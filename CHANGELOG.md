@@ -1,5 +1,14 @@
 # Release notes
 
+## Stage 13 — Viewport-sized desktop and mobile workspaces
+
+- Fit navigation, the atlas and footer inside the desktop viewport. Add compact division/region selectors, paged structure/details panels and a separate skull-key dialog.
+- Replace long desktop content scrolling with measured, keyboard-accessible content pages for lessons, glossary, practice, progress, reader search/text and reference dialogs. Keep study navigation in view and automatically show complete answer feedback.
+- Add mobile Specimen / Browse / Details views, search-to-specimen navigation, a working Focus handoff, safe touch controls and screen-aware specimen sizing. Retain natural mobile reading and preserve input drafts when crossing layouts.
+- Move the tutor launcher into navigation, page long desktop setup/history, and give desktop conversations a wide reading area beside model/composer controls. Align tablet modal behavior with the mobile layout.
+- Reframe the specimen after substantial aspect changes, reserve space for labels/camera tools and improve model use of the available drawing area.
+- Record the design decisions and critique in RESPONSIVE-PLAN.md.
+
 ## Stage 12 — Skull-only color coding
 
 - Apply the skull palette only while the Skull region is selected. Full-skeleton and axial overviews keep neutral bone colors.

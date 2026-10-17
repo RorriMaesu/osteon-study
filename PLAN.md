@@ -63,7 +63,7 @@ Design direction: a premium anatomy instrument, with a near-black ink background
 
 Use animated camera framing, subtle panel entrances, tactile button feedback and smooth isolation transitions. Let the learner explicitly enable slow rotation. Stop distracting motion during questions; respect reduced-motion preferences. Avoid flashing and compulsory sound. Use visible keyboard focus, descriptive button names, readable contrast, touch-sized controls and a fully usable text selection alternative to the canvas.
 
-Desktop: compact navigation, region/search column, large specimen stage and selected-structure information. Mobile: stacked learning panels and specimen, touch-sized controls and accessible navigation. All progress is saved locally with export/import; no account is needed and no private study results are sent to GitHub.
+Desktop: compact navigation, region/search column, large specimen stage and selected-structure information within the available viewport. Long content uses measured pages with visible navigation. Mobile: explicit Specimen / Browse / Details views, touch-sized controls and natural reading. The current review and layout decisions are in [RESPONSIVE-PLAN.md](RESPONSIVE-PLAN.md). All progress is saved locally with export/import; no account is needed and no private study results are sent to GitHub.
 
 **Critique:** visual richness must not cause excessive load time, illegible microtype or continuous animation. Limit pixel ratio, keep model transfer small and allow a text study mode when WebGL is unavailable.
 

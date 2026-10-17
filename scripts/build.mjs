@@ -10,6 +10,7 @@ await esbuild.build({entryPoints:[path.join(root,'src/main.js')],bundle:true,for
 const hash=file=>createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,12);
 const file=path.join(root,'index.html');
 let html=fs.readFileSync(file,'utf8');
+html=html.replace(/href="workspace\.css(?:\?v=[a-z0-9]+)?"/,`href="workspace.css?v=${hash('workspace.css')}"`);
 html=html.replace(/href="style\.css(?:\?v=[a-z0-9]+)?"/,`href="style.css?v=${hash('style.css')}"`).replace(/src="app\.js(?:\?v=[a-z0-9]+)?"/,`src="app.js?v=${hash('app.js')}"`);
 fs.writeFileSync(file,html);
 console.log('Built application and versioned assets.');

@@ -71,7 +71,7 @@ function initTutor({ escape: e, toast }) {
     tab = b.dataset.tutorTab;
     render();
   });
-  const compactTutor=matchMedia('(max-width:600px)');
+  const compactTutor=matchMedia('(max-width:999px)');
   function showPanel(){if(compactTutor.matches)panel.showModal();else panel.show();}
   compactTutor.addEventListener('change',()=>{if(panel.open){const focused=document.activeElement;panel.close();showPanel();if(panel.contains(focused))focused.focus({preventScroll:true});}});
   function status(text, ok = false) {

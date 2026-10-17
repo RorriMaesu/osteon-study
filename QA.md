@@ -99,3 +99,20 @@ Final desktop visual review corrected the practice/review column balance: approx
 ## 2026-10-17 — Skull-only color controls
 
 All 39 existing automated checks pass. Browser visual checks confirmed neutral bones in the full skeleton and axial overview, family colors when Skull is selected, and immediate neutral restoration with the visible Skull colors: Off button. The button and key are hidden outside Skull. Turning colors off, leaving Skull and returning preserves Off; enabling them and entering scored skull identification switches them off and disables the toggle. Exiting practice restores the prior On preference only in the Skull view. These checks exited practice without recording an answer.
+
+## 2026-10-17 — Responsive workspace review
+
+The original tall layout was replaced with a desktop application frame and measured content pages. See RESPONSIVE-PLAN.md for the design decisions and critique. All 39 automated checks pass; the content audit still reports 177 represented lab targets, twelve lessons, 104 authored questions, 237 glossary terms and 124 reading pages.
+
+Browser checks on the local preview:
+
+- Tested Atlas, Study, Practice and Progress at 1024 × 768, 1280 × 720, 1440 × 900 and 1920 × 1080. At each size, document dimensions matched the viewport and active content-page windows had no meaningful vertical overflow. Also checked all four screens at the shorter 1280 × 600 size with the same result.
+- Verified the separate skull-key dialog, its family selection, the Skull-only color toggle and paged selected-structure information. Search remains available above the paged list. Choosing a bone on a later list page retains that page; PageDown advances the focused list with the visible page selector updated.
+- Reviewed lesson text, persistent section navigation and learning-path cards; fitted original textbook page images; switched to readable, paged extracted text and checked paged reading results. The original-page image can be small when fitted; Accessible text and Enlarge remain available.
+- Checked concept-question options and feedback, complete-course setup, a 3D structure, a source landmark pin, and the newborn-skull diagram with numbered target buttons. Feedback moves as a complete block to a visible page with its Next target button.
+- Entered an unsubmitted identification answer, changed desktop → phone → desktop and retained the exact draft. Input nodes and existing handlers are moved rather than recreated by pagination.
+- Checked 390 × 844 and 360 × 740 phone layouts: no horizontal overflow, the specimen and all camera/action controls inside the viewport, 44-pixel-wide action buttons with heights at least 44 pixels, and no overlap between camera and action rows.
+- Verified mobile Browse search, selection returning to Specimen, Details access and Focus opening the specimen. The tutor is a native full-screen modal below the desktop breakpoint, with a 44 × 44 Close control.
+- Reviewed desktop tutor connection/model setup pages and the wider conversation/composer layout. An initially cramped history area was rejected; the final small-laptop history window measured 438 pixels high with the composer visible separately. Connected to the existing Ollama service, found fifteen usable local chat models and completed a real Qwen 3.5 4B reply. The conversation paged and followed the reply without vertical body overflow. This was a layout/transport check, not an independent certification of its answer.
+
+Tests used the local preview's isolated study history. Public study history was not reset or replaced, no model was installed, and the previously restricted native app-opening protocol was not retried. Phone lesson/reader content retains natural vertical reading; desktop uses explicit content pages instead of shrinking educational text to fit.
