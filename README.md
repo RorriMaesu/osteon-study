@@ -6,7 +6,7 @@ Live site: https://rorrimaesu.github.io/osteon-study/
 
 Read [the implementation and learning plan](PLAN.md) and [release notes](CHANGELOG.md).
 
-The next atlas expansion is specified in [the region-navigation and bone-landmark plan](ANATOMY-EXPANSION-PLAN.md), with a [source inventory and current-target audit](LANDMARK-EXPANSION-AUDIT.csv). It plans two-stage double-click navigation, color controls for all focused regions and selectively displayed textbook landmarks. These are planned additions; the audit does not claim that new 3D locations have been validated or shipped.
+The atlas now uses two-stage double-click navigation and colors in all focused regions. The remaining landmark expansion is specified in [the region-navigation and bone-landmark plan](ANATOMY-EXPANSION-PLAN.md), with a [source inventory and current-target audit](LANDMARK-EXPANSION-AUDIT.csv). The additional inventory is under validation and does not claim new verified 3D locations.
 
 Read [the responsive workspace plan](RESPONSIVE-PLAN.md) for the desktop and mobile layout review. Desktop widths from 1000 pixels use a viewport-sized application with Previous / Next content pages, including the atlas lists, lessons, reading text and tutor history. Phones and narrower tablets use Specimen / Browse / Details atlas controls and natural vertical reading. Search, answer drafts and progress are preserved when the layout changes.
 
@@ -37,8 +37,12 @@ The course list and chapter readings are covered in full. The finite question ba
 The site bundles its model and reading assets. Google Fonts is an optional external typography request with system fallbacks. No study progress is sent to a server. The original course document, full textbook PDF and personal paths are not published; licensed chapter page images and extracted text are included with attribution.
 
 
-## Skull colors, skeleton divisions and local tutoring
+## Regional exploration, skeleton divisions and local tutoring
 
-The atlas includes a cranial/facial color key and All / Axial / Appendicular filters, also applied to anatomy practice. Color coding appears only in the Skull region; its visible On / Off button sits above the color key and remembers your choice while changing regions. Full-skeleton and axial overviews stay neutral. Sacrum and coccyx remain axial; hip bones are appendicular. Mixed pelvis targets appear under All. Skull colors turn off for scored practice.
+Double-click a bone from overview to open its region; double-click again to focus that bone alone. The actual side is retained. Back and the focus trail restore the previous view. Use the Region / Bone buttons or select from Browse and press Enter in the specimen as alternatives; touch supports double-tap. Escape in the specimen goes back. Single-clicking a bone selects it without an automatic camera jump.
+
+Every focused region has bone colors, an optional key and a visible On / Off control. Paired counterparts share stable colors; colors also distinguish serial bones and neighboring anatomy. The choice survives reloads. Whole-skeleton, axial and appendicular overviews stay neutral, and scored practice turns colors off. All / Axial / Appendicular filters still apply to anatomy practice. Sacrum and coccyx remain axial; hip bones remain appendicular. Mixed pelvis targets appear under All.
+
+Browse has All / Bones / Landmarks controls. Existing landmark pins and source illustrations remain explicitly identified; selecting an unsided reference target opens appropriate regional context. The new textbook inventory is separate from the 177-item lab bank and is not yet a completed set of additional 3D landmarks.
 
 Use the **Socratic tutor** button for a local Ollama chat, installed-model selection, guided connection, optional model downloads and hardware/fit checks. See [the tutor guide](TUTOR.md) for first setup and honest browser limits. Tutor assistance is tracked separately from independent quiz accuracy.

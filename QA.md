@@ -116,3 +116,23 @@ Browser checks on the local preview:
 - Reviewed desktop tutor connection/model setup pages and the wider conversation/composer layout. An initially cramped history area was rejected; the final small-laptop history window measured 438 pixels high with the composer visible separately. Connected to the existing Ollama service, found fifteen usable local chat models and completed a real Qwen 3.5 4B reply. The conversation paged and followed the reply without vertical body overflow. This was a layout/transport check, not an independent certification of its answer.
 
 Tests used the local preview's isolated study history. Public study history was not reset or replaced, no model was installed, and the previously restricted native app-opening protocol was not retried. Phone lesson/reader content retains natural vertical reading; desktop uses explicit content pages instead of shrinking educational text to fit.
+
+## 2026-10-17 - Regional exploration implementation
+
+Stage 15 supersedes the earlier Skull-only palette policy: colors now apply in every explicit focused region, with neutral division/whole-skeleton overviews. The additional textbook landmark inventory remains a validation backlog; the 47 source-pin mappings and original 177-item graded bank are unchanged.
+
+All 43 automated checks pass. Four new checks cover every skeletal bone object's palette/destination, paired identity, core/context membership, two-level navigation, repeated bone focus, assessment blocking and multipart sternum identity. The course audit remains 177 represented targets, 352 objects, twelve lessons, 104 questions, 237 glossary entries and 124 reading pages.
+
+Local browser verification:
+
+- Used actual native double-clicks on the full specimen to open Skull, then on the frontal bone to isolate it. Back returned to the skull view. Repeated the first gesture on the final build.
+- Opened the right forearm from a radius selection, inspected distinct colors and neighboring context, then double-clicked the radius to isolate its right-side instance. Checked the Region / Bone controls and the right-knee context/isolated patella.
+- Turned regional colors off, reloaded, reopened a region and observed Off restored. Re-enabled colors; changing to Appendicular produced a neutral overview with hidden color controls and disabled Skull selection.
+- Opened both pages of the forearm color key at 1280 x 600. Its content window had equal client/scroll heights, no clipped buttons at the page boundary and no body overflow.
+- Selected Radial tuberosity through the new Landmarks mode. It displayed exactly one existing source reference pin, its proper unsided Upper limb context and the source-placement note.
+- Entered its bone region and used Back: the original named pin and unsided landmark context were restored, rather than returning to an empty landmark view.
+- Started identification practice without submitting an answer. Exploration navigation/colors were hidden, division/region selectors were disabled and the new browse controls were hidden. Enter in the specimen did not change focus or produce feedback. Exited cleanly and restored exploration.
+- Checked the focused atlas at 1024 x 768, 1280 x 600 and 1280 x 720: body dimensions matched the viewport and no exploration/camera/action control fell outside it. Checked 390 x 844 and 360 x 740 phone viewports: no horizontal overflow and all specimen controls remained inside the visible screen. Mobile reading/footer content may continue vertically, as designed.
+- No browser console errors were captured. These are browser viewport checks; physical touch-device double-tap behavior still benefits from real-device validation.
+
+No public study progress was reset or replaced. This release changes navigation/materials and access to existing targets; it does not introduce guessed geometry or new anatomical anchors.

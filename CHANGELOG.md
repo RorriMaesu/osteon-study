@@ -1,5 +1,14 @@
 # Release notes
 
+## Stage 15 - Live regional navigation and bone palettes
+
+- Implement double-click from overview to a useful anatomical area, then double-click within the area to isolate the actual clicked bone and side. Keep single-click selection in place, preserve the prior camera for Back, and focus sternum parts together as one adult bone.
+- Add a visible focus trail and Back control, keyboard Enter/Escape, touch double-tap handling, and Region / Bone button alternatives. Do not treat dragging, pinching, peeling or assessment input as navigation.
+- Color bones in every focused region with stable bilateral identities, a regional key and a persistent On / Off preference. Keep whole-skeleton/division overviews neutral and colors disabled during scored questions.
+- Add All / Bones / Landmarks browser controls for the existing course representations. Move unsided source landmark views into their appropriate regional context instead of retaining a misleading sided crop.
+- Preserve desktop content pagination and phone controls; hide/disable exploration controls during retrieval. Verify the new data/navigation rules alongside all existing checks (43 passing), current course coverage and actual browser gestures.
+- This release implements the navigation/palette stage. The additional textbook landmark inventory remains under source/geometry validation; no new 3D anchors or completeness claims were invented.
+
 ## Stage 14 - Region navigation and landmark expansion plan
 
 - Specify overview-to-region and region-to-bone double-click behavior, reversible navigation, touch/keyboard equivalents and assessment safeguards.

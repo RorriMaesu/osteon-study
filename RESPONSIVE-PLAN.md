@@ -5,7 +5,7 @@ The previous design stacked a large introduction, a fixed 780-pixel specimen and
 ## Desktop
 
 - Treat the application as one viewport-sized workspace. Keep navigation, the active workspace and a compact source footer visible.
-- Allocate the atlas's remaining height to the specimen and its two side panels. Use pages for the structure list and selected-structure content. Open the optional skull key separately.
+- Allocate the atlas's remaining height to the specimen and its two side panels. Use pages for the structure list and selected-structure content. Keep the focus trail, Back and color toggle in a compact specimen bar; open the optional regional color key separately.
 - Use visible Previous / Next / page selection for long study content, glossary entries, practice options and progress information. Preserve all original content and event handlers; do not obtain a fit by shrinking the text or clipping the rest of a page.
 - Keep lesson navigation outside its paged reading panel. Fit original textbook page images to their reading space; accessible text has its own pages. Search results use pages too.
 - Fit course targets and camera controls beside the question. Keep answer feedback reachable through the same visible content-page controls.

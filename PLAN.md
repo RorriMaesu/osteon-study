@@ -2,7 +2,7 @@
 
 Osteon is a personal BI 231 learning environment built around a real three dimensional skeleton, the supplied Fall 2024 lab structure list, and OpenStax Anatomy and Physiology 2e chapters 6 and 7. The goal is to retrieve names, locate structures from unfamiliar views, explain structure and function, and retain the knowledge over time.
 
-The proposed next expansion has a separate [region-navigation and bone-landmark plan](ANATOMY-EXPANSION-PLAN.md) and [source audit](LANDMARK-EXPANSION-AUDIT.csv). It defines overview-to-region-to-bone navigation, regional colors and a validated, uncluttered landmark layer. That expansion is a planning release and is not included in the completion claims for the existing lab checklist below.
+The expansion has a separate [region-navigation and bone-landmark plan](ANATOMY-EXPANSION-PLAN.md) and [source audit](LANDMARK-EXPANSION-AUDIT.csv). Stage 15 implements overview-to-region-to-bone navigation, regional colors and access to current landmarks. Validation of additional textbook features remains open and is not included in the completion claims for the existing lab checklist below.
 
 ## 1. Define the learning contract
 

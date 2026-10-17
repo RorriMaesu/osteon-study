@@ -1,5 +1,25 @@
 /* The study instrument fills a desktop screen; longer material has pages. */
 .atlas-pane-tabs{display:none}
+.exploration-bar{position:absolute;top:38px;left:14px;right:14px;min-height:36px;display:flex;align-items:center;gap:5px;z-index:4;padding:3px 4px;background:#132027e8;border:1px solid #39504d;border-radius:9px;backdrop-filter:blur(12px)}
+.exploration-bar[hidden],.exploration-bar [hidden]{display:none!important}
+.exploration-bar button{font-size:10px;min-height:30px;white-space:nowrap;padding:4px 8px;border-radius:6px}
+#focus-back{width:30px;padding:0;flex:none;font-size:16px}
+#focus-trail{display:flex;align-items:center;gap:6px;min-width:0;flex:1;overflow:hidden;font-size:10px;white-space:nowrap}
+#focus-trail button{border:0;padding:3px 1px;color:var(--mint);flex-shrink:0}
+#focus-trail strong{font-weight:500;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#focus-trail .focus-intro{color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+#focus-trail>span[aria-hidden]{color:#75968a}
+#skull-controls{flex:none;margin:0}#skull-colors[aria-pressed=true]{background:#2c4339;border-color:#658773;color:var(--mint)}
+#skull-key{flex:none;margin:0}
+.specimen-stage[data-exploring=true] .specimen-label{display:none}
+.specimen-stage[data-exploring=true] #viewer{top:86px}
+.browse-modes{display:flex;flex:none;gap:5px;margin:2px 0 6px}.browse-modes button{flex:1;padding:5px;font-size:11px;min-height:32px}.browse-modes button[aria-pressed=true]{background:#2c4339;color:var(--mint);border-color:#658773}
+.quiz-active .browse-modes,.quiz-active .desktop-filters{visibility:hidden;pointer-events:none}
+.region-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:16px 0}
+.region-legend button{display:flex;align-items:center;gap:9px;text-align:left;font-size:12px;min-height:40px;padding:7px 9px;break-inside:avoid}
+.region-legend i{display:block;flex:none;width:13px;height:13px;border-radius:4px;background:var(--bone-color);box-shadow:0 0 12px color-mix(in srgb,var(--bone-color) 22%,transparent)}
+@media(max-width:999px){#focus-region,#focus-region+span{display:none}}
+@media(max-width:999px){.exploration-bar{top:39px;left:9px;right:9px;gap:3px;padding:2px}.exploration-bar button{min-height:44px;font-size:10px;padding:5px 7px}#focus-back{width:44px;min-width:44px}#focus-trail{gap:3px;font-size:10px}#focus-trail button{padding:3px;min-width:0;flex-shrink:1;overflow:hidden;text-overflow:ellipsis}#focus-trail strong{max-width:145px}#skull-key{min-width:44px}.specimen-stage[data-exploring=true] #viewer{top:98px}.browse-modes button{min-height:44px;font-size:12px}.region-legend{grid-template-columns:repeat(2,minmax(0,1fr))}.region-legend button{min-height:44px;font-size:11px}}
 .desktop-filters{display:none}
 .page-flow h2,.page-flow h3{break-after:avoid}
 #concept-feedback,#course-feedback,#spatial-feedback{break-inside:avoid}
