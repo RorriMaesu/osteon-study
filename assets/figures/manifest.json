@@ -1,0 +1,128 @@
+{
+  "skull-front": {
+    "page": 255,
+    "printed": 239,
+    "width": 1500,
+    "height": 1269
+  },
+  "skull-side": {
+    "page": 256,
+    "printed": 240,
+    "width": 1500,
+    "height": 1029
+  },
+  "temporal": {
+    "page": 258,
+    "printed": 242,
+    "width": 774,
+    "height": 555
+  },
+  "skull-base": {
+    "page": 259,
+    "printed": 243,
+    "width": 1327,
+    "height": 1800
+  },
+  "skull-back": {
+    "page": 260,
+    "printed": 244,
+    "width": 810,
+    "height": 631
+  },
+  "ethmoid": {
+    "page": 262,
+    "printed": 246,
+    "width": 825,
+    "height": 637
+  },
+  "conchae": {
+    "page": 263,
+    "printed": 247,
+    "width": 825,
+    "height": 637
+  },
+  "maxilla": {
+    "page": 265,
+    "printed": 249,
+    "width": 784,
+    "height": 601
+  },
+  "mandible": {
+    "page": 267,
+    "printed": 251,
+    "width": 818,
+    "height": 627
+  },
+  "sinuses": {
+    "page": 271,
+    "printed": 255,
+    "width": 827,
+    "height": 558
+  },
+  "fontanelles": {
+    "page": 285,
+    "printed": 269,
+    "width": 1500,
+    "height": 505
+  },
+  "wrist": {
+    "page": 308,
+    "printed": 292,
+    "width": 1277,
+    "height": 893
+  },
+  "knee": {
+    "page": 367,
+    "printed": 351,
+    "width": 1500,
+    "height": 1150
+  },
+  "sternum": {
+    "page": 283,
+    "printed": 267,
+    "width": 1146,
+    "height": 678
+  },
+  "curves": {
+    "page": 273,
+    "printed": 257,
+    "width": 1092,
+    "height": 1042
+  },
+  "disc": {
+    "page": 276,
+    "printed": 260,
+    "width": 1000,
+    "height": 471
+  },
+  "sphenoid": {
+    "page": 261,
+    "printed": 245,
+    "width": 634,
+    "height": 820
+  },
+  "vertebra": {
+    "page": 276,
+    "printed": 260,
+    "width": 1092,
+    "height": 475
+  },
+  "cervical": {
+    "page": 277,
+    "printed": 261,
+    "width": 1083,
+    "height": 1240
+  },
+  "thoracic": {
+    "page": 278,
+    "printed": 262,
+    "width": 1686,
+    "height": 1267
+  },
+  "thoracic-rib": {
+    "page": 278,
+    "printed": 262,
+    "width": 738,
+    "height": 555
+  }
+}

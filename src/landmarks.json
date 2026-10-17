@@ -1,0 +1,907 @@
+{
+  "Coracoid process": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1384675,
+          1.3906839,
+          0.0004087
+        ],
+        "object": "Coracoid process.j",
+        "parent": "Coracoid process.t",
+        "label": "Coracoid process",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.189
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Acromion": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1616994,
+          1.4149489,
+          -0.0473241
+        ],
+        "object": "Acromion.j",
+        "parent": "Acromion.t",
+        "label": "Acromion",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.159
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Scapular spine": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1131185,
+          1.3877321,
+          -0.0920241
+        ],
+        "object": "Spine of scapula.j",
+        "parent": "Spine of scapula.t",
+        "label": "Spine of scapula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.823
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Glenoid cavity": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1454449,
+          1.374626,
+          -0.0366286
+        ],
+        "object": "Glenoid fossa.j",
+        "parent": "Glenoid fossa.t",
+        "label": "Glenoid fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.811
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Subscapular fossa": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0952329,
+          1.3370821,
+          -0.087657
+        ],
+        "object": "Subscapular fossa.j",
+        "parent": "Subscapular fossa.t",
+        "label": "Subscapular fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.095
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Supraspinous fossa": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1045915,
+          1.3808118,
+          -0.0718345
+        ],
+        "object": "Supraspinous fossa.j",
+        "parent": "Supraspinous fossa.t",
+        "label": "Supraspinous fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.42
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Infraspinous fossa": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0966173,
+          1.3302094,
+          -0.0920537
+        ],
+        "object": "Infraspinous fossa.j",
+        "parent": "Infraspinous fossa.t",
+        "label": "Infraspinous fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.254
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Acromioclavicular facet": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1506989,
+          1.4142492,
+          -0.0373252
+        ],
+        "object": "Clavicular facet.j",
+        "parent": "Clavicular facet.t",
+        "label": "Clavicular facet",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.943
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Medial border of scapula": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0625697,
+          1.3286397,
+          -0.1066453
+        ],
+        "object": "Medial border of scapula.j",
+        "parent": "Medial border of scapula.t",
+        "label": "Medial border of scapula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.173
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Head of humerus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1709735,
+          1.4010111,
+          -0.015696
+        ],
+        "object": "Head of humerus.j",
+        "parent": "Head of humerus.t",
+        "label": "Head of humerus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.296
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Anatomical neck of humerus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1513885,
+          1.3705032,
+          -0.0206559
+        ],
+        "object": "Anatomical neck of humerus.j",
+        "parent": "Anatomical neck of humerus.t",
+        "label": "Anatomical neck of humerus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.101
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Shaft of humerus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1926823,
+          1.265159,
+          -0.0255034
+        ],
+        "object": "Body of humerus.j",
+        "parent": "Body of humerus.t",
+        "label": "Body of humerus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 6.011
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Greater tubercle": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1924929,
+          1.3978572,
+          -0.024948
+        ],
+        "object": "Greater tubercle.j",
+        "parent": "Greater tubercle.t",
+        "label": "Greater tubercle",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.009
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Lesser tubercle": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1670678,
+          1.3846146,
+          -0.0034701
+        ],
+        "object": "Lesser tubercle.j",
+        "parent": "Lesser tubercle.t",
+        "label": "Lesser tubercle",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.009
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Medial epicondyle of humerus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1840411,
+          1.1097673,
+          -0.0361187
+        ],
+        "object": "Medial epicondyle of humerus.j",
+        "parent": "Medial epicondyle of humerus.t",
+        "label": "Medial epicondyle of humerus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.749
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Lateral epicondyle of humerus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2486879,
+          1.112909,
+          -0.0438847
+        ],
+        "object": "Lateral epicondyle of humerus.j",
+        "parent": "Lateral epicondyle of humerus.t",
+        "label": "Lateral epicondyle of humerus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.491
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Capitulum": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2401174,
+          1.1043569,
+          -0.0268367
+        ],
+        "object": "Capitulum of humerus.j",
+        "parent": "Capitulum of humerus.t",
+        "label": "Capitulum of humerus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.559
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Trochlea": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2356854,
+          1.0982833,
+          -0.0216792
+        ],
+        "object": "Trochlea of humerus.j",
+        "parent": "Trochlea of humerus.t",
+        "label": "Trochlea of humerus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 7.071
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Ulnar nerve sulcus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2024665,
+          1.0960311,
+          -0.0377027
+        ],
+        "object": "Groove for ulnar nerve.j",
+        "parent": "Groove for ulnar nerve.t",
+        "label": "Groove for ulnar nerve",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.468
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Olecranon fossa": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2170448,
+          1.1117516,
+          -0.0394209
+        ],
+        "object": "Olecranon fossa.j",
+        "parent": "Olecranon fossa.t",
+        "label": "Olecranon fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.052
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Radial nerve sulcus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2181239,
+          1.2570528,
+          -0.0401565
+        ],
+        "object": "Radial groove.j",
+        "parent": "Radial groove.t",
+        "label": "Radial groove",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 9.903
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Head of radius": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2288931,
+          1.0826712,
+          -0.0308128
+        ],
+        "object": "Head of radius.j",
+        "parent": "Head of radius.t",
+        "label": "Head of radius",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.435
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Styloid process of radius": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2857548,
+          0.8561211,
+          0.0164026
+        ],
+        "object": "Radial styloid process.j",
+        "parent": "Radial styloid process.t",
+        "label": "Radial styloid process",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.571
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Radial tuberosity": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2431547,
+          1.0617186,
+          -0.0117779
+        ],
+        "object": "Radial tuberosity.j",
+        "parent": "Radial tuberosity.t",
+        "label": "Radial tuberosity",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.223
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Olecranon": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.214682,
+          1.1051829,
+          -0.0553319
+        ],
+        "object": "Olecranon.j",
+        "parent": "Olecranon.t",
+        "label": "Olecranon",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.623
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Styloid process of ulna": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.243529,
+          0.8559273,
+          0.0116973
+        ],
+        "object": "Ulnar styloid process.j",
+        "parent": "Ulnar styloid process.t",
+        "label": "Ulnar styloid process",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.174
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Trochlear notch": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2175528,
+          1.0913014,
+          -0.0417094
+        ],
+        "object": "Trochlear notch.j",
+        "parent": "Trochlear notch.t",
+        "label": "Trochlear notch",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.499
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.2"
+  },
+  "Sacral foramina": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0166851,
+          0.9066609,
+          -0.0740673
+        ],
+        "object": "Anterior sacral foramina.j",
+        "parent": "Anterior sacral foramina.t",
+        "label": "Anterior sacral foramina",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.68
+      },
+      {
+        "point": [
+          -0.0168339,
+          0.9091508,
+          -0.080915
+        ],
+        "object": "Posterior sacral foramina.j",
+        "parent": "Posterior sacral foramina.t",
+        "label": "Posterior sacral foramina",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.739
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Auricular surface of sacrum": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          0.0560063,
+          0.9350651,
+          -0.0307989
+        ],
+        "object": "Auricular surface of sacrum.j",
+        "parent": "Auricular surface of sacrum.t",
+        "label": "Auricular surface of sacrum",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.382
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Ilium": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0940033,
+          0.9553653,
+          -0.0180244
+        ],
+        "object": "Ilium.j",
+        "parent": "Ilium.t",
+        "label": "Ilium",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 11.282
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Iliac crest": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1247879,
+          0.9986646,
+          0.0061895
+        ],
+        "object": "Iliac crest.j",
+        "parent": "Iliac crest.t",
+        "label": "Iliac crest",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.104
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Greater sciatic notch": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0622602,
+          0.9091622,
+          -0.0312422
+        ],
+        "object": "Greater sciatic notch.j",
+        "parent": "Greater sciatic notch.t",
+        "label": "Greater sciatic notch",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.526
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Pelvic brim": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0553206,
+          0.8872669,
+          0.0041019
+        ],
+        "object": "Arcuate line of ilium.j",
+        "parent": "Arcuate line of ilium.t",
+        "label": "Arcuate line of ilium",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 6.575
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Acetabulum": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0574583,
+          0.8710104,
+          -0.0149726
+        ],
+        "object": "Acetabulum.j",
+        "parent": "Acetabulum.t",
+        "label": "Acetabulum",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.334
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Ischium": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.055017,
+          0.8039576,
+          -0.0474165
+        ],
+        "object": "Ischium.j",
+        "parent": "Ischium.t",
+        "label": "Ischium",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 4.642
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Ischial tuberosity": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0678138,
+          0.8151411,
+          -0.0474347
+        ],
+        "object": "Ischial tuberosity.j",
+        "parent": "Ischial tuberosity.t",
+        "label": "Ischial tuberosity",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.1
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Pubis": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0049447,
+          0.8407596,
+          0.0403415
+        ],
+        "object": "Pubis.j",
+        "parent": "Pubis.t",
+        "label": "Pubis",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.75
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.3"
+  },
+  "Head of femur": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0747904,
+          0.8819225,
+          0.0001145
+        ],
+        "object": "Head of femur.j",
+        "parent": "Head of femur.t",
+        "label": "Head of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.57
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Neck of femur": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0830111,
+          0.833843,
+          -0.0024795
+        ],
+        "object": "Neck of femur.j",
+        "parent": "Neck of femur.t",
+        "label": "Neck of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.189
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Greater trochanter": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.145534,
+          0.8432177,
+          -0.0144767
+        ],
+        "object": "Greater trochanter.j",
+        "parent": "Greater trochanter.t",
+        "label": "Greater trochanter",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 7.759
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Lesser trochanter": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0898013,
+          0.7872818,
+          -0.0256872
+        ],
+        "object": "Lesser trochanter.j",
+        "parent": "Lesser trochanter.t",
+        "label": "Lesser trochanter",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.608
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Medial epicondyle of femur": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0336871,
+          0.4518226,
+          -0.0348662
+        ],
+        "object": "Medial epicondyle of femur.j",
+        "parent": "Medial epicondyle of femur.t",
+        "label": "Medial epicondyle of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.942
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Lateral epicondyle of femur": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1156268,
+          0.4592708,
+          -0.0294685
+        ],
+        "object": "Lateral epicondyle of femur.j",
+        "parent": "Lateral epicondyle of femur.t",
+        "label": "Lateral epicondyle of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.721
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Tibial tuberosity": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0881994,
+          0.3979513,
+          0.0043869
+        ],
+        "object": "Tibial tuberosity.j",
+        "parent": "Tibial tuberosity.t",
+        "label": "Tibial tuberosity",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.67
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Anterior border of tibia": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0854242,
+          0.3175352,
+          -0.0011444
+        ],
+        "object": "Anterior border of tibia.j",
+        "parent": "Anterior border of tibia.t",
+        "label": "Anterior border of tibia",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 8.018
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Medial malleolus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0460375,
+          0.0895832,
+          -0.0372314
+        ],
+        "object": "Medial malleolus.j",
+        "parent": "Medial malleolus.t",
+        "label": "Medial malleolus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.86
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  },
+  "Lateral malleolus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1083484,
+          0.0689874,
+          -0.0495753
+        ],
+        "object": "Lateral malleolus.j",
+        "parent": "Lateral malleolus.t",
+        "label": "Lateral malleolus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.485
+      }
+    ],
+    "source": "Z-Anatomy original anatomical end of annotation leader; vertex 1 transformed to the web model frame and checked against exported skeleton",
+    "reference": "8.4"
+  }
+}

@@ -1,10 +1,16 @@
 {
   "courseConcepts": 177,
-  "exact": 64,
-  "parentContext": 96,
-  "recallOnly": 17,
-  "modelObjects": 271,
+  "representations": {
+    "mesh": 82,
+    "source-pin": 47,
+    "diagram": 46,
+    "concept": 2
+  },
+  "unrepresented": 0,
+  "modelObjects": 352,
   "lessons": 12,
-  "authoredQuestions": 56,
-  "textbookTerms": 237
+  "authoredQuestions": 104,
+  "textbookTerms": 237,
+  "sourceReadingPages": 124,
+  "completeChapterPages": 86
 }

@@ -14,13 +14,16 @@ Serve this folder with any static HTTP server. Direct file opening is unsupporte
 
 Model and content credits are maintained in CREDITS.md. See PLAN.md for the educational coverage and representation policy.
 
-## Current coverage
+## Complete course release
 
-- 177 course concepts: 64 exact selectable mesh groups, 96 entries with parent-bone context and 17 recall-only entries. See COVERAGE.csv for every mapping.
-- Real full-body anatomical skeleton; 271 named objects include teeth, cartilage and sinus meshes.
-- Twelve textbook sections, 56 authored questions, 237 textbook glossary definitions and seven guided interactive activities.
-- 3D locate/identify, lab and glossary cards, mixed quizzes, local progress, review scheduling and backup/restore.
+- All 177 distinct BI 231 lab concepts have graded exercises: 82 named 3D structures/groups, 47 source landmark pins, 46 textbook diagram targets and two knee movement concepts. COVERAGE.csv lists every item and its source.
+- Adult skeleton plus 81 course tissue objects: 352 scene objects, including bones, cartilage, teeth, ligaments, discs, sinus volumes and vertebral arteries. Scene objects are not a biological bone count.
+- Full source reader: every page of chapters 6 and 7, plus appendicular and selected joint readings; 124 page images with searchable extracted text. Source pages load on demand.
+- Twelve teaching sections, 104 authored concept questions, 237 textbook glossary definitions and seven guided activities.
+- Locate and name practice, a systematic unpracticed-first course pass, region/session controls, missed-item retries, local review scheduling, score separation and progress backup/restore.
 
-Whole-bone or group meshes are scored directly. Small landmarks, fused hip-bone regions and unmodeled soft tissues are not falsely graded as exact clicks. Precise landmark targets and developmental specimens remain future geometry work. Source reading links provide the textbook's full figures and detail.
+Landmark pins identify reference locations; they do not segment complete ridges, surfaces or boundaries. Only the anatomical endpoints of reliable source annotation leaders are used. Other features use source textbook figures. Fontanelles use a newborn illustration. Drawer tests assess movement and ligament restraint. A parent-bone highlight never grades as locating a landmark.
 
-The site bundles rendering/model assets. Google Fonts is an optional external typography request; system fallbacks remain available. No progress is sent to a server. Original source PDFs and course documents are not included.
+The course list and chapter readings are covered in full. The finite question bank supplements those readings; it cannot guarantee every possible examination question. The anatomy is a single reference specimen and has not undergone independent instructor/anatomist validation. See QA.md for evidence and practical limits.
+
+The site bundles its model and reading assets. Google Fonts is an optional external typography request with system fallbacks. No study progress is sent to a server. The original course document, full textbook PDF and personal paths are not published; licensed chapter page images and extracted text are included with attribution.

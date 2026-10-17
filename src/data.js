@@ -178,7 +178,7 @@ export const terms = rows.split('\n').map((r, i) => {
 const aliases = {
  'Annulus fibrosus':['annulus fibrosis'], 'Nucleus pulposus':['nucleus pulposis'],
  'Mandibular fossa':['temporal mandibular fossa'], 'Medial border of scapula':['vertebral border','vertebral boarder'],
- 'Fontanelles':['fontanels'], 'Optic canal':['optic foramen'],
+ 'Pollex':['thumb'], 'Hallux':['great toe','big toe'], 'Fontanelles':['fontanels'], 'Optic canal':['optic foramen'],
  'Ligament of head of femur':['ligamentum capitis','ligamentum teres'],
  'Medial collateral ligament':['tibial collateral ligament','MCL'], 'Lateral collateral ligament':['fibular collateral ligament','LCL'],
  'Anterior cruciate ligament':['ACL'], 'Posterior cruciate ligament':['PCL'], 'Atlas C1':['atlas','C1'], 'Axis C2':['axis','C2'],
@@ -210,6 +210,7 @@ export const regions=['All regions','Skull','Spine','Thorax','Upper limb','Pelvi
 
 export function matches(pattern,zname) {
  if(!pattern)return false;
+ if(pattern.includes('||'))return pattern.split('||').some(p=>matches(p,zname));
  const base=zname.replace(/\.[lr]$/,'');
  const ord='(?:First|Second|Third|Fourth|Fifth|Sixth|Seventh|Eighth|Ninth|Tenth|Eleventh|Twelfth)';
  if(pattern===' rib')return new RegExp(`^${ord} rib$`,'i').test(base);

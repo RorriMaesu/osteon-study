@@ -10,7 +10,7 @@ Treat the course documents as source material. Instructions such as “Please kn
 
 For every lab entry record a canonical name, original synonym where useful, region, parent bone, structure type, learning cue, and representation status. Correct obvious spelling variants while preserving searchable aliases: annulus fibrosus, nucleus pulposus, medial border of the scapula, and fontanelles. Separate paired structures and numbered metacarpals/metatarsals where they can be tested individually. Preserve the lab note that shoulder ligaments are on the muscle test and hip/knee ligaments are on the bone test.
 
-**Critique:** counting every occurrence as a separate item would inflate coverage, while combining all landmarks into one “bone” would hide gaps. Use distinct concepts and show separately whether an item has an exact selectable mesh, only its parent bone for context, or no geometric representation.
+**Critique:** counting every occurrence as a separate item would inflate coverage, while combining all landmarks into one “bone” would hide gaps. Use distinct concepts and show separately whether an item uses a named mesh, an anatomical reference pin, a textbook target or a movement-concept exercise.
 
 ## 2. Teach through a deliberate practice ladder
 
@@ -53,7 +53,7 @@ Begin with the skeleton exported from Z-Anatomy/BodyParts3D by the 3d-human-body
 
 Keep anatomical object names and source attribution. Bundle the rendering library and compression decoder locally so the site does not depend on a third-party model viewer. Inspect orientation, normals, bone separation, loaded object count and mesh mappings before enabling assessment. Anatomical left/right must come from model names, never screen position.
 
-Use Blender 4.5 for targeted inspection, cleanup, optimization or necessary additional models. Do not invent detailed landmarks by procedural sculpting and present them as validated anatomy. Fontanelles require a developmental specimen because the primary skeleton is adult. Many foramina and processes are surface features rather than separate objects; highlighting the parent bone is context, not exact landmark localization. Such entries remain available for recall practice and are explicitly excluded from exact click grading until verified targets exist.
+Use Blender 4.5 for targeted inspection, cleanup, optimization or necessary additional models. Do not invent detailed landmarks by procedural sculpting and present them as validated anatomy. Fontanelles require a developmental specimen because the primary skeleton is adult. Many foramina and processes are surface features rather than separate objects; highlighting the parent bone is context, not exact landmark localization. Use reliable anatomical endpoints from original annotation leaders for reference pins. For entries with unreliable or missing endpoints, use numbered targets on the supplied textbook illustrations. Movement tests require a movement-concept exercise. Retain the distinction between a reference point, a full structure and its parent context.
 
 **Critique:** imported anatomy can be complete enough for a convincing screenshot and still omit required structures or encode different groupings. A course-to-mesh coverage report is a release artifact. Never describe a whole-bone highlight as landmark completion.
 
@@ -63,7 +63,7 @@ Design direction: a premium anatomy instrument, with a near-black ink background
 
 Use animated camera framing, subtle panel entrances, tactile button feedback and smooth isolation transitions. Let the learner explicitly enable slow rotation. Stop distracting motion during questions; respect reduced-motion preferences. Avoid flashing and compulsory sound. Use visible keyboard focus, descriptive button names, readable contrast, touch-sized controls and a fully usable text selection alternative to the canvas.
 
-Desktop: compact navigation, region/search column, large specimen stage and selected-structure information. Mobile: specimen first, collapsible controls, stacked learning panel and accessible navigation. All progress is saved locally with export/import; no account is needed and no private study results are sent to GitHub.
+Desktop: compact navigation, region/search column, large specimen stage and selected-structure information. Mobile: stacked learning panels and specimen, touch-sized controls and accessible navigation. All progress is saved locally with export/import; no account is needed and no private study results are sent to GitHub.
 
 **Critique:** visual richness must not cause excessive load time, illegible microtype or continuous animation. Limit pixel ratio, keep model transfer small and allow a text study mode when WebGL is unavailable.
 
@@ -76,12 +76,14 @@ Create RorriMaesu/osteon-study and use GitHub Pages with relative asset paths. E
 3. Practice release: exact-mesh locate/identify, typed recall, corrective feedback, assisted-answer tracking and session results.
 4. Study release: all 12 textbook sections, lab structure cards, conceptual process tools and local review queue.
 5. Verification release: content coverage audit, meaningful automated checks, browser interaction tests, responsive review and documented limits.
+6. Complete course release: all 177 graded targets, 81 additional anatomical objects, reliable source leader endpoints, textbook diagram exercises and integrated complete chapter readings.
+7. Final verification: source/end-point review, diagram clipping/label masking, cross-mode sessions, precise name grading, progress persistence, responsive testing and live deployment verification.
 
 At each stage assess: Does it improve retrieval? Are labels anatomically valid? Is navigation understandable? Is the motion useful? Is any displayed progress claim stronger than the evidence? Record defects and fixes in CHANGELOG.md.
 
 ## 7. Release checks
 
-Verify every course entry appears in the data, aliases work, only exact mesh matches enter localization questions, paired structures accept appropriate sides, hidden targets are not scored, a wrong answer cannot advance silently, skipped/revealed answers are not counted as unassisted success, duplicate submissions are blocked, progress survives reload, and reset/export/import are deliberate and robust.
+Verify every course entry appears in the data, aliases work, mesh questions grade named objects, pin questions grade the target identity, and diagram questions grade source target identities, paired structures accept appropriate sides, hidden targets are not scored, a wrong answer cannot advance silently, skipped/revealed answers are not counted as unassisted success, duplicate submissions are blocked, progress survives reload, and reset/export/import are deliberate and robust.
 
 Check that all textbook sections have instructional content and assessments, every question has a correct answer and explanation, process sequences match the source, no model/library request fails, the site works at the GitHub project subpath, and mobile controls do not overlap the specimen. Check reduced motion and keyboard study. Keep source documents, credentials and machine-specific paths out of the repository.
 
@@ -90,5 +92,15 @@ Check that all textbook sections have instructional content and assessments, eve
 - OpenStax, Anatomy and Physiology 2e, supplied 2026 PDF edition, chapters 6 and 7. Online book: https://openstax.org/details/books/anatomy-and-physiology-2e . Follow the attribution/license notice for the supplied edition; original app notes and questions are newly authored.
 - BI 231 Lab 6 and 7 Bone List F24, supplied course file. Used to define anatomical coverage; the original file is not redistributed.
 - Z-Anatomy: https://github.com/Z-Anatomy/Models-of-human-anatomy , CC BY-SA 4.0, derived from BodyParts3D © The Database Center for Life Science, CC BY-SA 2.1 Japan.
-- Web skeleton export: https://github.com/SeemaBansal1/3d-human-body-anatomy . Preserve export attribution and share the derived skeleton under CC BY-SA 4.0. Use only the skeleton asset; unrelated organs are not included.
+- Web skeleton export: https://github.com/SeemaBansal1/3d-human-body-anatomy . Preserve export attribution and share the derived skeleton under CC BY-SA 4.0. The initial web skeleton is supplemented only with the required course tissues from the original Z-Anatomy source; unrelated organs are not included.
 - three.js: https://threejs.org/ , MIT; Draco decoder: Google, Apache 2.0.
+
+## Completion critique and decisions
+
+The initial skeleton-only release covered whole bones but left landmarks and soft tissues as recall entries. That did not fulfill complete lab localization. Blender inspection found 81 needed tissue objects and source annotation leaders. A geometry check exposed that some leaders were label stubs or unassigned axial lines: these were rejected. The 47 retained mappings use the anatomical leader endpoint (vertex 1), checked against the web skeleton. Leader proximity is a consistency check, not an independent anatomical validation.
+
+Final coverage: 82 3D structure/group exercises, 47 landmark pin exercises, 46 textbook diagram exercises and two drawer-test concepts; zero course items lack a graded representation. The pin indicates a reference point and does not falsely outline a whole crest or foramen. The pelvic-brim target marks one component of the inlet boundary. Ethmoidal targets mark air cells, with drainage relationships explained separately. Fontanelles use the correct developmental source illustration. No invented anatomy or unverified procedural model was needed.
+
+The supplied chapters are now available inside the suite in full, with source page images, text search, accessible extracted text and direct section destinations. Teaching notes and quizzes support the readings. The finite bank remains a sample of possible questions, while the source reader preserves all of the assigned chapter content.
+
+Diagram views clip to the intended anatomical crop and mask residual labels. Labeled figures are available explicitly as assistance, and revealing an answer cannot increase independent accuracy. Small 3D pin labels use connector lines to keep adjacent targets readable without moving their anatomical endpoints. Visual design is evaluated against useful retrieval and clear source distinctions, as well as appearance.

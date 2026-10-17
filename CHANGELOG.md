@@ -1,5 +1,18 @@
 # Release notes
 
+## Stage 6 — Complete course practice and integrated textbook
+
+- Added graded exercises for every course item: 82 3D structure/group targets, 47 reference pin mappings, 46 source diagram targets and two movement concepts.
+- Exported 81 course tissues from the original Z-Anatomy model using Blender 4.5, including ligaments, discs, nuclei pulposi and vertebral arteries.
+- Rejected unreliable annotation leaders; retained anatomical endpoints with provenance and model-alignment checks. Added connector lines to separate crowded numbered pins.
+- Added whole-source reading for chapters 6 and 7, plus lab readings: 124 page images, searchable extracted text, accessible reading mode and direct section navigation.
+- Added unpracticed-first, random and due-item sessions, typed identification, missed-item retries and one-target practice from the atlas.
+- Corrected landmark name checking so a parent-bone name is never accepted as the landmark.
+- Cropped and clipped source figures; masked residual answer labels. Labeled source figures mark attempts as assisted.
+- Expanded the authored question bank to 104, adding transfer questions on gross/microscopic bone structure, ossification, fracture distinctions, calcium regulation, skull passages and development.
+- Extended the coverage audit and automated checks to source targets, endpoint provenance, every reading page and section destination.
+
+
 ## Stage 5 — Browser review and coverage audit
 
 - Verified complete 3D and chapter sessions, independent versus assisted results, glossary recall and progress persistence.

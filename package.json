@@ -1,6 +1,6 @@
 {
   "name": "osteon-study",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "BI 231 skeleton atlas and OpenStax chapter 6/7 study suite",

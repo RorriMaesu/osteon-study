@@ -9,7 +9,15 @@
 - https://creativecommons.org/licenses/by-sa/4.0/
 - https://creativecommons.org/licenses/by-sa/2.1/jp/
 
-Only the skeleton layer is included. The upstream project's kidney and inner-ear anatomy assets are not included. Auditory ossicles in this skeleton are bone meshes from its skeleton layer.
+The initial skeleton layer and the course-specific tissues listed below are included. The upstream project's kidney, brain and inner-ear soft-tissue assets are not included. Auditory ossicles in this skeleton are bone meshes from its skeleton layer.
+
+## Additional anatomical objects and landmarks
+
+`assets/course-tissues.glb` contains 81 selected Z-Anatomy objects, exported from the original `Z-Anatomy.zip` / `Startup.blend` using Blender 4.5.1. Original named geometry and world transforms are retained; curves are converted to mesh geometry, unrelated objects omitted and web materials applied. Objects are listed in `assets/course-tissues-manifest.json`. This derived model remains CC BY-SA 4.0 with the Z-Anatomy / BodyParts3D attribution above.
+
+`src/landmarks.json` contains 47 course landmark mappings derived from Z-Anatomy anatomical annotation leader endpoints. Coordinates are transformed from Blender to the web coordinate frame. Vertex index and distance to the nearest exported skeletal vertex are retained for provenance. These data remain CC BY-SA 4.0. Labels are rendered as reference pins with connector lines, rather than claiming full surface segmentation. Unreliable axial annotation leaders were replaced with textbook targets.
+
+Original download: https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip . The original atlas definitions and automatic translations are not reused.
 
 ## Learning content
 
@@ -17,6 +25,8 @@ Study explanations, retrieval prompts and questions are newly written adaptation
 
 - https://openstax.org/details/books/anatomy-and-physiology-2e
 - https://creativecommons.org/licenses/by-nc-sa/4.0/
+
+`assets/reader/` reproduces chapter 6 and 7 page images from the supplied edition, plus lab-relevant readings from chapters 8 and 9. `src/reader-pages.json` contains corresponding extracted text. `assets/figures/` reproduces source illustrations; the app crops, masks labels and overlays numbered targets for practice. Figure/page provenance appears in `assets/figures/manifest.json` and every displayed figure's attribution. Page images are unaltered renderings except resizing/compression. These reproduced and adapted materials remain CC BY-NC-SA 4.0; the commercial permissions of the code license do not apply to them. Access for free at openstax.org.
 
 The supplied BI 231 Fall 2024 lab structure list defines the course checklist. Its original document, authorship metadata and local file paths are not redistributed. This independent study tool is not an official OpenStax or college product.
 

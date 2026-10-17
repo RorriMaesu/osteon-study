@@ -1,0 +1,4 @@
+app.js linguist-generated=true
+assets/reader/*.jpg binary
+assets/figures/*.jpg binary
+*.glb binary
