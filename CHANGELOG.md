@@ -16,3 +16,10 @@
 - Established a retrieval practice ladder, full section map, design system and staged verification plan.
 - Selected a separately named anatomical skeleton with published reuse terms.
 - Identified exact landmark mapping as a separate quality requirement from whole-bone selection.
+## Stage 3 — Retrieval practice and local progress
+
+- Added 3D locate and typed identification sessions with side-aware mesh names, frozen answer states and corrective explanations.
+- Added all 177 course recall cards, self-rating, scheduled review and a due queue.
+- Separated independent correctness, assisted attempts, card ratings and lessons read.
+- Added progress export/import and deliberate local reset.
+- Browser-tested mode navigation and incorrect identification feedback; corrected session-result navigation so it retains the results screen.
