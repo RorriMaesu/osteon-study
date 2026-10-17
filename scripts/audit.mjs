@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import {terms,matches} from '../src/data.js';
+import {lessons,glossary,questions} from '../src/learning-data.js';
+const b=fs.readFileSync(new URL('../assets/skeleton.glb',import.meta.url));
+const j=JSON.parse(b.subarray(20,20+b.readUInt32LE(12)).toString());
+const names=j.nodes.map(n=>n.extras.zname);
+const records=terms.map(t=>{const meshes=names.filter(n=>matches(t.pattern,n));return{...t,meshes,status:t.exact&&meshes.length?'Exact mesh':meshes.length?'Parent-bone context':'Recall only'};});
+const csv=v=>'"'+String(v).replaceAll('"','""')+'"';
+fs.writeFileSync(new URL('../COVERAGE.csv',import.meta.url),['Name,Region,Type,Representation,Mesh count,Mesh names,Aliases',...records.map(t=>[t.name,t.region,t.type,t.status,t.meshes.length,t.meshes.join('; '),t.aliases.join('; ')].map(csv).join(','))].join('\n'));
+const summary={courseConcepts:terms.length,exact:records.filter(t=>t.status==='Exact mesh').length,parentContext:records.filter(t=>t.status==='Parent-bone context').length,recallOnly:records.filter(t=>t.status==='Recall only').length,modelObjects:names.length,lessons:lessons.length,authoredQuestions:questions.length,textbookTerms:glossary.length};
+fs.writeFileSync(new URL('../coverage-summary.json',import.meta.url),JSON.stringify(summary,null,2)+'\n');
+console.log(JSON.stringify(summary));

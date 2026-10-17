@@ -1,6 +1,18 @@
 {
- "name":"osteon-study","version":"0.2.0","private":true,"type":"module",
- "description":"BI 231 skeleton atlas and OpenStax chapter 6/7 study suite",
- "scripts":{"build":"esbuild src/main.js --bundle --format=esm --minify --outfile=app.js","test":"node tests/content.test.mjs"},
- "dependencies":{"three":"0.180.0"},"devDependencies":{"esbuild":"0.25.10"}
+  "name": "osteon-study",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "description": "BI 231 skeleton atlas and OpenStax chapter 6/7 study suite",
+  "scripts": {
+    "build": "esbuild src/main.js --bundle --format=esm --minify --outfile=app.js",
+    "test": "node --test tests/content.test.mjs",
+    "audit": "node scripts/audit.mjs"
+  },
+  "dependencies": {
+    "three": "0.180.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10"
+  }
 }

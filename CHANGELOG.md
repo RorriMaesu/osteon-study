@@ -1,5 +1,15 @@
 # Release notes
 
+## Stage 5 — Browser review and coverage audit
+
+- Verified complete 3D and chapter sessions, independent versus assisted results, glossary recall and progress persistence.
+- Added surface peeling and restoration so covered structures can be reached without relying on preselected labels.
+- Increased all six mobile viewer controls to at least 44 pixels high; confirmed no horizontal overflow at 390 pixels wide.
+- Published a concept-by-concept coverage CSV and summary: 64 exact groups, 96 parent-context entries and 17 recall-only entries.
+- Added decoder licensing, reproducible dependency lock and maintenance instructions.
+- Corrected early-load navigation edge cases and stricter progress import validation.
+- Documented the boundary between a usable bone-study release and future precision landmark geometry.
+
 ## Stage 2 — Interactive anatomical atlas
 
 - Added the real 271-object Z-Anatomy skeleton with locally bundled three.js and Draco decoder.
