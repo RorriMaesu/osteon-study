@@ -22,6 +22,10 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 - Twelve teaching sections, 104 authored concept questions, 237 textbook glossary definitions and seven guided activities.
 - Locate and name practice, a systematic unpracticed-first course pass, region/session controls, missed-item retries, local review scheduling, score separation and progress backup/restore.
 
+**My progress** now maps all 177 lab targets by their latest scored attempt and starts a focused ten-target identification session or ten-question chapter session. Missed or assisted items come first, followed by untried items. Full-course identification clears atlas filters. Lesson cards show their question evidence separately from reading status. Self-rated recall updates card scheduling but does not clear a scored retrieval gap; neither a correct latest answer nor a repeated answer after 24 hours is a guarantee of mastery.
+
+Due-card counts match the decks they open. The Practice menu scopes lab recall to its division and region; chapter recall keeps both chapters. Progress offers course-wide lab and chapter review decks regardless of the current atlas filters.
+
 Landmark pins identify reference locations; they do not segment complete ridges, surfaces or boundaries. Only the anatomical endpoints of reliable source annotation leaders are used. Other features use source textbook figures. Fontanelles use a newborn illustration. Drawer tests assess movement and ligament restraint. A parent-bone highlight never grades as locating a landmark.
 
 The course list and chapter readings are covered in full. The finite question bank supplements those readings; it cannot guarantee every possible examination question. The anatomy is a single reference specimen and has not undergone independent instructor/anatomist validation. See QA.md for evidence and practical limits.

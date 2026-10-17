@@ -1,5 +1,14 @@
 # Release notes
 
+## Stage 11 — Review scope and actionable retrieval progress
+
+- Use the same filtered queue for due-card counts and decks. Practice separates lab cards in the chosen division/region from chapter cards; Progress offers the entire course without silently applying atlas filters.
+- Add a 177-target retrieval map based on the latest scored attempt. Distinguish untried targets, missed/assisted targets and independently correct latest attempts; show repeated correct retrieval after at least 24 hours separately.
+- Start focused ten-item identification and chapter sessions from Progress, prioritizing unresolved targets and then untried items. Full-course identification explicitly clears atlas filters.
+- Show scored retrieval evidence on all twelve lesson cards. Card ratings and reading do not clear scored retrieval gaps.
+- Clear abandoned card-session state when leaving practice and enable next-lab controls when anatomy finishes loading on a directly opened Progress page.
+- Run every automated suite through the standard test command; expand to 39 checks, including review scope, due boundaries, latest evidence and spaced retrieval.
+
 ## Stage 10 — Conversation continuity and teaching refinements
 
 - Preserve unfinished questions across tutor tabs, drawer closure and refresh; add keyboard sending and an editable retry path for stopped replies.

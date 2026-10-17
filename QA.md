@@ -79,3 +79,17 @@ A browser-only preview rendering regression was caught and repaired before publi
 Final phone checks found and corrected an asynchronous context overwrite from pre-rendering an inactive practice screen, and source navigation that was hidden beneath the drawer. Inactive screens no longer replace the active learning context. The phone tutor uses native modal focus handling, and reading links close the drawer so the actual page is visible.
 
 Verified the final phone layout at 390 × 844 CSS pixels with no horizontal overflow, a 44-pixel Send control, and keyboard focus cycling inside the full-screen tutor. A source reference closed the drawer and displayed the expected chapter 8 printed page 290. Practice settings use aligned label/select rows on phones.
+
+## 2026-10-17 — Review workflow refinement
+
+All 39 automated tests pass. Six new checks cover division/region review scope, global queues, exact due boundaries, self-rating exclusion, unordered imported attempts, latest misses, repeated immediate answers versus a 24-hour interval, and complete lab/question coverage. The content audit still reports 177 represented lab targets, twelve lessons, 104 questions, 237 glossary terms and 124 reading pages.
+
+Browser checks used the isolated local-preview study history:
+- With Appendicular / Upper limb selected and one skull card due, Practice correctly showed zero due lab cards in that selection. Progress showed the one course-wide skull card and opened a one-card fontanelle deck.
+- Opened Progress directly while the skeleton loaded. Its next-lab button enabled when anatomy became ready, without navigating away.
+- Started the next ten-target identification session. The previously assisted fontanelle target came first. An independently correct typed response changed its latest-evidence state from revisit to independently correct and rescheduled its card.
+- Started ten targeted chapter questions, revealed a bone-classification answer and confirmed it entered the chapter queue. Rating the matching card Easy removed it from the immediate due queue but retained the section's scored-retrieval gap.
+- Left a recall deck for Study and returned to Practice. The practice menu returned cleanly instead of retaining stale session markup.
+- Checked desktop width 1280 and phone size 390 × 844: no horizontal overflow. Progress action buttons were at least 44 pixels high on the phone.
+
+Retrieval evidence describes observed practice, not mastery. It uses the latest scored attempt per item, with self-ratings excluded; repeated correct evidence at least 24 hours apart is reported separately. No existing public-site study history was reset or replaced for testing.
