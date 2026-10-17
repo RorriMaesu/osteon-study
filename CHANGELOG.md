@@ -1,5 +1,20 @@
 # Release notes
 
+## Stage 9 — Local tutor and verification
+
+- Added a browser-to-loopback Ollama tutor, installed-model metadata checks, cancellable streaming chat and source readings from local textbook retrieval.
+- Added official installer links with OS override, app handoff, guided origin configuration and optional setup/hardware-report downloads.
+- Added limited browser hardware reporting, manual/report memory inputs, model-fit suggestions, measured speed tests and explicit optional model downloads.
+- Integrated selection, lesson, reading and assessment context. Tutor use marks unanswered attempts assisted before generation; AI does not award mastery.
+- Added bounded history, separate chat clearing, phone layout, failure/retry states, narrow checks for observed misconceptions and direct-explanation handling.
+
+## Stage 8 — Skull colors and divisions
+
+- Colored 22 cranial/facial bones in 14 bilateral families with a grouped clickable legend. Associated ear ossicles remain distinct; teeth and sinus volumes are not counted as skull bones.
+- Added strict All / Axial / Appendicular intersections for meshes, search and anatomy practice. Sacrum/coccyx are axial; hip bones and pubic symphysis context appendicular; mixed pelvis targets stay in All.
+- Preserve family hues during selection and switch colors off for scored practice.
+
+
 ## Stage 7 — Final live verification
 
 - Made the source sinus-volume meshes available to raycasting and location practice. Both available sinus groups are shown for these questions; covering bones can be peeled away before answering.

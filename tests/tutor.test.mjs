@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {OllamaClient,localModelProblem,readNDJSON} from '../src/ollama-client.js';
 import {detectOS,validateHardware,modelFit} from '../src/hardware.js';
 import {retrieveSources,buildTutorMessages} from '../src/tutor-context.js';
+import {checkTutorReply} from '../src/tutor-checks.js';
 const local={name:'example:4b',size:3e9},info={details:{format:'gguf'},capabilities:['completion']};
 test('model verification rejects remote aliases, embeddings and unverifiable entries',()=>{
  assert.equal(localModelProblem(local,info),null);
@@ -33,11 +34,24 @@ test('cancel and timeout abort the API request',async()=>{
  const fetcher=async(_,opts)=>new Promise((resolve,reject)=>{if(opts.signal.aborted)return reject(opts.signal.reason);opts.signal.addEventListener('abort',()=>reject(opts.signal.reason));});
  const client=new OllamaClient(undefined,fetcher);const c=new AbortController();c.abort();await assert.rejects(client.connect(c.signal));await assert.rejects(client.request('version',{timeout:5}),/too long/);
 });
+test('model downloads require success and accept only the explicit local choices',async()=>{
+ const incomplete=new OllamaClient(undefined,async()=>new Response('{"status":"downloading","total":100,"completed":50}\n'));
+ await assert.rejects(incomplete.pull('qwen3.5:2b',()=>{}),/before completion/);
+ await assert.rejects(incomplete.pull('anything:cloud',()=>{}),/listed local/);
+ const complete=new OllamaClient(undefined,async()=>new Response('{"status":"success"}\n'));await complete.pull('qwen3.5:2b',()=>{});
+});
 test('hardware import validates limited values and never treats approximate RAM as exact VRAM',()=>{
  assert.equal(detectOS({platform:'Win32'}),'windows');assert.equal(detectOS({platform:'MacIntel',maxTouchPoints:5}),'other');
  assert.throws(()=>validateHardware({}),/report/);assert.equal(validateHardware({schema:1,vramGB:'24'}).vramGB,null);
  assert.equal(modelFit(4e9,{ramGB:32,ramApproximate:true}).rank,1);
  assert.equal(modelFit(4e9,{vramGB:16}).rank,3);assert.equal(modelFit(20e9,{ramGB:8}).rank,0);
+});
+test('known misleading model statements fall back to course notes without claiming general verification',()=>{
+ assert.ok(checkTutorReply('PTH directly stimulates osteoclasts.','Explain PTH').text.includes('indirectly'));
+ assert.equal(checkTutorReply('PTH promotes resorption indirectly through osteoblast-lineage cells.','PTH'),null);
+ assert.ok(checkTutorReply('All skull bones are fully fused together in adults.','fontanelles'));
+ assert.equal(checkTutorReply('Not all skull bones fuse when fontanelles close.','fontanelles'),null);
+ assert.ok(checkTutorReply('Which bone has a distal styloid process?','radius and ulna'));
 });
 test('retrieval returns actual source excerpts for core confusions and development',()=>{
  for(const query of ['radius ulna','atlas axis dens','condyle epicondyle','osteoblast osteoclast osteocyte','PTH calcium','fontanelles infant skull']){

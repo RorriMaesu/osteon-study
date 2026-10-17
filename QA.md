@@ -39,3 +39,18 @@ Pins locate reference points; they are not complete surface segmentations. Diagr
 Progress is stored locally. Reading status and self-rated cards are separate from independently scored accuracy. One correct response or a repeated immediate answer is not a claim of durable mastery.
 
 GitHub Pages verification is performed after publication against the new commit and its asset versions.
+
+
+## 2026-10-17 — Skull divisions and local tutor
+
+Automated checks: 24 tests covering the prior course content plus skull-family counts and paired colors, division boundaries, local/cloud model rejection, split/Unicode NDJSON streams, incomplete/error responses, cancellation/timeouts, hardware-report validation, memory-estimate limits, source retrieval and known misconception fallbacks. The original 177 course concepts, 352 model objects, 124 reader pages and 104 concept questions remain covered.
+
+Browser checks:
+- Verified appendicular pelvis displays the paired hip bones with sacrum/coccyx excluded; search excludes mixed and axial pelvic targets.
+- Connected the local preview and the actual HTTPS GitHub Pages site to Ollama 0.40.5; found 15 usable local chat models. Tested both loopback addresses; added fallback after an initial 127.0.0.1 timeout on the live origin.
+- Ran a real Qwen 3.5 4B test with the atlas visible: approximately 65 seconds first text including a 45-second cold load; about 87 tokens/second after loading. These are one-device observations, not advertised guarantees.
+- Evaluated source-grounded explanations for radius/ulna, atlas/axis, condyle/epicondyle, bone-cell roles, PTH/calcium and fontanelles with installed Qwen 3.5 4B and Gemma 4 12B. Both could simplify or misstate facts. Added direct-explanation instructions and course notes; narrow deterministic checks substitute course notes for known PTH-pathway, skull-fusion and ambiguous styloid-question errors. Other AI claims still require source checking.
+- Started a one-item fontanelle course exercise, requested tutor help and stopped generation, then chose the correct diagram target. The result correctly recorded 0/1 independent correct, 1 assisted attempt and 1 review item.
+- Checked the published tutor at 390 × 844: no horizontal overflow, readable single-column panel, input and send controls accessible. Reset the temporary viewport afterward.
+
+Windows/macOS helpers are downloadable source files, not silently executed installers. No fresh Ollama or multi-GB model installation was needed on this PC. macOS/Linux native installation and app handoff were not exercised on this Windows device. Hardware fit is an estimate; browser RAM is approximate and browser VRAM is unknown. The tutor is not a factual certification or medical advice system.

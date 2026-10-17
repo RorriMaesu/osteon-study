@@ -27,3 +27,10 @@ Landmark pins identify reference locations; they do not segment complete ridges,
 The course list and chapter readings are covered in full. The finite question bank supplements those readings; it cannot guarantee every possible examination question. The anatomy is a single reference specimen and has not undergone independent instructor/anatomist validation. See QA.md for evidence and practical limits.
 
 The site bundles its model and reading assets. Google Fonts is an optional external typography request with system fallbacks. No study progress is sent to a server. The original course document, full textbook PDF and personal paths are not published; licensed chapter page images and extracted text are included with attribution.
+
+
+## Skull colors, skeleton divisions and local tutoring
+
+The atlas now includes a cranial/facial color key and All / Axial / Appendicular filters, also applied to anatomy practice. Sacrum and coccyx remain axial; hip bones are appendicular. Mixed pelvis targets appear under All. Skull colors turn off for scored practice.
+
+Use the **Socratic tutor** button for a local Ollama chat, installed-model selection, guided connection, optional model downloads and hardware/fit checks. See [the tutor guide](TUTOR.md) for first setup and honest browser limits. Tutor assistance is tracked separately from independent quiz accuracy.
