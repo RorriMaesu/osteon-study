@@ -93,3 +93,5 @@ Browser checks used the isolated local-preview study history:
 - Checked desktop width 1280 and phone size 390 × 844: no horizontal overflow. Progress action buttons were at least 44 pixels high on the phone.
 
 Retrieval evidence describes observed practice, not mastery. It uses the latest scored attempt per item, with self-ratings excluded; repeated correct evidence at least 24 hours apart is reported separately. No existing public-site study history was reset or replaced for testing.
+
+Final desktop visual review corrected the practice/review column balance: approximately 602 / 548 pixels at width 1280, stacking to one 349-pixel column at phone width 390, with no horizontal overflow.
