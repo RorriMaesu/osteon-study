@@ -19,7 +19,7 @@ export class AnatomyViewer {
   this.ray=new THREE.Raycaster();this.pointer=new THREE.Vector2();this.down=null;
   el.addEventListener('pointerdown',e=>{this.down=[e.clientX,e.clientY];this.tween=null;});
   el.addEventListener('pointerup',e=>{if(this.down&&Math.hypot(e.clientX-this.down[0],e.clientY-this.down[1])<6){const m=this.hit(e);if(m){if(this.peel||e.shiftKey){this.hiddenMeshes.add(m);document.querySelector('#hover-label').hidden=true;this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}else this.onPick(m);}}this.down=null;});
-  el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.down){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.displayName(m);const r=el.getBoundingClientRect();label.style.left=Math.min(e.clientX-r.left+14,r.width-185)+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+'px';}el.style.cursor=m?'pointer':'grab';});
+  el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.down){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.displayName(m);const r=el.getBoundingClientRect();label.style.left=Math.min(e.clientX-r.left+14,r.width-185)+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+this.el.offsetTop+'px';}el.style.cursor=m?'pointer':'grab';});
   el.addEventListener('pointerleave',()=>{document.querySelector('#hover-label').hidden=true;});
   this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(el);
   this.controls.addEventListener('start',()=>{this.tween=null;});

@@ -42,3 +42,5 @@
 - Included the full chapter glossary with its original content license and attribution.
 - Added content and behavior checks for course-to-model mapping, chapter coverage, questions, answer aliases, progress accounting and backup validation.
 - Final live review also corrected compressed-transfer percentages and reserved clear specimen space above the camera controls.
+
+- Versioned application and stylesheet URLs by content hash after a live browser retained a cached prior-stage stylesheet.
