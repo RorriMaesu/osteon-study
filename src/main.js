@@ -1,6 +1,7 @@
 import {terms,allTerms,regions} from './data.js';
 import {AnatomyViewer} from './viewer.js';
 import {initPractice} from './practice.js';
+import {initStudy} from './study.js';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 export const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let region='All regions',selected=null,ready=false;
@@ -30,3 +31,6 @@ $('#help-btn').onclick=credits;$('#credits-btn').onclick=credits;
 $('#coverage-btn').onclick=()=>{const exact=terms.filter(t=>t.exact&&ready&&viewer.find(t).length),context=terms.filter(t=>!t.exact&&ready&&viewer.find(t).length);dialog(`<h2>Honest coverage.<br><em>Better practice.</em></h2><div class="score-row"><div class="stat"><strong>${terms.length}</strong><span>Distinct course concepts</span></div><div class="stat"><strong>${exact.length}</strong><span>Exact selectable mesh groups</span></div><div class="stat"><strong>${context.length}</strong><span>Parent-bone context entries</span></div></div><p>All course entries are available as study cards. Only exact selectable structures enter 3D location practice. The adult specimen does not show fontanelles. A parent-bone highlight never counts as locating a landmark. Some bone groups overlap by definition, such as false and floating ribs.</p><table><thead><tr><th>Region</th><th>Course concepts</th><th>Exact 3D</th></tr></thead><tbody>${regions.slice(1).map(r=>`<tr><td>${r}</td><td>${terms.filter(t=>t.region===r).length}</td><td>${exact.filter(t=>t.region===r).length}</td></tr>`).join('')}</tbody></table><p><a href="PLAN.md" target="_blank">Read the staged learning and design plan ↗</a></p>`);};
 renderList();
 initPractice({viewer,setView,selectTerm,dialog,toast,escape});
+
+initStudy({viewer,setView,selectTerm,dialog,toast,escape});
+setView(location.hash.slice(1)||'atlas');

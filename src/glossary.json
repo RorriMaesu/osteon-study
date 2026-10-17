@@ -1,0 +1,1661 @@
+[
+  {
+    "id": "g-6-articular-cartilage",
+    "name": "articular cartilage",
+    "cue": "thin layer of cartilage covering an epiphysis; reduces friction and acts as a shock absorber",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-articulation",
+    "name": "articulation",
+    "cue": "where two bone surfaces meet",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-bone",
+    "name": "bone",
+    "cue": "hard, dense connective tissue that forms the structural elements of the skeleton",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-canaliculi",
+    "name": "canaliculi",
+    "cue": "(singular = canaliculus) channels within the bone matrix that house one of an osteocyte’s many cytoplasmic extensions that it uses to communicate and receive nutrients",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-cartilage",
+    "name": "cartilage",
+    "cue": "semi-rigid connective tissue found on the skeleton in areas where flexibility and smooth surfaces support movement",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-central-canal",
+    "name": "central canal",
+    "cue": "longitudinal channel in the center of each osteon; contains blood vessels, nerves, and lymphatic vessels; also known as the Haversian canal",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-closed-reduction",
+    "name": "closed reduction",
+    "cue": "manual manipulation of a broken bone to set it into its natural position without surgery",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-compact-bone",
+    "name": "compact bone",
+    "cue": "dense osseous tissue that can withstand compressive forces",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-diaphysis",
+    "name": "diaphysis",
+    "cue": "tubular shaft that runs between the proximal and distal ends of a long bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-diplo",
+    "name": "diploë",
+    "cue": "layer of spongy bone, that is sandwiched between the two layers of compact bone found in flat bones",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-endochondral-ossification",
+    "name": "endochondral ossification",
+    "cue": "process in which bone forms by replacing hyaline cartilage",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-endosteum",
+    "name": "endosteum",
+    "cue": "delicate membranous lining of a bone’s medullary cavity",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-epiphyseal-line",
+    "name": "epiphyseal line",
+    "cue": "completely ossified remnant of the epiphyseal plate",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-epiphyseal-plate",
+    "name": "epiphyseal plate",
+    "cue": "(also, growth plate) sheet of hyaline cartilage in the metaphysis of an immature bone; replaced by bone tissue as the organ grows in length",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-epiphysis",
+    "name": "epiphysis",
+    "cue": "wide section at each end of a long bone; filled with spongy bone and red marrow",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-external-callus",
+    "name": "external callus",
+    "cue": "collar of hyaline cartilage and bone that forms around the outside of a fracture",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-flat-bone",
+    "name": "flat bone",
+    "cue": "thin and curved bone; serves as a point of attachment for muscles and protects internal organs",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-fracture",
+    "name": "fracture",
+    "cue": "broken bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-fracture-hematoma",
+    "name": "fracture hematoma",
+    "cue": "blood clot that forms at the site of a broken bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-hematopoiesis",
+    "name": "hematopoiesis",
+    "cue": "production of blood cells, which occurs in the red marrow of the bones",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-hole",
+    "name": "hole",
+    "cue": "opening or depression in a bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-hypercalcemia",
+    "name": "hypercalcemia",
+    "cue": "condition characterized by abnormally high levels of calcium",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-hypocalcemia",
+    "name": "hypocalcemia",
+    "cue": "condition characterized by abnormally low levels of calcium",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-internal-callus",
+    "name": "internal callus",
+    "cue": "fibrocartilaginous matrix, in the endosteal region, between the two ends of a broken bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-intramembranous-ossification",
+    "name": "intramembranous ossification",
+    "cue": "process by which bone forms directly from mesenchymal tissue",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-irregular-bone",
+    "name": "irregular bone",
+    "cue": "bone of complex shape; protects internal organs from compressive forces",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-lacunae",
+    "name": "lacunae",
+    "cue": "(singular = lacuna) spaces in a bone that house an osteocyte",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-long-bone",
+    "name": "long bone",
+    "cue": "cylinder-shaped bone that is longer than it is wide; functions as a lever",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-medullary-cavity",
+    "name": "medullary cavity",
+    "cue": "hollow region of the diaphysis; filled with yellow marrow",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-modeling",
+    "name": "modeling",
+    "cue": "process, during bone growth, by which bone is resorbed on one surface of a bone and deposited on another",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-nutrient-foramen",
+    "name": "nutrient foramen",
+    "cue": "small opening in the middle of the external surface of the diaphysis, through which an artery enters the bone to provide nourishment",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-open-reduction",
+    "name": "open reduction",
+    "cue": "surgical exposure of a bone to reset a fracture",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-orthopedist",
+    "name": "orthopedist",
+    "cue": "doctor who specializes in diagnosing and treating musculoskeletal disorders and injuries",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osseous-tissue",
+    "name": "osseous tissue",
+    "cue": "bone tissue; a hard, dense connective tissue that forms the structural elements of the skeleton",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-ossification",
+    "name": "ossification",
+    "cue": "(also, osteogenesis) bone formation",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-ossification-center",
+    "name": "ossification center",
+    "cue": "cluster of osteoblasts found in the early stages of intramembranous ossification",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osteoblast",
+    "name": "osteoblast",
+    "cue": "cell responsible for forming new bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osteoclast",
+    "name": "osteoclast",
+    "cue": "cell responsible for resorbing bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osteocyte",
+    "name": "osteocyte",
+    "cue": "primary cell in mature bone; responsible for maintaining the matrix",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osteogenic-cell",
+    "name": "osteogenic cell",
+    "cue": "undifferentiated cell with high mitotic activity; the only bone cells that divide; they differentiate and develop into osteoblasts",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osteoid",
+    "name": "osteoid",
+    "cue": "uncalcified bone matrix secreted by osteoblasts",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osteon",
+    "name": "osteon",
+    "cue": "(also, Haversian system) basic structural unit of compact bone; made of concentric layers of calcified matrix",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-osteoporosis",
+    "name": "osteoporosis",
+    "cue": "disease characterized by a decrease in bone mass; occurs when the rate of bone resorption exceeds the rate of bone formation, a common occurrence as the body ages",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-perforating-canal",
+    "name": "perforating canal",
+    "cue": "(also, Volkmann’s canal) channel that branches off from the central canal and houses vessels and nerves that extend to the periosteum and endosteum",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-perichondrium",
+    "name": "perichondrium",
+    "cue": "membrane that covers cartilage",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-periosteum",
+    "name": "periosteum",
+    "cue": "fibrous membrane covering the outer surface of bone and continuous with ligaments",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-primary-ossification-center",
+    "name": "primary ossification center",
+    "cue": "region, deep in the periosteal collar, where bone development starts during endochondral ossification",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-projection",
+    "name": "projection",
+    "cue": "bone markings where part of the surface sticks out above the rest of the surface, where tendons and ligaments attach",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-proliferative-zone",
+    "name": "proliferative zone",
+    "cue": "region of the epiphyseal plate that makes new chondrocytes to replace those that die at the diaphyseal end of the plate and contributes to longitudinal growth of the epiphyseal plate",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-red-marrow",
+    "name": "red marrow",
+    "cue": "connective tissue in the interior cavity of a bone where hematopoiesis takes place",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-remodeling",
+    "name": "remodeling",
+    "cue": "process by which osteoclasts resorb old or damaged bone at the same time as and on the same surface where osteoblasts form new bone to replace that which is resorbed",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-reserve-zone",
+    "name": "reserve zone",
+    "cue": "region of the epiphyseal plate that anchors the plate to the osseous tissue of the epiphysis",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-secondary-ossification-center",
+    "name": "secondary ossification center",
+    "cue": "region of bone development in the epiphyses",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-sesamoid-bone",
+    "name": "sesamoid bone",
+    "cue": "small, round bone embedded in a tendon; protects the tendon from compressive forces",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-short-bone",
+    "name": "short bone",
+    "cue": "cube-shaped bone that is approximately equal in length, width, and thickness; provides limited motion",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-skeletal-system",
+    "name": "skeletal system",
+    "cue": "organ system composed of bones and cartilage that provides for movement, support, and protection",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-spongy-bone",
+    "name": "spongy bone",
+    "cue": "(also, cancellous bone) trabeculated osseous tissue that supports shifts in weight distribution",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-trabeculae",
+    "name": "trabeculae",
+    "cue": "(singular = trabecula) spikes or sections of the lattice-like matrix in spongy bone",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-yellow-marrow",
+    "name": "yellow marrow",
+    "cue": "connective tissue in the interior cavity of a bone where fat is stored",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-zone-of-calcified-matrix",
+    "name": "zone of calcified matrix",
+    "cue": "region of the epiphyseal plate closest to the diaphyseal end; functions to connect the epiphyseal plate to the diaphysis",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-6-zone-of-maturation-and-hypertrophy",
+    "name": "zone of maturation and hypertrophy",
+    "cue": "region of the epiphyseal plate where chondrocytes from the proliferative zone grow and mature and contribute to the longitudinal growth of the epiphyseal plate",
+    "topic": "Chapter 6",
+    "chapter": 6
+  },
+  {
+    "id": "g-7-alveolar-process-of-the-mandible",
+    "name": "alveolar process of the mandible",
+    "cue": "upper border of mandibular body that contains the lower teeth",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-alveolar-process-of-the-maxilla",
+    "name": "alveolar process of the maxilla",
+    "cue": "curved, inferior margin of the maxilla that supports and anchors the upper teeth",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-angle-of-the-mandible",
+    "name": "angle of the mandible",
+    "cue": "rounded corner located at outside margin of the body and ramus junction",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-angle-of-the-rib",
+    "name": "angle of the rib",
+    "cue": "portion of rib with greatest curvature; together, the rib angles form the most posterior extent of the thoracic cage",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-anterior-ventral-sacral-foramen",
+    "name": "anterior (ventral) sacral foramen",
+    "cue": "one of the series of paired openings located on the anterior (ventral) side of the sacrum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-anterior-arch",
+    "name": "anterior arch",
+    "cue": "anterior portion of the ring-like C1 (atlas) vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-anterior-cranial-fossa",
+    "name": "anterior cranial fossa",
+    "cue": "shallowest and most anterior cranial fossa of the cranial base that extends from the frontal bone to the lesser wing of the sphenoid bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-anterior-longitudinal-ligament",
+    "name": "anterior longitudinal ligament",
+    "cue": "ligament that runs the length of the vertebral column, uniting the anterior aspects of the vertebral bodies",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-anulus-fibrosus",
+    "name": "anulus fibrosus",
+    "cue": "tough, fibrous outer portion of an intervertebral disc, which is strongly anchored to the bodies of the adjacent vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-appendicular-skeleton",
+    "name": "appendicular skeleton",
+    "cue": "all bones of the upper and lower limbs, plus the girdle bones that attach each limb to the axial skeleton",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-articular-tubercle",
+    "name": "articular tubercle",
+    "cue": "smooth ridge located on the inferior skull, immediately anterior to the mandibular fossa",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-atlas",
+    "name": "atlas",
+    "cue": "first cervical (C1) vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-axial-skeleton",
+    "name": "axial skeleton",
+    "cue": "central, vertical axis of the body, including the skull, vertebral column, and thoracic cage",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-axis",
+    "name": "axis",
+    "cue": "second cervical (C2) vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-body-of-the-rib",
+    "name": "body of the rib",
+    "cue": "shaft portion of a rib",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-brain-case",
+    "name": "brain case",
+    "cue": "portion of the skull that contains and protects the brain, consisting of the eight bones that form the cranial base and rounded upper skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-calvaria",
+    "name": "calvaria",
+    "cue": "(also, skullcap) rounded top of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-carotid-canal",
+    "name": "carotid canal",
+    "cue": "zig-zag tunnel providing passage through the base of the skull for the internal carotid artery to the brain; begins anteromedial to the styloid process and terminates in the middle cranial cavity, near the posterior-lateral base of the sella turcica",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-cervical-curve",
+    "name": "cervical curve",
+    "cue": "posteriorly concave curvature of the cervical vertebral column region; a secondary curve of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-cervical-vertebrae",
+    "name": "cervical vertebrae",
+    "cue": "seven vertebrae numbered as C1–C7 that are located in the neck region of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-clavicular-notch",
+    "name": "clavicular notch",
+    "cue": "paired notches located on the superior-lateral sides of the sternal manubrium, for articulation with the clavicle",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-coccyx",
+    "name": "coccyx",
+    "cue": "small bone located at inferior end of the adult vertebral column that is formed by the fusion of four coccygeal vertebrae; also referred to as the “tailbone”",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-condylar-process-of-the-mandible",
+    "name": "condylar process of the mandible",
+    "cue": "thickened upward projection from posterior margin of mandibular ramus",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-condyle",
+    "name": "condyle",
+    "cue": "oval-shaped process located at the top of the condylar process of the mandible",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-coronal-suture",
+    "name": "coronal suture",
+    "cue": "joint that unites the frontal bone to the right and left parietal bones across the top of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-coronoid-process-of-the-mandible",
+    "name": "coronoid process of the mandible",
+    "cue": "flattened upward projection from the anterior margin of the mandibular ramus",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-costal-cartilage",
+    "name": "costal cartilage",
+    "cue": "hyaline cartilage structure attached to the anterior end of each rib that provides for either direct or indirect attachment of most ribs to the sternum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-costal-facet",
+    "name": "costal facet",
+    "cue": "site on the lateral sides of a thoracic vertebra for articulation with the head of a rib",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-costal-groove",
+    "name": "costal groove",
+    "cue": "shallow groove along the inferior margin of a rib that provides passage for blood vessels and a nerve",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-cranial-cavity",
+    "name": "cranial cavity",
+    "cue": "interior space of the skull that houses the brain",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-cranium",
+    "name": "cranium",
+    "cue": "skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-cribriform-plate",
+    "name": "cribriform plate",
+    "cue": "small, flattened areas with numerous small openings, located to either side of the midline in the floor of the anterior cranial fossa; formed by the ethmoid bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-crista-galli",
+    "name": "crista galli",
+    "cue": "small upward projection located at the midline in the floor of the anterior cranial fossa; formed by the ethmoid bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-dens",
+    "name": "dens",
+    "cue": "bony projection (odontoid process) that extends upward from the body of the C2 (axis) vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-ear-ossicles",
+    "name": "ear ossicles",
+    "cue": "three small bones located in the middle ear cavity that serve to transmit sound vibrations to the inner ear",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-ethmoid-air-cell",
+    "name": "ethmoid air cell",
+    "cue": "one of several small, air-filled spaces located within the lateral sides of the ethmoid bone, between the orbit and upper nasal cavity",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-ethmoid-bone",
+    "name": "ethmoid bone",
+    "cue": "unpaired bone that forms the roof and upper, lateral walls of the nasal cavity, portions of the floor of the anterior cranial fossa and medial wall of orbit, and the upper portion of the nasal septum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-external-acoustic-meatus",
+    "name": "external acoustic meatus",
+    "cue": "ear canal opening located on the lateral side of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-external-occipital-protuberance",
+    "name": "external occipital protuberance",
+    "cue": "small bump located at the midline on the posterior skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-facet",
+    "name": "facet",
+    "cue": "small, flattened area on a bone for an articulation (joint) with another bone, or for muscle attachment",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-facial-bones",
+    "name": "facial bones",
+    "cue": "fourteen bones that support the facial structures and form the upper and lower jaws and the hard palate",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-false-ribs",
+    "name": "false ribs",
+    "cue": "vertebrochondral ribs 8–12 whose costal cartilage either attaches indirectly to the sternum via the costal cartilage of the next higher rib or does not attach to the sternum at all",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-floating-ribs",
+    "name": "floating ribs",
+    "cue": "vertebral ribs 11–12 that do not attach to the sternum or to the costal cartilage of another rib",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-fontanelle",
+    "name": "fontanelle",
+    "cue": "expanded area of fibrous connective tissue that separates the brain case bones of the skull prior to birth and during the first year after birth",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-foramen-lacerum",
+    "name": "foramen lacerum",
+    "cue": "irregular opening in the base of the skull, located inferior to the exit of carotid canal",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-foramen-magnum",
+    "name": "foramen magnum",
+    "cue": "large opening in the occipital bone of the skull through which the spinal cord emerges and the vertebral arteries enter the cranium",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-foramen-ovale-of-the-middle-cranial-fossa",
+    "name": "foramen ovale of the middle cranial fossa",
+    "cue": "oval- shaped opening in the floor of the middle cranial fossa",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-foramen-rotundum",
+    "name": "foramen rotundum",
+    "cue": "round opening in the floor of the middle cranial fossa, located between the superior orbital fissure and foramen ovale",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-foramen-spinosum",
+    "name": "foramen spinosum",
+    "cue": "small opening in the floor of the middle cranial fossa, located lateral to the foramen ovale",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-frontal-bone",
+    "name": "frontal bone",
+    "cue": "unpaired bone that forms forehead, roof of orbit, and floor of anterior cranial fossa",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-frontal-sinus",
+    "name": "frontal sinus",
+    "cue": "air-filled space within the frontal bone; most anterior of the paranasal sinuses",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-glabella",
+    "name": "glabella",
+    "cue": "slight depression of frontal bone, located at the midline between the eyebrows",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-greater-wings-of-sphenoid-bone",
+    "name": "greater wings of sphenoid bone",
+    "cue": "lateral projections of the sphenoid bone that form the anterior wall of the middle cranial fossa and an area of the lateral skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-hard-palate",
+    "name": "hard palate",
+    "cue": "bony structure that forms the roof of the mouth and floor of the nasal cavity, formed by the palatine process of the maxillary bones and the horizontal plate of the palatine bones",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-head-of-the-rib",
+    "name": "head of the rib",
+    "cue": "posterior end of a rib that articulates with the bodies of thoracic vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-horizontal-plate",
+    "name": "horizontal plate",
+    "cue": "medial extension from the palatine bone that forms the posterior quarter of the hard palate",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-hyoid-bone",
+    "name": "hyoid bone",
+    "cue": "small, U-shaped bone located in upper neck that does not contact any other bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-hypoglossal-canal",
+    "name": "hypoglossal canal",
+    "cue": "paired openings that pass anteriorly from the anterior-lateral margins of the foramen magnum deep to the occipital condyles",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-hypophyseal-pituitary-fossa",
+    "name": "hypophyseal (pituitary) fossa",
+    "cue": "shallow depression on top of the sella turcica that houses the pituitary (hypophyseal) gland",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-inferior-articular-process",
+    "name": "inferior articular process",
+    "cue": "bony process that extends downward from the vertebral arch of a vertebra that articulates with the superior articular process of the next lower vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-inferior-nasal-concha",
+    "name": "inferior nasal concha",
+    "cue": "one of the paired bones that project from the lateral walls of the nasal cavity to form the largest and most inferior of the nasal conchae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-infraorbital-foramen",
+    "name": "infraorbital foramen",
+    "cue": "opening located on anterior skull, below the orbit",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-infratemporal-fossa",
+    "name": "infratemporal fossa",
+    "cue": "space on lateral side of skull, below the level of the zygomatic arch and deep (medial) to the ramus of the mandible",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-internal-acoustic-meatus",
+    "name": "internal acoustic meatus",
+    "cue": "opening into petrous ridge, located on the lateral wall of the posterior cranial fossa",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-intervertebral-disc",
+    "name": "intervertebral disc",
+    "cue": "structure located between the bodies of adjacent vertebrae that strongly joins the vertebrae; provides padding, weight bearing ability, and enables vertebral column movements",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-intervertebral-foramen",
+    "name": "intervertebral foramen",
+    "cue": "opening located between adjacent vertebrae for exit of a spinal nerve",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-jugular-suprasternal-notch",
+    "name": "jugular (suprasternal) notch",
+    "cue": "shallow notch located on superior surface of sternal manubrium",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-jugular-foramen",
+    "name": "jugular foramen",
+    "cue": "irregularly shaped opening located in the lateral floor of the posterior cranial cavity",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-kyphosis",
+    "name": "kyphosis",
+    "cue": "(also, humpback or hunchback) excessive posterior curvature of the thoracic vertebral column region",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lacrimal-bone",
+    "name": "lacrimal bone",
+    "cue": "paired bones that contribute to the anterior-medial wall of each orbit",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lacrimal-fossa",
+    "name": "lacrimal fossa",
+    "cue": "shallow depression in the anterior- medial wall of the orbit, formed by the lacrimal bone that gives rise to the nasolacrimal canal",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lambdoid-suture",
+    "name": "lambdoid suture",
+    "cue": "inverted V-shaped joint that unites the occipital bone to the right and left parietal bones on the posterior skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lamina",
+    "name": "lamina",
+    "cue": "portion of the vertebral arch on each vertebra that extends between the transverse and spinous process",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lateral-pterygoid-plate",
+    "name": "lateral pterygoid plate",
+    "cue": "paired, flattened bony projections of the sphenoid bone located on the inferior skull, lateral to the medial pterygoid plate",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lateral-sacral-crest",
+    "name": "lateral sacral crest",
+    "cue": "paired irregular ridges running down the lateral sides of the posterior sacrum that was formed by the fusion of the transverse processes from the five sacral vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lesser-wings-of-the-sphenoid-bone",
+    "name": "lesser wings of the sphenoid bone",
+    "cue": "lateral extensions of the sphenoid bone that form the bony lip separating the anterior and middle cranial fossae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-ligamentum-flavum",
+    "name": "ligamentum flavum",
+    "cue": "series of short ligaments that unite the lamina of adjacent vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lingula",
+    "name": "lingula",
+    "cue": "small flap of bone located on the inner (medial) surface of mandibular ramus, next to the mandibular foramen",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lordosis",
+    "name": "lordosis",
+    "cue": "(also, swayback) excessive anterior curvature of the lumbar vertebral column region",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lumbar-curve",
+    "name": "lumbar curve",
+    "cue": "posteriorly concave curvature of the lumbar vertebral column region; a secondary curve of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-lumbar-vertebrae",
+    "name": "lumbar vertebrae",
+    "cue": "five vertebrae numbered as L1–L5 that are located in lumbar region (lower back) of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mandible",
+    "name": "mandible",
+    "cue": "unpaired bone that forms the lower jaw bone; the only moveable bone of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mandibular-foramen",
+    "name": "mandibular foramen",
+    "cue": "opening located on the inner (medial) surface of the mandibular ramus",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mandibular-fossa",
+    "name": "mandibular fossa",
+    "cue": "oval depression located on the inferior surface of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mandibular-notch",
+    "name": "mandibular notch",
+    "cue": "large U-shaped notch located between the condylar process and coronoid process of the mandible",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-manubrium",
+    "name": "manubrium",
+    "cue": "expanded, superior portion of the sternum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mastoid-process",
+    "name": "mastoid process",
+    "cue": "large bony prominence on the inferior, lateral skull, just behind the earlobe",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-maxillary-bone",
+    "name": "maxillary bone",
+    "cue": "(also, maxilla) paired bones that form the upper jaw and anterior portion of the hard palate",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-maxillary-sinus",
+    "name": "maxillary sinus",
+    "cue": "air-filled space located with each maxillary bone; largest of the paranasal sinuses",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-medial-pterygoid-plate",
+    "name": "medial pterygoid plate",
+    "cue": "paired, flattened bony projections of the sphenoid bone located on the inferior skull medial to the lateral pterygoid plate; form the posterior portion of the nasal cavity lateral wall",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-median-sacral-crest",
+    "name": "median sacral crest",
+    "cue": "irregular ridge running down the midline of the posterior sacrum that was formed from the fusion of the spinous processes of the five sacral vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mental-foramen",
+    "name": "mental foramen",
+    "cue": "opening located on the anterior- lateral side of the mandibular body",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mental-protuberance",
+    "name": "mental protuberance",
+    "cue": "inferior margin of anterior mandible that forms the chin",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-middle-cranial-fossa",
+    "name": "middle cranial fossa",
+    "cue": "centrally located cranial fossa that extends from the lesser wings of the sphenoid bone to the petrous ridge",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-middle-nasal-concha",
+    "name": "middle nasal concha",
+    "cue": "nasal concha formed by the ethmoid bone that is located between the superior and inferior conchae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-mylohyoid-line",
+    "name": "mylohyoid line",
+    "cue": "bony ridge located along the inner (medial) surface of the mandibular body",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-nasal-bone",
+    "name": "nasal bone",
+    "cue": "paired bones that form the base of the nose",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-nasal-cavity",
+    "name": "nasal cavity",
+    "cue": "opening through skull for passage of air",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-nasal-conchae",
+    "name": "nasal conchae",
+    "cue": "curved bony plates that project from the lateral walls of the nasal cavity; include the superior and middle nasal conchae, which are parts of the ethmoid bone, and the independent inferior nasal conchae bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-nasal-septum",
+    "name": "nasal septum",
+    "cue": "flat, midline structure that divides the nasal cavity into halves, formed by the perpendicular plate of the ethmoid bone, vomer bone, and septal cartilage",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-nasolacrimal-canal",
+    "name": "nasolacrimal canal",
+    "cue": "passage for drainage of tears that extends downward from the medial-anterior orbit to the nasal cavity, terminating behind the inferior nasal conchae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-neck-of-the-rib",
+    "name": "neck of the rib",
+    "cue": "narrowed region of a rib, next to the rib head",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-notochord",
+    "name": "notochord",
+    "cue": "rod-like structure along dorsal side of the early embryo; largely disappears during later development but does contribute to formation of the intervertebral discs",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-nuchal-ligament",
+    "name": "nuchal ligament",
+    "cue": "expanded portion of the supraspinous ligament within the posterior neck; interconnects the spinous processes of the cervical vertebrae and attaches to the base of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-nucleus-pulposus",
+    "name": "nucleus pulposus",
+    "cue": "gel-like central region of an intervertebral disc; provides for padding, weight- bearing, and movement between adjacent vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-occipital-bone",
+    "name": "occipital bone",
+    "cue": "unpaired bone that forms the posterior portions of the brain case and base of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-occipital-condyle",
+    "name": "occipital condyle",
+    "cue": "paired, oval-shaped bony knobs located on the inferior skull, to either side of the foramen magnum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-optic-canal",
+    "name": "optic canal",
+    "cue": "opening spanning between middle cranial fossa and posterior orbit",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-orbit",
+    "name": "orbit",
+    "cue": "bony socket that contains the eyeball and associated muscles",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-palatine-bone",
+    "name": "palatine bone",
+    "cue": "paired bones that form the posterior quarter of the hard palate and a small area in floor of the orbit",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-palatine-process",
+    "name": "palatine process",
+    "cue": "medial projection from the maxilla bone that forms the anterior three quarters of the hard palate",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-paranasal-sinuses",
+    "name": "paranasal sinuses",
+    "cue": "cavities within the skull that are connected to the conchae that serve to warm and humidify incoming air, produce mucus, and lighten the weight of the skull; consist of frontal, maxillary, sphenoidal, and ethmoidal sinuses",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-parietal-bone",
+    "name": "parietal bone",
+    "cue": "paired bones that form the upper, lateral sides of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-pedicle",
+    "name": "pedicle",
+    "cue": "portion of the vertebral arch that extends from the vertebral body to the transverse process",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-perpendicular-plate-of-the-ethmoid-bone",
+    "name": "perpendicular plate of the ethmoid bone",
+    "cue": "downward, midline extension of the ethmoid bone that forms the superior portion of the nasal septum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-petrous-ridge",
+    "name": "petrous ridge",
+    "cue": "petrous portion of the temporal bone that forms a large, triangular ridge in the floor of the cranial cavity, separating the middle and posterior cranial fossae; houses the middle and inner ear structures",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-posterior-dorsal-sacral-foramen",
+    "name": "posterior (dorsal) sacral foramen",
+    "cue": "one of the series of paired openings located on the posterior (dorsal) side of the sacrum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-posterior-arch",
+    "name": "posterior arch",
+    "cue": "posterior portion of the ring-like C1 (atlas) vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-posterior-cranial-fossa",
+    "name": "posterior cranial fossa",
+    "cue": "deepest and most posterior cranial fossa; extends from the petrous ridge to the occipital bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-posterior-longitudinal-ligament",
+    "name": "posterior longitudinal ligament",
+    "cue": "ligament that runs the length of the vertebral column, uniting the posterior sides of the vertebral bodies",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-primary-curve",
+    "name": "primary curve",
+    "cue": "anteriorly concave curvatures of the thoracic and sacrococcygeal regions that are retained from the original fetal curvature of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-pterion",
+    "name": "pterion",
+    "cue": "H-shaped suture junction region that unites the frontal, parietal, temporal, and sphenoid bones on the lateral side of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-ramus-of-the-mandible",
+    "name": "ramus of the mandible",
+    "cue": "vertical portion of the mandible",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-ribs",
+    "name": "ribs",
+    "cue": "thin, curved bones of the chest wall",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sacral-canal",
+    "name": "sacral canal",
+    "cue": "bony tunnel that runs through the sacrum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sacral-foramina",
+    "name": "sacral foramina",
+    "cue": "series of paired openings for nerve exit located on both the anterior (ventral) and posterior (dorsal) aspects of the sacrum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sacral-hiatus",
+    "name": "sacral hiatus",
+    "cue": "inferior opening and termination of the sacral canal",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sacral-promontory",
+    "name": "sacral promontory",
+    "cue": "anterior lip of the base (superior end) of the sacrum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sacrococcygeal-curve",
+    "name": "sacrococcygeal curve",
+    "cue": "anteriorly concave curvature formed by the sacrum and coccyx; a primary curve of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sacrum",
+    "name": "sacrum",
+    "cue": "single bone located near the inferior end of the adult vertebral column that is formed by the fusion of five sacral vertebrae; forms the posterior portion of the pelvis",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sagittal-suture",
+    "name": "sagittal suture",
+    "cue": "joint that unites the right and left parietal bones at the midline along the top of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sclerotome",
+    "name": "sclerotome",
+    "cue": "medial portion of a somite consisting of mesenchyme tissue that will give rise to bone, cartilage, and fibrous connective tissues",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-scoliosis",
+    "name": "scoliosis",
+    "cue": "abnormal lateral curvature of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-secondary-curve",
+    "name": "secondary curve",
+    "cue": "posteriorly concave curvatures of the cervical and lumbar regions of the vertebral column that develop after the time of birth",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sella-turcica",
+    "name": "sella turcica",
+    "cue": "elevated area of sphenoid bone located at midline of the middle cranial fossa",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-septal-cartilage",
+    "name": "septal cartilage",
+    "cue": "flat cartilage structure that forms the anterior portion of the nasal septum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-skeleton",
+    "name": "skeleton",
+    "cue": "bones of the body",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-skull",
+    "name": "skull",
+    "cue": "bony structure that forms the head, face, and jaws, and protects the brain; consists of 22 bones",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-somite",
+    "name": "somite",
+    "cue": "one of the paired, repeating blocks of tissue located on either side of the notochord in the early embryo",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sphenoid-bone",
+    "name": "sphenoid bone",
+    "cue": "unpaired bone that forms the central base of skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sphenoid-sinus",
+    "name": "sphenoid sinus",
+    "cue": "air-filled space located within the sphenoid bone; most posterior of the paranasal sinuses",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-spinous-process",
+    "name": "spinous process",
+    "cue": "unpaired bony process that extends posteriorly from the vertebral arch of a vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-squamous-suture",
+    "name": "squamous suture",
+    "cue": "joint that unites the parietal bone to the squamous portion of the temporal bone on the lateral side of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sternal-angle",
+    "name": "sternal angle",
+    "cue": "junction line between manubrium and body of the sternum and the site for attachment of the second rib to the sternum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-sternum",
+    "name": "sternum",
+    "cue": "flattened bone located at the center of the anterior chest",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-styloid-process",
+    "name": "styloid process",
+    "cue": "downward projecting, elongated bony process located on the inferior aspect of the skull",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-stylomastoid-foramen",
+    "name": "stylomastoid foramen",
+    "cue": "opening located on inferior skull, between the styloid process and mastoid process",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-superior-articular-process",
+    "name": "superior articular process",
+    "cue": "bony process that extends upward from the vertebral arch of a vertebra that articulates with the inferior articular process of the next higher vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-superior-articular-process-of-the-sacrum",
+    "name": "superior articular process of the sacrum",
+    "cue": "paired processes that extend upward from the sacrum to articulate (join) with the inferior articular processes from the L5 vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-superior-nasal-concha",
+    "name": "superior nasal concha",
+    "cue": "smallest and most superiorly located of the nasal conchae; formed by the ethmoid bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-superior-nuchal-line",
+    "name": "superior nuchal line",
+    "cue": "paired bony lines on the posterior skull that extend laterally from the external occipital protuberance",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-superior-orbital-fissure",
+    "name": "superior orbital fissure",
+    "cue": "irregularly shaped opening between the middle cranial fossa and the posterior orbit",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-supraorbital-foramen",
+    "name": "supraorbital foramen",
+    "cue": "opening located on anterior skull, at the superior margin of the orbit",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-supraorbital-margin",
+    "name": "supraorbital margin",
+    "cue": "superior margin of the orbit",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-supraspinous-ligament",
+    "name": "supraspinous ligament",
+    "cue": "ligament that interconnects the spinous processes of the thoracic and lumbar vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-suture",
+    "name": "suture",
+    "cue": "junction line at which adjacent bones of the skull are united by fibrous connective tissue",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-temporal-bone",
+    "name": "temporal bone",
+    "cue": "paired bones that form the lateral, inferior portions of the skull, with squamous, mastoid, and petrous portions",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-temporal-fossa",
+    "name": "temporal fossa",
+    "cue": "shallow space on the lateral side of the skull, above the level of the zygomatic arch",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-temporal-process-of-the-zygomatic-bone",
+    "name": "temporal process of the zygomatic bone",
+    "cue": "short extension from the zygomatic bone that forms the anterior portion of the zygomatic arch",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-thoracic-cage",
+    "name": "thoracic cage",
+    "cue": "consists of 12 pairs of ribs and sternum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-thoracic-curve",
+    "name": "thoracic curve",
+    "cue": "anteriorly concave curvature of the thoracic vertebral column region; a primary curve of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-thoracic-vertebrae",
+    "name": "thoracic vertebrae",
+    "cue": "twelve vertebrae numbered as T1–T12 that are located in the thoracic region (upper back) of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-transverse-foramen",
+    "name": "transverse foramen",
+    "cue": "opening found only in the transverse processes of cervical vertebrae",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-transverse-process",
+    "name": "transverse process",
+    "cue": "paired bony processes that extends laterally from the vertebral arch of a vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-true-ribs",
+    "name": "true ribs",
+    "cue": "vertebrosternal ribs 1–7 that attach via their costal cartilage directly to the sternum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-tubercle-of-the-rib",
+    "name": "tubercle of the rib",
+    "cue": "small bump on the posterior side of a rib for articulation with the transverse process of a thoracic vertebra",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-vertebra",
+    "name": "vertebra",
+    "cue": "individual bone in the neck and back regions of the vertebral column",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-vertebral-spinal-canal",
+    "name": "vertebral (spinal) canal",
+    "cue": "bony passageway within the vertebral column for the spinal cord that is formed by the series of individual vertebral foramina",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-vertebral-arch",
+    "name": "vertebral arch",
+    "cue": "bony arch formed by the posterior portion of each vertebra that surrounds and protects the spinal cord",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-vertebral-column",
+    "name": "vertebral column",
+    "cue": "entire sequence of bones that extend from the skull to the tailbone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-vertebral-foramen",
+    "name": "vertebral foramen",
+    "cue": "opening associated with each vertebra defined by the vertebral arch that provides passage for the spinal cord",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-vomer-bone",
+    "name": "vomer bone",
+    "cue": "unpaired bone that forms the inferior and posterior portions of the nasal septum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-xiphoid-process",
+    "name": "xiphoid process",
+    "cue": "small process that forms the inferior tip of the sternum",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-zygomatic-arch",
+    "name": "zygomatic arch",
+    "cue": "elongated, free-standing arch on the lateral skull, formed anteriorly by the temporal process of the zygomatic bone and posteriorly by the zygomatic process of the temporal bone",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-zygomatic-bone",
+    "name": "zygomatic bone",
+    "cue": "cheekbone; paired bones that contribute to the lateral orbit and anterior zygomatic arch",
+    "topic": "Chapter 7",
+    "chapter": 7
+  },
+  {
+    "id": "g-7-zygomatic-process-of-the-temporal-bone",
+    "name": "zygomatic process of the temporal bone",
+    "cue": "extension from the temporal bone that forms the posterior portion of the zygomatic arch",
+    "topic": "Chapter 7",
+    "chapter": 7
+  }
+]

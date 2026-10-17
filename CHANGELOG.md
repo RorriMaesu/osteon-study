@@ -23,3 +23,11 @@
 - Separated independent correctness, assisted attempts, card ratings and lessons read.
 - Added progress export/import and deliberate local reset.
 - Browser-tested mode navigation and incorrect identification feedback; corrected session-result navigation so it retains the results screen.
+## Stage 4 — Complete chapter study studio
+
+- Added all twelve sections from chapters 6 and 7, with objectives, teaching notes, comparisons, retrieval prompts and application explanations.
+- Added 56 authored concept questions and definition practice generated from the 237 textbook key terms.
+- Added guided bone classification, osteon schematic, endochondral and fracture sequencing, calcium feedback, vertebral comparison and rib attachment activities.
+- Added direct links to the full textbook sections and figures; these teaching notes supplement the complete source.
+- Included the full chapter glossary with its original content license and attribution.
+- Added content and behavior checks for course-to-model mapping, chapter coverage, questions, answer aliases, progress accounting and backup validation.
