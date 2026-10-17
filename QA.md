@@ -18,6 +18,7 @@ The integrated reader includes every PDF page 213–298 from the supplied editio
 
 The built static app was exercised in the browser:
 
+- Verified an actual frontal-sinus mesh answer after peeling the covering frontal bone and turning Peel off. Sinus-volume meshes are included in answer raycasting.
 - Loaded all 352 anatomical objects and inspected the adult skeleton and added tissue selections.
 - Selected a source landmark, completed a correct 3D pin answer and verified 1/1 unassisted results.
 - Completed a newborn fontanelle target by keyboard, with source labels hidden.

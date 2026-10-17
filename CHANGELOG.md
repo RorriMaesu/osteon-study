@@ -1,5 +1,11 @@
 # Release notes
 
+## Stage 7 — Final live verification
+
+- Made the source sinus-volume meshes available to raycasting and location practice. Both available sinus groups are shown for these questions; covering bones can be peeled away before answering.
+- Verified the distinction between source mesh geometry, landmark reference points and textbook targets through complete browser sessions.
+
+
 ## Stage 6 — Complete course practice and integrated textbook
 
 - Added graded exercises for every course item: 82 3D structure/group targets, 47 reference pin mappings, 46 source diagram targets and two movement concepts.
