@@ -4,7 +4,7 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {allTerms,matches} from './data.js';
 import './representations.js';
-import {meshDivision,skullFamily} from './anatomy.js';
+import {meshRegion,meshDivision,skullFamily} from './anatomy.js';
 
 export class AnatomyViewer {
  constructor(el,onPick,onReady,onError){
@@ -40,7 +40,7 @@ export class AnatomyViewer {
   },p=>{if(p.total)document.querySelector('#load-progress').textContent=`Model transfer ${Math.min(100,Math.round(p.loaded/p.total*100))}% · preparing geometry`;},onError);
   this.running=true;this.animate();
  }
- meshRegion(n,g){if(/cranium|ossicle|teeth/i.test(g)||/bone of cranium/i.test(g))return'Skull';if(/Vertebra|Atlas|Axis|Sacrum|Coccyx/.test(n))return'Spine';if(/rib|sternum|Xiphoid|Hyoid/i.test(n))return'Thorax';if(/Hip bone/.test(n))return'Pelvis';if(/Clavicle|Scapula|Humerus|Radius|Ulna|metacarpal|of hand|Scaphoid|Pisiform|Lunate|Triquetrum|Trapez|Capitate|Hamate/.test(n))return'Upper limb';if(/Femur|Patella|Tibia|Fibula|Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot/.test(n))return'Lower limb';return'Skull';}
+ meshRegion(n,g){return meshRegion(n,g);}
  displayName(m){const n=m.userData.zname;return n.replace(/finger of foot/g,'toe').replace(/finger of hand/g,'finger').replace(/\.l$/,' (left)').replace(/\.r$/,' (right)');}
  find(term){return this.meshes.filter(m=>matches(term.pattern,m.userData.zname));}
  termFor(m){const base=m.userData.zname.replace(/\.[lr]$/,'');return allTerms.find(t=>t.exact&&t.pattern===base)||allTerms.find(t=>t.exact&&matches(t.pattern,m.userData.zname));}

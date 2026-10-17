@@ -54,3 +54,7 @@ Browser checks:
 - Checked the published tutor at 390 × 844: no horizontal overflow, readable single-column panel, input and send controls accessible. Reset the temporary viewport afterward.
 
 Windows/macOS helpers are downloadable source files, not silently executed installers. No fresh Ollama or multi-GB model installation was needed on this PC. macOS/Linux native installation and app handoff were not exercised on this Windows device. Hardware fit is an estimate; browser RAM is approximate and browser VRAM is unknown. The tutor is not a factual certification or medical advice system.
+
+The Codex test browser blocked automated navigation to the `ollama://` app protocol. The site provides that native app handoff plus manual launch instructions; the handoff could not be verified in this browser. No alternate launch was attempted to bypass the block. Existing Ollama service connection and chat were verified separately.
+
+Final skull-view review moved laryngeal cartilages into the axial neck/thorax context so they do not appear beneath an isolated skull region. Nasal cartilage and teeth retain their neutral skull context. Added region assertions alongside the division tests.

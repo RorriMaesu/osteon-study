@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {meshDivision,termDivision,inDivision,skullFamilies,skullFamily} from '../src/anatomy.js';
+import {meshRegion,meshDivision,termDivision,inDivision,skullFamilies,skullFamily} from '../src/anatomy.js';
 import {terms} from '../src/data.js';
 import '../src/representations.js';
 const b=fs.readFileSync(new URL('../assets/skeleton.glb',import.meta.url));
@@ -14,6 +14,8 @@ test('22 skull bones share fourteen bilateral family colors, excluding teeth and
  assert.equal(skullFamily('Parietal bone.l').color,skullFamily('Parietal bone.r').color);
 });
 test('division boundaries respect girdles, sacrum and associated tissues',()=>{
+ assert.equal(meshRegion('Thyroid cartilage'),'Thorax');assert.equal(meshRegion('Cricoid cartilage'),'Thorax');
+ assert.equal(meshRegion('Mandible'),'Skull');assert.equal(meshRegion('Nasal septal cartilage'),'Skull');
  for(const n of ['Sacrum','Coccyx','Hyoid bone','Stylohyoid ligament.l','Vertebral artery.r','Intervertebral disc L5-S1'])assert.equal(meshDivision(n),'Axial',n);
  for(const n of ['Hip bone.l','Clavicle.r','Pubic symphysis','Trapezoid ligament.l','Deep part of tibial collateral ligament.r'])assert.equal(meshDivision(n),'Appendicular',n);
  for(const t of terms){assert.ok(['Axial','Appendicular','Mixed'].includes(termDivision(t)));assert.ok(inDivision(t,'All'));}

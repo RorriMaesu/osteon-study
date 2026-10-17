@@ -1,5 +1,15 @@
 // Anatomical divisions are independent of the viewer's regional groupings.
 export const divisions=['All','Axial','Appendicular'];
+export function meshRegion(n,g=''){
+ if(/Thyroid cartilage|Cricoid cartilage|Arytenoid cartilage|Corniculate cartilage/.test(n))return'Thorax';
+ if(/cranium|ossicle|teeth/i.test(g)||/bone of cranium/i.test(g))return'Skull';
+ if(/Vertebra|Atlas|Axis|Sacrum|Coccyx/.test(n))return'Spine';
+ if(/rib|sternum|Xiphoid|Hyoid/i.test(n))return'Thorax';
+ if(/Hip bone/.test(n))return'Pelvis';
+ if(/Clavicle|Scapula|Humerus|Radius|Ulna|metacarpal|of hand|Scaphoid|Pisiform|Lunate|Triquetrum|Trapez|Capitate|Hamate/.test(n))return'Upper limb';
+ if(/Femur|Patella|Tibia|Fibula|Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot/.test(n))return'Lower limb';
+ return'Skull';
+}
 export function meshDivision(name){
  return /Clavicle|Scapula|Humerus|Radius|Ulna|metacarpal|of hand|Scaphoid|Pisiform|Lunate|Triquetrum|Trapez|Capitate|Hamate|Hip bone|Femur|Patella|Tibia|Fibula|Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot|acromio|coraco|glenohumeral|cruciate|collateral|iliofemoral|head of femur|Pubic symphysis/i.test(name)?'Appendicular':'Axial';
 }
