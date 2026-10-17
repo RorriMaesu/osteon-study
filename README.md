@@ -6,6 +6,8 @@ Live site: https://rorrimaesu.github.io/osteon-study/
 
 Read [the implementation and learning plan](PLAN.md) and [release notes](CHANGELOG.md).
 
+The next atlas expansion is specified in [the region-navigation and bone-landmark plan](ANATOMY-EXPANSION-PLAN.md), with a [source inventory and current-target audit](LANDMARK-EXPANSION-AUDIT.csv). It plans two-stage double-click navigation, color controls for all focused regions and selectively displayed textbook landmarks. These are planned additions; the audit does not claim that new 3D locations have been validated or shipped.
+
 Read [the responsive workspace plan](RESPONSIVE-PLAN.md) for the desktop and mobile layout review. Desktop widths from 1000 pixels use a viewport-sized application with Previous / Next content pages, including the atlas lists, lessons, reading text and tutor history. Phones and narrower tablets use Specimen / Browse / Details atlas controls and natural vertical reading. Search, answer drafts and progress are preserved when the layout changes.
 
 This is a static GitHub Pages site. No server account is required. Study progress stays in the browser. The original course documents and personal file paths are not published.

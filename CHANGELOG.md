@@ -1,5 +1,12 @@
 # Release notes
 
+## Stage 14 - Region navigation and landmark expansion plan
+
+- Specify overview-to-region and region-to-bone double-click behavior, reversible navigation, touch/keyboard equivalents and assessment safeguards.
+- Plan bone colors for every focused region, a persistent On / Off preference, neutral overviews and an optional regional key.
+- Index the supplied full textbook locally and publish an initial 256-row source audit: 237 feature candidates and 19 vocabulary entries, including links to current targets and clearly unvalidated annotation candidates. This is not a final unique-feature count or a 3D completion claim; figure-label/body-text reconciliation remains open.
+- Define selective labels, shared-feature context, interior and microscopic views, geometry verification, study integration and staged release gates in ANATOMY-EXPANSION-PLAN.md. No viewer or anatomy mappings change in this planning release.
+
 ## Stage 13 — Viewport-sized desktop and mobile workspaces
 
 - Fit navigation, the atlas and footer inside the desktop viewport. Add compact division/region selectors, paged structure/details panels and a separate skull-key dialog.
