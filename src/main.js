@@ -33,7 +33,16 @@ function resetDetail(){
  $('#specimen-name').textContent='Explore the relationships.';
  setLearningContext(explorerContext());updateButtons();
 }
+function syncSkullControls(){
+ const focused=region==='Skull'&&viewer.division!=='Appendicular';
+ $('#skull-controls').hidden=!focused;$('#skull-key').hidden=!focused;
+ const button=$('#skull-colors');button.disabled=assessmentColors;
+ button.setAttribute('aria-pressed',String(viewer.skullColors));
+ button.textContent='Skull colors: '+(viewer.skullColors?'On':'Off');
+ button.title='Turn skull color coding '+(viewer.skullColors?'off':'on');
+}
 function syncFilters(){
+ syncSkullControls();
  $$('[data-division]').forEach(b=>{b.classList.toggle('active',b.dataset.division===viewer.division);b.setAttribute('aria-pressed',b.dataset.division===viewer.division);});
  $$('[data-region]').forEach(b=>{b.disabled=!regionAvailable(b.dataset.region,viewer.division,allTerms);b.classList.toggle('active',b.dataset.region===region);b.setAttribute('aria-pressed',b.dataset.region===region);});
 }
@@ -44,9 +53,9 @@ $('#division-filters').innerHTML=divisions.map(d=>`<button data-division="${d}" 
 $$('[data-division]').forEach(b=>b.onclick=()=>changeDivision(b.dataset.division));
 $('#skull-legend').innerHTML=['Cranial','Facial','Associated'].map(g=>`<div class="legend-group"><strong>${g}${g==='Cranial'?' · 8 bones':g==='Facial'?' · 14 bones':' · ear ossicles'}</strong>${skullFamilies.filter(f=>f.group===g).map(f=>`<button data-skull="${f.pattern}"><i style="--bone-color:${f.color}"></i>${f.name}<small>${f.count===2?'pair':'1'}</small></button>`).join('')}</div>`).join('');
 $$('[data-skull]').forEach(b=>b.onclick=()=>{const t=allTerms.find(t=>t.exact&&t.pattern===b.dataset.skull);if(t)selectTerm(t);else{const m=viewer.meshes.find(m=>m.userData.zname.replace(/\.[lr]$/,'')===b.dataset.skull);if(m){if(viewer.division==='Appendicular')changeDivision('Axial');viewer.selectMesh(m);viewer.frame(viewer.selected);const t={id:'ossicle',name:viewer.displayName(m),region:'Skull',type:'bone',cue:'Auditory ossicle of the middle ear. Associated with the skull; additional to its 22 cranial and facial bones.',source:'7.2',exact:true,aliases:[],pattern:b.dataset.skull};selected=t;detail(t);updateButtons();}}});
-$('#skull-colors').onchange=()=>{viewer.skullColors=$('#skull-colors').checked;if(!assessmentColors)explorationColors=viewer.skullColors;viewer.applyVisibility();if(viewer.skullColors)document.dispatchEvent(new Event('studyassistance'));};
-document.addEventListener('assessmentstart',()=>{if(!assessmentColors)explorationColors=viewer.skullColors;assessmentColors=true;viewer.skullColors=false;$('#skull-colors').checked=false;viewer.applyVisibility();});
-document.addEventListener('assessmentend',()=>{assessmentColors=false;viewer.skullColors=explorationColors;$('#skull-colors').checked=explorationColors;viewer.applyVisibility();});
+$('#skull-colors').onclick=()=>{if(assessmentColors)return;viewer.skullColors=!viewer.skullColors;explorationColors=viewer.skullColors;viewer.applyVisibility();syncSkullControls();};
+document.addEventListener('assessmentstart',()=>{if(!assessmentColors)explorationColors=viewer.skullColors;assessmentColors=true;viewer.skullColors=false;syncSkullControls();viewer.applyVisibility();});
+document.addEventListener('assessmentend',()=>{assessmentColors=false;viewer.skullColors=explorationColors;syncSkullControls();viewer.applyVisibility();});
 $('#region-filters').innerHTML=regions.map(r=>`<button data-region="${r}" class="${r===region?'active':''}" aria-pressed="${r===region}">${r}</button>`).join('');
 $$('[data-region]').forEach(b=>b.onclick=()=>changeRegion(b.dataset.region));
 syncFilters();

@@ -95,3 +95,7 @@ Browser checks used the isolated local-preview study history:
 Retrieval evidence describes observed practice, not mastery. It uses the latest scored attempt per item, with self-ratings excluded; repeated correct evidence at least 24 hours apart is reported separately. No existing public-site study history was reset or replaced for testing.
 
 Final desktop visual review corrected the practice/review column balance: approximately 602 / 548 pixels at width 1280, stacking to one 349-pixel column at phone width 390, with no horizontal overflow.
+
+## 2026-10-17 — Skull-only color controls
+
+All 39 existing automated checks pass. Browser visual checks confirmed neutral bones in the full skeleton and axial overview, family colors when Skull is selected, and immediate neutral restoration with the visible Skull colors: Off button. The button and key are hidden outside Skull. Turning colors off, leaving Skull and returning preserves Off; enabling them and entering scored skull identification switches them off and disables the toggle. Exiting practice restores the prior On preference only in the Skull view. These checks exited practice without recording an answer.

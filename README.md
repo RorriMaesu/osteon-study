@@ -35,6 +35,6 @@ The site bundles its model and reading assets. Google Fonts is an optional exter
 
 ## Skull colors, skeleton divisions and local tutoring
 
-The atlas now includes a cranial/facial color key and All / Axial / Appendicular filters, also applied to anatomy practice. Sacrum and coccyx remain axial; hip bones are appendicular. Mixed pelvis targets appear under All. Skull colors turn off for scored practice.
+The atlas includes a cranial/facial color key and All / Axial / Appendicular filters, also applied to anatomy practice. Color coding appears only in the Skull region; its visible On / Off button sits above the color key and remembers your choice while changing regions. Full-skeleton and axial overviews stay neutral. Sacrum and coccyx remain axial; hip bones are appendicular. Mixed pelvis targets appear under All. Skull colors turn off for scored practice.
 
 Use the **Socratic tutor** button for a local Ollama chat, installed-model selection, guided connection, optional model downloads and hardware/fit checks. See [the tutor guide](TUTOR.md) for first setup and honest browser limits. Tutor assistance is tracked separately from independent quiz accuracy.

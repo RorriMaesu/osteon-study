@@ -1,5 +1,10 @@
 # Release notes
 
+## Stage 12 — Skull-only color coding
+
+- Apply the skull palette only while the Skull region is selected. Full-skeleton and axial overviews keep neutral bone colors.
+- Add a visible Skull colors: On / Off button above the collapsible key. Show both controls only in Skull, preserve the choice while changing regions and keep colors disabled during scored practice.
+
 ## Stage 11 — Review scope and actionable retrieval progress
 
 - Use the same filtered queue for due-card counts and decks. Practice separates lab cards in the chosen division/region from chapter cards; Progress offers the entire course without silently applying atlas filters.
