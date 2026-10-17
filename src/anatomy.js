@@ -19,6 +19,8 @@ export function termDivision(t){
  return ['Upper limb','Lower limb','Pelvis','Joints'].includes(t.region)?'Appendicular':'Axial';
 }
 export const inDivision=(t,division)=>division==='All'||termDivision(t)===division;
+export const regionAvailable=(region,division,items)=>region==='All regions'||items.some(t=>t.region===region&&inDivision(t,division));
+export const meshInRegion=(name,meshRegion,region)=>region==='All regions'||(region==='Joints'?meshDivision(name)==='Appendicular':meshRegion===region||(region==='Pelvis'&&/Sacrum|Coccyx/.test(name)));
 export const skullFamilies=[
  ['Frontal bone','Frontal','#edb16c','Cranial',1],['Parietal bone','Parietal','#68c5dd','Cranial',2],
  ['Temporal bone','Temporal','#b8a0ed','Cranial',2],['Occipital bone','Occipital','#e48eae','Cranial',1],

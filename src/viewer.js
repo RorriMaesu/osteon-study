@@ -4,7 +4,7 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {allTerms,matches} from './data.js';
 import './representations.js';
-import {meshRegion,meshDivision,skullFamily} from './anatomy.js';
+import {meshRegion,meshDivision,meshInRegion,skullFamily} from './anatomy.js';
 
 export class AnatomyViewer {
  constructor(el,onPick,onReady,onError){
@@ -52,8 +52,8 @@ export class AnatomyViewer {
  focusPoint(point){const c=new THREE.Vector3(...point),side=point[2]<-.025?-1:1;this.moveCamera(c.clone().add(new THREE.Vector3(.13,.08,.34*side)),c);}
  selectMesh(m){this.clearPins();this.selected=[m];this.selectedTerm=this.termFor(m);this.isolated=false;this.ghost=false;this.applyVisibility();}
  setDivision(division){this.division=division;this.selected=[];this.selectedTerm=null;this.clearPins();this.isolated=false;this.ghost=false;this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));}
- setRegion(region){this.clearPins();this.region=region;this.isolated=false;this.ghost=false;this.selected=[];this.selectedTerm=null;this.applyVisibility();const ms=this.meshes.filter(m=>m.visible);if(ms.length)this.frame(ms);}
- applyVisibility(){const selected=new Set(this.selected);for(const m of this.meshes){const region=this.region==='All regions'||m.userData.region===this.region||(this.region==='Pelvis'&&/Sacrum|Coccyx/.test(m.userData.zname));m.visible=(this.division==='All'||meshDivision(m.userData.zname)===this.division)&&!this.hiddenMeshes.has(m)&&(this.isolated?selected.has(m):(region||selected.has(m))&&(!m.userData.sinus||this.sinuses||selected.has(m))&&(!m.userData.tissue||this.tissues||selected.has(m)));m.material.transparent=this.ghost&&!selected.has(m);m.material.opacity=this.ghost&&!selected.has(m)?0.12:1;m.material.depthWrite=!m.material.transparent;const family=this.skullColors?skullFamily(m.userData.zname):null;const c=family?parseInt(family.color.slice(1),16):selected.has(m)?0xb5e6be:m.userData.sinus?0xa1b59b:m.userData.tissue?/artery/.test(m.userData.zname)?0xd98878:0xc9aa7b:m.userData.nonbone?0x9da9a1:0xe5e1cd;m.material.color.setHex(c);m.material.emissive.setHex(selected.has(m)?0x3a5742:0x000000);}}
+ setRegion(region){if(region==='Joints')this.tissues=true;this.clearPins();this.region=region;this.isolated=false;this.ghost=false;this.selected=[];this.selectedTerm=null;this.applyVisibility();const ms=this.meshes.filter(m=>m.visible);if(ms.length)this.frame(ms);}
+ applyVisibility(){const selected=new Set(this.selected);for(const m of this.meshes){const region=meshInRegion(m.userData.zname,m.userData.region,this.region);m.visible=(this.division==='All'||meshDivision(m.userData.zname)===this.division)&&!this.hiddenMeshes.has(m)&&(this.isolated?selected.has(m):(region||selected.has(m))&&(!m.userData.sinus||this.sinuses||selected.has(m))&&(!m.userData.tissue||this.tissues||selected.has(m)));m.material.transparent=this.ghost&&!selected.has(m);m.material.opacity=this.ghost&&!selected.has(m)?0.12:1;m.material.depthWrite=!m.material.transparent;const family=this.skullColors?skullFamily(m.userData.zname):null;const c=family?parseInt(family.color.slice(1),16):selected.has(m)?0xb5e6be:m.userData.sinus?0xa1b59b:m.userData.tissue?/artery/.test(m.userData.zname)?0xd98878:0xc9aa7b:m.userData.nonbone?0x9da9a1:0xe5e1cd;m.material.color.setHex(c);m.material.emissive.setHex(selected.has(m)?0x3a5742:0x000000);}}
  isolate(){if(!this.selected.length)return false;this.isolated=!this.isolated;this.ghost=false;this.applyVisibility();if(this.isolated)this.frame(this.selected);return this.isolated;}
  xray(){if(!this.selected.length)return false;this.ghost=!this.ghost;this.isolated=false;this.applyVisibility();return this.ghost;}
  resize(){const w=this.el.clientWidth,h=this.el.clientHeight;if(!w||!h||!this.renderer)return;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);}

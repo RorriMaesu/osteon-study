@@ -35,3 +35,16 @@ The app makes AI requests only to `127.0.0.1:11434` or `localhost:11434`, withou
 Browsers cannot silently install applications, run arbitrary background commands or read exact cross-platform VRAM. This release uses official downloads, the supported app handoff and an optional user-run native check. No public server bind, tunnel, wildcard origin or permanent browser-security exception is needed.
 
 Official references: [Ollama FAQ](https://docs.ollama.com/faq), [downloads](https://ollama.com/download), [chat API](https://docs.ollama.com/api/chat), [installed models](https://docs.ollama.com/api/tags), [model allocations](https://docs.ollama.com/api/ps).
+
+
+## Conversation and navigation refinements
+
+Your unfinished question is saved in this browser and survives moving between tutor tabs, closing the drawer and refreshing the page. Enter sends a typed question; Shift + Enter inserts a line break. An empty Send does nothing; the three guided prompt buttons remain available for a new question. After a stopped or failed reply, **Edit question and retry** restores the original question without sending it automatically.
+
+Replies show the model that generated them. Click an inline source reference to open the actual textbook page, or expand **Read the source excerpts** to inspect the passages supplied to the model. A reference number that was not supplied stays plain text and is flagged. Old reference numbers and interrupted drafts are excluded from the next model request's source context. Short follow-ups can use the prior question's subject; selecting another region, lesson or question updates the learning context.
+
+Device details and supplied memory values are saved locally. A later browser hardware check keeps exact memory values you already supplied. Model fit suggestions reserve space for the atlas and context, prefer a fuller GPU budget when it fits, and favor smaller models for CPU use. They do not rank factual accuracy. Test results and download status survive moving between tutor tabs during the current visit. Downloads are marked ready only after installed-model verification succeeds.
+
+Skeleton divisions can be selected directly in both practice setup screens. Incompatible regions are disabled. Colors used for exploration return after a scored anatomy session, and the atlas restores its own region view when you return. The Joints explorer includes appendicular bone context and enables course tissues instead of displaying an empty specimen.
+
+On phones, the full-screen tutor keeps keyboard focus within its controls. Opening a source reference closes the drawer and displays the selected reading; reopen the tutor to continue your saved conversation.

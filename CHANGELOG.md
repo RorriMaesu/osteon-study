@@ -1,5 +1,16 @@
 # Release notes
 
+## Stage 10 — Conversation continuity and teaching refinements
+
+- Preserve unfinished questions across tutor tabs, drawer closure and refresh; add keyboard sending and an editable retry path for stopped replies.
+- Correct connection controls remaining disabled after a successful check; retain model-test and download state across panels and verify downloaded models before reporting readiness.
+- Keep learning context synchronized with atlas regions, lesson navigation, reading pages, active questions and answer review.
+- Retrieve the real target for masked prompts, expand short follow-ups using their recent topic, preserve word boundaries in source excerpts, and omit old source numbers/interrupted replies from model context.
+- Make supplied citations clickable, expose their source excerpts, label generated models and flag unavailable references. Refine course-note checks for observed styloid/tuberosity and PTH-pathway errors.
+- Add division selectors and target counts to practice setup, disable incompatible regions, restore exploration colors after assessment, and give joint extensions visible bone/tissue context.
+- Save supplied device memory, preserve it through limited browser detection, validate memory entry and improve memory-based starting-model suggestions.
+
+
 ## Stage 9 — Local tutor and verification
 
 - Added a browser-to-loopback Ollama tutor, installed-model metadata checks, cancellable streaming chat and source readings from local textbook retrieval.

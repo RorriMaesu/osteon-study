@@ -58,3 +58,24 @@ Windows/macOS helpers are downloadable source files, not silently executed insta
 The Codex test browser blocked automated navigation to the `ollama://` app protocol. The site provides that native app handoff plus manual launch instructions; the handoff could not be verified in this browser. No alternate launch was attempted to bypass the block. Existing Ollama service connection and chat were verified separately.
 
 Final skull-view review moved laryngeal cartilages into the axial neck/thorax context so they do not appear beneath an isolated skull region. Nasal cartilage and teeth retain their neutral skull context. Added region assertions alongside the division tests.
+
+
+## 2026-10-17 — Continuity and refinement pass
+
+Expanded automated coverage to 33 tests. New scenarios cover interrupted-chat restoration, exact reader-page allowlists, grouped/unknown references, exclusion of old citation IDs and failed drafts from model context, stale-assessment context removal, region eligibility, joint context, masked-target retrieval, word boundaries, conversational follow-ups and preservation/validation of supplied memory.
+
+Browser verification on the local preview:
+- Reproduced the live draft-loss, disabled-address and stale-page-context issues before editing. Confirmed the fixes: an unfinished radius/ulna question survives tab changes, the connection address is enabled after a successful connection, and changing to appendicular updates the tutor context.
+- Started a real model speed test, moved away and back, and retained its progress and Stop control. After completion, the result remained available: Qwen 3.5 4B on this device measured about 103 tokens/second after a 32-second cold load. These are observations, not performance promises.
+- Entered measured RAM and nominal VRAM, switched panels before applying, and retained both fields. Applying them and running browser detection kept supplied memory and offered an installed larger model that fit the GPU estimate.
+- Verified direct division controls in quick and complete-course setup, disabled regions, preservation of task/length choices, and two axial pelvic course targets with mixed pelvis targets excluded.
+- Exited a skull identification session and confirmed colors returned. Returned to the atlas with Skull still selected and confirmed the region label and specimen agreed.
+- Requested and stopped tutor help during a one-item fontanelle exercise, then answered correctly. Results recorded 0/1 independent correct and 1 assisted attempt; colors returned after results. Empty Send was disabled and the assistance notice matched the active question.
+- Verified Enter sending, retained follow-up drafts, persistent completion status, clickable source references, and an editable retry after Stop.
+- Evaluated the six core confusion topics with installed Gemma 4 12B. It still simplified some explanations; these outputs were not treated as independent factual verification. Extended specific course-note checks for observed styloid/tuberosity confusion and for PTH bone-pathway wording that mentioned indirect intestinal absorption without clarifying the indirect bone pathway.
+
+A browser-only preview rendering regression was caught and repaired before publication. The app-opening protocol was not retested or worked around; its earlier test-browser restriction remains documented above. No extra Ollama/model installation or progress reset was performed.
+
+Final phone checks found and corrected an asynchronous context overwrite from pre-rendering an inactive practice screen, and source navigation that was hidden beneath the drawer. Inactive screens no longer replace the active learning context. The phone tutor uses native modal focus handling, and reading links close the drawer so the actual page is visible.
+
+Verified the final phone layout at 390 × 844 CSS pixels with no horizontal overflow, a 44-pixel Send control, and keyboard focus cycling inside the full-screen tutor. A source reference closed the drawer and displayed the expected chapter 8 printed page 290. Practice settings use aligned label/select rows on phones.

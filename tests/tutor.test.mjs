@@ -49,9 +49,13 @@ test('hardware import validates limited values and never treats approximate RAM 
 test('known misleading model statements fall back to course notes without claiming general verification',()=>{
  assert.ok(checkTutorReply('PTH directly stimulates osteoclasts.','Explain PTH').text.includes('indirectly'));
  assert.equal(checkTutorReply('PTH promotes resorption indirectly through osteoblast-lineage cells.','PTH'),null);
+ assert.ok(checkTutorReply('PTH stimulates osteoclasts to resorb bone. It indirectly increases intestinal calcium absorption.','PTH'));
+ assert.equal(checkTutorReply('PTH indirectly stimulates osteoclast activity.','PTH'),null);
  assert.ok(checkTutorReply('All skull bones are fully fused together in adults.','fontanelles'));
  assert.equal(checkTutorReply('Not all skull bones fuse when fontanelles close.','fontanelles'),null);
  assert.ok(checkTutorReply('Which bone has a distal styloid process?','radius and ulna'));
+ assert.ok(checkTutorReply('The radius and ulna have styloid processes at different ends.','their styloid processes').text.includes('Both bones have a distal'));
+ assert.ok(checkTutorReply('The radius has a proximal styloid-like radial tuberosity.','forearm').text.includes('separate proximal feature'));
 });
 test('retrieval returns actual source excerpts for core confusions and development',()=>{
  for(const query of ['radius ulna','atlas axis dens','condyle epicondyle','osteoblast osteoclast osteocyte','PTH calcium','fontanelles infant skull']){
