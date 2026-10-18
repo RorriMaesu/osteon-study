@@ -96,10 +96,10 @@ export function initWorkspace() {
       mount(document.querySelector('#detail-content'),'Structure details');
       for(const id of ['study-view','practice-view','progress-view']){
         const root=document.getElementById(id);if(!root.classList.contains('active'))continue;
-        const specialized=root.querySelector('.reader-layout,.lesson-layout,.course-layout,#study-body');
+        const specialized=root.querySelector('.reader-layout,.lesson-layout,.course-layout,#study-body,.landmark-bank-layout');
         if(specialized){
           root.classList.add('workspace-special');
-          if(specialized.classList.contains('reader-layout')){
+          if(specialized.classList.contains('landmark-bank-layout')){}else if(specialized.classList.contains('reader-layout')){
             mount(root.querySelector('#reader-results'),'Reading results');
             if(root.querySelector('.reader-text'))mount(root.querySelector('.reader-paper'),'Textbook text');
           }else if(specialized.id==='study-body')mount(specialized,'Study content',[...specialized.children].filter(n=>n.classList.contains('control-row')));

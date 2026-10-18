@@ -1,0 +1,4157 @@
+{
+  "lm8-clavicle": {
+    "image": "lm8-p301-0",
+    "size": [
+      985,
+      1358
+    ],
+    "crop": [
+      180,
+      805,
+      725,
+      210
+    ],
+    "masks": [],
+    "reference": "8.1",
+    "figure": "8.3",
+    "pdf": 301,
+    "printed": 285,
+    "title": "Right clavicle, superior view",
+    "points": [
+      [
+        "acromial end of the clavicle",
+        221,
+        925
+      ],
+      [
+        "sternal end of the clavicle",
+        881,
+        967
+      ],
+      [
+        "shaft of the clavicle",
+        544,
+        934
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-scapula-anterior": {
+    "image": "lm8-p303-0",
+    "size": [
+      972,
+      641
+    ],
+    "crop": [
+      110,
+      235,
+      268,
+      365
+    ],
+    "masks": [
+      [
+        110,
+        480,
+        70,
+        40
+      ]
+    ],
+    "reference": "8.1",
+    "figure": "8.4",
+    "pdf": 303,
+    "printed": 287,
+    "title": "Right scapula, anterior aspect",
+    "points": [
+      [
+        "acromion",
+        127,
+        253
+      ],
+      [
+        "coracoid process",
+        155,
+        269
+      ],
+      [
+        "glenoid cavity",
+        160,
+        312
+      ],
+      [
+        "subscapular fossa",
+        304,
+        450
+      ],
+      [
+        "superior border of the scapula",
+        282,
+        297
+      ],
+      [
+        "suprascapular notch",
+        232,
+        309
+      ],
+      [
+        "superior angle of the scapula",
+        330,
+        278
+      ],
+      [
+        "inferior angle of the scapula",
+        280,
+        586
+      ],
+      [
+        "medial border of the scapula",
+        340,
+        507
+      ],
+      [
+        "lateral border of the scapula",
+        238,
+        505
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-scapula-posterior": {
+    "image": "lm8-p303-0",
+    "size": [
+      972,
+      641
+    ],
+    "crop": [
+      575,
+      245,
+      292,
+      350
+    ],
+    "masks": [
+      [
+        795,
+        485,
+        72,
+        50
+      ]
+    ],
+    "reference": "8.1",
+    "figure": "8.4",
+    "pdf": 303,
+    "printed": 287,
+    "title": "Right scapula, posterior aspect",
+    "points": [
+      [
+        "spine of the scapula",
+        667,
+        364
+      ],
+      [
+        "supraspinous fossa",
+        642,
+        316
+      ],
+      [
+        "infraspinous fossa",
+        667,
+        412
+      ],
+      [
+        "acromion",
+        851,
+        280
+      ],
+      [
+        "coracoid process",
+        754,
+        278
+      ],
+      [
+        "suprascapular notch",
+        717,
+        319
+      ],
+      [
+        "superior angle of the scapula",
+        602,
+        275
+      ],
+      [
+        "inferior angle of the scapula",
+        643,
+        579
+      ],
+      [
+        "lateral border of the scapula",
+        705,
+        503
+      ],
+      [
+        "medial border of the scapula",
+        595,
+        474
+      ],
+      [
+        "glenoid cavity",
+        790,
+        351
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-humerus-anterior": {
+    "image": "lm8-p304-0",
+    "size": [
+      676,
+      853
+    ],
+    "crop": [
+      120,
+      185,
+      145,
+      540
+    ],
+    "masks": [
+      [
+        120,
+        328,
+        20,
+        50
+      ]
+    ],
+    "reference": "8.2",
+    "figure": "8.5",
+    "pdf": 304,
+    "printed": 288,
+    "title": "Right humerus, anterior view",
+    "points": [
+      [
+        "head of the humerus",
+        251,
+        239
+      ],
+      [
+        "anatomical neck",
+        241,
+        220
+      ],
+      [
+        "surgical neck",
+        230,
+        282
+      ],
+      [
+        "greater tubercle",
+        177,
+        211
+      ],
+      [
+        "lesser tubercle",
+        210,
+        224
+      ],
+      [
+        "intertubercular groove (sulcus)",
+        183,
+        254
+      ],
+      [
+        "deltoid tuberosity",
+        185,
+        430
+      ],
+      [
+        "shaft of the humerus",
+        202,
+        509
+      ],
+      [
+        "lateral supracondylar ridge",
+        153,
+        606
+      ],
+      [
+        "radial fossa",
+        162,
+        675
+      ],
+      [
+        "coronoid fossa",
+        188,
+        683
+      ],
+      [
+        "capitulum",
+        151,
+        691
+      ],
+      [
+        "trochlea",
+        191,
+        701
+      ],
+      [
+        "medial epicondyle of the humerus",
+        226,
+        696
+      ]
+    ],
+    "pointNotes": {
+      "anatomical neck": "Reference point on the narrow margin around the head; trace the full neck in the source view.",
+      "surgical neck": "Reference point on the constricted region distal to the tubercles."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-humerus-posterior": {
+    "image": "lm8-p304-0",
+    "size": [
+      676,
+      853
+    ],
+    "crop": [
+      408,
+      185,
+      151,
+      532
+    ],
+    "masks": [
+      [
+        408,
+        595,
+        30,
+        50
+      ],
+      [
+        408,
+        675,
+        20,
+        45
+      ]
+    ],
+    "reference": "8.2",
+    "figure": "8.5",
+    "pdf": 304,
+    "printed": 288,
+    "title": "Right humerus, posterior view",
+    "points": [
+      [
+        "olecranon fossa",
+        499,
+        677
+      ],
+      [
+        "lateral epicondyle of the humerus",
+        550,
+        666
+      ],
+      [
+        "medial epicondyle of the humerus",
+        451,
+        695
+      ],
+      [
+        "greater tubercle",
+        481,
+        210
+      ],
+      [
+        "head of the humerus",
+        418,
+        237
+      ],
+      [
+        "shaft of the humerus",
+        481,
+        508
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-forearm-anterior": {
+    "image": "lm8-p305-0",
+    "size": [
+      1271,
+      1720
+    ],
+    "crop": [
+      215,
+      280,
+      255,
+      1260
+    ],
+    "masks": [],
+    "reference": "8.2",
+    "figure": "8.6",
+    "pdf": 305,
+    "printed": 289,
+    "title": "Right forearm, anterior view",
+    "points": [
+      [
+        "olecranon process",
+        401,
+        343
+      ],
+      [
+        "trochlear notch",
+        417,
+        386
+      ],
+      [
+        "coronoid process of the ulna",
+        442,
+        435
+      ],
+      [
+        "radial notch of the ulna",
+        343,
+        433
+      ],
+      [
+        "head of the radius",
+        285,
+        434
+      ],
+      [
+        "neck of the radius",
+        302,
+        480
+      ],
+      [
+        "radial tuberosity",
+        329,
+        550
+      ],
+      [
+        "shaft of the radius",
+        277,
+        1165
+      ],
+      [
+        "shaft of the ulna",
+        420,
+        1060
+      ],
+      [
+        "interosseous border of the radius",
+        298,
+        875
+      ],
+      [
+        "interosseous border of the ulna",
+        396,
+        874
+      ],
+      [
+        "ulnar notch of the radius",
+        369,
+        1450
+      ],
+      [
+        "head of the ulna",
+        420,
+        1462
+      ],
+      [
+        "styloid process of the ulna",
+        419,
+        1489
+      ],
+      [
+        "styloid process of the radius",
+        265,
+        1516
+      ]
+    ],
+    "pointNotes": {
+      "interosseous border of the radius": "Representative point on the medial border where the interosseous membrane attaches; not the membrane itself.",
+      "interosseous border of the ulna": "Representative point on the lateral border where the interosseous membrane attaches; not the membrane itself.",
+      "radial notch of the ulna": "The source magnifier circles the proximal radioulnar articulation; target lies on the ulnar articular notch, not the radial head."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-forearm-posterior": {
+    "image": "lm8-p305-0",
+    "size": [
+      1271,
+      1720
+    ],
+    "crop": [
+      820,
+      280,
+      295,
+      1270
+    ],
+    "masks": [],
+    "reference": "8.2",
+    "figure": "8.6",
+    "pdf": 305,
+    "printed": 289,
+    "title": "Right forearm, posterior view",
+    "points": [
+      [
+        "olecranon process",
+        840,
+        327
+      ],
+      [
+        "head of the radius",
+        1023,
+        433
+      ],
+      [
+        "neck of the radius",
+        1015,
+        462
+      ],
+      [
+        "shaft of the radius",
+        1040,
+        1300
+      ],
+      [
+        "shaft of the ulna",
+        896,
+        1060
+      ],
+      [
+        "head of the ulna",
+        903,
+        1463
+      ],
+      [
+        "styloid process of the ulna",
+        903,
+        1491
+      ],
+      [
+        "styloid process of the radius",
+        1074,
+        1537
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-hand-posterior-detail": {
+    "image": "lm8-p307-0",
+    "size": [
+      1954,
+      1573
+    ],
+    "crop": [
+      1025,
+      645,
+      280,
+      510
+    ],
+    "masks": [
+      [
+        1025,
+        965,
+        60,
+        70
+      ],
+      [
+        1025,
+        1080,
+        40,
+        75
+      ],
+      [
+        1280,
+        645,
+        25,
+        25
+      ]
+    ],
+    "reference": "8.2",
+    "figure": "8.7",
+    "pdf": 307,
+    "printed": 291,
+    "title": "Left hand, posterior aspect: fifth digit and metacarpal",
+    "points": [
+      [
+        "head of the proximal phalanx of the hand",
+        1087,
+        771
+      ],
+      [
+        "shaft of the proximal phalanx of the hand",
+        1123,
+        834
+      ],
+      [
+        "base of the proximal phalanx of the hand",
+        1146,
+        903
+      ],
+      [
+        "head of the metacarpal bone",
+        1180,
+        932
+      ],
+      [
+        "shaft of the metacarpal bone",
+        1234,
+        1030
+      ],
+      [
+        "base of the metacarpal bone",
+        1290,
+        1096
+      ]
+    ],
+    "pointNotes": {
+      "head of the proximal phalanx of the hand": "Representative proximal phalanx of digit5; heads are distal, bases proximal.",
+      "head of the metacarpal bone": "Representative metacarpal5; the source marks metacarpal1 on the opposite side, but head/base/shaft apply to each metacarpal."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-pelvis-anterior": {
+    "image": "lm8-p311-0",
+    "size": [
+      1153,
+      785
+    ],
+    "crop": [
+      180,
+      235,
+      810,
+      550
+    ],
+    "masks": [
+      [
+        180,
+        390,
+        20,
+        30
+      ],
+      [
+        180,
+        760,
+        125,
+        25
+      ]
+    ],
+    "reference": "8.3",
+    "figure": "8.12",
+    "pdf": 311,
+    "printed": 295,
+    "title": "Pelvis, anterior view",
+    "points": [
+      [
+        "obturator foramen",
+        464,
+        663
+      ],
+      [
+        "ischiopubic ramus",
+        476,
+        755
+      ],
+      [
+        "ischial tuberosity",
+        398,
+        729
+      ],
+      [
+        "acetabulum",
+        330,
+        576
+      ],
+      [
+        "sacral promontory",
+        585,
+        408
+      ]
+    ],
+    "pointNotes": {
+      "ischiopubic ramus": "Representative segment of the joined inferior pubic and ischial rami.",
+      "sacral promontory": "Anterior-projecting superior margin of the sacrum; belongs to axial skeleton although viewed within pelvis."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-hip-lateral": {
+    "image": "lm8-p312-0",
+    "size": [
+      974,
+      700
+    ],
+    "crop": [
+      95,
+      125,
+      315,
+      455
+    ],
+    "masks": [
+      [
+        95,
+        125,
+        65,
+        20
+      ],
+      [
+        95,
+        365,
+        40,
+        35
+      ],
+      [
+        95,
+        405,
+        22,
+        32
+      ],
+      [
+        95,
+        440,
+        25,
+        35
+      ],
+      [
+        95,
+        470,
+        35,
+        30
+      ],
+      [
+        345,
+        405,
+        65,
+        65
+      ],
+      [
+        360,
+        465,
+        50,
+        40
+      ],
+      [
+        350,
+        505,
+        60,
+        70
+      ],
+      [
+        400,
+        280,
+        10,
+        120
+      ]
+    ],
+    "reference": "8.3",
+    "figure": "8.13",
+    "pdf": 312,
+    "printed": 296,
+    "title": "Right hip bone, lateral view",
+    "points": [
+      [
+        "iliac crest",
+        388,
+        210
+      ],
+      [
+        "anterior superior iliac spine",
+        397,
+        253
+      ],
+      [
+        "anterior inferior iliac spine",
+        340,
+        341
+      ],
+      [
+        "posterior superior iliac spine",
+        100,
+        281
+      ],
+      [
+        "posterior inferior iliac spine",
+        147,
+        355
+      ],
+      [
+        "greater sciatic notch",
+        175,
+        359
+      ],
+      [
+        "acetabulum",
+        264,
+        404
+      ],
+      [
+        "ischial spine",
+        168,
+        441
+      ],
+      [
+        "lesser sciatic notch",
+        163,
+        480
+      ],
+      [
+        "ischial tuberosity",
+        178,
+        542
+      ],
+      [
+        "ischial ramus",
+        245,
+        542
+      ],
+      [
+        "obturator foramen",
+        264,
+        501
+      ],
+      [
+        "pubic body",
+        317,
+        486
+      ],
+      [
+        "superior pubic ramus",
+        300,
+        445
+      ],
+      [
+        "inferior pubic ramus",
+        309,
+        522
+      ]
+    ],
+    "pointNotes": {
+      "ischial ramus": "Reference point on the anteriorly directed ramus of the ischium, one part of the ischiopubic ramus."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-hip-medial": {
+    "image": "lm8-p312-0",
+    "size": [
+      974,
+      700
+    ],
+    "crop": [
+      540,
+      125,
+      327,
+      455
+    ],
+    "masks": [
+      [
+        825,
+        350,
+        42,
+        230
+      ],
+      [
+        540,
+        410,
+        30,
+        42
+      ],
+      [
+        540,
+        487,
+        12,
+        40
+      ],
+      [
+        540,
+        395,
+        18,
+        30
+      ]
+    ],
+    "reference": "8.3",
+    "figure": "8.13",
+    "pdf": 312,
+    "printed": 296,
+    "title": "Right hip bone, medial view",
+    "points": [
+      [
+        "iliac fossa",
+        681,
+        248
+      ],
+      [
+        "arcuate line of the ilium",
+        659,
+        343
+      ],
+      [
+        "auricular surface of the ilium",
+        774,
+        314
+      ],
+      [
+        "posterior superior iliac spine",
+        858,
+        267
+      ],
+      [
+        "posterior inferior iliac spine",
+        818,
+        344
+      ],
+      [
+        "greater sciatic notch",
+        773,
+        354
+      ],
+      [
+        "ischial spine",
+        765,
+        445
+      ],
+      [
+        "lesser sciatic notch",
+        752,
+        477
+      ],
+      [
+        "ischial tuberosity",
+        724,
+        547
+      ],
+      [
+        "ischial ramus",
+        674,
+        561
+      ],
+      [
+        "obturator foramen",
+        673,
+        518
+      ],
+      [
+        "pubic tubercle",
+        564,
+        474
+      ],
+      [
+        "pubic body",
+        580,
+        498
+      ],
+      [
+        "superior pubic ramus",
+        601,
+        448
+      ],
+      [
+        "inferior pubic ramus",
+        636,
+        527
+      ],
+      [
+        "articular surface of the pubis",
+        581,
+        498
+      ]
+    ],
+    "pointNotes": {
+      "arcuate line of the ilium": "Representative point on the curved internal ridge, one component of the pelvic brim.",
+      "articular surface of the pubis": "The symphyseal articular surface on one hip bone, not the complete pubic symphysis joint."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-pelvic-openings": {
+    "image": "lm8-p313-0",
+    "size": [
+      873,
+      523
+    ],
+    "crop": [
+      105,
+      0,
+      665,
+      500
+    ],
+    "masks": [
+      [
+        395,
+        460,
+        75,
+        40
+      ],
+      [
+        535,
+        480,
+        200,
+        20
+      ],
+      [
+        730,
+        275,
+        40,
+        48
+      ],
+      [
+        730,
+        355,
+        40,
+        55
+      ],
+      [
+        730,
+        415,
+        40,
+        60
+      ],
+      [
+        190,
+        477,
+        100,
+        23
+      ],
+      [
+        105,
+        385,
+        12,
+        25
+      ],
+      [
+        105,
+        265,
+        15,
+        35
+      ]
+    ],
+    "reference": "8.3",
+    "figure": "8.14",
+    "pdf": 313,
+    "printed": 297,
+    "title": "Pelvis with posterior ligaments",
+    "points": [
+      [
+        "greater sciatic foramen",
+        552,
+        205
+      ],
+      [
+        "lesser sciatic foramen",
+        546,
+        368
+      ],
+      [
+        "ischial spine",
+        319,
+        294
+      ],
+      [
+        "ischial tuberosity",
+        282,
+        433
+      ],
+      [
+        "obturator foramen",
+        340,
+        382
+      ],
+      [
+        "subpubic angle",
+        430,
+        419
+      ],
+      [
+        "ischiopubic ramus",
+        494,
+        457
+      ],
+      [
+        "pubic arch",
+        431,
+        408
+      ]
+    ],
+    "pointNotes": {
+      "greater sciatic foramen": "Space bounded jointly by bone and the sacrospinous/sacrotuberous ligaments; not an isolated hole in the hip bone.",
+      "lesser sciatic foramen": "Space bounded jointly by bone and the sacrospinous/sacrotuberous ligaments.",
+      "subpubic angle": "Reference point inside the angle formed beneath the pubic symphysis; not an isolated bony bump.",
+      "pubic arch": "Reference point at the apex of the arch formed by the pubic bodies and inferior rami; not the full extent of the arch."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-femur-anterior": {
+    "image": "lm8-p317-0",
+    "size": [
+      824,
+      1289
+    ],
+    "crop": [
+      90,
+      375,
+      240,
+      760
+    ],
+    "masks": [
+      [
+        90,
+        375,
+        35,
+        30
+      ],
+      [
+        90,
+        1010,
+        35,
+        55
+      ]
+    ],
+    "reference": "8.4",
+    "figure": "8.16",
+    "pdf": 317,
+    "printed": 301,
+    "title": "Right femur, anterior view",
+    "points": [
+      [
+        "head of the femur",
+        181,
+        410
+      ],
+      [
+        "neck of the femur",
+        182,
+        460
+      ],
+      [
+        "greater trochanter",
+        106,
+        456
+      ],
+      [
+        "lesser trochanter",
+        187,
+        515
+      ],
+      [
+        "intertrochanteric line",
+        156,
+        488
+      ],
+      [
+        "shaft of the femur",
+        211,
+        813
+      ],
+      [
+        "adductor tubercle",
+        303,
+        1033
+      ],
+      [
+        "lateral epicondyle of the femur",
+        184,
+        1060
+      ],
+      [
+        "medial epicondyle of the femur",
+        321,
+        1074
+      ]
+    ],
+    "pointNotes": {
+      "intertrochanteric line": "Representative point along the anterior line between the trochanters; not the posterior intertrochanteric crest."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-femur-posterior": {
+    "image": "lm8-p317-0",
+    "size": [
+      824,
+      1289
+    ],
+    "crop": [
+      485,
+      375,
+      240,
+      770
+    ],
+    "masks": [
+      [
+        680,
+        375,
+        45,
+        30
+      ],
+      [
+        680,
+        1070,
+        45,
+        75
+      ],
+      [
+        680,
+        980,
+        45,
+        70
+      ],
+      [
+        485,
+        530,
+        50,
+        85
+      ],
+      [
+        485,
+        790,
+        25,
+        50
+      ],
+      [
+        485,
+        650,
+        30,
+        40
+      ]
+    ],
+    "reference": "8.4",
+    "figure": "8.16",
+    "pdf": 317,
+    "printed": 301,
+    "title": "Right femur, posterior view",
+    "points": [
+      [
+        "head of the femur",
+        598,
+        410
+      ],
+      [
+        "neck of the femur",
+        641,
+        460
+      ],
+      [
+        "greater trochanter",
+        713,
+        441
+      ],
+      [
+        "lesser trochanter",
+        647,
+        535
+      ],
+      [
+        "intertrochanteric crest",
+        697,
+        475
+      ],
+      [
+        "gluteal tuberosity",
+        683,
+        545
+      ],
+      [
+        "linea aspera",
+        619,
+        701
+      ],
+      [
+        "shaft of the femur",
+        602,
+        813
+      ],
+      [
+        "medial epicondyle of the femur",
+        500,
+        1081
+      ],
+      [
+        "lateral epicondyle of the femur",
+        642,
+        1074
+      ],
+      [
+        "medial condyle of the femur",
+        530,
+        1104
+      ],
+      [
+        "lateral condyle of the femur",
+        613,
+        1101
+      ],
+      [
+        "intercondylar fossa",
+        575,
+        1074
+      ]
+    ],
+    "pointNotes": {
+      "linea aspera": "Representative point on the long posterior ridge; the feature extends along the shaft."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-leg-anterior": {
+    "image": "lm8-p320-0",
+    "size": [
+      1698,
+      2100
+    ],
+    "crop": [
+      375,
+      440,
+      320,
+      1530
+    ],
+    "masks": [],
+    "reference": "8.4",
+    "figure": "8.18",
+    "pdf": 320,
+    "printed": 304,
+    "title": "Right leg, anterior view",
+    "points": [
+      [
+        "lateral condyle of the tibia",
+        428,
+        548
+      ],
+      [
+        "medial condyle of the tibia",
+        670,
+        541
+      ],
+      [
+        "intercondylar eminence",
+        542,
+        465
+      ],
+      [
+        "tibial tuberosity",
+        558,
+        674
+      ],
+      [
+        "anterior border of the tibia",
+        537,
+        950
+      ],
+      [
+        "shaft of the tibia",
+        542,
+        1402
+      ],
+      [
+        "shaft of the fibula",
+        419,
+        1402
+      ],
+      [
+        "interosseous border of the tibia",
+        497,
+        1165
+      ],
+      [
+        "interosseous border of the fibula",
+        451,
+        1165
+      ],
+      [
+        "medial malleolus",
+        591,
+        1830
+      ],
+      [
+        "lateral malleolus",
+        425,
+        1872
+      ],
+      [
+        "inferior articular surface of the tibia",
+        533,
+        1895
+      ]
+    ],
+    "pointNotes": {
+      "intercondylar eminence": "Visibly verified raised central eminence between the tibial condyles; source prose on PDF320.",
+      "interosseous border of the tibia": "Representative lateral tibial border at the interosseous-membrane attachment.",
+      "interosseous border of the fibula": "Representative medial fibular border at the interosseous-membrane attachment.",
+      "inferior articular surface of the tibia": "Distal tibial surface that articulates with the talus."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-leg-posterior": {
+    "image": "lm8-p320-0",
+    "size": [
+      1698,
+      2100
+    ],
+    "crop": [
+      1005,
+      440,
+      370,
+      1520
+    ],
+    "masks": [
+      [
+        1005,
+        440,
+        28,
+        30
+      ],
+      [
+        1005,
+        1780,
+        15,
+        30
+      ]
+    ],
+    "reference": "8.4",
+    "figure": "8.18",
+    "pdf": 320,
+    "printed": 304,
+    "title": "Right leg, posterior view",
+    "points": [
+      [
+        "articular surface of the medial tibial condyle",
+        1079,
+        489
+      ],
+      [
+        "articular surface of the lateral tibial condyle",
+        1238,
+        481
+      ],
+      [
+        "medial condyle of the tibia",
+        1055,
+        562
+      ],
+      [
+        "head of the fibula",
+        1314,
+        599
+      ],
+      [
+        "soleal line",
+        1190,
+        701
+      ],
+      [
+        "shaft of the tibia",
+        1160,
+        1401
+      ],
+      [
+        "shaft of the fibula",
+        1293,
+        1402
+      ],
+      [
+        "medial malleolus",
+        1100,
+        1830
+      ],
+      [
+        "lateral malleolus",
+        1309,
+        1861
+      ],
+      [
+        "inferior articular surface of the tibia",
+        1175,
+        1900
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-foot-medial": {
+    "image": "lm8-p321-0",
+    "size": [
+      2232,
+      1640
+    ],
+    "crop": [
+      900,
+      225,
+      1110,
+      390
+    ],
+    "masks": [
+      [
+        930,
+        280,
+        240,
+        95
+      ],
+      [
+        1100,
+        225,
+        250,
+        60
+      ],
+      [
+        900,
+        345,
+        285,
+        50
+      ],
+      [
+        1660,
+        225,
+        100,
+        25
+      ],
+      [
+        1930,
+        275,
+        80,
+        100
+      ],
+      [
+        1370,
+        550,
+        210,
+        65
+      ],
+      [
+        1620,
+        550,
+        170,
+        65
+      ],
+      [
+        1950,
+        225,
+        60,
+        25
+      ],
+      [
+        1620,
+        575,
+        80,
+        40
+      ]
+    ],
+    "reference": "8.4",
+    "figure": "8.19",
+    "pdf": 321,
+    "printed": 305,
+    "title": "Right foot, medial view",
+    "points": [
+      [
+        "sustentaculum tali",
+        1768,
+        430
+      ],
+      [
+        "facet for medial malleolus",
+        1797,
+        278
+      ],
+      [
+        "calcaneal tuberosity",
+        1900,
+        551
+      ],
+      [
+        "base of the metatarsal bone",
+        1450,
+        433
+      ],
+      [
+        "head of the metatarsal bone",
+        1200,
+        485
+      ],
+      [
+        "shaft of the metatarsal bone",
+        1320,
+        459
+      ]
+    ],
+    "pointNotes": {
+      "calcaneal tuberosity": "Representative point on the posterior inferior heel prominence; source bracket spans the tuberosity.",
+      "base of the metatarsal bone": "Representative first metatarsal, proximal end next to the medial cuneiform.",
+      "head of the metatarsal bone": "Representative first metatarsal, distal rounded end at the first metatarsophalangeal joint."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-foot-superior": {
+    "image": "lm8-p321-0",
+    "size": [
+      2232,
+      1640
+    ],
+    "crop": [
+      225,
+      510,
+      405,
+      1050
+    ],
+    "masks": [],
+    "reference": "8.4",
+    "figure": "8.19",
+    "pdf": 321,
+    "printed": 305,
+    "title": "Right foot, superior view",
+    "points": [
+      [
+        "trochlea of the talus",
+        352,
+        1344
+      ],
+      [
+        "base of the fifth metatarsal",
+        562,
+        1158
+      ]
+    ],
+    "pointNotes": {
+      "trochlea of the talus": "Superior pulley-like talar articular surface beneath the tibia.",
+      "base of the fifth metatarsal": "Lateral expansion at the proximal fifth metatarsal; not its distal head."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-hamate-hook": {
+    "image": "lm8-p308-1",
+    "size": [
+      1277,
+      893
+    ],
+    "crop": [
+      350,
+      575,
+      570,
+      318
+    ],
+    "masks": [],
+    "reference": "8.2",
+    "figure": "8.9",
+    "pdf": 308,
+    "printed": 292,
+    "title": "Wrist cross-section: palmar hook of hamate",
+    "points": [
+      [
+        "hook of the hamate bone",
+        497,
+        687
+      ]
+    ],
+    "pointNotes": {
+      "hook of the hamate bone": "Reference point inside the palmar projection of the hamate beneath the ulnar attachment of the flexor retinaculum. The source separately labels the hamate body; this pin does not outline the complete hook."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source-authored leader endpoint or visibly identified feature"
+  },
+  "lm8-pelvic-spaces": {
+    "image": "lm8-p314-0",
+    "size": [
+      956,
+      448
+    ],
+    "crop": [
+      0,
+      20,
+      480,
+      385
+    ],
+    "masks": [
+      [
+        395,
+        260,
+        85,
+        135
+      ]
+    ],
+    "reference": "8.3",
+    "figure": "8.15",
+    "pdf": 314,
+    "printed": 298,
+    "title": "Pelvic spaces and brim: female pelvis",
+    "points": [
+      [
+        "pelvic brim",
+        351,
+        232
+      ],
+      [
+        "pelvic inlet",
+        240,
+        235
+      ],
+      [
+        "greater pelvis",
+        230,
+        80
+      ],
+      [
+        "lesser pelvis",
+        230,
+        315
+      ],
+      [
+        "pelvic outlet",
+        230,
+        341
+      ]
+    ],
+    "pointNotes": {
+      "pelvic brim": "Representative point on the red boundary around the inlet. The brim is a continuous composite boundary, not a single bone landmark.",
+      "pelvic inlet": "Reference point inside the inlet bounded by the red pelvic brim; not a physical surface point.",
+      "greater pelvis": "Conceptual reference point above the brim and between the iliac wings; not a bony point.",
+      "lesser pelvis": "Conceptual reference point in the cavity inferior to the brim; not a bony point.",
+      "pelvic outlet": "Conceptual reference near the outlet. Its full oblique boundary is not visible in this anterior projection; study the definition and 3D context rather than grading this point."
+    },
+    "assessment": "learn-only",
+    "source": "Source Figure8.15 plus section8.3 prose on PDF314. Pelvic spaces shown as conceptual reference regions, not source-authored point labels or physical surface anchors."
+  },
+  "lm8-medial-arch-context": {
+    "image": "lm8-p321-0",
+    "size": [
+      2232,
+      1640
+    ],
+    "crop": [
+      900,
+      225,
+      1110,
+      390
+    ],
+    "masks": [],
+    "reference": "8.4",
+    "figure": "8.19",
+    "pdf": 321,
+    "printed": 305,
+    "title": "Medial longitudinal arch: source foot profile",
+    "points": [],
+    "contexts": [
+      "Medial longitudinal arch"
+    ],
+    "pointNotes": {
+      "Medial longitudinal arch": "The medial longitudinal arch follows the medial tarsal/metatarsal profile and is taller than the lateral arch. The source profile is shown; the textbook does not draw an arch curve or exact point marker. Study the supported contour rather than grading a guessed dot."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Figure8.19, PDF321; arch definitions in section8.4 prose on PDF322-323. Context illustration only, not source-drawn arch curves."
+  },
+  "lm8-lateral-arch-context": {
+    "image": "lm8-p321-0",
+    "size": [
+      2232,
+      1640
+    ],
+    "crop": [
+      900,
+      1040,
+      1130,
+      500
+    ],
+    "masks": [],
+    "reference": "8.4",
+    "figure": "8.19",
+    "pdf": 321,
+    "printed": 305,
+    "title": "Lateral longitudinal arch: source foot profile",
+    "points": [],
+    "contexts": [
+      "Lateral longitudinal arch"
+    ],
+    "pointNotes": {
+      "Lateral longitudinal arch": "The lateral longitudinal arch runs along the relatively low lateral foot profile. The source figure shows its bony context without a drawn arch curve. This is a conceptual contour reference, not a point target."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Figure8.19, PDF321; arch definitions in section8.4 prose on PDF322-323. Context illustration only, not source-drawn arch curves."
+  },
+  "lm8-transverse-arch-context": {
+    "image": "lm8-p321-0",
+    "size": [
+      2232,
+      1640
+    ],
+    "crop": [
+      225,
+      510,
+      405,
+      1050
+    ],
+    "masks": [],
+    "reference": "8.4",
+    "figure": "8.19",
+    "pdf": 321,
+    "printed": 305,
+    "title": "Transverse arch of foot: source foot profile",
+    "points": [],
+    "contexts": [
+      "Transverse arch of foot"
+    ],
+    "pointNotes": {
+      "Transverse arch of foot": "The transverse arch spans medial-to-lateral across the midfoot, supported by cuneiforms and metatarsal bases. This superior view shows contributing bones but does not expose arch height. No guessed pin or curve is shown."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Figure8.19, PDF321; arch definitions in section8.4 prose on PDF322-323. Context illustration only, not source-drawn arch curves."
+  },
+  "lm8-cuboid-groove-context": {
+    "image": "lm8-p321-0",
+    "size": [
+      2232,
+      1640
+    ],
+    "crop": [
+      900,
+      1040,
+      1130,
+      500
+    ],
+    "masks": [],
+    "reference": "8.4",
+    "figure": "8.19",
+    "pdf": 321,
+    "printed": 305,
+    "title": "Cuboid in lateral foot context",
+    "points": [],
+    "contexts": [
+      "Inferior tendon groove of cuboid"
+    ],
+    "pointNotes": {
+      "Inferior tendon groove of cuboid": "The groove lies on the inferior cuboid and carries the fibularis longus tendon. The source describes it in prose; this lateral profile does not expose the inferior groove. Study its relationship to the cuboid, without a guessed point marker."
+    },
+    "assessment": "learn-only"
+  },
+  "lm6-long-proximal": {
+    "image": "lm6-long",
+    "size": [
+      1066,
+      1800
+    ],
+    "crop": [
+      330,
+      0,
+      390,
+      550
+    ],
+    "masks": [
+      [
+        665,
+        250,
+        55,
+        300
+      ]
+    ],
+    "reference": "6.3",
+    "figure": "6.7",
+    "pdf": 219,
+    "printed": 203,
+    "title": "Long-bone teaching section: proximal end",
+    "points": [
+      [
+        "Articular cartilage",
+        634,
+        26
+      ],
+      [
+        "Epiphysis",
+        530,
+        118
+      ],
+      [
+        "Metaphysis",
+        440,
+        260
+      ],
+      [
+        "Spongy bone",
+        501,
+        144
+      ],
+      [
+        "Epiphyseal line",
+        488,
+        214
+      ],
+      [
+        "Medullary cavity",
+        446,
+        480
+      ],
+      [
+        "Compact bone",
+        502,
+        547
+      ]
+    ],
+    "pointNotes": {
+      "Epiphysis": "Representative point within the expanded proximal end.",
+      "Metaphysis": "Representative point in the transition between the epiphysis and diaphysis."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm6-long-shaft": {
+    "image": "lm6-long",
+    "size": [
+      1066,
+      1800
+    ],
+    "crop": [
+      330,
+      320,
+      200,
+      1040
+    ],
+    "masks": [],
+    "reference": "6.3",
+    "figure": "6.7",
+    "pdf": 219,
+    "printed": 203,
+    "title": "Long-bone teaching section: shaft",
+    "points": [
+      [
+        "Diaphysis",
+        430,
+        700
+      ],
+      [
+        "Medullary cavity",
+        440,
+        480
+      ],
+      [
+        "Endosteum",
+        479,
+        842
+      ],
+      [
+        "Periosteum",
+        400,
+        984
+      ],
+      [
+        "Compact bone",
+        494,
+        705
+      ]
+    ],
+    "pointNotes": {
+      "Diaphysis": "Representative point on the shaft; the diaphysis is an extended region.",
+      "Endosteum": "The thin lining of the medullary cavity; the target is on the inner surface, not on the periosteum."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm6-flat-diploe": {
+    "image": "lm6-flat",
+    "size": [
+      812,
+      411
+    ],
+    "crop": [
+      140,
+      160,
+      660,
+      245
+    ],
+    "masks": [
+      [
+        680,
+        340,
+        120,
+        65
+      ]
+    ],
+    "reference": "6.3",
+    "figure": "6.9",
+    "pdf": 220,
+    "printed": 204,
+    "title": "Flat-bone cross-section",
+    "points": [
+      [
+        "Diploe",
+        588,
+        325
+      ],
+      [
+        "Compact bone",
+        695,
+        227
+      ],
+      [
+        "Periosteum",
+        146,
+        240
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm6-osteon": {
+    "image": "lm6-micro",
+    "size": [
+      1413,
+      1664
+    ],
+    "crop": [
+      280,
+      90,
+      935,
+      835
+    ],
+    "masks": [
+      [
+        280,
+        300,
+        70,
+        65
+      ],
+      [
+        280,
+        865,
+        420,
+        60
+      ],
+      [
+        910,
+        125,
+        300,
+        85
+      ],
+      [
+        979,
+        215,
+        236,
+        50
+      ],
+      [
+        480,
+        90,
+        150,
+        40
+      ],
+      [
+        1145,
+        710,
+        70,
+        55
+      ],
+      [
+        280,
+        810,
+        135,
+        75
+      ]
+    ],
+    "reference": "6.3",
+    "figure": "6.12",
+    "pdf": 225,
+    "printed": 209,
+    "title": "Compact-bone microanatomy",
+    "points": [
+      [
+        "Concentric lamellae",
+        803,
+        215
+      ],
+      [
+        "Osteon",
+        837,
+        401
+      ],
+      [
+        "Perforating canal",
+        435,
+        641
+      ],
+      [
+        "Central canal",
+        515,
+        683
+      ]
+    ],
+    "pointNotes": {
+      "Osteon": "Representative point within one complete concentric structural unit, outlined by the source.",
+      "Perforating canal": "Transverse channel carrying vessels across adjacent osteons; target marks the channel around these vessels, not a separate vessel name.",
+      "Central canal": "Longitudinal canal within an osteon; target marks the channel around the vascular bundle."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm6-trabecular-detail": {
+    "image": "lm6-spongy",
+    "size": [
+      1119,
+      743
+    ],
+    "crop": [
+      580,
+      250,
+      330,
+      490
+    ],
+    "masks": [
+      [
+        880,
+        335,
+        30,
+        44
+      ],
+      [
+        880,
+        425,
+        30,
+        40
+      ],
+      [
+        880,
+        490,
+        30,
+        38
+      ],
+      [
+        880,
+        560,
+        30,
+        70
+      ]
+    ],
+    "reference": "6.3",
+    "figure": "6.13",
+    "pdf": 226,
+    "printed": 210,
+    "title": "Spongy-bone microanatomy",
+    "points": [
+      [
+        "Lacunae",
+        797,
+        356
+      ],
+      [
+        "Canaliculi",
+        833,
+        622
+      ],
+      [
+        "Trabeculae",
+        676,
+        414
+      ]
+    ],
+    "pointNotes": {
+      "Lacunae": "One osteocyte-containing lacuna, shown as a small elongated space in the trabecular matrix.",
+      "Canaliculi": "One set of fine channels connecting lacunae; this point is not an entire trabecular strut.",
+      "Trabeculae": "Representative point in the magnified trabecular section; see the accompanying broader inset for the network."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm6-nutrient-opening": {
+    "image": "lm6-blood",
+    "size": [
+      1087,
+      1620
+    ],
+    "crop": [
+      390,
+      600,
+      280,
+      580
+    ],
+    "masks": [],
+    "reference": "6.3",
+    "figure": "6.15",
+    "pdf": 227,
+    "printed": 211,
+    "title": "Long-bone vascular entry",
+    "points": [
+      [
+        "Nutrient foramen",
+        501,
+        863
+      ]
+    ],
+    "pointNotes": {
+      "Nutrient foramen": "Opening where nutrient vessels enter the shaft, shown at the source leader endpoint."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm6-growth-plate": {
+    "image": "lm6-p233-0",
+    "size": [
+      790,
+      625
+    ],
+    "crop": [
+      85,
+      95,
+      125,
+      425
+    ],
+    "masks": [
+      [
+        85,
+        230,
+        20,
+        110
+      ]
+    ],
+    "reference": "6.4",
+    "figure": "6.19",
+    "pdf": 233,
+    "printed": 217,
+    "title": "Growing femur: epiphyseal plate",
+    "points": [
+      [
+        "Epiphyseal plate",
+        143,
+        140
+      ]
+    ],
+    "pointNotes": {
+      "Epiphyseal plate": "Growing-bone cartilage plate; this is a developmental teaching diagram rather than an adult 3D skeleton feature."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm6-growth-line": {
+    "image": "lm6-p233-0",
+    "size": [
+      790,
+      625
+    ],
+    "crop": [
+      590,
+      0,
+      115,
+      520
+    ],
+    "masks": [
+      [
+        680,
+        210,
+        25,
+        60
+      ]
+    ],
+    "reference": "6.4",
+    "figure": "6.19",
+    "pdf": 233,
+    "printed": 217,
+    "title": "Mature femur: epiphyseal line",
+    "points": [
+      [
+        "Epiphyseal line",
+        630,
+        52
+      ]
+    ],
+    "pointNotes": {
+      "Epiphyseal line": "Remnant of the former growth plate in the mature femur; preserve the developmental distinction."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-cranial-fossae": {
+    "image": "lm7-fossae",
+    "size": [
+      629,
+      841
+    ],
+    "crop": [
+      125,
+      0,
+      300,
+      390
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.6",
+    "pdf": 257,
+    "printed": 241,
+    "title": "Cranial base, superior view",
+    "points": [
+      [
+        "Anterior cranial fossa",
+        325,
+        67
+      ],
+      [
+        "Middle cranial fossa",
+        387,
+        177
+      ],
+      [
+        "Posterior cranial fossa",
+        329,
+        307
+      ]
+    ],
+    "pointNotes": {
+      "Anterior cranial fossa": "Reference point on the floor of this extended depression, not its complete boundary.",
+      "Middle cranial fossa": "Reference point on the floor of this extended depression.",
+      "Posterior cranial fossa": "Reference point on the floor of this extended depression."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-cranial-space": {
+    "image": "lm7-midline",
+    "size": [
+      1800,
+      1244
+    ],
+    "crop": [
+      290,
+      0,
+      1200,
+      1230
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.11",
+    "pdf": 262,
+    "printed": 246,
+    "title": "Cranial cavity and cranial roof, sagittal section",
+    "points": [
+      [
+        "Cranial cavity",
+        717,
+        336
+      ],
+      [
+        "Calvaria",
+        645,
+        68
+      ],
+      [
+        "Cranial base",
+        650,
+        792
+      ]
+    ],
+    "pointNotes": {
+      "Cranial cavity": "Reference point within the intracranial space; this is not a bony surface landmark.",
+      "Calvaria": "Reference point on the cranial roof; the calvaria extends over several bones.",
+      "Cranial base": "Reference point on the skull floor; the complete cranial base includes multiple bones."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-inferior-base-extra": {
+    "image": "skull-base",
+    "size": [
+      1327,
+      1800
+    ],
+    "crop": [
+      350,
+      35,
+      600,
+      845
+    ],
+    "masks": [
+      [
+        370,
+        120,
+        85,
+        44
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.8",
+    "pdf": 259,
+    "printed": 243,
+    "title": "Cranial base, inferior view",
+    "points": [
+      [
+        "Palatine process of maxilla",
+        696,
+        156
+      ],
+      [
+        "Horizontal plate of palatine bone",
+        701,
+        278
+      ],
+      [
+        "Lateral pterygoid plate",
+        784,
+        338
+      ],
+      [
+        "Medial pterygoid plate",
+        735,
+        373
+      ],
+      [
+        "Articular tubercle",
+        880,
+        400
+      ],
+      [
+        "Foramen ovale of the middle cranial fossa",
+        785,
+        410
+      ],
+      [
+        "Foramen spinosum",
+        532,
+        425
+      ],
+      [
+        "Foramen lacerum",
+        618,
+        434
+      ],
+      [
+        "Stylomastoid foramen",
+        847,
+        485
+      ],
+      [
+        "Superior nuchal line",
+        606,
+        817
+      ],
+      [
+        "External occipital protuberance",
+        675,
+        817
+      ]
+    ],
+    "pointNotes": {
+      "Lateral pterygoid plate": "Lateral lamina of the pterygoid process; source shows the paired medial/lateral plates.",
+      "Medial pterygoid plate": "Medial lamina of the pterygoid process.",
+      "Foramen lacerum": "Reference point at the opening in a dry skull. In life, the foramen is largely filled with cartilage; the internal carotid artery passes over its superior aspect rather than traversing the cartilage-filled hole.",
+      "Superior nuchal line": "Representative point on the ridge; trace its full course in the source."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-superior-base-extra": {
+    "image": "skull-base",
+    "size": [
+      1327,
+      1800
+    ],
+    "crop": [
+      380,
+      990,
+      570,
+      765
+    ],
+    "masks": [
+      [
+        380,
+        1180,
+        35,
+        60
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.8",
+    "pdf": 259,
+    "printed": 243,
+    "title": "Cranial base, superior view",
+    "points": [
+      [
+        "Crista galli",
+        680,
+        1118
+      ],
+      [
+        "Cribriform plate",
+        679,
+        1175
+      ],
+      [
+        "Hypophyseal fossa",
+        660,
+        1310
+      ],
+      [
+        "Foramen rotundum",
+        588,
+        1306
+      ],
+      [
+        "Foramen ovale of the middle cranial fossa",
+        571,
+        1350
+      ],
+      [
+        "Foramen spinosum",
+        556,
+        1367
+      ],
+      [
+        "Internal acoustic meatus",
+        577,
+        1428
+      ],
+      [
+        "Hypoglossal canal",
+        615,
+        1472
+      ],
+      [
+        "Petrous portion of temporal bone",
+        758,
+        1469
+      ],
+      [
+        "Petrous ridge",
+        762,
+        1457
+      ]
+    ],
+    "pointNotes": {
+      "Petrous ridge": "Representative point on the superior ridge of the petrous portion; the ridge and the whole petrous region are different extents.",
+      "Hypophyseal fossa": "The depression within the larger sella turcica, not the entire saddle-shaped sella."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-sphenoid-superior-extra": {
+    "image": "sphenoid",
+    "size": [
+      634,
+      820
+    ],
+    "crop": [
+      90,
+      110,
+      435,
+      240
+    ],
+    "masks": [
+      [
+        90,
+        280,
+        50,
+        60
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.10",
+    "pdf": 261,
+    "printed": 245,
+    "title": "Sphenoid, superior view",
+    "points": [
+      [
+        "Body of sphenoid",
+        308,
+        314
+      ],
+      [
+        "Greater wings of sphenoid",
+        184,
+        220
+      ],
+      [
+        "Lesser wings of sphenoid",
+        415,
+        177
+      ],
+      [
+        "Foramen rotundum",
+        379,
+        242
+      ],
+      [
+        "Foramen ovale of the middle cranial fossa",
+        397,
+        291
+      ],
+      [
+        "Foramen spinosum",
+        430,
+        316
+      ],
+      [
+        "Superior orbital fissure",
+        392,
+        218
+      ],
+      [
+        "Hypophyseal fossa",
+        309,
+        266
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-sphenoid-pterygoid": {
+    "image": "sphenoid",
+    "size": [
+      634,
+      820
+    ],
+    "crop": [
+      90,
+      500,
+      440,
+      280
+    ],
+    "masks": [
+      [
+        90,
+        575,
+        90,
+        35
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.10",
+    "pdf": 261,
+    "printed": 245,
+    "title": "Sphenoid, posterior view",
+    "points": [
+      [
+        "Pterygoid process of sphenoid",
+        367,
+        708
+      ],
+      [
+        "Medial pterygoid plate",
+        373,
+        752
+      ],
+      [
+        "Lateral pterygoid plate",
+        399,
+        723
+      ]
+    ],
+    "pointNotes": {
+      "Pterygoid process of sphenoid": "Reference point on the process that descends from the sphenoid; its medial and lateral plates remain separate named targets."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-temporal-extra": {
+    "image": "temporal",
+    "size": [
+      774,
+      555
+    ],
+    "crop": [
+      125,
+      95,
+      555,
+      420
+    ],
+    "masks": [
+      [
+        670,
+        220,
+        104,
+        75
+      ],
+      [
+        605,
+        475,
+        169,
+        70
+      ],
+      [
+        125,
+        435,
+        35,
+        70
+      ],
+      [
+        125,
+        95,
+        85,
+        100
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.7",
+    "pdf": 258,
+    "printed": 242,
+    "title": "Right temporal bone, lateral view",
+    "points": [
+      [
+        "Squamous portion of temporal bone",
+        517,
+        215
+      ],
+      [
+        "Mastoid portion of temporal bone",
+        278,
+        383
+      ],
+      [
+        "Articular tubercle",
+        527,
+        347
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-skull-lateral-extra": {
+    "image": "skull-side",
+    "size": [
+      1500,
+      1029
+    ],
+    "crop": [
+      245,
+      25,
+      1015,
+      955
+    ],
+    "masks": [
+      [
+        765,
+        0,
+        215,
+        55
+      ],
+      [
+        930,
+        45,
+        127,
+        45
+      ],
+      [
+        640,
+        850,
+        130,
+        47
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.5",
+    "pdf": 256,
+    "printed": 240,
+    "title": "Right skull, lateral view",
+    "points": [
+      [
+        "Pterion",
+        863,
+        379
+      ],
+      [
+        "Squamous suture",
+        680,
+        375
+      ],
+      [
+        "Temporal process of the zygomatic bone",
+        984,
+        565
+      ],
+      [
+        "Zygomatic arch",
+        884,
+        565
+      ],
+      [
+        "Squamous portion of temporal bone",
+        679,
+        442
+      ],
+      [
+        "Mastoid portion of temporal bone",
+        568,
+        646
+      ],
+      [
+        "Articular tubercle",
+        916,
+        655
+      ],
+      [
+        "Mental protuberance",
+        1214,
+        917
+      ]
+    ],
+    "pointNotes": {
+      "Zygomatic arch": "Representative point on the arch; the arch is formed by temporal and zygomatic contributions.",
+      "Temporal process of the zygomatic bone": "Zygomatic contribution to the arch; distinguish it from the zygomatic process of temporal bone."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-skull-fossae-lateral": {
+    "image": "skull-side",
+    "size": [
+      1500,
+      1029
+    ],
+    "crop": [
+      245,
+      25,
+      1015,
+      955
+    ],
+    "masks": [
+      [
+        765,
+        0,
+        215,
+        55
+      ],
+      [
+        930,
+        45,
+        127,
+        45
+      ],
+      [
+        640,
+        850,
+        130,
+        47
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.5",
+    "pdf": 256,
+    "printed": 240,
+    "title": "Skull fossae in lateral context",
+    "points": [
+      [
+        "Temporal fossa",
+        700,
+        450
+      ],
+      [
+        "Infratemporal fossa",
+        885,
+        665
+      ]
+    ],
+    "pointNotes": {
+      "Temporal fossa": "Broad depression on the lateral skull superior to the zygomatic arch. The point gives regional context, not a bounded surface outline.",
+      "Infratemporal fossa": "Deep space inferior to the arch and medial to the mandibular ramus. The ramus obscures much of the space in this intact lateral skull, so this is a context reference only."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-skull-anterior-extra": {
+    "image": "skull-front",
+    "size": [
+      1500,
+      1269
+    ],
+    "crop": [
+      345,
+      0,
+      800,
+      1190
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.4",
+    "pdf": 255,
+    "printed": 239,
+    "title": "Skull, anterior view",
+    "points": [
+      [
+        "Glabella",
+        729,
+        386
+      ],
+      [
+        "Supraorbital foramen",
+        566,
+        371
+      ],
+      [
+        "Supraorbital margin",
+        462,
+        417
+      ],
+      [
+        "Inferior orbital fissure",
+        992,
+        601
+      ],
+      [
+        "Infraorbital foramen",
+        895,
+        674
+      ],
+      [
+        "Orbit",
+        930,
+        465
+      ],
+      [
+        "Alveolar process of maxilla",
+        620,
+        831
+      ],
+      [
+        "Alveolar process of mandible",
+        852,
+        1020
+      ],
+      [
+        "Middle nasal concha",
+        775,
+        634
+      ],
+      [
+        "Nasal cavity",
+        750,
+        650
+      ]
+    ],
+    "pointNotes": {
+      "Orbit": "Reference point inside the bony orbit, a shared cavity made by seven bones.",
+      "Supraorbital margin": "Representative point on the upper orbital rim.",
+      "Nasal cavity": "Reference point within the anterior nasal aperture; not the entire posterior extent of the nasal cavity."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-ethmoid-extra": {
+    "image": "ethmoid",
+    "size": [
+      825,
+      637
+    ],
+    "crop": [
+      210,
+      60,
+      395,
+      530
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.12",
+    "pdf": 262,
+    "printed": 246,
+    "title": "Ethmoid bone, anterior view",
+    "points": [
+      [
+        "Crista galli",
+        404,
+        150
+      ],
+      [
+        "Superior nasal concha",
+        433,
+        330
+      ],
+      [
+        "Middle nasal concha",
+        464,
+        433
+      ],
+      [
+        "Perpendicular plate of ethmoid",
+        405,
+        483
+      ],
+      [
+        "Ethmoid air cells",
+        324,
+        291
+      ]
+    ],
+    "pointNotes": {
+      "Olfactory foramina": "Representative tiny perforation in the cribriform plate; these are the small holes, not the whole plate."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-orbit-detail": {
+    "image": "lm7-orbit",
+    "size": [
+      965,
+      457
+    ],
+    "crop": [
+      325,
+      0,
+      380,
+      455
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.16",
+    "pdf": 268,
+    "printed": 252,
+    "title": "Right orbit, anterior view",
+    "points": [
+      [
+        "Fossa for lacrimal sac",
+        641,
+        235
+      ],
+      [
+        "Supraorbital foramen",
+        539,
+        58
+      ],
+      [
+        "Supraorbital margin",
+        465,
+        79
+      ],
+      [
+        "Infraorbital foramen",
+        544,
+        335
+      ],
+      [
+        "Optic canal",
+        609,
+        186
+      ],
+      [
+        "Superior orbital fissure",
+        591,
+        205
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-maxilla-extra": {
+    "image": "maxilla",
+    "size": [
+      784,
+      601
+    ],
+    "crop": [
+      190,
+      60,
+      430,
+      490
+    ],
+    "masks": [
+      [
+        280,
+        70,
+        100,
+        50
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.14",
+    "pdf": 265,
+    "printed": 249,
+    "title": "Right maxilla, lateral view",
+    "points": [
+      [
+        "Zygomatic process of maxilla",
+        255,
+        328
+      ],
+      [
+        "Alveolar process of maxilla",
+        466,
+        429
+      ],
+      [
+        "Infraorbital foramen",
+        415,
+        270
+      ]
+    ],
+    "pointNotes": {
+      "Alveolus": "Representative tooth socket rim at the root of a visible maxillary tooth; the tooth conceals most of the socket in this image."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-mandible-extra": {
+    "image": "mandible",
+    "size": [
+      818,
+      627
+    ],
+    "crop": [
+      125,
+      165,
+      510,
+      355
+    ],
+    "masks": [
+      [
+        210,
+        220,
+        110,
+        80
+      ],
+      [
+        125,
+        495,
+        90,
+        25
+      ],
+      [
+        565,
+        165,
+        70,
+        30
+      ],
+      [
+        565,
+        235,
+        70,
+        40
+      ],
+      [
+        125,
+        490,
+        70,
+        30
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.15",
+    "pdf": 267,
+    "printed": 251,
+    "title": "Right mandible, lateral view with medial ramus",
+    "points": [
+      [
+        "Condylar process of mandible",
+        344,
+        199
+      ],
+      [
+        "Mandibular condyle",
+        160,
+        235
+      ],
+      [
+        "Mandibular notch",
+        274,
+        316
+      ],
+      [
+        "Lingula",
+        397,
+        255
+      ],
+      [
+        "Mylohyoid line",
+        430,
+        306
+      ],
+      [
+        "Alveolar process of mandible",
+        569,
+        409
+      ],
+      [
+        "Mental protuberance",
+        620,
+        441
+      ],
+      [
+        "Mental foramen",
+        529,
+        453
+      ],
+      [
+        "Angle of mandible",
+        227,
+        433
+      ],
+      [
+        "Ramus of mandible",
+        260,
+        380
+      ],
+      [
+        "Body of mandible",
+        422,
+        489
+      ]
+    ],
+    "pointNotes": {
+      "Condylar process of mandible": "Reference on the complete ascending condylar process; the articular mandibular condyle is only its head.",
+      "Body of mandible": "Representative point on the extended horizontal body.",
+      "Alveolar process of mandible": "Tooth-bearing ridge; distinguish it from an individual tooth socket."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-septum-extra": {
+    "image": "lm7-septum",
+    "size": [
+      1111,
+      749
+    ],
+    "crop": [
+      150,
+      0,
+      790,
+      700
+    ],
+    "masks": [
+      [
+        150,
+        240,
+        180,
+        45
+      ],
+      [
+        150,
+        325,
+        60,
+        72
+      ],
+      [
+        150,
+        407,
+        70,
+        33
+      ],
+      [
+        150,
+        560,
+        120,
+        65
+      ],
+      [
+        380,
+        75,
+        110,
+        35
+      ]
+    ],
+    "reference": "7.2",
+    "figure": "7.17",
+    "pdf": 269,
+    "printed": 253,
+    "title": "Nasal septum, sagittal section",
+    "points": [
+      [
+        "Nasal septum",
+        578,
+        357
+      ],
+      [
+        "Perpendicular plate of ethmoid",
+        581,
+        357
+      ],
+      [
+        "Palatine process of maxilla",
+        668,
+        555
+      ],
+      [
+        "Horizontal plate of palatine bone",
+        490,
+        585
+      ],
+      [
+        "Crista galli",
+        604,
+        217
+      ]
+    ],
+    "pointNotes": {
+      "Nasal septum": "Reference point on the bony septum; the complete septum includes perpendicular ethmoid plate, vomer and anterior cartilage."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-fontanelles-superior": {
+    "image": "fontanelles",
+    "size": [
+      1500,
+      505
+    ],
+    "crop": [
+      170,
+      0,
+      350,
+      440
+    ],
+    "masks": [],
+    "reference": "7.5",
+    "figure": "7.33",
+    "pdf": 285,
+    "printed": 269,
+    "title": "Newborn skull, superior view",
+    "points": [
+      [
+        "Anterior fontanelle",
+        347,
+        94
+      ],
+      [
+        "Posterior fontanelle",
+        344,
+        377
+      ]
+    ],
+    "pointNotes": {
+      "Anterior fontanelle": "Developmental fibrous gap in the newborn skull, not an adult bony foramen.",
+      "Posterior fontanelle": "Developmental fibrous gap in the newborn skull."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-fontanelles-lateral": {
+    "image": "fontanelles",
+    "size": [
+      1500,
+      505
+    ],
+    "crop": [
+      870,
+      20,
+      460,
+      380
+    ],
+    "masks": [
+      [
+        870,
+        70,
+        155,
+        75
+      ],
+      [
+        870,
+        300,
+        70,
+        40
+      ],
+      [
+        870,
+        40,
+        100,
+        35
+      ]
+    ],
+    "reference": "7.5",
+    "figure": "7.33",
+    "pdf": 285,
+    "printed": 269,
+    "title": "Newborn skull, lateral view",
+    "points": [
+      [
+        "Mastoid fontanelle",
+        997,
+        313
+      ],
+      [
+        "Sphenoidal fontanelle",
+        1174,
+        234
+      ],
+      [
+        "Posterior fontanelle",
+        886,
+        211
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-hyoid-regions": {
+    "image": "lm7-hyoid",
+    "size": [
+      727,
+      1138
+    ],
+    "crop": [
+      15,
+      410,
+      500,
+      305
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.19",
+    "pdf": 272,
+    "printed": 256,
+    "title": "Hyoid, anterior view",
+    "points": [
+      [
+        "Greater horn of hyoid",
+        478,
+        437
+      ],
+      [
+        "Lesser horn of hyoid",
+        417,
+        545
+      ],
+      [
+        "Body of hyoid",
+        332,
+        661
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-lumbar-processes": {
+    "image": "lm7-lumbar",
+    "size": [
+      638,
+      588
+    ],
+    "crop": [
+      260,
+      80,
+      255,
+      435
+    ],
+    "masks": [],
+    "reference": "7.3",
+    "figure": "7.28",
+    "pdf": 279,
+    "printed": 263,
+    "title": "Lumbar vertebrae, posterolateral view",
+    "points": [
+      [
+        "Superior articular process",
+        349,
+        116
+      ],
+      [
+        "Inferior articular process",
+        370,
+        223
+      ],
+      [
+        "Spinous process",
+        317,
+        423
+      ],
+      [
+        "Vertebral body",
+        491,
+        171
+      ]
+    ],
+    "pointNotes": {
+      "Superior articular process": "The projection bearing an articular facet; the facet surface and the whole process are different extents.",
+      "Inferior articular process": "The projection bearing an inferior facet; not the complete intervertebral joint."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-sacrum-anterior-extra": {
+    "image": "lm7-sacrum",
+    "size": [
+      1186,
+      530
+    ],
+    "crop": [
+      265,
+      55,
+      340,
+      350
+    ],
+    "masks": [
+      [
+        265,
+        200,
+        18,
+        75
+      ],
+      [
+        265,
+        325,
+        20,
+        25
+      ],
+      [
+        265,
+        380,
+        50,
+        25
+      ]
+    ],
+    "reference": "7.3",
+    "figure": "7.29",
+    "pdf": 280,
+    "printed": 264,
+    "title": "Sacrum, anterior view",
+    "points": [
+      [
+        "Sacral promontory",
+        402,
+        84
+      ],
+      [
+        "Body of first sacral vertebra",
+        385,
+        124
+      ],
+      [
+        "Transverse sacral ridges",
+        419,
+        154
+      ],
+      [
+        "Anterior sacral foramina",
+        385,
+        270
+      ],
+      [
+        "Apex of sacrum",
+        433,
+        394
+      ],
+      [
+        "Base of sacrum",
+        487,
+        85
+      ]
+    ],
+    "pointNotes": {
+      "Base of sacrum": "Representative point on the broad superior end of the sacrum.",
+      "Transverse sacral ridges": "One transverse line of fusion between adjacent sacral vertebral bodies.",
+      "Anterior sacral foramina": "One opening of the anterior series; distinct from the posterior sacral foramina."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-sacrum-posterior-extra": {
+    "image": "lm7-sacrum",
+    "size": [
+      1186,
+      530
+    ],
+    "crop": [
+      720,
+      55,
+      345,
+      350
+    ],
+    "masks": [
+      [
+        1030,
+        345,
+        35,
+        35
+      ]
+    ],
+    "reference": "7.3",
+    "figure": "7.29",
+    "pdf": 280,
+    "printed": 264,
+    "title": "Sacrum, posterior view",
+    "points": [
+      [
+        "Sacral canal",
+        876,
+        130
+      ],
+      [
+        "Median sacral crest",
+        890,
+        231
+      ],
+      [
+        "Lateral sacral crest",
+        1004,
+        192
+      ],
+      [
+        "Posterior sacral foramina",
+        821,
+        288
+      ],
+      [
+        "Sacral hiatus",
+        881,
+        357
+      ],
+      [
+        "Auricular surface of sacrum",
+        1051,
+        134
+      ],
+      [
+        "Superior articular facet of sacrum",
+        955,
+        89
+      ],
+      [
+        "Superior articular process of the sacrum",
+        957,
+        101
+      ]
+    ],
+    "pointNotes": {
+      "Sacral canal": "Superior opening of the canal; not the entire canal course.",
+      "Sacral hiatus": "Inferior opening at the termination of the sacral canal.",
+      "Superior articular process of the sacrum": "Process bearing the superior articular facet; the whole projection differs from its joint surface.",
+      "Posterior sacral foramina": "One opening of the posterior series; distinct from the anterior foramina."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-thoracic-rib-extra": {
+    "image": "lm7-rib",
+    "size": [
+      738,
+      555
+    ],
+    "crop": [
+      135,
+      0,
+      360,
+      550
+    ],
+    "masks": [
+      [
+        290,
+        450,
+        75,
+        60
+      ]
+    ],
+    "reference": "7.3",
+    "figure": "7.27",
+    "pdf": 278,
+    "printed": 262,
+    "title": "Rib articulating with thoracic vertebrae",
+    "points": [
+      [
+        "Superior costal facet",
+        413,
+        72
+      ],
+      [
+        "Inferior costal facet",
+        392,
+        349
+      ],
+      [
+        "Transverse costal facet",
+        352,
+        108
+      ],
+      [
+        "Head of rib",
+        439,
+        174
+      ],
+      [
+        "Neck of rib",
+        390,
+        234
+      ],
+      [
+        "Tubercle of rib",
+        347,
+        268
+      ],
+      [
+        "Angle of rib",
+        419,
+        463
+      ],
+      [
+        "Body of rib",
+        446,
+        486
+      ]
+    ],
+    "pointNotes": {
+      "Transverse costal facet": "The vertebral facet for the rib tubercle, not the tubercle on the rib itself.",
+      "Body of rib": "Representative point on the rib shaft distal to the angle."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-vertebral-opening": {
+    "image": "vertebra",
+    "size": [
+      1092,
+      475
+    ],
+    "crop": [
+      105,
+      65,
+      255,
+      260
+    ],
+    "masks": [
+      [
+        279,
+        65,
+        100,
+        64
+      ]
+    ],
+    "reference": "7.3",
+    "figure": "7.23",
+    "pdf": 276,
+    "printed": 260,
+    "title": "Typical vertebra, superior view",
+    "points": [
+      [
+        "Vertebral foramen",
+        212,
+        211
+      ],
+      [
+        "Vertebral arch",
+        250,
+        168
+      ]
+    ],
+    "pointNotes": {
+      "Vertebral foramen": "One vertebral opening; stacked foramina together contribute to the continuous vertebral canal.",
+      "Vertebral arch": "Representative point on the posterior arch formed by pedicles and laminae; not a single separate bone."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-atlas-arch": {
+    "image": "cervical",
+    "size": [
+      1083,
+      1240
+    ],
+    "crop": [
+      120,
+      670,
+      310,
+      180
+    ],
+    "masks": [
+      [
+        120,
+        810,
+        105,
+        40
+      ],
+      [
+        342,
+        818,
+        88,
+        33
+      ],
+      [
+        120,
+        665,
+        60,
+        45
+      ],
+      [
+        395,
+        655,
+        80,
+        30
+      ]
+    ],
+    "reference": "7.3",
+    "figure": "7.25",
+    "pdf": 277,
+    "printed": 261,
+    "title": "Atlas, superior view",
+    "points": [
+      [
+        "Anterior arch of atlas",
+        275,
+        682
+      ],
+      [
+        "Posterior arch of atlas",
+        300,
+        808
+      ]
+    ],
+    "pointNotes": {},
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-cervical-bifid": {
+    "image": "cervical",
+    "size": [
+      1083,
+      1240
+    ],
+    "crop": [
+      285,
+      165,
+      285,
+      230
+    ],
+    "masks": [
+      [
+        490,
+        190,
+        80,
+        28
+      ],
+      [
+        260,
+        180,
+        70,
+        25
+      ]
+    ],
+    "reference": "7.3",
+    "figure": "7.25",
+    "pdf": 277,
+    "printed": 261,
+    "title": "Typical cervical vertebra, superior view",
+    "points": [
+      [
+        "Bifid spinous process",
+        411,
+        183
+      ]
+    ],
+    "pointNotes": {
+      "Bifid spinous process": "Reference on one prong of the bifurcated spinous process; not all cervical vertebrae have the same morphology."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-sternum-extra": {
+    "image": "sternum",
+    "size": [
+      1146,
+      678
+    ],
+    "crop": [
+      125,
+      75,
+      175,
+      530
+    ],
+    "masks": [],
+    "reference": "7.4",
+    "figure": "7.32",
+    "pdf": 283,
+    "printed": 267,
+    "title": "Sternum, anterior view",
+    "points": [
+      [
+        "Clavicular notch",
+        150,
+        101
+      ],
+      [
+        "Sternal angle",
+        211,
+        216
+      ]
+    ],
+    "pointNotes": {
+      "Sternal angle": "Reference point at the manubriosternal junction; the ridge is extended across the sternum."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm14-inner-ear": {
+    "image": "lm14-ear",
+    "size": [
+      1126,
+      719
+    ],
+    "crop": [
+      555,
+      235,
+      305,
+      285
+    ],
+    "masks": [],
+    "reference": "14.1",
+    "figure": "14.5",
+    "pdf": 578,
+    "printed": 562,
+    "title": "Middle and inner ear, sectional schematic",
+    "points": [
+      [
+        "Cochlea",
+        804,
+        416
+      ],
+      [
+        "Oval window",
+        684,
+        358
+      ],
+      [
+        "Round window",
+        700,
+        402
+      ],
+      [
+        "Semicircular canals",
+        723,
+        274
+      ],
+      [
+        "Vestibule of inner ear",
+        720,
+        334
+      ]
+    ],
+    "pointNotes": {
+      "Oval window": "Opening contacted by the stapes footplate; the pin marks the opening at that interface.",
+      "Round window": "Opening inferior to the oval window, closed in life by a membrane.",
+      "Semicircular canals": "Representative point on one bony semicircular canal in this schematic.",
+      "Vestibule of inner ear": "Central vestibular region connecting cochlea and semicircular canals."
+    },
+    "assessment": "unlabeled-crop",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm14-bony-labyrinth": {
+    "image": "lm14-ear",
+    "size": [
+      1126,
+      719
+    ],
+    "crop": [
+      555,
+      235,
+      305,
+      285
+    ],
+    "masks": [],
+    "reference": "14.1",
+    "figure": "14.5",
+    "pdf": 578,
+    "printed": 562,
+    "title": "Bony labyrinth in inner-ear context",
+    "points": [
+      [
+        "Bony labyrinth",
+        720,
+        334
+      ]
+    ],
+    "pointNotes": {
+      "Bony labyrinth": "The connected bony cavities of cochlea, vestibule and semicircular canals. A single representative point cannot outline the entire system; this schematic gives context only."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures"
+  },
+  "lm7-alveolus-context": {
+    "image": "maxilla",
+    "size": [
+      784,
+      601
+    ],
+    "crop": [
+      190,
+      60,
+      430,
+      490
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.14",
+    "pdf": 265,
+    "printed": 249,
+    "title": "Maxillary alveoli: tooth-bearing ridge context",
+    "points": [],
+    "pointNotes": {
+      "Alveolus": "The alveolar process contains the tooth sockets (alveoli). Teeth obscure most of their sockets in this source view; use this as anatomical context and terminology review, not an exact socket-location test."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures",
+    "contexts": [
+      "Alveolus"
+    ]
+  },
+  "lm7-nasolacrimal-context": {
+    "image": "lm7-orbit",
+    "size": [
+      965,
+      457
+    ],
+    "crop": [
+      325,
+      0,
+      380,
+      455
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.16",
+    "pdf": 268,
+    "printed": 252,
+    "title": "Nasolacrimal canal: lacrimal-sac fossa context",
+    "points": [],
+    "pointNotes": {
+      "Nasolacrimal canal": "The fossa for the lacrimal sac lies on the anteromedial orbital wall. The nasolacrimal canal descends from this region to the inferior nasal meatus; the complete canal is not exposed in this anterior source view. No guessed canal pin is shown."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures",
+    "contexts": [
+      "Nasolacrimal canal"
+    ]
+  },
+  "lm6-markings-context": {
+    "image": "lm6-markings-table",
+    "size": [
+      1224,
+      1584
+    ],
+    "crop": [
+      0,
+      0,
+      1224,
+      1584
+    ],
+    "masks": [],
+    "reference": "6.3",
+    "figure": "Table6.2",
+    "pdf": 221,
+    "printed": 205,
+    "title": "Named bone-marking examples in source table",
+    "points": [],
+    "pointNotes": {
+      "Temporal lines of parietal bone": "Table6.2 names this feature as an example of a line or sulcus. The source table defines the vocabulary but does not depict the exact marking; this is a cited terminology context, not a validated spatial target.",
+      "Sigmoid sulcus of temporal bone": "Table6.2 names this feature as an example of a line or sulcus. The source table defines the vocabulary but does not depict the exact marking; this is a cited terminology context, not a validated spatial target."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures",
+    "contexts": [
+      "Temporal lines of parietal bone",
+      "Sigmoid sulcus of temporal bone"
+    ]
+  },
+  "lm7-costal-groove-context": {
+    "image": "lm7-rib",
+    "size": [
+      738,
+      555
+    ],
+    "crop": [
+      135,
+      0,
+      360,
+      550
+    ],
+    "masks": [],
+    "reference": "7.4",
+    "figure": "7.27",
+    "pdf": 278,
+    "printed": 262,
+    "title": "Rib anatomy and costal-groove context",
+    "points": [],
+    "pointNotes": {
+      "Costal groove": "The costal groove runs along the inferior internal aspect of the rib and accommodates the intercostal neurovascular bundle. This source view shows posterior articulation and rib angle but does not clearly expose the complete groove. No guessed groove pin is shown."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures",
+    "contexts": [
+      "Costal groove"
+    ]
+  },
+  "lm7-paranasal-context": {
+    "image": "sinuses",
+    "size": [
+      827,
+      558
+    ],
+    "crop": [
+      0,
+      0,
+      827,
+      558
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.18",
+    "pdf": 271,
+    "printed": 255,
+    "title": "Paranasal sinuses, source schematic",
+    "points": [],
+    "pointNotes": {
+      "Paranasal sinuses": "The frontal, maxillary, sphenoid and ethmoidal air spaces form a distributed group. The source schematic shows their regional relationships; no single point stands for the entire group."
+    },
+    "assessment": "learn-only",
+    "source": "Supplied OpenStax Anatomy and Physiology 2e PDF; source leader endpoints or directly visible named structures",
+    "contexts": [
+      "Paranasal sinuses"
+    ]
+  },
+  "lm14-canal-context": {
+    "image": "lm14-ear",
+    "size": [
+      1126,
+      719
+    ],
+    "crop": [
+      0,
+      0,
+      1126,
+      719
+    ],
+    "masks": [],
+    "reference": "14.1",
+    "figure": "14.5",
+    "pdf": 578,
+    "printed": 562,
+    "title": "Inner-ear spaces in temporal-bone context",
+    "points": [],
+    "contexts": [
+      "Anterior semicircular canal",
+      "Posterior semicircular canal",
+      "Lateral semicircular canal"
+    ],
+    "pointNotes": {
+      "Anterior semicircular canal": "Three roughly perpendicular bony semicircular canals enclose membranous semicircular ducts. This overview gives inner-ear context; it does not verify an individual canal point. Compare the canal orientations in the source text and figure14.12.",
+      "Posterior semicircular canal": "Three roughly perpendicular bony semicircular canals enclose membranous semicircular ducts. This overview gives inner-ear context; it does not verify an individual canal point. Compare the canal orientations in the source text and figure14.12.",
+      "Lateral semicircular canal": "Three roughly perpendicular bony semicircular canals enclose membranous semicircular ducts. This overview gives inner-ear context; it does not verify an individual canal point. Compare the canal orientations in the source text and figure14.12."
+    },
+    "assessment": "learn-only"
+  },
+  "lm7-olfactory-openings-context": {
+    "image": "ethmoid",
+    "size": [
+      825,
+      637
+    ],
+    "crop": [
+      210,
+      60,
+      395,
+      530
+    ],
+    "masks": [],
+    "reference": "7.2",
+    "figure": "7.12",
+    "pdf": 262,
+    "printed": 246,
+    "title": "Cribriform plate and olfactory openings",
+    "points": [],
+    "contexts": [
+      "Olfactory foramina"
+    ],
+    "pointNotes": {
+      "Olfactory foramina": "Many tiny openings pierce the cribriform plate beside the crista galli. This source shows the plate but does not clearly resolve a separately verified hole. The plate and its multiple openings are distinct concepts; no whole-plate dot is graded as an individual foramen."
+    },
+    "assessment": "learn-only"
+  }
+}

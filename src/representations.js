@@ -1,5 +1,7 @@
 import {terms,allTerms} from './data.js';
 import landmarks from './landmarks.json' with {type:'json'};
+import featurePlates from './feature-plates.json' with {type:'json'};
+import featureRepresentations from './landmark-representations.json' with {type:'json'};
 
 // Points are source-authored Z-Anatomy annotation anchors, not guessed surface boundaries.
 export const meshExtensions={
@@ -46,6 +48,7 @@ export const plates={
  'disc':{size:[1000,471],crop:[655,0,345,400],reference:'7.3',figure:'7.24',title:'Intervertebral disc, superior view',points:[['Annulus fibrosus',755,258],['Nucleus pulposus',824,295],['Vertebral canal',824,148],['Spinous process',825,60]]},
  'knee':{size:[1500,1150],crop:[225,600,280,500],reference:'9.6',figure:'9.19',title:'Anterior knee',points:[['Patellar ligament',375,969],['Patella',375,838],['Medial collateral ligament',453,892],['Lateral collateral ligament',251,913],['Tibiae',398,1028],['Fibulae',282,1045]]}
 };
+Object.assign(plates,featurePlates);
 const preferred={
  'Superior articular facet of atlas':'atlas','Dens':'axis','Transverse foramen':'cervical-typical','Vertebral body':'vertebra','Spinous process':'vertebra','Transverse process':'vertebra','Superior articular facets':'thoracic','Inferior articular facets':'thoracic','Costal facets':'thoracic','Lamina':'vertebra','Pedicles':'vertebra','Vertebral canal':'vertebra','Intervertebral foramen':'vertebra-lateral','Mastoid process':'temporal','Styloid process of temporal bone':'temporal','Foramen magnum':'skull-base','Occipital condyles':'skull-base','Optic canal':'sphenoid','Sella turcica':'sphenoid','Alveolar arch':'maxilla','Mandibular symphysis':'skull-front',
  'Cervical curvature':'curves','Thoracic curvature':'curves','Lumbar curvature':'curves','Annulus fibrosus':'disc','Jugular notch':'sternum',
@@ -55,6 +58,7 @@ const preferred={
  'Hard palate':'skull-base','Maxillary sinus':'sinuses','Mandibular condyles':'mandible','Coronoid process of mandible':'mandible','Mandibular foramina':'mandible','Carpal tunnel':'wrist','Patellar ligament':'knee'
 };
 for(const t of allTerms){
+ if(t.textbookOnly){t.representation=featureRepresentations[t.id];continue;}
  if(meshExtensions[t.name]){t.pattern=meshExtensions[t.name];t.exact=true;}
  t.representation=t.exact?{kind:'mesh',reference:t.region==='Joints'?'9.6':t.region==='Skull'?'7.2':t.region==='Spine'?'7.3':t.region==='Thorax'?'7.4':t.region==='Upper limb'?'8.2':t.region==='Lower limb'?'8.4':'8.3'}:landmarks[t.name]||{kind:preferred[t.name]?'diagram':'concept',plate:preferred[t.name],reference:preferred[t.name]?plates[preferred[t.name]].reference:'9.6'};
  if(['Hyoid bone','Stylohyoid ligament'].includes(t.name))t.representation.reference='7.2';
@@ -63,6 +67,7 @@ for(const t of allTerms){
  if(t.name==='Vertebral canal')t.representation.note='The diagram target marks one vertebral foramen along the continuous vertebral canal; it does not outline the entire canal.';
  if(t.name==='Pelvic brim')t.representation.note='The pin marks the arcuate line, one segment of the pelvic brim. Trace the complete inlet boundary in the textbook.';
  if(t.name==='Ethmoidal air cells and sinus openings')t.representation.note='Targets mark ethmoidal air cells. Their drainage openings lead into the nasal cavity: middle cells into the middle meatus and posterior cells into the superior meatus; anterior cells drain via the infundibulum to the middle meatus.';
+ if(t.feature?.sourcePlate)t.representation.sourcePlate=t.feature.sourcePlate;
 }
-export const labels={mesh:'3D structure', 'source-pin':'3D landmark pin',diagram:'Textbook diagram target',concept:'Movement concept'};
-export const coverage=()=>Object.fromEntries(Object.keys(labels).map(k=>[k,terms.filter(t=>t.representation.kind===k).length]));
+export const labels={mesh:'3D structure', 'source-pin':'3D landmark pin',diagram:'Textbook diagram target',reference:'Source guide',concept:'Movement concept'};
+export const coverage=()=>Object.fromEntries(Object.keys(labels).filter(k=>terms.some(t=>t.representation.kind===k)).map(k=>[k,terms.filter(t=>t.representation.kind===k).length]));

@@ -3,25 +3,37 @@
     "page": 255,
     "printed": 239,
     "width": 1500,
-    "height": 1269
+    "height": 1269,
+    "figure": "7.4",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "skull-side": {
     "page": 256,
     "printed": 240,
     "width": 1500,
-    "height": 1029
+    "height": 1029,
+    "figure": "7.5",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "temporal": {
     "page": 258,
     "printed": 242,
     "width": 774,
-    "height": 555
+    "height": 555,
+    "figure": "7.7",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "skull-base": {
     "page": 259,
     "printed": 243,
     "width": 1327,
-    "height": 1800
+    "height": 1800,
+    "figure": "7.8",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "skull-back": {
     "page": 260,
@@ -33,7 +45,10 @@
     "page": 262,
     "printed": 246,
     "width": 825,
-    "height": 637
+    "height": 637,
+    "figure": "7.12",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "conchae": {
     "page": 263,
@@ -45,25 +60,37 @@
     "page": 265,
     "printed": 249,
     "width": 784,
-    "height": 601
+    "height": 601,
+    "figure": "7.14",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "mandible": {
     "page": 267,
     "printed": 251,
     "width": 818,
-    "height": 627
+    "height": 627,
+    "figure": "7.15",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "sinuses": {
     "page": 271,
     "printed": 255,
     "width": 827,
-    "height": 558
+    "height": 558,
+    "figure": "7.18",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "fontanelles": {
     "page": 285,
     "printed": 269,
     "width": 1500,
-    "height": 505
+    "height": 505,
+    "figure": "7.33",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "wrist": {
     "page": 308,
@@ -81,7 +108,10 @@
     "page": 283,
     "printed": 267,
     "width": 1146,
-    "height": 678
+    "height": 678,
+    "figure": "7.32",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "curves": {
     "page": 273,
@@ -99,19 +129,28 @@
     "page": 261,
     "printed": 245,
     "width": 634,
-    "height": 820
+    "height": 820,
+    "figure": "7.10",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "vertebra": {
     "page": 276,
     "printed": 260,
     "width": 1092,
-    "height": 475
+    "height": 475,
+    "figure": "7.23",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "cervical": {
     "page": 277,
     "printed": 261,
     "width": 1083,
-    "height": 1240
+    "height": 1240,
+    "figure": "7.25",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   },
   "thoracic": {
     "page": 278,
@@ -124,5 +163,266 @@
     "printed": 262,
     "width": 738,
     "height": 555
+  },
+  "lm8-p301-0": {
+    "page": 301,
+    "printed": 285,
+    "width": 985,
+    "height": 1358,
+    "figure": "8.3",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p303-0": {
+    "page": 303,
+    "printed": 287,
+    "width": 972,
+    "height": 641,
+    "figure": "8.4",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p304-0": {
+    "page": 304,
+    "printed": 288,
+    "width": 676,
+    "height": 853,
+    "figure": "8.5",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p305-0": {
+    "page": 305,
+    "printed": 289,
+    "width": 1271,
+    "height": 1720,
+    "figure": "8.6",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p307-0": {
+    "page": 307,
+    "printed": 291,
+    "width": 1954,
+    "height": 1573,
+    "figure": "8.7",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p311-0": {
+    "page": 311,
+    "printed": 295,
+    "width": 1153,
+    "height": 785,
+    "figure": "8.12",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p312-0": {
+    "page": 312,
+    "printed": 296,
+    "width": 974,
+    "height": 700,
+    "figure": "8.13",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p313-0": {
+    "page": 313,
+    "printed": 297,
+    "width": 873,
+    "height": 523,
+    "figure": "8.14",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p317-0": {
+    "page": 317,
+    "printed": 301,
+    "width": 824,
+    "height": 1289,
+    "figure": "8.16",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p320-0": {
+    "page": 320,
+    "printed": 304,
+    "width": 1698,
+    "height": 2100,
+    "figure": "8.18",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p321-0": {
+    "page": 321,
+    "printed": 305,
+    "width": 2232,
+    "height": 1640,
+    "figure": "8.19",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p308-1": {
+    "page": 308,
+    "printed": 292,
+    "width": 1277,
+    "height": 893,
+    "figure": "8.9",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm8-p314-0": {
+    "page": 314,
+    "printed": 298,
+    "width": 956,
+    "height": 448,
+    "figure": "8.15",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm6-long": {
+    "page": 219,
+    "printed": 203,
+    "width": 1066,
+    "height": 1800,
+    "figure": "6.7",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm6-flat": {
+    "page": 220,
+    "printed": 204,
+    "width": 812,
+    "height": 411,
+    "figure": "6.9",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm6-micro": {
+    "page": 225,
+    "printed": 209,
+    "width": 1413,
+    "height": 1664,
+    "figure": "6.12",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm6-spongy": {
+    "page": 226,
+    "printed": 210,
+    "width": 1119,
+    "height": 743,
+    "figure": "6.13",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm6-blood": {
+    "page": 227,
+    "printed": 211,
+    "width": 1087,
+    "height": 1620,
+    "figure": "6.15",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm6-p233-0": {
+    "page": 233,
+    "printed": 217,
+    "width": 790,
+    "height": 625,
+    "figure": "6.19",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-fossae": {
+    "page": 257,
+    "printed": 241,
+    "width": 629,
+    "height": 841,
+    "figure": "7.6",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-midline": {
+    "page": 262,
+    "printed": 246,
+    "width": 1800,
+    "height": 1244,
+    "figure": "7.11",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-orbit": {
+    "page": 268,
+    "printed": 252,
+    "width": 965,
+    "height": 457,
+    "figure": "7.16",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-septum": {
+    "page": 269,
+    "printed": 253,
+    "width": 1111,
+    "height": 749,
+    "figure": "7.17",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-hyoid": {
+    "page": 272,
+    "printed": 256,
+    "width": 727,
+    "height": 1138,
+    "figure": "7.19",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-lumbar": {
+    "page": 279,
+    "printed": 263,
+    "width": 638,
+    "height": 588,
+    "figure": "7.28",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-sacrum": {
+    "page": 280,
+    "printed": 264,
+    "width": 1186,
+    "height": 530,
+    "figure": "7.29",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm7-rib": {
+    "page": 278,
+    "printed": 262,
+    "width": 738,
+    "height": 555,
+    "figure": "7.27",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm14-ear": {
+    "page": 578,
+    "printed": 562,
+    "width": 1126,
+    "height": 719,
+    "figure": "14.5",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
+  },
+  "lm6-markings-table": {
+    "page": 221,
+    "printed": 205,
+    "width": 1224,
+    "height": 1584,
+    "figure": "Table6.2",
+    "license": "CC BY-NC-SA4.0",
+    "source": "OpenStax Anatomy and Physiology2e, supplied2026 edition"
   }
 }

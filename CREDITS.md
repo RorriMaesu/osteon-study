@@ -26,7 +26,7 @@ Study explanations, retrieval prompts and questions are newly written adaptation
 - https://openstax.org/details/books/anatomy-and-physiology-2e
 - https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-`assets/reader/` reproduces chapter 6 and 7 page images from the supplied edition, plus lab-relevant readings from chapters 8 and 9. `src/reader-pages.json` contains corresponding extracted text. `assets/figures/` reproduces source illustrations; the app crops, masks labels and overlays numbered targets for practice. Figure/page provenance appears in `assets/figures/manifest.json` and every displayed figure's attribution. Page images are unaltered renderings except resizing/compression. These reproduced and adapted materials remain CC BY-NC-SA 4.0; the commercial permissions of the code license do not apply to them. Access for free at openstax.org.
+`assets/reader/` reproduces chapter 6 and 7 page images from the supplied edition, plus lab-relevant readings from chapters 8 and 9, plus selected chapter 11 attachment references and chapter 14 inner-ear passages. `src/reader-pages.json` contains corresponding extracted text. `assets/figures/` reproduces source illustrations; the app crops, masks labels and overlays numbered targets for practice. Figure/page provenance appears in `assets/figures/manifest.json` and every displayed figure's attribution. Page images are unaltered renderings except resizing/compression. These reproduced and adapted materials remain CC BY-NC-SA 4.0; the commercial permissions of the code license do not apply to them. Access for free at openstax.org.
 
 The supplied BI 231 Fall 2024 lab structure list defines the course checklist. Its original document, authorship metadata and local file paths are not redistributed. This independent study tool is not an official OpenStax or college product.
 
@@ -37,3 +37,12 @@ Original Osteon application code: MIT License, © 2026 RorriMaesu. This code lic
 three.js © three.js authors, MIT License. See vendor/THREE-LICENSE.txt. Draco compression decoder © Google, Apache License 2.0, https://github.com/google/draco/blob/main/LICENSE . Decoder files are distributed through three.js. No third-party viewer iframe is used.
 
 MIT License: Permission is hereby granted, free of charge, to any person obtaining a copy of the original application software and associated documentation files, to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to inclusion of this notice. THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+## Expanded landmark data and source views
+
+`src/landmark-catalog.json` contains curated canonical names, aliases, parent relationships, original explanations and source citations. Textbook-derived content is CC BY-NC-SA 4.0. `src/feature-plates.json` and the `lm*` figure crops include overlay points, assessment crops and label masks; these remain CC BY-NC-SA 4.0. Additional source pages and figure images are attributed to OpenStax, ©2026 Rice University. Access for free at openstax.org.
+
+The source-pin portions of `src/landmark-representations.json` are derived from 52 Z-Anatomy annotation endpoints and retain CC BY-SA 4.0. They record original source object, parent, right side, coordinate transform and surface-consistency evidence. Other representations in that file are textbook-derived mappings under CC BY-NC-SA 4.0. The code license does not override either content license.
+
+Terminology validation for the cuboid tendon groove and the source's historical auricular-fissure wording references FIPAT Terminologia Anatomica 2, https://fipat.library.dal.ca/TA2/ . Inferior orbital fissure contributors were checked against the primary anatomy study cited in the canonical entry. No third-party figure or body text from those terminology references is reproduced.

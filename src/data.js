@@ -1,3 +1,4 @@
+import landmarkCatalog from './landmark-catalog.json' with {type:'json'};
 // Canonical concepts transcribed from the supplied BI 231 lab 6/7 structure list.
 // A match is a complete selectable structure, not an inferred landmark location.
 const rows = `
@@ -205,8 +206,15 @@ export const supplement = [
  ['Malleus','Skull','Malleus','Hammer-shaped auditory ossicle.'], ['Incus','Skull','Incus','Anvil-shaped auditory ossicle.'], ['Stapes','Skull','Stapes','Stirrup-shaped auditory ossicle at the oval window.'],
  ['Hip bones','Pelvis','Hip bone','Each adult hip bone is formed by fusion of ilium, ischium and pubis.']
 ].map(([name,region,pattern,cue])=>({id:name.toLowerCase().replaceAll(' ','-'),name,region,pattern,cue,type:'bone',exact:true,source:'Supplement · full atlas',aliases:[]}));
-export const allTerms=[...terms,...supplement];
-export const regions=['All regions','Skull','Spine','Thorax','Upper limb','Pelvis','Lower limb','Joints'];
+const originalTerms=[...terms,...supplement];
+export const markingVocabulary=landmarkCatalog.entries.filter(t=>t.category==='vocabulary');
+export const textbookTerms=landmarkCatalog.entries.filter(t=>t.category!=='vocabulary').map(feature=>{
+ const existing=originalTerms.find(t=>t.id===feature.labTermId);
+ if(existing){existing.feature=feature;existing.aliases=[...new Set([...existing.aliases,feature.name,...feature.aliases])].filter(n=>n!==existing.name);return existing;}
+ return {id:feature.termId,name:feature.name,region:feature.region==='Bone structure inset'?'Bone structure':feature.region,pattern:feature.pattern,cue:feature.description,type:feature.category==='histology'?'microstructure':feature.featureType==='Opening or passage'?'opening':feature.featureType==='Developmental boundary'?'development':feature.category==='shared space'?'shared feature':'landmark',exact:false,source:'OpenStax section '+feature.section,aliases:feature.aliases,feature,textbookOnly:true,division:feature.division};
+});
+export const allTerms=[...originalTerms,...textbookTerms.filter(t=>t.textbookOnly)];
+export const regions=['All regions','Skull','Spine','Thorax','Upper limb','Pelvis','Lower limb','Joints','Bone structure'];
 
 export function matches(pattern,zname) {
  if(!pattern)return false;

@@ -1,6 +1,6 @@
 # Region navigation and complete bone-landmark expansion
 
-Status: navigation and regional palettes implemented in Stage 15, 17 October 2026. Back/breadcrumbs, Region / Bone alternatives and the existing-target Landmarks browser are also implemented. The additional textbook landmark inventory and its new 3D representations remain under validation; the remaining sections describe that work's acceptance criteria.
+Status: Stage 16 implements the audited textbook inventory, source views and landmark practice bank. See [LANDMARKS.md](LANDMARKS.md) for final coverage, evidence and the 23 source-guide limitations. The original 177 lab targets remain intact. The sections below record the design and acceptance criteria.
 
 The learning sequence is **whole skeleton -> region -> individual bone -> selected feature**. Each step should answer one question: Where am I? Which bone is this? Where is the feature? What distinguishes it from its neighbors?
 

@@ -98,7 +98,7 @@ export class AnatomyViewer {
  select(term,{frame=true}={}){
   let found=this.find(term),changedContext=false;
   // Unsided reference targets need their source context, rather than a stale sided crop.
-  if(!this.quiz&&!term.exact&&['source-pin','diagram'].includes(term.representation?.kind)&&(this.focus.areaId||this.focus.level!=='region')){
+  if(!this.quiz&&!term.exact&&['source-pin','diagram','reference'].includes(term.representation?.kind)&&(this.focus.areaId||this.focus.level!=='region')){
    this.focusHistory.push(this.snapshot());this.focus={level:'region',areaId:null,side:null,boneId:null};this.region=term.region;changedContext=true;
   }else if(!this.quiz&&this.focus.level==='bone'&&!found.some(m=>boneId(m.userData.zname)===this.focus.boneId))this.back();
   if(!this.quiz&&this.focus.level==='bone')found=found.filter(m=>boneId(m.userData.zname)===this.focus.boneId);
@@ -131,5 +131,5 @@ export class AnatomyViewer {
  view(side){this.controls.autoRotate=false;this.frameScope(side);}
  restore(){this.hiddenMeshes.clear();this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}
  reset(){this.sinuses=false;this.controls.autoRotate=false;this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];this.lastTap=null;document.querySelector('#rotate-btn').setAttribute('aria-pressed','false');this.clearPins();this.hiddenMeshes.clear();this.peel=false;document.dispatchEvent(new Event('layerschanged'));this.selected=[];this.selectedTerm=null;this.isolated=false;this.ghost=false;this.region='All regions';this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));this.notifyFocus();}
- animate(){if(!this.running)return;requestAnimationFrame(()=>this.animate());if(this.tween){const t=Math.min((performance.now()-this.tween.start)/700,1),e=1-Math.pow(1-t,3);this.camera.position.lerpVectors(this.tween.from,this.tween.to,e);this.controls.target.lerpVectors(this.tween.targetFrom,this.tween.targetTo,e);if(t===1)this.tween=null;}this.controls.update();this.layoutPins();if(this.el.clientWidth&&this.el.clientHeight)this.renderer.render(this.scene,this.camera);}
+ animate(){if(!this.running)return;requestAnimationFrame(()=>this.animate());if(this.tween){const t=Math.min((performance.now()-this.tween.start)/700,1),e=1-Math.pow(1-t,3);this.camera.position.lerpVectors(this.tween.from,this.tween.to,e);this.controls.target.lerpVectors(this.tween.targetFrom,this.tween.targetTo,e);if(t===1)this.tween=null;}this.controls.update();this.layoutPins();if(!this.referenceOpen&&this.el.clientWidth&&this.el.clientHeight)this.renderer.render(this.scene,this.camera);}
 }

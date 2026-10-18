@@ -85,7 +85,7 @@ test('diagram targets remain inside the correct licensed source illustration cro
  for(const [key,p]of Object.entries(plates)){assert.ok(fs.existsSync(new URL('../assets/figures/'+(p.image||key)+'.jpg',import.meta.url)));const [x,y,w,h]=p.crop;assert.ok(x>=0&&y>=0&&x+w<=p.size[0]&&y+h<=p.size[1],key);for(const [name,px,py]of p.points){assert.ok(px>=x&&px<=x+w&&py>=y&&py<=y+h,key+': '+name);}}
 });
 test('full chapter reading includes every source page and valid section destinations',()=>{
- assert.equal(pages.length,124);assert.equal(new Set(pages.map(p=>p.pdf)).size,124);
+ assert.equal(pages.length,144);assert.equal(new Set(pages.map(p=>p.pdf)).size,pages.length);
  for(let n=213;n<=298;n++)assert.ok(pages.some(p=>p.pdf===n),'Missing chapter page '+n);
  for(const p of pages){assert.equal(p.printed,p.pdf-16);assert.ok(p.text.length>50);assert.ok(!p.text.includes('\ufffd'));assert.ok(fs.existsSync(new URL('../assets/reader/p'+p.pdf+'.jpg',import.meta.url)));}
  for(const [section,pdf]of Object.entries(sectionPages))assert.ok(pages.find(p=>p.pdf===pdf).text.includes(section),section);

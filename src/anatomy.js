@@ -14,6 +14,7 @@ export function meshDivision(name){
  return /Clavicle|Scapula|Humerus|Radius|Ulna|metacarpal|of hand|Scaphoid|Pisiform|Lunate|Triquetrum|Trapez|Capitate|Hamate|Hip bone|Femur|Patella|Tibia|Fibula|Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot|acromio|coraco|glenohumeral|cruciate|collateral|iliofemoral|head of femur|Pubic symphysis/i.test(name)?'Appendicular':'Axial';
 }
 export function termDivision(t){
+ if(t.division)return t.division;
  if(t.name==='Pelvis'||t.name==='Pelvic brim')return'Mixed';
  if(/Sacrum|Coccyx/.test(t.pattern))return'Axial';
  return ['Upper limb','Lower limb','Pelvis','Joints'].includes(t.region)?'Appendicular':'Axial';

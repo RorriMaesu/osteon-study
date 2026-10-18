@@ -1,5 +1,15 @@
 # Release notes
 
+## Stage 16 - Complete textbook landmark inventory and practice
+
+- Reconcile 330 canonical entries: 310 named anatomical features and 20 marking definitions/source terminology notes. Preserve all 177 lab targets and stable progress IDs.
+- Add 52 validated right-side 3D reference anchors,67 source views, and 229 atlas entries. Use 189 textbook diagram targets, 93 source reference pins and 5 model targets within the canonical feature bank.
+- Keep 23 source guides explicit and exclude them from spatial scoring. Provide cited source views, accurate relationship explanations and recall cards instead of guessed locations.
+- Move diagrams into the main specimen stage; show one active feature. Limit locate comparisons to five separated choices on desktop and three on phones.
+- Add region/type/parent/alias search, a paged landmark bank, identification sessions, recall decks and progress counts. Extend the source reader to 144 pages.
+- Validate distinct nested structures, correct parent bones, alias grading, source masks, source references and all new mesh anchor bounds. All 48 automated checks pass.
+
+
 ## Stage 15 - Live regional navigation and bone palettes
 
 - Implement double-click from overview to a useful anatomical area, then double-click within the area to isolate the actual clicked bone and side. Keep single-click selection in place, preserve the prior camera for Back, and focus sternum parts together as one adult bone.

@@ -6,7 +6,7 @@ Live site: https://rorrimaesu.github.io/osteon-study/
 
 Read [the implementation and learning plan](PLAN.md) and [release notes](CHANGELOG.md).
 
-The atlas now uses two-stage double-click navigation and colors in all focused regions. The remaining landmark expansion is specified in [the region-navigation and bone-landmark plan](ANATOMY-EXPANSION-PLAN.md), with a [source inventory and current-target audit](LANDMARK-EXPANSION-AUDIT.csv). The additional inventory is under validation and does not claim new verified 3D locations.
+The atlas combines two-stage double-click navigation, colors in focused regions, and the completed [310-feature textbook inventory](LANDMARKS.md). Open the landmark bank from the atlas or Practice lab. It includes 287 verified spatial targets and 23 clearly marked source guides, with [an item-by-item source audit](LANDMARKS.csv).
 
 Read [the responsive workspace plan](RESPONSIVE-PLAN.md) for the desktop and mobile layout review. Desktop widths from 1000 pixels use a viewport-sized application with Previous / Next content pages, including the atlas lists, lessons, reading text and tutor history. Phones and narrower tablets use Specimen / Browse / Details atlas controls and natural vertical reading. Search, answer drafts and progress are preserved when the layout changes.
 
@@ -22,7 +22,7 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 
 - All 177 distinct BI 231 lab concepts have graded exercises: 82 named 3D structures/groups, 47 source landmark pins, 46 textbook diagram targets and two knee movement concepts. COVERAGE.csv lists every item and its source.
 - Adult skeleton plus 81 course tissue objects: 352 scene objects, including bones, cartilage, teeth, ligaments, discs, sinus volumes and vertebral arteries. Scene objects are not a biological bone count.
-- Full source reader: every page of chapters 6 and 7, plus appendicular and selected joint readings; 124 page images with searchable extracted text. Source pages load on demand.
+- Full source reader: every page of chapters 6 and 7, plus appendicular and selected joint readings; 144 page images with searchable extracted text. Source pages load on demand.
 - Twelve teaching sections, 104 authored concept questions, 237 textbook glossary definitions and seven guided activities.
 - Locate and name practice, a systematic unpracticed-first course pass, region/session controls, missed-item retries, local review scheduling, score separation and progress backup/restore.
 
@@ -43,6 +43,6 @@ Double-click a bone from overview to open its region; double-click again to focu
 
 Every focused region has bone colors, an optional key and a visible On / Off control. Paired counterparts share stable colors; colors also distinguish serial bones and neighboring anatomy. The choice survives reloads. Whole-skeleton, axial and appendicular overviews stay neutral, and scored practice turns colors off. All / Axial / Appendicular filters still apply to anatomy practice. Sacrum and coccyx remain axial; hip bones remain appendicular. Mixed pelvis targets appear under All.
 
-Browse has All / Bones / Landmarks controls. Existing landmark pins and source illustrations remain explicitly identified; selecting an unsided reference target opens appropriate regional context. The new textbook inventory is separate from the 177-item lab bank and is not yet a completed set of additional 3D landmarks.
+Browse has All / Bones / Landmarks controls. Existing landmark pins and source illustrations remain explicitly identified; selecting an unsided reference target opens appropriate regional context. The 310-feature textbook bank remains separate from the original 177-item lab checklist. Fifty-two additional 3D reference anchors and full-size source diagrams expand spatial practice without claiming that every feature is separately modeled.
 
 Use the **Socratic tutor** button for a local Ollama chat, installed-model selection, guided connection, optional model downloads and hardware/fit checks. See [the tutor guide](TUTOR.md) for first setup and honest browser limits. Tutor assistance is tracked separately from independent quiz accuracy.

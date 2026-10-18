@@ -106,3 +106,8 @@ Final coverage: 82 3D structure/group exercises, 47 landmark pin exercises, 46 t
 The supplied chapters are now available inside the suite in full, with source page images, text search, accessible extracted text and direct section destinations. Teaching notes and quizzes support the readings. The finite bank remains a sample of possible questions, while the source reader preserves all of the assigned chapter content.
 
 Diagram views clip to the intended anatomical crop and mask residual labels. Labeled figures are available explicitly as assistance, and revealing an answer cannot increase independent accuracy. Small 3D pin labels use connector lines to keep adjacent targets readable without moving their anatomical endpoints. Visual design is evaluated against useful retrieval and clear source distinctions, as well as appearance.
+
+
+## Stage 16: textbook feature bank
+
+The named textbook inventory is reconciled into 310 features plus 20 marking definitions/source terminology notes. New learning representations comprise 52 additional validated right-side 3D anchors and 67 source views. There are 287 spatial practice targets and 23 source guides across the canonical bank. Large source views occupy the main specimen area, and sparse comparisons preserve legibility. The original 177 lab target IDs, exercises and progress remain unchanged. [LANDMARKS.md](LANDMARKS.md) explains the completed inventory and the features that require better exposed source anatomy before exact spatial scoring.

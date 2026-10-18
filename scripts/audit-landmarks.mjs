@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import {textbookTerms,markingVocabulary,terms} from '../src/data.js';
+import {plates} from '../src/representations.js';
+const csv=s=>'"'+String(s??'').replaceAll('"','""')+'"';
+const counts={};for(const t of textbookTerms)counts[t.representation.kind]=(counts[t.representation.kind]||0)+1;
+const rows=textbookTerms.map(t=>{const f=t.feature,r=t.representation,p=plates[r.plate||r.sourcePlate];return[f.name,t.id,f.region,f.featureType,f.parentBones.join('; '),f.aliases.join('; '),r.kind,r.kind==='reference'?'Source guide / recall':'Spatial target',r.plate||r.sourcePlate||'',p?.figure||'',f.sources.map(s=>'PDF '+s.pdf+' / printed '+s.printed+' / '+s.kind).join('; '),r.note||'',t.source];});
+for(const f of markingVocabulary)rows.push([f.name,'',f.region,f.featureType,f.parentBones.join('; '),f.aliases.join('; '),'vocabulary','Definition / examples','','',f.sources.map(s=>'PDF '+s.pdf+' / printed '+s.printed).join('; '),f.description,'OpenStax '+f.section]);
+const headers=['Canonical feature','Stable practice ID','Region','Feature type','Parent or contributing bones','Aliases','Representation','Practice scope','Source view','Figure','Source pages','Location limitations','Course connection'];
+fs.writeFileSync(new URL('../LANDMARKS.csv',import.meta.url),[headers,...rows].map(r=>r.map(csv).join(',')).join('\n')+'\n');
+const missing=textbookTerms.filter(t=>!t.representation||(t.representation.kind==='diagram'&&!plates[t.representation.plate]?.points.some(p=>p[0]===(t.representation.target||t.name))));
+if(missing.length)throw Error('Unresolved targets: '+missing.map(t=>t.name).join(', '));
+console.log(JSON.stringify({labTargets:terms.length,textbookFeatures:textbookTerms.length,markingVocabulary:markingVocabulary.length,representations:counts,unresolvedCatalogEntries:missing.length,sourceViews:Object.keys(plates).filter(k=>k.startsWith('lm')).length},null,2));

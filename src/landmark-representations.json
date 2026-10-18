@@ -1,0 +1,4803 @@
+{
+  "textbook-articular-cartilage": {
+    "kind": "diagram",
+    "plate": "lm6-long-proximal",
+    "target": "Articular cartilage",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-canaliculi": {
+    "kind": "diagram",
+    "plate": "lm6-trabecular-detail",
+    "target": "Canaliculi",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "One set of fine channels connecting lacunae; this point is not an entire trabecular strut."
+  },
+  "textbook-central-canal": {
+    "kind": "diagram",
+    "plate": "lm6-osteon",
+    "target": "Central canal",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Longitudinal canal within an osteon; target marks the channel around the vascular bundle."
+  },
+  "textbook-compact-bone": {
+    "kind": "diagram",
+    "plate": "lm6-long-proximal",
+    "target": "Compact bone",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-concentric-lamellae": {
+    "kind": "diagram",
+    "plate": "lm6-osteon",
+    "target": "Concentric lamellae",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-diaphysis": {
+    "kind": "diagram",
+    "plate": "lm6-long-shaft",
+    "target": "Diaphysis",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the shaft; the diaphysis is an extended region."
+  },
+  "textbook-diploe": {
+    "kind": "diagram",
+    "plate": "lm6-flat-diploe",
+    "target": "Diploe",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-endosteum": {
+    "kind": "diagram",
+    "plate": "lm6-long-shaft",
+    "target": "Endosteum",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "The thin lining of the medullary cavity; the target is on the inner surface, not on the periosteum."
+  },
+  "textbook-epiphyseal-line": {
+    "kind": "diagram",
+    "plate": "lm6-long-proximal",
+    "target": "Epiphyseal line",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-epiphyseal-plate": {
+    "kind": "diagram",
+    "plate": "lm6-growth-plate",
+    "target": "Epiphyseal plate",
+    "reference": "6.4",
+    "assessment": "unlabeled-crop",
+    "note": "Growing-bone cartilage plate; this is a developmental teaching diagram rather than an adult 3D skeleton feature."
+  },
+  "textbook-epiphysis": {
+    "kind": "diagram",
+    "plate": "lm6-long-proximal",
+    "target": "Epiphysis",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point within the expanded proximal end."
+  },
+  "textbook-lacunae": {
+    "kind": "diagram",
+    "plate": "lm6-trabecular-detail",
+    "target": "Lacunae",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "One osteocyte-containing lacuna, shown as a small elongated space in the trabecular matrix."
+  },
+  "textbook-medullary-cavity": {
+    "kind": "diagram",
+    "plate": "lm6-long-proximal",
+    "target": "Medullary cavity",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-metaphysis": {
+    "kind": "diagram",
+    "plate": "lm6-long-proximal",
+    "target": "Metaphysis",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point in the transition between the epiphysis and diaphysis."
+  },
+  "textbook-nutrient-foramen": {
+    "kind": "diagram",
+    "plate": "lm6-nutrient-opening",
+    "target": "Nutrient foramen",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Opening where nutrient vessels enter the shaft, shown at the source leader endpoint."
+  },
+  "textbook-osteon": {
+    "kind": "diagram",
+    "plate": "lm6-osteon",
+    "target": "Osteon",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point within one complete concentric structural unit, outlined by the source."
+  },
+  "textbook-perforating-canal": {
+    "kind": "diagram",
+    "plate": "lm6-osteon",
+    "target": "Perforating canal",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Transverse channel carrying vessels across adjacent osteons; target marks the channel around these vessels, not a separate vessel name."
+  },
+  "textbook-periosteum": {
+    "kind": "diagram",
+    "plate": "lm6-long-shaft",
+    "target": "Periosteum",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-spongy-bone": {
+    "kind": "diagram",
+    "plate": "lm6-long-proximal",
+    "target": "Spongy bone",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-trabeculae": {
+    "kind": "diagram",
+    "plate": "lm6-trabecular-detail",
+    "target": "Trabeculae",
+    "reference": "6.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point in the magnified trabecular section; see the accompanying broader inset for the network."
+  },
+  "textbook-sigmoid-sulcus-of-temporal-bone": {
+    "kind": "reference",
+    "plate": "lm6-markings-context",
+    "reference": "6.3",
+    "assessment": "learn-only",
+    "note": "Table6.2 names this feature as an example of a line or sulcus. The source table defines the vocabulary but does not depict the exact marking; this is a cited terminology context, not a validated spatial target."
+  },
+  "textbook-temporal-lines-of-parietal-bone": {
+    "kind": "reference",
+    "plate": "lm6-markings-context",
+    "reference": "6.3",
+    "assessment": "learn-only",
+    "note": "Table6.2 names this feature as an example of a line or sulcus. The source table defines the vocabulary but does not depict the exact marking; this is a cited terminology context, not a validated spatial target."
+  },
+  "textbook-alveolar-process-of-mandible": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Alveolar process of mandible",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-alveolar-process-of-maxilla": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Alveolar process of maxilla",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-alveolus": {
+    "kind": "reference",
+    "plate": "lm7-alveolus-context",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "The alveolar process contains the tooth sockets (alveoli). Teeth obscure most of their sockets in this source view; use this as anatomical context and terminology review, not an exact socket-location test."
+  },
+  "textbook-angle-of-mandible": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Angle of mandible",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-anterior-cranial-fossa": {
+    "kind": "diagram",
+    "plate": "lm7-cranial-fossae",
+    "target": "Anterior cranial fossa",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point on the floor of this extended depression, not its complete boundary."
+  },
+  "textbook-anterior-fontanelle": {
+    "kind": "diagram",
+    "plate": "lm7-fontanelles-superior",
+    "target": "Anterior fontanelle",
+    "reference": "7.5",
+    "assessment": "unlabeled-crop",
+    "note": "Developmental fibrous gap in the newborn skull, not an adult bony foramen."
+  },
+  "textbook-articular-tubercle": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Articular tubercle",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-body-of-mandible": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Body of mandible",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the extended horizontal body."
+  },
+  "textbook-body-of-sphenoid": {
+    "kind": "diagram",
+    "plate": "lm7-sphenoid-superior-extra",
+    "target": "Body of sphenoid",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-calvaria": {
+    "kind": "reference",
+    "plate": "lm7-cranial-space",
+    "target": "Calvaria",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "Reference point on the cranial roof; the calvaria extends over several bones."
+  },
+  "textbook-condylar-process-of-mandible": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Condylar process of mandible",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference on the complete ascending condylar process; the articular mandibular condyle is only its head."
+  },
+  "textbook-cranial-base": {
+    "kind": "reference",
+    "plate": "lm7-cranial-space",
+    "target": "Cranial base",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "Reference point on the skull floor; the complete cranial base includes multiple bones."
+  },
+  "textbook-cranial-cavity": {
+    "kind": "reference",
+    "plate": "lm7-cranial-space",
+    "target": "Cranial cavity",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "Reference point within the intracranial space; this is not a bony surface landmark."
+  },
+  "textbook-crista-galli": {
+    "kind": "diagram",
+    "plate": "lm7-superior-base-extra",
+    "target": "Crista galli",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-ethmoid-air-cells": {
+    "kind": "diagram",
+    "plate": "lm7-ethmoid-extra",
+    "target": "Ethmoid air cells",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-external-occipital-protuberance": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "External occipital protuberance",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-foramen-lacerum": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Foramen lacerum",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point at the opening in a dry skull. In life, the foramen is largely filled with cartilage; the internal carotid artery passes over its superior aspect rather than traversing the cartilage-filled hole."
+  },
+  "textbook-foramen-ovale-of-the-middle-cranial-fossa": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Foramen ovale of the middle cranial fossa",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-foramen-rotundum": {
+    "kind": "diagram",
+    "plate": "lm7-superior-base-extra",
+    "target": "Foramen rotundum",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-foramen-spinosum": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Foramen spinosum",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-fossa-for-lacrimal-sac": {
+    "kind": "diagram",
+    "plate": "lm7-orbit-detail",
+    "target": "Fossa for lacrimal sac",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-glabella": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Glabella",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-greater-wings-of-sphenoid": {
+    "kind": "diagram",
+    "plate": "lm7-sphenoid-superior-extra",
+    "target": "Greater wings of sphenoid",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-horizontal-plate-of-palatine-bone": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Horizontal plate of palatine bone",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-hypoglossal-canal": {
+    "kind": "diagram",
+    "plate": "lm7-superior-base-extra",
+    "target": "Hypoglossal canal",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-hypophyseal-fossa": {
+    "kind": "diagram",
+    "plate": "lm7-superior-base-extra",
+    "target": "Hypophyseal fossa",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "The depression within the larger sella turcica, not the entire saddle-shaped sella."
+  },
+  "textbook-inferior-orbital-fissure": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Inferior orbital fissure",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-infraorbital-foramen": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Infraorbital foramen",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-infratemporal-fossa": {
+    "kind": "reference",
+    "plate": "lm7-skull-fossae-lateral",
+    "target": "Infratemporal fossa",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "Deep space inferior to the arch and medial to the mandibular ramus. The ramus obscures much of the space in this intact lateral skull, so this is a context reference only."
+  },
+  "textbook-internal-acoustic-meatus": {
+    "kind": "diagram",
+    "plate": "lm7-superior-base-extra",
+    "target": "Internal acoustic meatus",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-lateral-pterygoid-plate": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Lateral pterygoid plate",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Lateral lamina of the pterygoid process; source shows the paired medial/lateral plates."
+  },
+  "textbook-lesser-wings-of-sphenoid": {
+    "kind": "diagram",
+    "plate": "lm7-sphenoid-superior-extra",
+    "target": "Lesser wings of sphenoid",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-lingula": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Lingula",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-mandibular-notch": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Mandibular notch",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-mastoid-fontanelle": {
+    "kind": "diagram",
+    "plate": "lm7-fontanelles-lateral",
+    "target": "Mastoid fontanelle",
+    "reference": "7.5",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-mastoid-portion-of-temporal-bone": {
+    "kind": "diagram",
+    "plate": "lm7-temporal-extra",
+    "target": "Mastoid portion of temporal bone",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-medial-pterygoid-plate": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Medial pterygoid plate",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Medial lamina of the pterygoid process."
+  },
+  "textbook-mental-foramen": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Mental foramen",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-mental-protuberance": {
+    "kind": "diagram",
+    "plate": "lm7-skull-lateral-extra",
+    "target": "Mental protuberance",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-middle-cranial-fossa": {
+    "kind": "diagram",
+    "plate": "lm7-cranial-fossae",
+    "target": "Middle cranial fossa",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point on the floor of this extended depression."
+  },
+  "textbook-middle-nasal-concha": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Middle nasal concha",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-mylohyoid-line": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Mylohyoid line",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-nasal-cavity": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Nasal cavity",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point within the anterior nasal aperture; not the entire posterior extent of the nasal cavity."
+  },
+  "textbook-nasal-septum": {
+    "kind": "diagram",
+    "plate": "lm7-septum-extra",
+    "target": "Nasal septum",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point on the bony septum; the complete septum includes perpendicular ethmoid plate, vomer and anterior cartilage."
+  },
+  "textbook-nasolacrimal-canal": {
+    "kind": "reference",
+    "plate": "lm7-nasolacrimal-context",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "The fossa for the lacrimal sac lies on the anteromedial orbital wall. The nasolacrimal canal descends from this region to the inferior nasal meatus; the complete canal is not exposed in this anterior source view. No guessed canal pin is shown."
+  },
+  "textbook-olfactory-foramina": {
+    "kind": "reference",
+    "plate": "lm7-olfactory-openings-context",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "Many tiny openings pierce the cribriform plate beside the crista galli. This source shows the plate but does not clearly resolve a separately verified hole. The plate and its multiple openings are distinct concepts; no whole-plate dot is graded as an individual foramen."
+  },
+  "textbook-orbit": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Orbit",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point inside the bony orbit, a shared cavity made by seven bones."
+  },
+  "textbook-palatine-process-of-maxilla": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Palatine process of maxilla",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-paranasal-sinuses": {
+    "kind": "reference",
+    "plate": "lm7-paranasal-context",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "The frontal, maxillary, sphenoid and ethmoidal air spaces form a distributed group. The source schematic shows their regional relationships; no single point stands for the entire group."
+  },
+  "textbook-petrous-portion-of-temporal-bone": {
+    "kind": "diagram",
+    "plate": "lm7-superior-base-extra",
+    "target": "Petrous portion of temporal bone",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-petrous-ridge": {
+    "kind": "diagram",
+    "plate": "lm7-superior-base-extra",
+    "target": "Petrous ridge",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the superior ridge of the petrous portion; the ridge and the whole petrous region are different extents."
+  },
+  "textbook-posterior-cranial-fossa": {
+    "kind": "diagram",
+    "plate": "lm7-cranial-fossae",
+    "target": "Posterior cranial fossa",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point on the floor of this extended depression."
+  },
+  "textbook-posterior-fontanelle": {
+    "kind": "diagram",
+    "plate": "lm7-fontanelles-superior",
+    "target": "Posterior fontanelle",
+    "reference": "7.5",
+    "assessment": "unlabeled-crop",
+    "note": "Developmental fibrous gap in the newborn skull."
+  },
+  "textbook-pterion": {
+    "kind": "diagram",
+    "plate": "lm7-skull-lateral-extra",
+    "target": "Pterion",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-ramus-of-mandible": {
+    "kind": "diagram",
+    "plate": "lm7-mandible-extra",
+    "target": "Ramus of mandible",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-sphenoidal-fontanelle": {
+    "kind": "diagram",
+    "plate": "lm7-fontanelles-lateral",
+    "target": "Sphenoidal fontanelle",
+    "reference": "7.5",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-squamous-portion-of-temporal-bone": {
+    "kind": "diagram",
+    "plate": "lm7-temporal-extra",
+    "target": "Squamous portion of temporal bone",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-squamous-suture": {
+    "kind": "diagram",
+    "plate": "lm7-skull-lateral-extra",
+    "target": "Squamous suture",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-stylomastoid-foramen": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Stylomastoid foramen",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-superior-nasal-concha": {
+    "kind": "diagram",
+    "plate": "lm7-ethmoid-extra",
+    "target": "Superior nasal concha",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-superior-nuchal-line": {
+    "kind": "diagram",
+    "plate": "lm7-inferior-base-extra",
+    "target": "Superior nuchal line",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the ridge; trace its full course in the source."
+  },
+  "textbook-superior-orbital-fissure": {
+    "kind": "diagram",
+    "plate": "lm7-sphenoid-superior-extra",
+    "target": "Superior orbital fissure",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-supraorbital-foramen": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Supraorbital foramen",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-supraorbital-margin": {
+    "kind": "diagram",
+    "plate": "lm7-skull-anterior-extra",
+    "target": "Supraorbital margin",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the upper orbital rim."
+  },
+  "textbook-temporal-fossa": {
+    "kind": "reference",
+    "plate": "lm7-skull-fossae-lateral",
+    "target": "Temporal fossa",
+    "reference": "7.2",
+    "assessment": "learn-only",
+    "note": "Broad depression on the lateral skull superior to the zygomatic arch. The point gives regional context, not a bounded surface outline."
+  },
+  "textbook-temporal-process-of-the-zygomatic-bone": {
+    "kind": "diagram",
+    "plate": "lm7-skull-lateral-extra",
+    "target": "Temporal process of the zygomatic bone",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Zygomatic contribution to the arch; distinguish it from the zygomatic process of temporal bone."
+  },
+  "textbook-zygomatic-arch": {
+    "kind": "diagram",
+    "plate": "lm7-skull-lateral-extra",
+    "target": "Zygomatic arch",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the arch; the arch is formed by temporal and zygomatic contributions."
+  },
+  "textbook-zygomatic-process-of-maxilla": {
+    "kind": "diagram",
+    "plate": "lm7-maxilla-extra",
+    "target": "Zygomatic process of maxilla",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-anterior-arch-of-atlas": {
+    "kind": "diagram",
+    "plate": "lm7-atlas-arch",
+    "target": "Anterior arch of atlas",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-anterior-sacral-foramina": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-anterior-extra",
+    "target": "Anterior sacral foramina",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "One opening of the anterior series; distinct from the posterior sacral foramina."
+  },
+  "textbook-apex-of-sacrum": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-anterior-extra",
+    "target": "Apex of sacrum",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-base-of-sacrum": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-anterior-extra",
+    "target": "Base of sacrum",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the broad superior end of the sacrum."
+  },
+  "textbook-bifid-spinous-process": {
+    "kind": "diagram",
+    "plate": "lm7-cervical-bifid",
+    "target": "Bifid spinous process",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "Reference on one prong of the bifurcated spinous process; not all cervical vertebrae have the same morphology."
+  },
+  "textbook-body-of-first-sacral-vertebra": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-anterior-extra",
+    "target": "Body of first sacral vertebra",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-inferior-articular-process": {
+    "kind": "diagram",
+    "plate": "lm7-lumbar-processes",
+    "target": "Inferior articular process",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "The projection bearing an inferior facet; not the complete intervertebral joint."
+  },
+  "textbook-inferior-costal-facet": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Inferior costal facet",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-lateral-sacral-crest": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-posterior-extra",
+    "target": "Lateral sacral crest",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-median-sacral-crest": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-posterior-extra",
+    "target": "Median sacral crest",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-posterior-arch-of-atlas": {
+    "kind": "diagram",
+    "plate": "lm7-atlas-arch",
+    "target": "Posterior arch of atlas",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-posterior-sacral-foramina": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-posterior-extra",
+    "target": "Posterior sacral foramina",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "One opening of the posterior series; distinct from the anterior foramina."
+  },
+  "textbook-sacral-canal": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-posterior-extra",
+    "target": "Sacral canal",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "Superior opening of the canal; not the entire canal course."
+  },
+  "textbook-sacral-hiatus": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-posterior-extra",
+    "target": "Sacral hiatus",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "Inferior opening at the termination of the sacral canal."
+  },
+  "textbook-sacral-promontory": {
+    "kind": "diagram",
+    "plate": "lm8-pelvis-anterior",
+    "target": "sacral promontory",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": "Anterior-projecting superior margin of the sacrum; belongs to axial skeleton although viewed within pelvis."
+  },
+  "textbook-superior-articular-facet-of-sacrum": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-posterior-extra",
+    "target": "Superior articular facet of sacrum",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-superior-articular-process": {
+    "kind": "diagram",
+    "plate": "lm7-lumbar-processes",
+    "target": "Superior articular process",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "The projection bearing an articular facet; the facet surface and the whole process are different extents."
+  },
+  "textbook-superior-articular-process-of-the-sacrum": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-posterior-extra",
+    "target": "Superior articular process of the sacrum",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "Process bearing the superior articular facet; the whole projection differs from its joint surface."
+  },
+  "textbook-superior-costal-facet": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Superior costal facet",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-transverse-costal-facet": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Transverse costal facet",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "The vertebral facet for the rib tubercle, not the tubercle on the rib itself."
+  },
+  "textbook-transverse-sacral-ridges": {
+    "kind": "diagram",
+    "plate": "lm7-sacrum-anterior-extra",
+    "target": "Transverse sacral ridges",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "One transverse line of fusion between adjacent sacral vertebral bodies."
+  },
+  "textbook-vertebral-arch": {
+    "kind": "diagram",
+    "plate": "lm7-vertebral-opening",
+    "target": "Vertebral arch",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the posterior arch formed by pedicles and laminae; not a single separate bone."
+  },
+  "textbook-vertebral-foramen": {
+    "kind": "diagram",
+    "plate": "lm7-vertebral-opening",
+    "target": "Vertebral foramen",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "One vertebral opening; stacked foramina together contribute to the continuous vertebral canal."
+  },
+  "textbook-angle-of-rib": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Angle of rib",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-body-of-hyoid": {
+    "kind": "diagram",
+    "plate": "lm7-hyoid-regions",
+    "target": "Body of hyoid",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-body-of-rib": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Body of rib",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the rib shaft distal to the angle."
+  },
+  "textbook-clavicular-notch": {
+    "kind": "diagram",
+    "plate": "lm7-sternum-extra",
+    "target": "Clavicular notch",
+    "reference": "7.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-costal-groove": {
+    "kind": "reference",
+    "plate": "lm7-costal-groove-context",
+    "reference": "7.4",
+    "assessment": "learn-only",
+    "note": "The costal groove runs along the inferior internal aspect of the rib and accommodates the intercostal neurovascular bundle. This source view shows posterior articulation and rib angle but does not clearly expose the complete groove. No guessed groove pin is shown."
+  },
+  "textbook-greater-horn-of-hyoid": {
+    "kind": "diagram",
+    "plate": "lm7-hyoid-regions",
+    "target": "Greater horn of hyoid",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-head-of-rib": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Head of rib",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-lesser-horn-of-hyoid": {
+    "kind": "diagram",
+    "plate": "lm7-hyoid-regions",
+    "target": "Lesser horn of hyoid",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-neck-of-rib": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Neck of rib",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-sternal-angle": {
+    "kind": "diagram",
+    "plate": "lm7-sternum-extra",
+    "target": "Sternal angle",
+    "reference": "7.4",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point at the manubriosternal junction; the ridge is extended across the sternum."
+  },
+  "textbook-tubercle-of-rib": {
+    "kind": "diagram",
+    "plate": "lm7-thoracic-rib-extra",
+    "target": "Tubercle of rib",
+    "reference": "7.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-adductor-tubercle": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0364813,
+          0.4752806,
+          -0.0329207
+        ],
+        "object": "Adductor tubercle.j",
+        "parent": "Adductor tubercle.t",
+        "label": "Adductor tubercle",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.34,
+        "distanceToWebSurfaceMm": 0.692,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ADDUCTOR TUBERCLE",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0364813,
+        0.4752806,
+        -0.0329207
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.743,
+      "webSurfaceDistanceMm": 0.692,
+      "leaderLengthMm": 39.01,
+      "sourceEndpoints": [
+        [
+          0.0024991,
+          0.4756173,
+          -0.0314474
+        ],
+        [
+          -0.0364813,
+          0.4752806,
+          -0.0329207
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Medial distal femoral projection superior to the medial condyle; lower limb, not upper limb.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-anterior"
+  },
+  "textbook-articular-surface-of-lateral-tibial-condyle": {
+    "kind": "diagram",
+    "plate": "lm8-leg-posterior",
+    "target": "articular surface of the lateral tibial condyle",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-articular-surface-of-medial-tibial-condyle": {
+    "kind": "diagram",
+    "plate": "lm8-leg-posterior",
+    "target": "articular surface of the medial tibial condyle",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-base-of-fifth-metatarsal": {
+    "kind": "diagram",
+    "plate": "lm8-foot-superior",
+    "target": "base of the fifth metatarsal",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": "Lateral expansion at the proximal fifth metatarsal; not its distal head."
+  },
+  "textbook-base-of-the-metatarsal-bone": {
+    "kind": "diagram",
+    "plate": "lm8-foot-medial",
+    "target": "base of the metatarsal bone",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": "Representative first metatarsal, proximal end next to the medial cuneiform."
+  },
+  "textbook-calcaneal-tuberosity": {
+    "kind": "diagram",
+    "plate": "lm8-foot-medial",
+    "target": "calcaneal tuberosity",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on the posterior inferior heel prominence; source bracket spans the tuberosity."
+  },
+  "textbook-facet-for-medial-malleolus": {
+    "kind": "diagram",
+    "plate": "lm8-foot-medial",
+    "target": "facet for medial malleolus",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-fibular-notch-of-tibia": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0917947,
+          0.0985549,
+          -0.0433874
+        ],
+        "object": "Fibular notch.j",
+        "parent": "Fibular notch.t",
+        "label": "Fibular notch",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.028,
+        "distanceToWebSurfaceMm": 0.081,
+        "sourceBone": "Tibia.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Tibia",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "FIBULAR NOTCH",
+      "sourceParentBone": "Tibia.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0917947,
+        0.0985549,
+        -0.0433874
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.023,
+      "webSurfaceDistanceMm": 0.081,
+      "leaderLengthMm": 47.976,
+      "sourceEndpoints": [
+        [
+          -0.1397712,
+          0.0985429,
+          -0.0433874
+        ],
+        [
+          -0.0917947,
+          0.0985549,
+          -0.0433874
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "tibia-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Lateral distal tibial groove facing the distal fibula; this is a tibial landmark.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-fovea-capitis": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0646624,
+          0.8632973,
+          -0.0096893
+        ],
+        "object": "Fovea for ligament of head of femur.j",
+        "parent": "Fovea for ligament of head of femur.t",
+        "label": "Fovea for ligament of head of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.992,
+        "distanceToWebSurfaceMm": 0.041,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "left",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "FOVEA FOR LIGAMENT OF HEAD OF FEMUR",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0646624,
+        0.8632973,
+        -0.0096893
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.008,
+      "webSurfaceDistanceMm": 0.041,
+      "leaderLengthMm": 44.596,
+      "sourceEndpoints": [
+        [
+          -0.0257482,
+          0.8850797,
+          -0.0096892
+        ],
+        [
+          -0.0646624,
+          0.8632973,
+          -0.0096893
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Small indentation on the medial femoral head for the ligament of the head of femur; not the femoral neck.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-gluteal-tuberosity": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1152262,
+          0.7749895,
+          -0.0257491
+        ],
+        "object": "Gluteal tuberosity.j",
+        "parent": "Gluteal tuberosity.t",
+        "label": "Gluteal tuberosity",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.814,
+        "distanceToWebSurfaceMm": 0.04,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "back",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "GLUTEAL TUBEROSITY",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1152262,
+        0.7749895,
+        -0.0257491
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.006,
+      "webSurfaceDistanceMm": 0.04,
+      "leaderLengthMm": 30.435,
+      "sourceEndpoints": [
+        [
+          -0.1022805,
+          0.7749836,
+          -0.0532941
+        ],
+        [
+          -0.1152262,
+          0.7749895,
+          -0.0257491
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Posterior proximal femoral roughened ridge inferior to greater trochanter.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-posterior"
+  },
+  "textbook-head-of-the-fibula": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1246944,
+          0.3988287,
+          -0.0402069
+        ],
+        "object": "Head of fibula.j",
+        "parent": "Head of fibula.t",
+        "label": "Head of fibula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.244,
+        "distanceToWebSurfaceMm": 0.013,
+        "sourceBone": "Fibula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Fibula",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "HEAD OF FIBULA",
+      "sourceParentBone": "Fibula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1246944,
+        0.3988287,
+        -0.0402069
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.035,
+      "webSurfaceDistanceMm": 0.013,
+      "leaderLengthMm": 35.742,
+      "sourceEndpoints": [
+        [
+          -0.1604351,
+          0.3991392,
+          -0.0402069
+        ],
+        [
+          -0.1246944,
+          0.3988287,
+          -0.0402069
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "fibula-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Proximal expanded fibular region lateral to the proximal tibia.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-leg-posterior"
+  },
+  "textbook-head-of-the-metatarsal-bone": {
+    "kind": "diagram",
+    "plate": "lm8-foot-medial",
+    "target": "head of the metatarsal bone",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": "Representative first metatarsal, distal rounded end at the first metatarsophalangeal joint."
+  },
+  "textbook-inferior-articular-surface-of-tibia": {
+    "kind": "diagram",
+    "plate": "lm8-leg-anterior",
+    "target": "inferior articular surface of the tibia",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": "Distal tibial surface that articulates with the talus."
+  },
+  "textbook-inferior-tendon-groove-of-cuboid": {
+    "kind": "reference",
+    "plate": "lm8-cuboid-groove-context",
+    "reference": "8.4",
+    "assessment": "learn-only",
+    "note": "The groove lies on the inferior cuboid and carries the fibularis longus tendon. The source describes it in prose; this lateral profile does not expose the inferior groove. Study its relationship to the cuboid, without a guessed point marker."
+  },
+  "textbook-intercondylar-eminence-of-tibia": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0703371,
+          0.4301832,
+          -0.0381469
+        ],
+        "object": "Intercondylar eminence.j",
+        "parent": "Intercondylar eminence.t",
+        "label": "Intercondylar eminence",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.612,
+        "distanceToWebSurfaceMm": 0.193,
+        "sourceBone": "Tibia.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Tibia",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTERCONDYLAR EMINENCE",
+      "sourceParentBone": "Tibia.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0703371,
+        0.4301832,
+        -0.0381469
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.041,
+      "webSurfaceDistanceMm": 0.193,
+      "leaderLengthMm": 21.681,
+      "sourceEndpoints": [
+        [
+          -0.070337,
+          0.4518645,
+          -0.0381469
+        ],
+        [
+          -0.0703371,
+          0.4301832,
+          -0.0381469
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "tibia-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Elevated region between the proximal tibial condylar articular surfaces.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-leg-anterior"
+  },
+  "textbook-intercondylar-fossa-of-femur": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0752696,
+          0.4563788,
+          -0.0360488
+        ],
+        "object": "Intercondylar fossa.j",
+        "parent": "Intercondylar fossa.t",
+        "label": "Intercondylar fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.351,
+        "distanceToWebSurfaceMm": 0.093,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "back",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTERCONDYLAR FOSSA",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0752696,
+        0.4563788,
+        -0.0360488
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.052,
+      "webSurfaceDistanceMm": 0.093,
+      "leaderLengthMm": 71.692,
+      "sourceEndpoints": [
+        [
+          -0.0752696,
+          0.4442121,
+          -0.1067009
+        ],
+        [
+          -0.0752696,
+          0.4563788,
+          -0.0360488
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Posterior depression between the distal femoral condyles.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-posterior"
+  },
+  "textbook-interosseous-border-of-the-fibula": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.098125,
+          0.2157852,
+          -0.0482654
+        ],
+        "object": "Interosseous crest of fibula.j",
+        "parent": "Interosseous crest of fibula.t",
+        "label": "Interosseous crest of fibula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.532,
+        "distanceToWebSurfaceMm": 0.123,
+        "sourceBone": "Fibula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Fibula",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTEROSSEOUS CREST OF FIBULA",
+      "sourceParentBone": "Fibula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.098125,
+        0.2157852,
+        -0.0482654
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.007,
+      "webSurfaceDistanceMm": 0.123,
+      "leaderLengthMm": 53.807,
+      "sourceEndpoints": [
+        [
+          -0.0443185,
+          0.2154891,
+          -0.0482654
+        ],
+        [
+          -0.098125,
+          0.2157852,
+          -0.0482654
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "fibula-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Medial shaft crest of the fibula facing the tibia; a point on the ridge, not the whole ridge.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-leg-anterior"
+  },
+  "textbook-interosseous-border-of-the-tibia": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0890863,
+          0.289788,
+          -0.0310325
+        ],
+        "object": "Interosseous border of tibia.j",
+        "parent": "Interosseous border of tibia.t",
+        "label": "Interosseous border of tibia",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 8.712,
+        "distanceToWebSurfaceMm": 0.085,
+        "sourceBone": "Tibia.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Tibia",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTEROSSEOUS BORDER OF TIBIA",
+      "sourceParentBone": "Tibia.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0890863,
+        0.289788,
+        -0.0310325
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.031,
+      "webSurfaceDistanceMm": 0.085,
+      "leaderLengthMm": 66.05,
+      "sourceEndpoints": [
+        [
+          -0.1360649,
+          0.2902828,
+          -0.0774584
+        ],
+        [
+          -0.0890863,
+          0.289788,
+          -0.0310325
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "tibia-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Lateral shaft edge of the tibia facing the fibula; a point on the ridge, not the whole ridge.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-leg-anterior"
+  },
+  "textbook-intertrochanteric-crest": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1166567,
+          0.8103541,
+          -0.0358199
+        ],
+        "object": "Intertrochanteric crest.j",
+        "parent": "Intertrochanteric crest.t",
+        "label": "Intertrochanteric crest",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 4.007,
+        "distanceToWebSurfaceMm": 0.057,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "back",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTERTROCHANTERIC CREST",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1166567,
+        0.8103541,
+        -0.0358199
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.051,
+      "webSurfaceDistanceMm": 0.057,
+      "leaderLengthMm": 52.539,
+      "sourceEndpoints": [
+        [
+          -0.1166567,
+          0.8096743,
+          -0.0883546
+        ],
+        [
+          -0.1166567,
+          0.8103541,
+          -0.0358199
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Posterior proximal femoral ridge connecting trochanters; distinct from anterior line.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-posterior"
+  },
+  "textbook-intertrochanteric-line": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1038308,
+          0.8262352,
+          0.0021744
+        ],
+        "object": "Intertrochanteric line.j",
+        "parent": "Intertrochanteric line.t",
+        "label": "Intertrochanteric line",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 6.184,
+        "distanceToWebSurfaceMm": 0.022,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTERTROCHANTERIC LINE",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1038308,
+        0.8262352,
+        0.0021744
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.021,
+      "webSurfaceDistanceMm": 0.022,
+      "leaderLengthMm": 23.982,
+      "sourceEndpoints": [
+        [
+          -0.1038308,
+          0.8286848,
+          0.0260306
+        ],
+        [
+          -0.1038308,
+          0.8262352,
+          0.0021744
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Anterior proximal femoral line connecting trochanters; distinct from posterior crest.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-anterior"
+  },
+  "textbook-lateral-condyle-of-the-femur": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1002154,
+          0.4392794,
+          -0.0473022
+        ],
+        "object": "Lateral condyle of femur.j",
+        "parent": "Lateral condyle of femur.t",
+        "label": "Lateral condyle of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 4.434,
+        "distanceToWebSurfaceMm": 0.1,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "LATERAL CONDYLE OF FEMUR",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1002154,
+        0.4392794,
+        -0.0473022
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.013,
+      "webSurfaceDistanceMm": 0.1,
+      "leaderLengthMm": 13.644,
+      "sourceEndpoints": [
+        [
+          -0.1002153,
+          0.4256354,
+          -0.0473022
+        ],
+        [
+          -0.1002154,
+          0.4392794,
+          -0.0473022
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Lateral distal femoral rounded articular region, distinct from epicondyle.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-posterior"
+  },
+  "textbook-lateral-condyle-of-the-tibia": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1132715,
+          0.4219148,
+          -0.0286674
+        ],
+        "object": "Lateral condyle of tibia.j",
+        "parent": "Lateral condyle of tibia.t",
+        "label": "Lateral condyle of tibia",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.714,
+        "distanceToWebSurfaceMm": 0.039,
+        "sourceBone": "Tibia.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Tibia",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "LATERAL CONDYLE OF TIBIA",
+      "sourceParentBone": "Tibia.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1132715,
+        0.4219148,
+        -0.0286674
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.012,
+      "webSurfaceDistanceMm": 0.039,
+      "leaderLengthMm": 50.406,
+      "sourceEndpoints": [
+        [
+          -0.1636767,
+          0.4216729,
+          -0.0286674
+        ],
+        [
+          -0.1132715,
+          0.4219148,
+          -0.0286674
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "tibia-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Lateral expanded proximal tibial region beneath the femoral lateral condyle.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-leg-anterior"
+  },
+  "textbook-lateral-longitudinal-arch-of-foot": {
+    "kind": "reference",
+    "plate": "lm8-lateral-arch-context",
+    "reference": "8.4",
+    "assessment": "learn-only",
+    "note": "The lateral longitudinal arch runs along the relatively low lateral foot profile. The source figure shows its bony context without a drawn arch curve. This is a conceptual contour reference, not a point target."
+  },
+  "textbook-linea-aspera": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0968394,
+          0.6580141,
+          -0.0175475
+        ],
+        "object": "Linea aspera.j",
+        "parent": "Linea aspera.t",
+        "label": "Linea aspera",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.621,
+        "distanceToWebSurfaceMm": 0.087,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "back",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "LINEA ASPERA",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0968394,
+        0.6580141,
+        -0.0175475
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.019,
+      "webSurfaceDistanceMm": 0.087,
+      "leaderLengthMm": 23.459,
+      "sourceEndpoints": [
+        [
+          -0.0968393,
+          0.6579277,
+          -0.0410063
+        ],
+        [
+          -0.0968394,
+          0.6580141,
+          -0.0175475
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Posterior femoral shaft ridge; reference point along the ridge rather than a full segmentation.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-posterior"
+  },
+  "textbook-medial-condyle-of-the-femur": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0514635,
+          0.434635,
+          -0.0472259
+        ],
+        "object": "Medial condyle of femur.j",
+        "parent": "Medial condyle of femur.t",
+        "label": "Medial condyle of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.659,
+        "distanceToWebSurfaceMm": 0.004,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "MEDIAL CONDYLE OF FEMUR",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0514635,
+        0.434635,
+        -0.0472259
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.007,
+      "webSurfaceDistanceMm": 0.004,
+      "leaderLengthMm": 19.459,
+      "sourceEndpoints": [
+        [
+          -0.0514635,
+          0.415176,
+          -0.0472259
+        ],
+        [
+          -0.0514635,
+          0.434635,
+          -0.0472259
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Medial distal femoral rounded articular region, distinct from epicondyle.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-femur-posterior"
+  },
+  "textbook-medial-condyle-of-the-tibia": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0401438,
+          0.4103038,
+          -0.0428676
+        ],
+        "object": "Medial condyle of tibia.j",
+        "parent": "Medial condyle of tibia.t",
+        "label": "Medial condyle of tibia",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.73,
+        "distanceToWebSurfaceMm": 0.003,
+        "sourceBone": "Tibia.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Tibia",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "MEDIAL CONDYLE OF TIBIA",
+      "sourceParentBone": "Tibia.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0401438,
+        0.4103038,
+        -0.0428676
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.028,
+      "webSurfaceDistanceMm": 0.003,
+      "leaderLengthMm": 47.21,
+      "sourceEndpoints": [
+        [
+          0.0070652,
+          0.410036,
+          -0.0428676
+        ],
+        [
+          -0.0401438,
+          0.4103038,
+          -0.0428676
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "tibia-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Medial expanded proximal tibial region beneath the femoral medial condyle.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-leg-anterior"
+  },
+  "textbook-medial-longitudinal-arch-of-foot": {
+    "kind": "reference",
+    "plate": "lm8-medial-arch-context",
+    "reference": "8.4",
+    "assessment": "learn-only",
+    "note": "The medial longitudinal arch follows the medial tarsal/metatarsal profile and is taller than the lateral arch. The source profile is shown; the textbook does not draw an arch curve or exact point marker. Study the supported contour rather than grading a guessed dot."
+  },
+  "textbook-patellar-surface": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0810084,
+          0.4498527,
+          -0.0041198
+        ],
+        "object": "Patellar surface of femur.j",
+        "parent": "Patellar surface of femur.t",
+        "label": "Patellar surface of femur",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 4.623,
+        "distanceToWebSurfaceMm": 0.003,
+        "sourceBone": "Femur.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Femur",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "PATELLAR SURFACE OF FEMUR",
+      "sourceParentBone": "Femur.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0810084,
+        0.4498527,
+        -0.0041198
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.001,
+      "webSurfaceDistanceMm": 0.003,
+      "leaderLengthMm": 75.268,
+      "sourceEndpoints": [
+        [
+          -0.0810083,
+          0.4500714,
+          0.0711482
+        ],
+        [
+          -0.0810084,
+          0.4498527,
+          -0.0041198
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "femur-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.16",
+      "textbookPdfPages": [
+        316,
+        317,
+        318
+      ],
+      "anatomicalRelationshipChecked": "Anterior distal femoral articular surface for the patella; distinct from posterior intercondylar fossa.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-shaft-of-metatarsal-bone": {
+    "kind": "diagram",
+    "plate": "lm8-foot-medial",
+    "target": "shaft of the metatarsal bone",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-shaft-of-the-femur": {
+    "kind": "diagram",
+    "plate": "lm8-femur-anterior",
+    "target": "shaft of the femur",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-shaft-of-the-fibula": {
+    "kind": "diagram",
+    "plate": "lm8-leg-anterior",
+    "target": "shaft of the fibula",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-shaft-of-the-tibia": {
+    "kind": "diagram",
+    "plate": "lm8-leg-anterior",
+    "target": "shaft of the tibia",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-soleal-line": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0754029,
+          0.3628682,
+          -0.0381088
+        ],
+        "object": "Soleal line.j",
+        "parent": "Soleal line.t",
+        "label": "Soleal line",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 9.938,
+        "distanceToWebSurfaceMm": 0.002,
+        "sourceBone": "Tibia.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.4",
+    "intendedParentPattern": "Tibia",
+    "preferredView": "back",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "SOLEAL LINE",
+      "sourceParentBone": "Tibia.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0754029,
+        0.3628682,
+        -0.0381088
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.009,
+      "webSurfaceDistanceMm": 0.002,
+      "leaderLengthMm": 23.798,
+      "sourceEndpoints": [
+        [
+          -0.0754029,
+          0.3626259,
+          -0.0619051
+        ],
+        [
+          -0.0754029,
+          0.3628682,
+          -0.0381088
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "tibia-r-validation.png",
+      "textbookSection": "8.4",
+      "textbookFigureContext": "8.18",
+      "textbookPdfPages": [
+        320,
+        321
+      ],
+      "anatomicalRelationshipChecked": "Oblique ridge on posterior proximal tibial shaft; the pin marks one location along the ridge.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-leg-posterior"
+  },
+  "textbook-sustentaculum-tali": {
+    "kind": "diagram",
+    "plate": "lm8-foot-medial",
+    "target": "sustentaculum tali",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-transverse-arch-of-foot": {
+    "kind": "reference",
+    "plate": "lm8-transverse-arch-context",
+    "reference": "8.4",
+    "assessment": "learn-only",
+    "note": "The transverse arch spans medial-to-lateral across the midfoot, supported by cuneiforms and metatarsal bases. This superior view shows contributing bones but does not expose arch height. No guessed pin or curve is shown."
+  },
+  "textbook-trochlea-of-talus": {
+    "kind": "diagram",
+    "plate": "lm8-foot-superior",
+    "target": "trochlea of the talus",
+    "reference": "8.4",
+    "assessment": "unlabeled-crop",
+    "note": "Superior pulley-like talar articular surface beneath the tibia."
+  },
+  "textbook-anterior-inferior-iliac-spine": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0938062,
+          0.8885877,
+          0.0237094
+        ],
+        "object": "Anterior inferior iliac spine.j",
+        "parent": "Anterior inferior iliac spine.t",
+        "label": "Anterior inferior iliac spine",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.353,
+        "distanceToWebSurfaceMm": 0.025,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ANTERIOR INFERIOR ILIAC SPINE",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0938062,
+        0.8885877,
+        0.0237094
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.013,
+      "webSurfaceDistanceMm": 0.025,
+      "leaderLengthMm": 33.777,
+      "sourceEndpoints": [
+        [
+          -0.1005621,
+          0.8885443,
+          0.0568038
+        ],
+        [
+          -0.0938062,
+          0.8885877,
+          0.0237094
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Anterior ilium projection below ASIS and above acetabulum.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-anterior-superior-iliac-spine": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1206489,
+          0.9450442,
+          0.0559046
+        ],
+        "object": "Anterior superior iliac spine.j",
+        "parent": "Anterior superior iliac spine.t",
+        "label": "Anterior superior iliac spine",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.82,
+        "distanceToWebSurfaceMm": 0.023,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ANTERIOR SUPERIOR ILIAC SPINE",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1206489,
+        0.9450442,
+        0.0559046
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.02,
+      "webSurfaceDistanceMm": 0.023,
+      "leaderLengthMm": 36.546,
+      "sourceEndpoints": [
+        [
+          -0.1206489,
+          0.9450048,
+          0.0924501
+        ],
+        [
+          -0.1206489,
+          0.9450442,
+          0.0559046
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Anterior end of iliac crest, superior to anterior inferior iliac spine.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-arcuate-line-of-the-ilium": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0553206,
+          0.8872669,
+          0.0041019
+        ],
+        "object": "Arcuate line of ilium.j",
+        "parent": "Arcuate line of ilium.t",
+        "label": "Arcuate line of ilium",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 6.575,
+        "distanceToWebSurfaceMm": 0.01,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "left",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ARCUATE LINE OF ILIUM",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0553206,
+        0.8872669,
+        0.0041019
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.011,
+      "webSurfaceDistanceMm": 0.01,
+      "leaderLengthMm": 23.405,
+      "sourceEndpoints": [
+        [
+          -0.0319157,
+          0.8871372,
+          0.0041018
+        ],
+        [
+          -0.0553206,
+          0.8872669,
+          0.0041019
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Medial ilium ridge at the lower edge of the iliac fossa; one contributor to the pelvic brim.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-medial"
+  },
+  "textbook-auricular-surface-of-the-ilium": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0515838,
+          0.9298331,
+          -0.0349044
+        ],
+        "object": "Auricular surface of ilium.j",
+        "parent": "Auricular surface of ilium.t",
+        "label": "Auricular surface of ilium",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 8.343,
+        "distanceToWebSurfaceMm": 0.028,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "left",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "AURICULAR SURFACE OF ILIUM",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0515838,
+        0.9298331,
+        -0.0349044
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.024,
+      "webSurfaceDistanceMm": 0.028,
+      "leaderLengthMm": 29.704,
+      "sourceEndpoints": [
+        [
+          -0.0265575,
+          0.9364476,
+          -0.0203351
+        ],
+        [
+          -0.0515838,
+          0.9298331,
+          -0.0349044
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Medial posterior ilium articular region for the sacrum; retain this contributor rather than labeling the sacrum.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-medial"
+  },
+  "textbook-greater-pelvis": {
+    "kind": "reference",
+    "plate": "lm8-pelvic-spaces",
+    "target": "greater pelvis",
+    "reference": "8.3",
+    "assessment": "learn-only",
+    "note": "Conceptual reference point above the brim and between the iliac wings; not a bony point."
+  },
+  "textbook-greater-sciatic-foramen": {
+    "kind": "diagram",
+    "plate": "lm8-pelvic-openings",
+    "target": "greater sciatic foramen",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": "Space bounded jointly by bone and the sacrospinous/sacrotuberous ligaments; not an isolated hole in the hip bone."
+  },
+  "textbook-iliac-fossa": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0881858,
+          0.9378917,
+          -0.0076674
+        ],
+        "object": "Iliac fossa.j",
+        "parent": "Iliac fossa.t",
+        "label": "Iliac fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 10.425,
+        "distanceToWebSurfaceMm": 0.02,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "left",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ILIAC FOSSA",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0881858,
+        0.9378917,
+        -0.0076674
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.021,
+      "webSurfaceDistanceMm": 0.02,
+      "leaderLengthMm": 23.581,
+      "sourceEndpoints": [
+        [
+          -0.0717365,
+          0.9428417,
+          0.0084881
+        ],
+        [
+          -0.0881858,
+          0.9378917,
+          -0.0076674
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Broad medial ilium depression; the pin is a reference point within a region, not its entire surface.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-medial"
+  },
+  "textbook-inferior-pubic-ramus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0189871,
+          0.8241946,
+          0.0222016
+        ],
+        "object": "Inferior pubic ramus.j",
+        "parent": "Inferior pubic ramus.t",
+        "label": "Inferior pubic ramus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 9.346,
+        "distanceToWebSurfaceMm": 0.006,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INFERIOR PUBIC RAMUS",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0189871,
+        0.8241946,
+        0.0222016
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.029,
+      "webSurfaceDistanceMm": 0.006,
+      "leaderLengthMm": 23.789,
+      "sourceEndpoints": [
+        [
+          -0.0382164,
+          0.8183119,
+          0.0349117
+        ],
+        [
+          -0.0189871,
+          0.8241946,
+          0.0222016
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Inferomedial pubic ramus bounding the obturator opening, distinguish from the ischial ramus posteriorly.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-ischial-ramus": {
+    "kind": "diagram",
+    "plate": "lm8-hip-lateral",
+    "target": "ischial ramus",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point on the anteriorly directed ramus of the ischium, one part of the ischiopubic ramus."
+  },
+  "textbook-ischial-spine": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0427719,
+          0.8670718,
+          -0.0519942
+        ],
+        "object": "Ischial spine.j",
+        "parent": "Ischial spine.t",
+        "label": "Ischial spine",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.622,
+        "distanceToWebSurfaceMm": 0.031,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ISCHIAL SPINE",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0427719,
+        0.8670718,
+        -0.0519942
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.041,
+      "webSurfaceDistanceMm": 0.031,
+      "leaderLengthMm": 23.449,
+      "sourceEndpoints": [
+        [
+          -0.026191,
+          0.8669986,
+          -0.068575
+        ],
+        [
+          -0.0427719,
+          0.8670718,
+          -0.0519942
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Projection of the posterior hip border between greater and lesser sciatic notches.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-ischiopubic-ramus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0283522,
+          0.8076578,
+          0.0012208
+        ],
+        "object": "Ischiopubic ramus.j",
+        "parent": "Ischiopubic ramus.t",
+        "label": "Ischiopubic ramus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.288,
+        "distanceToWebSurfaceMm": 0.066,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ISCHIOPUBIC RAMUS",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0283522,
+        0.8076578,
+        0.0012208
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.072,
+      "webSurfaceDistanceMm": 0.066,
+      "leaderLengthMm": 24.431,
+      "sourceEndpoints": [
+        [
+          -0.0426183,
+          0.7933443,
+          0.01495
+        ],
+        [
+          -0.0283522,
+          0.8076578,
+          0.0012208
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Inferior joined ramus of pubis and ischium below the obturator opening; pin marks one part of the composite region.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-pelvis-anterior"
+  },
+  "textbook-lesser-pelvis": {
+    "kind": "reference",
+    "plate": "lm8-pelvic-spaces",
+    "target": "lesser pelvis",
+    "reference": "8.3",
+    "assessment": "learn-only",
+    "note": "Conceptual reference point in the cavity inferior to the brim; not a bony point."
+  },
+  "textbook-lesser-sciatic-foramen": {
+    "kind": "diagram",
+    "plate": "lm8-pelvic-openings",
+    "target": "lesser sciatic foramen",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": "Space bounded jointly by bone and the sacrospinous/sacrotuberous ligaments."
+  },
+  "textbook-lesser-sciatic-notch": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0540681,
+          0.8534296,
+          -0.0482176
+        ],
+        "object": "Lesser sciatic notch.j",
+        "parent": "Lesser sciatic notch.t",
+        "label": "Lesser sciatic notch",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.311,
+        "distanceToWebSurfaceMm": 0.034,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "LESSER SCIATIC NOTCH",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0540681,
+        0.8534296,
+        -0.0482176
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.03,
+      "webSurfaceDistanceMm": 0.034,
+      "leaderLengthMm": 35.92,
+      "sourceEndpoints": [
+        [
+          -0.0286488,
+          0.8534408,
+          -0.0735964
+        ],
+        [
+          -0.0540681,
+          0.8534296,
+          -0.0482176
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Posterior hip indentation inferior to ischial spine; distinguish notch from ligament-bounded foramen.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-obturator-foramen": {
+    "kind": "diagram",
+    "plate": "lm8-pelvis-anterior",
+    "target": "obturator foramen",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-pectineal-line-of-pubis": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0488089,
+          0.8707858,
+          0.0261508
+        ],
+        "object": "Pecten pubis.j",
+        "parent": "Pecten pubis.t",
+        "label": "Pecten pubis",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.472,
+        "distanceToWebSurfaceMm": 0.018,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "left",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "PECTEN PUBIS",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0488089,
+        0.8707858,
+        0.0261508
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.018,
+      "webSurfaceDistanceMm": 0.018,
+      "leaderLengthMm": 11.556,
+      "sourceEndpoints": [
+        [
+          -0.047133,
+          0.8787606,
+          0.0343441
+        ],
+        [
+          -0.0488089,
+          0.8707858,
+          0.0261508
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Pectineal line of the superior pubic ramus; not the pectineal line of the femur.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-pelvic-outlet": {
+    "kind": "reference",
+    "plate": "lm8-pelvic-spaces",
+    "target": "pelvic outlet",
+    "reference": "8.3",
+    "assessment": "learn-only",
+    "note": "Conceptual reference near the outlet. Its full oblique boundary is not visible in this anterior projection; study the definition and 3D context rather than grading this point."
+  },
+  "textbook-posterior-inferior-iliac-spine": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0472421,
+          0.9160143,
+          -0.0579833
+        ],
+        "object": "Posterior inferior iliac spine.j",
+        "parent": "Posterior inferior iliac spine.t",
+        "label": "Posterior inferior iliac spine",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.503,
+        "distanceToWebSurfaceMm": 0.087,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "POSTERIOR INFERIOR ILIAC SPINE",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0472421,
+        0.9160143,
+        -0.0579833
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.007,
+      "webSurfaceDistanceMm": 0.087,
+      "leaderLengthMm": 36.123,
+      "sourceEndpoints": [
+        [
+          -0.0329633,
+          0.9160143,
+          -0.0911647
+        ],
+        [
+          -0.0472421,
+          0.9160143,
+          -0.0579833
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Posterior ilium projection below PSIS, above greater sciatic notch.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-posterior-superior-iliac-spine": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0382848,
+          0.9491354,
+          -0.0818633
+        ],
+        "object": "Posterior superior iliac spine.j",
+        "parent": "Posterior superior iliac spine.t",
+        "label": "Posterior superior iliac spine",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.214,
+        "distanceToWebSurfaceMm": 0.06,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "POSTERIOR SUPERIOR ILIAC SPINE",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0382848,
+        0.9491354,
+        -0.0818633
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.061,
+      "webSurfaceDistanceMm": 0.06,
+      "leaderLengthMm": 35.48,
+      "sourceEndpoints": [
+        [
+          -0.0213655,
+          0.949127,
+          -0.1130489
+        ],
+        [
+          -0.0382848,
+          0.9491354,
+          -0.0818633
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Posterior end of iliac crest, superior to posterior inferior iliac spine.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-pubic-arch": {
+    "kind": "diagram",
+    "plate": "lm8-pelvic-openings",
+    "target": "pubic arch",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point at the apex of the arch formed by the pubic bodies and inferior rami; not the full extent of the arch."
+  },
+  "textbook-pubic-body": {
+    "kind": "diagram",
+    "plate": "lm8-hip-lateral",
+    "target": "pubic body",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-pubic-tubercle": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0322241,
+          0.8472164,
+          0.0437356
+        ],
+        "object": "Pubic tubercle.j",
+        "parent": "Pubic tubercle.t",
+        "label": "Pubic tubercle",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.23,
+        "distanceToWebSurfaceMm": 0.021,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "PUBIC TUBERCLE",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0322241,
+        0.8472164,
+        0.0437356
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.022,
+      "webSurfaceDistanceMm": 0.021,
+      "leaderLengthMm": 24.091,
+      "sourceEndpoints": [
+        [
+          -0.0488748,
+          0.847184,
+          0.0611464
+        ],
+        [
+          -0.0322241,
+          0.8472164,
+          0.0437356
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Anterior superior pubic projection lateral to the pubic crest.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-medial"
+  },
+  "textbook-subpubic-angle": {
+    "kind": "diagram",
+    "plate": "lm8-pelvic-openings",
+    "target": "subpubic angle",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point inside the angle formed beneath the pubic symphysis; not an isolated bony bump."
+  },
+  "textbook-superior-pubic-ramus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0393562,
+          0.8618558,
+          0.0333224
+        ],
+        "object": "Superior pubic ramus.j",
+        "parent": "Superior pubic ramus.t",
+        "label": "Superior pubic ramus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 3.11,
+        "distanceToWebSurfaceMm": 0.007,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "SUPERIOR PUBIC RAMUS",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0393562,
+        0.8618558,
+        0.0333224
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.008,
+      "webSurfaceDistanceMm": 0.007,
+      "leaderLengthMm": 24.133,
+      "sourceEndpoints": [
+        [
+          -0.0152231,
+          0.8617383,
+          0.0333224
+        ],
+        [
+          -0.0393562,
+          0.8618558,
+          0.0333224
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Superior pubic bar above the obturator opening, medial to acetabulum.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-hip-lateral"
+  },
+  "textbook-symphyseal-surface-of-pubis": {
+    "kind": "diagram",
+    "plate": "lm8-hip-medial",
+    "target": "articular surface of the pubis",
+    "reference": "8.3",
+    "assessment": "unlabeled-crop",
+    "note": "The symphyseal articular surface on one hip bone, not the complete pubic symphysis joint."
+  },
+  "textbook-acromial-end-of-the-clavicle": {
+    "kind": "diagram",
+    "plate": "lm8-clavicle",
+    "target": "acromial end of the clavicle",
+    "reference": "8.1",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-base-of-metacarpal-bone": {
+    "kind": "diagram",
+    "plate": "lm8-hand-posterior-detail",
+    "target": "base of the metacarpal bone",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-base-of-proximal-phalanx-of-hand": {
+    "kind": "diagram",
+    "plate": "lm8-hand-posterior-detail",
+    "target": "base of the proximal phalanx of the hand",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-coronoid-fossa": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2160431,
+          1.1150907,
+          -0.0346569
+        ],
+        "object": "Coronoid fossa.j",
+        "parent": "Coronoid fossa.t",
+        "label": "Coronoid fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.789,
+        "distanceToWebSurfaceMm": 0.046,
+        "sourceBone": "Humerus.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Humerus",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "CORONOID FOSSA",
+      "sourceParentBone": "Humerus.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2160431,
+        1.1150907,
+        -0.0346569
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.001,
+      "webSurfaceDistanceMm": 0.046,
+      "leaderLengthMm": 29.536,
+      "sourceEndpoints": [
+        [
+          -0.2160687,
+          1.1144611,
+          -0.005128
+        ],
+        [
+          -0.2160431,
+          1.1150907,
+          -0.0346569
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "humerus-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.5",
+      "textbookPdfPages": [
+        304,
+        305
+      ],
+      "anatomicalRelationshipChecked": "Anterior distal humeral depression superior to the trochlear articulation.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-humerus-anterior"
+  },
+  "textbook-coronoid-process-of-the-ulna": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2192739,
+          1.0920233,
+          -0.022943
+        ],
+        "object": "Coronoid process of ulna.j",
+        "parent": "Coronoid process of ulna.t",
+        "label": "Coronoid process of ulna",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.911,
+        "distanceToWebSurfaceMm": 0.058,
+        "sourceBone": "Ulna.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Ulna",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "CORONOID PROCESS OF ULNA",
+      "sourceParentBone": "Ulna.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2192739,
+        1.0920233,
+        -0.022943
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.029,
+      "webSurfaceDistanceMm": 0.058,
+      "leaderLengthMm": 23.008,
+      "sourceEndpoints": [
+        [
+          -0.2192533,
+          1.1033459,
+          -0.0029135
+        ],
+        [
+          -0.2192739,
+          1.0920233,
+          -0.022943
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "ulna-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Anterior projecting lower lip of the proximal trochlear notch.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-forearm-anterior"
+  },
+  "textbook-deltoid-tuberosity": {
+    "kind": "diagram",
+    "plate": "lm8-humerus-anterior",
+    "target": "deltoid tuberosity",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-head-of-metacarpal-bone": {
+    "kind": "diagram",
+    "plate": "lm8-hand-posterior-detail",
+    "target": "head of the metacarpal bone",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": "Representative metacarpal5; the source marks metacarpal1 on the opposite side, but head/base/shaft apply to each metacarpal."
+  },
+  "textbook-head-of-proximal-phalanx-of-hand": {
+    "kind": "diagram",
+    "plate": "lm8-hand-posterior-detail",
+    "target": "head of the proximal phalanx of the hand",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": "Representative proximal phalanx of digit5; heads are distal, bases proximal."
+  },
+  "textbook-head-of-the-ulna": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.239217,
+          0.8705738,
+          0.0130229
+        ],
+        "object": "Head of ulna.j",
+        "parent": "Head of ulna.t",
+        "label": "Head of ulna",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 5.222,
+        "distanceToWebSurfaceMm": 0.023,
+        "sourceBone": "Ulna.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Ulna",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "HEAD OF ULNA",
+      "sourceParentBone": "Ulna.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.239217,
+        0.8705738,
+        0.0130229
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.022,
+      "webSurfaceDistanceMm": 0.023,
+      "leaderLengthMm": 25.779,
+      "sourceEndpoints": [
+        [
+          -0.2134384,
+          0.870412,
+          0.0129973
+        ],
+        [
+          -0.239217,
+          0.8705738,
+          0.0130229
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "ulna-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Rounded distal ulnar expansion, distinct from styloid process.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-forearm-anterior"
+  },
+  "textbook-hook-of-hamate": {
+    "kind": "diagram",
+    "plate": "lm8-hamate-hook",
+    "target": "hook of the hamate bone",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point inside the palmar projection of the hamate beneath the ulnar attachment of the flexor retinaculum. The source separately labels the hamate body; this pin does not outline the complete hook."
+  },
+  "textbook-inferior-angle-of-the-scapula": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0945486,
+          1.2541589,
+          -0.102438
+        ],
+        "object": "Inferior angle of scapula.j",
+        "parent": "Inferior angle of scapula.t",
+        "label": "Inferior angle of scapula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.111,
+        "distanceToWebSurfaceMm": 0.743,
+        "sourceBone": "Scapula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.1",
+    "intendedParentPattern": "Scapula",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INFERIOR ANGLE OF SCAPULA",
+      "sourceParentBone": "Scapula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0945486,
+        1.2541589,
+        -0.102438
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.725,
+      "webSurfaceDistanceMm": 0.743,
+      "leaderLengthMm": 16.798,
+      "sourceEndpoints": [
+        [
+          -0.0940704,
+          1.2375015,
+          -0.1003233
+        ],
+        [
+          -0.0945486,
+          1.2541589,
+          -0.102438
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "scapula-r-validation.png",
+      "textbookSection": "8.1",
+      "textbookFigureContext": "8.4",
+      "textbookPdfPages": [
+        302,
+        303
+      ],
+      "anatomicalRelationshipChecked": "Inferior junction of medial and lateral scapular borders.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-scapula-anterior"
+  },
+  "textbook-infraglenoid-tubercle": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1553501,
+          1.3634621,
+          -0.0436148
+        ],
+        "object": "Infraglenoid tubercle.j",
+        "parent": "Infraglenoid tubercle.t",
+        "label": "Infraglenoid tubercle",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.154,
+        "distanceToWebSurfaceMm": 0.008,
+        "sourceBone": "Scapula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.1",
+    "intendedParentPattern": "Scapula",
+    "preferredView": "right",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INFRAGLENOID TUBERCLE",
+      "sourceParentBone": "Scapula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1553501,
+        1.3634621,
+        -0.0436148
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.006,
+      "webSurfaceDistanceMm": 0.008,
+      "leaderLengthMm": 24.752,
+      "sourceEndpoints": [
+        [
+          -0.1762166,
+          1.3661983,
+          -0.0305847
+        ],
+        [
+          -0.1553501,
+          1.3634621,
+          -0.0436148
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "scapula-r-validation.png",
+      "textbookSection": "8.1",
+      "textbookFigureContext": "8.4",
+      "textbookPdfPages": [
+        302,
+        303
+      ],
+      "anatomicalRelationshipChecked": "Immediately inferior to the glenoid articular cavity at the upper lateral scapular border.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-interosseous-border-of-the-radius": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2504979,
+          0.9651975,
+          -0.0111112
+        ],
+        "object": "Interosseous border of radius.j",
+        "parent": "Interosseous border of radius.t",
+        "label": "Interosseous border of radius",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.513,
+        "distanceToWebSurfaceMm": 0.049,
+        "sourceBone": "Radius.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Radius",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTEROSSEOUS BORDER OF RADIUS",
+      "sourceParentBone": "Radius.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2504979,
+        0.9651975,
+        -0.0111112
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.052,
+      "webSurfaceDistanceMm": 0.049,
+      "leaderLengthMm": 41.572,
+      "sourceEndpoints": [
+        [
+          -0.2089277,
+          0.9647757,
+          -0.0111027
+        ],
+        [
+          -0.2504979,
+          0.9651975,
+          -0.0111112
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "radius-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Medial shaft edge of the radius facing the ulna; a point on the ridge, not the whole ridge.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-forearm-anterior"
+  },
+  "textbook-interosseous-border-of-the-ulna": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2397939,
+          0.9673911,
+          -0.0103651
+        ],
+        "object": "Interosseous border of ulna.j",
+        "parent": "Interosseous border of ulna.t",
+        "label": "Interosseous border of ulna",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.398,
+        "distanceToWebSurfaceMm": 0.04,
+        "sourceBone": "Ulna.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Ulna",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "INTEROSSEOUS BORDER OF ULNA",
+      "sourceParentBone": "Ulna.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2397939,
+        0.9673911,
+        -0.0103651
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.006,
+      "webSurfaceDistanceMm": 0.04,
+      "leaderLengthMm": 45.872,
+      "sourceEndpoints": [
+        [
+          -0.2856645,
+          0.9677982,
+          -0.0103202
+        ],
+        [
+          -0.2397939,
+          0.9673911,
+          -0.0103651
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "ulna-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Lateral shaft edge of the ulna facing the radius; a point on the ridge, not the whole ridge.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-forearm-anterior"
+  },
+  "textbook-intertubercular-groove-of-humerus": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1818819,
+          1.3832088,
+          -0.0119457
+        ],
+        "object": "Intertubercular sulcus.j",
+        "parent": "Intertubercular sulcus.t",
+        "label": "Intertubercular sulcus",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.027,
+        "distanceToWebSurfaceMm": 0.011,
+        "sourceBone": "Humerus.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Humerus",
+    "preferredView": "front",
+    "aliases": [
+      "bicipital groove"
+    ],
+    "verification": {
+      "sourceLabel": "INTERTUBERCULAR SULCUS",
+      "sourceParentBone": "Humerus.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1818819,
+        1.3832088,
+        -0.0119457
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.001,
+      "webSurfaceDistanceMm": 0.011,
+      "leaderLengthMm": 57.646,
+      "sourceEndpoints": [
+        [
+          -0.2211839,
+          1.4014933,
+          0.0260559
+        ],
+        [
+          -0.1818819,
+          1.3832088,
+          -0.0119457
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "humerus-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.5",
+      "textbookPdfPages": [
+        304,
+        305
+      ],
+      "anatomicalRelationshipChecked": "Anterior proximal humeral groove between the greater and lesser tubercles; also bicipital groove.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-humerus-anterior"
+  },
+  "textbook-lateral-border-of-the-scapula": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1303971,
+          1.3267773,
+          -0.0643485
+        ],
+        "object": "Lateral border of scapula.j",
+        "parent": "Lateral border of scapula.t",
+        "label": "Lateral border of scapula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.365,
+        "distanceToWebSurfaceMm": 0.001,
+        "sourceBone": "Scapula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.1",
+    "intendedParentPattern": "Scapula",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "LATERAL BORDER OF SCAPULA",
+      "sourceParentBone": "Scapula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1303971,
+        1.3267773,
+        -0.0643485
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.007,
+      "webSurfaceDistanceMm": 0.001,
+      "leaderLengthMm": 23.604,
+      "sourceEndpoints": [
+        [
+          -0.151617,
+          1.3267649,
+          -0.05401
+        ],
+        [
+          -0.1303971,
+          1.3267773,
+          -0.0643485
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "scapula-r-validation.png",
+      "textbookSection": "8.1",
+      "textbookFigureContext": "8.4",
+      "textbookPdfPages": [
+        302,
+        303
+      ],
+      "anatomicalRelationshipChecked": "Scapular border extending from inferior glenoid toward inferior angle; reference point only.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-scapula-anterior"
+  },
+  "textbook-lateral-supracondylar-ridge": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2392627,
+          1.135745,
+          -0.0505092
+        ],
+        "object": "Lateral supracondylar ridge.j",
+        "parent": "Lateral supracondylar ridge.t",
+        "label": "Lateral supracondylar ridge",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.747,
+        "distanceToWebSurfaceMm": 0.032,
+        "sourceBone": "Humerus.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Humerus",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "LATERAL SUPRACONDYLAR RIDGE",
+      "sourceParentBone": "Humerus.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2392627,
+        1.135745,
+        -0.0505092
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.001,
+      "webSurfaceDistanceMm": 0.032,
+      "leaderLengthMm": 46.55,
+      "sourceEndpoints": [
+        [
+          -0.2855545,
+          1.1406429,
+          -0.0505258
+        ],
+        [
+          -0.2392627,
+          1.135745,
+          -0.0505092
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "humerus-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.5",
+      "textbookPdfPages": [
+        304,
+        305
+      ],
+      "anatomicalRelationshipChecked": "Lateral distal humeral ridge above the lateral epicondyle.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-humerus-anterior"
+  },
+  "textbook-neck-of-the-radius": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2463301,
+          1.0748084,
+          -0.0253334
+        ],
+        "object": "Neck of radius.j",
+        "parent": "Neck of radius.t",
+        "label": "Neck of radius",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.307,
+        "distanceToWebSurfaceMm": 0.029,
+        "sourceBone": "Radius.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Radius",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "NECK OF RADIUS",
+      "sourceParentBone": "Radius.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2463301,
+        1.0748084,
+        -0.0253334
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.002,
+      "webSurfaceDistanceMm": 0.029,
+      "leaderLengthMm": 24.03,
+      "sourceEndpoints": [
+        [
+          -0.2703599,
+          1.0749116,
+          -0.0253392
+        ],
+        [
+          -0.2463301,
+          1.0748084,
+          -0.0253334
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "radius-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Narrowed radius just distal to disc-shaped head.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-forearm-anterior"
+  },
+  "textbook-radial-fossa": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2300745,
+          1.1188442,
+          -0.0364632
+        ],
+        "object": "Radial fossa.j",
+        "parent": "Radial fossa.t",
+        "label": "Radial fossa",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.967,
+        "distanceToWebSurfaceMm": 0.083,
+        "sourceBone": "Humerus.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Humerus",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "RADIAL FOSSA",
+      "sourceParentBone": "Humerus.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2300745,
+        1.1188442,
+        -0.0364632
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.001,
+      "webSurfaceDistanceMm": 0.083,
+      "leaderLengthMm": 46.169,
+      "sourceEndpoints": [
+        [
+          -0.2301131,
+          1.1306289,
+          0.0081765
+        ],
+        [
+          -0.2300745,
+          1.1188442,
+          -0.0364632
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "humerus-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.5",
+      "textbookPdfPages": [
+        304,
+        305
+      ],
+      "anatomicalRelationshipChecked": "Anterior distal humeral depression superior to the capitulum, lateral to the coronoid fossa.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-humerus-anterior"
+  },
+  "textbook-radial-notch-of-the-ulna": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2264312,
+          1.0833371,
+          -0.0367469
+        ],
+        "object": "Radial notch.j",
+        "parent": "Radial notch.t",
+        "label": "Radial notch",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 2.289,
+        "distanceToWebSurfaceMm": 0.041,
+        "sourceBone": "Ulna.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Ulna",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "RADIAL NOTCH",
+      "sourceParentBone": "Ulna.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2264312,
+        1.0833371,
+        -0.0367469
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.048,
+      "webSurfaceDistanceMm": 0.041,
+      "leaderLengthMm": 23.114,
+      "sourceEndpoints": [
+        [
+          -0.245781,
+          1.0959802,
+          -0.0367972
+        ],
+        [
+          -0.2264312,
+          1.0833371,
+          -0.0367469
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "ulna-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Lateral proximal ulnar articular depression for the radial head.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-forearm-anterior"
+  },
+  "textbook-shaft-of-clavicle": {
+    "kind": "diagram",
+    "plate": "lm8-clavicle",
+    "target": "shaft of the clavicle",
+    "reference": "8.1",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-shaft-of-metacarpal-bone": {
+    "kind": "diagram",
+    "plate": "lm8-hand-posterior-detail",
+    "target": "shaft of the metacarpal bone",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-shaft-of-proximal-phalanx-of-hand": {
+    "kind": "diagram",
+    "plate": "lm8-hand-posterior-detail",
+    "target": "shaft of the proximal phalanx of the hand",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-shaft-of-the-radius": {
+    "kind": "diagram",
+    "plate": "lm8-forearm-anterior",
+    "target": "shaft of the radius",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-shaft-of-the-ulna": {
+    "kind": "diagram",
+    "plate": "lm8-forearm-anterior",
+    "target": "shaft of the ulna",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-sternal-end-of-the-clavicle": {
+    "kind": "diagram",
+    "plate": "lm8-clavicle",
+    "target": "sternal end of the clavicle",
+    "reference": "8.1",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-superior-angle-of-the-scapula": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0825333,
+          1.4096998,
+          -0.0764986
+        ],
+        "object": "Superior angle of scapula.j",
+        "parent": "Superior angle of scapula.t",
+        "label": "Superior angle of scapula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.444,
+        "distanceToWebSurfaceMm": 0.008,
+        "sourceBone": "Scapula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.1",
+    "intendedParentPattern": "Scapula",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "SUPERIOR ANGLE OF SCAPULA",
+      "sourceParentBone": "Scapula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0825333,
+        1.4096998,
+        -0.0764986
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.0,
+      "webSurfaceDistanceMm": 0.008,
+      "leaderLengthMm": 18.019,
+      "sourceEndpoints": [
+        [
+          -0.0825333,
+          1.427719,
+          -0.0764985
+        ],
+        [
+          -0.0825333,
+          1.4096998,
+          -0.0764986
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "scapula-r-validation.png",
+      "textbookSection": "8.1",
+      "textbookFigureContext": "8.4",
+      "textbookPdfPages": [
+        302,
+        303
+      ],
+      "anatomicalRelationshipChecked": "Junction of superior and medial scapular borders.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-scapula-anterior"
+  },
+  "textbook-superior-border-of-the-scapula": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0970296,
+          1.3981863,
+          -0.0598549
+        ],
+        "object": "Superior border of scapula.j",
+        "parent": "Superior border of scapula.t",
+        "label": "Superior border of scapula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.229,
+        "distanceToWebSurfaceMm": 0.003,
+        "sourceBone": "Scapula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.1",
+    "intendedParentPattern": "Scapula",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "SUPERIOR BORDER OF SCAPULA",
+      "sourceParentBone": "Scapula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0970296,
+        1.3981863,
+        -0.0598549
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.009,
+      "webSurfaceDistanceMm": 0.003,
+      "leaderLengthMm": 63.71,
+      "sourceEndpoints": [
+        [
+          -0.0969366,
+          1.4200118,
+          2e-07
+        ],
+        [
+          -0.0970296,
+          1.3981863,
+          -0.0598549
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "scapula-r-validation.png",
+      "textbookSection": "8.1",
+      "textbookFigureContext": "8.4",
+      "textbookPdfPages": [
+        302,
+        303
+      ],
+      "anatomicalRelationshipChecked": "Upper edge of scapula between superior angle and suprascapular notch; reference point only.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-scapula-anterior"
+  },
+  "textbook-supraglenoid-tubercle": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1435862,
+          1.3952425,
+          -0.0305965
+        ],
+        "object": "Supraglenoid tubercle.j",
+        "parent": "Supraglenoid tubercle.t",
+        "label": "Supraglenoid tubercle",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.82,
+        "distanceToWebSurfaceMm": 0.001,
+        "sourceBone": "Scapula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.1",
+    "intendedParentPattern": "Scapula",
+    "preferredView": "right",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "SUPRAGLENOID TUBERCLE",
+      "sourceParentBone": "Scapula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1435862,
+        1.3952425,
+        -0.0305965
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.01,
+      "webSurfaceDistanceMm": 0.001,
+      "leaderLengthMm": 22.935,
+      "sourceEndpoints": [
+        [
+          -0.1632227,
+          1.4035066,
+          -0.0221035
+        ],
+        [
+          -0.1435862,
+          1.3952425,
+          -0.0305965
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "scapula-r-validation.png",
+      "textbookSection": "8.1",
+      "textbookFigureContext": "8.4",
+      "textbookPdfPages": [
+        302,
+        303
+      ],
+      "anatomicalRelationshipChecked": "Immediately superior to the glenoid articular cavity; distinct from the coracoid process.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-suprascapular-notch": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.1150848,
+          1.3867673,
+          -0.0509538
+        ],
+        "object": "Scapular notch.j",
+        "parent": "Scapular notch.t",
+        "label": "Scapular notch",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.278,
+        "distanceToWebSurfaceMm": 0.004,
+        "sourceBone": "Scapula.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.1",
+    "intendedParentPattern": "Scapula",
+    "preferredView": "right",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "SCAPULAR NOTCH",
+      "sourceParentBone": "Scapula.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.1150848,
+        1.3867673,
+        -0.0509538
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.0,
+      "webSurfaceDistanceMm": 0.004,
+      "leaderLengthMm": 22.013,
+      "sourceEndpoints": [
+        [
+          -0.1147051,
+          1.4087741,
+          -0.0513134
+        ],
+        [
+          -0.1150848,
+          1.3867673,
+          -0.0509538
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "scapula-r-validation.png",
+      "textbookSection": "8.1",
+      "textbookFigureContext": "8.4",
+      "textbookPdfPages": [
+        302,
+        303
+      ],
+      "anatomicalRelationshipChecked": "Notch in superior border near coracoid base, lateral to superior angle.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-scapula-anterior"
+  },
+  "textbook-surgical-neck-of-humerus": {
+    "kind": "diagram",
+    "plate": "lm8-humerus-anterior",
+    "target": "surgical neck",
+    "reference": "8.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point on the constricted region distal to the tubercles."
+  },
+  "textbook-ulnar-notch-of-the-radius": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.2574244,
+          0.868645,
+          0.0116918
+        ],
+        "object": "Ulnar notch.j",
+        "parent": "Ulnar notch.t",
+        "label": "Ulnar notch",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 1.066,
+        "distanceToWebSurfaceMm": 0.302,
+        "sourceBone": "Radius.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Radius",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "ULNAR NOTCH",
+      "sourceParentBone": "Radius.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.2574244,
+        0.868645,
+        0.0116918
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.275,
+      "webSurfaceDistanceMm": 0.302,
+      "leaderLengthMm": 23.042,
+      "sourceEndpoints": [
+        [
+          -0.234384,
+          0.8687546,
+          0.0119121
+        ],
+        [
+          -0.2574244,
+          0.868645,
+          0.0116918
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "radius-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Medial distal radial articular depression for the ulnar head.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location.",
+    "sourcePlate": "lm8-forearm-anterior"
+  },
+  "textbook-ulnar-tuberosity": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.223258,
+          1.0643491,
+          -0.0299187
+        ],
+        "object": "Tuberosity of ulna.j",
+        "parent": "Tuberosity of ulna.t",
+        "label": "Tuberosity of ulna",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.689,
+        "distanceToWebSurfaceMm": 0.011,
+        "sourceBone": "Ulna.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.2",
+    "intendedParentPattern": "Ulna",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "TUBEROSITY OF ULNA",
+      "sourceParentBone": "Ulna.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.223258,
+        1.0643491,
+        -0.0299187
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.021,
+      "webSurfaceDistanceMm": 0.011,
+      "leaderLengthMm": 24.528,
+      "sourceEndpoints": [
+        [
+          -0.2232328,
+          1.0644715,
+          -0.0053906
+        ],
+        [
+          -0.223258,
+          1.0643491,
+          -0.0299187
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "ulna-r-validation.png",
+      "textbookSection": "8.2",
+      "textbookFigureContext": "8.6",
+      "textbookPdfPages": [
+        305,
+        306
+      ],
+      "anatomicalRelationshipChecked": "Anterior proximal ulnar roughened area inferior to the coronoid process.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-pubic-crest": {
+    "kind": "source-pin",
+    "points": [
+      {
+        "point": [
+          -0.0242133,
+          0.8512693,
+          0.0492478
+        ],
+        "object": "Pubic crest.j",
+        "parent": "Pubic crest.t",
+        "label": "Pubic crest",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 4.422,
+        "distanceToWebSurfaceMm": 0.004,
+        "sourceBone": "Hip bone.r",
+        "side": "right"
+      }
+    ],
+    "source": "Z-Anatomy Startup.blend original anatomical annotation leader endpoint; vertex1 transformed [x,z,-y] to the web model frame; original parent and exported bone surfaces checked. CC BY-SA4.0.",
+    "reference": "8.3",
+    "intendedParentPattern": "Hip bone",
+    "preferredView": "front",
+    "aliases": [],
+    "verification": {
+      "sourceLabel": "PUBIC CREST",
+      "sourceParentBone": "Hip bone.r",
+      "sourceEndpointBlenderToWeb": [
+        -0.0242133,
+        0.8512693,
+        0.0492478
+      ],
+      "sourceOriginalSurfaceDistanceMm": 0.006,
+      "webSurfaceDistanceMm": 0.004,
+      "leaderLengthMm": 5.74,
+      "sourceEndpoints": [
+        [
+          -0.0242133,
+          0.8570095,
+          0.0492478
+        ],
+        [
+          -0.0242133,
+          0.8512693,
+          0.0492478
+        ]
+      ],
+      "modelViewsInspected": [
+        "anterior",
+        "posterior",
+        "right lateral"
+      ],
+      "modelValidationImage": "hip-bone-r-validation.png",
+      "textbookSection": "8.3",
+      "textbookFigureContext": "8.13",
+      "textbookPdfPages": [
+        311,
+        312,
+        313
+      ],
+      "anatomicalRelationshipChecked": "Superior pubic ridge between symphysis and pubic tubercle; a reference point, not its full length.",
+      "limits": "Reference point on one right-side specimen. Does not segment the full feature, trace a canal, imply bilateral anchors, or replace a source illustration for feature extent."
+    },
+    "note": "Verified reference point on the right-side source specimen. It does not outline the entire feature or establish a mirrored left-side location."
+  },
+  "textbook-pterygoid-process-of-sphenoid": {
+    "kind": "diagram",
+    "plate": "lm7-sphenoid-pterygoid",
+    "target": "Pterygoid process of sphenoid",
+    "reference": "7.2",
+    "assessment": "unlabeled-crop",
+    "note": "Reference point on the process that descends from the sphenoid; its medial and lateral plates remain separate named targets."
+  },
+  "textbook-anterior-semicircular-canal": {
+    "kind": "reference",
+    "plate": "lm14-canal-context",
+    "reference": "14.1",
+    "assessment": "learn-only",
+    "note": "Three roughly perpendicular bony semicircular canals enclose membranous semicircular ducts. This overview gives inner-ear context; it does not verify an individual canal point. Compare the canal orientations in the source text and figure14.12."
+  },
+  "textbook-bony-labyrinth": {
+    "kind": "reference",
+    "plate": "lm14-bony-labyrinth",
+    "target": "Bony labyrinth",
+    "reference": "14.1",
+    "assessment": "learn-only",
+    "note": "The connected bony cavities of cochlea, vestibule and semicircular canals. A single representative point cannot outline the entire system; this schematic gives context only."
+  },
+  "textbook-cochlea": {
+    "kind": "diagram",
+    "plate": "lm14-inner-ear",
+    "target": "Cochlea",
+    "reference": "14.1",
+    "assessment": "unlabeled-crop",
+    "note": ""
+  },
+  "textbook-lateral-semicircular-canal": {
+    "kind": "reference",
+    "plate": "lm14-canal-context",
+    "reference": "14.1",
+    "assessment": "learn-only",
+    "note": "Three roughly perpendicular bony semicircular canals enclose membranous semicircular ducts. This overview gives inner-ear context; it does not verify an individual canal point. Compare the canal orientations in the source text and figure14.12."
+  },
+  "textbook-oval-window": {
+    "kind": "diagram",
+    "plate": "lm14-inner-ear",
+    "target": "Oval window",
+    "reference": "14.1",
+    "assessment": "unlabeled-crop",
+    "note": "Opening contacted by the stapes footplate; the pin marks the opening at that interface."
+  },
+  "textbook-posterior-semicircular-canal": {
+    "kind": "reference",
+    "plate": "lm14-canal-context",
+    "reference": "14.1",
+    "assessment": "learn-only",
+    "note": "Three roughly perpendicular bony semicircular canals enclose membranous semicircular ducts. This overview gives inner-ear context; it does not verify an individual canal point. Compare the canal orientations in the source text and figure14.12."
+  },
+  "textbook-round-window": {
+    "kind": "diagram",
+    "plate": "lm14-inner-ear",
+    "target": "Round window",
+    "reference": "14.1",
+    "assessment": "unlabeled-crop",
+    "note": "Opening inferior to the oval window, closed in life by a membrane."
+  },
+  "textbook-semicircular-canals": {
+    "kind": "diagram",
+    "plate": "lm14-inner-ear",
+    "target": "Semicircular canals",
+    "reference": "14.1",
+    "assessment": "unlabeled-crop",
+    "note": "Representative point on one bony semicircular canal in this schematic."
+  },
+  "textbook-vestibule-of-inner-ear": {
+    "kind": "diagram",
+    "plate": "lm14-inner-ear",
+    "target": "Vestibule of inner ear",
+    "reference": "14.1",
+    "assessment": "unlabeled-crop",
+    "note": "Central vestibular region connecting cochlea and semicircular canals."
+  }
+}

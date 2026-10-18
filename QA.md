@@ -136,3 +136,21 @@ Local browser verification:
 - No browser console errors were captured. These are browser viewport checks; physical touch-device double-tap behavior still benefits from real-device validation.
 
 No public study progress was reset or replaced. This release changes navigation/materials and access to existing targets; it does not introduce guessed geometry or new anatomical anchors.
+
+## 2026-10-17 - Textbook landmark expansion
+
+Stage 16 reconciles 330 canonical source entries into 310 named anatomical features and 20 marking definitions/source terminology notes. All 177 original lab targets and IDs are preserved. The canonical feature bank contains 287 spatial targets (93 pins, 189 source diagrams, 5 modeled structures) and 23 explicit source guides. All source guides have cited context views and recall cards and are excluded from spatial scoring. See LANDMARKS.md and LANDMARKS.csv.
+
+All 48 automated checks pass, including the original course checks. Added checks cover every canonical entry and source page, distinct nested/grouped identities, aliases and rejection of parent-bone answers, all 52 new right-side source anchors and their parent bounds, diagram target presence, sparse comparisons and masked/cropped target positions. New source anchors were compared with original and exported triangle surfaces and inspected from multiple views; maximum accepted distance is 0.743 mm. This is source consistency evidence, not independent anatomist certification.
+
+Source-image review checked labeled originals and target overlays, including cranial base openings, temporal/sphenoid/ethmoid features, mandible, newborn fontanelles, sacrum, long-bone growth and microscopic structures, inner ear, girdles, limbs and foot. A ramus point outside the mandible was corrected. Olfactory foramina were moved to source guidance because the image does not clearly resolve a separately verified tiny hole. Unreliable source leaders were rejected rather than snapped to a surface.
+
+Local browser verification covered:
+
+- Full-size Hook of hamate source view and right femoral Fovea capitis pin, with one active feature and explicit reference-point limitations.
+- Foramen rotundum identification: “Sphenoid” was rejected; source labels stayed hidden. Fovea capitis identification accepted its precise name and displayed correct feedback. Only the local preview's isolated study history was used.
+- At 1280 × 720 and 1024 × 600, desktop document height equaled viewport height. The bank keeps filters visible and pages its cards; source illustrations and question details use the available workspace.
+- At 390 × 844, Browse selection returned to Specimen, the Hypoglossal canal source view fit the pane, the Nasolacrimal canal guide displayed zero target dots, and there was no horizontal overflow. Phone questions put the visual before the answer panel and retain natural vertical reading.
+- A loading race initially replaced the landmark bank with the practice menu when the skeleton finished loading. The bank now survives model readiness, retains filters, and enables model-dependent practice when geometry is ready.
+
+The 144 reader pages include all original complete chapters plus the added source references. Derived image and model-data licenses are retained separately. No original private course document, full textbook PDF, machine path or public study-history change is included.
