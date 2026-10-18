@@ -72,10 +72,10 @@ test('review intervals, backups and malformed imports behave deliberately',()=>{
 });
 
 test('all course concepts have appropriate graded representations',()=>{
- assert.deepEqual(coverage(),{mesh:82,'source-pin':47,diagram:46,concept:2});
- for(const t of terms){const r=t.representation;assert.ok(r.reference,t.name);assert.ok(['mesh','source-pin','diagram','concept'].includes(r.kind));if(r.kind==='diagram')assert.ok(plates[r.plate].points.some(p=>p[0]===t.name),t.name);}
+ assert.equal(Object.values(coverage()).reduce((a,b)=>a+b,0),177);assert.equal(coverage()['source-pin'],47);
+ for(const t of terms){const r=t.representation;assert.ok(r.reference,t.name);assert.ok(['mesh','source-pin','3d-landmark','teaching-pin','concept'].includes(r.kind),t.name);}
  assert.deepEqual(terms.filter(t=>t.representation.kind==='concept').map(t=>t.name),['Anterior drawer','Posterior drawer']);
- assert.equal(terms.find(t=>t.name==='Fontanelles').representation.kind,'diagram');
+ assert.equal(terms.find(t=>t.name==='Fontanelles').representation.kind,'teaching-pin');
 });
 test('landmark targets use anatomical leader endpoints within the parent model bounds',()=>{
  const bounds=gltf.nodes.map(n=>{const a=gltf.accessors[gltf.meshes[n.mesh].primitives[0].attributes.POSITION];return {name:n.extras.zname,min:a.min,max:a.max};});

@@ -1,0 +1,25 @@
+{
+  "features": 310,
+  "canonicalEntries": 330,
+  "vocabulary": 20,
+  "representations": {
+    "teaching-pin": 29,
+    "3d-landmark": 185,
+    "mesh": 3,
+    "source-pin": 93
+  },
+  "missing3D": [],
+  "originalLabItems": 177,
+  "teachingGroups": [
+    "long-bone",
+    "osteon",
+    "flat-bone",
+    "growing-bone",
+    "newborn",
+    "cervical-variant",
+    "sacral-detail",
+    "rib-detail",
+    "inner-ear",
+    "ear-windows"
+  ]
+}

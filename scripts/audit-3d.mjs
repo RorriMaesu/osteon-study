@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import {allTerms,textbookTerms} from '../src/data.js';
+import {pointKinds} from '../src/representations.js';
+import catalog from '../src/landmark-catalog.json' with {type:'json'};
+const counts=Object.fromEntries([...new Set(textbookTerms.map(t=>t.representation.kind))].map(k=>[k,textbookTerms.filter(t=>t.representation.kind===k).length]));
+const pending=textbookTerms.filter(t=>t.representation.kind!=='mesh'&&!pointKinds.includes(t.representation.kind));
+const summary={features:textbookTerms.length,canonicalEntries:catalog.entries.length,vocabulary:20,representations:counts,missing3D:pending.map(t=>t.name),originalLabItems:177,teachingGroups:[...new Set(textbookTerms.map(t=>t.representation.detailGroup).filter(Boolean))]};
+fs.writeFileSync(new URL('../landmark-3d-summary.json',import.meta.url),JSON.stringify(summary,null,2)+'\n');
+const csv=v=>'"'+String(v??'').replaceAll('"','""')+'"';
+const rows=catalog.entries.map(c=>{const t=allTerms.find(t=>t.id===c.termId),r=t?.representation;return[c.id,c.name,c.section,r?.kind||'Vocabulary definition',r?.detailGroup||'',r?.parentPattern||r?.object||t?.pattern||'',r?.points?.map(p=>p.point.join('/')).join('; ')||'',r?.source||'',r?.note||'',c.sources.map(s=>'PDF '+s.pdf+' / '+s.kind).join('; ')];});
+fs.writeFileSync(new URL('../LANDMARK-3D-AUDIT.csv',import.meta.url),[['Canonical ID','Name','Section','Primary representation','Model group','Parent anatomy','3D references (m)','Placement provenance','Extent / fidelity notes','Source pages'].map(csv).join(','),...rows.map(row=>row.map(csv).join(','))].join('\n'));
+console.log(JSON.stringify(summary));
+if(pending.length)process.exitCode=1;

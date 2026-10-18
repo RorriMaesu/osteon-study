@@ -1,3 +1,11 @@
+# 2026-10-18 — 3D labels for every cataloged feature
+
+- Replaced primary diagram/source-guide fallbacks with 3D labels for all 310 named features.
+- Added source-derived anatomy, precise manually curated references, cutaways and explicit microscopic/developmental teaching models.
+- Added label visibility controls and leaders that leave the target visible; retained source comparisons, regional colors and navigation.
+- Preserved original model files and verified a backup before every model revision; versioned model URLs prevent stale cached exports.
+- Preserved all 177 lab IDs and added checks for model resolution, finite positions, side identity and teaching-model distinctions.
+
 # Release notes
 
 ## Stage 16 - Complete textbook landmark inventory and practice

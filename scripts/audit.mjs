@@ -1,10 +1,10 @@
 import fs from 'node:fs';
 import {terms,matches} from '../src/data.js';
-import {coverage,labels,plates} from '../src/representations.js';
+import {coverage,labels,plates,pointKinds} from '../src/representations.js';
 import {lessons,glossary,questions} from '../src/learning-data.js';
 import pages from '../src/reader-pages.json' with {type:'json'};
-const names=['skeleton','course-tissues'].flatMap(file=>{const b=fs.readFileSync(new URL('../assets/'+file+'.glb',import.meta.url));const j=JSON.parse(b.subarray(20,20+b.readUInt32LE(12)).toString());return j.nodes.filter(n=>n.mesh!==undefined).map(n=>n.extras.zname);});
-const records=terms.map(t=>{const r=t.representation;return {...t,meshes:r.kind==='mesh'?names.filter(n=>matches(t.pattern,n)):[],status:labels[r.kind],reference:r.reference,target:r.kind==='source-pin'?r.points.map(p=>p.object+' vertex '+p.sourceVertex+' @ '+p.point.join('/')).join('; '):r.kind==='diagram'?'OpenStax figure '+plates[r.plate].figure+' ('+r.plate+')':r.kind==='concept'?'Tibial direction and ACL/PCL restraint':t.pattern};});
+const names=JSON.parse(fs.readFileSync(new URL('../assets/landmark-model-inventory.json',import.meta.url),'utf8')).map(m=>m.name);
+const records=terms.map(t=>{const r=t.representation;return {...t,meshes:r.kind==='mesh'?names.filter(n=>matches(t.pattern,n)):[],status:labels[r.kind],reference:r.reference,target:pointKinds.includes(r.kind)?r.points.map(p=>(p.object||r.parentPattern||r.object||r.detailGroup)+' @ '+p.point.join('/')).join('; '):r.kind==='diagram'?'OpenStax figure '+plates[r.plate].figure+' ('+r.plate+')':r.kind==='concept'?'Tibial direction and ACL/PCL restraint':t.pattern};});
 const csv=v=>'"'+String(v).replaceAll('"','""')+'"';
 fs.writeFileSync(new URL('../COVERAGE.csv',import.meta.url),['Name,Region,Type,Representation,Source section,Target,Mesh count,Mesh names,Aliases',...records.map(t=>[t.name,t.region,t.type,t.status,t.reference,t.target,t.meshes.length,t.meshes.join('; '),t.aliases.join('; ')].map(csv).join(','))].join('\n'));
 const summary={courseConcepts:terms.length,representations:coverage(),unrepresented:terms.filter(t=>!t.representation).length,modelObjects:names.length,lessons:lessons.length,authoredQuestions:questions.length,textbookTerms:glossary.length,sourceReadingPages:pages.length,completeChapterPages:pages.filter(p=>p.chapter===6||p.chapter===7).length};

@@ -122,6 +122,7 @@ export function initWorkspace() {
   document.addEventListener('viewchange',()=>{setPane('specimen');request();});
   document.addEventListener('structureselected',()=>{if(pane==='browse')setPane('specimen');request();});
   main.addEventListener('click',ev=>{if(!desktop.matches&&ev.target.closest('#detail-focus'))setPane('specimen');});
+  for(const event of ['landmarksource','landmarkcontext'])document.addEventListener(event,()=>{if(!desktop.matches)setPane('specimen');request();});
   document.addEventListener('anatomyready',request);
   window.addEventListener('resize',request);desktop.addEventListener('change',request);
   main.addEventListener('toggle',request,true);main.addEventListener('load',request,true);

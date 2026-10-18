@@ -5,6 +5,8 @@ import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 const require=createRequire(import.meta.url),esbuild=require('esbuild');
 const root=fileURLToPath(new URL('../',import.meta.url));
+const modelAssets=Object.fromEntries(['skeleton','course-tissues','landmark-details'].map(n=>[n,createHash('sha256').update(fs.readFileSync(path.join(root,'assets',n+'.glb'))).digest('hex').slice(0,12)]));
+fs.writeFileSync(path.join(root,'src/model-assets.json'),JSON.stringify(modelAssets,null,2)+'\n');
 const nodeModules=path.dirname(path.dirname(path.dirname(require.resolve('three'))));
 await esbuild.build({entryPoints:[path.join(root,'src/main.js')],bundle:true,format:'esm',minify:true,outfile:path.join(root,'app.js'),nodePaths:[nodeModules]});
 const hash=file=>createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,12);

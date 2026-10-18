@@ -111,3 +111,6 @@ Diagram views clip to the intended anatomical crop and mask residual labels. Lab
 ## Stage 16: textbook feature bank
 
 The named textbook inventory is reconciled into 310 features plus 20 marking definitions/source terminology notes. New learning representations comprise 52 additional validated right-side 3D anchors and 67 source views. There are 287 spatial practice targets and 23 source guides across the canonical bank. Large source views occupy the main specimen area, and sparse comparisons preserve legibility. The original 177 lab target IDs, exercises and progress remain unchanged. [LANDMARKS.md](LANDMARKS.md) explains the completed inventory and the features that require better exposed source anatomy before exact spatial scoring.
+# 2026-10-18: 3D feature coverage delivered
+
+The 310-feature catalog now uses primary labeled 3D representations, retaining the original 177-item lab checklist. The viewer combines validated source pins, curated anatomical references, source-constrained passage reconstructions and explicitly separate teaching specimens. Source figures remain optional comparison views. Geometry backups, per-feature fidelity notes, versioned assets and interaction checks are documented in [LANDMARKS.md](LANDMARKS.md) and [REVIEW.md](REVIEW.md).

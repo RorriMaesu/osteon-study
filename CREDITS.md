@@ -15,7 +15,7 @@ The initial skeleton layer and the course-specific tissues listed below are incl
 
 `assets/course-tissues.glb` contains 81 selected Z-Anatomy objects, exported from the original `Z-Anatomy.zip` / `Startup.blend` using Blender 4.5.1. Original named geometry and world transforms are retained; curves are converted to mesh geometry, unrelated objects omitted and web materials applied. Objects are listed in `assets/course-tissues-manifest.json`. This derived model remains CC BY-SA 4.0 with the Z-Anatomy / BodyParts3D attribution above.
 
-`src/landmarks.json` contains 47 course landmark mappings derived from Z-Anatomy anatomical annotation leader endpoints. Coordinates are transformed from Blender to the web coordinate frame. Vertex index and distance to the nearest exported skeletal vertex are retained for provenance. These data remain CC BY-SA 4.0. Labels are rendered as reference pins with connector lines, rather than claiming full surface segmentation. Unreliable axial annotation leaders were replaced with textbook targets.
+`src/landmarks.json` contains 47 course landmark mappings derived from Z-Anatomy anatomical annotation leader endpoints. Coordinates are transformed from Blender to the web coordinate frame. Vertex index and distance to the nearest exported skeletal vertex are retained for provenance. These data remain CC BY-SA 4.0. Labels are rendered as reference pins with connector lines, rather than claiming full surface segmentation. Unreliable annotation leaders are not reused. Independently curated mesh references and explicit 3D teaching reconstructions now provide their primary spatial views; source figures remain optional comparisons.
 
 Original download: https://raw.githubusercontent.com/Z-Anatomy/Models-of-human-anatomy/master/Z-Anatomy.zip . The original atlas definitions and automatic translations are not reused.
 
@@ -46,3 +46,11 @@ MIT License: Permission is hereby granted, free of charge, to any person obtaini
 The source-pin portions of `src/landmark-representations.json` are derived from 52 Z-Anatomy annotation endpoints and retain CC BY-SA 4.0. They record original source object, parent, right side, coordinate transform and surface-consistency evidence. Other representations in that file are textbook-derived mappings under CC BY-NC-SA 4.0. The code license does not override either content license.
 
 Terminology validation for the cuboid tendon groove and the source's historical auricular-fissure wording references FIPAT Terminologia Anatomica 2, https://fipat.library.dal.ca/TA2/ . Inferior orbital fissure contributors were checked against the primary anatomy study cited in the canonical entry. No third-party figure or body text from those terminology references is reproduced.
+
+## Additional 3D landmark specimens
+
+`assets/landmark-details.glb` contains original evaluated Z-Anatomy bony-labyrinth and ligament geometry, higher-resolution source replacement bones, and authored teaching geometry. All remain CC BY-SA 4.0 with Z-Anatomy / BodyParts3D attribution where derived. The editable Blender 4.5 project and verified pre-edit snapshots were delivered separately to the project owner.
+
+`src/three-d-landmarks.json` distinguishes manually curated surface/rim/space references from original source annotations. Actual source nerve/vessel crossings constrain selected reconstructed passages. Reconstruction wall thickness, aperture caliber, developmental proportions and microscopic scale are explanatory, not clinical measurements. The original source geometry is retained; separately named teaching variants show morphology missing from that specimen. In particular, no cochlea/vestibule part seam or apical opening is represented as the round window. A separate basal-chamber teaching reconstruction shows that relationship.
+
+See `LANDMARK-3D-AUDIT.csv`, `landmark-3d-summary.json` and `assets/landmark-model-inventory.json` for per-feature provenance, fidelity notes and model groups. Figure/text adaptations retain the separate OpenStax CC BY-NC-SA 4.0 license.

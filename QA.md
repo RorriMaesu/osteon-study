@@ -155,3 +155,6 @@ Local browser verification covered:
 - A missed textbook-only Foramen rotundum attempt appeared as one due card; its filtered review button opened exactly one matching recall card. Next practice uses the existing date-aware retrieval plan to prioritize missed/assisted targets and handle unordered imported evidence.
 
 The 144 reader pages include all original complete chapters plus the added source references. Derived image and model-data licenses are retained separately. No original private course document, full textbook PDF, machine path or public study-history change is included.
+# 2026-10-18: labeled 3D release and interaction review
+
+All 310 named textbook features now resolve a 3D representation. All 51 automated tests passed. Desktop and phone browser checks, masked identification/grading, target-preserving Reset, source/3D transitions, labels, cutaways, isolation and X-ray were reviewed. Seven backup snapshots and 27 copied files passed checksum verification; the three original model files remain unchanged. See [REVIEW.md](REVIEW.md) for exact checks and anatomy fidelity qualifications.
