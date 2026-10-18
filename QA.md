@@ -152,5 +152,6 @@ Local browser verification covered:
 - At 1280 × 720 and 1024 × 600, desktop document height equaled viewport height. The bank keeps filters visible and pages its cards; source illustrations and question details use the available workspace.
 - At 390 × 844, Browse selection returned to Specimen, the Hypoglossal canal source view fit the pane, the Nasolacrimal canal guide displayed zero target dots, and there was no horizontal overflow. Phone questions put the visual before the answer panel and retain natural vertical reading.
 - A loading race initially replaced the landmark bank with the practice menu when the skeleton finished loading. The bank now survives model readiness, retains filters, and enables model-dependent practice when geometry is ready.
+- A missed textbook-only Foramen rotundum attempt appeared as one due card; its filtered review button opened exactly one matching recall card. Next practice uses the existing date-aware retrieval plan to prioritize missed/assisted targets and handle unordered imported evidence.
 
 The 144 reader pages include all original complete chapters plus the added source references. Derived image and model-data licenses are retained separately. No original private course document, full textbook PDF, machine path or public study-history change is included.

@@ -12,7 +12,7 @@ The atlas adds **229 entries** to the previous 193 entries. The original **177 l
 - **67 added source views**, including context views. The atlas shows one active feature. Locate exercises compare at most five separated targets on desktop and three on phones.
 - The reader includes 144 source pages, including the additional appendicular, muscle-attachment and inner-ear references used here.
 
-The landmark bank has region, feature-type, parent-bone and alias search. Its progress is separate from the original lab checklist. Existing assessment assistance and self-rating rules remain in effect. A parent bone name does not pass recall of its landmark.
+The landmark bank has region, feature-type, parent-bone and alias search. Its progress is separate from the original lab checklist. Next practice prioritizes missed or assisted targets, then untried targets, then the least recently retrieved. Due-card counts open the same filtered deck, including new textbook entries. Existing assessment assistance and self-rating rules remain in effect. A parent bone name does not pass recall of its landmark.
 
 ## Spatial evidence
 
