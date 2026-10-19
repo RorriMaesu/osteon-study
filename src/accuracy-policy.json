@@ -1,0 +1,134 @@
+{
+  "fontanelles": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+  },
+  "anterior-fontanelle": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+  },
+  "posterior-fontanelle": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+  },
+  "sphenoidal-fontanelle": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+  },
+  "mastoid-fontanelle": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+  },
+  "round-window": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "Use the source illustration for the round window. The adult mesh has no verified round-window aperture, and the previous straightened tube did not provide adequate anatomical orientation. A precise 3D target is withheld."
+  },
+  "sigmoid-sulcus-of-temporal-bone": {
+    "assessment": "learn-only",
+    "reviewStatus": "regional-reference",
+    "reviewNotice": "The native temporal bone displays the sigmoid groove. This regional contact pin has not been verified to follow its full course; use the source illustration to study the extent. Exact groove locating is withheld."
+  },
+  "temporal-lines-of-parietal-bone": {
+    "assessment": "learn-only",
+    "reviewStatus": "regional-reference",
+    "reviewNotice": "These references locate temporal muscle and fascia attachment regions. The source does not resolve two independently verified continuous cortical ridges, so exact line locating is withheld."
+  },
+  "paranasal-sinuses": {
+    "assessment": "learn-only",
+    "reviewStatus": "composite-overview",
+    "memberIds": [
+      "frontal-sinus",
+      "sphenoid-sinus",
+      "maxillary-sinus",
+      "textbook-ethmoid-air-cells"
+    ],
+    "reviewNotice": "The paranasal sinuses comprise four groups. Choose a member below to inspect its own geometry and source view. A single maxillary point is not assessed as the whole sinus system."
+  },
+  "stylomastoid-foramen": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "Use the textbook to locate the opening between the styloid and mastoid processes. A source facial-nerve crossing did not verify a native bony aperture. The added tube has been withdrawn; a precise native 3D target is pending."
+  },
+  "supraorbital-foramen": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "The source orbital margin has an open/notch-like form, not a verified enclosed foramen. The added enclosed tube has been withdrawn. Use the textbook to compare the foramen/notch variants; precise foramen locating is withheld."
+  },
+  "nasolacrimal-canal": {
+    "kind": "reference",
+    "assessment": "learn-only",
+    "retiredModel": true,
+    "reviewStatus": "replacement-required",
+    "reviewNotice": "The source duct locates the drainage route but does not establish the complete bony canal walls. The added hollow tube has been withdrawn. Use the textbook comparison until a properly verified bony target is available."
+  },
+  "ethmoidal-air-cells-and-sinus-openings": {
+    "assessment": "learn-only",
+    "reviewStatus": "partial-extent",
+    "reviewNotice": "The 3D reference identifies ethmoidal air cells. Individual drainage openings have not been mapped and are not being presented as verified targets."
+  },
+  "carpal-tunnel": {
+    "outline": null
+  },
+  "superior-articular-facets": {
+    "view": {
+      "direction": [
+        1,
+        0.7,
+        0
+      ],
+      "distance": 0.28
+    }
+  },
+  "superior-articular-facet-of-sacrum": {
+    "view": {
+      "direction": [
+        1,
+        0.7,
+        0
+      ],
+      "distance": 0.28
+    }
+  },
+  "costal-groove": {
+    "view": {
+      "direction": [
+        1,
+        -0.7,
+        0.1
+      ],
+      "distance": 0.085,
+      "center": [
+        -0.12472076984232258,
+        1.288103326842698,
+        0.015
+      ]
+    }
+  }
+}

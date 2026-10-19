@@ -3,23 +3,90 @@
   "canonicalEntries": 330,
   "vocabulary": 20,
   "representations": {
-    "teaching-pin": 29,
+    "teaching-pin": 22,
     "3d-landmark": 185,
+    "reference": 8,
     "mesh": 3,
-    "source-pin": 93
+    "source-pin": 92
   },
-  "missing3D": [],
+  "sourceOnly3DWithheld": [
+    "Anterior fontanelle",
+    "Mastoid fontanelle",
+    "Nasolacrimal canal",
+    "Posterior fontanelle",
+    "Sphenoidal fontanelle",
+    "Stylomastoid foramen",
+    "Supraorbital foramen",
+    "Round window"
+  ],
+  "spatialScoringWithheld": [
+    {
+      "name": "Sigmoid sulcus of temporal bone",
+      "status": "regional-reference",
+      "reason": "The native temporal bone displays the sigmoid groove. This regional contact pin has not been verified to follow its full course; use the source illustration to study the extent. Exact groove locating is withheld."
+    },
+    {
+      "name": "Temporal lines of parietal bone",
+      "status": "regional-reference",
+      "reason": "These references locate temporal muscle and fascia attachment regions. The source does not resolve two independently verified continuous cortical ridges, so exact line locating is withheld."
+    },
+    {
+      "name": "Anterior fontanelle",
+      "status": "replacement-required",
+      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+    },
+    {
+      "name": "Mastoid fontanelle",
+      "status": "replacement-required",
+      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+    },
+    {
+      "name": "Nasolacrimal canal",
+      "status": "replacement-required",
+      "reason": "The source duct locates the drainage route but does not establish the complete bony canal walls. The added hollow tube has been withdrawn. Use the textbook comparison until a properly verified bony target is available."
+    },
+    {
+      "name": "Paranasal sinuses",
+      "status": "composite-overview",
+      "reason": "The paranasal sinuses comprise four groups. Choose a member below to inspect its own geometry and source view. A single maxillary point is not assessed as the whole sinus system."
+    },
+    {
+      "name": "Posterior fontanelle",
+      "status": "replacement-required",
+      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+    },
+    {
+      "name": "Sphenoidal fontanelle",
+      "status": "replacement-required",
+      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+    },
+    {
+      "name": "Stylomastoid foramen",
+      "status": "replacement-required",
+      "reason": "Use the textbook to locate the opening between the styloid and mastoid processes. A source facial-nerve crossing did not verify a native bony aperture. The added tube has been withdrawn; a precise native 3D target is pending."
+    },
+    {
+      "name": "Supraorbital foramen",
+      "status": "replacement-required",
+      "reason": "The source orbital margin has an open/notch-like form, not a verified enclosed foramen. The added enclosed tube has been withdrawn. Use the textbook to compare the foramen/notch variants; precise foramen locating is withheld."
+    },
+    {
+      "name": "Round window",
+      "status": "replacement-required",
+      "reason": "Use the source illustration for the round window. The adult mesh has no verified round-window aperture, and the previous straightened tube did not provide adequate anatomical orientation. A precise 3D target is withheld."
+    }
+  ],
+  "spatialScoringEligible": 299,
+  "unexpectedUnmapped": [],
   "originalLabItems": 177,
   "teachingGroups": [
     "long-bone",
     "osteon",
     "flat-bone",
     "growing-bone",
-    "newborn",
     "cervical-variant",
     "sacral-detail",
     "rib-detail",
-    "inner-ear",
-    "ear-windows"
+    "inner-ear"
   ]
 }

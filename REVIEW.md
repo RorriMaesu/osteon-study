@@ -1,27 +1,34 @@
-# 3D atlas review — 2026-10-18
+# Anatomy review — 2026-10-18
 
-## Findings fixed
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
 
-- Labels now sit beside the feature with a leader and a surface/space dot, leaving the target visible. Labels have a working On/Off control.
-- Isolate and X-ray now affect the additional teaching models and reconstructed passages, while retaining authored material colors. Peel can remove teaching-model surfaces and Restore brings them back.
-- Internal conchae, cranial floors and mandibular features have explicit cutaways and appropriate views. Small microscopic targets and the costal groove have closer views.
-- Mobile textbook comparisons open the Specimen pane. Returning to 3D restores the selected reference and its camera, rather than an unrelated parent-bone frame.
-- Practice keeps names and feature-specific notes hidden for identification. Locate choices share the visible model/context and cutaway; close details without a useful comparison use typed identification. Practice Reset preserves the question and target.
-- Clicks on reconstructed passage geometry retain the anatomical feature's name and label. Internal construction-object names do not replace the learning target.
-- Model URLs include content versions so a new publication does not reuse a cached model revision.
+The previous statement that all features had accurate primary 3D views was too broad. Automated loading, finite coordinates and parent bounds do not establish anatomical accuracy. The current release separates supported native anatomy, explanatory geometry and unresolved features.
+
+## Review method
+
+Each named feature was reconciled against the supplied textbook inventory and course list, then inspected for name/parent/side, anatomical extent, source morphology, locator position, visibility and grading eligibility. Skull, axial, appendicular and chapter 6 ledgers were combined without discarding initial failures. All 97 active source-pin terms (98 points) were checked against evaluated original leader geometry; a coordinate being on a mesh was not accepted by itself as anatomical validation.
+
+The [public report](accuracy.html) contains every entry, current disposition and available inspection images. Images can show the initial problem before correction; each record links to the current atlas. Offline morphology renders and source checks are distinct from selected interactive browser checks. This is educational review, not clinical or faculty certification.
+
+## Material corrections
+
+- Restored native sacral canal and hiatus; removed the incorrectly drilled reconstruction.
+- Replaced unsupported skull tubes with verified native openings where both mouths and the lumen were demonstrated. Original higher-resolution geometry is retained rather than drilling a guessed passage.
+- Restored contributors for sutures, orbit, hard palate, cranial floors and nasal boundaries. Corrected supraorbital-margin and anterior-cranial-fossa locators.
+- Corrected humeral trochlea/radial-sulcus and inferior scapular-angle markers; retained evaluated provenance.
+- Rechecked the right labyrinth, oval-window rim and semicircular-canal identities; clarified the space-cast display and improved ossicle close-ups.
+- Connected floating trabeculae to cortex, connected canaliculi to lacunae/central canal, and fitted the growth plate inside its elliptical cortex. These remain explanatory models.
+- Withdrew the crude fontanelle and round-window models. Unverified ridges, routes and composite extents cannot enter scored locating.
+- Added covered-reference styling, improved camera fitting and Top/Base views, and retained labels, color toggles and desktop pagination.
 
 ## Verification
 
-- 51 automated tests passed: original lab IDs, all 310 feature representations, finite coordinates, actual parent/model resolution, side identity, vocabulary and model distinctions, source reading, progress and tutor checks.
-- Desktop atlas at 1280 × 720 and the normal 1193 × 884 viewport fit without document scrolling. Practice also fit the normal desktop viewport.
-- Phone layout checked at 390 × 844: Browse → selected 3D specimen, Details → textbook comparison → precise 3D return, label toggles and passage isolation worked without horizontal overflow. This is responsive-browser testing, not a claim of physical-device performance testing.
-- Browser identification exercise concealed the answer and graded a typed response correctly. Reset retained the same target ID and question.
-- Seven pre-revision backup snapshots contain 27 checksum-verified files. Original `Startup.blend`, `skeleton.glb` and `course-tissues.glb` still match the first snapshot.
+54 automated checks pass. They cover data/ID integrity, source provenance, parent/side constraints, withdrawn-model grading exclusion, contributor retention, binary equality of restored sacral geometry, removal of unsupported tubes, camera/navigation rules, source reading, progress and local tutor behavior. Passing these checks does not certify fine anatomical morphology.
 
-## Anatomy fidelity
+Selected desktop and phone browser views were checked separately for target visibility, source/3D transitions, label/color/cutaway controls and overflow. Detailed browser results are in QA.md; this does not claim every feature was inspected interactively on physical devices.
 
-The complete catalog has 310 named features and 20 vocabulary entries; all named features have a primary 3D study representation. This does not imply that every feature was resolved in the original specimen. Fine passages, microscopic layers, developmental anatomy and selected axial variants use explicitly identified teaching geometry. Reconstruction caliber, wall thickness and fine contour are explanatory. Source-specific placement evidence and native-mesh limits remain documented per feature.
+13 pre-edit backup snapshots contain 51 checksum-verified files. The original Startup.blend, skeleton.glb and course-tissues.glb match the initial snapshot. Editable model revisions and backups are retained locally for the owner.
 
-Pins identify a reference or contributor rather than tracing an entire boundary. Composite guides for arches, spaces and curves describe arrangements. Original source annotation stubs rejected during inspection are not reused as new precise landmarks. The adult source cochlea/vestibule seam and apical opening are not labeled as the round window.
+## Work remaining
 
-See [the complete 3D audit](LANDMARK-3D-AUDIT.csv) and [coverage guide](LANDMARKS.md).
+Precise native fontanelle targets on a complete suitable skull and a resolved round-window opening remain unfinished. Other unresolved entries are explicitly listed in the [review report](accuracy.html). The UCSF scan can be viewed, but its licensed native download and individual target verification remain pending. This release improves accuracy without claiming those gaps are finished.

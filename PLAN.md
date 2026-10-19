@@ -1,3 +1,9 @@
+<!-- accuracy-review-current -->
+# Current accuracy priority
+
+The [landmark review](accuracy.html) supersedes earlier all-3D completion claims. Preserve supported anatomy, withdraw misleading reconstructions, verify native openings against their source, and keep unresolved geometry out of scored locating. Complete the native fontanelle and round-window work before claiming every named landmark has a precise 3D target.
+<!-- /accuracy-review-current -->
+
 # Osteon study suite implementation plan
 
 Osteon is a personal BI 231 learning environment built around a real three dimensional skeleton, the supplied Fall 2024 lab structure list, and OpenStax Anatomy and Physiology 2e chapters 6 and 7. The goal is to retrieve names, locate structures from unfamiliar views, explain structure and function, and retain the knowledge over time.

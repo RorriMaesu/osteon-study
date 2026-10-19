@@ -1,35 +1,25 @@
-# Labeled 3D landmark atlas
+# Landmark coverage and accuracy
 
-All **310 named textbook features** now open a labeled 3D representation in the specimen viewer. The original **177-item lab checklist** and its IDs are preserved. The source inventory contains **330 canonical entries**: 310 anatomical features and 20 bone-marking vocabulary definitions.
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
 
-| Primary view | Features |
-|---|---:|
-| Validated original source annotation pins | 93 |
-| Curated 3D references and passage reconstructions | 185 |
-| Explicit 3D teaching-model targets | 29 |
-| Complete named 3D geometry | 3 |
-| Total | **310** |
+Use the [searchable landmark review](accuracy.html) for every entry, its findings, current disposition and inspection images. The [CSV](ACCURACY-REVIEW.csv) provides the full record. Twenty marking-vocabulary definitions remain separate from the 310 anatomical features.
 
-## Use the atlas
+## How the viewer represents anatomy
 
-Search a name or choose Landmarks in Browse. Selecting a feature moves to its 3D reference, with a leader line pointing to the location. Labels can be switched off. Internal features use a cutaway or translucent bone context. Cutaway controls let you compare the revealed and covered views. Source figures remain available through **Open textbook view**.
+Native source geometry and original annotation endpoints are distinguished from manually curated rim/surface references and explanatory teaching models. A pin marks a reference location; it does not trace an entire ridge, boundary or canal. Composite features retain their contributing bones. Covered references use dashed leaders and hollow dots so they are not mistaken for an exposed surface.
 
-Whole-skeleton overview colors stay neutral. Focused regional bone colors retain their On/Off control. Double-click a bone to explore its region, then again to isolate the bone; Back restores the previous view. Spatial practice uses numbered references or typed retrieval, with names hidden before grading.
+Search a feature, inspect its label, rotate the specimen and compare the source figure. Top and Base views supplement Front, Back and side cameras. Regional colors have an On/Off control. Whole-skeleton overviews remain neutral. Double-click explores a region, then isolates the bone.
 
-## Geometry and extent
+## Current limits
 
-Reference points identify an actual surface, rim, bounded space or contributor to a composite structure. They do not segment every ridge, boundary or drainage opening. Right- or left-side placements retain their documented source side; they are not silently mirrored. Guides for arches, pelvic spaces and spinal curvatures describe structural arrangements rather than invented surface ridges.
+The crude newborn calvarial model and straightened round-window teaching detail have been withdrawn. Fontanelles now open the complete labeled textbook comparison, with superior/lateral choices and an optional full UCSF fetal-skull scan. Individual targets on that scan are pending verification; it is not yet a native labeled replacement. A fetal specimen is not assumed to have identical morphology to a newborn textbook illustration.
 
-Separate teaching models cover growing/adult long-bone layers, flat-bone diploë, compact-bone microarchitecture, newborn fontanelles, a typical bifid cervical variant, a sacral neural-passage cutaway, a curved rib groove segment and basal cochlear chambers. Their scale and fine contours are explanatory. Source-constrained hollow passage reconstructions make selected unresolved small openings visible with translucent source-bone context; native mesh limitations remain documented in each entry. The actual source bony labyrinth is used for its resolved anatomy and independently verified oval window. A separate teaching detail represents the round window.
+Unresolved passage schematics and regional ridge references carry visible qualifications and are excluded from scored locating. Composite sinus and air-cell guides do not imply that every drainage opening has been resolved. Consult the current [review dispositions](accuracy.html) rather than treating a loading model as proof of anatomical completeness.
 
-The source `Startup.blend` remains untouched. Every saved/exported model revision was preceded by a verified backup. The original web skeleton and course tissue files are retained; selected higher-resolution replacements and teaching models load from an additional versioned asset.
+## Verification and preservation
 
-## Audits and sources
+All 97 active source-pin terms (98 points) were compared with evaluated original annotation leaders and parent bones. Inferior scapular-angle, humeral and skull reference corrections are recorded separately from source-pin provenance. Native sacral canal/hiatus geometry was restored; verified native skull openings replace unsupported added tubes where available. Microarchitecture corrections connect trabeculae and canaliculi and fit the growth plate inside the cortex. Those specimens remain generalized teaching geometry.
 
-- [Current 3D coverage and per-feature provenance](LANDMARK-3D-AUDIT.csv)
-- [Machine-readable 3D summary](landmark-3d-summary.json)
-- [Frozen source inventory](LANDMARK-EXPANSION-AUDIT.csv)
-- [Original course checklist](COVERAGE.csv)
-- [Credits and licenses](CREDITS.md)
+There are 13 pre-revision snapshots with 51 checksum-verified files. Original Startup.blend, skeleton.glb and course-tissues.glb remain unchanged. Selected higher-resolution original bones and teaching geometry load from a separately versioned asset.
 
-Content follows the supplied OpenStax Anatomy and Physiology 2e edition and BI 231 lab scope, with additional appendicular and inner-ear source sections where the requested feature inventory requires them. Geometry and placement data use CC BY-SA 4.0; OpenStax-derived learning content and source illustrations retain CC BY-NC-SA 4.0. Access for free at openstax.org.
+See [review methods and browser checks](REVIEW.md), [3D provenance](LANDMARK-3D-AUDIT.csv), [credits and licenses](CREDITS.md), and the [frozen source inventory](LANDMARK-EXPANSION-AUDIT.csv).

@@ -20,7 +20,7 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 
 ## Complete course release
 
-- All 177 distinct BI 231 lab concepts have graded exercises: 82 named 3D structures/groups, 47 source landmark pins, 46 textbook diagram targets and two knee movement concepts. COVERAGE.csv lists every item and its source.
+- All 177 BI 231 lab IDs are preserved. Supported targets have locating/identification exercises; unresolved anatomy uses source study and recall while spatial grading is withheld. See the [current accuracy review](accuracy.html).
 - Adult skeleton plus 81 course tissue objects: 352 scene objects, including bones, cartilage, teeth, ligaments, discs, sinus volumes and vertebral arteries. Scene objects are not a biological bone count.
 - Full source reader: every page of chapters 6 and 7, plus appendicular and selected joint readings; 144 page images with searchable extracted text. Source pages load on demand.
 - Twelve teaching sections, 104 authored concept questions, 237 textbook glossary definitions and seven guided activities.
@@ -46,3 +46,9 @@ Every focused region has bone colors, an optional key and a visible On / Off con
 Browse has All / Bones / Landmarks controls. Existing landmark pins and source illustrations remain explicitly identified; selecting an unsided reference target opens appropriate regional context. The 310-feature textbook bank remains separate from the original 177-item lab checklist. Fifty-two additional 3D reference anchors and full-size source diagrams expand spatial practice without claiming that every feature is separately modeled.
 
 Use the **Socratic tutor** button for a local Ollama chat, installed-model selection, guided connection, optional model downloads and hardware/fit checks. See [the tutor guide](TUTOR.md) for first setup and honest browser limits. Tutor assistance is tracked separately from independent quiz accuracy.
+
+## Current accuracy review
+
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
+
+[Browse every review record](accuracy.html) · [Methods and limits](REVIEW.md)

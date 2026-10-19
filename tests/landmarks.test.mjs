@@ -12,7 +12,7 @@ import pages from '../src/reader-pages.json' with {type:'json'};
 test('the audited textbook inventory resolves every canonical feature without changing the lab checklist',()=>{
  assert.equal(catalog.entries.length,330);assert.equal(textbookTerms.length,310);assert.equal(markingVocabulary.length,20);
  assert.equal(new Set(textbookTerms.map(t=>t.id)).size,310);assert.equal(terms.length,177);
- assert.equal(Object.values(coverage()).reduce((a,b)=>a+b,0),177);assert.equal(coverage()['source-pin'],47);
+ assert.equal(Object.values(coverage()).reduce((a,b)=>a+b,0),177);assert.equal(coverage()['source-pin'],45);
  for(const c of catalog.entries.filter(c=>c.termId)){
   const t=allTerms.find(t=>t.id===c.termId);assert.ok(t,c.name);assert.equal(t.feature.id,c.id);
   assert.ok(t.feature.description.length>15,t.name);assert.ok(t.representation,t.name);
@@ -35,7 +35,7 @@ test('new 3D anchors are validated source endpoints on the stated parent and sid
 });
 test('every spatial diagram has its named target, while source guides cannot enter spatial scoring',()=>{
  for(const t of textbookTerms){const r=t.representation;if(r.kind==='diagram'){assert.ok(plates[r.plate],t.name);assert.ok(plates[r.plate].points.some(p=>p[0]===(r.target||t.name)),t.name);assert.notEqual(r.assessment,'learn-only');}if(r.kind==='reference'){assert.equal(r.assessment,'learn-only');assert.ok(plates[r.plate],t.name);assert.ok(r.note.length>30,t.name);}}
- assert.equal(textbookTerms.filter(t=>!['mesh','source-pin','3d-landmark','teaching-pin'].includes(t.representation.kind)).length,0);
+ for(const t of textbookTerms.filter(t=>t.representation.kind==='reference')){assert.ok(t.representation.retiredModel,t.name);assert.ok(t.representation.reviewStatus,t.name);}
  const micro=textbookTerms.find(t=>t.name==='Central canal');assert.equal(termDivision(micro),'General');assert.ok(!inDivision(micro,'Axial'));assert.ok(inDivision(micro,'All'));
 });
 test('diagram comparisons remain sparse, include the answer and avoid obscured or overlapping choices',()=>{

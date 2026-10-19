@@ -2,6 +2,8 @@ import {terms,allTerms} from './data.js';
 import landmarks from './landmarks.json' with {type:'json'};
 import featurePlates from './feature-plates.json' with {type:'json'};
 import featureRepresentations from './landmark-representations.json' with {type:'json'};
+import accuracyPolicy from './accuracy-policy.json' with {type:'json'};
+import anatomyCorrections from './anatomy-corrections.json' with {type:'json'};
 import threeDLandmarks from './three-d-landmarks.json' with {type:'json'};
 
 // Points are source-authored Z-Anatomy annotation anchors, not guessed surface boundaries.
@@ -71,6 +73,9 @@ for(const t of allTerms){
  if(t.feature?.sourcePlate)t.representation.sourcePlate=t.feature.sourcePlate;
 }
 for(const t of allTerms){const r=threeDLandmarks[t.feature?.id]||threeDLandmarks[t.id];if(r){t.sourceRepresentation={...t.representation};t.representation={...r,reference:t.feature?.section||t.representation.reference,sourcePlate:t.representation.plate||t.representation.sourcePlate,target:t.representation.target};}}
+for(const t of allTerms){const a=anatomyCorrections[t.feature?.id]||anatomyCorrections[t.id];if(a)t.representation={...t.representation,...a};}
+for(const t of allTerms){const a=accuracyPolicy[t.feature?.id]||accuracyPolicy[t.id];if(a)t.representation={...t.representation,...a};}
+for(const t of allTerms){const r=t.representation;if(r.retiredModel){r.plate=r.sourcePlate||r.plate;r.note=r.reviewNotice;}}
 export const pointKinds=['source-pin','3d-landmark','teaching-pin'];
 export const labels={mesh:'3D structure', 'source-pin':'3D landmark pin','3d-landmark':'3D anatomical reference','teaching-pin':'3D teaching model',diagram:'Textbook diagram target',reference:'Source guide',concept:'Movement concept'};
 export const coverage=()=>Object.fromEntries(Object.keys(labels).filter(k=>terms.some(t=>t.representation.kind===k)).map(k=>[k,terms.filter(t=>t.representation.kind===k).length]));

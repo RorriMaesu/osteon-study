@@ -1,3 +1,15 @@
+<!-- accuracy-review-current -->
+# Accuracy correction release — 2026-10-18
+
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
+
+- Replaced unsupported passages with verified native anatomy where available; corrected source references, composite context and microarchitecture.
+- Withdrew inaccurate fontanelle/round-window models and excluded unresolved targets from spatial scoring.
+- Added the [per-entry review](accuracy.html), with findings, evidence and current-atlas links.
+
+Earlier release notes below describe historical states and are superseded by this accuracy review.
+<!-- /accuracy-review-current -->
+
 # 2026-10-18 — 3D labels for every cataloged feature
 
 - Replaced primary diagram/source-guide fallbacks with 3D labels for all 310 named features.

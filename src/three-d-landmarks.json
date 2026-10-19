@@ -10442,34 +10442,15 @@
       1.5702304,
       -0.0017623
     ],
-    "detailGroup": "",
-    "object": "Carotid canal teaching passage.r",
+    "parentPattern": "Temporal bone.r",
+    "sourceMesh": "Temporal bone.r",
+    "cameraView": "bottom",
     "kind": "3d-landmark",
-    "source": "Authored 3D teaching reconstruction informed by supplied OpenStax section 7.2",
-    "reference": "7.2",
-    "view": {
-      "direction": [
-        0,
-        -1,
-        0.2
-      ],
-      "distance": 0.11
-    },
-    "note": "A hollow 3D teaching passage is reconstructed at the actual named source nerve/vessel route, over translucent source bones. Caliber, wall thickness and local contour are simplified. The original bone mesh does not independently resolve the complete aperture/lumen; this target assesses its site and relationship.",
-    "verification": {
-      "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
-      "sourceSection": "7.2",
-      "scale": "Explanatory model; not to scale"
-    },
-    "parentPattern": "Carotid canal teaching passage.r",
-    "contextPatterns": [
-      "Temporal bone.r"
+    "evidence": "Named internal carotid source path enters actual inferior petrous temporal surface; source-specific entry replaces the rejected provisional lateral depression.",
+    "sourceFigures": [
+      "7.8"
     ],
-    "isolateContext": true,
-    "ghostContext": true,
-    "refinement": "Source-constrained hollow teaching passage",
-    "nativeGeometryLimit": "This source-specific site does not by itself prove that the coarse mesh resolves a continuous lumen. Root must inspect/refine an actual aperture before grading it as an opening.",
-    "placementEvidence": {
+    "verification": {
       "method": "Actual named original source vessel/nerve path intersected with exact exported parent bone triangles; morphology/relationship checked.",
       "sourceObject": "Internal carotid artery.r",
       "sourceSpline": 0,
@@ -10482,6 +10463,11 @@
         0.14792424633511786
       ]
     },
+    "limitations": "This source-specific site does not by itself prove that the coarse mesh resolves a continuous lumen. Root must inspect/refine an actual aperture before grading it as an opening.",
+    "requiresGeometryRefinement": true,
+    "status": "source-constrained refinement site",
+    "coordinateFrame": "web [Blender.x, Blender.z, -Blender.y]",
+    "sourceBlenderFile": "Startup.blend (read only)",
     "points": [
       {
         "point": [
@@ -10489,10 +10475,21 @@
           1.5702304,
           -0.0017623
         ],
-        "parent": "Carotid canal teaching passage.r",
+        "parent": "Temporal bone",
         "label": "Carotid canal"
       }
-    ]
+    ],
+    "note": "Named internal carotid source path enters actual inferior petrous temporal surface; source-specific entry replaces the rejected provisional lateral depression. This source-specific site does not by itself prove that the coarse mesh resolves a continuous lumen. Root must inspect/refine an actual aperture before grading it as an opening.",
+    "isolateContext": true,
+    "contextPatterns": [],
+    "view": {
+      "direction": [
+        0,
+        -1,
+        0.08
+      ],
+      "distance": 0.22
+    }
   },
   "hypoglossal-canal": {
     "point": [
@@ -11275,34 +11272,15 @@
       1.5815177,
       0.0077798
     ],
-    "detailGroup": "",
-    "object": "Foramen spinosum teaching passage.r",
+    "parentPattern": "Sphenoid bone",
+    "sourceMesh": "Sphenoid bone",
+    "cameraView": "top",
     "kind": "3d-landmark",
-    "source": "Authored 3D teaching reconstruction informed by supplied OpenStax section 7.2",
-    "reference": "7.2",
-    "view": {
-      "direction": [
-        0,
-        1,
-        0.2
-      ],
-      "distance": 0.11
-    },
-    "note": "A hollow 3D teaching passage is reconstructed at the actual named source nerve/vessel route, over translucent source bones. Caliber, wall thickness and local contour are simplified. The original bone mesh does not independently resolve the complete aperture/lumen; this target assesses its site and relationship.",
-    "verification": {
-      "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
-      "sourceSection": "7.2",
-      "scale": "Explanatory model; not to scale"
-    },
-    "parentPattern": "Foramen spinosum teaching passage.r",
-    "contextPatterns": [
-      "Sphenoid bone"
+    "evidence": "Named middle meningeal artery passes through sphenoid floor posterior to ovale at the source-specific spinosum exit site.",
+    "sourceFigures": [
+      "7.8"
     ],
-    "isolateContext": true,
-    "ghostContext": true,
-    "refinement": "Source-constrained hollow teaching passage",
-    "nativeGeometryLimit": "This source-specific site does not by itself prove that the coarse mesh resolves a continuous lumen. Root must inspect/refine an actual aperture before grading it as an opening.",
-    "placementEvidence": {
+    "verification": {
       "method": "Actual named original source vessel/nerve path intersected with exact exported parent bone triangles; morphology/relationship checked.",
       "sourceObject": "Middle meningeal artery.r",
       "sourceSpline": 0,
@@ -11315,6 +11293,11 @@
         -0.06447016907330566
       ]
     },
+    "limitations": "This source-specific site does not by itself prove that the coarse mesh resolves a continuous lumen. Root must inspect/refine an actual aperture before grading it as an opening.",
+    "requiresGeometryRefinement": true,
+    "status": "source-constrained refinement site",
+    "coordinateFrame": "web [Blender.x, Blender.z, -Blender.y]",
+    "sourceBlenderFile": "Startup.blend (read only)",
     "points": [
       {
         "point": [
@@ -11322,10 +11305,21 @@
           1.5815177,
           0.0077798
         ],
-        "parent": "Foramen spinosum teaching passage.r",
+        "parent": "Sphenoid bone",
         "label": "Foramen spinosum"
       }
-    ]
+    ],
+    "note": "Named middle meningeal artery passes through sphenoid floor posterior to ovale at the source-specific spinosum exit site. This source-specific site does not by itself prove that the coarse mesh resolves a continuous lumen. Root must inspect/refine an actual aperture before grading it as an opening.",
+    "isolateContext": true,
+    "contextPatterns": [],
+    "view": {
+      "direction": [
+        0,
+        1,
+        0.08
+      ],
+      "distance": 0.16
+    }
   },
   "oval-window": {
     "point": [
@@ -11535,9 +11529,9 @@
   },
   "olfactory-foramina": {
     "point": [
-      -0.0014830720972827552,
-      1.599819834559418,
-      0.06354699497197912
+      -0.003601532948604746,
+      1.5967202779422822,
+      0.0645331279679251
     ],
     "detailGroup": "",
     "object": "Ethmoid bone",
@@ -11564,9 +11558,9 @@
     "points": [
       {
         "point": [
-          -0.0014830720972827552,
-          1.599819834559418,
-          0.06354699497197912
+          -0.003601532948604746,
+          1.5967202779422822,
+          0.0645331279679251
         ],
         "parent": "Ethmoid bone",
         "label": "Olfactory foramina"
@@ -12230,7 +12224,7 @@
     "point": [
       -0.022,
       1.155,
-      0.038
+      0.03
     ],
     "detailGroup": "long-bone",
     "object": "long-bone epiphyseal line",
@@ -12257,7 +12251,7 @@
         "point": [
           -0.022,
           1.155,
-          0.038
+          0.03
         ],
         "parent": "long-bone epiphyseal line",
         "label": "Epiphyseal line"
@@ -12534,7 +12528,7 @@
     "point": [
       -0.022,
       1.153,
-      0.038
+      0.03
     ],
     "detailGroup": "growing-bone",
     "object": "growing-bone epiphyseal plate",
@@ -12561,7 +12555,7 @@
         "point": [
           -0.022,
           1.153,
-          0.038
+          0.03
         ],
         "parent": "growing-bone epiphyseal plate",
         "label": "Epiphyseal plate"
@@ -12663,7 +12657,7 @@
       ],
       "distance": 0.34
     },
-    "note": "Magnified 3D microarchitecture. Canals and lacunae are actual cavities in this teaching mesh; cell, vessel and channel sizes are exaggerated for visibility. This is not a microscopic scan.",
+    "note": "Magnified 3D microarchitecture. Lacunae are cavities around separate osteocytes. Canaliculi connect adjacent lacunae and the central canal. Cell, vessel and channel sizes are exaggerated for visibility; this is an explanatory cutaway, not a microscopic scan.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "6.3",
@@ -12701,7 +12695,7 @@
       ],
       "distance": 0.34
     },
-    "note": "Magnified 3D microarchitecture. Canals and lacunae are actual cavities in this teaching mesh; cell, vessel and channel sizes are exaggerated for visibility. This is not a microscopic scan.",
+    "note": "Magnified 3D microarchitecture. Lacunae are cavities around separate osteocytes. Canaliculi connect adjacent lacunae and the central canal. Cell, vessel and channel sizes are exaggerated for visibility; this is an explanatory cutaway, not a microscopic scan.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "6.3",
@@ -12739,7 +12733,7 @@
       ],
       "distance": 0.34
     },
-    "note": "Magnified 3D microarchitecture. Canals and lacunae are actual cavities in this teaching mesh; cell, vessel and channel sizes are exaggerated for visibility. This is not a microscopic scan.",
+    "note": "Magnified 3D microarchitecture. Lacunae are cavities around separate osteocytes. Canaliculi connect adjacent lacunae and the central canal. Cell, vessel and channel sizes are exaggerated for visibility; this is an explanatory cutaway, not a microscopic scan.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "6.3",
@@ -12777,7 +12771,7 @@
       ],
       "distance": 0.34
     },
-    "note": "Magnified 3D microarchitecture. Canals and lacunae are actual cavities in this teaching mesh; cell, vessel and channel sizes are exaggerated for visibility. This is not a microscopic scan.",
+    "note": "Magnified 3D microarchitecture. Lacunae are cavities around separate osteocytes. Canaliculi connect adjacent lacunae and the central canal. Cell, vessel and channel sizes are exaggerated for visibility; this is an explanatory cutaway, not a microscopic scan.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "6.3",
@@ -12791,19 +12785,19 @@
           1.02,
           -0.03
         ],
-        "parent": "Concentric lamella 4",
+        "parent": null,
         "label": "Osteon"
       }
     ]
   },
   "lacunae": {
     "point": [
-      -0.007,
+      -0.012799999999999999,
       1.045,
       0.039
     ],
     "detailGroup": "osteon",
-    "object": "Osteocyte in lacuna",
+    "object": "Concentric lamella 4",
     "kind": "teaching-pin",
     "source": "Authored 3D teaching reconstruction informed by supplied OpenStax section 6.3",
     "reference": "6.3",
@@ -12815,12 +12809,12 @@
       ],
       "distance": 0.075,
       "center": [
-        -0.007,
+        -0.012799999999999999,
         1.045,
         0.039
       ]
     },
-    "note": "Magnified 3D microarchitecture. Canals and lacunae are actual cavities in this teaching mesh; cell, vessel and channel sizes are exaggerated for visibility. This is not a microscopic scan.",
+    "note": "Magnified 3D microarchitecture. Lacunae are cavities around separate osteocytes. Canaliculi connect adjacent lacunae and the central canal. Cell, vessel and channel sizes are exaggerated for visibility; this is an explanatory cutaway, not a microscopic scan.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "6.3",
@@ -12830,23 +12824,23 @@
     "points": [
       {
         "point": [
-          -0.007,
+          -0.012799999999999999,
           1.045,
           0.039
         ],
-        "parent": "Osteocyte in lacuna",
+        "parent": "Concentric lamella 4",
         "label": "Lacunae"
       }
     ]
   },
   "canaliculi": {
     "point": [
-      -0.011596194077712558,
-      1.0478284271247462,
-      0.03
+      0.0015,
+      1.0495,
+      0.0345
     ],
     "detailGroup": "osteon",
-    "object": "Concentric lamella 4",
+    "object": "Concentric lamella 3",
     "kind": "teaching-pin",
     "source": "Authored 3D teaching reconstruction informed by supplied OpenStax section 6.3",
     "reference": "6.3",
@@ -12858,12 +12852,12 @@
       ],
       "distance": 0.065,
       "center": [
-        -0.011596194077712558,
-        1.0478284271247462,
-        0.03
+        0.0015,
+        1.0495,
+        0.0345
       ]
     },
-    "note": "Magnified 3D microarchitecture. Canals and lacunae are actual cavities in this teaching mesh; cell, vessel and channel sizes are exaggerated for visibility. This is not a microscopic scan.",
+    "note": "Magnified 3D microarchitecture. Lacunae are cavities around separate osteocytes. Canaliculi connect adjacent lacunae and the central canal. Cell, vessel and channel sizes are exaggerated for visibility; this is an explanatory cutaway, not a microscopic scan.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "6.3",
@@ -12873,11 +12867,11 @@
     "points": [
       {
         "point": [
-          -0.011596194077712558,
-          1.0478284271247462,
-          0.03
+          0.0015,
+          1.0495,
+          0.0345
         ],
-        "parent": "Concentric lamella 4",
+        "parent": "Concentric lamella 3",
         "label": "Canaliculi"
       }
     ],
@@ -13121,23 +13115,23 @@
   "sacral-canal": {
     "point": [
       0,
-      0.959,
-      -0.0565
+      0.93,
+      -0.0677
     ],
     "detailGroup": "sacral-detail",
-    "object": "Sacrum with reconstructed neural passage",
-    "kind": "teaching-pin",
+    "object": "Sacrum native neural passage",
+    "kind": "3d-landmark",
     "source": "Authored 3D teaching reconstruction informed by supplied OpenStax section 7.3",
     "reference": "7.3",
     "view": {
       "direction": [
         1,
-        0.6,
-        0.3
+        0.2,
+        0
       ],
-      "distance": 0.36
+      "distance": 0.32
     },
-    "note": "Source-derived sacral teaching cutaway with a reconstructed continuous central canal and inferior posterior hiatus. The route follows the sacral contour and neural-arch region; lumen caliber is simplified. The unchanged adult source sacrum remains available in the skeleton.",
+    "note": "Native central lumen between the sacral body and dorsal neural arch, exposed by a sagittal viewing cut. No channel has been drilled into this source bone. The reference marks one part of the continuous canal.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "7.3",
@@ -13156,10 +13150,10 @@
       {
         "point": [
           0,
-          0.959,
-          -0.0565
+          0.93,
+          -0.0677
         ],
-        "parent": "Sacrum with reconstructed neural passage",
+        "parent": "Sacrum native neural passage",
         "label": "Sacral canal"
       }
     ]
@@ -13167,23 +13161,23 @@
   "sacral-hiatus": {
     "point": [
       0,
-      0.879,
-      -0.094
+      0.881,
+      -0.086
     ],
     "detailGroup": "sacral-detail",
-    "object": "Sacrum with reconstructed neural passage",
-    "kind": "teaching-pin",
+    "object": "Sacrum native neural passage",
+    "kind": "3d-landmark",
     "source": "Authored 3D teaching reconstruction informed by supplied OpenStax section 7.3",
     "reference": "7.3",
     "view": {
       "direction": [
         0,
-        0.2,
+        -0.2,
         -1
       ],
-      "distance": 0.34
+      "distance": 0.32
     },
-    "note": "Source-derived sacral teaching variant. The reconstructed inferior posterior opening continues into the sacral canal between the cornual regions; contour and caliber are explanatory, rather than a claim about a resolved source aperture.",
+    "note": "Native inferior posterior opening at the termination of the dorsal sacral arch. The point identifies the opening, which continues superiorly into the sacral canal; source section boundaries verify the arch termination here.",
     "verification": {
       "method": "Named geometry authored with explicit dimensions and topology; inspected as a separate teaching specimen",
       "sourceSection": "7.3",
@@ -13194,10 +13188,10 @@
       {
         "point": [
           0,
-          0.879,
-          -0.094
+          0.881,
+          -0.086
         ],
-        "parent": "Sacrum with reconstructed neural passage",
+        "parent": "Sacrum native neural passage",
         "label": "Sacral hiatus"
       }
     ]

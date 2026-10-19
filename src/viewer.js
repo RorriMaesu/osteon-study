@@ -43,7 +43,7 @@ export class AnatomyViewer {
   el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.down){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.peel?'Hide this surface':this.displayName(m);const r=el.getBoundingClientRect();label.style.left=Math.min(e.clientX-r.left+14,r.width-185)+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+this.el.offsetTop+'px';}el.style.cursor=m?'pointer':'grab';});
   el.addEventListener('pointerleave',()=>{document.querySelector('#hover-label').hidden=true;});
   this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(el);
-  this.controls.addEventListener('start',()=>{this.tween=null;});
+  this.controls.addEventListener('start',()=>{this.tween=null;document.querySelectorAll('[data-camera]').forEach(b=>b.classList.remove('active'));});
   const decoder=new DRACOLoader();decoder.setDecoderPath(new URL('vendor/draco/',document.baseURI).href);decoder.setWorkerLimit(2);
   const loader=new GLTFLoader();loader.setDRACOLoader(decoder);
   loader.load(new URL('assets/skeleton.glb?v='+modelAssets['skeleton'],document.baseURI).href,async gltf=>{
@@ -70,19 +70,19 @@ export class AnatomyViewer {
  }
  meshRegion(n,g){return meshRegion(n,g);}
  displayName(m){const n=m.userData.zname;return n.replace(/finger of foot/g,'toe').replace(/finger of hand/g,'finger').replace(/\.l$/,' (left)').replace(/\.r$/,' (right)');}
- find(term){const r=term.representation||{};if(r.detailGroup)return this.meshes.filter(m=>m.userData.detailGroup===r.detailGroup&&(!r.object||m.userData.zname.startsWith(r.object)));return this.meshes.filter(m=>!m.userData.detailGroup&&matches(r.parentPattern||term.pattern,m.userData.zname));}
+ find(term){const r=term.representation||{};if(r.retiredModel)return [];if(r.detailGroup)return this.meshes.filter(m=>m.userData.detailGroup===r.detailGroup&&(!r.object||m.userData.zname.startsWith(r.object)));return this.meshes.filter(m=>!m.userData.detailGroup&&matches(r.parentPattern||term.pattern,m.userData.zname));}
  focusFeature(term=this.selectedTerm){const r=term?.representation;if(!r?.points?.length)return;let center=r.view?.center||r.points[0].point;
   let view=r.view;
-  if(r.detailGroup&&!r.view?.center){const box=new THREE.Box3();this.meshes.filter(m=>m.userData.detailGroup===r.detailGroup).forEach(m=>box.union(m.userData.bounds));center=box.getCenter(new THREE.Vector3()).toArray();
+  if((r.detailGroup||r.frameContext)&&!r.view?.center){const context=this.meshes.filter(m=>r.detailGroup?m.userData.detailGroup===r.detailGroup:this.find(term).includes(m)||(r.contextPatterns||[]).some(p=>matches(p,m.userData.zname)));const box=new THREE.Box3();context.forEach(m=>box.union(m.userData.bounds));center=box.getCenter(new THREE.Vector3()).toArray();
    const d=new THREE.Vector3(...(r.view?.direction||[.6,.5,1])).normalize(),right=new THREE.Vector3(0,1,0).cross(d);if(right.lengthSq()<.001)right.set(1,0,0);right.normalize();const up=d.clone().cross(right),c=new THREE.Vector3(...center),p=[];
-   for(const m of this.meshes.filter(m=>m.userData.detailGroup===r.detailGroup)){const a=m.geometry.getAttribute('position'),step=Math.max(1,Math.ceil(a.count/600));for(let i=0;i<a.count;i+=step)p.push(new THREE.Vector3().fromBufferAttribute(a,i).applyMatrix4(m.matrixWorld).sub(c));}
+   for(const m of context){const a=m.geometry.getAttribute('position'),step=Math.max(1,Math.ceil(a.count/600));for(let i=0;i<a.count;i+=step)p.push(new THREE.Vector3().fromBufferAttribute(a,i).applyMatrix4(m.matrixWorld).sub(c));}
    const span=v=>Math.max(...p.map(q=>q.dot(v)))-Math.min(...p.map(q=>q.dot(v))),fit=Math.max(span(up),span(right)/this.camera.aspect)*.5/Math.tan(THREE.MathUtils.degToRad(16))*1.14+span(d)*.5;
    view={...r.view,distance:Math.max(r.view?.distance||0,fit)/Math.max(1,.75/this.camera.aspect)};
   }
   this.focusPoint(center,view);
  }
  refreshLandmarkTools(){if(!this.detailTools)return;const r=this.selectedTerm?.representation,active=pointKinds.includes(r?.kind)&&!this.quiz;this.detailTools.hidden=!active;if(!active)return;
-  this.detailTools.replaceChildren();const tag=document.createElement('span');tag.textContent=r.detailGroup==='inner-ear'?'Right inner ear · surrounding bone removed':r.refinement?'3D passage reconstruction':r.kind==='teaching-pin'?'3D teaching reconstruction':r.cutaway?'3D anatomy · cutaway':'3D anatomy';this.detailTools.append(tag);
+  this.detailTools.replaceChildren();const tag=document.createElement('span');tag.textContent=r.detailGroup==='inner-ear'?'Right labyrinth · space cast · bone removed':r.refinement?'Route / opening schematic':r.kind==='teaching-pin'?'3D teaching reconstruction':r.cutaway?'3D anatomy · cutaway':'3D anatomy';this.detailTools.append(tag);
   const labels=document.createElement('button');labels.type='button';labels.dataset.action='labels';labels.textContent='Label: '+(this.labelsHidden?'Off':'On');labels.setAttribute('aria-pressed',String(!this.labelsHidden));labels.onclick=()=>{this.labelsHidden=!this.labelsHidden;this.pinLayer.hidden=this.labelsHidden;this.refreshLandmarkTools();this.detailTools.querySelector('[data-action=labels]')?.focus({preventScroll:true});};this.detailTools.append(labels);
   if(r.cutaway){const b=document.createElement('button');b.type='button';b.dataset.action='cutaway';b.textContent='Cutaway: '+(this.cutaway?'On':'Off');b.setAttribute('aria-pressed',String(!!this.cutaway));b.onclick=()=>{this.cutaway=this.cutaway?null:r.cutaway;this.applyVisibility();this.refreshLandmarkTools();this.detailTools.querySelector('[data-action=cutaway]')?.focus({preventScroll:true});};this.detailTools.append(b);}
  }
@@ -128,16 +128,43 @@ export class AnatomyViewer {
    this.focusHistory.push(this.snapshot());this.focus={level:'region',areaId:null,side:null,boneId:null};this.region=term.region;changedContext=true;
   }else if(!this.quiz&&this.focus.level==='bone'&&!found.some(m=>boneId(m.userData.zname)===this.focus.boneId))this.back();
   if(!this.quiz&&this.focus.level==='bone')found=found.filter(m=>boneId(m.userData.zname)===this.focus.boneId);
-  this.activeDetail=term.representation?.detailGroup||null;this.cutaway=term.representation?.cutaway||null;this.clearPins();this.selected=found;this.selected.forEach(m=>this.hiddenMeshes.delete(m));this.selectedTerm=term;this.isolated=this.focus.level==='bone'&&!this.quiz;this.ghost=false;this.applyVisibility();
+  this.activeDetail=term.representation?.retiredModel?null:term.representation?.detailGroup||null;this.cutaway=term.representation?.cutaway||null;this.clearPins();this.selected=found;this.selected.forEach(m=>this.hiddenMeshes.delete(m));this.selectedTerm=term;this.isolated=this.focus.level==='bone'&&!this.quiz;this.ghost=false;this.applyVisibility();
   if(pointKinds.includes(term.representation?.kind)){this.showPins(term.representation.points.map(p=>({...p,term})),{labelled:true});this.showOutline(term.representation.outline);this.ghost=!!term.representation.ghostContext||(!this.activeDetail&&!term.representation.isolateContext);this.applyVisibility();if(frame)this.focusFeature(term);}
-  else if(this.selected.length){if(term.feature){const p=this.selected[0].userData.bounds.getCenter(new THREE.Vector3()).toArray();this.showPins([{term,point:p}],{labelled:true});}if(frame)this.frame(this.selected);}
+  else if(this.selected.length){if(term.feature){const p=this.selected[0].userData.bounds.getCenter(new THREE.Vector3()).toArray();this.showPins([{term,point:p}],{labelled:true});}if(frame){if(term.representation?.autoFocus)this.focusPoint(this.selected[0].userData.bounds.getCenter(new THREE.Vector3()).toArray(),term.representation.view);else this.frame(this.selected);}}
   this.refreshLandmarkTools();if(changedContext)this.notifyFocus();return this.selected;
  }
  clearPins(){if(this.outline){this.outline.removeFromParent();this.outline.geometry.dispose();this.outline.material.dispose();this.outline=null;}this.pins=[];this.pinLabels=false;if(this.pinLayer)this.pinLayer.replaceChildren();}
  showOutline(points){if(!points?.length)return;const geometry=new THREE.BufferGeometry().setFromPoints(points.map(p=>new THREE.Vector3(...p)));this.outline=new THREE.Line(geometry,new THREE.LineDashedMaterial({color:0xf4b184,dashSize:.004,gapSize:.002,depthTest:false,transparent:true,opacity:.9}));this.outline.computeLineDistances();this.outline.renderOrder=10;this.scene.add(this.outline);}
  showPins(entries,{labelled=false,highlightId=null}={}){this.clearPins();if(!this.pinLayer)return;this.pinLayer.hidden=!!this.labelsHidden&&!this.quiz;this.pinLabels=labelled;const ns='http://www.w3.org/2000/svg';const svg=document.createElementNS(ns,'svg');svg.classList.add('pin-lines');this.pinLayer.append(svg);this.pins=entries.map((p,i)=>{const line=document.createElementNS(ns,'line'),dot=document.createElementNS(ns,'circle');dot.setAttribute('r','3');svg.append(line,dot);const b=document.createElement('button');b.className='anatomy-pin';b.textContent=labelled?(p.label||p.term.name):String(i+1);b.setAttribute('aria-label',labelled?(p.label||p.term.name):'Anatomical target '+(i+1));b.dataset.id=p.term.id;b.classList.toggle('answer-pin',p.term.id===highlightId);b.onpointerdown=ev=>ev.stopPropagation();b.onpointerup=ev=>ev.stopPropagation();b.onclick=ev=>{ev.stopPropagation();document.dispatchEvent(new CustomEvent('landmarkpick',{detail:p.term}));};this.pinLayer.append(b);return{...p,position:new THREE.Vector3(...p.point),button:b,line,dot};});}
- layoutPins(){const placed=[],w=this.el.clientWidth,h=this.el.clientHeight;for(const p of this.pins||[]){const q=p.position.clone().project(this.camera),hidden=q.z>1||q.z< -1||Math.abs(q.x)>1||Math.abs(q.y)>1;p.button.hidden=hidden;p.line.style.display=p.dot.style.display=hidden?'none':'';if(hidden)continue;const ax=(q.x+1)*.5*w,ay=(1-q.y)*.5*h,bw=p.button.offsetWidth/2+5,bh=p.button.offsetHeight/2+5;let x=ax,y=ay;for(let step=0;step<25;step++){const angle=step*2.4-1.1,r=this.pinLabels?Math.max(75,bw+18)+Math.ceil(step/4)*20:Math.ceil(step/4)*25;x=Math.max(bw,Math.min(w-bw,ax+Math.cos(angle)*r));y=Math.max(bh,Math.min(h-bh,ay+Math.sin(angle)*r));if(!placed.some(a=>Math.abs(a.x-x)<a.bw+bw&&Math.abs(a.y-y)<a.bh+bh))break;}placed.push({x,y,bw,bh});p.button.style.left=x+'px';p.button.style.top=y+'px';p.line.setAttribute('x1',ax);p.line.setAttribute('y1',ay);p.line.setAttribute('x2',x);p.line.setAttribute('y2',y);p.dot.setAttribute('cx',ax);p.dot.setAttribute('cy',ay);}}
- focusPoint(point,view=null){const c=new THREE.Vector3(...point),side=point[2]<-.025?-1:1;const dir=new THREE.Vector3(...(view?.direction||[.13,.08,.34*side])).normalize();const distance=(view?.distance||.37)*Math.max(1,.75/this.camera.aspect);this.moveCamera(c.clone().addScaledVector(dir,distance),c);}
+ layoutPins(){
+  const placed=[],w=this.el.clientWidth,h=this.el.clientHeight;
+  // Keep labels clear of the fixed landmark controls, including multi-line phone controls.
+  const toolBottom=this.detailTools&&!this.detailTools.hidden?this.detailTools.getBoundingClientRect().bottom-this.el.getBoundingClientRect().top+8:0;
+  const checkVisibility=performance.now()-(this.lastPinVisibility||0)>140;
+  if(checkVisibility)this.lastPinVisibility=performance.now();
+  const visibleSolids=checkVisibility?this.meshes.filter(m=>m.visible&&m.material.opacity>.45):[];
+  for(const p of this.pins||[]){
+   const q=p.position.clone().project(this.camera),hidden=q.z>1||q.z< -1||Math.abs(q.x)>1||Math.abs(q.y)>1;
+   p.button.hidden=hidden;p.line.style.display=p.dot.style.display=hidden?'none':'';if(hidden)continue;
+   if(checkVisibility){
+    const delta=p.position.clone().sub(this.camera.position),distance=delta.length();
+    const probe=new THREE.Raycaster(this.camera.position,delta.normalize(),0,Math.max(0,distance-.0004));
+    const hits=probe.intersectObjects(visibleSolids,false).filter(hit=>!(hit.object.material.clippingPlanes||[]).some(plane=>plane.distanceToPoint(hit.point)<0));
+    const covered=hits.length>0;
+    p.button.classList.toggle('covered-pin',covered);p.line.classList.toggle('covered-pin',covered);p.dot.classList.toggle('covered-pin',covered);
+    p.button.title=covered?'Reference is behind a surface. Rotate the specimen or use Peel to expose it.':'Visible anatomical reference';
+    p.button.setAttribute('aria-description',p.button.title);
+   }
+   const ax=(q.x+1)*.5*w,ay=(1-q.y)*.5*h,bw=p.button.offsetWidth/2+5,bh=p.button.offsetHeight/2+5;let x=ax,y=ay;
+   for(let step=0;step<25;step++){
+    const angle=step*2.4-1.1,r=this.pinLabels?Math.max(75,bw+18)+Math.ceil(step/4)*20:Math.ceil(step/4)*25;
+    x=Math.max(bw,Math.min(w-bw,ax+Math.cos(angle)*r));y=Math.max(bh+toolBottom,Math.min(h-bh,ay+Math.sin(angle)*r));
+    if(!placed.some(a=>Math.abs(a.x-x)<a.bw+bw&&Math.abs(a.y-y)<a.bh+bh))break;
+   }
+   placed.push({x,y,bw,bh});p.button.style.left=x+'px';p.button.style.top=y+'px';p.line.setAttribute('x1',ax);p.line.setAttribute('y1',ay);p.line.setAttribute('x2',x);p.line.setAttribute('y2',y);p.dot.setAttribute('cx',ax);p.dot.setAttribute('cy',ay);
+  }
+ }
+ focusPoint(point,view=null){document.querySelectorAll('[data-camera]').forEach(b=>b.classList.remove('active'));const c=new THREE.Vector3(...point),side=point[2]<-.025?-1:1;const dir=new THREE.Vector3(...(view?.direction||[.13,.08,.34*side])).normalize();const distance=(view?.distance||.37)*Math.max(1,.75/this.camera.aspect);this.moveCamera(c.clone().addScaledVector(dir,distance),c);}
  selectMesh(m){const reference=allTerms.find(t=>t.representation?.refinement&&t.representation.parentPattern===m.userData.zname);if(reference){this.select(reference,{frame:false});return;}if(m.userData.detailGroup&&this.selectedTerm)return;this.activeDetail=null;this.cutaway=null;if(!this.quiz&&this.focus.level==='bone'&&boneId(m.userData.zname)!==this.focus.boneId)this.back();this.clearPins();this.selected=this.focus.level==='bone'&&!this.quiz?this.boneMeshes(m):[m];this.selectedTerm=this.termFor(m);this.isolated=this.focus.level==='bone'&&!this.quiz;this.ghost=false;this.applyVisibility();}
  setDivision(division){this.activeDetail=null;this.cutaway=null;this.division=division;this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];this.selected=[];this.selectedTerm=null;this.clearPins();this.isolated=false;this.ghost=false;this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));this.notifyFocus();}
  setRegion(region){this.activeDetail=null;this.cutaway=null;if(region==='Joints')this.tissues=true;this.focus={level:region==='All regions'?'overview':'region',areaId:null,side:null,boneId:null};this.focusHistory=[];this.clearPins();this.region=region;this.isolated=false;this.ghost=false;this.selected=[];this.selectedTerm=null;this.applyVisibility();this.frameScope();this.notifyFocus();}
@@ -148,8 +175,8 @@ export class AnatomyViewer {
    const region=this.scopeContains(m),focusedBone=this.focus.level==='bone'&&!this.quiz&&boneId(m.userData.zname)===this.focus.boneId;
    const context=(r?.contextPatterns||[]).some(p=>matches(p,m.userData.zname));
    m.visible=!this.activeDetail&&(this.division==='All'||meshDivision(m.userData.zname)===this.division)&&!this.hiddenMeshes.has(m)&&(r?.isolateContext?(selected.has(m)||(!this.isolated&&context)):this.isolated?selected.has(m)||focusedBone:(region||selected.has(m)||context)&&(!m.userData.sinus||this.sinuses||selected.has(m))&&(!m.userData.tissue||this.tissues||selected.has(m)||context));
-   m.material.clippingPlanes=m.userData.region==='Skull'?clipping:[];
-   m.material.transparent=this.ghost&&!selected.has(m);m.material.opacity=m.material.transparent ? .12 : 1;m.material.depthWrite=!m.material.transparent;
+   m.material.clippingPlanes=(m.userData.region==='Skull'||r?.isolateContext)?clipping:[];
+   m.material.transparent=(this.ghost&&!selected.has(m))||!!(r?.ghostContext&&context&&!selected.has(m));m.material.opacity=m.material.transparent ? .12 : 1;m.material.depthWrite=!m.material.transparent;
    const family=this.skullColors&&!this.quiz&&this.focus.level!=='overview'&&!m.userData.nonbone?boneFamily(m.userData.zname):null;
    const c=family?parseInt(family.color.slice(1),16):selected.has(m)?0xb5e6be:m.userData.sinus?0xa1b59b:m.userData.tissue?/artery/.test(m.userData.zname)?0xd98878:0xc9aa7b:m.userData.nonbone?0x9da9a1:0xe5e1cd;m.material.color.setHex(c);m.material.emissive.setHex(selected.has(m)?0x3a5742:0x000000);
   }this.refreshLandmarkTools();
@@ -167,7 +194,15 @@ export class AnatomyViewer {
   this.frame(this.quiz&&this.selected.length||this.focus.level==='bone'||this.isolated?this.selected:this.meshes.filter(m=>m.visible),side);
  }
  frame(ms,side='front'){if(!ms.length)return;const box=new THREE.Box3();for(const m of ms)box.union(m.userData.bounds);this.frameBox(box,side);}
- frameBox(box,side='front'){const size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());const minimum=this.activeDetail==='inner-ear' ? .005 : .08;const h=Math.max(minimum,size.y),w=Math.max(minimum,side==='left'||side==='right'?size.z:size.x),depth=Math.max(minimum,side==='left'||side==='right'?size.x:size.z);const distance=Math.max(h,w/Math.max(this.camera.aspect,.4),depth)*.5/Math.tan(THREE.MathUtils.degToRad(16))*1.15+(this.activeDetail==='inner-ear' ? .005 : .05);const dirs={front:[0,.04,1],back:[0,.04,-1],left:[1,.04,0],right:[-1,.04,0]};const dir=new THREE.Vector3(...dirs[side]).normalize();this.moveCamera(center.clone().addScaledVector(dir,distance),center);}
+ frameBox(box,side='front'){
+  const center=box.getCenter(new THREE.Vector3()),dirs={front:[0,.04,1],back:[0,.04,-1],left:[1,.04,0],right:[-1,.04,0],top:[0,1,.001],bottom:[0,-1,.001]};
+  const direction=new THREE.Vector3(...dirs[side]).normalize(),right=new THREE.Vector3(0,1,0).cross(direction).normalize(),up=direction.clone().cross(right),points=[];
+  for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z])points.push(new THREE.Vector3(x,y,z).sub(center));
+  const span=axis=>Math.max(.002,Math.max(...points.map(p=>p.dot(axis)))-Math.min(...points.map(p=>p.dot(axis))));
+  const distance=Math.max(span(up),span(right)/Math.max(this.camera.aspect,.4))*.5/Math.tan(THREE.MathUtils.degToRad(16))*1.18+span(direction)*.5+.002;
+  this.moveCamera(center.clone().addScaledVector(direction,distance),center);
+ }
+
  moveCamera(pos,target){if(this.reduced){this.camera.position.copy(pos);this.controls.target.copy(target);this.controls.update();return;}this.tween={start:performance.now(),from:this.camera.position.clone(),to:pos,targetFrom:this.controls.target.clone(),targetTo:target};}
  view(side){this.controls.autoRotate=false;this.frameScope(side);}
  restore(){this.hiddenMeshes.clear();this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}

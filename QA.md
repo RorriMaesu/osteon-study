@@ -1,3 +1,15 @@
+<!-- accuracy-review-current -->
+# Current verification — 2026-10-18
+
+54 automated checks pass. 13 model backup snapshots / 51 files passed checksum verification; three original model files are unchanged.
+
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
+
+Current browser checks used 1280 × 720 desktop and 390 × 844 phone viewports. Desktop document dimensions stayed 1280 × 720 for the atlas, including focused skull openings, hard palate, sacral cutaway and fontanelle comparison. The phone atlas had no horizontal overflow. Tested native spinosum, hypoglossal and carotid displays; hard-palate contributors; right labyrinth labels; fontanelle superior/lateral/full-source transitions; the optional full UCSF scan; labels, colors and sacral cutaway switches; and source-first withdrawal for the supraorbital opening. A sacral locating exercise concealed target names and Reset retained the question. The review page search, dispositions and separate paged evidence dialog worked; its desktop findings dialog fit without scrolling. No full physical-device or all-feature interactive certification is claimed.
+
+See [REVIEW.md](REVIEW.md) for anatomy methods and limits. Earlier stage counts and coverage claims below are historical, not current certification.
+<!-- /accuracy-review-current -->
+
 # Release verification — complete course suite
 
 ## Automated checks

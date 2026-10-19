@@ -1,0 +1,1188 @@
+{
+  "coronal-suture": {
+    "parentPattern": "Frontal bone||Parietal bone.r||Parietal bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "sagittal-suture": {
+    "parentPattern": "Parietal bone.r||Parietal bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "lambdoid-suture": {
+    "parentPattern": "Occipital bone||Parietal bone.r||Parietal bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "squamous-suture": {
+    "parentPattern": "Temporal bone.r||Parietal bone.r",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "zygomatic-arch": {
+    "parentPattern": "Temporal bone.r||Zygomatic bone.r",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "hard-palate": {
+    "parentPattern": "Maxilla.r||Maxilla.l||Palatine bone.r||Palatine bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "orbit": {
+    "parentPattern": "Sphenoid bone||Frontal bone||Zygomatic bone.r||Maxilla.r||Lacrimal bone.r||Ethmoid bone||Palatine bone.r",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "nasal-septum": {
+    "parentPattern": "Vomer||Ethmoid bone",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "nasal-cavity": {
+    "parentPattern": "Vomer||Ethmoid bone||Maxilla.r||Maxilla.l||Palatine bone.r||Palatine bone.l||Nasal bone.r||Nasal bone.l||Inferior nasal concha bone.r||Inferior nasal concha bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "pterion": {
+    "parentPattern": "Sphenoid bone||Frontal bone||Parietal bone.r||Temporal bone.r",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "temporal-fossa": {
+    "parentPattern": "Parietal bone.r||Frontal bone||Temporal bone.r||Sphenoid bone",
+    "contextPatterns": [
+      "Zygomatic bone.r"
+    ],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "infratemporal-fossa": {
+    "parentPattern": "Sphenoid bone",
+    "contextPatterns": [
+      "Temporal bone.r",
+      "Maxilla.r",
+      "Mandible",
+      "Zygomatic bone.r"
+    ],
+    "isolateContext": true,
+    "ghostContext": true,
+    "frameContext": true
+  },
+  "cranial-base": {
+    "parentPattern": "Frontal bone||Ethmoid bone||Sphenoid bone||Temporal bone.r||Temporal bone.l||Occipital bone",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "cranial-cavity": {
+    "parentPattern": "Frontal bone||Ethmoid bone||Sphenoid bone||Temporal bone.r||Temporal bone.l||Occipital bone||Parietal bone.r||Parietal bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "anterior-cranial-fossa": {
+    "parentPattern": "Frontal bone||Ethmoid bone||Sphenoid bone",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "point": [
+      -0.0323084,
+      1.6196965652926403,
+      0.0626754
+    ],
+    "points": [
+      {
+        "point": [
+          -0.0323084,
+          1.6196965652926403,
+          0.0626754
+        ],
+        "parent": "Frontal bone",
+        "label": "Anterior cranial fossa"
+      }
+    ],
+    "frameContext": true
+  },
+  "middle-cranial-fossa": {
+    "parentPattern": "Sphenoid bone||Temporal bone.r||Temporal bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "posterior-cranial-fossa": {
+    "parentPattern": "Occipital bone||Temporal bone.r||Temporal bone.l",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "calvaria": {
+    "parentPattern": "Frontal bone||Parietal bone.r||Parietal bone.l||Occipital bone",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "inferior-orbital-fissure": {
+    "parentPattern": "Maxilla.r||Sphenoid bone||Zygomatic bone.r||Palatine bone.r",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "frameContext": true
+  },
+  "olfactory-foramina": {
+    "parentPattern": "Ethmoid bone",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "point": [
+      -0.003601532948604746,
+      1.5967202779422822,
+      0.0645331279679251
+    ],
+    "points": [
+      {
+        "point": [
+          -0.003601532948604746,
+          1.5967202779422822,
+          0.0645331279679251
+        ],
+        "parent": "Ethmoid bone",
+        "label": "Olfactory foramina"
+      }
+    ],
+    "requiresModelCorrection": true,
+    "plateQualifiedSourceSplines": [
+      15,
+      21
+    ]
+  },
+  "infraorbital-foramen": {
+    "parentPattern": "Maxilla.r",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "view": {
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.22
+    }
+  },
+  "internal-acoustic-meatus": {
+    "parentPattern": "Temporal bone.r",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "view": {
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "distance": 0.22
+    }
+  },
+  "superior-orbital-fissure": {
+    "parentPattern": "Sphenoid bone",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "view": {
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.16
+    }
+  },
+  "supraorbital-margin": {
+    "parentPattern": "Frontal bone",
+    "contextPatterns": [],
+    "isolateContext": true,
+    "point": [
+      -0.026813741773366928,
+      1.6143497228622437,
+      0.07777503877878189
+    ],
+    "points": [
+      {
+        "point": [
+          -0.026813741773366928,
+          1.6143497228622437,
+          0.07777503877878189
+        ],
+        "parent": "Frontal bone",
+        "label": "Supraorbital margin"
+      }
+    ]
+  },
+  "superior-articular-facets": {
+    "view": {
+      "direction": [
+        1,
+        0.7,
+        0
+      ],
+      "distance": 0.28
+    }
+  },
+  "superior-articular-facet-of-sacrum": {
+    "view": {
+      "direction": [
+        1,
+        0.7,
+        0
+      ],
+      "distance": 0.28
+    }
+  },
+  "costal-groove": {
+    "view": {
+      "direction": [
+        1,
+        -0.7,
+        0.1
+      ],
+      "distance": 0.085,
+      "center": [
+        -0.12472076984232258,
+        1.288103326842698,
+        0.015
+      ]
+    }
+  },
+  "sacral-canal": {
+    "point": [
+      0,
+      0.93,
+      -0.0677
+    ],
+    "detailGroup": "sacral-detail",
+    "object": "Sacrum native neural passage",
+    "points": [
+      {
+        "point": [
+          0,
+          0.93,
+          -0.0677
+        ],
+        "parent": "Sacrum native neural passage",
+        "label": "Sacral canal"
+      }
+    ],
+    "view": {
+      "direction": [
+        1,
+        0.2,
+        0
+      ],
+      "distance": 0.32
+    },
+    "cutaway": {
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "constant": 0
+    },
+    "outline": [
+      [
+        0,
+        0.955,
+        -0.04706
+      ],
+      [
+        0,
+        0.95,
+        -0.05058
+      ],
+      [
+        0,
+        0.945,
+        -0.05449
+      ],
+      [
+        0,
+        0.94,
+        -0.05897
+      ],
+      [
+        0,
+        0.935,
+        -0.06325
+      ],
+      [
+        0,
+        0.93,
+        -0.06769
+      ],
+      [
+        0,
+        0.925,
+        -0.07247
+      ],
+      [
+        0,
+        0.92,
+        -0.07653
+      ],
+      [
+        0,
+        0.915,
+        -0.07992
+      ],
+      [
+        0,
+        0.91,
+        -0.08223
+      ],
+      [
+        0,
+        0.905,
+        -0.08371
+      ],
+      [
+        0,
+        0.9,
+        -0.08441
+      ],
+      [
+        0,
+        0.895,
+        -0.08459
+      ],
+      [
+        0,
+        0.89,
+        -0.08476
+      ],
+      [
+        0,
+        0.885,
+        -0.0854
+      ],
+      [
+        0,
+        0.881,
+        -0.086
+      ]
+    ],
+    "note": "Native sacral canal, exposed by a sagittal viewing cutaway. The guide follows the midline space between the sacral bodies anteriorly and neural arch posteriorly. No new canal is drilled.",
+    "kind": "3d-landmark"
+  },
+  "sacral-hiatus": {
+    "point": [
+      0,
+      0.881,
+      -0.086
+    ],
+    "detailGroup": "sacral-detail",
+    "object": "Sacrum native neural passage",
+    "points": [
+      {
+        "point": [
+          0,
+          0.881,
+          -0.086
+        ],
+        "parent": "Sacrum native neural passage",
+        "label": "Sacral hiatus"
+      }
+    ],
+    "view": {
+      "direction": [
+        0,
+        -0.2,
+        -1
+      ],
+      "distance": 0.32
+    },
+    "cutaway": null,
+    "note": "Native inferior posterior opening of the sacral canal below the termination of the neural arch. A space reference point, not a point on an artificial drilled wall.",
+    "kind": "3d-landmark"
+  },
+  "vertebral-canal": {
+    "parentPattern": "Vertebra L1||Vertebra L2||Vertebra L3||Vertebra L4||Vertebra L5",
+    "contextPatterns": [
+      "Intervertebral disc L1-L2",
+      "Intervertebral disc L2-L3",
+      "Intervertebral disc L3-L4",
+      "Intervertebral disc L4-L5"
+    ],
+    "frameContext": true,
+    "isolateContext": true,
+    "view": {
+      "direction": [
+        1,
+        0.15,
+        0
+      ],
+      "distance": 0.62
+    },
+    "cutaway": {
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "constant": 0
+    }
+  },
+  "trochlea": {
+    "kind": "3d-landmark",
+    "point": [
+      -0.2135763,
+      1.0965131,
+      -0.0252428
+    ],
+    "points": [
+      {
+        "point": [
+          -0.2135763,
+          1.0965131,
+          -0.0252428
+        ],
+        "parent": "Humerus.r",
+        "label": "Trochlea"
+      }
+    ],
+    "parentPattern": "Humerus.r",
+    "view": {
+      "direction": [
+        0,
+        0,
+        1
+      ],
+      "distance": 0.19,
+      "center": [
+        -0.2135763,
+        1.0965131,
+        -0.0252428
+      ]
+    },
+    "isolateContext": true,
+    "note": "Manually selected on the actual medial distal spool; not snapped from the old rejected leader. Only one right-side feature reference; no segmentation of full spool.",
+    "source": "Independently reviewed source morphology / original radial-nerve course; corrected manual surface reference"
+  },
+  "radial-nerve-sulcus": {
+    "kind": "3d-landmark",
+    "point": [
+      -0.19906212389469147,
+      1.2570483684539795,
+      -0.04381401836872101
+    ],
+    "points": [
+      {
+        "point": [
+          -0.19906212389469147,
+          1.2570483684539795,
+          -0.04381401836872101
+        ],
+        "parent": "Humerus.r",
+        "label": "Radial nerve sulcus"
+      }
+    ],
+    "parentPattern": "Humerus.r",
+    "view": {
+      "direction": [
+        0,
+        0.1,
+        -1
+      ],
+      "distance": 0.18,
+      "center": [
+        -0.19906212389469147,
+        1.2570483684539795,
+        -0.04381401836872101
+      ]
+    },
+    "isolateContext": true,
+    "note": "Actual source radial nerve course independently constrains the posterior humeral groove site; source cortex is coarse, so this is a location reference rather than a segmented full sulcus.",
+    "source": "Independently reviewed source morphology / original radial-nerve course; corrected manual surface reference"
+  },
+  "malleus": {
+    "parentPattern": "Malleus.r",
+    "isolateContext": true,
+    "autoFocus": true,
+    "view": {
+      "direction": [
+        -1,
+        0.2,
+        0.4
+      ],
+      "distance": 0.035
+    },
+    "note": "Right middle-ear ossicle, isolated from the surrounding temporal bone to make its shape visible."
+  },
+  "incus": {
+    "parentPattern": "Incus.r",
+    "isolateContext": true,
+    "autoFocus": true,
+    "view": {
+      "direction": [
+        -1,
+        0.2,
+        0.4
+      ],
+      "distance": 0.035
+    },
+    "note": "Right middle-ear ossicle, isolated from the surrounding temporal bone to make its shape visible."
+  },
+  "stapes": {
+    "parentPattern": "Stapes.r",
+    "isolateContext": true,
+    "autoFocus": true,
+    "view": {
+      "direction": [
+        -1,
+        0.2,
+        0.4
+      ],
+      "distance": 0.035
+    },
+    "note": "Right middle-ear ossicle, isolated from the surrounding temporal bone to make its shape visible."
+  },
+  "sacral-foramina": {
+    "view": {
+      "direction": [
+        0,
+        0.1,
+        -1
+      ],
+      "distance": 0.35
+    }
+  },
+  "alveolar-arch": {
+    "parentPattern": "Maxilla.r||Maxilla.l",
+    "isolateContext": true,
+    "frameContext": true,
+    "view": {
+      "direction": [
+        0,
+        0.12,
+        1
+      ],
+      "distance": 0.24
+    },
+    "note": "Both maxillae form the upper alveolar arch. The point marks one local part of the paired arch, rather than its full extent."
+  },
+  "carpal-tunnel": {
+    "outline": null
+  },
+  "textbook-anterior-semicircular-canal": {
+    "point": [
+      -0.0386850210796035,
+      1.5900218040303509,
+      -0.007843155373211818
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.5,
+        0.5
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "point": [
+          -0.0386850210796035,
+          1.5900218040303509,
+          -0.007843155373211818
+        ],
+        "parent": "Vestibule.r",
+        "label": "Anterior semicircular canal"
+      }
+    ],
+    "evidenceStatus": "source-ledger-supported",
+    "sourceLabel": "Anterior semicircular canal.t",
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-anterior-semicircular-canal-reviewed.png",
+    "note": "Right labyrinth space cast from the original Z-Anatomy geometry, with the surrounding temporal bone removed. Pin constrained by the original evaluated Anterior semicircular canal.t annotation leader and projected onto the intended cast surface; this is a locator, not a trace of the complete lumen."
+  },
+  "textbook-posterior-semicircular-canal": {
+    "point": [
+      -0.03887757410290574,
+      1.5809158088968984,
+      -0.014105867795506419
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.2,
+        -0.3
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "point": [
+          -0.03887757410290574,
+          1.5809158088968984,
+          -0.014105867795506419
+        ],
+        "parent": "Vestibule.r",
+        "label": "Posterior semicircular canal"
+      }
+    ],
+    "evidenceStatus": "source-ledger-supported",
+    "sourceLabel": "Posterior semicircular canal.t",
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-posterior-semicircular-canal-reviewed.png",
+    "note": "Right labyrinth space cast from the original Z-Anatomy geometry, with the surrounding temporal bone removed. Pin constrained by the original evaluated Posterior semicircular canal.t annotation leader and projected onto the intended cast surface; this is a locator, not a trace of the complete lumen."
+  },
+  "textbook-lateral-semicircular-canal": {
+    "point": [
+      -0.04448973575391411,
+      1.583108716348186,
+      -0.009706769479815903
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.5,
+        0.5
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "point": [
+          -0.04448973575391411,
+          1.583108716348186,
+          -0.009706769479815903
+        ],
+        "parent": "Vestibule.r",
+        "label": "Lateral semicircular canal"
+      }
+    ],
+    "evidenceStatus": "source-ledger-supported",
+    "sourceLabel": "Lateral semicircular canal.t",
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-lateral-semicircular-canal-reviewed.png",
+    "note": "Right labyrinth space cast from the original Z-Anatomy geometry, with the surrounding temporal bone removed. Pin constrained by the original evaluated Lateral semicircular canal.t annotation leader and projected onto the intended cast surface; this is a locator, not a trace of the complete lumen."
+  },
+  "textbook-cochlea": {
+    "point": [
+      -0.0389605631109071,
+      1.5772190946460576,
+      0.0029795537991296837
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.5,
+        0.5
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "point": [
+          -0.0389605631109071,
+          1.5772190946460576,
+          0.0029795537991296837
+        ],
+        "parent": "Cochlea.r",
+        "label": "Cochlea"
+      }
+    ],
+    "evidenceStatus": "source-ledger-supported",
+    "sourceLabel": "Spiral canal of cochlea.t",
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-cochlea-reviewed.png",
+    "note": "Right labyrinth space cast from the original Z-Anatomy geometry, with the surrounding temporal bone removed. Pin constrained by the original evaluated Spiral canal of cochlea.t annotation leader and projected onto the intended cast surface; this is a locator, not a trace of the complete lumen."
+  },
+  "textbook-vestibule-of-inner-ear": {
+    "point": [
+      -0.041521062167186824,
+      1.5835105310835935,
+      -0.0034894689164065885
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.5,
+        0.5
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "point": [
+          -0.041521062167186824,
+          1.5835105310835935,
+          -0.0034894689164065885
+        ],
+        "parent": "Vestibule.r",
+        "label": "Vestibule of inner ear"
+      }
+    ],
+    "evidenceStatus": "manual-chamber-surface-reference",
+    "sourceLabel": null,
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-vestibule-of-inner-ear-reviewed.png",
+    "note": "Right labyrinth space cast from original Z-Anatomy geometry, with surrounding temporal bone removed. The chamber locator is manually constrained to the expanded central vestibular cast between the cochlea and semicircular canals; it is not a separate native chamber segmentation."
+  },
+  "textbook-oval-window": {
+    "point": [
+      -0.04138235840946436,
+      1.5813038249810536,
+      -0.004473057197174057
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.2,
+        0.3
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "point": [
+          -0.04138235840946436,
+          1.5813038249810536,
+          -0.004473057197174057
+        ],
+        "parent": "Vestibule.r",
+        "label": "Oval window"
+      }
+    ],
+    "evidenceStatus": "previously-independent-stapes-rim-verified",
+    "sourceLabel": null,
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-oval-window-reviewed.png"
+  },
+  "textbook-semicircular-canals": {
+    "point": [
+      -0.0386850210796035,
+      1.5900218040303509,
+      -0.007843155373211818
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.2,
+        -0.3
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "label": "Anterior semicircular canal",
+        "point": [
+          -0.0386850210796035,
+          1.5900218040303509,
+          -0.007843155373211818
+        ]
+      },
+      {
+        "label": "Posterior semicircular canal",
+        "point": [
+          -0.03887757410290574,
+          1.5809158088968984,
+          -0.014105867795506419
+        ]
+      },
+      {
+        "label": "Lateral semicircular canal",
+        "point": [
+          -0.04448973575391411,
+          1.583108716348186,
+          -0.009706769479815903
+        ]
+      }
+    ],
+    "evidenceStatus": "source-ledger-supported",
+    "sourceLabel": "Anterior semicircular canal.t",
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-semicircular-canals-reviewed.png",
+    "note": "Right labyrinth space cast from the original Z-Anatomy geometry, with the surrounding temporal bone removed. Pin constrained by the original evaluated Anterior semicircular canal.t annotation leader and projected onto the intended cast surface; this is a locator, not a trace of the complete lumen."
+  },
+  "textbook-bony-labyrinth": {
+    "point": [
+      -0.041521062167186824,
+      1.5835105310835935,
+      -0.0034894689164065885
+    ],
+    "view": {
+      "direction": [
+        -1,
+        0.5,
+        0.5
+      ],
+      "distance": 0.042
+    },
+    "points": [
+      {
+        "label": "Cochlea",
+        "point": [
+          -0.0389605631109071,
+          1.5772190946460576,
+          0.0029795537991296837
+        ]
+      },
+      {
+        "label": "Vestibule of inner ear",
+        "point": [
+          -0.041521062167186824,
+          1.5835105310835935,
+          -0.0034894689164065885
+        ]
+      },
+      {
+        "label": "Semicircular canals",
+        "point": [
+          -0.0386850210796035,
+          1.5900218040303509,
+          -0.007843155373211818
+        ]
+      }
+    ],
+    "evidenceStatus": "manual-chamber-reference",
+    "sourceLabel": null,
+    "evidenceImage": "C:\\Users\\Tesla\\Documents\\Codex\\2026-10-16\\i-w\\work\\accuracy-review\\ear\\textbook-bony-labyrinth-reviewed.png",
+    "note": "Right labyrinth space cast from original Z-Anatomy geometry, with surrounding temporal bone removed. The chamber locator is manually constrained to the expanded central vestibular cast between the cochlea and semicircular canals; it is not a separate native chamber segmentation."
+  },
+  "textbook-inferior-angle-of-the-scapula": {
+    "point": [
+      -0.0939178466796875,
+      1.2542850971221924,
+      -0.10094708204269409
+    ],
+    "points": [
+      {
+        "point": [
+          -0.0939178466796875,
+          1.2542850971221924,
+          -0.10094708204269409
+        ],
+        "object": "Inferior angle of scapula.j",
+        "parent": "Inferior angle of scapula.t",
+        "label": "Inferior angle of scapula",
+        "sourceVertex": 1,
+        "distanceToWebVertexMm": 0.4520636251126585,
+        "distanceToWebSurfaceMm": 0.009569939720677212,
+        "sourceBone": "Scapula.r",
+        "side": "right",
+        "sourceEvaluation": "evaluated_get(depsgraph).to_mesh after view_layer.update",
+        "sourceEndpoint": [
+          -0.0939178466796875,
+          1.2542850971221924,
+          -0.10094708204269409
+        ],
+        "rawSourceEndpoint": [
+          -0.09454856812953949,
+          1.254158854484558,
+          -0.10243801772594452
+        ],
+        "sourceEndpointEvaluation": "modifier-evaluated",
+        "surfaceDistanceMm": 0.009569939720677212
+      }
+    ],
+    "source": "Z-Anatomy original named annotation leader, modifier-evaluated vertex1 in web model frame; parent Scapula.r and inferior-tip morphology reviewed independently.",
+    "verification": {
+      "method": "Original evaluated leader versus raw/current endpoint comparison, exact source/current triangle distances, parent/text identity check and actual inferior-tip geometry close-up.",
+      "currentToEvaluatedMm": 1.62376,
+      "evaluatedToSourceSurfaceMm": 0.0,
+      "evaluatedToWebSurfaceMm": 0.009569939720677212,
+      "webSurfaceDistanceMm": 0.009569939720677212,
+      "sourceOriginalSurfaceDistanceMm": 0,
+      "image": "textbook-inferior-angle-of-the-scapula-comparison.png"
+    }
+  },
+  "foramen-spinosum": {
+    "point": [
+      -0.0293,
+      1.5794580742466553,
+      0.008596483544925626
+    ],
+    "parentPattern": "Sphenoid bone",
+    "sourceMesh": "Sphenoid bone",
+    "cameraView": "top",
+    "cameraDirection": [
+      0,
+      1,
+      -0.06666666666666667
+    ],
+    "kind": "3d-landmark",
+    "requiresGeometryRefinement": false,
+    "status": "actual native aperture and through lumen verified",
+    "view": {
+      "center": [
+        -0.0293,
+        1.58,
+        0.0084
+      ],
+      "direction": [
+        0,
+        1,
+        -0.06666666666666667
+      ],
+      "distance": 0.065
+    },
+    "evidence": "Separate actual small opening posterolateral to foramen ovale in original Sphenoid greater wing; opposite superior/inferior mouths visible. Source middle-meningeal artery intersects solid bone approximately 4mm medial to this actual opening, so that earlier path-derived point is rejected.",
+    "verification": {
+      "method": "Morphology and correct relationship to actual foramen ovale, opposite mouth views, exact original rim ray/triangle intersection, 541 unobstructed straight rays extended through and beyond source bone",
+      "nativeFaceIndex": 6979,
+      "rimPixel": [
+        425,
+        435
+      ],
+      "viewImage": "spinosum-actual-axis-superior.png",
+      "oppositeImage": "spinosum-actual-axis-inferior.png",
+      "unblockedRay": {
+        "a": [
+          -0.0294,
+          1.595,
+          0.0074
+        ],
+        "b": [
+          -0.0294,
+          1.55,
+          0.0104
+        ]
+      },
+      "sourceFigures": [
+        "7.8"
+      ],
+      "textbookUrl": "https://openstax.org/books/anatomy-and-physiology-2e/pages/7-2-the-skull"
+    },
+    "limitations": "Named reference describes actual source shape. No new holes were cut or tubes added; source individual anatomical variant/caliber is not a universal measurement.",
+    "coordinateFrame": "WEB [Blender.x, Blender.z, -Blender.y], meters, world transform applied",
+    "object": null,
+    "detailGroup": null,
+    "refinement": null,
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "frameContext": false,
+    "retiredModel": false,
+    "reviewStatus": "native-opening-verified",
+    "source": "Z-Anatomy unchanged original evaluated bone; native opening and opposite mouths inspected",
+    "points": [
+      {
+        "point": [
+          -0.0293,
+          1.5794580742466553,
+          0.008596483544925626
+        ],
+        "parent": "Sphenoid bone",
+        "label": "Foramen spinosum"
+      }
+    ],
+    "evidenceImages": [
+      "work/accuracy-review/native-skull/spinosum-actual-axis-superior.png",
+      "work/accuracy-review/native-skull/spinosum-actual-axis-inferior.png"
+    ],
+    "note": "Native bony opening with both mouths and a through lumen verified in the source specimen. The small aperture lies posterolateral to foramen ovale. No tube has been added and no new hole has been drilled."
+  },
+  "hypoglossal-canal": {
+    "point": [
+      -0.015646684377756515,
+      1.5638133879429579,
+      -0.0161744931123044
+    ],
+    "parentPattern": "Occipital bone",
+    "sourceMesh": "Occipital bone",
+    "cameraView": "medial",
+    "cameraDirection": [
+      1,
+      0.1,
+      -1
+    ],
+    "kind": "3d-landmark",
+    "requiresGeometryRefinement": false,
+    "status": "actual native two-mouth aperture and lumen verified",
+    "view": {
+      "center": [
+        -0.0161,
+        1.563,
+        -0.0164
+      ],
+      "direction": [
+        1,
+        0.1,
+        -1
+      ],
+      "distance": 0.065
+    },
+    "cutaway": {
+      "axis": "x",
+      "keepBelow": 0,
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "constant": 0,
+      "label": "Medial cutaway"
+    },
+    "evidence": "Actual right hypoglossal canal passes anterolaterally through occipital bone deep to condyle. Medial view uses sagittal cut to remove contralateral shell; external opposite view identifies the second mouth. This is distinct from more posterior condylar canals.",
+    "verification": {
+      "method": "Anatomical relationships, two opposite native mouth views, closed ring with clear through void, 195 unblocked 80mm rays through local aperture, exact original rim ray/triangle pick",
+      "nativeFaceIndex": 2053,
+      "rimPixel": [
+        410,
+        420
+      ],
+      "viewImage": "hypoglossal-actual-axis-sagittal-cut.png",
+      "oppositeImage": "hypoglossal-actual-axis-opposite.png",
+      "unblockedRayFile": "hypoglossal-free-rays.json",
+      "sourceFigures": [
+        "7.8",
+        "7.11"
+      ],
+      "textbookUrl": "https://openstax.org/books/anatomy-and-physiology-2e/pages/7-2-the-skull"
+    },
+    "limitations": "Without the sagittal cut a medial camera outside the whole bone is blocked by the opposite calvarial wall. Native bone is preferable to a synthetic tube. Both original and web meshes retain this canal.",
+    "coordinateFrame": "WEB [Blender.x, Blender.z, -Blender.y], meters, world transform applied",
+    "object": null,
+    "detailGroup": null,
+    "refinement": null,
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "frameContext": false,
+    "retiredModel": false,
+    "reviewStatus": "native-opening-verified",
+    "source": "Z-Anatomy unchanged original evaluated bone; native opening and opposite mouths inspected",
+    "points": [
+      {
+        "point": [
+          -0.015646684377756515,
+          1.5638133879429579,
+          -0.0161744931123044
+        ],
+        "parent": "Occipital bone",
+        "label": "Hypoglossal canal"
+      }
+    ],
+    "evidenceImages": [
+      "work/accuracy-review/native-skull/hypoglossal-actual-axis-sagittal-cut.png",
+      "work/accuracy-review/native-skull/hypoglossal-actual-axis-opposite.png"
+    ],
+    "note": "Native bony opening with both mouths and a through lumen verified in the source specimen. A medial cutaway removes the opposite skull wall so the internal opening is visible."
+  },
+  "carotid-canal": {
+    "point": [
+      -0.028463866666666664,
+      1.5724194421544457,
+      -0.0070103000000000006
+    ],
+    "parentPattern": "Temporal bone.r",
+    "sourceMesh": "Temporal bone.r",
+    "cameraView": "bottom",
+    "cameraDirection": [
+      0,
+      -1,
+      0
+    ],
+    "kind": "3d-landmark",
+    "requiresGeometryRefinement": false,
+    "status": "actual native external mouth and bent lumen verified",
+    "view": {
+      "center": [
+        -0.03,
+        1.573,
+        -0.0055
+      ],
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "distance": 0.075
+    },
+    "coordinateFrame": "WEB [Blender.x, Blender.z, -Blender.y], meters, world transform applied",
+    "evidence": "Inferior external opening in petrous temporal bone anterior to jugular region and medial to styloid base. Actual native bony passage bends superiorly and then anteromedially toward petrous apex. A straight ray cannot establish this bent canal. Serial native-geometry cross sections locate the lumen; an exact five-segment triangle-free route joins the inferior mouth to the petrous apex opening.",
+    "verification": {
+      "method": "Native original main shell is closed and has one handle; serial 0.35mm occupancy slices show canal continuity, then exact intersections against all original Temporal triangles verify all five route segments are unblocked. Actual inferior rim picked on native triangle, not a nerve/vessel crossing.",
+      "nativeFaceIndex": 5266,
+      "rimPixel": [
+        525,
+        322
+      ],
+      "viewImage": "carotid-canal-native-web.png",
+      "closeupImage": "carotid-actual-external-mouth.png",
+      "oppositeImage": null,
+      "sectionImage": "carotid-native-cross-sections.png",
+      "route": {
+        "path": [
+          [
+            -0.03,
+            1.56,
+            -0.006
+          ],
+          [
+            -0.03,
+            1.572,
+            -0.006
+          ],
+          [
+            -0.03,
+            1.574,
+            -0.003
+          ],
+          [
+            -0.026,
+            1.577,
+            0.001
+          ],
+          [
+            -0.02,
+            1.577,
+            0.004
+          ],
+          [
+            -0.018,
+            1.574,
+            0.01
+          ]
+        ],
+        "segmentsUnblocked": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      },
+      "sourceFigures": [
+        "7.8"
+      ],
+      "textbookUrl": "https://openstax.org/books/anatomy-and-physiology-2e/pages/7-2-the-skull"
+    },
+    "limitations": "Demonstrates native bony passage; source-specific canal caliber and course are not universal measurements. Previous named artery surface intersection is rejected as the external rim: it lies on adjacent solid bone. Original mouth is also recognizable in web geometry, but original mesh has better detail. Remove the synthetic carotid tube; do not superimpose it on native canal. Internal oblique render overlaps acoustic anatomy and is not accepted as visual identification of the second mouth; rely on native serial lumen slices and exact curved-route validation for continuity.",
+    "object": null,
+    "detailGroup": null,
+    "refinement": null,
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "frameContext": false,
+    "retiredModel": false,
+    "reviewStatus": "native-opening-verified",
+    "source": "Z-Anatomy unchanged original evaluated temporal bone; native inferior mouth and bent lumen verified",
+    "points": [
+      {
+        "point": [
+          -0.028463866666666664,
+          1.5724194421544457,
+          -0.0070103000000000006
+        ],
+        "parent": "Temporal bone.r",
+        "label": "Carotid canal \u00b7 inferior opening"
+      }
+    ],
+    "evidenceImages": [
+      "work/accuracy-review/native-skull/carotid-canal-native-web.png",
+      "work/accuracy-review/native-skull/carotid-actual-external-mouth.png",
+      "work/accuracy-review/native-skull/carotid-native-cross-sections.png"
+    ],
+    "note": "Native inferior opening of the right carotid canal. The passage bends superiorly and anteromedially within the petrous temporal bone; serial source sections and an unblocked five-segment lumen path verify continuity. No tube is added and no hole has been drilled.",
+    "cutaway": null
+  }
+}
