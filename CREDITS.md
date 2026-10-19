@@ -64,3 +64,7 @@ The prior crude newborn calvarial and straightened round-window models are retai
 ## Direct bone refinements
 
 Frontal, right temporal, right maxillary and right lacrimal geometry now contains explicit Blender 4.5 reconstructed openings. These derived models retain CC BY-SA 4.0. The supraorbital opening teaches an enclosed variant rather than the source notch; its placement also references the primary anatomical study at https://pmc.ncbi.nlm.nih.gov/articles/PMC5890013/ . No image or text from that study is reproduced. Stylomastoid and nasolacrimal refinements follow source nerve/duct relationships and OpenStax 7.2. The editable project and pre-edit backups remain with the owner. `src/blender-refinement-evidence.json` records the construction limits and geometry checks.
+
+## Promotional demo and screenshots
+
+`demo/` contains real browser captures edited into silent captioned videos, cover compositions, and a GIF preview. No generated interface, fabricated results, or private study history is included. Anatomy imagery retains the Z-Anatomy / BodyParts3D CC BY-SA 4.0 license; OpenStax-derived learning content retains CC BY-NC-SA 4.0. Original promotional layout and copy are © 2026 RorriMaesu, CC BY 4.0. Each component retains its separate license. The downloadable kit includes attribution and reuse notes in `demo/SHARE-COPY.md`. Fonts used in encoded titles are rendered locally; font files are not redistributed.

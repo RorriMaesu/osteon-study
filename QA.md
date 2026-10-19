@@ -170,3 +170,14 @@ The 144 reader pages include all original complete chapters plus the added sourc
 # 2026-10-18: labeled 3D release and interaction review
 
 All 310 named textbook features now resolve a 3D representation. All 51 automated tests passed. Desktop and phone browser checks, masked identification/grading, target-preserving Reset, source/3D transitions, labels, cutaways, isolation and X-ray were reviewed. Seven backup snapshots and 27 copied files passed checksum verification; the three original model files remain unchanged. See [REVIEW.md](REVIEW.md) for exact checks and anatomy fidelity qualifications.
+
+
+## 2026-10-19 — Classroom demo and sharing kit
+
+Created a 29.33-second 1920 × 1080 H.264 demo, a 24.10-second 1080 × 1920 social edit, a 72-frame GIF preview, six actual application screenshots, two covers, English captions, a transcript, and class-group post copy. Both videos are intentionally silent. Captures use an isolated local origin; one correct landmark response shown in the video was actually submitted there. Public study history was not reset or used.
+
+Both complete MP4 files decoded without errors. Scene review frames were inspected; the vertical covers were recaptured at their full 1080 × 1920 extent after the initial viewport capture clipped their bottoms. All media hashes, local asset links, caption files, GIF frame count, and the ZIP archive passed verification. The kit contains sixteen files and is approximately 2.87 MiB. Fonts are rendered into titles, with no font files redistributed.
+
+Browser checks confirmed desktop video playback with a decoded 1920 × 1080 stream, the Recall chapter jumping to 16 seconds, no media errors, and a complete seekable range. A local media-capable server was used because Python's basic static server cannot serve byte ranges. At 390 × 844 the demo page had no horizontal overflow, readable sharing text, and a working ZIP download. Browser viewport overrides were reset afterward.
+
+Filming exposed a viewer-control defect: pointer events from the landmark Label/Cutaway toolbar could select the bone behind the control. The toolbar now stops those pointer/navigation events. Browser checks confirmed Label Off and On preserve the selected Nasolacrimal canal, and identification practice opens that target correctly. All 56 application tests pass after the fix. No anatomy meshes changed in this release.

@@ -1,12 +1,32 @@
 # Osteon
 
-Interactive 3D bone atlas and BI 231 study suite. Built for OpenStax Anatomy and Physiology 2e chapters 6 and 7, with the supplied lab list's appendicular and joint extensions.
+**A&P study, in another dimension.** Explore the skeleton, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6 and 7, with the BI 231 lab list’s appendicular and joint extensions.
 
-Live site: https://rorrimaesu.github.io/osteon-study/
+[![Watch the Osteon demo: See it. Name it. Recall it.](demo/poster.jpg)](https://rorrimaesu.github.io/osteon-study/demo/)
+
+**[Try the app ↗](https://rorrimaesu.github.io/osteon-study/)** · **[Watch the 29-second demo ▶](https://rorrimaesu.github.io/osteon-study/demo/)** · [Download the vertical social video](https://rorrimaesu.github.io/osteon-study/demo/osteon-social.mp4) · [Get the complete share kit](https://rorrimaesu.github.io/osteon-study/demo/osteon-share-kit.zip)
+
+- **Explore:** rotate the skeleton, double-click into a region, and compare bones with optional colors.
+- **Locate:** inspect labeled landmarks, openings, and teaching reconstructions.
+- **Recall:** name numbered targets, check your answer, and return to missed material.
+- **Connect:** study chapter notes, concept questions, glossary terms, and source readings on desktop or phone.
+
+| Explore relationships | Put recall to work |
+| --- | --- |
+| [![Rotated skull with regional bone colors](demo/screenshots/02-regional-colors.jpg)](https://rorrimaesu.github.io/osteon-study/#atlas) | [![Landmark identification with a numbered target and an answer field](demo/screenshots/04-practice.jpg)](https://rorrimaesu.github.io/osteon-study/#practice) |
+
+<details>
+<summary>See the nine-second animated preview</summary>
+
+[![Osteon rotating a skull and exploring a labeled landmark](demo/preview.gif)](https://rorrimaesu.github.io/osteon-study/demo/)
+
+</details>
+
+The videos use actual app interactions with captions and no music. [Screenshots, downloads, transcript, and class-group post copy](https://rorrimaesu.github.io/osteon-study/demo/) are ready to share. Free to open; no account needed.
 
 Read [the implementation and learning plan](PLAN.md) and [release notes](CHANGELOG.md).
 
-The atlas combines two-stage double-click navigation, colors in focused regions, and the completed [310-feature textbook inventory](LANDMARKS.md). Open the landmark bank from the atlas or Practice lab. It includes 287 verified spatial targets and 23 clearly marked source guides, with [an item-by-item source audit](LANDMARKS.csv).
+The atlas combines two-stage double-click navigation, colors in focused regions, and the completed [310-feature textbook inventory](LANDMARKS.md). Open the landmark bank from the atlas or Practice lab. Supported references and labeled teaching reconstructions provide spatial practice; eight textbook features remain excluded from scored locating. See the [current per-entry accuracy review](accuracy.html) and [source inventory](LANDMARKS.csv).
 
 Read [the responsive workspace plan](RESPONSIVE-PLAN.md) for the desktop and mobile layout review. Desktop widths from 1000 pixels use a viewport-sized application with Previous / Next content pages, including the atlas lists, lessons, reading text and tutor history. Phones and narrower tablets use Specimen / Browse / Details atlas controls and natural vertical reading. Search, answer drafts and progress are preserved when the layout changes.
 
@@ -21,7 +41,7 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 ## Complete course release
 
 - All 177 BI 231 lab IDs are preserved. Supported targets have locating/identification exercises; unresolved anatomy uses source study and recall while spatial grading is withheld. See the [current accuracy review](accuracy.html).
-- Adult skeleton plus 81 course tissue objects: 352 scene objects, including bones, cartilage, teeth, ligaments, discs, sinus volumes and vertebral arteries. Scene objects are not a biological bone count.
+- Adult skeleton, 81 course tissue objects, additional anatomical detail, and labeled teaching reconstructions. Scene objects include bones, cartilage, teeth, ligaments, discs, sinus volumes, and vertebral arteries; mesh counts are not a biological bone count.
 - Full source reader: every page of chapters 6 and 7, plus appendicular and selected joint readings; 144 page images with searchable extracted text. Source pages load on demand.
 - Twelve teaching sections, 104 authored concept questions, 237 textbook glossary definitions and seven guided activities.
 - Locate and name practice, a systematic unpracticed-first course pass, region/session controls, missed-item retries, local review scheduling, score separation and progress backup/restore.
@@ -30,7 +50,7 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 
 Due-card counts match the decks they open. The Practice menu scopes lab recall to its division and region; chapter recall keeps both chapters. Progress offers course-wide lab and chapter review decks regardless of the current atlas filters.
 
-Landmark pins identify reference locations; they do not segment complete ridges, surfaces or boundaries. Only the anatomical endpoints of reliable source annotation leaders are used. Other features use source textbook figures. Fontanelles use a newborn illustration. Drawer tests assess movement and ligament restraint. A parent-bone highlight never grades as locating a landmark.
+Landmark pins identify reference locations; they do not segment complete ridges, surfaces or boundaries. Only the anatomical endpoints of reliable source annotation leaders are used. Source textbook figures remain available for comparison; unresolved features use explicit source guidance. Fontanelles use a newborn illustration. Drawer tests assess movement and ligament restraint. A parent-bone highlight never grades as locating a landmark.
 
 The course list and chapter readings are covered in full. The finite question bank supplements those readings; it cannot guarantee every possible examination question. The anatomy is a single reference specimen and has not undergone independent instructor/anatomist validation. See QA.md for evidence and practical limits.
 

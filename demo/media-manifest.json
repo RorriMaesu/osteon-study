@@ -1,0 +1,46 @@
+{
+  "capture_date": "2026-10-19",
+  "source_revision": "c480275 plus overlay-control fix",
+  "method": "Real browser screenshots captured continuously with timestamps; edited into captioned scenes. No generated app UI, no fabricated grades.",
+  "audio": "Silent; captions burned in and supplied separately.",
+  "desktop": {
+    "width": 1920,
+    "height": 1080,
+    "duration": 29.299
+  },
+  "social": {
+    "width": 1080,
+    "height": 1920,
+    "duration": 24.086
+  },
+  "files": {
+    "osteon-demo.mp4": {
+      "bytes": 1195028,
+      "sha256": "0880b12c4bfd7ee4e4ff4af3b08f98f72b49e7ee8dc669022893c5dbea4d06fa"
+    },
+    "osteon-demo.vtt": {
+      "bytes": 542,
+      "sha256": "aff7e1cf99226aab5b7e5386df26057dad686f651417f0396fb5e20dfe7b1a59"
+    },
+    "osteon-social.mp4": {
+      "bytes": 1016498,
+      "sha256": "55440cc484734bc7fe7018d7a93b4a44b3fc10900e644db9e409b116842b4b8f"
+    },
+    "osteon-social.vtt": {
+      "bytes": 407,
+      "sha256": "426aef5dc82c7c0c76d0bbe1dd3f0efac21984a50198f6e10096d978502c0032"
+    },
+    "poster.jpg": {
+      "bytes": 84065,
+      "sha256": "f585c96b93a265e68a8595c44294e9170f9010e37d6260dea43430629b67398f"
+    },
+    "preview.gif": {
+      "bytes": 369991,
+      "sha256": "d82a25df0016bd386e5b14e18cb3a35ad7988660fe5fe5865fee2ce5678bc59c"
+    },
+    "social-poster.jpg": {
+      "bytes": 126570,
+      "sha256": "1e5a86987a5a86d00a6e3e3fb87e51005f10ac176a9451e4679afe910528cc63"
+    }
+  }
+}

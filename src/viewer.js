@@ -62,6 +62,8 @@ export class AnatomyViewer {
     this.meshes.push(m);
    });this.scene.add(details.scene);details.scene.updateMatrixWorld(true);this.meshes.forEach(m=>{m.userData.bounds=new THREE.Box3().setFromObject(m);});
    this.detailTools=document.createElement('div');this.detailTools.className='landmark-3d-tools';this.detailTools.hidden=true;el.append(this.detailTools);
+   // Overlay controls must not select or navigate the bone beneath them.
+   for(const event of ['pointerdown','pointerup','pointermove','dblclick'])this.detailTools.addEventListener(event,e=>e.stopPropagation());
    this.pinLayer=document.createElement('div');this.pinLayer.className='pin-layer';el.append(this.pinLayer);this.pins=[];
    this.loaded=true;this.applyVisibility();this.resize();this.reset();decoder.dispose();el.dataset.loaded='true';onReady(this.meshes);
    }catch(err){onError(err);}

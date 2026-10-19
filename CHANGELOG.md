@@ -1,3 +1,10 @@
+# 2026-10-19 — See Osteon in action
+
+- Add captioned widescreen and vertical app demonstrations, screenshots, cover images, animated preview, transcript, and a downloadable classroom share kit.
+- Add a responsive demo page with playback chapters and ready-to-copy class-group text; update the README and social preview metadata.
+- Keep anatomy/content credits with the videos and share kit. Captures use actual app interactions and isolated demonstration progress.
+- Fix landmark toolbar pointer events selecting the bone behind the Label or Cutaway controls.
+
 <!-- accuracy-review-current -->
 # Accuracy correction release — 2026-10-19
 
