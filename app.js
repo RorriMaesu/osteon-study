@@ -42,7 +42,7 @@ Skull|cavity|Sinus of frontal bone|Frontal sinus|Paranasal air space within the 
 Skull|bone|Parietal bone|Parietal bones|Paired bones forming much of the superior and lateral cranium.
 Skull|suture|Frontal bone|Coronal suture|Joins the frontal bone to the parietal bones.
 Skull|suture|Parietal bone|Sagittal suture|Midline joint between the right and left parietal bones.
-Skull|development||Fontanelles|Fibrous gaps between incompletely ossified newborn skull bones. Explore the separate 3D newborn teaching reconstruction.
+Skull|development||Fontanelles|Fibrous gaps between incompletely ossified newborn skull bones: anterior, posterior, paired sphenoidal and paired mastoid sites.
 Skull|bone|Temporal bone|Temporal bones|Paired lateral skull bones; contain hearing structures and the mandibular fossae.
 Skull|landmark|Temporal bone|Mandibular fossa|Temporal-bone depression receiving the mandibular condyle at the temporomandibular joint.
 Skull|opening|Temporal bone|External acoustic meatus|External ear canal opening in the temporal bone.
