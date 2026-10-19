@@ -1,6 +1,6 @@
 # Landmark coverage and accuracy
 
-The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **55 have applied corrections**, **247 retain supported source/morphology references**, and **8 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
 
 Use the [searchable landmark review](accuracy.html) for every entry, its findings, current disposition and inspection images. The [CSV](ACCURACY-REVIEW.csv) provides the full record. Twenty marking-vocabulary definitions remain separate from the 310 anatomical features.
 
@@ -20,6 +20,14 @@ Unresolved passage schematics and regional ridge references carry visible qualif
 
 All 97 active source-pin terms (98 points) were compared with evaluated original annotation leaders and parent bones. Inferior scapular-angle, humeral and skull reference corrections are recorded separately from source-pin provenance. Native sacral canal/hiatus geometry was restored; verified native skull openings replace unsupported added tubes where available. Microarchitecture corrections connect trabeculae and canaliculi and fit the growth plate inside the cortex. Those specimens remain generalized teaching geometry.
 
-There are 13 pre-revision snapshots with 51 checksum-verified files. Original Startup.blend, skeleton.glb and course-tissues.glb remain unchanged. Selected higher-resolution original bones and teaching geometry load from a separately versioned asset.
+There are 22 pre-revision snapshots with 87 checksum-verified files. Original Startup.blend, skeleton.glb and course-tissues.glb remain unchanged. Selected higher-resolution original bones and teaching geometry load from a separately versioned asset.
 
 See [review methods and browser checks](REVIEW.md), [3D provenance](LANDMARK-3D-AUDIT.csv), [credits and licenses](CREDITS.md), and the [frozen source inventory](LANDMARK-EXPANSION-AUDIT.csv).
+
+## Direct Blender bone refinement
+
+Blender 4.5.1 now edits the source bone surfaces for three previously unresolved openings. The supraorbital enclosed-foramen variant is cut into existing frontal cortex above the orbital margin; no protruding ring is added. The stylomastoid exit and terminal facial canal are cut into the temporal bone while retaining its three original surface components. The nasolacrimal canal is integrated with the maxilla, trimmed against lacrimal/conchal contributors and hollowed along the source duct route, continuing into the lacrimal-fossa region.
+
+The meshes contain real passages, with named rim anchors and unobstructed default views. Geometry tests check the shipped GLB, continuous centerline clearance, preserved carotid passage, generated rim positions and topology. These are documented teaching reconstructions; their caliber and local contours are explanatory rather than patient measurements. Before/after renders appear in the per-feature review records. The editable Blender project includes named landmark empties.
+
+Current interactive browser review of these three new edits is pending: the browser approval service could not complete its review because its selected model was at capacity. Offline model inspection and geometry tests are complete. Prior browser checks apply to the earlier viewer layout, not to exhaustive testing of these new meshes.

@@ -1,6 +1,6 @@
-# Anatomy review — 2026-10-18
+# Anatomy review — 2026-10-19
 
-The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **55 have applied corrections**, **247 retain supported source/morphology references**, and **8 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
 
 The previous statement that all features had accurate primary 3D views was too broad. Automated loading, finite coordinates and parent bounds do not establish anatomical accuracy. The current release separates supported native anatomy, explanatory geometry and unresolved features.
 
@@ -23,12 +23,20 @@ The [public report](accuracy.html) contains every entry, current disposition and
 
 ## Verification
 
-54 automated checks pass. They cover data/ID integrity, source provenance, parent/side constraints, withdrawn-model grading exclusion, contributor retention, binary equality of restored sacral geometry, removal of unsupported tubes, camera/navigation rules, source reading, progress and local tutor behavior. Passing these checks does not certify fine anatomical morphology.
+56 automated checks pass. They cover data/ID integrity, source provenance, parent/side constraints, withdrawn-model grading exclusion, contributor retention, binary equality of restored sacral geometry, removal of unsupported tubes, camera/navigation rules, source reading, progress and local tutor behavior. Passing these checks does not certify fine anatomical morphology.
 
 Selected desktop and phone browser views were checked separately for target visibility, source/3D transitions, label/color/cutaway controls and overflow. Detailed browser results are in QA.md; this does not claim every feature was inspected interactively on physical devices.
 
-13 pre-edit backup snapshots contain 51 checksum-verified files. The original Startup.blend, skeleton.glb and course-tissues.glb match the initial snapshot. Editable model revisions and backups are retained locally for the owner.
+22 pre-edit backup snapshots contain 87 checksum-verified files. The original Startup.blend, skeleton.glb and course-tissues.glb match the initial snapshot. Editable model revisions and backups are retained locally for the owner.
 
 ## Work remaining
 
 Precise native fontanelle targets on a complete suitable skull and a resolved round-window opening remain unfinished. Other unresolved entries are explicitly listed in the [review report](accuracy.html). The UCSF scan can be viewed, but its licensed native download and individual target verification remain pending. This release improves accuracy without claiming those gaps are finished.
+
+## Direct Blender bone refinement
+
+Blender 4.5.1 now edits the source bone surfaces for three previously unresolved openings. The supraorbital enclosed-foramen variant is cut into existing frontal cortex above the orbital margin; no protruding ring is added. The stylomastoid exit and terminal facial canal are cut into the temporal bone while retaining its three original surface components. The nasolacrimal canal is integrated with the maxilla, trimmed against lacrimal/conchal contributors and hollowed along the source duct route, continuing into the lacrimal-fossa region.
+
+The meshes contain real passages, with named rim anchors and unobstructed default views. Geometry tests check the shipped GLB, continuous centerline clearance, preserved carotid passage, generated rim positions and topology. These are documented teaching reconstructions; their caliber and local contours are explanatory rather than patient measurements. Before/after renders appear in the per-feature review records. The editable Blender project includes named landmark empties.
+
+Interactive browser review resumed on 2026-10-19. The three edited openings and active rim labels were inspected at 1280 × 720. Label visibility, the mobile specimen/details view and masked nasolacrimal identification were checked. A mobile practice width defect found during review was corrected and rechecked: the model now fills the available phone width. Desktop practice retains its no-scroll layout. Offline model inspection and geometry tests are complete. These selected checks do not constitute exhaustive interactive or independent anatomical certification of every feature; see QA.md for scope.

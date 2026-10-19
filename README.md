@@ -49,6 +49,8 @@ Use the **Socratic tutor** button for a local Ollama chat, installed-model selec
 
 ## Current accuracy review
 
-The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **52 have applied corrections**, **247 retain supported source/morphology references**, and **11 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
+The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **55 have applied corrections**, **247 retain supported source/morphology references**, and **8 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.
 
 [Browse every review record](accuracy.html) · [Methods and limits](REVIEW.md)
+
+Three missing openings now use direct Blender bone edits: the supraorbital foramen, stylomastoid foramen and nasolacrimal canal. Their labels identify actual sculpted rims; [construction evidence and limits](REVIEW.md) distinguish these edits from untouched native anatomy.

@@ -6,15 +6,15 @@
     "originalCourseItems": 177,
     "counts": {
       "reviewed": 352,
-      "correction-applied": 57,
-      "source-only": 9,
+      "correction-applied": 60,
+      "source-only": 6,
       "reference-only": 4
     },
     "canonicalCounts": {
       "reviewed": 247,
-      "correction-applied": 52,
+      "correction-applied": 55,
       "reference-only": 3,
-      "source-only": 8
+      "source-only": 5
     },
     "scope": "All 310 named textbook features and original course entries, including additional whole structures. Twenty vocabulary definitions are separate.",
     "limits": "A completed review record is not a claim that every native feature is resolved. Source-only and reference-only records are excluded from scored locating. Offline renders and source checks are distinct from browser layout checks.",
@@ -1008,7 +1008,7 @@
       "reviewFindings": [
         "The corrected internal-carotid route is source-specific, but the displayed target is a separate hollow wall laid over an unchanged temporal bone. A ~short route segment does not demonstrate the complete petrous carotid canal, its vertical/horizontal bend, or native bony entry/exit."
       ],
-      "currentDisposition": "Native inferior opening of the right carotid canal. The passage bends superiorly and anteromedially within the petrous temporal bone; serial source sections and an unblocked five-segment lumen path verify continuity. No tube is added and no hole has been drilled.",
+      "currentDisposition": "Native inferior opening of the right carotid canal, retaining its original bent passage. The Blender edit adds the separate stylomastoid opening elsewhere in this bone; it does not reconstruct this carotid opening.",
       "evidence": [
         "assets/accuracy-review/44c8dfcd71-carotid-canal-native-web.webp",
         "assets/accuracy-review/bb1938979f-carotid-actual-external-mouth.webp",
@@ -4913,16 +4913,17 @@
       "canonicalId": "nasolacrimal-canal",
       "name": "Nasolacrimal canal",
       "region": "Skull",
-      "status": "source-only",
-      "representation": "reference",
-      "spatialScoring": false,
+      "status": "correction-applied",
+      "representation": "3d-landmark",
+      "spatialScoring": true,
       "section": "7.2",
       "description": "The bony passage descends from the lacrimal-sac region of the medial orbit toward the nasal cavity behind the inferior nasal concha.",
       "reviewFindings": [
         "The hollow overlay follows the source mucosal duct centerline, but its round wall thickness/caliber and union with maxilla/lacrimal/inferior-concha bones were invented for visibility. It is not independent proof of a continuous bony canal into the inferior meatus."
       ],
-      "currentDisposition": "The source duct locates the drainage route but does not establish the complete bony canal walls. The added hollow tube has been withdrawn. Use the textbook comparison until a properly verified bony target is available.",
+      "currentDisposition": "A bony canal is integrated into the maxilla, trimmed against the lacrimal and inferior conchal contributors, and hollowed along the source duct from lacrimal-fossa region toward inferior nasal meatus. Wall thickness and caliber are instructional, not clinical measurements.",
       "evidence": [
+        "assets/accuracy-review/2568460bb7-nasolacrimal-canal-bone-edit.webp",
         "assets/accuracy-review/94bb240638-textbook-nasolacrimal-canal.webp"
       ],
       "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
@@ -5176,16 +5177,17 @@
       "canonicalId": "stylomastoid-foramen",
       "name": "Stylomastoid foramen",
       "region": "Skull",
-      "status": "source-only",
-      "representation": "reference",
-      "spatialScoring": false,
+      "status": "correction-applied",
+      "representation": "3d-landmark",
+      "spatialScoring": true,
       "section": "7.2",
       "description": "Opening located on inferior skull, between the styloid process and mastoid process.",
       "reviewFindings": [
         "The separate short wall uses the facial-nerve exit site between styloid/mastoid regions, but the parent temporal mesh was not opened. This is a route indicator, not a verified native foramen or facial canal."
       ],
-      "currentDisposition": "Use the textbook to locate the opening between the styloid and mastoid processes. A source facial-nerve crossing did not verify a native bony aperture. The added tube has been withdrawn; a precise native 3D target is pending.",
+      "currentDisposition": "Actual temporal bone copied and terminal facial canal subtracted along the source facial nerve. The aperture opens between the styloid and mastoid bases; canal caliber is explanatory.",
       "evidence": [
+        "assets/accuracy-review/7ac829d75a-stylomastoid-foramen-bone-edit.webp",
         "assets/accuracy-review/0a52b9bcb0-textbook-stylomastoid-foramen.webp"
       ],
       "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
@@ -5255,16 +5257,17 @@
       "canonicalId": "supraorbital-foramen",
       "name": "Supraorbital foramen",
       "region": "Skull",
-      "status": "source-only",
-      "representation": "reference",
-      "spatialScoring": false,
+      "status": "correction-applied",
+      "representation": "3d-landmark",
+      "spatialScoring": true,
       "section": "7.2",
       "description": "Opening located on anterior skull, at the superior margin of the orbit.",
       "reviewFindings": [
         "The source frontal margin has an open/notch-like exit. A detached hollow ring at the nerve route illustrates an enclosed variant but is not embedded in a matching frontal-bone rim. It should not be graded as this specimen's actual enclosed foramen."
       ],
-      "currentDisposition": "The source orbital margin has an open/notch-like form, not a verified enclosed foramen. The added enclosed tube has been withdrawn. Use the textbook to compare the foramen/notch variants; precise foramen locating is withheld.",
+      "currentDisposition": "Enclosed supraorbital-foramen variant cut into existing frontal cortex just superior to the same source supraorbital-margin exit. No protruding ring is added. The original source has an open/notch-like margin; this edited specimen teaches the enclosed variant. Position and caliber are instructional, not a patient measurement.",
       "evidence": [
+        "assets/accuracy-review/92273c03ed-supraorbital-foramen-bone-edit.webp",
         "assets/accuracy-review/7ecb766b56-textbook-supraorbital-foramen.webp"
       ],
       "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."

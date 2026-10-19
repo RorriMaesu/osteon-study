@@ -67,27 +67,6 @@
     ],
     "reviewNotice": "The paranasal sinuses comprise four groups. Choose a member below to inspect its own geometry and source view. A single maxillary point is not assessed as the whole sinus system."
   },
-  "stylomastoid-foramen": {
-    "kind": "reference",
-    "assessment": "learn-only",
-    "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "Use the textbook to locate the opening between the styloid and mastoid processes. A source facial-nerve crossing did not verify a native bony aperture. The added tube has been withdrawn; a precise native 3D target is pending."
-  },
-  "supraorbital-foramen": {
-    "kind": "reference",
-    "assessment": "learn-only",
-    "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "The source orbital margin has an open/notch-like form, not a verified enclosed foramen. The added enclosed tube has been withdrawn. Use the textbook to compare the foramen/notch variants; precise foramen locating is withheld."
-  },
-  "nasolacrimal-canal": {
-    "kind": "reference",
-    "assessment": "learn-only",
-    "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "The source duct locates the drainage route but does not establish the complete bony canal walls. The added hollow tube has been withdrawn. Use the textbook comparison until a properly verified bony target is available."
-  },
   "ethmoidal-air-cells-and-sinus-openings": {
     "assessment": "learn-only",
     "reviewStatus": "partial-extent",

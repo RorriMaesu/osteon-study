@@ -51,23 +51,6 @@
     "replacementAnatomy": false
   },
   {
-    "name": "Frontal bone",
-    "asset": "skeleton",
-    "min": [
-      -0.06111440062522888,
-      1.5926116704940796,
-      0.017992563545703888
-    ],
-    "max": [
-      0.06111437454819679,
-      1.69917893409729,
-      0.08705995231866837
-    ],
-    "detailGroup": null,
-    "supportAnatomy": false,
-    "replacementAnatomy": false
-  },
-  {
     "name": "Sinus of sphenoid bone",
     "asset": "skeleton",
     "min": [
@@ -85,40 +68,6 @@
     "replacementAnatomy": false
   },
   {
-    "name": "Inferior nasal concha bone.r",
-    "asset": "skeleton",
-    "min": [
-      -0.01485513336956501,
-      1.5521032810211182,
-      0.0407877191901207
-    ],
-    "max": [
-      -0.004423435311764479,
-      1.5746158361434937,
-      0.07543990015983582
-    ],
-    "detailGroup": null,
-    "supportAnatomy": false,
-    "replacementAnatomy": false
-  },
-  {
-    "name": "Lacrimal bone.r",
-    "asset": "skeleton",
-    "min": [
-      -0.017161335796117783,
-      1.5730788707733154,
-      0.06151899695396423
-    ],
-    "max": [
-      -0.006468209903687239,
-      1.5982099771499634,
-      0.07622834295034409
-    ],
-    "detailGroup": null,
-    "supportAnatomy": false,
-    "replacementAnatomy": false
-  },
-  {
     "name": "Nasal bone.r",
     "asset": "skeleton",
     "min": [
@@ -130,23 +79,6 @@
       -1.7462298274040222e-08,
       1.6050796508789062,
       0.10027167201042175
-    ],
-    "detailGroup": null,
-    "supportAnatomy": false,
-    "replacementAnatomy": false
-  },
-  {
-    "name": "Maxilla.r",
-    "asset": "skeleton",
-    "min": [
-      -0.04613047093153,
-      1.5374441146850586,
-      0.040060482919216156
-    ],
-    "max": [
-      0.00016478476754855365,
-      1.6052587032318115,
-      0.09389443695545197
     ],
     "detailGroup": null,
     "supportAnatomy": false,
@@ -19533,23 +19465,6 @@
     "replacementAnatomy": true
   },
   {
-    "name": "Temporal bone.r",
-    "asset": "landmark-details",
-    "min": [
-      -0.07242035865783691,
-      1.5487265586853027,
-      -0.05156397819519043
-    ],
-    "max": [
-      -0.009648576378822327,
-      1.623145580291748,
-      0.0447830855846405
-    ],
-    "detailGroup": "",
-    "supportAnatomy": false,
-    "replacementAnatomy": true
-  },
-  {
     "name": "C3 typical bifid variant",
     "asset": "landmark-details",
     "min": [
@@ -19650,5 +19565,90 @@
     "detailGroup": "",
     "supportAnatomy": true,
     "replacementAnatomy": false
+  },
+  {
+    "name": "Temporal bone.r",
+    "asset": "landmark-details",
+    "min": [
+      -0.07242035865783691,
+      1.5487265586853027,
+      -0.05156397819519043
+    ],
+    "max": [
+      -0.009648576378822327,
+      1.623145580291748,
+      0.0447830855846405
+    ],
+    "detailGroup": "",
+    "supportAnatomy": false,
+    "replacementAnatomy": true
+  },
+  {
+    "name": "Maxilla.r",
+    "asset": "landmark-details",
+    "min": [
+      -0.04603412002325058,
+      1.537443995475769,
+      0.04006047919392586
+    ],
+    "max": [
+      0.00021110475063323975,
+      1.6052191257476807,
+      0.0938725546002388
+    ],
+    "detailGroup": "",
+    "supportAnatomy": false,
+    "replacementAnatomy": true
+  },
+  {
+    "name": "Lacrimal bone.r",
+    "asset": "landmark-details",
+    "min": [
+      -0.017119670286774635,
+      1.5731173753738403,
+      0.06151899695396423
+    ],
+    "max": [
+      -0.006468209903687239,
+      1.598219394683838,
+      0.07622788101434708
+    ],
+    "detailGroup": "",
+    "supportAnatomy": false,
+    "replacementAnatomy": true
+  },
+  {
+    "name": "Inferior nasal concha bone.r",
+    "asset": "landmark-details",
+    "min": [
+      -0.014880185015499592,
+      1.5521032810211182,
+      0.0407877191901207
+    ],
+    "max": [
+      -0.004423435311764479,
+      1.574622631072998,
+      0.07542936503887177
+    ],
+    "detailGroup": "",
+    "supportAnatomy": false,
+    "replacementAnatomy": true
+  },
+  {
+    "name": "Frontal bone",
+    "asset": "landmark-details",
+    "min": [
+      -0.061189014464616776,
+      1.5926116704940796,
+      0.01801314577460289
+    ],
+    "max": [
+      0.06118898466229439,
+      1.6991924047470093,
+      0.08711200207471848
+    ],
+    "detailGroup": "",
+    "supportAnatomy": false,
+    "replacementAnatomy": true
   }
 ]

@@ -4,19 +4,16 @@
   "vocabulary": 20,
   "representations": {
     "teaching-pin": 22,
-    "3d-landmark": 185,
-    "reference": 8,
+    "3d-landmark": 188,
+    "reference": 5,
     "mesh": 3,
     "source-pin": 92
   },
   "sourceOnly3DWithheld": [
     "Anterior fontanelle",
     "Mastoid fontanelle",
-    "Nasolacrimal canal",
     "Posterior fontanelle",
     "Sphenoidal fontanelle",
-    "Stylomastoid foramen",
-    "Supraorbital foramen",
     "Round window"
   ],
   "spatialScoringWithheld": [
@@ -41,11 +38,6 @@
       "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
     },
     {
-      "name": "Nasolacrimal canal",
-      "status": "replacement-required",
-      "reason": "The source duct locates the drainage route but does not establish the complete bony canal walls. The added hollow tube has been withdrawn. Use the textbook comparison until a properly verified bony target is available."
-    },
-    {
       "name": "Paranasal sinuses",
       "status": "composite-overview",
       "reason": "The paranasal sinuses comprise four groups. Choose a member below to inspect its own geometry and source view. A single maxillary point is not assessed as the whole sinus system."
@@ -61,22 +53,12 @@
       "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
     },
     {
-      "name": "Stylomastoid foramen",
-      "status": "replacement-required",
-      "reason": "Use the textbook to locate the opening between the styloid and mastoid processes. A source facial-nerve crossing did not verify a native bony aperture. The added tube has been withdrawn; a precise native 3D target is pending."
-    },
-    {
-      "name": "Supraorbital foramen",
-      "status": "replacement-required",
-      "reason": "The source orbital margin has an open/notch-like form, not a verified enclosed foramen. The added enclosed tube has been withdrawn. Use the textbook to compare the foramen/notch variants; precise foramen locating is withheld."
-    },
-    {
       "name": "Round window",
       "status": "replacement-required",
       "reason": "Use the source illustration for the round window. The adult mesh has no verified round-window aperture, and the previous straightened tube did not provide adequate anatomical orientation. A precise 3D target is withheld."
     }
   ],
-  "spatialScoringEligible": 299,
+  "spatialScoringEligible": 302,
   "unexpectedUnmapped": [],
   "originalLabItems": 177,
   "teachingGroups": [

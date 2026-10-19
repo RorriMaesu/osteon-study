@@ -9,9 +9,6 @@ test('retired models have a real source illustration and cannot masquerade as pr
   const r=t.representation;assert.equal(r.kind,'reference',t.name);assert.equal(r.assessment,'learn-only');
   assert.ok(plates[r.plate],t.name);assert.ok(r.reviewNotice.length>60);assert.ok(r.reviewStatus);
  }
- for(const name of ['Stylomastoid foramen','Supraorbital foramen','Nasolacrimal canal']){
-  const r=allTerms.find(t=>t.name===name).representation;assert.equal(r.assessment,'learn-only',name);assert.equal(r.reviewStatus,'replacement-required');assert.equal(r.kind,'reference');assert.equal(r.retiredModel,true);
- }
 });
 
 test('native sacral teaching copy has identical geometry to the unchanged source sacrum',()=>{
