@@ -1,0 +1,622 @@
+{
+  "id": "e035f635-62aa-4da0-a053-5d3fdb712015",
+  "revision": 0,
+  "last_node_id": 11,
+  "last_link_id": 4,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "FB_Qwen3TTSVoiceDesign",
+      "title": "1 \u00b7 Design a warm female voice",
+      "pos": [
+        40,
+        80
+      ],
+      "size": [
+        410,
+        700
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "text"
+          }
+        },
+        {
+          "name": "instruct",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "instruct"
+          }
+        },
+        {
+          "name": "model_choice",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model_choice"
+          }
+        },
+        {
+          "name": "device",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "device"
+          }
+        },
+        {
+          "name": "precision",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "precision"
+          }
+        },
+        {
+          "name": "language",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "language"
+          }
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "name": "max_new_tokens",
+          "type": "INT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "max_new_tokens"
+          }
+        },
+        {
+          "name": "top_p",
+          "type": "FLOAT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "top_p"
+          }
+        },
+        {
+          "name": "top_k",
+          "type": "INT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "top_k"
+          }
+        },
+        {
+          "name": "temperature",
+          "type": "FLOAT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "temperature"
+          }
+        },
+        {
+          "name": "repetition_penalty",
+          "type": "FLOAT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "repetition_penalty"
+          }
+        },
+        {
+          "name": "attention",
+          "type": "COMBO",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "attention"
+          }
+        },
+        {
+          "name": "unload_model_after_generate",
+          "type": "BOOLEAN",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "unload_model_after_generate"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            1,
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FB_Qwen3TTSVoiceDesign"
+      },
+      "widgets_values": [
+        "Meet Osteon, your anatomy study space. Rotate a real three-dimensional skeleton, explore its landmarks, and turn a study break into practice.",
+        "A warm, conversational adult female narrator with a natural American English accent. Clear midrange voice, gentle energy and relaxed confidence. Speak like a friendly lab partner giving a thoughtful tutorial, at a measured pace with natural pauses. Clean dry studio recording, no music, no whispering, no exaggerated acting.",
+        "1.7B",
+        "cuda",
+        "bf16",
+        "English",
+        20261019,
+        "fixed",
+        1024,
+        0.95,
+        50,
+        0.8,
+        1.05,
+        "sdpa",
+        true
+      ]
+    },
+    {
+      "id": 2,
+      "type": "SaveAudio",
+      "title": "Reference voice \u00b7 preview / save",
+      "pos": [
+        500,
+        80
+      ],
+      "size": [
+        410,
+        280
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 1
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveAudio"
+      },
+      "widgets_values": [
+        "osteon-v2/voice-reference"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "FB_Qwen3TTSVoiceClonePrompt",
+      "title": "2 \u00b7 Reuse the designed voice",
+      "pos": [
+        500,
+        340
+      ],
+      "size": [
+        410,
+        280
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": 2
+        },
+        {
+          "name": "ref_text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "ref_text"
+          }
+        },
+        {
+          "name": "model_choice",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model_choice"
+          }
+        },
+        {
+          "name": "device",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "device"
+          }
+        },
+        {
+          "name": "precision",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "precision"
+          }
+        },
+        {
+          "name": "attention",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "attention"
+          }
+        },
+        {
+          "name": "x_vector_only",
+          "type": "BOOLEAN",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "x_vector_only"
+          }
+        },
+        {
+          "name": "unload_model_after_generate",
+          "type": "BOOLEAN",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "unload_model_after_generate"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "voice_clone_prompt",
+          "type": "VOICE_CLONE_PROMPT",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FB_Qwen3TTSVoiceClonePrompt"
+      },
+      "widgets_values": [
+        "Meet Osteon, your anatomy study space. Rotate a real three-dimensional skeleton, explore its landmarks, and turn a study break into practice.",
+        "1.7B",
+        "cuda",
+        "bf16",
+        "sdpa",
+        false,
+        false
+      ]
+    },
+    {
+      "id": 10,
+      "type": "FB_Qwen3TTSVoiceClone",
+      "title": "3 \u00b7 Edit the narration text",
+      "pos": [
+        950,
+        80
+      ],
+      "size": [
+        410,
+        700
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "target_text",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "target_text"
+          }
+        },
+        {
+          "name": "model_choice",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "model_choice"
+          }
+        },
+        {
+          "name": "device",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "device"
+          }
+        },
+        {
+          "name": "precision",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "precision"
+          }
+        },
+        {
+          "name": "language",
+          "type": "COMBO",
+          "link": null,
+          "widget": {
+            "name": "language"
+          }
+        },
+        {
+          "name": "ref_audio",
+          "type": "AUDIO",
+          "link": null,
+          "shape": 7
+        },
+        {
+          "name": "ref_text",
+          "type": "STRING",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "ref_text"
+          }
+        },
+        {
+          "name": "voice_clone_prompt",
+          "type": "VOICE_CLONE_PROMPT",
+          "link": 3,
+          "shape": 7
+        },
+        {
+          "name": "seed",
+          "type": "INT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "seed"
+          }
+        },
+        {
+          "name": "max_new_tokens",
+          "type": "INT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "max_new_tokens"
+          }
+        },
+        {
+          "name": "top_p",
+          "type": "FLOAT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "top_p"
+          }
+        },
+        {
+          "name": "top_k",
+          "type": "INT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "top_k"
+          }
+        },
+        {
+          "name": "temperature",
+          "type": "FLOAT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "temperature"
+          }
+        },
+        {
+          "name": "repetition_penalty",
+          "type": "FLOAT",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "repetition_penalty"
+          }
+        },
+        {
+          "name": "x_vector_only",
+          "type": "BOOLEAN",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "x_vector_only"
+          }
+        },
+        {
+          "name": "instruct",
+          "type": "STRING",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "instruct"
+          }
+        },
+        {
+          "name": "attention",
+          "type": "COMBO",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "attention"
+          }
+        },
+        {
+          "name": "unload_model_after_generate",
+          "type": "BOOLEAN",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "unload_model_after_generate"
+          }
+        },
+        {
+          "name": "custom_model_path",
+          "type": "STRING",
+          "link": null,
+          "shape": 7,
+          "widget": {
+            "name": "custom_model_path"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "FB_Qwen3TTSVoiceClone"
+      },
+      "widgets_values": [
+        "Meet Oss-tee-on, your anatomy and physiology study space.",
+        "1.7B",
+        "cuda",
+        "bf16",
+        "English",
+        "",
+        20261019,
+        "fixed",
+        1536,
+        0.95,
+        50,
+        0.75,
+        1.05,
+        false,
+        "",
+        "sdpa",
+        false,
+        ""
+      ]
+    },
+    {
+      "id": 11,
+      "type": "SaveAudio",
+      "title": "4 \u00b7 Preview / save your take",
+      "pos": [
+        1410,
+        80
+      ],
+      "size": [
+        410,
+        280
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 4
+        },
+        {
+          "name": "filename_prefix",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "filename_prefix"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": []
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveAudio"
+      },
+      "widgets_values": [
+        "osteon-narration/edited-take"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "AUDIO"
+    ],
+    [
+      2,
+      1,
+      0,
+      3,
+      0,
+      "AUDIO"
+    ],
+    [
+      3,
+      3,
+      0,
+      10,
+      7,
+      "VOICE_CLONE_PROMPT"
+    ],
+    [
+      4,
+      10,
+      0,
+      11,
+      0,
+      "AUDIO"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        0,
+        0
+      ]
+    }
+  },
+  "version": 0.4
+}

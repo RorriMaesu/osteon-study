@@ -1,0 +1,327 @@
+{
+  "1": {
+    "class_type": "FB_Qwen3TTSVoiceDesign",
+    "inputs": {
+      "text": "Meet Osteon, your anatomy study space. Rotate a real three-dimensional skeleton, explore its landmarks, and turn a study break into practice.",
+      "instruct": "A warm, conversational adult female narrator with a natural American English accent. Clear midrange voice, gentle energy and relaxed confidence. Speak like a friendly lab partner giving a thoughtful tutorial, at a measured pace with natural pauses. Clean dry studio recording, no music, no whispering, no exaggerated acting.",
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261019,
+      "max_new_tokens": 1024,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.8,
+      "repetition_penalty": 1.05,
+      "attention": "sdpa",
+      "unload_model_after_generate": true
+    }
+  },
+  "2": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "1",
+        0
+      ],
+      "filename_prefix": "osteon-v2/voice-reference"
+    }
+  },
+  "3": {
+    "class_type": "FB_Qwen3TTSVoiceClonePrompt",
+    "inputs": {
+      "ref_audio": [
+        "1",
+        0
+      ],
+      "ref_text": "Meet Osteon, your anatomy study space. Rotate a real three-dimensional skeleton, explore its landmarks, and turn a study break into practice.",
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "attention": "sdpa",
+      "x_vector_only": false,
+      "unload_model_after_generate": false
+    }
+  },
+  "10": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Meet Oss-tee-on, your anatomy and physiology study space.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261019,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "11": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "10",
+        0
+      ],
+      "filename_prefix": "osteon-v2/01-intro"
+    }
+  },
+  "12": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Drag to rotate. Scroll to zoom. Double-click a bone to explore its region; double-click again to focus on that bone. Use Back to return.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261020,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "13": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "12",
+        0
+      ],
+      "filename_prefix": "osteon-v2/02-controls"
+    }
+  },
+  "14": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Switch between the axial and appendicular skeletons. Turn regional colors on to compare neighboring bones.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261021,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "15": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "14",
+        0
+      ],
+      "filename_prefix": "osteon-v2/03-divisions"
+    }
+  },
+  "16": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Here is the foramen magnum: the large opening in the occipital bone. Hide the label, then test yourself with a numbered target and check your answer.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261022,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "17": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "16",
+        0
+      ],
+      "filename_prefix": "osteon-v2/04-landmark"
+    }
+  },
+  "18": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Need a nudge? Open the Socratic tutor and choose an installed Ollama model. Ask for one question at a time. It uses your current study context and links to the supplied textbook readings.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261023,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "19": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "18",
+        0
+      ],
+      "filename_prefix": "osteon-v2/05-tutor"
+    }
+  },
+  "20": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Then connect what you see with OpenStax chapters six and seven in the study studio.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261024,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "21": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "20",
+        0
+      ],
+      "filename_prefix": "osteon-v2/06-study"
+    }
+  },
+  "22": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Explore, identify, and return to what needs practice, on desktop or phone. Try Oss-tee-on free in your browser. No account needed. Local tutoring requires Ollama.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261025,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "23": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "22",
+        0
+      ],
+      "filename_prefix": "osteon-v2/07-close"
+    }
+  },
+  "24": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Meet Oss-tee-on. Explore anatomy in three dimensions. Drag to rotate and double-click to look closer. Find a landmark, hide its label, and test your recall. Need a nudge? Ask the local Socratic tutor one question at a time. Study OpenStax chapters six and seven. Free in your browser. Local tutoring requires Ollama.",
+      "voice_clone_prompt": [
+        "3",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261026,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "instruct": "",
+      "attention": "sdpa",
+      "unload_model_after_generate": false,
+      "custom_model_path": ""
+    }
+  },
+  "25": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "24",
+        0
+      ],
+      "filename_prefix": "osteon-v2/social-narration"
+    }
+  }
+}

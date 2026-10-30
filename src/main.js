@@ -1,3 +1,4 @@
+import {initLabList} from './lab-list-ui.js';
 import {initLandmarks} from './landmark-ui.js';
 import {initWorkspace} from './workspace.js';
 import {setLearningContext} from './learning-context.js';
@@ -116,7 +117,8 @@ renderList();
 initPractice({viewer,setDivision:changeDivision,setView,selectTerm,dialog,toast,escape});
 
 initStudy({viewer,setView,selectTerm,dialog,toast,escape});
-initPrecision({viewer,setDivision:changeDivision,setView,dialog,toast,escape});
+const precision=initPrecision({viewer,setDivision:changeDivision,setView,dialog,toast,escape});
+const labList=initLabList({viewer,setView,selectTerm,precision,toast,escape});
 initReader({setView,escape});
 initTutor({escape,toast});
 landmarkUI=initLandmarks({viewer,selectTerm,setView,dialog,escape});
@@ -126,6 +128,7 @@ document.addEventListener('landmarkpick',ev=>{if(!document.body.dataset.precisio
 document.addEventListener('viewchange',ev=>{if(ev.detail==='atlas'&&!document.body.classList.contains('quiz-active')){if(ready&&viewer.region!==region)viewer.setRegion(region);if(selected){if(viewer.selectedTerm?.id!==selected.id)selectTerm(selected);else detail(selected);}else resetDetail();syncFilters();}});
 
 setView(location.hash.slice(1)||'atlas');
+if(new URLSearchParams(location.search).get('lablist')==='1')labList.home();
 const requestedFeature=new URLSearchParams(location.search).get('feature');
 if(requestedFeature){const term=allTerms.find(t=>t.id===requestedFeature||t.feature?.id===requestedFeature);if(term)selectTerm(term);}
 document.addEventListener('click',event=>{const id=event.target.closest('[data-member-term]')?.dataset.memberTerm;if(id){const term=allTerms.find(t=>t.id===id);if(term)selectTerm(term);}});

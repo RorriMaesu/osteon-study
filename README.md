@@ -4,16 +4,17 @@
 
 [![Watch the Osteon demo: See it. Name it. Recall it.](demo/poster.jpg)](https://rorrimaesu.github.io/osteon-study/demo/)
 
-**[Try the app ↗](https://rorrimaesu.github.io/osteon-study/)** · **[Watch the 29-second demo ▶](https://rorrimaesu.github.io/osteon-study/demo/)** · [Download the vertical social video](https://rorrimaesu.github.io/osteon-study/demo/osteon-social.mp4) · [Get the complete share kit](https://rorrimaesu.github.io/osteon-study/demo/osteon-share-kit.zip)
+**[Try the app ↗](https://rorrimaesu.github.io/osteon-study/)** · **[Watch the narrated 66-second tour ▶](https://rorrimaesu.github.io/osteon-study/demo/)** · [Download the vertical social video](https://rorrimaesu.github.io/osteon-study/demo/osteon-social.mp4) · [Get the complete share kit](https://rorrimaesu.github.io/osteon-study/demo/osteon-share-kit.zip)
 
 - **Explore:** rotate the skeleton, double-click into a region, and compare bones with optional colors.
 - **Locate:** inspect labeled landmarks, openings, and teaching reconstructions.
 - **Recall:** name numbered targets, check your answer, and return to missed material.
 - **Connect:** study chapter notes, concept questions, glossary terms, and source readings on desktop or phone.
+- **Think it through:** get one question at a time from a local Socratic tutor. Optional tutoring requires Ollama on your computer.
 
-| Explore relationships | Put recall to work |
+| Locate a clear landmark | Think it through |
 | --- | --- |
-| [![Rotated skull with regional bone colors](demo/screenshots/02-regional-colors.jpg)](https://rorrimaesu.github.io/osteon-study/#atlas) | [![Landmark identification with a numbered target and an answer field](demo/screenshots/04-practice.jpg)](https://rorrimaesu.github.io/osteon-study/#practice) |
+| [![The foramen magnum with one clear label](demo/screenshots/03-landmark.jpg)](https://rorrimaesu.github.io/osteon-study/#atlas) | [![An actual local tutor question, student answer and textbook-linked feedback](demo/screenshots/07-tutor.jpg)](https://rorrimaesu.github.io/osteon-study/demo/#watch) |
 
 <details>
 <summary>See the nine-second animated preview</summary>
@@ -22,7 +23,15 @@
 
 </details>
 
-The videos use actual app interactions with captions and no music. [Screenshots, downloads, transcript, and class-group post copy](https://rorrimaesu.github.io/osteon-study/demo/) are ready to share. Free to open; no account needed.
+The narrated videos use actual app interactions: a clear foramen magnum example, identification practice, and a real local Socratic tutor exchange. A warm female voice was generated locally with Qwen3-TTS in ComfyUI; captions and an editable voice workflow are included. No music. [Screenshots, downloads, transcript, and class-group post copy](https://rorrimaesu.github.io/osteon-study/demo/) are ready to share. Free to open; no account needed.
+
+## Your BI 231 bone-list test
+
+[Open the dedicated test ↗](https://rorrimaesu.github.io/osteon-study/?lablist=1#practice) · [Document reconciliation](BONE-LIST-REVIEW.md) · [Download the checklist](BONE-LIST-CHECKLIST.csv)
+
+The supplied Lab 6/7 document is reconciled to all **177 original study entries**. A full run has **182 questions**: 173 3D identification targets, two drawer movement questions, two source-recall questions and five vertebral count blanks. Choose the entire document, Lab 6, Lab 7 bone test, or the four shoulder muscle-test ligaments. Named items repeated across the two labs are tested once in the full run.
+
+Search the original wording beside the standard anatomical names, open an item's study view, save and continue a test, retry missed/assisted items, and export the results. Hints remain recorded after reload. Fontanelles and the grouped ethmoid drainage item retain their spatial accuracy holds and use explicitly labeled source recall. They are included in the test without claiming verified 3D opening locations.
 
 Read [the implementation and learning plan](PLAN.md) and [release notes](CHANGELOG.md).
 
@@ -34,7 +43,7 @@ This is a static GitHub Pages site. No server account is required. Study progres
 
 ## Development
 
-Serve this folder with any static HTTP server. Direct file opening is unsupported because the 3D asset must be fetched over HTTP. Runtime libraries and the model are bundled with the site. Source modules live in `src/`; `app.js` is the bundled browser entry point. For changes, use Node.js 22+ and run `npm ci`, `npm test`, `npm run audit`, then `npm run build`. Commit the rebuilt app.js before pushing to main; GitHub Pages publishes the repository root.
+Serve this folder with any static HTTP server. Direct file opening is unsupported because the 3D asset must be fetched over HTTP. Runtime libraries and the model are bundled with the site. Source modules live in `src/`; `app.js` is the bundled browser entry point. For changes, use Node.js 22+ and run `npm ci`, `npm test`, `npm run audit`, then `npm run audit:lab-list` and `npm run build`. Commit the rebuilt app.js before pushing to main; GitHub Pages publishes the repository root.
 
 Model and content credits are maintained in CREDITS.md. See PLAN.md for the educational coverage and representation policy.
 

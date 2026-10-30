@@ -1,46 +1,148 @@
 {
   "capture_date": "2026-10-19",
-  "source_revision": "c480275 plus overlay-control fix",
-  "method": "Real browser screenshots captured continuously with timestamps; edited into captioned scenes. No generated app UI, no fabricated grades.",
-  "audio": "Silent; captions burned in and supplied separately.",
+  "method": "Genuine browser captures edited into a narrated tutorial. Crops, holds, scene cuts and response-wait edits improve readability. Interface, tutor replies and quiz feedback are real. No personal study history.",
+  "source_revision": "032befd plus replacement-bone selection fix",
+  "audio": {
+    "model": "Qwen3-TTS-12Hz-1.7B-VoiceDesign \u2192 1.7B-Base",
+    "device": "RTX 5060 Ti 16GB",
+    "precision": "bf16",
+    "attention": "sdpa",
+    "voice": "Designed synthetic warm conversational adult female voice. No real-person reference.",
+    "reference_seed": 20261019,
+    "narration_seed_start": 20261019,
+    "narration_rate": 0.9,
+    "social_rate": 0.94,
+    "target_lufs": -16,
+    "model_license": "Apache-2.0"
+  },
   "desktop": {
     "width": 1920,
     "height": 1080,
-    "duration": 29.299
+    "duration": 65.90720833333333,
+    "chapters": [
+      {
+        "id": "01-intro",
+        "start": 0,
+        "duration": 4.514
+      },
+      {
+        "id": "02-controls",
+        "start": 4.514,
+        "duration": 10.729
+      },
+      {
+        "id": "03-divisions",
+        "start": 15.243,
+        "duration": 7.441
+      },
+      {
+        "id": "04-landmark",
+        "start": 22.684,
+        "duration": 9.754
+      },
+      {
+        "id": "05-tutor",
+        "start": 32.438,
+        "duration": 12.953
+      },
+      {
+        "id": "06-study",
+        "start": 45.39,
+        "duration": 6.029
+      },
+      {
+        "id": "07-close",
+        "start": 51.419,
+        "duration": 13.488
+      }
+    ]
   },
   "social": {
     "width": 1080,
     "height": 1920,
-    "duration": 24.086
+    "duration": 22.905208333333334,
+    "captions": "Burned in; VTT also supplied"
   },
   "files": {
     "osteon-demo.mp4": {
-      "bytes": 1195028,
-      "sha256": "0880b12c4bfd7ee4e4ff4af3b08f98f72b49e7ee8dc669022893c5dbea4d06fa"
+      "bytes": 4733831,
+      "sha256": "43092c8731c6dc7aeff1dfe3fab1aa66d73a47fd85825bc519cc1225605d185d"
     },
     "osteon-demo.vtt": {
-      "bytes": 542,
-      "sha256": "aff7e1cf99226aab5b7e5386df26057dad686f651417f0396fb5e20dfe7b1a59"
+      "bytes": 1557,
+      "sha256": "e236af1d5132f45d1f2525e5a9950e8f47f3b8397c209578c5e26bf715a6e420"
+    },
+    "osteon-narration-api.json": {
+      "bytes": 8777,
+      "sha256": "33f1d2c6b5da94afdf0ea8cfbc4cec97cbf3a8fe99def89f110c13711e242011"
+    },
+    "osteon-narration.wav": {
+      "bytes": 6327136,
+      "sha256": "6fdc99f81b829b73fd2ed81e8a12982a1cfad77d3c862a7633154825b98f6908"
+    },
+    "osteon-social-narration.wav": {
+      "bytes": 2198944,
+      "sha256": "d94ef190cfad77cffa713a977b704930fcb7a39c8e89b0faa56b03781a1f1f72"
     },
     "osteon-social.mp4": {
-      "bytes": 1016498,
-      "sha256": "55440cc484734bc7fe7018d7a93b4a44b3fc10900e644db9e409b116842b4b8f"
+      "bytes": 1668548,
+      "sha256": "f324aa81be922d90b784d676ec7c7840f69756a07ff73706c215ec23bfc7cc09"
     },
     "osteon-social.vtt": {
-      "bytes": 407,
-      "sha256": "426aef5dc82c7c0c76d0bbe1dd3f0efac21984a50198f6e10096d978502c0032"
+      "bytes": 518,
+      "sha256": "e81cbfe4b0c3a642ac85a1012a33e2c252b11ab2f5e8239f8966260fb4f8d59f"
+    },
+    "osteon-voice-workflow.json": {
+      "bytes": 12680,
+      "sha256": "e0609ca8095519b9ba7a11915434def3a40d3659d0ec755b581cf4f83d5ebbaf"
     },
     "poster.jpg": {
-      "bytes": 84065,
-      "sha256": "f585c96b93a265e68a8595c44294e9170f9010e37d6260dea43430629b67398f"
+      "bytes": 87841,
+      "sha256": "0b19f21012c18c45ff5d1708a4018081d513b32cef5ed19d2543dbbf4f9a0ecd"
     },
     "preview.gif": {
-      "bytes": 369991,
-      "sha256": "d82a25df0016bd386e5b14e18cb3a35ad7988660fe5fe5865fee2ce5678bc59c"
+      "bytes": 271347,
+      "sha256": "bd330218a047477d3cc98e99366c2b1ae4fd7b404236ed606b102eb9b72db6d3"
+    },
+    "screenshots/01-atlas.jpg": {
+      "bytes": 77600,
+      "sha256": "678b0359a7da72d6bd929b36d9eba327aaa95df9a6bc9745639df4670c2ca0a6"
+    },
+    "screenshots/02-regional-colors.jpg": {
+      "bytes": 73832,
+      "sha256": "60c816bc944c0a888e610895c62b653a65cdd55c4be97d0fc0d1a1ee3609d16b"
+    },
+    "screenshots/03-landmark.jpg": {
+      "bytes": 80800,
+      "sha256": "9041c1c80eecae82a6299c13915b1f4a8d61f24887cf8d4556e9599560b98cc9"
+    },
+    "screenshots/04-practice.jpg": {
+      "bytes": 64141,
+      "sha256": "d4ba1cc39a6e0cf446700a958638b19a44b5a74f2e45f1d3c1ebf779eff75111"
+    },
+    "screenshots/05-study-studio.jpg": {
+      "bytes": 84243,
+      "sha256": "070caab1632f8461dd22b9d9d55bdb2337a10ea2075f7c39e8fc0ec49fbb5173"
+    },
+    "screenshots/06-mobile.jpg": {
+      "bytes": 35588,
+      "sha256": "6a5f178c0c9bdcc2450966bc68b87841c160145511be36c8e6a0b332ac4517ee"
+    },
+    "screenshots/07-tutor.jpg": {
+      "bytes": 87901,
+      "sha256": "f1e277b546aed69988d0794bf959866e68617e8e1430ec5481baca23fd4a3d64"
+    },
+    "screenshots/08-mobile-tutor.jpg": {
+      "bytes": 34190,
+      "sha256": "9ede11ecccec378cc0e21331b63d9935830413b828c9b457a982a155ce9c721d"
     },
     "social-poster.jpg": {
-      "bytes": 126570,
-      "sha256": "1e5a86987a5a86d00a6e3e3fb87e51005f10ac176a9451e4679afe910528cc63"
+      "bytes": 134413,
+      "sha256": "6efba17263cee51b396bf2d280fb92546f8654cc9b3d907a24134e87c44ab8f3"
+    },
+    "voice-reference.wav": {
+      "bytes": 448214,
+      "sha256": "3efcf803d06123f26b364c2614e16053cd2e0fb8d34828f1a72446783275657d"
     }
   }
 }

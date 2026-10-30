@@ -181,3 +181,20 @@ Both complete MP4 files decoded without errors. Scene review frames were inspect
 Browser checks confirmed desktop video playback with a decoded 1920 × 1080 stream, the Recall chapter jumping to 16 seconds, no media errors, and a complete seekable range. A local media-capable server was used because Python's basic static server cannot serve byte ranges. At 390 × 844 the demo page had no horizontal overflow, readable sharing text, and a working ZIP download. Browser viewport overrides were reset afterward.
 
 Filming exposed a viewer-control defect: pointer events from the landmark Label/Cutaway toolbar could select the bone behind the control. The toolbar now stops those pointer/navigation events. Browser checks confirmed Label Off and On preserve the selected Nasolacrimal canal, and identification practice opens that target correctly. All 56 application tests pass after the fix. No anatomy meshes changed in this release.
+
+
+## Required BI 231 bone-list release — final verification
+
+The original legacy Word document was independently read from its compound-document main text stream. Its hash is recorded in BONE-LIST-REVIEW.md. All 152 reconciled source items/context groups map to the unchanged 177 course IDs. The audit resolves all 173 supported 3D selectors/parents against the shipped model files; the two movement items, two spatial holds and five count blanks remain distinct. No model geometry was changed.
+
+All **64 automated checks pass**, including five new source-list, exam-scope, count-answer, checkpoint/denominator checks and a regression check for catalog-linked whole-bone labels during assessment. The course audit and dedicated lab-list audit pass with zero unmapped entries.
+
+Browser checks used an isolated localhost origin, without changing public study history:
+
+- Exercised the entire 182-question source-order run through the real controls. Confirmed masked target names before submission and canonical answer acceptance across structures, source recall, movement and counts. This found an existing xiphoid/whole-feature label leak; the viewer now suppresses those labels during assessment, and the run continued through the fixed target and remaining items.
+- Deliberately entered one wrong answer and used a cue on another. Results reported 180/182 independently correct, one assisted response and two items to revisit. A two-item retry reported its actual 2/182 scope coverage, rather than a full-course pass. These were verification inputs, not a student's claimed achievement.
+- Saved/reloaded during a run and returned to the next unanswered question. A cue used before reload still produced assisted feedback afterward. Later completed a four-question shoulder run and exported results; the export retained the original full run, retry and later scope results.
+- Checked the dedicated checklist at 1280 × 720 and 1024 × 600. At the compact size, document width/height equaled the viewport, rows had no internal text overflow and all page controls remained visible. At a 390 × 844 phone viewport there was no horizontal overflow; specimen, answer and source reading use natural vertical flow.
+- Confirmed source-spelling search for fontanels, the labeled OpenStax newborn comparison, the separate four-ligament shoulder scope and explicit source-recall holds. The adult badge is hidden while a source guide is shown. No browser console errors were reported in the final interaction checks.
+
+The narrated demo prepared earlier was finalized with its 25-file share kit, voice workflow, script, audio, refreshed screenshots and README. Both MP4s decode with H.264 video and AAC narration; the final durations are about 65.93 and 22.93 seconds. Local transcription checked wording and supplied caption timing. Caption ranges, media hashes, local links and ZIP integrity pass. Metadata/captions use stable LF endings so their published hashes match. The final tutorial's measured audio is about −16.9 LUFS integrated, with a −0.96 dBTP true peak. The recording uses a synthetic designed female voice and a real local tutor exchange; it contains no private study history.

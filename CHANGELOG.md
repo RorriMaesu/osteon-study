@@ -1,3 +1,19 @@
+# 2026-10-29 — Required BI 231 bone-list test
+
+- Reconcile the supplied two-page list into 152 mapped source items/context groups and all 177 original study IDs; publish the item-by-item checklist and review report.
+- Add a dedicated 182-question full-document test, Lab 6 and Lab 7 scopes, and the separate shoulder muscle-test scope. Include five vertebral count blanks and honest source recall for the two spatial holds.
+- Add automatic test checkpoints, resume, result export and missed/assisted retries. Preserve cue use after reload and make subset denominators explicit.
+- Fix catalog-linked whole bones revealing a named label during identification; retain labels during normal atlas study.
+- Keep the new checklist and results in desktop pages, with natural phone reading. No model geometry changed.
+
+# 2026-10-19 — Narrated tutorial and local tutor demo
+
+- Replace the unclear canal example with a clearly framed foramen magnum, label hiding and actual identification feedback.
+- Show a genuine local Socratic tutor question, answer, feedback and textbook links, including responsive phone layouts.
+- Add a warm conversational female narration generated locally in ComfyUI with Qwen3-TTS 1.7B; provide a roughly 66-second tutorial, 23-second social edit, captions, audio, script and editable workflow.
+- Refresh screenshots, covers, the README, chapter jumps, sharing copy and the complete download kit.
+- Preserve the identity of edited replacement bones when clicked. Their landmark openings remain separately selectable. No anatomy geometry changed.
+
 # 2026-10-19 — See Osteon in action
 
 - Add captioned widescreen and vertical app demonstrations, screenshots, cover images, animated preview, transcript, and a downloadable classroom share kit.

@@ -177,6 +177,7 @@ export const terms = rows.split('\n').map((r, i) => {
   return {id,region,type,pattern,name,cue,source:region==='Joints'?'Lab 7 · joint extension': ['Upper limb','Lower limb','Pelvis'].includes(region)?'Lab 7 · appendicular':'Lab 6 · axial',exact:type==='bone'||(type==='cavity'&&pattern.startsWith('Sinus of')),aliases:[]};
 });
 const aliases = {
+ 'Cervical vertebrae':['cervical vertebra'], 'Thoracic vertebrae':['thoracic vertebra'], 'Lumbar vertebrae':['lumbar vertebra'],
  'Annulus fibrosus':['annulus fibrosis'], 'Nucleus pulposus':['nucleus pulposis'],
  'Mandibular fossa':['temporal mandibular fossa'], 'Medial border of scapula':['vertebral border','vertebral boarder'],
  'Pollex':['thumb'], 'Hallux':['great toe','big toe'], 'Fontanelles':['fontanels'], 'Optic canal':['optic foramen'],
