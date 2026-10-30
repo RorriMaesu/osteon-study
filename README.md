@@ -1,6 +1,6 @@
 # Osteon
 
-**A&P study, in another dimension.** Explore the skeleton, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6 and 7, with the BI 231 lab list’s appendicular and joint extensions.
+**A&P study, in another dimension.** Explore the skeleton, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6, 7, 8 and 9, alongside the dedicated BI 231 bone-list test.
 
 [![Watch the Osteon demo: See it. Name it. Recall it.](demo/poster.jpg)](https://rorrimaesu.github.io/osteon-study/demo/)
 
@@ -25,6 +25,14 @@
 
 The narrated videos use actual app interactions: a clear foramen magnum example, identification practice, and a real local Socratic tutor exchange. A warm female voice was generated locally with Qwen3-TTS in ComfyUI; captions and an editable voice workflow are included. No music. [Screenshots, downloads, transcript, and class-group post copy](https://rorrimaesu.github.io/osteon-study/demo/) are ready to share. Free to open; no account needed.
 
+## Chapters 6–9 exam preparation
+
+[Open the exam center ↗](https://rorrimaesu.github.io/osteon-study/?exam=1#practice) · [Teaching plan](CHAPTERS-6-9-PLAN.md) · [Objective coverage](CURRICULUM-COVERAGE.csv)
+
+Study all **24 sections** with complete source readings and figures, guided notes, comparisons, closed-book retrieval and application. The four **50-question chapter exams** cover every section in their chapter. The **100-question cumulative exam** includes 25 questions per chapter and samples all **74 source objectives**. Short 20-question practice is explicitly a sample; full-bank review contains every one of the 256 new exam questions.
+
+Multiple choice, typed recall, anatomical schematic identification, matching and ordering use explicit answer keys and source-linked explanations. Full exams delay feedback until submission. Save a draft, flag questions, edit answers and review section/objective results. Source or tutor assistance stays attached after reload and is separated from independently correct answers. One point per question; all matching/ordering parts must be correct. Export completed reports; up to 20 sessions remain in this browser. These are original study questions, not the instructor’s exam.
+
 ## Your BI 231 bone-list test
 
 [Open the dedicated test ↗](https://rorrimaesu.github.io/osteon-study/?lablist=1#practice) · [Document reconciliation](BONE-LIST-REVIEW.md) · [Download the checklist](BONE-LIST-CHECKLIST.csv)
@@ -43,7 +51,7 @@ This is a static GitHub Pages site. No server account is required. Study progres
 
 ## Development
 
-Serve this folder with any static HTTP server. Direct file opening is unsupported because the 3D asset must be fetched over HTTP. Runtime libraries and the model are bundled with the site. Source modules live in `src/`; `app.js` is the bundled browser entry point. For changes, use Node.js 22+ and run `npm ci`, `npm test`, `npm run audit`, then `npm run audit:lab-list` and `npm run build`. Commit the rebuilt app.js before pushing to main; GitHub Pages publishes the repository root.
+Serve this folder with any static HTTP server. Direct file opening is unsupported because the 3D asset must be fetched over HTTP. Runtime libraries and the model are bundled with the site. Source modules live in `src/`; `app.js` is the bundled browser entry point. For changes, use Node.js 22+ and run `npm ci`, `npm test`, `npm run audit`, then `npm run audit:lab-list`, `npm run audit:curriculum` and `npm run build`. Commit the rebuilt app.js before pushing to main; GitHub Pages publishes the repository root.
 
 Model and content credits are maintained in CREDITS.md. See PLAN.md for the educational coverage and representation policy.
 
@@ -51,13 +59,13 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 
 - All 177 BI 231 lab IDs are preserved. Supported targets have locating/identification exercises; unresolved anatomy uses source study and recall while spatial grading is withheld. See the [current accuracy review](accuracy.html).
 - Adult skeleton, 81 course tissue objects, additional anatomical detail, and labeled teaching reconstructions. Scene objects include bones, cartilage, teeth, ligaments, discs, sinus volumes, and vertebral arteries; mesh counts are not a biological bone count.
-- Full source reader: every page of chapters 6 and 7, plus appendicular and selected joint readings; 144 page images with searchable extracted text. Source pages load on demand.
-- Twelve teaching sections, 104 authored concept questions, 237 textbook glossary definitions and seven guided activities.
+- Full source reader: all 172 pages of chapters 6–9, plus eight supplemental reference pages; 180 page images with searchable extracted text. Source pages load on demand.
+- 24 teaching sections, all 74 source learning objectives, 360 authored questions (256 new mixed-format exam items plus 104 supplementary questions), 544 textbook glossary definitions and guided activities.
 - Locate and name practice, a systematic unpracticed-first course pass, region/session controls, missed-item retries, local review scheduling, score separation and progress backup/restore.
 
 **My progress** now maps all 177 lab targets by their latest scored attempt and starts a focused ten-target identification session or ten-question chapter session. Missed or assisted items come first, followed by untried items. Full-course identification clears atlas filters. Lesson cards show their question evidence separately from reading status. Self-rated recall updates card scheduling but does not clear a scored retrieval gap; neither a correct latest answer nor a repeated answer after 24 hours is a guarantee of mastery.
 
-Due-card counts match the decks they open. The Practice menu scopes lab recall to its division and region; chapter recall keeps both chapters. Progress offers course-wide lab and chapter review decks regardless of the current atlas filters.
+Due-card counts match the decks they open. The Practice menu scopes lab recall to its division and region; chapter recall covers all four chapters. Progress offers course-wide lab and chapter review decks regardless of the current atlas filters.
 
 Landmark pins identify reference locations; they do not segment complete ridges, surfaces or boundaries. Only the anatomical endpoints of reliable source annotation leaders are used. Source textbook figures remain available for comparison; unresolved features use explicit source guidance. Fontanelles use a newborn illustration. Drawer tests assess movement and ligament restraint. A parent-bone highlight never grades as locating a landmark.
 

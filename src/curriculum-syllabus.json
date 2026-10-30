@@ -1,0 +1,1128 @@
+{
+  "version": 1,
+  "source": {
+    "title": "Anatomy and Physiology 2e",
+    "copyright": "2026 Rice University",
+    "license": "CC BY-NC-SA 4.0",
+    "url": "https://openstax.org/details/books/anatomy-and-physiology-2e",
+    "pdfToPrintedOffset": 16
+  },
+  "chapters": [
+    {
+      "id": 6,
+      "title": "Bone Tissue and the Skeletal System",
+      "pdfStart": 213,
+      "pdfEnd": 250,
+      "examLength": 50
+    },
+    {
+      "id": 7,
+      "title": "Axial Skeleton",
+      "pdfStart": 251,
+      "pdfEnd": 298,
+      "examLength": 50
+    },
+    {
+      "id": 8,
+      "title": "The Appendicular Skeleton",
+      "pdfStart": 299,
+      "pdfEnd": 338,
+      "examLength": 50
+    },
+    {
+      "id": 9,
+      "title": "Joints",
+      "pdfStart": 339,
+      "pdfEnd": 384,
+      "examLength": 50
+    }
+  ],
+  "sections": [
+    {
+      "id": "6.1",
+      "chapter": 6,
+      "title": "The Functions of the Skeletal System",
+      "pdfStart": 213,
+      "pdfEnd": 216,
+      "objectives": [
+        {
+          "id": "6.1.1",
+          "text": "Define bone, cartilage, and the skeletal system"
+        },
+        {
+          "id": "6.1.2",
+          "text": "List and describe the functions of the skeletal system"
+        }
+      ],
+      "figures": [
+        {
+          "number": "6.1",
+          "caption": "Child Looking at Bones Bone is a living tissue. Unlike the bones of a fossil made inert by a process of mineralization, a "
+        },
+        {
+          "number": "6.2",
+          "caption": "Bones Support Movement Bones act as levers when muscles span a joint and contract. (credit: Benjamin J. DeLong) "
+        },
+        {
+          "number": "6.3",
+          "caption": "Bones Protect Brain The cranium completely surrounds and protects the brain from non-traumatic injury. "
+        },
+        {
+          "number": "6.4",
+          "caption": "Complex Brace An orthopedist will sometimes prescribe the use of a brace that reinforces the underlying bone structure it is "
+        },
+        {
+          "number": "6.5",
+          "caption": "Head of Femur Showing Red and Yellow Marrow The head of the femur contains both yellow and red marrow. Yellow "
+        }
+      ],
+      "characters": 6050,
+      "prerequisites": [],
+      "examWeight": 4
+    },
+    {
+      "id": "6.2",
+      "chapter": 6,
+      "title": "Bone Classification",
+      "pdfStart": 216,
+      "pdfEnd": 218,
+      "objectives": [
+        {
+          "id": "6.2.1",
+          "text": "Classify bones according to their shapes"
+        },
+        {
+          "id": "6.2.2",
+          "text": "Describe the function of each category of bones"
+        }
+      ],
+      "figures": [
+        {
+          "number": "6.6",
+          "caption": "Classifications of Bones Bones are classified according to their shape. "
+        }
+      ],
+      "characters": 3790,
+      "prerequisites": [
+        "6.1"
+      ],
+      "examWeight": 4
+    },
+    {
+      "id": "6.3",
+      "chapter": 6,
+      "title": "Bone Structure",
+      "pdfStart": 218,
+      "pdfEnd": 228,
+      "objectives": [
+        {
+          "id": "6.3.1",
+          "text": "Identify the anatomical features of a bone"
+        },
+        {
+          "id": "6.3.2",
+          "text": "Define and list examples of bone markings"
+        },
+        {
+          "id": "6.3.3",
+          "text": "Describe the histology of bone tissue"
+        },
+        {
+          "id": "6.3.4",
+          "text": "Compare and contrast compact and spongy bone"
+        },
+        {
+          "id": "6.3.5",
+          "text": "Identify the structures that compose compact and spongy bone"
+        },
+        {
+          "id": "6.3.6",
+          "text": "Describe how bones are nourished and innervated"
+        }
+      ],
+      "figures": [
+        {
+          "number": "6.10",
+          "caption": "Bone Features The surface features of bones depend on their function, location, attachment of ligaments and tendons, or the "
+        },
+        {
+          "number": "6.11",
+          "caption": "Bone Cells Four types of cells are found within bone tissue. Osteogenic cells are undifferentiated and develop into "
+        },
+        {
+          "number": "6.12",
+          "caption": "Diagram of Compact Bone (a) This cross-sectional view of compact bone shows the basic structural unit, the osteon. (b) In "
+        },
+        {
+          "number": "6.13",
+          "caption": "Diagram of Spongy Bone Spongy bone is composed of trabeculae that contain the osteocytes. Red marrow fills the spaces "
+        },
+        {
+          "number": "6.14",
+          "caption": "Paget's Disease Normal leg bones are relatively straight, but those affected by Paget’s disease are porous and curved. "
+        },
+        {
+          "number": "6.15",
+          "caption": "Diagram of Blood and Nerve Supply to Bone Blood vessels and nerves enter the bone through the nutrient foramen. "
+        },
+        {
+          "number": "6.7",
+          "caption": "Anatomy of a Long Bone A typical long bone shows the gross anatomical characteristics of bone. "
+        },
+        {
+          "number": "6.8",
+          "caption": "Periosteum and Endosteum The periosteum forms the outer surface of bone, and the endosteum lines the medullary cavity. "
+        },
+        {
+          "number": "6.9",
+          "caption": "Anatomy of a Flat Bone This cross-section of a flat bone shows the spongy bone (diploë) lined on either side by a layer of "
+        }
+      ],
+      "characters": 15632,
+      "prerequisites": [
+        "6.2"
+      ],
+      "examWeight": 12
+    },
+    {
+      "id": "6.4",
+      "chapter": 6,
+      "title": "Bone Formation and Development",
+      "pdfStart": 228,
+      "pdfEnd": 234,
+      "objectives": [
+        {
+          "id": "6.4.1",
+          "text": "Explain the function of cartilage"
+        },
+        {
+          "id": "6.4.2",
+          "text": "List the steps of intramembranous ossification"
+        },
+        {
+          "id": "6.4.3",
+          "text": "List the steps of endochondral ossification"
+        },
+        {
+          "id": "6.4.4",
+          "text": "Explain the growth activity at the epiphyseal plate"
+        },
+        {
+          "id": "6.4.5",
+          "text": "Compare and contrast the processes of modeling and remodeling"
+        }
+      ],
+      "figures": [
+        {
+          "number": "6.16",
+          "caption": "Intramembranous Ossification Intramembranous ossification follows four steps. (a) Mesenchymal cells group into clusters, "
+        },
+        {
+          "number": "6.17",
+          "caption": "Endochondral Ossification Endochondral ossification follows five steps. (a) Mesenchymal cells differentiate into "
+        },
+        {
+          "number": "6.18",
+          "caption": "Longitudinal Bone Growth The epiphyseal plate is responsible for longitudinal bone growth. "
+        },
+        {
+          "number": "6.19",
+          "caption": "Progression from Epiphyseal Plate to Epiphyseal Line As a bone matures, the epiphyseal plate progresses to an "
+        }
+      ],
+      "characters": 12656,
+      "prerequisites": [
+        "6.3"
+      ],
+      "examWeight": 10
+    },
+    {
+      "id": "6.5",
+      "chapter": 6,
+      "title": "Fractures: Bone Repair",
+      "pdfStart": 234,
+      "pdfEnd": 237,
+      "objectives": [
+        {
+          "id": "6.5.1",
+          "text": "Differentiate among the different types of fractures"
+        },
+        {
+          "id": "6.5.2",
+          "text": "Describe the steps involved in bone repair"
+        }
+      ],
+      "figures": [
+        {
+          "number": "6.20",
+          "caption": "Types of Fractures Compare healthy bone with different types of fractures: (a) closed fracture, (b) open fracture, (c) "
+        },
+        {
+          "number": "6.21",
+          "caption": "Stages in Fracture Repair The healing of a bone fracture follows a series of progressive steps: (a) A fracture hematoma "
+        }
+      ],
+      "characters": 4970,
+      "prerequisites": [
+        "6.4"
+      ],
+      "examWeight": 6
+    },
+    {
+      "id": "6.6",
+      "chapter": 6,
+      "title": "Exercise, Nutrition, Hormones, and Bone Tissue",
+      "pdfStart": 237,
+      "pdfEnd": 241,
+      "objectives": [
+        {
+          "id": "6.6.1",
+          "text": "Describe the effect exercise has on bone tissue"
+        },
+        {
+          "id": "6.6.2",
+          "text": "List the nutrients that affect bone health"
+        },
+        {
+          "id": "6.6.3",
+          "text": "Discuss the role those nutrients play in bone health"
+        },
+        {
+          "id": "6.6.4",
+          "text": "Describe the effects of hormones on bone tissue"
+        }
+      ],
+      "figures": [
+        {
+          "number": "6.22",
+          "caption": "Synthesis of Vitamin D Sunlight is one source of vitamin D. "
+        },
+        {
+          "number": "6.23",
+          "caption": "Graph Showing Relationship Between Age and Bone Mass Bone density peaks at about 30 years of age. Females "
+        }
+      ],
+      "characters": 12287,
+      "prerequisites": [
+        "6.3"
+      ],
+      "examWeight": 8
+    },
+    {
+      "id": "6.7",
+      "chapter": 6,
+      "title": "Calcium Homeostasis: Interactions of the Skeletal System and Other Organ Systems",
+      "pdfStart": 241,
+      "pdfEnd": 243,
+      "objectives": [
+        {
+          "id": "6.7.1",
+          "text": "Describe the effect of too much or too little calcium on the body"
+        },
+        {
+          "id": "6.7.2",
+          "text": "Explain the process of calcium homeostasis"
+        }
+      ],
+      "figures": [
+        {
+          "number": "6.24",
+          "caption": "Pathways in Calcium Homeostasis The body regulates calcium homeostasis with two pathways; one is signaled to turn on "
+        }
+      ],
+      "characters": 3834,
+      "prerequisites": [
+        "6.3",
+        "6.6"
+      ],
+      "examWeight": 6
+    },
+    {
+      "id": "7.1",
+      "chapter": 7,
+      "title": "Divisions of the Skeletal System",
+      "pdfStart": 252,
+      "pdfEnd": 253,
+      "objectives": [
+        {
+          "id": "7.1.1",
+          "text": "Discuss the functions of the skeletal system"
+        },
+        {
+          "id": "7.1.2",
+          "text": "Distinguish between the axial skeleton and appendicular skeleton"
+        },
+        {
+          "id": "7.1.3",
+          "text": "Define the axial skeleton and its components"
+        },
+        {
+          "id": "7.1.4",
+          "text": "Define the appendicular skeleton and its components"
+        }
+      ],
+      "figures": [
+        {
+          "number": "7.2",
+          "caption": "Axial and Appendicular Skeleton The axial skeleton supports the head, neck, back, and chest and thus forms the vertical axis "
+        }
+      ],
+      "characters": 3435,
+      "prerequisites": [
+        "6.1"
+      ],
+      "examWeight": 4
+    },
+    {
+      "id": "7.2",
+      "chapter": 7,
+      "title": "The Skull",
+      "pdfStart": 253,
+      "pdfEnd": 272,
+      "objectives": [
+        {
+          "id": "7.2.1",
+          "text": "List and identify the bones of the brain case and face"
+        },
+        {
+          "id": "7.2.2",
+          "text": "Locate the major suture lines of the skull and name the bones associated with each"
+        },
+        {
+          "id": "7.2.3",
+          "text": "Locate and define the boundaries of the anterior, middle, and posterior cranial fossae, the temporal fossa, and infratemporal fossa"
+        },
+        {
+          "id": "7.2.4",
+          "text": "Define the paranasal sinuses and identify the location of each"
+        },
+        {
+          "id": "7.2.5",
+          "text": "Name the bones that make up the walls of the orbit and identify the openings associated with the orbit"
+        },
+        {
+          "id": "7.2.6",
+          "text": "Identify the bones and structures that form the nasal septum and nasal conchae, and locate the hyoid bone"
+        },
+        {
+          "id": "7.2.7",
+          "text": "Identify the bony openings of the skull"
+        }
+      ],
+      "figures": [
+        {
+          "number": "7.10",
+          "caption": "Sphenoid Bone Shown in isolation in (a) superior and (b) posterior views, the sphenoid bone is a single midline bone that "
+        },
+        {
+          "number": "7.11",
+          "caption": "Sagittal Section of Skull This midline view of the sagittally sectioned skull shows the nasal septum. "
+        },
+        {
+          "number": "7.12",
+          "caption": "Ethmoid Bone The unpaired ethmoid bone is located at the midline within the central skull. It has an upward projection, the "
+        },
+        {
+          "number": "7.13",
+          "caption": "Lateral Wall of Nasal Cavity The three nasal conchae are curved bones that project from the lateral walls of the nasal "
+        },
+        {
+          "number": "7.14",
+          "caption": "Maxillary Bone The maxillary bone forms the upper jaw and supports the upper teeth. Each maxilla also forms the lateral "
+        },
+        {
+          "number": "7.15",
+          "caption": "Isolated Mandible The mandible is the only moveable bone of the skull. "
+        },
+        {
+          "number": "7.16",
+          "caption": "Bones of the Orbit Seven skull bones contribute to the walls of the orbit. Opening into the posterior orbit from the cranial "
+        },
+        {
+          "number": "7.17",
+          "caption": "Nasal Septum The nasal septum is formed by the perpendicular plate of the ethmoid bone and the vomer bone. The septal "
+        },
+        {
+          "number": "7.18",
+          "caption": "Paranasal Sinuses The paranasal sinuses are hollow, air-filled spaces named for the skull bone that each occupies. The "
+        },
+        {
+          "number": "7.19",
+          "caption": "Hyoid Bone The hyoid bone is located in the upper neck and does not join with any other bone. It provides attachments for "
+        },
+        {
+          "number": "7.3",
+          "caption": "Parts of the Skull The skull consists of the rounded brain case that houses the brain and the facial bones that form the upper "
+        },
+        {
+          "number": "7.4",
+          "caption": "Anterior View of Skull An anterior view of the skull shows the bones that form the forehead, orbits (eye sockets), nasal cavity, "
+        },
+        {
+          "number": "7.5",
+          "caption": "Lateral View of Skull The lateral skull shows the large rounded brain case, zygomatic arch, and the upper and lower jaws. The "
+        },
+        {
+          "number": "7.6",
+          "caption": "Cranial Fossae The bones of the brain case surround and protect the brain, which occupies the cranial cavity. The base of the "
+        },
+        {
+          "number": "7.7",
+          "caption": "Temporal Bone A lateral view of the isolated temporal bone shows the squamous, mastoid, and zygomatic portions of the "
+        },
+        {
+          "number": "7.8",
+          "caption": "External and Internal Views of Base of Skull (a) The hard palate is formed anteriorly by the palatine processes of the maxilla "
+        },
+        {
+          "number": "7.9",
+          "caption": "Posterior View of Skull This view of the posterior skull shows attachment sites for muscles and joints that support the skull. "
+        }
+      ],
+      "characters": 45404,
+      "prerequisites": [
+        "6.3",
+        "7.1"
+      ],
+      "examWeight": 20
+    },
+    {
+      "id": "7.3",
+      "chapter": 7,
+      "title": "The Vertebral Column",
+      "pdfStart": 272,
+      "pdfEnd": 283,
+      "objectives": [
+        {
+          "id": "7.3.1",
+          "text": "Describe each region of the vertebral column and the number of bones in each region"
+        },
+        {
+          "id": "7.3.2",
+          "text": "Discuss the curves of the vertebral column and how these change after birth"
+        },
+        {
+          "id": "7.3.3",
+          "text": "Describe a typical vertebra and determine the distinguishing characteristics for vertebrae in each vertebral region and features of the sacrum and the coccyx"
+        },
+        {
+          "id": "7.3.4",
+          "text": "Describe the structure of an intervertebral disc"
+        },
+        {
+          "id": "7.3.5",
+          "text": "Determine the location of the ligaments that provide support for the vertebral column"
+        }
+      ],
+      "figures": [
+        {
+          "number": "7.20",
+          "caption": "Vertebral Column The adult vertebral column consists of 24 vertebrae, plus the sacrum and coccyx. The vertebrae are "
+        },
+        {
+          "number": "7.21",
+          "caption": "Abnormal Curvatures of the Vertebral Column (a) Scoliosis is an abnormal lateral bending of the vertebral column. (b) "
+        },
+        {
+          "number": "7.22",
+          "caption": "Osteoporosis Osteoporosis is an age-related disorder that causes the gradual loss of bone density and strength. When "
+        },
+        {
+          "number": "7.23",
+          "caption": "Parts of a Typical Vertebra A typical vertebra consists of a body and a vertebral arch. The arch is formed by the paired "
+        },
+        {
+          "number": "7.24",
+          "caption": "Intervertebral Disc The bodies of adjacent vertebrae are separated and united by an intervertebral disc, which provides "
+        },
+        {
+          "number": "7.25",
+          "caption": "Cervical Vertebrae A typical cervical vertebra has a small body, a bifid spinous process, transverse processes that have a "
+        },
+        {
+          "number": "7.26",
+          "caption": "Thoracic Vertebrae A typical thoracic vertebra is distinguished by the spinous process, which is long and projects downward "
+        },
+        {
+          "number": "7.27",
+          "caption": "Rib Articulation in Thoracic Vertebrae Thoracic vertebrae have superior and inferior articular facets on the vertebral body "
+        },
+        {
+          "number": "7.28",
+          "caption": "Lumbar Vertebrae Lumbar vertebrae are characterized by having a large, thick body and a short, rounded spinous process. "
+        },
+        {
+          "number": "7.29",
+          "caption": "Sacrum and Coccyx The sacrum is formed from the fusion of five sacral vertebrae, whose lines of fusion are indicated by the "
+        },
+        {
+          "number": "7.30",
+          "caption": "Herniated Intervertebral Disc Weakening of the anulus fibrosus can result in herniation (protrusion) of the nucleus pulposus "
+        },
+        {
+          "number": "7.31",
+          "caption": "Ligaments of Vertebral Column The anterior longitudinal ligament runs the length of the vertebral column, uniting the "
+        }
+      ],
+      "characters": 28561,
+      "prerequisites": [
+        "6.3",
+        "7.1"
+      ],
+      "examWeight": 14
+    },
+    {
+      "id": "7.4",
+      "chapter": 7,
+      "title": "The Thoracic Cage",
+      "pdfStart": 283,
+      "pdfEnd": 284,
+      "objectives": [
+        {
+          "id": "7.4.1",
+          "text": "Discuss the components that make up the thoracic cage"
+        },
+        {
+          "id": "7.4.2",
+          "text": "Identify the parts of the sternum and define the sternal angle"
+        },
+        {
+          "id": "7.4.3",
+          "text": "Discuss the parts of a rib and rib classifications"
+        }
+      ],
+      "figures": [
+        {
+          "number": "7.32",
+          "caption": "Thoracic Cage The thoracic cage is formed by the (a) sternum and (b) 12 pairs of ribs with their costal cartilages. The ribs are "
+        }
+      ],
+      "characters": 4906,
+      "prerequisites": [
+        "7.3"
+      ],
+      "examWeight": 6
+    },
+    {
+      "id": "7.5",
+      "chapter": 7,
+      "title": "Embryonic Development of the Axial Skeleton",
+      "pdfStart": 284,
+      "pdfEnd": 287,
+      "objectives": [
+        {
+          "id": "7.5.1",
+          "text": "Discuss the two types of embryonic bone development within the skull"
+        },
+        {
+          "id": "7.5.2",
+          "text": "Describe the development of the vertebral column and thoracic cage"
+        }
+      ],
+      "figures": [
+        {
+          "number": "7.33",
+          "caption": "Newborn Skull The bones of the newborn skull are not fully ossified and are separated by large areas called fontanelles, "
+        }
+      ],
+      "characters": 8447,
+      "prerequisites": [
+        "6.4",
+        "7.2",
+        "7.3"
+      ],
+      "examWeight": 6
+    },
+    {
+      "id": "8.1",
+      "chapter": 8,
+      "title": "The Pectoral Girdle",
+      "pdfStart": 299,
+      "pdfEnd": 303,
+      "objectives": [
+        {
+          "id": "8.1.1",
+          "text": "Describe the bones that form the pectoral girdle"
+        },
+        {
+          "id": "8.1.2",
+          "text": "List the functions of the pectoral girdle"
+        }
+      ],
+      "figures": [
+        {
+          "number": "8.1",
+          "caption": "Dancer The appendicular skeleton consists of the upper and lower limb bones, the bones of the hands and feet, and the "
+        },
+        {
+          "number": "8.2",
+          "caption": "Axial and Appendicular Skeletons The axial skeleton forms the central axis of the body and consists of the skull, vertebral "
+        },
+        {
+          "number": "8.3",
+          "caption": "Pectoral Girdle The pectoral girdle consists of the clavicle and the scapula, which serve to attach the upper limb to the "
+        },
+        {
+          "number": "8.4",
+          "caption": "Scapula The isolated scapula is shown here from its anterior (deep) side and its posterior (superficial) side. "
+        }
+      ],
+      "characters": 10367,
+      "prerequisites": [
+        "7.1",
+        "6.3"
+      ],
+      "examWeight": 6
+    },
+    {
+      "id": "8.2",
+      "chapter": 8,
+      "title": "Bones of the Upper Limb",
+      "pdfStart": 303,
+      "pdfEnd": 311,
+      "objectives": [
+        {
+          "id": "8.2.1",
+          "text": "Identify the divisions of the upper limb and describe the bones in each region"
+        },
+        {
+          "id": "8.2.2",
+          "text": "List the bones and bony landmarks that articulate at each joint of the upper limb"
+        }
+      ],
+      "figures": [
+        {
+          "number": "8.10",
+          "caption": "Hand During Gripping During tight gripping—compare (b) to (a)—the fourth and, particularly, the fifth metacarpal bones are "
+        },
+        {
+          "number": "8.11",
+          "caption": "Fractures of the Humerus and Radius Falls or direct blows can result in fractures of the surgical neck or shaft of the "
+        },
+        {
+          "number": "8.5",
+          "caption": "Humerus and Elbow Joint The humerus is the single bone of the upper arm region. It articulates with the radius and ulna "
+        },
+        {
+          "number": "8.6",
+          "caption": "Ulna and Radius The ulna is located on the medial side of the forearm, and the radius is on the lateral side. These bones are "
+        },
+        {
+          "number": "8.7",
+          "caption": "Bones of the Wrist and Hand The eight carpal bones form the base of the hand. These are arranged into proximal and distal "
+        },
+        {
+          "number": "8.8",
+          "caption": "Bones of the Hand This radiograph shows the position of the bones within the hand. Note the carpal bones that form the base "
+        },
+        {
+          "number": "8.9",
+          "caption": "Carpal Tunnel The carpal tunnel is the passageway by which nine muscle tendons and a major nerve enter the hand from the "
+        }
+      ],
+      "characters": 18765,
+      "prerequisites": [
+        "8.1"
+      ],
+      "examWeight": 14
+    },
+    {
+      "id": "8.3",
+      "chapter": 8,
+      "title": "The Pelvic Girdle and Pelvis",
+      "pdfStart": 311,
+      "pdfEnd": 316,
+      "objectives": [
+        {
+          "id": "8.3.1",
+          "text": "Define the pelvic girdle and describe the bones and ligaments of the pelvis"
+        },
+        {
+          "id": "8.3.2",
+          "text": "Explain the three regions of the hip bone and identify their bony landmarks"
+        },
+        {
+          "id": "8.3.3",
+          "text": "Describe the openings of the pelvis and the boundaries of the greater and lesser pelvis"
+        }
+      ],
+      "figures": [
+        {
+          "number": "8.12",
+          "caption": "Pelvis The pelvic girdle is formed by a single hip bone. The hip bone attaches the lower limb to the axial skeleton through its "
+        },
+        {
+          "number": "8.13",
+          "caption": "The Hip Bone The adult hip bone consists of three regions. The ilium forms the large, fan-shaped superior portion, the "
+        },
+        {
+          "number": "8.14",
+          "caption": "Ligaments of the Pelvis The posterior sacroiliac ligament supports the sacroiliac joint. The sacrospinous ligament spans the "
+        },
+        {
+          "number": "8.15",
+          "caption": "Male and Female Pelvis The female pelvis is adapted for childbirth and is broader, with a larger subpubic angle, a rounder "
+        }
+      ],
+      "characters": 15862,
+      "prerequisites": [
+        "7.3",
+        "7.1"
+      ],
+      "examWeight": 10
+    },
+    {
+      "id": "8.4",
+      "chapter": 8,
+      "title": "Bones of the Lower Limb",
+      "pdfStart": 316,
+      "pdfEnd": 323,
+      "objectives": [
+        {
+          "id": "8.4.1",
+          "text": "Identify the divisions of the lower limb and describe the bones of each region"
+        },
+        {
+          "id": "8.4.2",
+          "text": "Describe the bones and bony landmarks that articulate at each joint of the lower limb"
+        }
+      ],
+      "figures": [
+        {
+          "number": "8.16",
+          "caption": "Femur and Patella The femur is the single bone of the thigh region. It articulates superiorly with the hip bone at the hip joint, "
+        },
+        {
+          "number": "8.17",
+          "caption": "The Q-Angle The Q-angle is a measure of the amount of lateral deviation of the femur from the vertical line of the tibia. Adult "
+        },
+        {
+          "number": "8.18",
+          "caption": "Tibia and Fibula The tibia is the larger, weight-bearing bone located on the medial side of the leg. The fibula is the slender "
+        },
+        {
+          "number": "8.19",
+          "caption": "Bones of the Foot The bones of the foot are divided into three groups. The posterior foot is formed by the seven tarsal bones. "
+        }
+      ],
+      "characters": 20330,
+      "prerequisites": [
+        "8.3"
+      ],
+      "examWeight": 14
+    },
+    {
+      "id": "8.5",
+      "chapter": 8,
+      "title": "Development of the Appendicular Skeleton",
+      "pdfStart": 323,
+      "pdfEnd": 327,
+      "objectives": [
+        {
+          "id": "8.5.1",
+          "text": "Describe the growth and development of the embryonic limb buds"
+        },
+        {
+          "id": "8.5.2",
+          "text": "Discuss the appearance of primary and secondary ossification centers"
+        }
+      ],
+      "figures": [
+        {
+          "number": "8.20",
+          "caption": "Embryo at Seven Weeks Limb buds are visible in an embryo at the end of the seventh week of development (embryo derived "
+        },
+        {
+          "number": "8.21",
+          "caption": "Clubfoot Clubfoot is a common deformity of the ankle and foot that is present at birth. Most cases are corrected without "
+        }
+      ],
+      "characters": 10582,
+      "prerequisites": [
+        "6.4",
+        "7.5"
+      ],
+      "examWeight": 6
+    },
+    {
+      "id": "9.1",
+      "chapter": 9,
+      "title": "Classification of Joints",
+      "pdfStart": 340,
+      "pdfEnd": 342,
+      "objectives": [
+        {
+          "id": "9.1.1",
+          "text": "Distinguish between the functional and structural classifications for joints"
+        },
+        {
+          "id": "9.1.2",
+          "text": "Describe the three functional types of joints and give an example of each"
+        },
+        {
+          "id": "9.1.3",
+          "text": "List the three types of diarthrodial joints"
+        }
+      ],
+      "figures": [
+        {
+          "number": "9.2",
+          "caption": "Suture Joints of Skull The suture joints of the skull are an example of a synarthrosis, an immobile or essentially immobile joint. "
+        },
+        {
+          "number": "9.3",
+          "caption": "Intervertebral Disc An intervertebral disc unites the bodies of adjacent vertebrae within the vertebral column. Each disc "
+        },
+        {
+          "number": "9.4",
+          "caption": "Multiaxial Joint A multiaxial joint, such as the hip joint, allows for three types of movement: anterior-posterior, medial-lateral, "
+        }
+      ],
+      "characters": 6975,
+      "prerequisites": [
+        "6.3"
+      ],
+      "examWeight": 5
+    },
+    {
+      "id": "9.2",
+      "chapter": 9,
+      "title": "Fibrous Joints",
+      "pdfStart": 342,
+      "pdfEnd": 345,
+      "objectives": [
+        {
+          "id": "9.2.1",
+          "text": "Describe the structural features of fibrous joints"
+        },
+        {
+          "id": "9.2.2",
+          "text": "Distinguish between a suture, syndesmosis, and gomphosis"
+        },
+        {
+          "id": "9.2.3",
+          "text": "Give an example of each type of fibrous joint"
+        }
+      ],
+      "figures": [
+        {
+          "number": "9.5",
+          "caption": "Fibrous Joints Fibrous joints form strong connections between bones. (a) Sutures join most bones of the skull. (b) An "
+        },
+        {
+          "number": "9.6",
+          "caption": "The Newborn Skull The fontanelles of a newborn’s skull are broad areas of fibrous connective tissue that form fibrous joints "
+        }
+      ],
+      "characters": 6828,
+      "prerequisites": [
+        "9.1",
+        "7.2",
+        "8.2"
+      ],
+      "examWeight": 5
+    },
+    {
+      "id": "9.3",
+      "chapter": 9,
+      "title": "Cartilaginous Joints",
+      "pdfStart": 345,
+      "pdfEnd": 346,
+      "objectives": [
+        {
+          "id": "9.3.1",
+          "text": "Describe the structural features of cartilaginous joints"
+        },
+        {
+          "id": "9.3.2",
+          "text": "Distinguish between a synchondrosis and symphysis"
+        },
+        {
+          "id": "9.3.3",
+          "text": "Give an example of each type of cartilaginous joint"
+        }
+      ],
+      "figures": [
+        {
+          "number": "9.7",
+          "caption": "Cartilaginous Joints At cartilaginous joints, bones are united by hyaline cartilage to form a synchondrosis or by fibrocartilage "
+        }
+      ],
+      "characters": 6083,
+      "prerequisites": [
+        "9.1",
+        "6.3",
+        "7.3"
+      ],
+      "examWeight": 5
+    },
+    {
+      "id": "9.4",
+      "chapter": 9,
+      "title": "Synovial Joints",
+      "pdfStart": 346,
+      "pdfEnd": 353,
+      "objectives": [
+        {
+          "id": "9.4.1",
+          "text": "Describe the structural features of a synovial joint"
+        },
+        {
+          "id": "9.4.2",
+          "text": "Discuss the function of additional structures associated with synovial joints"
+        },
+        {
+          "id": "9.4.3",
+          "text": "List the six types of synovial joints and give an example of each"
+        }
+      ],
+      "figures": [
+        {
+          "number": "9.10",
+          "caption": "Types of Synovial Joints The six types of synovial joints allow the body to move in a variety of ways. (a) Pivot joints allow for "
+        },
+        {
+          "number": "9.8",
+          "caption": "Synovial Joints Synovial joints allow for smooth movements between the adjacent bones. The joint is surrounded by an "
+        },
+        {
+          "number": "9.9",
+          "caption": "Bursae Bursae are fluid-filled sacs that serve to prevent friction between skin, muscle, or tendon and an underlying bone. "
+        }
+      ],
+      "characters": 21088,
+      "prerequisites": [
+        "9.1",
+        "6.3"
+      ],
+      "examWeight": 10
+    },
+    {
+      "id": "9.5",
+      "chapter": 9,
+      "title": "Types of Body Movements",
+      "pdfStart": 353,
+      "pdfEnd": 358,
+      "objectives": [
+        {
+          "id": "9.5.1",
+          "text": "Define the different types of body movements"
+        },
+        {
+          "id": "9.5.2",
+          "text": "Identify the joints that allow for these motions"
+        }
+      ],
+      "figures": [
+        {
+          "number": "9.11",
+          "caption": "Osteoarthritis Osteoarthritis of a synovial joint results from aging or prolonged joint wear and tear. These cause erosion "
+        },
+        {
+          "number": "9.12",
+          "caption": "Movements of the Body, Part 1 Synovial joints give the body many ways in which to move. (a)–(b) Flexion and extension "
+        },
+        {
+          "number": "9.13",
+          "caption": "Movements of the Body, Part 2 (g) Supination of the forearm turns the hand to the palm forward position in which the radius "
+        }
+      ],
+      "characters": 17549,
+      "prerequisites": [
+        "9.4",
+        "8.2",
+        "8.4"
+      ],
+      "examWeight": 8
+    },
+    {
+      "id": "9.6",
+      "chapter": 9,
+      "title": "Anatomy of Selected Synovial Joints",
+      "pdfStart": 358,
+      "pdfEnd": 370,
+      "objectives": [
+        {
+          "id": "9.6.1",
+          "text": "Describe the bones that articulate together to form selected synovial joints"
+        },
+        {
+          "id": "9.6.2",
+          "text": "Discuss the movements available at each joint"
+        },
+        {
+          "id": "9.6.3",
+          "text": "Describe the structures that support and prevent excess movements at each joint"
+        }
+      ],
+      "figures": [
+        {
+          "number": "9.14",
+          "caption": "Atlantoaxial Joint The atlantoaxial joint is a pivot type of joint between the dens portion of the axis (C2 vertebra) and the "
+        },
+        {
+          "number": "9.15",
+          "caption": "Temporomandibular Joint The temporomandibular joint is the articulation between the temporal bone of the skull and the "
+        },
+        {
+          "number": "9.16",
+          "caption": "Glenohumeral Joint The glenohumeral (shoulder) joint is a ball-and-socket joint that provides the widest range of motions. It "
+        },
+        {
+          "number": "9.17",
+          "caption": "Elbow Joint (a) The elbow is a hinge joint that allows only for flexion and extension of the forearm. (b) It is supported by the "
+        },
+        {
+          "number": "9.18",
+          "caption": "Hip Joint (a) The ball-and-socket joint of the hip is a multiaxial joint that provides both stability and a wide range of motion. "
+        },
+        {
+          "number": "9.19",
+          "caption": "Knee Joint (a) The knee joint is the largest joint of the body. (b)–(c) It is supported by the tibial and fibular collateral "
+        },
+        {
+          "number": "9.20",
+          "caption": "Knee Injury A strong blow to the lateral side of the extended knee will cause three injuries, in sequence: tearing of the "
+        },
+        {
+          "number": "9.21",
+          "caption": "Ankle Joint The talocrural (ankle) joint is a uniaxial hinge joint that only allows for dorsiflexion or plantar flexion of the foot. "
+        }
+      ],
+      "characters": 32151,
+      "prerequisites": [
+        "9.4",
+        "9.5",
+        "8.2",
+        "8.4"
+      ],
+      "examWeight": 13
+    },
+    {
+      "id": "9.7",
+      "chapter": 9,
+      "title": "Development of Joints",
+      "pdfStart": 370,
+      "pdfEnd": 372,
+      "objectives": [
+        {
+          "id": "9.7.1",
+          "text": "Describe the two processes by which mesenchyme can give rise to bone"
+        },
+        {
+          "id": "9.7.2",
+          "text": "Discuss the process by which joints of the limbs are formed"
+        }
+      ],
+      "figures": [],
+      "characters": 5136,
+      "prerequisites": [
+        "6.4",
+        "8.5",
+        "9.1"
+      ],
+      "examWeight": 4
+    }
+  ],
+  "cumulativeLength": 100
+}

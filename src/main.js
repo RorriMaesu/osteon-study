@@ -9,6 +9,7 @@ import {terms,allTerms,textbookTerms,regions} from './data.js';
 import {AnatomyViewer} from './viewer.js';
 import {initPractice} from './practice.js';
 import {initStudy} from './study.js';
+import {initExams} from './exam-ui.js';
 import {initPrecision,plateHTML} from './precision.js';
 import {initReader} from './reader.js';
 import {labels,coverage,pointKinds} from './representations.js';
@@ -119,6 +120,7 @@ initPractice({viewer,setDivision:changeDivision,setView,selectTerm,dialog,toast,
 initStudy({viewer,setView,selectTerm,dialog,toast,escape});
 const precision=initPrecision({viewer,setDivision:changeDivision,setView,dialog,toast,escape});
 const labList=initLabList({viewer,setView,selectTerm,precision,toast,escape});
+initExams({setView,dialog,toast,escape});
 initReader({setView,escape});
 initTutor({escape,toast});
 landmarkUI=initLandmarks({viewer,selectTerm,setView,dialog,escape});

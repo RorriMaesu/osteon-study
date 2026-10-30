@@ -1,3 +1,12 @@
+# 2026-10-30 — Complete chapter 6–9 curriculum and mixed-format exams
+
+- Expand the learning path to all 24 sections, preserving all 74 source learning objectives and prerequisite links.
+- Include all 172 chapter pages with figures and extracted text, plus eight supplemental reference pages. Expand the glossary to 544 terms.
+- Add 256 mixed-format exam items, retaining 104 earlier supplementary questions and their identifiers.
+- Add four coverage-aware 50-question chapter exams, a 100-question cumulative exam, full-bank review, save/resume, flags, delayed exam feedback and source-linked reports.
+- Preserve assistance across reload and deduplicate recorded attempts. Extend lesson backups, progress topics and local tutor context to chapters 6–9.
+- Keep desktop exam launchers together and question navigation paged, with a natural phone answering flow. No model geometry changed.
+
 # 2026-10-29 — Required BI 231 bone-list test
 
 - Reconcile the supplied two-page list into 152 mapped source items/context groups and all 177 original study IDs; publish the item-by-item checklist and review report.

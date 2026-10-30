@@ -1657,5 +1657,2768 @@
     "cue": "extension from the temporal bone that forms the posterior portion of the zygomatic arch",
     "topic": "Chapter 7",
     "chapter": 7
+  },
+  {
+    "id": "g8-acetabulum",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "acetabulum",
+    "cue": "large, cup-shaped cavity located on the lateral side of the hip bone; formed by the junction of the ilium, pubis, and ischium portions of the hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-acromial-end-of-the-clavicle",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "acromial end of the clavicle",
+    "cue": "lateral end of the clavicle that articulates with the acromion of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-acromial-process",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "acromial process",
+    "cue": "acromion of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-acromioclavicular-joint",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "acromioclavicular joint",
+    "cue": "articulation between the acromion of the scapula and the acromial end of the clavicle",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-acromion",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "acromion",
+    "cue": "flattened bony process that extends laterally from the scapular spine to form the bony tip of the shoulder",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-adductor-tubercle",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "adductor tubercle",
+    "cue": "small, bony bump located on the superior aspect of the medial epicondyle of the femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-anatomical-neck",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "anatomical neck",
+    "cue": "line on the humerus located around the outside margin of the humeral head",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ankle-joint",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "ankle joint",
+    "cue": "joint that separates the leg and foot portions of the lower limb; formed by the articulations between the talus bone of the foot inferiorly, and the distal end of the tibia, medial malleolus of the tibia, and lateral malleolus of the fibula superiorly",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-anterior-border-of-the-tibia",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "anterior border of the tibia",
+    "cue": "narrow, anterior margin of the tibia that extends inferiorly from the tibial tuberosity",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-anterior-inferior-iliac-spine",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "anterior inferior iliac spine",
+    "cue": "small, bony projection located on the anterior margin of the ilium, below the anterior superior iliac spine",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-anterior-sacroiliac-ligament",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "anterior sacroiliac ligament",
+    "cue": "strong ligament between the sacrum and the ilium portions of the hip bone that supports the anterior side of the sacroiliac joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-anterior-superior-iliac-spine",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "anterior superior iliac spine",
+    "cue": "rounded, anterior end of the iliac crest",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-apical-ectodermal-ridge",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "apical ectodermal ridge",
+    "cue": "enlarged ridge of ectoderm at the distal end of a limb bud that stimulates growth and elongation of the limb",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-arcuate-line-of-the-ilium",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "arcuate line of the ilium",
+    "cue": "smooth ridge located at the inferior margin of the iliac fossa; forms the lateral portion of the pelvic brim",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-arm",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "arm",
+    "cue": "region of the upper limb located between the shoulder and elbow joints; contains the humerus bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-auricular-surface-of-the-ilium",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "auricular surface of the ilium",
+    "cue": "roughened area located on the posterior, medial side of the ilium of the hip bone; articulates with the auricular surface of the sacrum to form the sacroiliac joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-base-of-the-metatarsal-bone",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "base of the metatarsal bone",
+    "cue": "expanded, proximal end of each metatarsal bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-bicipital-groove",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "bicipital groove",
+    "cue": "intertubercular groove; narrow groove located between the greater and lesser tubercles of the humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-calcaneus",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "calcaneus",
+    "cue": "heel bone; posterior, inferior tarsal bone that forms the heel of the foot",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-capitate",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "capitate",
+    "cue": "from the lateral side, the third of the four distal carpal bones; articulates with the scaphoid and lunate proximally, the trapezoid laterally, the hamate medially, and primarily with the third metacarpal distally",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-capitulum",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "capitulum",
+    "cue": "knob-like bony structure located anteriorly on the lateral, distal end of the humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-carpal-bone",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "carpal bone",
+    "cue": "one of the eight small bones that form the wrist and base of the hand; these are grouped as a proximal row consisting of (from lateral to medial) the scaphoid, lunate, triquetrum, and pisiform bones, and a distal row containing (from lateral to medial) the trapezium, trapezoid, capitate, and hamate bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-carpal-tunnel",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "carpal tunnel",
+    "cue": "passageway between the anterior forearm and hand formed by the carpal bones and flexor retinaculum",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-carpometacarpal-joint",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "carpometacarpal joint",
+    "cue": "articulation between one of the carpal bones in the distal row and a metacarpal bone of the hand",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-clavicle",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "clavicle",
+    "cue": "collarbone; elongated bone that articulates with the manubrium of the sternum medially and the acromion of the scapula laterally",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-coracoclavicular-ligament",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "coracoclavicular ligament",
+    "cue": "strong band of connective tissue that anchors the coracoid process of the scapula to the lateral clavicle; provides important indirect support for the acromioclavicular joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-coracoid-process",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "coracoid process",
+    "cue": "short, hook-like process that projects anteriorly and laterally from the superior margin of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-coronoid-fossa",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "coronoid fossa",
+    "cue": "depression on the anterior surface of the humerus above the trochlea; this space receives the coronoid process of the ulna when the elbow is maximally flexed",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-coronoid-process-of-the-ulna",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "coronoid process of the ulna",
+    "cue": "projecting bony lip located on the anterior, proximal ulna; forms the inferior margin of the trochlear notch",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-costoclavicular-ligament",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "costoclavicular ligament",
+    "cue": "band of connective tissue that unites the medial clavicle with the first rib",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-coxal-bone",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "coxal bone",
+    "cue": "hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-cuboid",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "cuboid",
+    "cue": "tarsal bone that articulates posteriorly with the calcaneus bone, medially with the lateral cuneiform bone, and anteriorly with the fourth and fifth metatarsal bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-deltoid-tuberosity",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "deltoid tuberosity",
+    "cue": "roughened, V-shaped region located laterally on the mid-shaft of the humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-distal-radioulnar-joint",
+    "chapter": 8,
+    "pdf": 327,
+    "printed": 311,
+    "name": "distal radioulnar joint",
+    "cue": "articulation between the head of the ulna and the ulnar notch of the radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-distal-tibiofibular-joint",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "distal tibiofibular joint",
+    "cue": "articulation between the distal fibula and the fibular notch of the tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-elbow-joint",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "elbow joint",
+    "cue": "joint located between the upper arm and forearm regions of the upper limb; formed by the articulations between the trochlea of the humerus and the trochlear notch of the ulna, and the capitulum of the humerus and the head of the radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-femur",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "femur",
+    "cue": "thigh bone; the single bone of the thigh",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-fibula",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "fibula",
+    "cue": "thin, non-weight-bearing bone found on the lateral side of the leg",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-fibular-notch",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "fibular notch",
+    "cue": "wide groove on the lateral side of the distal tibia for articulation with the fibula at the distal tibiofibular joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-flexor-retinaculum",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "flexor retinaculum",
+    "cue": "strong band of connective tissue at the anterior wrist that spans the top of the U- shaped grouping of the carpal bones to form the roof of the carpal tunnel",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-foot",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "foot",
+    "cue": "portion of the lower limb located distal to the ankle joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-forearm",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "forearm",
+    "cue": "region of the upper limb located between the elbow and wrist joints; contains the radius and ulna bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-fossa",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "fossa",
+    "cue": "(plural = fossae) shallow depression on the surface of a bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-fovea-capitis",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "fovea capitis",
+    "cue": "minor indentation on the head of the femur that serves as the site of attachment for the ligament to the head of the femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-glenohumeral-joint",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "glenohumeral joint",
+    "cue": "shoulder joint; formed by the articulation between the glenoid cavity of the scapula and the head of the humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-glenoid-cavity",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "glenoid cavity",
+    "cue": "(also, glenoid fossa) shallow depression located on the lateral scapula, between the superior and lateral borders",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-gluteal-tuberosity",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "gluteal tuberosity",
+    "cue": "roughened area on the posterior side of the proximal femur, extending inferiorly from the base of the greater trochanter",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-greater-pelvis",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "greater pelvis",
+    "cue": "(also, greater pelvic cavity or false pelvis) broad space above the pelvic brim defined laterally by the fan-like portion of the upper ilium",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-greater-sciatic-foramen",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "greater sciatic foramen",
+    "cue": "pelvic opening formed by the greater sciatic notch of the hip bone, the sacrum, and the sacrospinous ligament",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-greater-sciatic-notch",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "greater sciatic notch",
+    "cue": "large, U-shaped indentation located on the posterior margin of the ilium, superior to the ischial spine",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-greater-trochanter",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "greater trochanter",
+    "cue": "large, bony expansion of the femur that projects superiorly from the base of the femoral neck",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-greater-tubercle",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "greater tubercle",
+    "cue": "enlarged prominence located on the lateral side of the proximal humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-hallux",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "hallux",
+    "cue": "big toe; digit 1 of the foot",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-hamate",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "hamate",
+    "cue": "from the lateral side, the fourth of the four distal carpal bones; articulates with the lunate and triquetrum proximally, the fourth and fifth metacarpals distally, and the capitate laterally",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-hand",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "hand",
+    "cue": "region of the upper limb distal to the wrist joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-head-of-the-femur",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "head of the femur",
+    "cue": "rounded, proximal end of the femur that articulates with the acetabulum of the hip bone to form the hip joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-head-of-the-fibula",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "head of the fibula",
+    "cue": "small, knob-like, proximal end of the fibula; articulates with the inferior aspect of the lateral condyle of the tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-head-of-the-humerus",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "head of the humerus",
+    "cue": "smooth, rounded region on the medial side of the proximal humerus; articulates with the glenoid fossa of the scapula to form the glenohumeral (shoulder) joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-head-of-the-metatarsal-bone",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "head of the metatarsal bone",
+    "cue": "expanded, distal end of each metatarsal bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-head-of-the-radius",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "head of the radius",
+    "cue": "disc-shaped structure that forms the proximal end of the radius; articulates with the capitulum of the humerus as part of the elbow joint, and with the radial notch of the ulna as part of the proximal radioulnar joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-head-of-the-ulna",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "head of the ulna",
+    "cue": "small, rounded distal end of the ulna; articulates with the ulnar notch of the distal radius, forming the distal radioulnar joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-hip-bone",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "hip bone",
+    "cue": "coxal bone; single bone that forms the pelvic girdle; consists of three areas, the ilium, ischium, and pubis",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-hip-joint",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "hip joint",
+    "cue": "joint located at the proximal end of the lower limb; formed by the articulation between the acetabulum of the hip bone and the head of the femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-hook-of-the-hamate-bone",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "hook of the hamate bone",
+    "cue": "bony extension located on the anterior side of the hamate carpal bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-humerus",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "humerus",
+    "cue": "single bone of the upper arm",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-iliac-crest",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "iliac crest",
+    "cue": "curved, superior margin of the ilium",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-iliac-fossa",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "iliac fossa",
+    "cue": "shallow depression found on the anterior and medial surfaces of the upper ilium",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ilium",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "ilium",
+    "cue": "superior portion of the hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-inferior-angle-of-the-scapula",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "inferior angle of the scapula",
+    "cue": "inferior corner of the scapula located where the medial and lateral borders meet",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-inferior-pubic-ramus",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "inferior pubic ramus",
+    "cue": "narrow segment of bone that passes inferiorly and laterally from the pubic body; joins with the ischial ramus to form the ischiopubic ramus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-infraglenoid-tubercle",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "infraglenoid tubercle",
+    "cue": "small bump or roughened area located on the lateral border of the scapula, near the inferior margin of the glenoid cavity",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-infraspinous-fossa",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "infraspinous fossa",
+    "cue": "broad depression located on the posterior scapula, inferior to the spine",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-intercondylar-eminence",
+    "chapter": 8,
+    "pdf": 328,
+    "printed": 312,
+    "name": "intercondylar eminence",
+    "cue": "irregular elevation on the superior end of the tibia, between the articulating surfaces of the medial and lateral condyles",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-intercondylar-fossa",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "intercondylar fossa",
+    "cue": "deep depression on the posterior side of the distal femur that separates the medial and lateral condyles",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-intermediate-cuneiform",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "intermediate cuneiform",
+    "cue": "middle of the three cuneiform tarsal bones; articulates posteriorly with the navicular bone, medially with the medial cuneiform bone, laterally with the lateral cuneiform bone, and anteriorly with the second metatarsal bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-interosseous-border-of-the-fibula",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "interosseous border of the fibula",
+    "cue": "small ridge running down the medial side of the fibular shaft; for attachment of the interosseous membrane between the fibula and tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-interosseous-border-of-the-radius",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "interosseous border of the radius",
+    "cue": "narrow ridge located on the medial side of the radial shaft; for attachment of the interosseous membrane between the ulna and radius bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-interosseous-border-of-the-tibia",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "interosseous border of the tibia",
+    "cue": "small ridge running down the lateral side of the tibial shaft; for attachment of the interosseous membrane between the tibia and fibula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-interosseous-border-of-the-ulna",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "interosseous border of the ulna",
+    "cue": "narrow ridge located on the lateral side of the ulnar shaft; for attachment of the interosseous membrane between the ulna and radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-interosseous-membrane-of-the-forearm",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "interosseous membrane of the forearm",
+    "cue": "sheet of dense connective tissue that unites the radius and ulna bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-interosseous-membrane-of-the-leg",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "interosseous membrane of the leg",
+    "cue": "sheet of dense connective tissue that unites the shafts of the tibia and fibula bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-interphalangeal-joint",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "interphalangeal joint",
+    "cue": "articulation between adjacent phalanx bones of the hand or foot digits",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-intertrochanteric-crest",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "intertrochanteric crest",
+    "cue": "short, prominent ridge running between the greater and lesser trochanters on the posterior side of the proximal femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-intertrochanteric-line",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "intertrochanteric line",
+    "cue": "small ridge running between the greater and lesser trochanters on the anterior side of the proximal femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-intertubercular-groove-sulcus",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "intertubercular groove (sulcus)",
+    "cue": "bicipital groove; narrow groove located between the greater and lesser tubercles of the humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ischial-ramus",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "ischial ramus",
+    "cue": "bony extension projecting anteriorly and superiorly from the ischial tuberosity; joins with the inferior pubic ramus to form the ischiopubic ramus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ischial-spine",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "ischial spine",
+    "cue": "pointed, bony projection from the posterior margin of the ischium that separates the greater sciatic notch and lesser sciatic notch",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ischial-tuberosity",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "ischial tuberosity",
+    "cue": "large, roughened protuberance that forms the posteroinferior portion of the hip bone; weight-bearing region of the pelvis when sitting",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ischiopubic-ramus",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "ischiopubic ramus",
+    "cue": "narrow extension of bone that connects the ischial tuberosity to the pubic body; formed by the junction of the ischial ramus and inferior pubic ramus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ischium",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "ischium",
+    "cue": "posteroinferior portion of the hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-knee-joint",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "knee joint",
+    "cue": "joint that separates the thigh and leg portions of the lower limb; formed by the articulations between the medial and lateral condyles of the femur, and the medial and lateral condyles of the tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-border-of-the-scapula",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral border of the scapula",
+    "cue": "diagonally oriented lateral margin of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-condyle-of-the-femur",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral condyle of the femur",
+    "cue": "smooth, articulating surface that forms the distal and posterior sides of the lateral expansion of the distal femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-condyle-of-the-tibia",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral condyle of the tibia",
+    "cue": "lateral, expanded region of the proximal tibia that includes the smooth surface that articulates with the lateral condyle of the femur as part of the knee joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-cuneiform",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral cuneiform",
+    "cue": "most lateral of the three cuneiform tarsal bones; articulates posteriorly with the navicular bone, medially with the intermediate cuneiform bone, laterally with the cuboid bone, and anteriorly with the third metatarsal bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-epicondyle-of-the-femur",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral epicondyle of the femur",
+    "cue": "roughened area of the femur located on the lateral side of the lateral condyle",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-epicondyle-of-the-humerus",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral epicondyle of the humerus",
+    "cue": "small projection located on the lateral side of the distal humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-malleolus",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral malleolus",
+    "cue": "expanded distal end of the fibula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lateral-supracondylar-ridge",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lateral supracondylar ridge",
+    "cue": "narrow, bony ridge located along the lateral side of the distal humerus, superior to the lateral epicondyle",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-leg",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "leg",
+    "cue": "portion of the lower limb located between the knee and ankle joints",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lesser-pelvis",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lesser pelvis",
+    "cue": "(also, lesser pelvic cavity or true pelvis) narrow space located within the pelvis, defined superiorly by the pelvic brim (pelvic inlet) and inferiorly by the pelvic outlet",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lesser-sciatic-foramen",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lesser sciatic foramen",
+    "cue": "pelvic opening formed by the lesser sciatic notch of the hip bone, the sacrospinous ligament, and the sacrotuberous ligament",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lesser-sciatic-notch",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lesser sciatic notch",
+    "cue": "shallow indentation along the posterior margin of the ischium, inferior to the ischial spine",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lesser-trochanter",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lesser trochanter",
+    "cue": "small, bony projection on the medial side of the proximal femur, at the base of the femoral neck",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lesser-tubercle",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "lesser tubercle",
+    "cue": "small, bony prominence located on anterior side of the proximal humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ligament-of-the-head-of-the-femur",
+    "chapter": 8,
+    "pdf": 329,
+    "printed": 313,
+    "name": "ligament of the head of the femur",
+    "cue": "ligament that spans the acetabulum of the hip bone and the fovea capitis of the femoral head",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-limb-bud",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "limb bud",
+    "cue": "small elevation that appears on the lateral side of the embryo during the fourth or fifth week of development, which gives rise to an upper or lower limb",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-linea-aspera",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "linea aspera",
+    "cue": "longitudinally running bony ridge located in the middle third of the posterior femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-lunate",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "lunate",
+    "cue": "from the lateral side, the second of the four proximal carpal bones; articulates with the radius proximally, the capitate and hamate distally, the scaphoid laterally, and the triquetrum medially",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-medial-border-of-the-scapula",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "medial border of the scapula",
+    "cue": "elongated, medial margin of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-medial-condyle-of-the-femur",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "medial condyle of the femur",
+    "cue": "smooth, articulating surface that forms the distal and posterior sides of the medial expansion of the distal femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-medial-condyle-of-the-tibia",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "medial condyle of the tibia",
+    "cue": "medial, expanded region of the proximal tibia that includes the smooth surface that articulates with the medial condyle of the femur as part of the knee joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-medial-cuneiform",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "medial cuneiform",
+    "cue": "most medial of the three cuneiform tarsal bones; articulates posteriorly with the navicular bone, laterally with the intermediate cuneiform bone, and anteriorly with the first and second metatarsal bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-medial-epicondyle-of-the-femur",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "medial epicondyle of the femur",
+    "cue": "roughened area of the distal femur located on the medial side of the medial condyle",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-medial-epicondyle-of-the-humerus",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "medial epicondyle of the humerus",
+    "cue": "enlarged projection located on the medial side of the distal humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-medial-malleolus",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "medial malleolus",
+    "cue": "bony expansion located on the medial side of the distal tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-metacarpal-bone",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "metacarpal bone",
+    "cue": "one of the five long bones that form the palm of the hand; numbered 1–5, starting on the lateral (thumb) side of the hand",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-metacarpophalangeal-joint",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "metacarpophalangeal joint",
+    "cue": "articulation between the distal end of a metacarpal bone of the hand and a proximal phalanx bone of the thumb or a finger",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-metatarsal-bone",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "metatarsal bone",
+    "cue": "one of the five elongated bones that forms the anterior half of the foot; numbered 1–5, starting on the medial side of the foot",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-metatarsophalangeal-joint",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "metatarsophalangeal joint",
+    "cue": "articulation between a metatarsal bone of the foot and the proximal phalanx bone of a toe",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-midcarpal-joint",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "midcarpal joint",
+    "cue": "articulation between the proximal and distal rows of the carpal bones; contributes to movements of the hand at the wrist",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-navicular",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "navicular",
+    "cue": "tarsal bone that articulates posteriorly with the talus bone, laterally with the cuboid bone, and anteriorly with the medial, intermediate, and lateral cuneiform bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-neck-of-the-femur",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "neck of the femur",
+    "cue": "narrowed region located inferior to the head of the femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-neck-of-the-radius",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "neck of the radius",
+    "cue": "narrowed region immediately distal to the head of the radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-obturator-foramen",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "obturator foramen",
+    "cue": "large opening located in the anterior hip bone, between the pubis and ischium regions",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-olecranon-fossa",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "olecranon fossa",
+    "cue": "large depression located on the posterior side of the distal humerus; this space receives the olecranon process of the ulna when the elbow is fully extended",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-olecranon-process",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "olecranon process",
+    "cue": "expanded posterior and superior portions of the proximal ulna; forms the bony tip of the elbow",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-patella",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "patella",
+    "cue": "kneecap; the largest sesamoid bone of the body; articulates with the distal femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-patellar-surface",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "patellar surface",
+    "cue": "smooth groove located on the anterior side of the distal femur, between the medial and lateral condyles; site of articulation for the patella",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pectineal-line",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pectineal line",
+    "cue": "narrow ridge located on the superior surface of the superior pubic ramus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pectoral-girdle",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pectoral girdle",
+    "cue": "shoulder girdle; the set of bones, consisting of the scapula and clavicle, which attaches each upper limb to the axial skeleton",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pelvic-brim",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pelvic brim",
+    "cue": "pelvic inlet; the dividing line between the greater and lesser pelvic regions; formed by the superior margin of the pubic symphysis, the pectineal lines of each pubis, the arcuate lines of each ilium, and the sacral promontory",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pelvic-girdle",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pelvic girdle",
+    "cue": "hip girdle; consists of a single hip bone, which attaches a lower limb to the sacrum of the axial skeleton",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pelvic-inlet",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pelvic inlet",
+    "cue": "pelvic brim",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pelvic-outlet",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pelvic outlet",
+    "cue": "inferior opening of the lesser pelvis; formed by the inferior margin of the pubic symphysis, right and left ischiopubic rami and sacrotuberous ligaments, and the tip of the coccyx",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pelvis",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pelvis",
+    "cue": "ring of bone consisting of the right and left hip bones, the sacrum, and the coccyx",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-phalanx-bone-of-the-foot",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "phalanx bone of the foot",
+    "cue": "(plural = phalanges) one of the 14 bones that form the toes; these include the proximal and distal phalanges of the big toe, and the proximal, middle, and distal phalanx bones of toes two through five",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-phalanx-bone-of-the-hand",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "phalanx bone of the hand",
+    "cue": "(plural = phalanges) one of the 14 bones that form the thumb and fingers; these include the proximal and distal phalanges of the thumb, and the proximal, middle, and distal phalanx bones of the fingers two through five",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pisiform",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pisiform",
+    "cue": "from the lateral side, the fourth of the four proximal carpal bones; articulates with the anterior surface of the triquetrum",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pollex",
+    "chapter": 8,
+    "pdf": 330,
+    "printed": 314,
+    "name": "pollex",
+    "cue": "(also, thumb) digit 1 of the hand",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-posterior-inferior-iliac-spine",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "posterior inferior iliac spine",
+    "cue": "small, bony projection located at the inferior margin of the auricular surface on the posterior ilium",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-posterior-sacroiliac-ligament",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "posterior sacroiliac ligament",
+    "cue": "strong ligament spanning the sacrum and ilium of the hip bone that supports the posterior side of the sacroiliac joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-posterior-superior-iliac-spine",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "posterior superior iliac spine",
+    "cue": "rounded, posterior end of the iliac crest",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-proximal-radioulnar-joint",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "proximal radioulnar joint",
+    "cue": "articulation formed by the radial notch of the ulna and the head of the radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-proximal-tibiofibular-joint",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "proximal tibiofibular joint",
+    "cue": "articulation between the head of the fibula and the inferior aspect of the lateral condyle of the tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pubic-arch",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "pubic arch",
+    "cue": "bony structure formed by the pubic symphysis, and the bodies and inferior pubic rami of the right and left pubic bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pubic-body",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "pubic body",
+    "cue": "enlarged, medial portion of the pubis region of the hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pubic-symphysis",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "pubic symphysis",
+    "cue": "joint formed by the articulation between the pubic bodies of the right and left hip bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pubic-tubercle",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "pubic tubercle",
+    "cue": "small bump located on the superior aspect of the pubic body",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-pubis",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "pubis",
+    "cue": "anterior portion of the hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-radial-fossa",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "radial fossa",
+    "cue": "small depression located on the anterior humerus above the capitulum; this space receives the head of the radius when the elbow is maximally flexed",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-radial-notch-of-the-ulna",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "radial notch of the ulna",
+    "cue": "small, smooth area on the lateral side of the proximal ulna; articulates with the head of the radius as part of the proximal radioulnar joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-radial-tuberosity",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "radial tuberosity",
+    "cue": "oval-shaped, roughened protuberance located on the medial side of the proximal radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-radiocarpal-joint",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "radiocarpal joint",
+    "cue": "wrist joint, located between the forearm and hand regions of the upper limb; articulation formed proximally by the distal end of the radius and the fibrocartilaginous pad that unites the distal radius and ulna bone, and distally by the scaphoid, lunate, and triquetrum carpal bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-radius",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "radius",
+    "cue": "bone located on the lateral side of the forearm",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-sacroiliac-joint",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "sacroiliac joint",
+    "cue": "joint formed by the articulation between the auricular surfaces of the sacrum and ilium",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-sacrospinous-ligament",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "sacrospinous ligament",
+    "cue": "ligament that spans the sacrum to the ischial spine of the hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-sacrotuberous-ligament",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "sacrotuberous ligament",
+    "cue": "ligament that spans the sacrum to the ischial tuberosity of the hip bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-scaphoid",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "scaphoid",
+    "cue": "from the lateral side, the first of the four proximal carpal bones; articulates with the radius proximally, the trapezoid, trapezium, and capitate distally, and the lunate medially",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-scapula",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "scapula",
+    "cue": "shoulder blade bone located on the posterior side of the shoulder",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-shaft-of-the-femur",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "shaft of the femur",
+    "cue": "cylindrically shaped region that forms the central portion of the femur",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-shaft-of-the-fibula",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "shaft of the fibula",
+    "cue": "elongated, slender portion located between the expanded ends of the fibula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-shaft-of-the-humerus",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "shaft of the humerus",
+    "cue": "narrow, elongated, central region of the humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-shaft-of-the-radius",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "shaft of the radius",
+    "cue": "narrow, elongated, central region of the radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-shaft-of-the-tibia",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "shaft of the tibia",
+    "cue": "triangular-shaped, central portion of the tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-shaft-of-the-ulna",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "shaft of the ulna",
+    "cue": "narrow, elongated, central region of the ulna",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-soleal-line",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "soleal line",
+    "cue": "small, diagonally running ridge located on the posterior side of the proximal tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-spine-of-the-scapula",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "spine of the scapula",
+    "cue": "prominent ridge passing mediolaterally across the upper portion of the posterior scapular surface",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-sternal-end-of-the-clavicle",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "sternal end of the clavicle",
+    "cue": "medial end of the clavicle that articulates with the manubrium of the sternum",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-sternoclavicular-joint",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "sternoclavicular joint",
+    "cue": "articulation between the manubrium of the sternum and the sternal end of the clavicle; forms the only bony attachment between the pectoral girdle of the upper limb and the axial skeleton",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-styloid-process-of-the-radius",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "styloid process of the radius",
+    "cue": "pointed projection located on the lateral end of the distal radius",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-styloid-process-of-the-ulna",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "styloid process of the ulna",
+    "cue": "short, bony projection located on the medial end of the distal ulna",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-subpubic-angle",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "subpubic angle",
+    "cue": "inverted V-shape formed by the convergence of the right and left ischiopubic rami; this angle is greater than 80 degrees in females and less than 70 degrees in males",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-subscapular-fossa",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "subscapular fossa",
+    "cue": "broad depression located on the anterior (deep) surface of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-superior-angle-of-the-scapula",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "superior angle of the scapula",
+    "cue": "corner of the scapula between the superior and medial borders of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-superior-border-of-the-scapula",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "superior border of the scapula",
+    "cue": "superior margin of the scapula",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-superior-pubic-ramus",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "superior pubic ramus",
+    "cue": "narrow segment of bone that passes laterally from the pubic body to join the ilium",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-supraglenoid-tubercle",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "supraglenoid tubercle",
+    "cue": "small bump located at the superior margin of the glenoid cavity",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-suprascapular-notch",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "suprascapular notch",
+    "cue": "small notch located along the superior border of the scapula, medial to the coracoid process",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-supraspinous-fossa",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "supraspinous fossa",
+    "cue": "narrow depression located on the posterior scapula, superior to the spine",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-surgical-neck",
+    "chapter": 8,
+    "pdf": 331,
+    "printed": 315,
+    "name": "surgical neck",
+    "cue": "region of the humerus where the expanded, proximal end joins with the narrower shaft",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-sustentaculum-tali",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "sustentaculum tali",
+    "cue": "bony ledge extending from the medial side of the calcaneus bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-talus",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "talus",
+    "cue": "tarsal bone that articulates superiorly with the tibia and fibula at the ankle joint; also articulates inferiorly with the calcaneus bone and anteriorly with the navicular bone",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-tarsal-bone",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "tarsal bone",
+    "cue": "one of the seven bones that make up the posterior foot; includes the calcaneus, talus, navicular, cuboid, medial cuneiform, intermediate cuneiform, and lateral cuneiform bones",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-thigh",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "thigh",
+    "cue": "portion of the lower limb located between the hip and knee joints",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-tibia",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "tibia",
+    "cue": "shin bone; the large, weight-bearing bone located on the medial side of the leg",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-tibial-tuberosity",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "tibial tuberosity",
+    "cue": "elevated area on the anterior surface of the proximal tibia",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-trapezium",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "trapezium",
+    "cue": "from the lateral side, the first of the four distal carpal bones; articulates with the scaphoid proximally, the first and second metacarpals distally, and the trapezoid medially",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-trapezoid",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "trapezoid",
+    "cue": "from the lateral side, the second of the four distal carpal bones; articulates with the scaphoid proximally, the second metacarpal distally, the trapezium laterally, and the capitate medially",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-triquetrum",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "triquetrum",
+    "cue": "from the lateral side, the third of the four proximal carpal bones; articulates with the lunate laterally, the hamate distally, and has a facet for the pisiform",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-trochlea",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "trochlea",
+    "cue": "pulley-shaped region located medially at the distal end of the humerus; articulates at the elbow with the trochlear notch of the ulna",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-trochlear-notch",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "trochlear notch",
+    "cue": "large, C-shaped depression located on the anterior side of the proximal ulna; articulates at the elbow with the trochlea of the humerus",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ulna",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "ulna",
+    "cue": "bone located on the medial side of the forearm",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ulnar-notch-of-the-radius",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "ulnar notch of the radius",
+    "cue": "shallow, smooth area located on the medial side of the distal radius; articulates with the head of the ulna at the distal radioulnar joint",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g8-ulnar-tuberosity",
+    "chapter": 8,
+    "pdf": 332,
+    "printed": 316,
+    "name": "ulnar tuberosity",
+    "cue": "roughened area located on the anterior, proximal ulna inferior to the coronoid process",
+    "topic": "Chapter 8"
+  },
+  {
+    "id": "g9-abduction",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "abduction",
+    "cue": "movement in the coronal plane that moves a limb laterally away from the body; spreading of the fingers",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-acetabular-labrum",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "acetabular labrum",
+    "cue": "lip of fibrocartilage that surrounds outer margin of the acetabulum on the hip bone",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-adduction",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "adduction",
+    "cue": "movement in the coronal plane that moves a limb medially toward or across the midline of the body; bringing fingers together",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-amphiarthrosis",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "amphiarthrosis",
+    "cue": "slightly mobile joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-annular-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "annular ligament",
+    "cue": "intrinsic ligament of the elbow articular capsule that surrounds and supports the head of the radius at the proximal radioulnar joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-anterior-cruciate-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "anterior cruciate ligament",
+    "cue": "intracapsular ligament of the knee; extends from anterior, superior surface of the tibia to the inner aspect of the lateral condyle of the femur; resists hyperextension of knee",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-anterior-talofibular-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "anterior talofibular ligament",
+    "cue": "intrinsic ligament located on the lateral side of the ankle joint, between talus bone and lateral malleolus of fibula; supports talus at the talocrural joint and resists excess inversion of the foot",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-articular-capsule",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "articular capsule",
+    "cue": "connective tissue structure that encloses the joint cavity of a synovial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-articular-cartilage",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "articular cartilage",
+    "cue": "thin layer of hyaline cartilage that covers the articulating surfaces of bones at a synovial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-articular-disc",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "articular disc",
+    "cue": "meniscus; a fibrocartilage structure found between the bones of some synovial joints; provides padding or smooths movements between the bones; strongly unites the bones together",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-articulation",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "articulation",
+    "cue": "joint of the body",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-atlanto-occipital-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "atlanto-occipital joint",
+    "cue": "articulation between the occipital condyles of the skull and the superior articular processes of the atlas (C1 vertebra)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-atlantoaxial-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "atlantoaxial joint",
+    "cue": "series of three articulations between the atlas (C1) vertebra and the axis (C2) vertebra, consisting of the joints between the inferior articular processes of C1 and the superior articular processes of C2, and the articulation between the dens of C2 and the anterior arch of C1",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-ball-and-socket-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "ball-and-socket joint",
+    "cue": "synovial joint formed between the spherical end of one bone (the ball) that fits into the depression of a second bone (the socket); found at the hip and shoulder joints; functionally classified as a multiaxial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-biaxial-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "biaxial joint",
+    "cue": "type of diarthrosis; a joint that allows for movements within two planes (two axes)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-bursa",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "bursa",
+    "cue": "connective tissue sac containing lubricating fluid that prevents friction between adjacent structures, such as skin and bone, tendons and bone, or between muscles",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-calcaneofibular-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "calcaneofibular ligament",
+    "cue": "intrinsic ligament located on the lateral side of the ankle joint, between the calcaneus bone and lateral malleolus of the fibula; supports the talus bone at the ankle joint and resists excess inversion of the foot",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-cartilaginous-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "cartilaginous joint",
+    "cue": "joint at which the bones are united by hyaline cartilage (synchondrosis) or fibrocartilage (symphysis)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-circumduction",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "circumduction",
+    "cue": "circular motion of the arm, thigh, hand, thumb, or finger that is produced by the sequential combination of flexion, abduction, extension, and adduction",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-condyloid-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "condyloid joint",
+    "cue": "synovial joint in which the shallow depression at the end of one bone receives a rounded end from a second bone or a rounded structure formed by two bones; found at the metacarpophalangeal joints of the fingers or the radiocarpal joint of the wrist; functionally classified as a biaxial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-coracohumeral-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "coracohumeral ligament",
+    "cue": "intrinsic ligament of the shoulder joint; runs from the coracoid process of the scapula to the anterior humerus",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-deltoid-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "deltoid ligament",
+    "cue": "broad intrinsic ligament located on the medial side of the ankle joint; supports the talus at the talocrural joint and resists excess eversion of the foot",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-depression",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "depression",
+    "cue": "downward (inferior) motion of the scapula or mandible",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-diarthrosis",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "diarthrosis",
+    "cue": "freely mobile joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-dorsiflexion",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "dorsiflexion",
+    "cue": "movement at the ankle that brings the top of the foot toward the anterior leg",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-elbow-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "elbow joint",
+    "cue": "humeroulnar joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-elevation",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "elevation",
+    "cue": "upward (superior) motion of the scapula or mandible",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-eversion",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "eversion",
+    "cue": "foot movement involving the intertarsal joints of the foot in which the bottom of the foot is turned laterally, away from the midline",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-extension",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "extension",
+    "cue": "movement in the sagittal plane that increases the angle of a joint (straightens the joint); motion involving posterior bending of the vertebral column or returning to the upright position from a flexed position",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-extrinsic-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "extrinsic ligament",
+    "cue": "ligament located outside of the articular capsule of a synovial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-femoropatellar-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "femoropatellar joint",
+    "cue": "portion of the knee joint consisting of the articulation between the distal femur and the patella",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-fibrous-joint",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "fibrous joint",
+    "cue": "joint where the articulating areas of the adjacent bones are connected by fibrous connective tissue",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-fibular-collateral-ligament",
+    "chapter": 9,
+    "pdf": 372,
+    "printed": 356,
+    "name": "fibular collateral ligament",
+    "cue": "extrinsic ligament of the knee joint that spans from the lateral epicondyle of the femur to the head of the fibula; resists hyperextension and rotation of the extended knee",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-flexion",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "flexion",
+    "cue": "movement in the sagittal plane that decreases the angle of a joint (bends the joint); motion involving anterior bending of the vertebral column",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-fontanelles",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "fontanelles",
+    "cue": "expanded areas of fibrous connective tissue that separate the braincase bones of the skull prior to birth and during the first year after birth",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-glenohumeral-joint",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "glenohumeral joint",
+    "cue": "shoulder joint; articulation between the glenoid cavity of the scapula and head of the humerus; multiaxial ball-and-socket joint that allows for flexion/extension, abduction/adduction, circumduction, and medial/lateral rotation of the humerus",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-glenohumeral-ligament",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "glenohumeral ligament",
+    "cue": "one of the three intrinsic ligaments of the shoulder joint that strengthen the anterior articular capsule",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-glenoid-labrum",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "glenoid labrum",
+    "cue": "lip of fibrocartilage located around the outside margin of the glenoid cavity of the scapula",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-gomphosis",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "gomphosis",
+    "cue": "type of fibrous joint in which the root of a tooth is anchored into its bony jaw socket by strong periodontal ligaments",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-hinge-joint",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "hinge joint",
+    "cue": "synovial joint at which the convex surface of one bone articulates with the concave surface of a second bone; includes the elbow, knee, ankle, and interphalangeal joints; functionally classified as a uniaxial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-humeroradial-joint",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "humeroradial joint",
+    "cue": "articulation between the capitulum of the humerus and head of the radius",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-humeroulnar-joint",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "humeroulnar joint",
+    "cue": "articulation between the trochlea of humerus and the trochlear notch of the ulna; uniaxial hinge joint that allows for flexion/extension of the forearm",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-hyperextension",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "hyperextension",
+    "cue": "excessive extension of joint, beyond the normal range of movement",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-hyperflexion",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "hyperflexion",
+    "cue": "excessive flexion of joint, beyond the normal range of movement",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-iliofemoral-ligament",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "iliofemoral ligament",
+    "cue": "intrinsic ligament spanning from the ilium of the hip bone to the femur, on the superior-anterior aspect of the hip joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-inferior-rotation",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "inferior rotation",
+    "cue": "movement of the scapula during upper limb adduction in which the glenoid cavity of the scapula moves in a downward direction as the medial end of the scapular spine moves in an upward direction",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-interosseous-membrane",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "interosseous membrane",
+    "cue": "wide sheet of fibrous connective tissue that fills the gap between two parallel bones, forming a syndesmosis; found between the radius and ulna of the forearm and between the tibia and fibula of the leg",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-intracapsular-ligament",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "intracapsular ligament",
+    "cue": "ligament that is located within the articular capsule of a synovial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-intrinsic-ligament",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "intrinsic ligament",
+    "cue": "ligament that is fused to or incorporated into the wall of the articular capsule of a synovial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-inversion",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "inversion",
+    "cue": "foot movement involving the intertarsal joints of the foot in which the bottom of the foot is turned toward the midline",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-ischiofemoral-ligament",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "ischiofemoral ligament",
+    "cue": "intrinsic ligament spanning from the ischium of the hip bone to the femur, on the posterior aspect of the hip joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-joint",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "joint",
+    "cue": "site at which two or more bones or bone and cartilage come together (articulate)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-joint-cavity",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "joint cavity",
+    "cue": "space enclosed by the articular capsule of a synovial joint that is filled with synovial fluid and contains the articulating surfaces of the adjacent bones",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-joint-interzone",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "joint interzone",
+    "cue": "site within a growing embryonic limb bud that will become a synovial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-lateral-external-rotation",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "lateral (external) rotation",
+    "cue": "movement of the arm at the shoulder joint or the thigh at the hip joint that moves the anterior surface of the limb away from the midline of the body",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-lateral-excursion",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "lateral excursion",
+    "cue": "side-to-side movement of the mandible away from the midline, toward either the right or left side",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-lateral-flexion",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "lateral flexion",
+    "cue": "bending of the neck or body toward the right or left side",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-lateral-meniscus",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "lateral meniscus",
+    "cue": "C-shaped fibrocartilage articular disc located at the knee, between the lateral condyle of the femur and the lateral condyle of the tibia",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-lateral-tibiofemoral-joint",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "lateral tibiofemoral joint",
+    "cue": "portion of the knee consisting of the articulation between the lateral condyle of the tibia and the lateral condyle of the femur; allows for flexion/extension at the knee",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-ligament",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "ligament",
+    "cue": "strong band of dense connective tissue spanning between bones",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-ligament-of-the-head-of-the-femur",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "ligament of the head of the femur",
+    "cue": "intracapsular ligament that runs from the acetabulum of the hip bone to the head of the femur",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-medial-internal-rotation",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "medial (internal) rotation",
+    "cue": "movement of the arm at the shoulder joint or the thigh at the hip joint that brings the anterior surface of the limb toward the midline of the body",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-medial-excursion",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "medial excursion",
+    "cue": "side-to-side movement that returns the mandible to the midline",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-medial-meniscus",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "medial meniscus",
+    "cue": "C-shaped fibrocartilage articular disc located at the knee, between the medial condyle of the femur and medial condyle of the tibia",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-medial-tibiofemoral-joint",
+    "chapter": 9,
+    "pdf": 373,
+    "printed": 357,
+    "name": "medial tibiofemoral joint",
+    "cue": "portion of the knee consisting of the articulation between the medial condyle of the tibia and the medial condyle of the femur; allows for flexion/extension at the knee",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-meniscus",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "meniscus",
+    "cue": "articular disc",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-multiaxial-joint",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "multiaxial joint",
+    "cue": "type of diarthrosis; a joint that allows for movements within three planes (three axes)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-opposition",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "opposition",
+    "cue": "thumb movement that brings the tip of the thumb in contact with the tip of a finger",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-patellar-ligament",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "patellar ligament",
+    "cue": "ligament spanning from the patella to the anterior tibia; serves as the final attachment for the quadriceps femoris muscle",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-periodontal-ligament",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "periodontal ligament",
+    "cue": "band of dense connective tissue that anchors the root of a tooth into the bony jaw socket",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-pivot-joint",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "pivot joint",
+    "cue": "synovial joint at which the rounded portion of a bone rotates within a ring formed by a ligament and an articulating bone; functionally classified as uniaxial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-plane-joint",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "plane joint",
+    "cue": "synovial joint formed between the flattened articulating surfaces of adjacent bones; functionally classified as a multiaxial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-plantar-flexion",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "plantar flexion",
+    "cue": "foot movement at the ankle in which the heel is lifted off of the ground",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-posterior-cruciate-ligament",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "posterior cruciate ligament",
+    "cue": "intracapsular ligament of the knee; extends from the posterior, superior surface of the tibia to the inner aspect of the medial condyle of the femur; prevents anterior displacement of the femur when the knee is flexed and weight bearing",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-posterior-talofibular-ligament",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "posterior talofibular ligament",
+    "cue": "intrinsic ligament located on the lateral side of the ankle joint, between the talus bone and lateral malleolus of the fibula; supports the talus at the talocrural joint and resists excess inversion of the foot",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-pronated-position",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "pronated position",
+    "cue": "forearm position in which the palm faces backward",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-pronation",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "pronation",
+    "cue": "forearm motion that moves the palm of the hand from the palm forward to the palm backward position",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-protraction",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "protraction",
+    "cue": "anterior motion of the scapula or mandible",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-proximal-radioulnar-joint",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "proximal radioulnar joint",
+    "cue": "articulation between head of radius and radial notch of ulna; uniaxial pivot joint that allows for rotation of radius during pronation/ supination of forearm",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-pubofemoral-ligament",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "pubofemoral ligament",
+    "cue": "intrinsic ligament spanning from the pubis of the hip bone to the femur, on the anterior-inferior aspect of the hip joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-radial-collateral-ligament",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "radial collateral ligament",
+    "cue": "intrinsic ligament on the lateral side of the elbow joint; runs from the lateral epicondyle of humerus to merge with the annular ligament",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-reposition",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "reposition",
+    "cue": "movement of the thumb from opposition back to the anatomical position (next to index finger)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-retraction",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "retraction",
+    "cue": "posterior motion of the scapula or mandible",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-rotation",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "rotation",
+    "cue": "movement of a bone around a central axis (atlantoaxial joint) or around its long axis (proximal radioulnar joint; shoulder or hip joint); twisting of the vertebral column resulting from the summation of small motions between adjacent vertebrae",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-rotator-cuff",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "rotator cuff",
+    "cue": "strong connective tissue structure formed by the fusion of four rotator cuff muscle tendons to the articular capsule of the shoulder joint; surrounds and supports superior, anterior, lateral, and posterior sides of the humeral head",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-saddle-joint",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "saddle joint",
+    "cue": "synovial joint in which the articulating ends of both bones are convex and concave in shape, such as at the first carpometacarpal joint at the base of the thumb; functionally classified as a biaxial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-subacromial-bursa",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "subacromial bursa",
+    "cue": "bursa that protects the supraspinatus muscle tendon and superior end of the humerus from rubbing against the acromion of the scapula",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-subcutaneous-bursa",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "subcutaneous bursa",
+    "cue": "bursa that prevents friction between skin and an underlying bone",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-submuscular-bursa",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "submuscular bursa",
+    "cue": "bursa that prevents friction between bone and a muscle or between adjacent muscles",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-subscapular-bursa",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "subscapular bursa",
+    "cue": "bursa that prevents rubbing of the subscapularis muscle tendon against the scapula",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-subtalar-joint",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "subtalar joint",
+    "cue": "articulation between the talus and calcaneus bones of the foot; allows motions that contribute to inversion/eversion of the foot",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-subtendinous-bursa",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "subtendinous bursa",
+    "cue": "bursa that prevents friction between bone and a muscle tendon",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-superior-rotation",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "superior rotation",
+    "cue": "movement of the scapula during upper limb abduction in which the glenoid cavity of the scapula moves in an upward direction as the medial end of the scapular spine moves in a downward direction",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-supinated-position",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "supinated position",
+    "cue": "forearm position in which the palm faces anteriorly (anatomical position)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-supination",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "supination",
+    "cue": "forearm motion that moves the palm of the hand from the palm backward to the palm forward position",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-suture",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "suture",
+    "cue": "fibrous joint that connects the bones of the skull (except the mandible); an immobile joint (synarthrosis)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-symphysis",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "symphysis",
+    "cue": "type of cartilaginous joint where the bones are joined by fibrocartilage",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-synarthrosis",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "synarthrosis",
+    "cue": "immobile or nearly immobile joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-synchondrosis",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "synchondrosis",
+    "cue": "type of cartilaginous joint where the bones are joined by hyaline cartilage",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-syndesmosis",
+    "chapter": 9,
+    "pdf": 374,
+    "printed": 358,
+    "name": "syndesmosis",
+    "cue": "type of fibrous joint in which two separated, parallel bones are connected by an interosseous membrane",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-synostosis",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "synostosis",
+    "cue": "site at which adjacent bones or bony components have fused together",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-synovial-fluid",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "synovial fluid",
+    "cue": "thick, lubricating fluid that fills the interior of a synovial joint",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-synovial-joint",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "synovial joint",
+    "cue": "joint at which the articulating surfaces of the bones are located within a joint cavity formed by an articular capsule",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-synovial-membrane",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "synovial membrane",
+    "cue": "thin layer that lines the inner surface of the joint cavity at a synovial joint; produces the synovial fluid",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-talocrural-joint",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "talocrural joint",
+    "cue": "ankle joint; articulation between the talus bone of the foot and medial malleolus of the tibia, distal tibia, and lateral malleolus of the fibula; a uniaxial hinge joint that allows only for dorsiflexion and plantar flexion of the foot",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-temporomandibular-joint-tmj",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "temporomandibular joint (TMJ)",
+    "cue": "articulation between the condyle of the mandible and the mandibular fossa and articular tubercle of the temporal bone of the skull; allows for depression/ elevation (opening/closing of mouth), protraction/ retraction, and side-to-side motions of the mandible",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-tendon",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "tendon",
+    "cue": "dense connective tissue structure that anchors a muscle to bone",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-tendon-sheath",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "tendon sheath",
+    "cue": "connective tissue that surrounds a tendon at places where the tendon crosses a joint; contains a lubricating fluid to prevent friction and allow smooth movements of the tendon",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-tibial-collateral-ligament",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "tibial collateral ligament",
+    "cue": "extrinsic ligament of knee joint that spans from the medial epicondyle of the femur to the medial tibia; resists hyperextension and rotation of extended knee",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-ulnar-collateral-ligament",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "ulnar collateral ligament",
+    "cue": "intrinsic ligament on the medial side of the elbow joint; spans from the medial epicondyle of the humerus to the medial ulna",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-uniaxial-joint",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "uniaxial joint",
+    "cue": "type of diarthrosis; joint that allows for motion within only one plane (one axis)",
+    "topic": "Chapter 9"
+  },
+  {
+    "id": "g9-zygapophysial-joints",
+    "chapter": 9,
+    "pdf": 375,
+    "printed": 359,
+    "name": "zygapophysial joints",
+    "cue": "facet joints; plane joints between the superior and inferior articular processes of adjacent vertebrae that provide for only limited motions between the vertebrae",
+    "topic": "Chapter 9"
   }
 ]

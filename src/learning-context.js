@@ -1,4 +1,4 @@
-const defaultContext={type:'study',label:'Chapters 6 and 7',text:'Bone tissue and the axial skeleton, with appendicular lab extensions.'};
+const defaultContext={type:'study',label:'Chapters 6–9',text:'Bone tissue, axial and appendicular anatomy, and joints.'};
 let current={...defaultContext};
 export function getLearningContext(){return{...current};}
 export function setLearningContext(context){

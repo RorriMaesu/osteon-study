@@ -37,14 +37,14 @@ test('numbered and regional meshes do not accept neighboring bones',()=>{
  assert.ok(matches('Middle phalanx of.*hand','Middle phalanx of second finger of hand.r'));
  assert.ok(!matches('Middle phalanx of.*hand','Middle phalanx of second finger of foot.r'));
 });
-test('all twelve sections teach, apply and assess distinct concepts',()=>{
- assert.deepEqual(lessons.map(l=>l.id),['6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4','7.5']);
+test('all twenty-four sections teach, apply and assess distinct concepts',()=>{
+ assert.deepEqual(lessons.map(l=>l.id),['6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4','7.5','8.1','8.2','8.3','8.4','8.5','9.1','9.2','9.3','9.4','9.5','9.6','9.7']);
  for(const l of lessons){assert.ok(l.objective.length>35);assert.ok(l.sections.length>=3);assert.ok(l.compare.length>=2);assert.equal(l.recall.length,2);assert.equal(l.application.length,2);assert.ok(l.questions.length>=4);}
- assert.equal(questions.length,104);assert.equal(new Set(questions.map(q=>q.id)).size,questions.length);
- for(const q of questions){assert.equal(q.distractors.length,3);assert.equal(new Set([q.answer,...q.distractors]).size,4);assert.ok(q.explanation.length>25);}
+ assert.equal(questions.length,360);assert.equal(new Set(questions.map(q=>q.id)).size,questions.length);
+ for(const q of questions){if(q.type==='choice'){assert.equal(q.distractors.length,3);assert.equal(new Set([q.answer,...q.distractors]).size,4);}assert.ok(q.explanation.length>25);}
 });
 test('complete glossary extraction excludes page furniture and broken glyphs',()=>{
- assert.equal(glossary.length,237);assert.equal(new Set(glossary.map(g=>g.id)).size,237);
+ assert.equal(glossary.length,544);assert.equal(new Set(glossary.map(g=>g.id)).size,544);
  for(const g of glossary){assert.ok(g.name.length>2);assert.ok(g.cue.length>3);assert.ok(!/PDF PAGE|Access for free|Key Terms|\uFFFD/.test(g.cue+g.name),g.name);}
 });
 test('name recall accepts canonical synonyms without accepting other bones',()=>{
@@ -85,8 +85,8 @@ test('diagram targets remain inside the correct licensed source illustration cro
  for(const [key,p]of Object.entries(plates)){assert.ok(fs.existsSync(new URL('../assets/figures/'+(p.image||key)+'.jpg',import.meta.url)));const [x,y,w,h]=p.crop;assert.ok(x>=0&&y>=0&&x+w<=p.size[0]&&y+h<=p.size[1],key);for(const [name,px,py]of p.points){assert.ok(px>=x&&px<=x+w&&py>=y&&py<=y+h,key+': '+name);}}
 });
 test('full chapter reading includes every source page and valid section destinations',()=>{
- assert.equal(pages.length,144);assert.equal(new Set(pages.map(p=>p.pdf)).size,pages.length);
- for(let n=213;n<=298;n++)assert.ok(pages.some(p=>p.pdf===n),'Missing chapter page '+n);
+ assert.equal(pages.length,180);assert.equal(new Set(pages.map(p=>p.pdf)).size,pages.length);
+ for(let n=213;n<=384;n++)assert.ok(pages.some(p=>p.pdf===n),'Missing chapter page '+n);
  for(const p of pages){assert.equal(p.printed,p.pdf-16);assert.ok(p.text.length>50);assert.ok(!p.text.includes('\ufffd'));assert.ok(fs.existsSync(new URL('../assets/reader/p'+p.pdf+'.jpg',import.meta.url)));}
  for(const [section,pdf]of Object.entries(sectionPages))assert.ok(pages.find(p=>p.pdf===pdf).text.includes(section),section);
 });

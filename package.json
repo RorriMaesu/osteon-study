@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "BI 231 skeleton atlas and OpenStax chapter 6/7 study suite",
+  "description": "BI 231 skeleton atlas and OpenStax chapters 6–9 study suite",
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
     "audit": "node scripts/audit.mjs",
-    "audit:lab-list": "node scripts/audit-lab-list.mjs"
+    "audit:lab-list": "node scripts/audit-lab-list.mjs",
+    "audit:curriculum": "node scripts/audit-curriculum.mjs"
   },
   "dependencies": {
     "three": "0.180.0"
