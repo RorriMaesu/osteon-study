@@ -4,6 +4,10 @@ import fs from 'node:fs';
 import {examBank} from '../src/exam-bank.js';
 import {questions,lessons,glossary} from '../src/learning-data.js';
 import {selectExam,createSession,validSession,gradeQuestion,answered,results,syllabus} from '../src/exam-core.js';
+import links from '../src/lesson-links.json' with {type:'json'};
+import pages from '../src/reader-pages.json' with {type:'json'};
+import {regions} from '../src/data.js';
+import {retrieveSources,buildTutorMessages} from '../src/tutor-context.js';
 const rng=seed=>()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296;};
 test('every source objective has multiple explicit questions, with complete modules and source destinations',()=>{
  assert.equal(syllabus.sections.length,24);assert.equal(syllabus.sections.flatMap(s=>s.objectives).length,74);
@@ -26,6 +30,7 @@ test('chapter and cumulative blueprints hold across different randomized forms a
 });
 test('graders accept explicit synonyms and require every matching or sequence component',()=>{
  const text=examBank.find(q=>q.type==='text'&&q.answer==='Diaphysis');assert.ok(gradeQuestion(text,' DIAPHYSIS. '));assert.ok(gradeQuestion(text,'shaft'));assert.ok(!gradeQuestion(text,'epiphysis'));assert.ok(!gradeQuestion(text,''));assert.ok(!gradeQuestion(text,'the diaphysis or epiphysis'));
+ const hip=examBank.find(q=>q.prompt==='Which three fused regions contribute to the acetabulum?');for(const a of ['the ilium, ischium, and pubis','Pubis, ilium and ischium','ischium pubis ilium'])assert.ok(gradeQuestion(hip,a));assert.ok(!gradeQuestion(hip,'Ilium, ischium and femur'));
  const match=examBank.find(q=>q.type==='match');const response=key(match);delete response[match.pairs[0].left];assert.ok(!answered(match,response));assert.ok(!gradeQuestion(match,response));
  const order=examBank.find(q=>q.type==='order');assert.ok(!answered(order,undefined));assert.ok(!gradeQuestion(order,[...order.steps].reverse()));assert.ok(gradeQuestion(order,order.steps));
  const figure=examBank.find(q=>q.type==='identify');assert.ok(gradeQuestion(figure,figure.answer));assert.ok(!gradeQuestion(figure,'bone'));
@@ -42,6 +47,16 @@ test('legacy question and glossary identifiers stay usable, and new glossary has
  for(const g of glossary)assert.ok(!/Chapter Review|Access for free|Key Terms|\ufffd/.test(g.name+' '+g.cue),g.name);
  assert.ok(glossary.find(g=>g.name==='ulnar tuberosity').cue.length<300);
  for(const name of ['long-bone','osteon','vertebra','upper-limb','lower-limb'])assert.ok(fs.readFileSync(new URL('../src/exam-figures.js',import.meta.url),'utf8').includes(name));
+});
+test('every lesson anatomy route exists and every direct figure link resolves its actual source caption',()=>{
+ assert.deepEqual(Object.keys(links),lessons.map(l=>l.id));let figures=0;
+ for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region),id);for(const f of l.figures){figures++;const page=pages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
+ assert.equal(figures,97);
+});
+test('the local tutor retrieves the newly complete development sections and names the full four-chapter scope',()=>{
+ assert.ok(retrieveSources('apical ectodermal ridge limb buds',{reference:'8.5'}).some(s=>s.pdf===324));
+ assert.ok(retrieveSources('joint interzone cavity mesenchyme capsule',{reference:'9.7'}).some(s=>s.pdf===371));
+ assert.ok(buildTutorMessages('Explain a joint interzone',[],{reference:'9.7'}).messages[0].content.includes('chapters 6, 7, 8 and 9'));
 });
 test('recording a resumed exam does not duplicate existing attempts, and new lesson marks survive backup',async()=>{
  globalThis.localStorage={getItem:()=>null,setItem:()=>{}};globalThis.document=new EventTarget();

@@ -1,3 +1,15 @@
+# Current validation — 2026-10-30
+
+The chapters 6–9 release has 24 guided sections, all 74 source learning objectives, 172 complete chapter pages plus eight supplemental pages, 544 glossary terms, 256 new mixed-format exam items and 104 supplementary questions. Source-objective coverage is published in CURRICULUM-COVERAGE.csv. The chronological records below retain the counts and limits of their respective earlier releases.
+
+All 72 current automated checks pass. They cover blueprint quotas and objective coverage across 60 randomized forms of each exam scope; one-point graders for all five response formats; explicit synonyms and unordered bone lists; incomplete, malformed and outdated drafts; assistance persistence; idempotent attempt recording; legacy identifiers; new lesson marks in backups; all source pages and 97 figure destinations; and chapter 8/9 tutor retrieval. The existing 177-item lab-list, model, landmark, source-hold and tutor checks continue to pass.
+
+Browser verification used an isolated local origin, leaving public learning history untouched. Tested matching responses, source assistance followed by reload, retained flags, delayed 50-question results, typed recall, multiple choice, sequence reordering, schematic identification, and navigation to question 100 in the cumulative exam. A one-assisted-correct/49-unanswered trial returned 1/50 including assistance and 0/50 independently correct. Checked the new dashboard at 1024 × 640 and the default 1280 × 720; checked phone content at 390 × 844 without horizontal overflow. Source-based guided relationship labs, keyboard-adjustable motion controls and chapter navigation were reviewed. Compact desktop ordering steps stay together; practice controls remain outside the content pager.
+
+Answer-key versions are explicit. Current drafts resume only against the matching question version. Earlier-version records are retained for export rather than silently regraded with changed keys. Main study history remains independent. These checks validate content coverage and application behavior, not independent instructor/anatomist approval or prediction of the instructor’s exam. No 3D model geometry changed in this release.
+
+---
+
 <!-- accuracy-review-current -->
 # Current verification — 2026-10-19
 

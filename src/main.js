@@ -98,6 +98,7 @@ $('#skull-key').onclick=()=>{
 $('#skull-colors').onclick=()=>{if(assessmentColors)return;viewer.skullColors=!viewer.skullColors;explorationColors=viewer.skullColors;try{localStorage.setItem('osteon-bone-colors',explorationColors?'on':'off');}catch{}viewer.applyVisibility();syncSkullControls();};
 document.addEventListener('assessmentstart',()=>{if(!assessmentColors)explorationColors=viewer.skullColors;assessmentColors=true;viewer.skullColors=false;syncFocusControls();syncFilters();viewer.applyVisibility();});
 document.addEventListener('assessmentend',()=>{assessmentColors=false;viewer.skullColors=explorationColors;syncFocusControls();syncFilters();viewer.applyVisibility();});
+document.addEventListener('studyregion',ev=>{if(!regions.includes(ev.detail))return;setView('atlas');changeDivision('All');changeRegion(ev.detail);});
 $('#region-filters').innerHTML=regions.map(r=>`<button data-region="${r}" class="${r===region?'active':''}" aria-pressed="${r===region}">${r}</button>`).join('');
 $$('[data-region]').forEach(b=>b.onclick=()=>changeRegion(b.dataset.region));
 syncFilters();

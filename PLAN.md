@@ -1,3 +1,7 @@
+# Current curriculum expansion
+
+See [the chapters 6–9 teaching and assessment plan](CHAPTERS-6-9-PLAN.md) and [the objective coverage audit](CURRICULUM-COVERAGE.csv) for the current four-chapter scope. The original design plan below is retained as project history.
+
 <!-- accuracy-review-current -->
 # Current accuracy priority
 
@@ -6,7 +10,7 @@ The [landmark review](accuracy.html) supersedes earlier all-3D completion claims
 
 # Osteon study suite implementation plan
 
-Osteon is a personal BI 231 learning environment built around a real three dimensional skeleton, the supplied Fall 2024 lab structure list, and OpenStax Anatomy and Physiology 2e chapters 6 and 7. The goal is to retrieve names, locate structures from unfamiliar views, explain structure and function, and retain the knowledge over time.
+Osteon is a personal BI 231 learning environment built around a real three dimensional skeleton, the supplied Fall 2024 lab structure list, and OpenStax Anatomy and Physiology 2e chapters 6–9. The goal is to retrieve names, locate structures from unfamiliar views, explain structure and function, and retain the knowledge over time.
 
 The expansion has a separate [region-navigation and bone-landmark plan](ANATOMY-EXPANSION-PLAN.md) and [source audit](LANDMARK-EXPANSION-AUDIT.csv). Stage 15 implements overview-to-region-to-bone navigation, regional colors and access to current landmarks. Validation of additional textbook features remains open and is not included in the completion claims for the existing lab checklist below.
 
@@ -97,7 +101,7 @@ Check that all textbook sections have instructional content and assessments, eve
 
 ## Sources and licensing
 
-- OpenStax, Anatomy and Physiology 2e, supplied 2026 PDF edition, chapters 6 and 7. Online book: https://openstax.org/details/books/anatomy-and-physiology-2e . Follow the attribution/license notice for the supplied edition; original app notes and questions are newly authored.
+- OpenStax, Anatomy and Physiology 2e, supplied 2026 PDF edition, chapters 6–9. Online book: https://openstax.org/details/books/anatomy-and-physiology-2e . Follow the attribution/license notice for the supplied edition; original app notes and questions are newly authored.
 - BI 231 Lab 6 and 7 Bone List F24, supplied course file. Used to define anatomical coverage; the original file is not redistributed.
 - Z-Anatomy: https://github.com/Z-Anatomy/Models-of-human-anatomy , CC BY-SA 4.0, derived from BodyParts3D © The Database Center for Life Science, CC BY-SA 2.1 Japan.
 - Web skeleton export: https://github.com/SeemaBansal1/3d-human-body-anatomy . Preserve export attribution and share the derived skeleton under CC BY-SA 4.0. The initial web skeleton is supplemented only with the required course tissues from the original Z-Anatomy source; unrelated organs are not included.

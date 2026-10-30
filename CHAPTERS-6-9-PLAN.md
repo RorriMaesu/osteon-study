@@ -73,3 +73,13 @@ Desktop uses fixed-height workspaces with page controls for long material. Mobil
 Full readings make the scope complete, but volume alone does not teach. The guided sequence, comparisons and retrieval connect that source to useful practice. Random selection alone can miss a whole topic, so exam blueprints enforce section and objective coverage. A finite bank cannot predict the professor's exam, and repeated exposure can inflate scores; learners should explain answers aloud and retest later.
 
 Schematic identification tests orientation and relationships, while the existing atlas and BI 231 test support spatial practice. They are complementary activities. Existing source-only accuracy holds remain visible; this expansion does not certify every 3D landmark as independently anatomically validated. No bone model geometry is changed in this curriculum update.
+
+## Review after implementation
+
+The initial desktop exam menu showed only one chapter per content page and left excessive empty space. It was replaced with a single dashboard showing all four chapter launchers, the cumulative exam and full-bank review. On phones, question content precedes the larger navigator so answering stays direct.
+
+The final study pass adds 97 direct figure links, 12 new guided activities (19 total), and explicit routes from lessons to related atlas regions. The movement explorer demonstrates elbow, shoulder and ankle directions with qualitative segment schematics; it does not claim physiological range measurements or moving 3D bones. Revealed activity answers remain unscored. Source-filtered reader navigation stays inside the selected collection.
+
+Validation checks all 74 objective mappings, all 172 chapter source pages, accepted/rejected response formats, corrupted or outdated drafts, assistance persistence, and legacy study identifiers. Randomized exam forms are checked for section quotas and objective coverage. Browser review includes desktop and phone layouts, source reading, matching, delayed feedback and interrupted-session recovery. The published curriculum coverage file makes the finite bank reviewable.
+
+The final browser pass also moved practice Check/Reveal controls outside the content pager and automatically brings generated feedback into view. This keeps feedback accessible when a figure or explanation needs a second content page. Older exam-key versions remain exportable; they are not silently scored using changed keys.

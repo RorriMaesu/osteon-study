@@ -5,6 +5,8 @@
 - Add 256 mixed-format exam items, retaining 104 earlier supplementary questions and their identifiers.
 - Add four coverage-aware 50-question chapter exams, a 100-question cumulative exam, full-bank review, save/resume, flags, delayed exam feedback and source-linked reports.
 - Preserve assistance across reload and deduplicate recorded attempts. Extend lesson backups, progress topics and local tutor context to chapters 6–9.
+- Add 97 direct source-figure links, 12 new guided activities, an elbow/shoulder/ankle movement explorer and routes into related atlas regions.
+- Preserve earlier exam versions for export when keys change; accept equivalent bone lists without fuzzy grading.
 - Keep desktop exam launchers together and question navigation paged, with a natural phone answering flow. No model geometry changed.
 
 # 2026-10-29 — Required BI 231 bone-list test

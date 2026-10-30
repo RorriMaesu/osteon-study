@@ -1,7 +1,7 @@
 import syllabus from './curriculum-syllabus.json' with {type:'json'};
 import {examBank,EXAM_VERSION} from './exam-bank.js';
 export {syllabus};
-export const normalize=s=>String(s??'').normalize('NFKC').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9]+/g,' ').trim();
+export const normalize=s=>String(s??'').normalize('NFKC').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9]+/g,' ').replace(/\b(a|an|the|and)\b/g,' ').replace(/\s+/g,' ').trim();
 export function shuffled(a,rng=Math.random){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 export function gradeQuestion(q,response){
  if(q.type==='match')return !!response&&q.pairs.every(p=>response[p.left]===p.right);

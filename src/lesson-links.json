@@ -1,0 +1,509 @@
+{
+  "6.1": {
+    "region": "All regions",
+    "figures": [
+      {
+        "number": "6.1",
+        "pdf": 213
+      },
+      {
+        "number": "6.2",
+        "pdf": 214
+      },
+      {
+        "number": "6.3",
+        "pdf": 215
+      },
+      {
+        "number": "6.4",
+        "pdf": 215
+      },
+      {
+        "number": "6.5",
+        "pdf": 216
+      }
+    ]
+  },
+  "6.2": {
+    "region": "All regions",
+    "figures": [
+      {
+        "number": "6.6",
+        "pdf": 217
+      }
+    ]
+  },
+  "6.3": {
+    "region": "Bone structure",
+    "figures": [
+      {
+        "number": "6.10",
+        "pdf": 222
+      },
+      {
+        "number": "6.11",
+        "pdf": 223
+      },
+      {
+        "number": "6.12",
+        "pdf": 225
+      },
+      {
+        "number": "6.13",
+        "pdf": 226
+      },
+      {
+        "number": "6.14",
+        "pdf": 226
+      },
+      {
+        "number": "6.15",
+        "pdf": 227
+      },
+      {
+        "number": "6.7",
+        "pdf": 219
+      },
+      {
+        "number": "6.8",
+        "pdf": 220
+      },
+      {
+        "number": "6.9",
+        "pdf": 220
+      }
+    ]
+  },
+  "6.4": {
+    "region": "Bone structure",
+    "figures": [
+      {
+        "number": "6.16",
+        "pdf": 229
+      },
+      {
+        "number": "6.17",
+        "pdf": 230
+      },
+      {
+        "number": "6.18",
+        "pdf": 232
+      },
+      {
+        "number": "6.19",
+        "pdf": 233
+      }
+    ]
+  },
+  "6.5": {
+    "region": "Bone structure",
+    "figures": [
+      {
+        "number": "6.20",
+        "pdf": 235
+      },
+      {
+        "number": "6.21",
+        "pdf": 236
+      }
+    ]
+  },
+  "6.6": {
+    "region": "Bone structure",
+    "figures": [
+      {
+        "number": "6.22",
+        "pdf": 238
+      },
+      {
+        "number": "6.23",
+        "pdf": 240
+      }
+    ]
+  },
+  "6.7": {
+    "region": "Bone structure",
+    "figures": [
+      {
+        "number": "6.24",
+        "pdf": 242
+      }
+    ]
+  },
+  "7.1": {
+    "region": "All regions",
+    "figures": [
+      {
+        "number": "7.2",
+        "pdf": 253
+      }
+    ]
+  },
+  "7.2": {
+    "region": "Skull",
+    "figures": [
+      {
+        "number": "7.10",
+        "pdf": 261
+      },
+      {
+        "number": "7.11",
+        "pdf": 262
+      },
+      {
+        "number": "7.12",
+        "pdf": 262
+      },
+      {
+        "number": "7.13",
+        "pdf": 263
+      },
+      {
+        "number": "7.14",
+        "pdf": 265
+      },
+      {
+        "number": "7.15",
+        "pdf": 267
+      },
+      {
+        "number": "7.16",
+        "pdf": 268
+      },
+      {
+        "number": "7.17",
+        "pdf": 269
+      },
+      {
+        "number": "7.18",
+        "pdf": 271
+      },
+      {
+        "number": "7.19",
+        "pdf": 272
+      },
+      {
+        "number": "7.3",
+        "pdf": 254
+      },
+      {
+        "number": "7.4",
+        "pdf": 255
+      },
+      {
+        "number": "7.5",
+        "pdf": 256
+      },
+      {
+        "number": "7.6",
+        "pdf": 257
+      },
+      {
+        "number": "7.7",
+        "pdf": 258
+      },
+      {
+        "number": "7.8",
+        "pdf": 259
+      },
+      {
+        "number": "7.9",
+        "pdf": 260
+      }
+    ]
+  },
+  "7.3": {
+    "region": "Spine",
+    "figures": [
+      {
+        "number": "7.20",
+        "pdf": 273
+      },
+      {
+        "number": "7.21",
+        "pdf": 274
+      },
+      {
+        "number": "7.22",
+        "pdf": 275
+      },
+      {
+        "number": "7.23",
+        "pdf": 276
+      },
+      {
+        "number": "7.24",
+        "pdf": 276
+      },
+      {
+        "number": "7.25",
+        "pdf": 277
+      },
+      {
+        "number": "7.26",
+        "pdf": 278
+      },
+      {
+        "number": "7.27",
+        "pdf": 278
+      },
+      {
+        "number": "7.28",
+        "pdf": 279
+      },
+      {
+        "number": "7.29",
+        "pdf": 280
+      },
+      {
+        "number": "7.30",
+        "pdf": 281
+      },
+      {
+        "number": "7.31",
+        "pdf": 282
+      }
+    ]
+  },
+  "7.4": {
+    "region": "Thorax",
+    "figures": [
+      {
+        "number": "7.32",
+        "pdf": 283
+      }
+    ]
+  },
+  "7.5": {
+    "region": "Skull",
+    "figures": [
+      {
+        "number": "7.33",
+        "pdf": 285
+      }
+    ]
+  },
+  "8.1": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "8.1",
+        "pdf": 299
+      },
+      {
+        "number": "8.2",
+        "pdf": 300
+      },
+      {
+        "number": "8.3",
+        "pdf": 301
+      },
+      {
+        "number": "8.4",
+        "pdf": 303
+      }
+    ]
+  },
+  "8.2": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "8.10",
+        "pdf": 309
+      },
+      {
+        "number": "8.11",
+        "pdf": 310
+      },
+      {
+        "number": "8.5",
+        "pdf": 304
+      },
+      {
+        "number": "8.6",
+        "pdf": 305
+      },
+      {
+        "number": "8.7",
+        "pdf": 307
+      },
+      {
+        "number": "8.8",
+        "pdf": 308
+      },
+      {
+        "number": "8.9",
+        "pdf": 308
+      }
+    ]
+  },
+  "8.3": {
+    "region": "Pelvis",
+    "figures": [
+      {
+        "number": "8.12",
+        "pdf": 311
+      },
+      {
+        "number": "8.13",
+        "pdf": 312
+      },
+      {
+        "number": "8.14",
+        "pdf": 313
+      },
+      {
+        "number": "8.15",
+        "pdf": 314
+      }
+    ]
+  },
+  "8.4": {
+    "region": "Lower limb",
+    "figures": [
+      {
+        "number": "8.16",
+        "pdf": 317
+      },
+      {
+        "number": "8.17",
+        "pdf": 319
+      },
+      {
+        "number": "8.18",
+        "pdf": 320
+      },
+      {
+        "number": "8.19",
+        "pdf": 321
+      }
+    ]
+  },
+  "8.5": {
+    "region": "All regions",
+    "figures": [
+      {
+        "number": "8.20",
+        "pdf": 323
+      },
+      {
+        "number": "8.21",
+        "pdf": 325
+      }
+    ]
+  },
+  "9.1": {
+    "region": "Joints",
+    "figures": [
+      {
+        "number": "9.2",
+        "pdf": 341
+      },
+      {
+        "number": "9.3",
+        "pdf": 341
+      },
+      {
+        "number": "9.4",
+        "pdf": 342
+      }
+    ]
+  },
+  "9.2": {
+    "region": "Skull",
+    "figures": [
+      {
+        "number": "9.5",
+        "pdf": 343
+      },
+      {
+        "number": "9.6",
+        "pdf": 344
+      }
+    ]
+  },
+  "9.3": {
+    "region": "Spine",
+    "figures": [
+      {
+        "number": "9.7",
+        "pdf": 345
+      }
+    ]
+  },
+  "9.4": {
+    "region": "Joints",
+    "figures": [
+      {
+        "number": "9.10",
+        "pdf": 350
+      },
+      {
+        "number": "9.8",
+        "pdf": 347
+      },
+      {
+        "number": "9.9",
+        "pdf": 348
+      }
+    ]
+  },
+  "9.5": {
+    "region": "Joints",
+    "figures": [
+      {
+        "number": "9.11",
+        "pdf": 353
+      },
+      {
+        "number": "9.12",
+        "pdf": 354
+      },
+      {
+        "number": "9.13",
+        "pdf": 355
+      }
+    ]
+  },
+  "9.6": {
+    "region": "Joints",
+    "figures": [
+      {
+        "number": "9.14",
+        "pdf": 359
+      },
+      {
+        "number": "9.15",
+        "pdf": 360
+      },
+      {
+        "number": "9.16",
+        "pdf": 361
+      },
+      {
+        "number": "9.17",
+        "pdf": 363
+      },
+      {
+        "number": "9.18",
+        "pdf": 365
+      },
+      {
+        "number": "9.19",
+        "pdf": 367
+      },
+      {
+        "number": "9.20",
+        "pdf": 368
+      },
+      {
+        "number": "9.21",
+        "pdf": 369
+      }
+    ]
+  },
+  "9.7": {
+    "region": "Joints",
+    "figures": []
+  }
+}
