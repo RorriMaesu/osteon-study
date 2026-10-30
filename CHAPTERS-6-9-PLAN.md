@@ -78,7 +78,7 @@ Schematic identification tests orientation and relationships, while the existing
 
 The initial desktop exam menu showed only one chapter per content page and left excessive empty space. It was replaced with a single dashboard showing all four chapter launchers, the cumulative exam and full-bank review. On phones, question content precedes the larger navigator so answering stays direct.
 
-The final study pass adds 97 direct figure links, 12 new guided activities (19 total), and explicit routes from lessons to related atlas regions. The movement explorer demonstrates elbow, shoulder and ankle directions with qualitative segment schematics; it does not claim physiological range measurements or moving 3D bones. Revealed activity answers remain unscored. Source-filtered reader navigation stays inside the selected collection.
+The final study pass adds 99 direct figure links, 12 new guided activities (19 total), and explicit routes from lessons to related atlas regions. The movement explorer demonstrates elbow, shoulder and ankle directions with qualitative segment schematics; it does not claim physiological range measurements or moving 3D bones. Revealed activity answers remain unscored. Source-filtered reader navigation stays inside the selected collection.
 
 Validation checks all 74 objective mappings, all 172 chapter source pages, accepted/rejected response formats, corrupted or outdated drafts, assistance persistence, and legacy study identifiers. Randomized exam forms are checked for section quotas and objective coverage. Browser review includes desktop and phone layouts, source reading, matching, delayed feedback and interrupted-session recovery. The published curriculum coverage file makes the finite bank reviewable.
 

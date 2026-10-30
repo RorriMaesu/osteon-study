@@ -51,7 +51,7 @@ test('legacy question and glossary identifiers stay usable, and new glossary has
 test('every lesson anatomy route exists and every direct figure link resolves its actual source caption',()=>{
  assert.deepEqual(Object.keys(links),lessons.map(l=>l.id));let figures=0;
  for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region),id);for(const f of l.figures){figures++;const page=pages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
- assert.equal(figures,97);
+ assert.equal(figures,99);const all=new Set(pages.filter(p=>[6,7,8,9].includes(p.chapter)).flatMap(p=>[...p.text.matchAll(/FIGURE\s+(\d+\.\d+)\s/g)].map(m=>m[1])));assert.deepEqual(new Set(Object.values(links).flatMap(l=>l.figures.map(f=>f.number))),all);
 });
 test('the local tutor retrieves the newly complete development sections and names the full four-chapter scope',()=>{
  assert.ok(retrieveSources('apical ectodermal ridge limb buds',{reference:'8.5'}).some(s=>s.pdf===324));
