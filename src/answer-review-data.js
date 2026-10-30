@@ -1,0 +1,9 @@
+// Persisted review evidence is separate from the learner's original response.
+export const reviewText=s=>String(s??'').normalize('NFKD').toLowerCase().replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').replace(/\b(a|an|the|and)\b/g,' ').replace(/\s+/g,' ').trim();
+export function validAnswerReview(r){return !!r&&r.schema===1&&['reviewed','unavailable','uncertain','guarded'].includes(r.status)&&['correct','spelling','equivalent','incorrect','uncertain'].includes(r.verdict)&&['high','low'].includes(r.confidence)&&typeof r.strictCorrect==='boolean'&&typeof r.allowOverride==='boolean'&&Number.isFinite(r.at)&&['target','answer','response','model','correctedAnswer','explanation','reference'].every(k=>typeof r[k]==='string'&&r[k].length<=(k==='explanation'?1600:k==='response'?2000:k==='model'?160:600));}
+export function reviewMatches(r,target,response){return validAnswerReview(r)&&r.target===target.id&&r.answer===target.answer&&r.response===response;}
+export function reviewedCorrect(strictCorrect,r,target,response){
+ if(strictCorrect)return true;
+ return reviewMatches(r,target,response)&&r.status==='reviewed'&&r.allowOverride&&r.confidence==='high'&&['spelling','equivalent'].includes(r.verdict)&&[target.answer,...(target.aliases||[])].some(a=>reviewText(a)===reviewText(r.correctedAnswer));
+}
+export function reviewLabel(r){if(!r)return'';if(r.status==='unavailable')return r.explanation.startsWith('AI review was canceled.')?'AI review canceled · answer key used':'Local AI unavailable · answer key used';if(r.status==='uncertain')return'AI uncertain · answer key retained';if(r.status==='guarded')return'Answer key retained · local AI review';return r.verdict==='spelling'&&!r.strictCorrect&&r.allowOverride?'Spelling accepted by local AI':r.verdict==='equivalent'&&!r.strictCorrect&&r.allowOverride?'Equivalent wording accepted by local AI':'Reviewed by local AI';}

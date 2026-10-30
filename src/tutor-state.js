@@ -1,6 +1,6 @@
 import pages from './reader-pages.json' with {type:'json'};
 const pageMap=new Map(pages.map(p=>[p.pdf,p]));
-const validReference=s=>/^(?:6\.[1-7]|7\.[1-5]|8\.[1-4]|9\.6)$/.test(s);
+const validReference=s=>/^(?:6\.[1-7]|7\.[1-5]|8\.[1-5]|9\.[1-7])$/.test(s);
 export const CHAT_LIMIT=30;
 export function sanitizeConversation(value){
  if(!Array.isArray(value))return[];

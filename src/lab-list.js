@@ -1,6 +1,7 @@
 import source from './lab-list-source.json' with {type:'json'};
 import {terms} from './data.js';
 import './representations.js';
+import {validAnswerReview} from './answer-review-data.js';
 
 export {source as labListSource};
 export const labScopes=[['all','Entire document'],['lab6','Lab 6 · axial'],['lab7','Lab 7 · bone test'],['shoulder','Shoulder · muscle test']];
@@ -40,11 +41,11 @@ export function listStats(scope='all'){
 export const listQuestionById=new Map(listQuestions().map(t=>[t.id,t]));
 export const LAB_TEST_KEY='osteon-bone-list-test-v1';
 export function validLabRun(run){
- if(!run||run.schema!==1||run.source!==source.source.sha256||!labScopes.some(([s])=>s===run.scope)||!Number.isFinite(run.startedAt)||typeof run.assisted!=='boolean')return false;
+ if(!run||run.schema!==1||run.source!==source.source.sha256||!labScopes.some(([s])=>s===run.scope)||!Number.isFinite(run.startedAt)||typeof run.assisted!=='boolean'||(run.draft!==undefined&&(typeof run.draft!=='string'||run.draft.length>500)))return false;
  if(!Array.isArray(run.questionIds)||!run.questionIds.length||run.questionIds.length>182||new Set(run.questionIds).size!==run.questionIds.length)return false;
  const allowed=new Set(listQuestions(run.scope).map(t=>t.id));if(run.questionIds.some(id=>!allowed.has(id)))return false;
  if(!Array.isArray(run.results)||run.results.length>run.questionIds.length)return false;
- return run.results.every((r,i)=>r&&r.id===run.questionIds[i]&&typeof r.correct==='boolean'&&typeof r.assisted==='boolean'&&typeof r.response==='string'&&r.response.length<=500&&Number.isFinite(r.at));
+ return run.results.every((r,i)=>r&&r.id===run.questionIds[i]&&typeof r.correct==='boolean'&&typeof r.assisted==='boolean'&&typeof r.response==='string'&&r.response.length<=500&&Number.isFinite(r.at)&&(r.review===undefined||validAnswerReview(r.review)));
 }
 export function makeLabRun(scope,questionIds,now=Date.now()){
  const run={schema:1,source:source.source.sha256,scope,questionIds:[...questionIds],startedAt:now,assisted:false,results:[]};

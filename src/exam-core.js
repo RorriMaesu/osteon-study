@@ -1,5 +1,6 @@
 import syllabus from './curriculum-syllabus.json' with {type:'json'};
 import {examBank,EXAM_VERSION} from './exam-bank.js';
+import {validAnswerReview,reviewedCorrect} from './answer-review-data.js';
 export {syllabus};
 export const normalize=s=>String(s??'').normalize('NFKC').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9]+/g,' ').replace(/\b(a|an|the|and)\b/g,' ').replace(/\s+/g,' ').trim();
 export function shuffled(a,rng=Math.random){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
@@ -10,6 +11,7 @@ export function gradeQuestion(q,response){
  return normalize(response)!==''&&[q.answer,...(q.aliases||[])].some(a=>normalize(a)===normalize(response));
 }
 export function answered(q,response){if(q.type==='match')return !!response&&q.pairs.every(p=>typeof response[p.left]==='string'&&response[p.left]);if(q.type==='order')return Array.isArray(response)&&response.length===q.steps.length;return typeof response==='string'&&!!response.trim();}
+export function gradeWithReview(q,response,review){const strict=gradeQuestion(q,response);return ['text','identify'].includes(q.type)?reviewedCorrect(strict,review,q,response):strict;}
 const cumulative={6:[2,2,7,5,2,4,3],7:[4,9,6,3,3],8:[3,7,5,7,3],9:[3,3,3,5,3,6,2]};
 export function selectExam(scope,bank=examBank,rng=Math.random){
  if(scope==='bank')return shuffled(bank,rng);
@@ -37,13 +39,14 @@ export function validSession(s,bank=examBank){
  if(!s||s.version!==EXAM_VERSION||!['active','submitted'].includes(s.status)||!['practice','exam'].includes(s.mode)||typeof s.id!=='string'||s.id.length>100||typeof s.scope!=='string'||(s.status==='submitted'&&!Number.isFinite(s.submitted))||!Array.isArray(s.ids)||!s.ids.length||s.ids.length>1000||new Set(s.ids).size!==s.ids.length||!Number.isFinite(s.started)||!Number.isInteger(s.index)||s.index<0||s.index>=s.ids.length)return false;
  const byId=new Map(bank.map(q=>[q.id,q]));
  for(const key of ['options','responses','assisted','flags','checked'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
+ if(s.aiReviews!==undefined&&(!s.aiReviews||typeof s.aiReviews!=='object'||Array.isArray(s.aiReviews)||Object.entries(s.aiReviews).some(([id,r])=>!s.ids.includes(id)||!validAnswerReview(r)||r.target!==id||r.answer!==byId.get(id)?.answer||(['text','identify'].includes(byId.get(id)?.type)&&r.response!==s.responses[id]))))return false;
  for(const id of s.ids){const q=byId.get(id);if(!q)return false;const expected=q.type==='match'?q.pairs.map(p=>p.right):q.type==='order'?q.steps:q.type==='choice'||!q.type?[q.answer,...q.distractors]:[],actual=s.options[id];if(!Array.isArray(actual)||actual.length!==expected.length||new Set(actual).size!==expected.length||!expected.every(v=>actual.includes(v)))return false;
   const r=s.responses[id];if(r!==undefined){if(q.type==='match'){if(!r||typeof r!=='object'||Array.isArray(r)||Object.entries(r).some(([a,b])=>!q.pairs.some(p=>p.left===a)||!expected.includes(b)))return false;}else if(q.type==='order'){if(!Array.isArray(r)||r.length!==expected.length||new Set(r).size!==expected.length||!expected.every(v=>r.includes(v)))return false;}else if(typeof r!=='string'||r.length>2000||(q.type==='choice'&&!expected.includes(r)))return false;}
  }
  return ['assisted','flags','checked'].every(k=>Object.entries(s[k]).every(([id,v])=>s.ids.includes(id)&&typeof v==='boolean'));
 }
 export function results(s,bank=examBank){
- const byId=new Map(bank.map(q=>[q.id,q]));const rows=s.ids.map(id=>{const q=byId.get(id);return {q,response:s.responses[id],answered:answered(q,s.responses[id]),correct:gradeQuestion(q,s.responses[id]),assisted:!!s.assisted[id]};});
+ const byId=new Map(bank.map(q=>[q.id,q]));const rows=s.ids.map(id=>{const q=byId.get(id);return {q,response:s.responses[id],answered:answered(q,s.responses[id]),correct:gradeWithReview(q,s.responses[id],s.aiReviews?.[id]),strictCorrect:gradeQuestion(q,s.responses[id]),review:s.aiReviews?.[id],assisted:!!s.assisted[id]};});
  const summarize=a=>({total:a.length,answered:a.filter(x=>x.answered).length,correct:a.filter(x=>x.correct).length,independent:a.filter(x=>x.correct&&!x.assisted).length,assisted:a.filter(x=>x.assisted).length});
  return {...summarize(rows),rows,sections:Object.fromEntries([...new Set(rows.map(r=>r.q.lesson))].map(id=>[id,summarize(rows.filter(r=>r.q.lesson===id))])),objectives:Object.fromEntries([...new Set(rows.flatMap(r=>r.q.objectives||[]))].map(id=>[id,summarize(rows.filter(r=>r.q.objectives?.includes(id)))]))};
 }

@@ -1,3 +1,11 @@
+# 2026-10-30 — Optional local AI answer review
+
+- Add an opt-in Ollama reviewer to typed 3D practice, the required BI 231 test, concept practice and chapter/cumulative exams. Select an installed, verified local chat model through Models & connection.
+- Accept clear minor misspellings and equivalent wording, while retaining the source answer, original response, answer-key result, model and explanation. Preserve exact-match credit and keep clicked/selected answers scored against their key.
+- Explain wrong structures and guard known anatomical distinctions, ambiguous alternatives, counts and vertebral numbers. Uncertain, interrupted or unavailable reviews retain the key; provide a cancel-and-use-key button.
+- Keep exam feedback delayed until submission. Save partial submission reviews, typed bone-list drafts and review evidence in reports/backups without rewriting earlier results.
+- Verify real local Qwen responses, saved-draft recovery, cancellation, and phone/compact-desktop layouts. All 84 automated checks pass. No model geometry changed.
+
 # 2026-10-30 — Complete chapter 6–9 curriculum and mixed-format exams
 
 - Expand the learning path to all 24 sections, preserving all 74 source learning objectives and prerequisite links.

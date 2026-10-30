@@ -1,4 +1,18 @@
-# Current validation — 2026-10-30
+# Current validation — local AI answer review, 2026-10-30
+
+All 84 automated checks pass: the preceding 72 checks plus 12 answer-review checks covering response/key binding, typo credit, semantic equivalents, conservative anatomy/count/side guards, exact-match preservation, selected-answer scoring, malformed/incomplete/cloud generation rejection, cancellation, escaped feedback, persisted evidence, bone-list typed drafts and chapter 8/9 tutor references.
+
+Real Ollama testing used the existing installed `qwen3.5:4b-q4_K_M` model. It accepted `femurr` for Femur, accepted “head of the thighbone” for Head of femur, and retained an incorrect result for Radius in place of Ulna. One cold CLI review took about 51 seconds; the two warm reviews took about one second each. These are observations on one computer, not latency or accuracy guarantees. No model download or persistent system configuration change was needed.
+
+Browser checks used an isolated local origin and synthetic study responses. Verified typed chapter practice accepting a spelling error and rejecting a different lower-leg bone; delayed chapter-exam submission accepting `sevn` for seven; actual 3D identification accepting `femurr` for Femora; cancellation retaining the key; and bone-list save/reload/continue restoring an unsubmitted typed draft and the opt-in setting. The bone-list launcher opened successfully. Completed reports retained the original response, source key and actual model; the exam report distinguished AI acceptance from strict matches. No errors or warnings were captured after the final preview reload and resume checks.
+
+At 1024 × 640, all six exam launch cards and the new AI controls fitted inside a 1024 × 640 document. At 390 × 844, the required-list question used a natural vertical flow without horizontal overflow; the setup dialog fitted the viewport width and scrolled internally. Temporary viewport overrides were reset. Phone loopback cannot reach Ollama on a different computer; the connection dialog states this limitation. No public study history was changed, and no 3D model geometry changed.
+
+The source key remains authoritative on uncertainty or service failure. These checks validate the integration and selected real examples, not every possible answer/model combination or independent assessment validity. Earlier validation below describes the curriculum and anatomy work already in place.
+
+---
+
+# Curriculum validation — 2026-10-30
 
 The chapters 6–9 release has 24 guided sections, all 74 source learning objectives, 172 complete chapter pages plus eight supplemental pages, 544 glossary terms, 256 new mixed-format exam items and 104 supplementary questions. Source-objective coverage is published in CURRICULUM-COVERAGE.csv. The chronological records below retain the counts and limits of their respective earlier releases.
 

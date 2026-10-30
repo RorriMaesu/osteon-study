@@ -48,3 +48,7 @@ Device details and supplied memory values are saved locally. A later browser har
 Skeleton divisions can be selected directly in both practice setup screens. Incompatible regions are disabled. Colors used for exploration return after a scored anatomy session, and the atlas restores its own region view when you return. The Joints explorer includes appendicular bone context and enables course tissues instead of displaying an empty specimen.
 
 On phones, the full-screen tutor keeps keyboard focus within its controls. Opening a source reference closes the drawer and displays the selected reading; reopen the tutor to continue your saved conversation.
+
+## Answer review in Practice lab
+
+The optional **Local AI answer review** control uses the same local Ollama installation and lets you choose from verified installed models. It judges submitted meaning and spelling and explains corrections. Review after submission is distinct from tutor/source assistance before answering. Full chapter exams defer AI review until final submission. See [the answer-review guide](ANSWER-REVIEW.md) for scoring, saved evidence, cancellation and fallback behavior.

@@ -33,6 +33,12 @@ Study all **24 sections** with complete source readings and figures, guided note
 
 Multiple choice, typed recall, anatomical schematic identification, matching and ordering use explicit answer keys and source-linked explanations. Full exams delay feedback until submission. Save a draft, flag questions, edit answers and review section/objective results. Source or tutor assistance stays attached after reload and is separated from independently correct answers. One point per question; all matching/ordering parts must be correct. Export completed reports; up to 20 sessions remain in this browser. Earlier question versions are retained for export rather than silently regraded. These are original study questions, not the instructor’s exam.
 
+## Optional local AI grading
+
+Turn on **Local AI answer review** in Practice lab or the Exam center, then use **Models & connection** to choose an installed Ollama model. The reviewer can accept minor spelling errors and equivalent wording, correct the standard term, and explain confusion. Typed bone-list answers, anatomy practice and chapter questions support it. Full exams review typed submissions after the exam is submitted; clicked targets and selected answers keep their key-based score.
+
+Original responses, exact answer-key results and AI decisions stay available in saved results and exports. Uncertainty or connection failures retain the key. The existing local Ollama setup is reused; no cloud fallback or extra app. [How grading works and its limits](ANSWER-REVIEW.md).
+
 ## Your BI 231 bone-list test
 
 [Open the dedicated test ↗](https://rorrimaesu.github.io/osteon-study/?lablist=1#practice) · [Document reconciliation](BONE-LIST-REVIEW.md) · [Download the checklist](BONE-LIST-CHECKLIST.csv)

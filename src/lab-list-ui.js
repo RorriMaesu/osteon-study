@@ -1,3 +1,4 @@
+import {reviewHTML} from './answer-review-ui.js';
 import {labListSource,labScopes,listEntries,listQuestions,listStats,listQuestionById,entryStatus,LAB_TEST_KEY,validLabRun,makeLabRun,labRunSummary} from './lab-list.js';
 import {shuffle} from './storage.js';
 import {setLearningContext} from './learning-context.js';
@@ -65,7 +66,7 @@ export function initLabList({viewer,setView,selectTerm,precision,toast,escape:e}
  }
  function renderResults(){
   const rows=current.results.filter(r=>!onlyMissed||!r.correct||r.assisted);
-  paginate(rows,r=>{const t=listQuestionById.get(r.id);return `<article class="lab-list-row"><div><strong>${e(t.testLabel||t.name)}</strong><small>${e(t.region)}</small></div><div><span>${e(r.response)}</span><small>${e(t.listRecall?.kind||entryStatus(t))}</small></div><span class="lab-list-status ${!r.correct||r.assisted?'hold':''}">${r.assisted?'Assisted':r.correct?'Correct':'Review again'}</span><button data-lab-study="${r.id}" ${viewer.loaded?'':'disabled'}>Study ↗</button></article>`;});
+  paginate(rows,r=>{const t=listQuestionById.get(r.id);return `<article class="lab-list-row"><div><strong>${e(t.testLabel||t.name)}</strong><small>${e(t.region)}</small></div><div><span>${e(r.response)}</span><small>${e(t.listRecall?.kind||entryStatus(t))}</small>${reviewHTML(r.review)}</div><span class="lab-list-status ${!r.correct||r.assisted?'hold':''}">${r.assisted?'Assisted':r.correct?'Correct':'Review again'}</span><button data-lab-study="${r.id}" ${viewer.loaded?'':'disabled'}>Study ↗</button></article>`;});
  }
  function download(text,name,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  document.addEventListener('lablist',()=>{page=0;home();});
