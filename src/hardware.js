@@ -4,7 +4,7 @@ export async function browserHardware(){
  try{if(n.gpu){const adapter=await n.gpu.requestAdapter();if(adapter){const info=adapter.info;report.gpu=[info?.vendor,info?.architecture,info?.description].filter(Boolean).join(' · ')||report.gpu;}}}catch{}
  return report;
 }
-export function validateHardware(r){if(!r||r.schema!==1)throw new Error('Choose an Osteon hardware report.');const num=v=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=4096?v:null;return{schema:1,source:'imported native report',ramGB:num(r.ramGB),vramGB:num(r.vramGB),ramApproximate:r.ramApproximate===true,gpu:String(r.gpu||'Unknown').slice(0,250),threads:num(r.threads),os:['windows','mac','linux'].includes(r.os)?r.os:'other'};}
+export function validateHardware(r){if(!r||r.schema!==1)throw new Error('Choose an Osteon hardware report.');const num=v=>typeof v==='number'&&Number.isFinite(v)&&v>=0&&v<=4096?v:null;return{schema:1,source:'imported native report',ramGB:num(r.ramGB),vramGB:num(r.vramGB),ramApproximate:r.ramApproximate===true,gpu:String(r.gpu||'Unknown').slice(0,250),threads:num(r.threads),freeDiskGB:typeof r.freeDiskGB==='number'&&Number.isFinite(r.freeDiskGB)&&r.freeDiskGB>=0&&r.freeDiskGB<=1e7?r.freeDiskGB:null,os:['windows','mac','linux'].includes(r.os)?r.os:'other'};}
 export function mergeBrowserHardware(previous,detected){
  const exactRAM=previous.ramGB>0&&!previous.ramApproximate;
  return{...detected,ramGB:exactRAM?previous.ramGB:detected.ramGB,ramApproximate:!exactRAM,vramGB:previous.vramGB??null,source:exactRAM||previous.vramGB!=null?'browser identifiers + supplied memory values':'browser'};
@@ -24,3 +24,8 @@ export function modelFit(size,{ramGB,vramGB,ramApproximate=false}={}){
  return{rank:1,label:'Memory unknown · run a short test',needed};
 }
 export const downloadModels=[{name:'qwen3.5:2b',size:2.7e9,description:'Small start · roughly 2.7–3.1 GB download. Less reliable on complex explanations.'},{name:'qwen3.5:4b',size:3.4e9,description:'Balanced start · roughly 3.3–4.0 GB download.'},{name:'qwen3.5:9b',size:6.7e9,description:'Larger option · roughly 6.6–7.6 GB download. Needs more memory.'}];
+export function recommendedDownload(hardware={}){
+ const gpu=downloadModels.filter(m=>modelFit(m.size,hardware).rank===3);
+ if(gpu.length)return gpu.at(-1);
+ return downloadModels.find(m=>m.name==='qwen3.5:4b'&&modelFit(m.size,hardware).rank===2)||downloadModels[0];
+}

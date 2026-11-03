@@ -5,12 +5,18 @@ import {retrieveSources} from './tutor-context.js';
 import {reviewText,reviewedCorrect} from './answer-review-data.js';
 import {assessTyped,answerPolicy,acceptedForms} from './typed-answer.js';
 import {answerPolicies} from './exam-answer-policies.js';
+import {localAI} from './local-ai.js';
 export const JUDGE_KEY='osteon-answer-review-v1';
 let settings={enabled:false,model:''};
 try{const s=JSON.parse(localStorage.getItem(JUDGE_KEY));if(s&&typeof s.enabled==='boolean')settings={enabled:s.enabled,model:typeof s.model==='string'?s.model.slice(0,160):'',endpoint:endpoints.includes(s.endpoint)?s.endpoint:undefined};}catch{}
-const saved=k=>{try{return localStorage.getItem(k)||'';}catch{return'';}};
-export function judgeSettings(){return {...settings,model:settings.model||saved('osteon-tutor-model-v1'),endpoint:endpoints.includes(settings.endpoint)?settings.endpoint:endpoints.includes(saved('osteon-tutor-address-v1'))?saved('osteon-tutor-address-v1'):endpoints[0]};}
-export function setJudgeSettings(update){settings={...settings,...update};try{localStorage.setItem(JUDGE_KEY,JSON.stringify(settings));}catch{}if(typeof document!=='undefined')document.dispatchEvent(new Event('answerreviewchange'));return judgeSettings();}
+export function judgeSettings(){return {enabled:settings.enabled,model:localAI.state.model||localAI.preferences.model,endpoint:localAI.state.endpoint};}
+export function setJudgeSettings(update){
+ if(typeof update.enabled==='boolean')settings.enabled=update.enabled;
+ if(update.endpoint&&update.endpoint!==localAI.state.endpoint)localAI.setEndpoint(update.endpoint);
+ if(update.model&&update.model!==localAI.state.model&&localAI.state.models.some(m=>m.name===update.model&&!m.problem))localAI.select(update.model);
+ try{localStorage.setItem(JUDGE_KEY,JSON.stringify({enabled:settings.enabled}));}catch{}
+ if(typeof document!=='undefined')document.dispatchEvent(new Event('answerreviewchange'));return judgeSettings();
+}
 export const REVIEW_SCHEMA={type:'object',properties:{verdict:{type:'string',enum:['correct','spelling','equivalent','incorrect','uncertain']},confidence:{type:'string',enum:['high','low']},correctedAnswer:{type:'string'},explanation:{type:'string'}},required:['verdict','confidence','correctedAnswer','explanation'],additionalProperties:false};
 const names=[...allTerms,...glossary].map(t=>({id:t.id,name:t.name,forms:[t.name,...(t.aliases||[])].filter(Boolean).flatMap(s=>[reviewText(s),reviewText(s.replace(/(?<!s)s$/,''))])}));
 export function conflictingTerm(target,response){const input=reviewText(response),expected=new Set([target.answer,...(target.aliases||[])].flatMap(s=>[reviewText(s),reviewText(s.replace(/(?<!s)s$/,''))]));const matches=names.filter(t=>t.forms.includes(input));return matches.length&&!matches.some(t=>t.id===target.id||t.forms.some(f=>expected.has(f)))?matches[0].name:null;}
@@ -52,6 +58,13 @@ export function interpretReview(data,{target,response,strictCorrect,allowOverrid
 export class LocalAnswerJudge{
  constructor(fetcher){this.fetcher=fetcher;this.models=[];this.client=null;}
  async connect({endpoint=judgeSettings().endpoint,model=judgeSettings().model,signal}={}){
+  if(!this.fetcher){
+   if(endpoint!==localAI.state.endpoint)localAI.setEndpoint(endpoint);
+   const state=localAI.state.connected?localAI.snapshot():await localAI.connect(signal);
+   if(!state.model)throw new Error('Ollama is connected. Finish local AI setup to choose or download a model.');
+   this.models=state.models;this.client=localAI.client;
+   return {models:this.models,model:state.model,endpoint:state.endpoint};
+  }
   let client=new OllamaClient(endpoint,this.fetcher),result;
   try{result=await client.connect(signal);}catch(err){if(signal?.aborted)throw err;client=new OllamaClient(endpoints.find(e=>e!==endpoint),this.fetcher);result=await client.connect(signal);}
   const verified=await Promise.allSettled(result.models.slice(0,50).map(async m=>{const info=await client.show(m.name,signal);return {...m,info,problem:localModelProblem(m,info)};}));
@@ -72,6 +85,8 @@ export class LocalAnswerJudge{
   const body={model,messages,stream:false,format:REVIEW_SCHEMA,keep_alive:'10m',options:{temperature:0,num_ctx:4096,num_predict:450}};if(info.capabilities.includes('thinking'))body.think=false;
   const data=await client.request('chat',{body,signal,timeout:90000});if(!data.done||data.done_reason==='length'||typeof data.message?.content!=='string'||data.message.content.length>6000)throw new Error('The model did not finish its review.');
   let parsed;try{parsed=JSON.parse(data.message.content);}catch{throw new Error('The model returned an unreadable review.');}
-  return interpretReview(parsed,{target,response,strictCorrect,allowOverride,model});
+  const result=interpretReview(parsed,{target,response,strictCorrect,allowOverride,model});
+  if(!this.fetcher)localAI.markResponded(model);
+  return result;
  }
 }

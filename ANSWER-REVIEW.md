@@ -18,7 +18,7 @@ Spelling practice is a separate learning record. It does not edit submitted answ
 
 ## Optional local meaning review
 
-1. Turn on **Local AI answer review**, then choose **Models & connection → Connect & refresh models**. Select a verified installed Ollama chat model. **Check local AI** in the Exam center also checks readiness.
+1. Turn on **Local AI answer review**. If setup is needed, the shared local AI guide opens over your exam. Choose an installed model or explicitly download one, test it, then choose **Return to my exam**. **AI ready · Settings** manages the shared model; **Check local AI** in the Exam center also checks readiness.
 2. New exams send only unresolved typed wording for local review. Clear built-in spelling corrections and known errors do not require generation. Chapter/cumulative reviews run after final submission; section practice can review when checked.
 3. If a review is canceled, unavailable or uncertain, the answer stays pending. You can finish the exam and use **Meaning review → Review original wording with local AI** later. **Leave answer pending** cancels a running review.
 4. A successful retry judges the fixed original response, updates its score and records the resolved anatomy attempt once. Previous review evidence and the first submitted outcome remain in the exported session. Seeing the key and practicing a corrected answer never replaces the original response.

@@ -116,7 +116,7 @@ export function initWorkspace() {
       if(document.querySelector('#tutor-panel').open){
         const body=document.querySelector('#tutor-body'),chat=!!body.querySelector('#tutor-form');
         body.classList.toggle('tutor-chat-layout',chat);
-        mount(chat?body.querySelector('#tutor-messages'):body,chat?'Conversation':'Tutor setup');
+        if(chat)mount(body.querySelector('#tutor-messages'),'Conversation');
       }
     }
     working=false;observe();

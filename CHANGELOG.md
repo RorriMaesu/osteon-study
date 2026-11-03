@@ -1,3 +1,11 @@
+# 2026-11-02 — Guided local AI setup
+
+- Replace three setup tabs and paginated instructions with a guided connection/install/model/test flow, a pinned primary action, optional hardware, and concise recovery branches.
+- Share connection, local-model preference, and response-tested readiness between the tutor and answer reviewer; preserve the separate grading opt-in and all exam drafts.
+- Reuse installed weights, reconnect previously working models, verify completed responses before readiness, and distinguish current download-part progress from total model completion.
+- Add an optional Windows assistant for signed official-installer verification, settings backups/undo, approved Ollama restart, loopback startup, and an automatic bounded hardware-report handoff. Include read-only and hardware-only modes; preserve manual setup if scripts are blocked.
+- Add a macOS connection helper, explicit desktop requirements on phones, and advanced Linux service instructions. Document that the helpers are source scripts rather than signed native executables.
+
 # 2026-11-02 — Landmarks on the model and a native developmental specimen
 
 - Add a persistent Landmarks On/Off control to the 3D viewer. Show small contextual label groups directly on regions/bones, with batch navigation, side labels and a searchable integrated finder. Include teacher tissues and joint structures as well as textbook bone features.

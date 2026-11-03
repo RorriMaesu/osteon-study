@@ -47,7 +47,7 @@ New chapter/section exams and full-bank review accept clear spelling errors and 
 
 After a test, choose **Practice spellings** to compare changed letters, hide the term and try it from memory. Due words also appear in the Exam center. This practice never edits your submitted response or changes your exam score.
 
-Turn on **Local AI answer review** and use **Models & connection** to choose an installed Ollama model. New exams use it for unresolved wording; failed or uncertain reviews stay pending and can be retried from the fixed original response later. The BI 231 test, 3D and supplementary practice retain their existing optional AI workflow. Original responses, strict key results and review evidence stay in reports. Earlier exam scores retain their original rules. [How grading works and its limits](ANSWER-REVIEW.md).
+Turn on **Local AI answer review** and use **Set up local AI** for the shared tutor/reviewer setup. New exams use it for unresolved wording; failed or uncertain reviews stay pending and can be retried from the fixed original response later. The BI 231 test, 3D and supplementary practice retain their existing optional AI workflow. Original responses, strict key results and review evidence stay in reports. Earlier exam scores retain their original rules. [How grading works and its limits](ANSWER-REVIEW.md).
 
 ## Your BI 231 bone-list test
 
@@ -61,7 +61,7 @@ Read [the implementation and learning plan](PLAN.md) and [release notes](CHANGEL
 
 The atlas combines two-stage double-click navigation, colors in focused regions, and the completed [310-feature textbook inventory](LANDMARKS.md). Open the landmark bank from the atlas or Practice lab. Supported references and labeled teaching reconstructions provide spatial practice; eight textbook features remain excluded from scored locating. See the [current per-entry accuracy review](accuracy.html) and [source inventory](LANDMARKS.csv).
 
-Read [the responsive workspace plan](RESPONSIVE-PLAN.md) for the desktop and mobile layout review. Desktop widths from 1000 pixels use a viewport-sized application with Previous / Next content pages, including the atlas lists, lessons, reading text and tutor history. Phones and narrower tablets use Specimen / Browse / Details atlas controls and natural vertical reading. Search, answer drafts and progress are preserved when the layout changes.
+Read [the responsive workspace plan](RESPONSIVE-PLAN.md) for the desktop and mobile layout review. Desktop widths from 1000 pixels use a viewport-sized application with Previous / Next content pages, including the atlas lists, lessons, reading text and tutor history. Local AI setup uses a guided flow with a pinned next action instead of content pages. Phones and narrower tablets use Specimen / Browse / Details atlas controls and natural vertical reading. Search, answer drafts and progress are preserved when the layout changes.
 
 Use **Expand viewer** on the model to fill the browser window on any screen. **Full screen** can also hide browser chrome when supported; **Exit expanded view** or Escape returns to the workspace. In practice, **Back to question** restores the existing question and typed draft. Laptop layouts give more height to the canvas and put selected-structure information behind **Details**; large desktops keep both side panels. **Controls** explains double-click/double-tap navigation, rotation, zoom and pan. Selecting a bone also offers an explicit **Zoom to region** action.
 
@@ -100,7 +100,7 @@ Every focused region has bone colors, an optional key and a visible On / Off con
 
 Browse has All / Bones / Landmarks controls. Existing landmark pins and source illustrations remain explicitly identified; selecting an unsided reference target opens appropriate regional context. The 310-feature textbook bank remains separate from the original 177-item lab checklist. Fifty-two additional 3D reference anchors and full-size source diagrams expand spatial practice without claiming that every feature is separately modeled.
 
-Use the **Socratic tutor** button for a local Ollama chat, installed-model selection, guided connection, optional model downloads and hardware/fit checks. See [the tutor guide](TUTOR.md) for first setup and honest browser limits. Tutor assistance is tracked separately from independent quiz accuracy.
+Use the **Socratic tutor** button for a local Ollama chat, installed-model selection, guided connection, explicit model downloads, optional hardware checks, and a Windows setup assistant. Existing installations skip unnecessary steps, and the tutor and answer reviewer share one model preference. See [the tutor guide](TUTOR.md) for first setup and honest browser limits. Tutor assistance is tracked separately from independent quiz accuracy.
 
 ## Current accuracy review
 
