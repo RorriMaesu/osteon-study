@@ -1,3 +1,13 @@
+# 2026-11-02 — Spelling-aware exams and a separate spelling review
+
+- Add built-in, question-specific spelling and equivalent-wording support for all 63 typed/identification questions in new chapter, cumulative, section and full-bank exams, without requiring Ollama.
+- Keep formal names, anatomical confusions, sides, counts, units and complete bone sets distinct. Leave plausible unresolved meaning pending rather than declaring a confirmed mistake.
+- Show confirmed scores, pending upper limits, spelling notes and filtered feedback. Move desktop pages directly to the selected feedback category.
+- Add changed-letter comparison, hide-and-retrieve spelling practice and a separate due-word schedule. Keep submitted responses and exam scores unchanged by spelling practice.
+- Use optional local AI only for unresolved new-exam wording. Allow cancellation and later retries of the fixed original response, retaining the first submitted outcome and earlier review evidence.
+- Preserve immediately preceding identical-key exams/drafts under their original rules. Export pending decisions explicitly and prevent them entering anatomy-failure statistics. Fix complete-answer counts after a typed answer is cleared.
+- Verify 101 automated checks, source audits, full-exam delayed feedback, reload/resume, real local Qwen review, cancellation/retry, and compact-laptop/phone layouts. No model geometry changed.
+
 # 2026-11-02 — A larger, more discoverable 3D viewer
 
 - Reclaim laptop canvas height and move selected-structure details behind an on-demand panel at 1000–1599 pixels. Keep both side panels on large desktops.

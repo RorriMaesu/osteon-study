@@ -303,3 +303,22 @@ body.viewer-room-open{overflow:hidden!important}
 }
 .viewer-room #viewer-details,.viewer-room .viewer-details-close{display:none!important}
 @media(max-width:999px) and (max-height:500px){.viewer-room .specimen-stage[data-exploring=true] #viewer{top:58px}}
+
+/* Exam spelling support and a separate, short post-test practice loop. */
+.feedback.pending,.outcome-pending-banner{background:#39342a;border-left:3px solid #d5b77b;color:#f0e3c8;padding:12px 16px;border-radius:7px}
+.outcome-pending-banner p{font-size:12px;line-height:1.6;margin:6px 0 0}
+.exam-result-filters{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
+.exam-result-filters button{min-height:34px;font-size:11px;padding:7px 10px}
+.exam-result-filters [aria-pressed=true]{background:var(--mint);color:#173526;border-color:var(--mint)}
+.outcome-badge{display:inline-block;font-size:10px;line-height:1.5;padding:3px 7px;border:1px solid #69846e;border-radius:5px;margin-right:7px;color:#cce4cc}
+.outcome-pending .outcome-badge{border-color:#b59665;color:#ecd7a8}.outcome-incorrect .outcome-badge,.outcome-unanswered .outcome-badge{border-color:#9d7060;color:#edbba7}
+.outcome-spelling .outcome-badge{border-color:#88a57a;color:#d7ebc9}.exam-meaning-settings .tiny{margin-top:3px}
+.spelling-workspace{max-width:760px;width:100%;margin:0 auto;display:flex;justify-content:center}
+.spelling-card{width:100%;max-width:600px;min-width:0}.spelling-card>p{font-size:13px;line-height:1.6}
+.spelling-card .spelling-word{font-family:var(--serif);font-size:34px;line-height:1.3;margin:5px 0 18px;overflow-wrap:anywhere}
+.spelling-word del{text-decoration:line-through;text-decoration-thickness:2px;background:#744d3c;color:#ffe0cb;border-radius:3px}.spelling-word mark{background:#b5d49f;color:#193324;border-radius:3px}
+.spelling-original{color:#c4cdcb}.spelling-card>.tiny{margin:13px 0 0;color:var(--muted)}
+#spelling-form{display:flex;gap:10px;align-items:stretch;margin:10px 0}#spelling-input{min-width:0;flex:1;background:#102127;color:var(--text);border:1px solid #657c70;border-radius:7px;padding:10px;font-size:17px}
+.spelling-card .control-row{margin:15px 0}.spelling-complete p{font-size:15px}.spelling-card>button{min-height:38px}
+@media(min-width:1000px){.spelling-workspace{padding:18px 24px}.spelling-card .spelling-word{font-size:30px;margin-bottom:13px}.spelling-card>p{margin:10px 0}.spelling-card .tiny{font-size:10px}.spelling-card button{font-size:12px;padding:8px 12px}.exam-report-content>.score-row .stat span{line-height:1.5}.exam-hub-foot #exam-check-connection{font-size:10px}}
+@media(max-width:999px){.spelling-workspace{padding:20px}.spelling-card .spelling-word{font-size:31px}.spelling-card button,.exam-result-filters button,[data-review-original]{min-height:44px}.outcome-badge{font-size:11px}.exam-result-filters{gap:6px}.exam-result-filters button{font-size:12px}#spelling-form{flex-direction:column}#spelling-input{min-height:48px;font-size:18px}.outcome-pending-banner p{font-size:13px}}

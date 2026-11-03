@@ -33,11 +33,13 @@ Study all **24 sections** with complete source readings and figures, guided note
 
 Multiple choice, typed recall, anatomical schematic identification, matching and ordering use explicit answer keys and source-linked explanations. Full exams delay feedback until submission. Save a draft, flag questions, edit answers and review section/objective results. Source or tutor assistance stays attached after reload and is separated from independently correct answers. One point per question; all matching/ordering parts must be correct. Export completed reports; up to 20 sessions remain in this browser. Earlier question versions are retained for export rather than silently regraded. These are original study questions, not the instructor’s exam.
 
-## Optional local AI grading
+## Spelling support and optional local AI
 
-Turn on **Local AI answer review** in Practice lab or the Exam center, then use **Models & connection** to choose an installed Ollama model. The reviewer can accept minor spelling errors and equivalent wording, correct the standard term, and explain confusion. Typed bone-list answers, anatomy practice and chapter questions support it. Full exams review typed submissions after the exam is submitted; clicked targets and selected answers keep their key-based score.
+New chapter/section exams and full-bank review accept clear spelling errors and appropriate equivalent wording **without Ollama**. Results separate spelling notes, equivalent wording, concept gaps and unresolved meaning. Pending answers show a possible score range and are not recorded as confirmed anatomy failures. Formal anatomical terms, sides, counts and different structures keep their distinctions.
 
-Original responses, exact answer-key results and AI decisions stay available in saved results and exports. Uncertainty or connection failures retain the key. The existing local Ollama setup is reused; no cloud fallback or extra app. [How grading works and its limits](ANSWER-REVIEW.md).
+After a test, choose **Practice spellings** to compare changed letters, hide the term and try it from memory. Due words also appear in the Exam center. This practice never edits your submitted response or changes your exam score.
+
+Turn on **Local AI answer review** and use **Models & connection** to choose an installed Ollama model. New exams use it for unresolved wording; failed or uncertain reviews stay pending and can be retried from the fixed original response later. The BI 231 test, 3D and supplementary practice retain their existing optional AI workflow. Original responses, strict key results and review evidence stay in reports. Earlier exam scores retain their original rules. [How grading works and its limits](ANSWER-REVIEW.md).
 
 ## Your BI 231 bone-list test
 

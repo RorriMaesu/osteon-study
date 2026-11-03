@@ -79,7 +79,7 @@ export function initWorkspace() {
     if(root.id==='tutor-messages'&&(record.initial||(following&&stop&&!stop.hidden)))record.index=count-1;
     record.initial=false;
     // Newly generated feedback should be immediately visible after an answer.
-    const feedback=record.flow.querySelector('#concept-feedback:not(:empty),#course-feedback:not(:empty),#spatial-feedback:not(:empty),#exam-feedback:not(:empty),#relationship-feedback:not(:empty)');
+    const feedback=record.flow.querySelector('#concept-feedback:not(:empty),#course-feedback:not(:empty),#spatial-feedback:not(:empty),#exam-feedback:not(:empty),[data-result-focus],#relationship-feedback:not(:empty)');
     const signature=feedback?.textContent||'';
     if(signature&&signature!==record.feedback){const x=feedback.getBoundingClientRect().left-record.window.getBoundingClientRect().left+record.window.scrollLeft;record.index=Math.floor((x+2)/(record.width+24));}
     record.feedback=signature;record.signature=record.flow.textContent;record.go(record.index);
