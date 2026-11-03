@@ -2,7 +2,7 @@
 
 - Replace three setup tabs and paginated instructions with a guided connection/install/model/test flow, a pinned primary action, optional hardware, and concise recovery branches.
 - Share connection, local-model preference, and response-tested readiness between the tutor and answer reviewer; preserve the separate grading opt-in and all exam drafts.
-- Reuse installed weights, reconnect previously working models, verify completed responses before readiness, and distinguish current download-part progress from total model completion.
+- Reuse installed weights, reconnect previously working models, verify completed responses before readiness, and distinguish current download-part progress from total model completion. Bound the sample test to 60 seconds, show elapsed time, and offer an explicit longer retry or a smaller installed model.
 - Add an optional Windows assistant for signed official-installer verification, settings backups/undo, approved Ollama restart, loopback startup, and an automatic bounded hardware-report handoff. Include read-only and hardware-only modes; preserve manual setup if scripts are blocked.
 - Add a macOS connection helper, explicit desktop requirements on phones, and advanced Linux service instructions. Document that the helpers are source scripts rather than signed native executables.
 

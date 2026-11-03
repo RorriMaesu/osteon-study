@@ -87,16 +87,19 @@ export class LocalAIConnection {
     this.update({phase:'ready', ready:true, error:'', checkedAt:Date.now()});
   }
   unavailable(message = 'Connection lost. Check Ollama again.') { this.update({connected:false, ready:false, phase:'unreachable', error:message}); }
-  async test(signal) {
+  async test(signal,{timeout=60000}={}) {
     const {model, connected} = this.state, client = this.client;
     if(!connected || !model) throw new Error('Connect Ollama and choose a local model first.');
     this.update({phase:'testing', ready:false, error:''});
     const started = performance.now(); let first = null;
+    const deadline=new AbortController(),cancel=()=>deadline.abort(signal?.reason);
+    signal?.addEventListener('abort',cancel,{once:true});if(signal?.aborted)cancel();
+    const timer=setTimeout(()=>deadline.abort(new DOMException('No complete reply within '+Math.round(timeout/1000)+' seconds. Try a smaller model, or allow a longer first load.','TimeoutError')),timeout);
     try {
       const entry = this.state.models.find(m => m.name === model);
-      const info = await client.show(model,signal), problem = localModelProblem(entry,info);
+      const info = await client.show(model,deadline.signal), problem = localModelProblem(entry,info);
       if(problem) throw new Error(problem);
-      const reply = await client.chat(model,[{role:'user',content:'In at most 35 words, explain how the axial and appendicular skeleton differ.'}], () => { first ??= performance.now(); }, {signal,info,numPredict:110});
+      const reply = await client.chat(model,[{role:'user',content:'In at most 35 words, explain how the axial and appendicular skeleton differ.'}], () => { first ??= performance.now(); }, {signal:deadline.signal,info,numPredict:110});
       signal?.throwIfAborted();
       if(client !== this.client || model !== this.state.model) throw new Error('The selected model changed. Test it again.');
       this.markResponded(model);
@@ -105,7 +108,7 @@ export class LocalAIConnection {
       const lost=error instanceof TypeError&&/fetch/i.test(error.message);
       this.update({connected:lost?false:this.state.connected,phase:lost?'unreachable':this.state.connected ? 'needs-test' : 'unreachable', ready:false, error:signal?.aborted ? 'Test stopped. Your model is still installed.' : error.message || 'The model did not respond. Try a smaller model.'});
       throw error;
-    }
+    } finally { clearTimeout(timer);signal?.removeEventListener('abort',cancel); }
   }
 }
 

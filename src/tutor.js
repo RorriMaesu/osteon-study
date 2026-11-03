@@ -96,7 +96,7 @@ function initTutor({escape:e,toast}) {
     // phone keyboard open. Technical instructions may scroll independently.
     const primary=panel.querySelector('.ai-setup-content .primary'),footer=panel.querySelector('.ai-setup-footer');
     if(primary){footer.append(primary);footer.classList.add('has-primary');}
-    const actions={overview:()=>go('auto'),install:()=>go('install'),repair:()=>go('repair'),model:()=>go('model'),downloads:()=>go('download'),hardware:()=>go('hardware'),close:closePanel,finish,check:()=>connect(),test:benchmark,download:pull,'use-installed':()=>{sample='';benchmarkText='';go('auto');},stop:()=>{stopWaiting();controller?.abort();render();},detect:async()=>{hardware=mergeBrowserHardware(hardware,await browserHardware());saveHardware();downloadState.model=recommendedDownload(hardware).name;render();},'apply-memory':()=>{try{hardware={...hardware,...memoryValues($('#hardware-ram').value,$('#hardware-vram').value),schema:1,ramApproximate:false,source:'manually entered'};saveHardware();downloadState.model=recommendedDownload(hardware).name;render();}catch(err){$('#hardware-error').textContent=err.message;}}};
+    const actions={overview:()=>go('auto'),install:()=>go('install'),repair:()=>go('repair'),model:()=>go('model'),downloads:()=>go('download'),hardware:()=>go('hardware'),close:closePanel,finish,check:()=>connect(),test:()=>benchmark(),longer:()=>benchmark(120000),smaller:()=>{const smaller=models.filter(m=>!m.problem&&m.size<(models.find(m=>m.name===choice)?.size||0)).sort((a,b)=>a.size-b.size)[0];if(smaller){localAI.select(smaller.name);benchmark();}},download:pull,'use-installed':()=>{sample='';benchmarkText='';go('auto');},stop:()=>{stopWaiting();controller?.abort();render();},detect:async()=>{hardware=mergeBrowserHardware(hardware,await browserHardware());saveHardware();downloadState.model=recommendedDownload(hardware).name;render();},'apply-memory':()=>{try{hardware={...hardware,...memoryValues($('#hardware-ram').value,$('#hardware-vram').value),schema:1,ramApproximate:false,source:'manually entered'};saveHardware();downloadState.model=recommendedDownload(hardware).name;render();}catch(err){$('#hardware-error').textContent=err.message;}}};
     panel.querySelectorAll('[data-ai-action]').forEach(b=>b.onclick=()=>actions[b.dataset.aiAction]?.());
     if($('#ollama-os'))$('#ollama-os').onchange=ev=>{os=ev.target.value;render();};
     if($('#ollama-address'))$('#ollama-address').onchange=ev=>{localAI.setEndpoint(ev.target.value);sample='';benchmarkText='';render();};
@@ -129,11 +129,12 @@ function initTutor({escape:e,toast}) {
     const model=models.find(m=>m.name===name);if(!model)throw new Error('Check the installed model list again.');
     const info=await client.show(name,controller?.signal),problem=localModelProblem(model,info);if(problem)throw new Error(problem);return info;
   }
-  async function benchmark(){
+  async function benchmark(timeout=60000){
     if(busy||!choice)return;setupPage='auto';sample='';benchmarkText='Loading and trying your model…';beginJob('benchmark');
-    try{const result=await localAI.test(controller.signal);sample=result.text;benchmarkText='Your model returned a complete response.'+(result.firstSeconds==null?'':' First text took '+result.firstSeconds.toFixed(1)+' seconds.');}
+    const started=performance.now(),ticker=setInterval(()=>{if($('#model-test-result'))$('#model-test-result').textContent='Loading and trying your model · '+Math.floor((performance.now()-started)/1000)+' seconds (up to '+Math.round(timeout/1000)+' seconds).';},1000);
+    try{const result=await localAI.test(controller.signal,{timeout});sample=result.text;benchmarkText='Your model returned a complete response.'+(result.firstSeconds==null?'':' First text took '+result.firstSeconds.toFixed(1)+' seconds.')+(result.firstSeconds>30?' A smaller model may make tutoring quicker.':'');}
     catch(err){benchmarkText=controller.signal.aborted?'Test stopped. You can try again.':(err.message?.includes('fetch')?'Connection interrupted. Check Ollama again.':err.message)+' Try a smaller model if this computer runs out of memory.';}
-    finally{endJob();}
+    finally{clearInterval(ticker);endJob();}
   }
   function updateDeviceJob(){
     if($('#model-pull-result'))$('#model-pull-result').textContent=downloadState.text;

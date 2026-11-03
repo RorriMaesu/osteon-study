@@ -44,7 +44,7 @@ Choose an installed local text-generation model or **Download a different model*
 
 Hardware checks are optional. A browser check provides only exposed GPU information and approximate/bounded RAM; exact VRAM is not available through that check. The Windows assistant has a report-only mode and automatic handoff. Manual memory entry and older report imports remain under an advanced disclosure. Apple unified memory is shared RAM.
 
-Suggestions reserve room for context and the atlas. They do not rank factual accuracy. The short sample checks response delivery and reports first-response time. It does not guarantee long-session speed, memory use, or correct anatomy.
+Suggestions reserve room for context and the atlas. They do not rank factual accuracy. The short sample checks response delivery and reports elapsed and first-response time. It stops after 60 seconds without a complete reply. If loading is slow, choose a smaller installed model or explicitly allow a two-minute test. It does not guarantee long-session speed, memory use, or correct anatomy.
 
 ## Learn with it
 

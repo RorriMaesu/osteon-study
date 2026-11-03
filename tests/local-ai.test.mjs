@@ -52,6 +52,16 @@ test('connection loss during the sample test leads to connection recovery rather
  }});
  await ai.connect();await assert.rejects(ai.test());assert.equal(ai.state.ready,false);assert.equal(ai.state.connected,false);assert.equal(ai.state.phase,'unreachable');
 });
+test('a sample-test deadline aborts a stalled generation and offers a retry instead of claiming readiness',async()=>{
+ const f=fake(),ai=new LocalAIConnection({storage:storage(),fetcher:async(url,init)=>{
+  if(!url.endsWith('/chat'))return f.fetcher(url,init);
+  return new Promise((resolve,reject)=>{if(init.signal.aborted)reject(init.signal.reason);else init.signal.addEventListener('abort',()=>reject(init.signal.reason),{once:true});});
+ }});
+ await ai.connect();await assert.rejects(ai.test(undefined,{timeout:5}),e=>e.name==='TimeoutError');
+ assert.equal(ai.state.ready,false);assert.equal(ai.state.connected,true);assert.equal(ai.state.phase,'needs-test');
+ const screen=setupScreen({state:{...ai.snapshot(),models:[model,{...model,name:'smaller',size:1e9}]},os:'windows'});
+ assert.ok(screen.includes('Try a smaller installed model'));assert.ok(screen.includes('Allow 2 minutes for this model'));
+});
 test('switching models invalidates ready status and cannot select an unknown model or external address',async()=>{
  const ai=new LocalAIConnection({storage:storage(),fetcher:fake({models:[model,{...model,name:'another:local'}]}).fetcher});await ai.connect();await ai.test();
  ai.select('another:local');assert.equal(ai.state.ready,false);assert.equal(ai.preferences.model,'another:local');

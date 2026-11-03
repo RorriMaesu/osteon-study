@@ -1,6 +1,6 @@
 # Current validation — guided local AI setup, 2026-11-02
 
-All **124 automated checks** pass, including ten setup/connection checks and the existing anatomy/exam regression suite. Checks cover readiness only after a completed response, preference migration and changed-weight identity, canceled/unreachable checks, cloud exclusion, empty/unfinished streams, lost connections, model changes, bounded untrusted assistant fragments, conservative hardware suggestions, optional hardware, mobile requirements, and separate installed/download paths.
+All **125 automated checks** pass, including eleven setup/connection checks and the existing anatomy/exam regression suite. Checks cover readiness only after a completed response, preference migration and changed-weight identity, canceled/unreachable checks, cloud exclusion, empty/unfinished streams, lost connections, model changes, bounded untrusted assistant fragments, conservative hardware suggestions, optional hardware, mobile requirements, and separate installed/download paths.
 
 A real local **qwen3.5:4b-q4_K_M** returned the setup sample in the browser (first text about 2.9 seconds on the first observed test). Reloading reconnected and retested the saved model, then opened chat. A separate actual reviewer request accepted **femurr** as a spelling error for **Femur**, retained the corrected source answer, and returned reviewed evidence. No real exam answers were submitted.
 
@@ -10,7 +10,7 @@ An isolated local-origin Chapter 6 exam retained its question position and the p
 
 The Windows assistant parsed successfully and its **-CheckOnly** mode found the already-installed/running service and reported NVIDIA VRAM without configuration changes, installation, restart, browser launch, or report-file writes. Missing RAM/thread/disk measurements remained unknown. PowerShell and shell syntax checks passed. Fresh installer, settings mutation, undo, and native macOS execution have **not** been tested end to end; the existing installation was preserved. Assistants are source scripts, not code-signed native executables, with explicit manual fallbacks rather than security-policy bypasses.
 
-The first implementation checkpoint was published as **f235e7a** and its versioned application asset was observed on GitHub Pages. Subsequent verification fixes preserve the browser app-link activation and pause/resume bounded launch checks when the page is hidden/visible. All anatomy model assets are unchanged.
+The first implementation checkpoint was published as **f235e7a** and its versioned application asset was observed on GitHub Pages. The public saved Gemma 4 12B model also completed a response, but its first text took 74.2 seconds before the final waiting safeguard. This prompted a 60-second default sample deadline, live elapsed-time feedback, an explicit two-minute retry, and a smaller-installed-model recovery action. A stalled-generation test verifies cancellation and recovery without false readiness. Subsequent verification fixes preserve the browser app-link activation and pause/resume bounded launch checks when the page is hidden/visible. All anatomy model assets are unchanged.
 
 Earlier validation records below describe their respective releases.
 
