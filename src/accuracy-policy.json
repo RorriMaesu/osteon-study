@@ -3,41 +3,46 @@
     "kind": "reference",
     "assessment": "learn-only",
     "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
-    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+    "reviewStatus": "developmental-site-guide",
+    "reviewNotice": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1",
+    "localSpecimen": "fetal-skull"
   },
   "anterior-fontanelle": {
     "kind": "reference",
     "assessment": "learn-only",
     "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
-    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+    "reviewStatus": "developmental-site-guide",
+    "reviewNotice": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1",
+    "localSpecimen": "fetal-skull"
   },
   "posterior-fontanelle": {
     "kind": "reference",
     "assessment": "learn-only",
     "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
-    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+    "reviewStatus": "developmental-site-guide",
+    "reviewNotice": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1",
+    "localSpecimen": "fetal-skull"
   },
   "sphenoidal-fontanelle": {
     "kind": "reference",
     "assessment": "learn-only",
     "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
-    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+    "reviewStatus": "developmental-site-guide",
+    "reviewNotice": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1",
+    "localSpecimen": "fetal-skull"
   },
   "mastoid-fontanelle": {
     "kind": "reference",
     "assessment": "learn-only",
     "retiredModel": true,
-    "reviewStatus": "replacement-required",
-    "reviewNotice": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
-    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1"
+    "reviewStatus": "developmental-site-guide",
+    "reviewNotice": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
+    "externalSpecimen": "https://sketchfab.com/models/7646e0227f07475eb8275d084993194c/embed?autostart=1&ui_infos=0&ui_ar=0&ui_watermark_link=1",
+    "localSpecimen": "fetal-skull"
   },
   "round-window": {
     "kind": "reference",

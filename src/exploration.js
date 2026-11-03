@@ -1,4 +1,4 @@
-import {skullFamily} from './anatomy.js';
+import {skullFamily,tissueAreas} from './anatomy.js';
 
 export const baseName=name=>name.replace(/\.[lr]$/,'');
 export const boneId=name=>/^(Manubrium of sternum|Body of sternum|Xiphoid process)$/.test(baseName(name))?'Sternum':name;
@@ -64,8 +64,10 @@ export function areaForBone(name){
 }
 export function inArea(name,id,side,{core=false}={}){
  const a=areas[id],n=baseName(name);
- if(!a||!isBone(name))return false;
+ if(!a)return false;
  if(a.sided&&side&&boneSide(name)&&boneSide(name)!==side)return false;
+ if(tissueAreas(name).length)return !core&&tissueAreas(name).includes(id);
+ if(!isBone(name))return !core&&tissueAreas(name).includes(id);
  return !!(a.core(n)||(!core&&a.context?.(n)));
 }
 export function areaLabel(id,side){const label=areas[id]?.label||'Region';return areas[id]?.sided&&side?(side==='l'?'Left ':'Right ')+label[0].toLowerCase()+label.slice(1):label;}

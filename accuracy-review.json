@@ -18,7 +18,8 @@
     },
     "scope": "All 310 named textbook features and original course entries, including additional whole structures. Twenty vocabulary definitions are separate.",
     "limits": "A completed review record is not a claim that every native feature is resolved. Source-only and reference-only records are excluded from scored locating. Offline renders and source checks are distinct from browser layout checks.",
-    "unreconciled": []
+    "unreconciled": [],
+    "developmentalScanReviewed": "2026-11-02"
   },
   "items": [
     {
@@ -93,11 +94,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "7.3",
-      "description": "Seven vertebrae, C1–C7; typical cervical vertebrae have transverse foramina.",
+      "description": "Seven vertebrae, C1\u2013C7; typical cervical vertebrae have transverse foramina.",
       "reviewFindings": [
         "Named complete mesh selection agrees with the source structure and expected regional geometry."
       ],
-      "currentDisposition": "Seven vertebrae, C1–C7; typical cervical vertebrae have transverse foramina.",
+      "currentDisposition": "Seven vertebrae, C1\u2013C7; typical cervical vertebrae have transverse foramina.",
       "evidence": [
         "assets/accuracy-review/8c152f7d91-cervical.webp",
         "assets/accuracy-review/798f79294f-cervical-vertebrae.webp"
@@ -234,11 +235,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "7.3",
-      "description": "Twelve vertebrae, T1–T12; costal facets articulate with ribs.",
+      "description": "Twelve vertebrae, T1\u2013T12; costal facets articulate with ribs.",
       "reviewFindings": [
         "Named complete mesh selection agrees with the source structure and expected regional geometry."
       ],
-      "currentDisposition": "Twelve vertebrae, T1–T12; costal facets articulate with ribs.",
+      "currentDisposition": "Twelve vertebrae, T1\u2013T12; costal facets articulate with ribs.",
       "evidence": [
         "assets/accuracy-review/34135265da-thoracic.webp",
         "assets/accuracy-review/e444aa6010-thoracic-vertebrae.webp"
@@ -456,11 +457,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "7.3",
-      "description": "Five vertebrae, L1–L5, with large bodies adapted for substantial loads.",
+      "description": "Five vertebrae, L1\u2013L5, with large bodies adapted for substantial loads.",
       "reviewFindings": [
         "Named complete mesh selection agrees with the source structure and expected regional geometry."
       ],
-      "currentDisposition": "Five vertebrae, L1–L5, with large bodies adapted for substantial loads.",
+      "currentDisposition": "Five vertebrae, L1\u2013L5, with large bodies adapted for substantial loads.",
       "evidence": [
         "assets/accuracy-review/a16472b943-vertebra.webp",
         "assets/accuracy-review/c107ca7271-lumbar-vertebrae.webp"
@@ -637,11 +638,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "7.4",
-      "description": "Pairs 1–7 attach to the sternum through their own costal cartilage.",
+      "description": "Pairs 1\u20137 attach to the sternum through their own costal cartilage.",
       "reviewFindings": [
         "Named complete mesh selection agrees with the source structure and expected regional geometry."
       ],
-      "currentDisposition": "Pairs 1–7 attach to the sternum through their own costal cartilage.",
+      "currentDisposition": "Pairs 1\u20137 attach to the sternum through their own costal cartilage.",
       "evidence": [
         "assets/accuracy-review/babb381a09-lm7-rib.webp",
         "assets/accuracy-review/51d6adf79d-true-ribs.webp"
@@ -657,11 +658,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "7.4",
-      "description": "Pairs 8–12 lack their own direct sternal cartilage attachment; 11–12 are also floating.",
+      "description": "Pairs 8\u201312 lack their own direct sternal cartilage attachment; 11\u201312 are also floating.",
       "reviewFindings": [
         "Named complete mesh selection agrees with the source structure and expected regional geometry."
       ],
-      "currentDisposition": "Pairs 8–12 lack their own direct sternal cartilage attachment; 11–12 are also floating.",
+      "currentDisposition": "Pairs 8\u201312 lack their own direct sternal cartilage attachment; 11\u201312 are also floating.",
       "evidence": [
         "assets/accuracy-review/babb381a09-lm7-rib.webp",
         "assets/accuracy-review/83232c9ad8-false-ribs.webp"
@@ -677,11 +678,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "7.4",
-      "description": "Pairs 11–12 have no anterior attachment to the sternum.",
+      "description": "Pairs 11\u201312 have no anterior attachment to the sternum.",
       "reviewFindings": [
         "Named complete mesh selection agrees with the source structure and expected regional geometry."
       ],
-      "currentDisposition": "Pairs 11–12 have no anterior attachment to the sternum.",
+      "currentDisposition": "Pairs 11\u201312 have no anterior attachment to the sternum.",
       "evidence": [
         "assets/accuracy-review/babb381a09-lm7-rib.webp",
         "assets/accuracy-review/9458c6c2f8-floating-ribs.webp"
@@ -856,7 +857,7 @@
       "section": "7.2",
       "description": "Joint that unites the frontal bone to the right and left parietal bones across the top of the skull.",
       "reviewFindings": [
-        "The coronal suture is the frontal–parietal joint; one isolated parietal edge does not display the joint."
+        "The coronal suture is the frontal\u2013parietal joint; one isolated parietal edge does not display the joint."
       ],
       "currentDisposition": "Observed frontal-parietal junction on right lateral vault. Point marks one actual part of the named extent in this adult reference specimen; it does not segment the full region.",
       "evidence": [
@@ -894,11 +895,11 @@
       "section": "7.5",
       "description": "Fibrous gaps between incompletely ossified newborn skull bones: anterior, posterior, paired sphenoidal and paired mastoid sites.",
       "reviewFindings": [
-        "Grouped newborn target is routed to separate authored newborn specimen rather than adult skull."
+        "Licensed native UCSF fetal-skull scan is bundled with qualified developmental site references and the newborn source comparison. The specimen does not establish six open fontanelles; exact spatial scoring remains withheld."
       ],
-      "currentDisposition": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+      "currentDisposition": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
       "evidence": [],
-      "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
+      "reviewMethod": "Native scan inspected in seven Blender views against OpenStax Figure 7.33; developmental junction references reviewed with explicit visual uncertainty. This is not anatomical certification."
     },
     {
       "id": "temporal-bones",
@@ -1027,7 +1028,7 @@
       "section": "7.2",
       "description": "Irregularly shaped opening located in the lateral floor of the posterior cranial cavity.",
       "reviewFindings": [
-        "The custom source-sigmoid-axis view shows an actual temporal–occipital gap and its bony rim. The current camera exposes the opening and preserves both contributor meshes. This validates the aperture, not separate IX/X/XI channels."
+        "The custom source-sigmoid-axis view shows an actual temporal\u2013occipital gap and its bony rim. The current camera exposes the opening and preserves both contributor meshes. This validates the aperture, not separate IX/X/XI channels."
       ],
       "currentDisposition": "Actual open aperture viewed along the named source sigmoid sinus outflow at temporal/occipital interface. The source route independently identifies the aperture, and the displayed void/bone transition selects its actual rim. Rim reference, not full canal wall segmentation.",
       "evidence": [
@@ -1123,7 +1124,7 @@
       "section": "7.2",
       "description": "The posterior skull suture joins the occipital bone with the right and left parietal bones.",
       "reviewFindings": [
-        "Show both contributors to the posterior parietal–occipital joint."
+        "Show both contributors to the posterior parietal\u2013occipital joint."
       ],
       "currentDisposition": "Observed posterior parietal-occipital junction. Point marks one actual part of the named extent in this adult reference specimen; it does not segment the full region.",
       "evidence": [
@@ -1801,7 +1802,7 @@
       "reviewFindings": [
         "Long vertebral border opposite glenoid/lateral border; sample marks part of the border."
       ],
-      "currentDisposition": "Vertebral border, nearest the spine; corrected from the lab spelling “boarder.”",
+      "currentDisposition": "Vertebral border, nearest the spine; corrected from the lab spelling \u201cboarder.\u201d",
       "evidence": [
         "assets/accuracy-review/520fbc0f19-Scapula.r-anterior.webp",
         "assets/accuracy-review/c3d61f7eb1-Scapula.r-posterior.webp"
@@ -2283,7 +2284,7 @@
       "section": "8.2",
       "description": "The U-shaped carpal bones form the floor and walls of a passage roofed by the flexor retinaculum.",
       "reviewFindings": [
-        "Central space reference and actual carpal/retinacular context are anatomically sound. The current outline order floor→roof→ulnar wall→radial wall draws through the lumen instead of a rim guide."
+        "Central space reference and actual carpal/retinacular context are anatomically sound. The current outline order floor\u2192roof\u2192ulnar wall\u2192radial wall draws through the lumen instead of a rim guide."
       ],
       "currentDisposition": "The marker lies within an anatomical opening or space. Boundary references are actual mesh-surface points; this is not a point on a bone and must not be rendered as a bony projection.",
       "evidence": [],
@@ -2298,11 +2299,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "8.2",
-      "description": "Five bones in each palm, numbered I–V from thumb to little finger.",
+      "description": "Five bones in each palm, numbered I\u2013V from thumb to little finger.",
       "reviewFindings": [
         "Runtime exact/pattern selection resolves the intended original named source anatomy: Fifth metacarpal bone.l, Fifth metacarpal bone.r, First metacarpal bone.l, First metacarpal bone.r, Fourth metacarpal bone.l, Fourth metacarpal bone.r, Second metacarpal bone.l, Second metacarpal bone.r, Third metacarpal bone.l, Third metacarpal bone.r. Parent naming and anatomical placement checked in the assembled specimen."
       ],
-      "currentDisposition": "Five bones in each palm, numbered I–V from thumb to little finger.",
+      "currentDisposition": "Five bones in each palm, numbered I\u2013V from thumb to little finger.",
       "evidence": [],
       "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
     },
@@ -2332,11 +2333,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "8.2",
-      "description": "Intermediate phalanges of fingers II–V; absent in the thumb.",
+      "description": "Intermediate phalanges of fingers II\u2013V; absent in the thumb.",
       "reviewFindings": [
         "Runtime exact/pattern selection resolves the intended original named source anatomy: Middle phalanx of fifth finger of hand.l, Middle phalanx of fifth finger of hand.r, Middle phalanx of fourth finger of hand.l, Middle phalanx of fourth finger of hand.r, Middle phalanx of second finger of hand.l, Middle phalanx of second finger of hand.r, Middle phalanx of third finger of hand.l, Middle phalanx of third finger of hand.r. Parent naming and anatomical placement checked in the assembled specimen."
       ],
-      "currentDisposition": "Intermediate phalanges of fingers II–V; absent in the thumb.",
+      "currentDisposition": "Intermediate phalanges of fingers II\u2013V; absent in the thumb.",
       "evidence": [],
       "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
     },
@@ -2915,11 +2916,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "8.4",
-      "description": "Five bones of each midfoot, numbered I–V from the great-toe side.",
+      "description": "Five bones of each midfoot, numbered I\u2013V from the great-toe side.",
       "reviewFindings": [
         "Runtime exact/pattern selection resolves the intended original named source anatomy: Fifth metatarsal bone.l, Fifth metatarsal bone.r, First metatarsal bone.l, First metatarsal bone.r, Fourth metatarsal bone.l, Fourth metatarsal bone.r, Second metatarsal bone.l, Second metatarsal bone.r, Third metatarsal bone.l, Third metatarsal bone.r. Parent naming and anatomical placement checked in the assembled specimen."
       ],
-      "currentDisposition": "Five bones of each midfoot, numbered I–V from the great-toe side.",
+      "currentDisposition": "Five bones of each midfoot, numbered I\u2013V from the great-toe side.",
       "evidence": [],
       "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
     },
@@ -2949,11 +2950,11 @@
       "representation": "mesh",
       "spatialScoring": true,
       "section": "8.4",
-      "description": "Intermediate phalanges of toes II–V; absent in the great toe.",
+      "description": "Intermediate phalanges of toes II\u2013V; absent in the great toe.",
       "reviewFindings": [
         "Runtime exact/pattern selection resolves the intended original named source anatomy: Middle phalanx of fifth finger of foot.l, Middle phalanx of fifth finger of foot.r, Middle phalanx of fourth finger of foot.l, Middle phalanx of fourth finger of foot.r, Middle phalanx of second finger of foot.l, Middle phalanx of second finger of foot.r, Middle phalanx of third finger of foot.l, Middle phalanx of third finger of foot.r. Parent naming and anatomical placement checked in the assembled specimen."
       ],
-      "currentDisposition": "Intermediate phalanges of toes II–V; absent in the great toe.",
+      "currentDisposition": "Intermediate phalanges of toes II\u2013V; absent in the great toe.",
       "evidence": [],
       "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
     },
@@ -4004,7 +4005,7 @@
       "section": "6.3",
       "description": "Trabecular osseous tissue occupies the interior of epiphyses and flat bones, with spaces that may contain marrow.",
       "reviewFindings": [
-        "The original saved adult/growing trabecular graphs were separated from all four epiphyseal cortical shells by at least roughly7–9mm at their nearest vertices."
+        "The original saved adult/growing trabecular graphs were separated from all four epiphyseal cortical shells by at least roughly7\u20139mm at their nearest vertices."
       ],
       "currentDisposition": "Trabeculae now meet the endosteal cortex in both epiphyses of the adult and growing models.",
       "evidence": [],
@@ -4171,11 +4172,11 @@
       "section": "7.5",
       "description": "An infant skull fibrous gap between the adjacent developing bones; locate it on a newborn specimen, not as a hole in an adult skull.",
       "reviewFindings": [
-        "The withdrawn reconstruction lacks facial and basal anatomy and uses an arbitrary ellipsoidal plate layout. It is not accepted as an accurate whole newborn skull."
+        "Licensed native UCSF fetal-skull scan is bundled with qualified developmental site references and the newborn source comparison. The specimen does not establish six open fontanelles; exact spatial scoring remains withheld."
       ],
-      "currentDisposition": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+      "currentDisposition": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
       "evidence": [],
-      "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
+      "reviewMethod": "Native scan inspected in seven Blender views against OpenStax Figure 7.33; developmental junction references reviewed with explicit visual uncertainty. This is not anatomical certification."
     },
     {
       "id": "textbook-articular-tubercle",
@@ -4379,7 +4380,7 @@
       "section": "7.2",
       "description": "A ragged gap at the sphenoid-temporal-occipital junction is filled with cartilage in life; the internal carotid artery passes above it after leaving its canal.",
       "reviewFindings": [
-        "The assembled inferior sphenoid–temporal–occipital view shows the real gap medial to foramen ovale and at the petrous apex. Both its bony boundary and relationship fit the source figure. It is cartilage-filled in life."
+        "The assembled inferior sphenoid\u2013temporal\u2013occipital view shows the real gap medial to foramen ovale and at the petrous apex. Both its bony boundary and relationship fit the source figure. It is cartilage-filled in life."
       ],
       "currentDisposition": "Observed triangular gap between sphenoid, petrous temporal apex and basilar occipital bone, medial to the larger foramen ovale; distinct three-bone contributor relationship matches source inferior skull-base figure. Bony opening is filled by fibrocartilage in life; carotid artery courses over its superior aspect rather than passing vertically through its entire opening.",
       "evidence": [
@@ -4633,7 +4634,7 @@
       "section": "7.2",
       "description": "Opening into petrous ridge, located on the lateral wall of the posterior cranial fossa.",
       "reviewFindings": [
-        "A petrous medial pit and independent original VII/VIII paths support the acoustic-meatus region. The selected wall point is about 1.82 mm behind an opaque surface in the default camera. Fresh VIII nearest distances (~7–8 mm) are consistent with a broad entrance region but do not alone prove the exact rim."
+        "A petrous medial pit and independent original VII/VIII paths support the acoustic-meatus region. The selected wall point is about 1.82 mm behind an opaque surface in the default camera. Fresh VIII nearest distances (~7\u20138 mm) are consistent with a broad entrance region but do not alone prove the exact rim."
       ],
       "currentDisposition": "Round entry on posterior surface of petrous temporal portion; selected actual aperture rim. Reference marks the entry rim in this orientation; full internal lumen and a second exit are not validated by this one reference.",
       "evidence": [
@@ -4729,11 +4730,11 @@
       "section": "7.5",
       "description": "An infant skull fibrous gap between the adjacent developing bones; locate it on a newborn specimen, not as a hole in an adult skull.",
       "reviewFindings": [
-        "The withdrawn reconstruction lacks facial and basal anatomy and uses an arbitrary ellipsoidal plate layout. It is not accepted as an accurate whole newborn skull."
+        "Licensed native UCSF fetal-skull scan is bundled with qualified developmental site references and the newborn source comparison. The specimen does not establish six open fontanelles; exact spatial scoring remains withheld."
       ],
-      "currentDisposition": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+      "currentDisposition": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
       "evidence": [],
-      "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
+      "reviewMethod": "Native scan inspected in seven Blender views against OpenStax Figure 7.33; developmental junction references reviewed with explicit visual uncertainty. This is not anatomical certification."
     },
     {
       "id": "textbook-mastoid-portion-of-temporal-bone",
@@ -5073,11 +5074,11 @@
       "section": "7.5",
       "description": "An infant skull fibrous gap between the adjacent developing bones; locate it on a newborn specimen, not as a hole in an adult skull.",
       "reviewFindings": [
-        "The withdrawn reconstruction lacks facial and basal anatomy and uses an arbitrary ellipsoidal plate layout. It is not accepted as an accurate whole newborn skull."
+        "Licensed native UCSF fetal-skull scan is bundled with qualified developmental site references and the newborn source comparison. The specimen does not establish six open fontanelles; exact spatial scoring remains withheld."
       ],
-      "currentDisposition": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+      "currentDisposition": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
       "evidence": [],
-      "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
+      "reviewMethod": "Native scan inspected in seven Blender views against OpenStax Figure 7.33; developmental junction references reviewed with explicit visual uncertainty. This is not anatomical certification."
     },
     {
       "id": "textbook-pterion",
@@ -5128,11 +5129,11 @@
       "section": "7.5",
       "description": "An infant skull fibrous gap between the adjacent developing bones; locate it on a newborn specimen, not as a hole in an adult skull.",
       "reviewFindings": [
-        "The withdrawn reconstruction lacks facial and basal anatomy and uses an arbitrary ellipsoidal plate layout. It is not accepted as an accurate whole newborn skull."
+        "Licensed native UCSF fetal-skull scan is bundled with qualified developmental site references and the newborn source comparison. The specimen does not establish six open fontanelles; exact spatial scoring remains withheld."
       ],
-      "currentDisposition": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked.",
+      "currentDisposition": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld.",
       "evidence": [],
-      "reviewMethod": "Source / morphology and offline geometry review. Selected browser views were checked separately; this is not clinical certification."
+      "reviewMethod": "Native scan inspected in seven Blender views against OpenStax Figure 7.33; developmental junction references reviewed with explicit visual uncertainty. This is not anatomical certification."
     },
     {
       "id": "textbook-squamous-portion-of-temporal-bone",

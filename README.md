@@ -25,6 +25,14 @@
 
 The narrated videos use actual app interactions: a clear foramen magnum example, identification practice, and a real local Socratic tutor exchange. A warm female voice was generated locally with Qwen3-TTS in ComfyUI; captions and an editable voice workflow are included. No music. [Screenshots, downloads, transcript, and class-group post copy](https://rorrimaesu.github.io/osteon-study/demo/) are ready to share. Free to open; no account needed.
 
+## Landmarks directly on the model
+
+Turn on **Landmarks** above the 3D viewer. Double-click a bone to see labels for its region, then repeat to study one bone. Use the arrow buttons for more labels, or **Find landmarks** to search and focus a feature within the same viewer. **Teacher list** covers the required features; **All anatomy** adds the wider textbook collection and bone microanatomy. Switching Landmarks off hides selected labels too. Identification questions automatically conceal study labels.
+
+The review reconciles all **177 teacher-list entries**: 59 direct bone entries and 118 integrated landmark/tissue/reference entries. Existing spatial practice remains 173 entries, with two source-recall items and two movement tests. Ligaments, discs, arteries and joint tissues now remain with their anatomical region when zoomed in. [Full in-view coverage checklist](ATLAS-LANDMARK-COVERAGE.csv).
+
+Fontanelles open a **locally bundled, rotatable UCSF fetal-skull scan**, with superior, posterior and left/right developmental site guides plus the labeled newborn comparison. Some sites are narrowed or closed in the specimen, so the guides do not assert six open gaps. The ethmoidal air-cell region is also available, but individual drainage ostia remain unverified. Both limitations stay explicit and excluded from exact spatial scoring. [Model credits and separate specimen license](CREDITS.md).
+
 ## Chapters 6–9 exam preparation
 
 [Open the exam center ↗](https://rorrimaesu.github.io/osteon-study/?exam=1#practice) · [Teaching plan](CHAPTERS-6-9-PLAN.md) · [Objective coverage](CURRICULUM-COVERAGE.csv)
@@ -77,7 +85,7 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 
 Due-card counts match the decks they open. The Practice menu scopes lab recall to its division and region; chapter recall covers all four chapters. Progress offers course-wide lab and chapter review decks regardless of the current atlas filters.
 
-Landmark pins identify reference locations; they do not segment complete ridges, surfaces or boundaries. Only the anatomical endpoints of reliable source annotation leaders are used. Source textbook figures remain available for comparison; unresolved features use explicit source guidance. Fontanelles use a newborn illustration. Drawer tests assess movement and ligament restraint. A parent-bone highlight never grades as locating a landmark.
+Landmark pins identify reference locations; they do not segment complete ridges, surfaces or boundaries. Only the anatomical endpoints of reliable source annotation leaders are used. Source textbook figures remain available for comparison; unresolved features use explicit source guidance. Fontanelles combine a native fetal-skull site guide with the newborn illustration. Drawer tests assess movement and ligament restraint. A parent-bone highlight never grades as locating a landmark.
 
 The course list and chapter readings are covered in full. The finite question bank supplements those readings; it cannot guarantee every possible examination question. The anatomy is a single reference specimen and has not undergone independent instructor/anatomist validation. See QA.md for evidence and practical limits.
 

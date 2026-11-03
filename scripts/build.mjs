@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 const require=createRequire(import.meta.url),esbuild=require('esbuild');
 const root=fileURLToPath(new URL('../',import.meta.url));
-const modelAssets=Object.fromEntries(['skeleton','course-tissues','landmark-details'].map(n=>[n,createHash('sha256').update(fs.readFileSync(path.join(root,'assets',n+'.glb'))).digest('hex').slice(0,12)]));
+const modelAssets=Object.fromEntries(['skeleton','course-tissues','landmark-details','fetal-skull'].map(n=>[n,createHash('sha256').update(fs.readFileSync(path.join(root,'assets',n+'.glb'))).digest('hex').slice(0,12)]));
 fs.writeFileSync(path.join(root,'src/model-assets.json'),JSON.stringify(modelAssets,null,2)+'\n');
 const nodeModules=path.dirname(path.dirname(path.dirname(require.resolve('three'))));
 const threeRoot=path.dirname(path.dirname(require.resolve('three')));

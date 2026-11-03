@@ -1,3 +1,12 @@
+# 2026-11-02 — Landmarks on the model and a native developmental specimen
+
+- Add a persistent Landmarks On/Off control to the 3D viewer. Show small contextual label groups directly on regions/bones, with batch navigation, side labels and a searchable integrated finder. Include teacher tissues and joint structures as well as textbook bone features.
+- Reconcile all 177 teacher entries to direct model access, qualified source guides or movement exercises. Preserve the dedicated 182-question test and existing spatial-scoring holds. Publish ATLAS-LANDMARK-COVERAGE.csv.
+- Fix regional visibility for shoulder/hip/knee ligaments, wrist retinaculum, discs and vertebral arteries. Correct the patellar ligament's appendicular classification. Use X-ray neighborhood context for focused tissues.
+- Use installed Blender 4.5 to create an editable assembled atlas and 495 source-backed annotation nodes. Verify backups before every model save/export; preserve authored opening/surface coordinates and the original three anatomy asset hashes.
+- Bundle the licensed UCSF fetal-skull scan after the authorized creator download. Preserve native mesh/textures, orient it for display, and add six qualified developmental site references plus a newborn comparison. The scan loads on demand. Keep fontanelle spatial scoring withheld because the specimen does not establish six open gaps.
+- Keep study labels hidden during identification and restore the prior toggle afterward. Verify desktop/phone layouts, native specimen views, source comparison and assessment masking. All 114 automated checks pass.
+
 # 2026-11-02 — Spelling-aware exams and a separate spelling review
 
 - Add built-in, question-specific spelling and equivalent-wording support for all 63 typed/identification questions in new chapter, cumulative, section and full-bank exams, without requiring Ollama.

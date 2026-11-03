@@ -1,0 +1,80 @@
+[
+  {
+    "id": "anterior",
+    "image": "top",
+    "pixel": [
+      354,
+      373
+    ],
+    "label": "Anterior fontanelle region",
+    "side": "midline",
+    "termId": "textbook-anterior-fontanelle",
+    "uncertaintyPixels": 10,
+    "interpretation": "Developmental junction region only; not a verified open gap"
+  },
+  {
+    "id": "posterior",
+    "image": "back",
+    "pixel": [
+      353,
+      368
+    ],
+    "label": "Posterior fontanelle site",
+    "side": "midline",
+    "termId": "textbook-posterior-fontanelle",
+    "uncertaintyPixels": 10,
+    "interpretation": "Developmental junction region only; not a verified open gap"
+  },
+  {
+    "id": "sphenoidal-r",
+    "image": "right",
+    "pixel": [
+      440,
+      397
+    ],
+    "label": "Right sphenoidal fontanelle site",
+    "side": "r",
+    "termId": "textbook-sphenoidal-fontanelle",
+    "uncertaintyPixels": 20,
+    "interpretation": "Developmental junction region only; not a verified open gap"
+  },
+  {
+    "id": "sphenoidal-l",
+    "image": "left",
+    "pixel": [
+      224,
+      401
+    ],
+    "label": "Left sphenoidal fontanelle site",
+    "side": "l",
+    "termId": "textbook-sphenoidal-fontanelle",
+    "uncertaintyPixels": 20,
+    "interpretation": "Developmental junction region only; not a verified open gap"
+  },
+  {
+    "id": "mastoid-r",
+    "image": "right",
+    "pixel": [
+      199,
+      483
+    ],
+    "label": "Right mastoid fontanelle site",
+    "side": "r",
+    "termId": "textbook-mastoid-fontanelle",
+    "uncertaintyPixels": 20,
+    "interpretation": "Developmental junction region only; not a verified open gap"
+  },
+  {
+    "id": "mastoid-l",
+    "image": "left",
+    "pixel": [
+      495,
+      493
+    ],
+    "label": "Left mastoid fontanelle site",
+    "side": "l",
+    "termId": "textbook-mastoid-fontanelle",
+    "uncertaintyPixels": 25,
+    "interpretation": "Developmental junction region only; not a verified open gap"
+  }
+]

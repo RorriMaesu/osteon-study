@@ -10,11 +10,29 @@
     "source-pin": 92
   },
   "sourceOnly3DWithheld": [
-    "Anterior fontanelle",
-    "Mastoid fontanelle",
-    "Posterior fontanelle",
-    "Sphenoidal fontanelle",
     "Round window"
+  ],
+  "localDevelopmentalGuides": [
+    {
+      "name": "Anterior fontanelle",
+      "specimen": "fetal-skull",
+      "spatialScoring": "withheld"
+    },
+    {
+      "name": "Mastoid fontanelle",
+      "specimen": "fetal-skull",
+      "spatialScoring": "withheld"
+    },
+    {
+      "name": "Posterior fontanelle",
+      "specimen": "fetal-skull",
+      "spatialScoring": "withheld"
+    },
+    {
+      "name": "Sphenoidal fontanelle",
+      "specimen": "fetal-skull",
+      "spatialScoring": "withheld"
+    }
   ],
   "spatialScoringWithheld": [
     {
@@ -29,13 +47,13 @@
     },
     {
       "name": "Anterior fontanelle",
-      "status": "replacement-required",
-      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+      "status": "developmental-site-guide",
+      "reason": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld."
     },
     {
       "name": "Mastoid fontanelle",
-      "status": "replacement-required",
-      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+      "status": "developmental-site-guide",
+      "reason": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld."
     },
     {
       "name": "Paranasal sinuses",
@@ -44,13 +62,13 @@
     },
     {
       "name": "Posterior fontanelle",
-      "status": "replacement-required",
-      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+      "status": "developmental-site-guide",
+      "reason": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld."
     },
     {
       "name": "Sphenoidal fontanelle",
-      "status": "replacement-required",
-      "reason": "The previous calvarial reconstruction has been withdrawn. Use the textbook to identify the four named types at six sites. The scanned fetal skull provides complete facial and basal orientation; its individual 3D targets are still being checked."
+      "status": "developmental-site-guide",
+      "reason": "Explore the licensed UCSF fetal-skull scan with developmental junction guides. Some sites are narrowed or closed in this specimen; the markers do not assert six open fontanelles. Compare the labeled OpenStax newborn illustration. Precise fontanelle locating remains withheld."
     },
     {
       "name": "Round window",

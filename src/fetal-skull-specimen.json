@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "group": "fetal-skull",
+  "name": "UCSF fetal-skull scan",
+  "source": "https://sketchfab.com/3d-models/fetal-skull-7646e0227f07475eb8275d084993194c",
+  "creator": "Roberto Rodriguez Rubio / SBCVL_UCSF",
+  "institution": "UCSF Anatomy Learning Center",
+  "license": "CC BY-NC 4.0",
+  "licenseURL": "https://creativecommons.org/licenses/by-nc/4.0/",
+  "reference": "7.5",
+  "figure": "7.33",
+  "center": [
+    0,
+    1.1,
+    0
+  ],
+  "sites": [
+    {
+      "id": "anterior",
+      "image": "top",
+      "pixel": [
+        354,
+        373
+      ],
+      "label": "Anterior fontanelle region",
+      "side": "midline",
+      "termId": "textbook-anterior-fontanelle",
+      "uncertaintyPixels": 10,
+      "interpretation": "Developmental junction region only; not a verified open gap",
+      "point": [
+        -0.0019583,
+        1.163156,
+        0.0043062
+      ],
+      "parent": "UCSF fetal skull scan 1",
+      "face": 65270,
+      "method": "Manual developmental-junction reference in an orthographic scan rendering; exact ray/triangle intersection",
+      "spatialScoring": false
+    },
+    {
+      "id": "posterior",
+      "image": "back",
+      "pixel": [
+        353,
+        368
+      ],
+      "label": "Posterior fontanelle site",
+      "side": "midline",
+      "termId": "textbook-posterior-fontanelle",
+      "uncertaintyPixels": 10,
+      "interpretation": "Developmental junction region only; not a verified open gap",
+      "point": [
+        0.0022847,
+        1.097389,
+        -0.095871
+      ],
+      "parent": "UCSF fetal skull scan 2",
+      "face": 4836,
+      "method": "Manual developmental-junction reference in an orthographic scan rendering; exact ray/triangle intersection",
+      "spatialScoring": false
+    },
+    {
+      "id": "sphenoidal-r",
+      "image": "right",
+      "pixel": [
+        440,
+        397
+      ],
+      "label": "Right sphenoidal fontanelle site",
+      "side": "r",
+      "termId": "textbook-sphenoidal-fontanelle",
+      "uncertaintyPixels": 20,
+      "interpretation": "Developmental junction region only; not a verified open gap",
+      "point": [
+        -0.0592831,
+        1.0879236,
+        0.0261111
+      ],
+      "parent": "UCSF fetal skull scan 1",
+      "face": 24638,
+      "method": "Manual developmental-junction reference in an orthographic scan rendering; exact ray/triangle intersection",
+      "spatialScoring": false
+    },
+    {
+      "id": "sphenoidal-l",
+      "image": "left",
+      "pixel": [
+        224,
+        401
+      ],
+      "label": "Left sphenoidal fontanelle site",
+      "side": "l",
+      "termId": "textbook-sphenoidal-fontanelle",
+      "uncertaintyPixels": 20,
+      "interpretation": "Developmental junction region only; not a verified open gap",
+      "point": [
+        0.0510074,
+        1.0866182,
+        0.0443889
+      ],
+      "parent": "UCSF fetal skull scan 2",
+      "face": 30984,
+      "method": "Manual developmental-junction reference in an orthographic scan rendering; exact ray/triangle intersection",
+      "spatialScoring": false
+    },
+    {
+      "id": "mastoid-r",
+      "image": "right",
+      "pixel": [
+        199,
+        483
+      ],
+      "label": "Right mastoid fontanelle site",
+      "side": "r",
+      "termId": "textbook-mastoid-fontanelle",
+      "uncertaintyPixels": 20,
+      "interpretation": "Developmental junction region only; not a verified open gap",
+      "point": [
+        -0.049891,
+        1.0598543,
+        -0.0525486
+      ],
+      "parent": "UCSF fetal skull scan 1",
+      "face": 90990,
+      "method": "Manual developmental-junction reference in an orthographic scan rendering; exact ray/triangle intersection",
+      "spatialScoring": false
+    },
+    {
+      "id": "mastoid-l",
+      "image": "left",
+      "pixel": [
+        495,
+        493
+      ],
+      "label": "Left mastoid fontanelle site",
+      "side": "l",
+      "termId": "textbook-mastoid-fontanelle",
+      "uncertaintyPixels": 25,
+      "interpretation": "Developmental junction region only; not a verified open gap",
+      "point": [
+        0.0523901,
+        1.0565904,
+        -0.0440625
+      ],
+      "parent": "UCSF fetal skull scan 2",
+      "face": 14201,
+      "method": "Manual developmental-junction reference in an orthographic scan rendering; exact ray/triangle intersection",
+      "spatialScoring": false
+    }
+  ],
+  "notice": "Developmental junction references are marked on this scan. Some sites are narrowed or closed in the specimen; labels do not assert six open fontanelles. Compare the newborn illustration to learn the membrane-filled gaps. The specimen is normalized for display; do not use it for measurements.",
+  "geometryChanges": "Orientation and uniform display scale only; no holes, bone shapes or scan textures were fabricated.",
+  "sourceSHA256": "c3cc0df1c33e65ce4dc407b98b3c9575ae1d20f7cd1fb45fdb4c2b76270ab3cc",
+  "assetSHA256": "86f683cc3fc74a96a0aa023dbfb645d9c7bf7792b7a519be97672df758d972c1",
+  "backup": "fetal-skull-20261103-043420-464255",
+  "blenderVersion": "4.5.1 LTS",
+  "meshFaces": 150022
+}

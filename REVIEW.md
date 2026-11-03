@@ -31,7 +31,7 @@ Selected desktop and phone browser views were checked separately for target visi
 
 ## Work remaining
 
-Precise native fontanelle targets on a complete suitable skull and a resolved round-window opening remain unfinished. Other unresolved entries are explicitly listed in the [review report](accuracy.html). The UCSF scan can be viewed, but its licensed native download and individual target verification remain pending. This release improves accuracy without claiming those gaps are finished.
+Precise native fontanelle targets on a complete suitable skull and a resolved round-window opening remain unfinished. Other unresolved entries are explicitly listed in the [review report](accuracy.html). The licensed UCSF scan is now bundled locally with qualified developmental junction guides; the sites do not establish six open fontanelles and remain excluded from precise spatial scoring. This release improves accuracy without claiming those gaps are finished.
 
 ## Direct Blender bone refinement
 

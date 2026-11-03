@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import {terms} from '../src/data.js';
+import '../src/representations.js';
+import {teacherIds,isOverlayLandmark} from '../src/atlas-landmark-data.js';
+import labels from '../src/atlas-label-anchors.json' with {type:'json'};
+const required=terms.filter(t=>teacherIds.has(t.id));
+const rows=required.map(t=>({id:t.id,name:t.name,region:t.region,access:t.type==='test'?'Movement exercise':t.representation.localSpecimen?'Local fetal scan + newborn comparison':t.representation.assessment==='learn-only'?'Partial 3D reference + source guide':isOverlayLandmark(t)?'Landmark toggle + integrated finder':'Select bone in atlas',anchors:labels.anchors[t.id]?.length||0,scored:t.type!=='test'&&t.representation.assessment!=='learn-only',note:t.representation.reviewNotice||''}));
+const missing=rows.filter(r=>!r.anchors&&!['Movement exercise','Local fetal scan + newborn comparison'].includes(r.access));
+const summary={required:required.length,directBoneEntries:required.filter(t=>!isOverlayLandmark(t)).length,integratedLandmarkEntries:required.filter(isOverlayLandmark).length,spatialPracticeEntries:rows.filter(r=>r.scored).length,sourceRecallEntries:required.filter(t=>t.representation.assessment==='learn-only').length,movementEntries:required.filter(t=>t.type==='test').length,missing:missing.map(r=>r.name),source:labels.source};
+const csv=v=>'"'+String(v??'').replaceAll('"','""')+'"';
+fs.writeFileSync(new URL('../ATLAS-LANDMARK-COVERAGE.csv',import.meta.url),[['Teacher ID','Name','Region','In-view access','Model references','Spatial scoring','Extent / limitations'].map(csv).join(','),...rows.map(r=>[r.id,r.name,r.region,r.access,r.anchors,r.scored?'enabled':'withheld / movement',r.note].map(csv).join(','))].join('\n')+'\n');
+fs.writeFileSync(new URL('../atlas-landmark-summary.json',import.meta.url),JSON.stringify(summary,null,2)+'\n');console.log(JSON.stringify(summary));if(missing.length||required.length!==177)process.exitCode=1;

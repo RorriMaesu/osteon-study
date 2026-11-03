@@ -1,6 +1,20 @@
 // Anatomical divisions are independent of the viewer's regional groupings.
 export const divisions=['All','Axial','Appendicular'];
+// Named teaching tissues stay with their anatomical neighborhood during regional
+// navigation. A ligament is not a bone, but must not disappear from a joint view.
+export function tissueAreas(n){
+ if(/Conoid ligament|Trapezoid ligament|Acromioclavicular ligament|glenohumeral ligament|Coracohumeral ligament/.test(n))return ['shoulder','arm'];
+ if(/Flexor retinaculum of wrist/.test(n))return ['hand','forearm'];
+ if(/iliofemoral ligament|Ligament of head of femur/.test(n))return ['pelvis','thigh'];
+ if(/cruciate ligament|collateral ligament|Patellar ligament/.test(n))return ['knee','leg','thigh'];
+ if(/Pubic symphysis/.test(n))return ['pelvis'];
+ if(/Stylohyoid ligament|Vertebral artery/.test(n))return ['neck'];
+ if(/Intervertebral disc|Nucleus pulposus/.test(n)){if(/ C\d/.test(n))return ['neck'];if(/ T\d/.test(n))return ['thoracic-spine'];return ['lower-back','pelvis'];}
+ return [];
+}
+export function tissueRegion(n){const a=tissueAreas(n)[0];return a==='shoulder'||a==='hand'?'Upper limb':a==='knee'?'Lower limb':a==='pelvis'?'Pelvis':['neck','thoracic-spine','lower-back'].includes(a)?'Spine':null;}
 export function meshRegion(n,g=''){
+ const tissue=tissueRegion(n);if(tissue)return tissue;
  if(/Thyroid cartilage|Cricoid cartilage|Arytenoid cartilage|Corniculate cartilage/.test(n))return'Thorax';
  if(/cranium|ossicle|teeth/i.test(g)||/bone of cranium/i.test(g))return'Skull';
  if(/Vertebra|Atlas|Axis|Sacrum|Coccyx/.test(n))return'Spine';
@@ -11,7 +25,7 @@ export function meshRegion(n,g=''){
  return'Skull';
 }
 export function meshDivision(name){
- return /Clavicle|Scapula|Humerus|Radius|Ulna|metacarpal|of hand|Scaphoid|Pisiform|Lunate|Triquetrum|Trapez|Capitate|Hamate|Hip bone|Femur|Patella|Tibia|Fibula|Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot|acromio|coraco|glenohumeral|cruciate|collateral|iliofemoral|head of femur|Pubic symphysis/i.test(name)?'Appendicular':'Axial';
+ return /Clavicle|Scapula|Humerus|Radius|Ulna|metacarpal|of hand|Scaphoid|Pisiform|Lunate|Triquetrum|Trapez|Capitate|Hamate|Hip bone|Femur|Patella|Tibia|Fibula|Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot|acromio|coraco|glenohumeral|cruciate|collateral|iliofemoral|head of femur|Pubic symphysis|Patellar ligament|Flexor retinaculum of wrist|Conoid ligament/i.test(name)?'Appendicular':'Axial';
 }
 export function termDivision(t){
  if(t.division)return t.division;
@@ -21,7 +35,7 @@ export function termDivision(t){
 }
 export const inDivision=(t,division)=>division==='All'||termDivision(t)===division;
 export const regionAvailable=(region,division,items)=>region==='All regions'||items.some(t=>t.region===region&&inDivision(t,division));
-export const meshInRegion=(name,meshRegion,region)=>region==='All regions'||(region==='Joints'?meshDivision(name)==='Appendicular':meshRegion===region||(region==='Pelvis'&&/Sacrum|Coccyx/.test(name)));
+export const meshInRegion=(name,meshRegion,region)=>region==='All regions'||(region==='Joints'?meshDivision(name)==='Appendicular':meshRegion===region||tissueRegion(name)===region||(region==='Pelvis'&&/Sacrum|Coccyx/.test(name)));
 export const skullFamilies=[
  ['Frontal bone','Frontal','#edb16c','Cranial',1],['Parietal bone','Parietal','#68c5dd','Cranial',2],
  ['Temporal bone','Temporal','#b8a0ed','Cranial',2],['Occipital bone','Occipital','#e48eae','Cranial',1],

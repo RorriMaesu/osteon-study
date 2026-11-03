@@ -52,9 +52,15 @@ These checks establish source reconciliation, label identity and model/reference
 
 ## Two remaining spatial limitations
 
-**Fontanelles:** newborn fibrous gaps cannot be identified on an adult skull. The withdrawn crude newborn reconstruction is not reintroduced. The atlas provides labeled textbook comparison and the optional fetal-skull scan; individually verified 3D fontanelle targets remain pending. The test asks for the source term from its definition.
+**Fontanelles:** newborn fibrous gaps cannot be identified on an adult skull. The withdrawn crude newborn reconstruction is not reintroduced. The atlas provides the labeled newborn comparison and a bundled, rotatable UCSF fetal-skull scan with qualified developmental site guides. Some junctions are narrowed or closed, so individually verified open-fontanelle targets remain pending. The test asks for the source term from its definition.
 
 **Ethmoidal air cells and sinus openings:** the adult reference locates the air-cell region, but individual drainage openings are not fully mapped. The test uses group-name source recall, not an asserted opening location. These two questions are explicitly labeled **Source recall**. Their original spatial-scoring holds remain intact.
+
+## Integrated model access — November 2, 2026
+
+Turn on **Landmarks** above the 3D viewer to see feature labels directly on the specimen. **Find landmarks** searches and focuses the teacher's features within this same viewer; the separate landmark bank is optional. Small label batches, specimen-side labels and an Off switch keep the view readable. Regional navigation retains associated ligament, disc, artery and joint-tissue geometry.
+
+The [in-view coverage checklist](ATLAS-LANDMARK-COVERAGE.csv) accounts for all 177 IDs: 59 direct bone entries and 118 landmark/tissue/reference entries. The 173 spatial / 2 source / 2 movement split remains unchanged. The native fetal specimen adds developmental region/site references, with the labeled newborn comparison available in the viewer; it does not establish six open fontanelles. Individual ethmoid drainage ostia remain unverified.
 
 ## Count blanks
 
@@ -66,7 +72,7 @@ ${counts}
 
 Names and labeled pins remain hidden until the answer is checked. A cue, reveal or tutor assistance is recorded separately from independent correctness. Save & exit and reload preserve the current order and submitted answers; Continue starts at the next unanswered question. A cue used on an unanswered question stays recorded after reload. Submitted responses also enter the existing learning history. The dedicated test record and results export retain the document identity and test scope. Storage is local to the browser.
 
-Results identify 3D, source recall, movement and count evidence separately. Retry missed / assisted makes a clearly scoped new run. Correct answers and repeated immediate attempts are practice evidence, not a guarantee of mastery. The model files were not edited for this reconciliation.
+Results identify 3D, source recall, movement and count evidence separately. Retry missed / assisted makes a clearly scoped new run. Correct answers and repeated immediate attempts are practice evidence, not a guarantee of mastery. The original source reconciliation preserved model geometry; the later integrated layer adds backed-up Blender annotation projects and the separately licensed native developmental specimen.
 
 ## Complete named-item checklist
 
