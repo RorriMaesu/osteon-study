@@ -46,6 +46,12 @@ test('unfinished or empty model tests never mark the AI ready',async()=>{
   const ai=new LocalAIConnection({storage:storage(),fetcher:fake(opts).fetcher});await ai.connect();await assert.rejects(ai.test());assert.equal(ai.state.ready,false);assert.equal(ai.state.phase,'needs-test');
  }
 });
+test('connection loss during the sample test leads to connection recovery rather than a false ready state',async()=>{
+ const f=fake(),ai=new LocalAIConnection({storage:storage(),fetcher:async(url,init)=>{
+  if(url.endsWith('/chat'))throw new TypeError('Failed to fetch');return f.fetcher(url,init);
+ }});
+ await ai.connect();await assert.rejects(ai.test());assert.equal(ai.state.ready,false);assert.equal(ai.state.connected,false);assert.equal(ai.state.phase,'unreachable');
+});
 test('switching models invalidates ready status and cannot select an unknown model or external address',async()=>{
  const ai=new LocalAIConnection({storage:storage(),fetcher:fake({models:[model,{...model,name:'another:local'}]}).fetcher});await ai.connect();await ai.test();
  ai.select('another:local');assert.equal(ai.state.ready,false);assert.equal(ai.preferences.model,'another:local');
@@ -69,4 +75,8 @@ test('setup makes hardware optional and installation/device branches explicit',(
  const phone=setupScreen({state,os:'other'});assert.ok(phone.includes('Use a computer for local AI'));assert.ok(!phone.includes('href="ollama://"'));
  const unready=setupScreen({state:{...state,connected:true,model:model.name,models:[model],phase:'needs-test'},os:'windows'});
  assert.ok(unready.includes('Test and finish setup'));assert.ok(!unready.includes('data-ai-action="finish"'));
+ const installed=setupScreen({state:{...state,connected:true,model:model.name,models:[model]},os:'windows',page:'model'});
+ assert.ok(installed.includes('Use this model'));assert.ok(!installed.includes('id="model-download"'));
+ const download=setupScreen({state:{...state,connected:true,model:model.name,models:[model]},os:'windows',page:'download'});
+ assert.ok(download.includes('Download 2.7 GB model'));assert.ok(download.includes('current download part'));
 });

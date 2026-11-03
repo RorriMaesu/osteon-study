@@ -1,3 +1,21 @@
+# Current validation — guided local AI setup, 2026-11-02
+
+All **124 automated checks** pass, including ten setup/connection checks and the existing anatomy/exam regression suite. Checks cover readiness only after a completed response, preference migration and changed-weight identity, canceled/unreachable checks, cloud exclusion, empty/unfinished streams, lost connections, model changes, bounded untrusted assistant fragments, conservative hardware suggestions, optional hardware, mobile requirements, and separate installed/download paths.
+
+A real local **qwen3.5:4b-q4_K_M** returned the setup sample in the browser (first text about 2.9 seconds on the first observed test). Reloading reconnected and retested the saved model, then opened chat. A separate actual reviewer request accepted **femurr** as a spelling error for **Femur**, retained the corrected source answer, and returned reviewed evidence. No real exam answers were submitted.
+
+At **1024 × 640**, setup uses a compact focused card and a pinned next action instead of the generic desktop pager. At **390 × 844**, the setup is a full-screen modal with no horizontal overflow; its primary action remained in view. Installed-model and explicit-download screens were exercised without starting any new model download. Optional details/instructions can scroll independently of the action.
+
+An isolated local-origin Chapter 6 exam retained its question position and the partial matching response **Parathyroid → Secretes PTH** after enabling optional AI review, completing the shared guide, and choosing **Return to my exam**. The settings button reflected the same tested model/readiness. The test opt-in was switched back off. Public study progress and exam responses were not edited.
+
+The Windows assistant parsed successfully and its **-CheckOnly** mode found the already-installed/running service and reported NVIDIA VRAM without configuration changes, installation, restart, browser launch, or report-file writes. Missing RAM/thread/disk measurements remained unknown. PowerShell and shell syntax checks passed. Fresh installer, settings mutation, undo, and native macOS execution have **not** been tested end to end; the existing installation was preserved. Assistants are source scripts, not code-signed native executables, with explicit manual fallbacks rather than security-policy bypasses.
+
+The first implementation checkpoint was published as **f235e7a** and its versioned application asset was observed on GitHub Pages. Subsequent verification fixes preserve the browser app-link activation and pause/resume bounded launch checks when the page is hidden/visible. All anatomy model assets are unchanged.
+
+Earlier validation records below describe their respective releases.
+
+---
+
 # Current validation — integrated atlas landmarks, 2026-11-02
 
 All **114 automated checks** pass: 101 existing checks plus eleven integrated-layer checks and two native fetal-specimen checks. The new checks account for every teacher ID, preserve source-authored coordinates, resolve annotation parents/specimens and bounds, prevent right-side anchors appearing on isolated left bones and composite openings appearing without their contributing bones, retain all required joint/tissue entries, validate regional tissue membership/divisions, prevent label collisions, hide study labels during assessment, and verify the Blender annotation asset and original anatomy hashes. Native-scan checks cover the source/output hashes, 150,022 scan faces, separate specimen identity, six qualified site references, anatomical side/order and retained spatial-scoring holds. Bounds and ray intersections do not independently establish fine anatomical morphology.

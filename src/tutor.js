@@ -66,7 +66,7 @@ function initTutor({escape:e,toast}) {
   localAI.subscribe(syncConnection);syncConnection(localAI.snapshot());
   document.addEventListener('localaiopen',ev=>openPanel({setup:true,review:ev.detail?.returnToReview===true}));
   window.addEventListener('storage',ev=>{if(ev.key===HARDWARE_KEY&&ev.newValue){try{hardware=validateHardware(JSON.parse(ev.newValue));hardware.source='setup assistant / another study tab';if(panel.open&&tab==='setup')render();}catch{}}});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden&&opening){stopWaiting();if(panel.open)render();}});
+  document.addEventListener('visibilitychange',()=>{if(!opening)return;if(document.hidden)clearTimeout(pollTimer);else if(panel.open)waitForOllama();});
   function save(){try{localStorage.setItem(CHAT_KEY,JSON.stringify(chat.slice(-CHAT_LIMIT)));}catch{toast('Tutor history could not be saved. Study progress is separate.');}}
   function saveDraft(){try{localStorage.setItem(DRAFT_KEY,draft);}catch{}}
   function saveHardware(){try{localStorage.setItem(HARDWARE_KEY,JSON.stringify(hardware));}catch{}}
@@ -100,7 +100,7 @@ function initTutor({escape:e,toast}) {
     panel.querySelectorAll('[data-ai-action]').forEach(b=>b.onclick=()=>actions[b.dataset.aiAction]?.());
     if($('#ollama-os'))$('#ollama-os').onchange=ev=>{os=ev.target.value;render();};
     if($('#ollama-address'))$('#ollama-address').onchange=ev=>{localAI.setEndpoint(ev.target.value);sample='';benchmarkText='';render();};
-    if($('#ollama-open'))$('#ollama-open').onclick=ev=>{if(busy){ev.preventDefault();return;}waitForOllama();};
+    if($('#ollama-open'))$('#ollama-open').onclick=ev=>{if(busy){ev.preventDefault();return;}setTimeout(()=>{if(panel.open)waitForOllama();},0);};
     if($('#model-download'))$('#model-download').onchange=ev=>{downloadState={model:ev.target.value,text:'',progress:null};render();};
     if($('#hardware-import'))$('#hardware-import').onchange=async ev=>{try{const f=ev.target.files[0];if(!f)return;if(f.size>20000)throw new Error('Choose a small Osteon hardware report.');hardware=validateHardware(JSON.parse((await f.text()).replace(/^\uFEFF/,'')));saveHardware();downloadState.model=recommendedDownload(hardware).name;render();}catch(err){$('#hardware-error').textContent=err.message;}};
     bindModel();
