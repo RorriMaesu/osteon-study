@@ -1,6 +1,8 @@
 import {initLabList} from './lab-list-ui.js';
 import {initLandmarks} from './landmark-ui.js';
 import {initWorkspace} from './workspace.js';
+import {initViewerRoom} from './viewer-room.js';
+import {viewerGuidance} from './viewer-guidance.js';
 import {setLearningContext} from './learning-context.js';
 import {initTutor} from './tutor.js';
 import {divisions,inDivision,termDivision,regionAvailable,meshDivision} from './anatomy.js';
@@ -52,19 +54,21 @@ function syncSkullControls(){
 }
 function syncFocusControls(){
  const blocked=assessmentColors||viewer.quiz;
+ const guidance=viewerGuidance({level:viewer.focus.level,touch:viewer.touchInput??matchMedia('(pointer:coarse)').matches,blocked,peel:viewer.peel});
  $('#exploration-bar').hidden=blocked;
  $('.specimen-stage').dataset.exploring=String(!blocked);
  $('#focus-back').disabled=viewer.focus.level==='overview';
  const label=viewer.focusLabel(),focusedMesh=viewer.selected.find(m=>boneFamily(m.userData.zname)),bone=viewer.focus.level==='bone'&&focusedMesh?(viewer.focus.boneId==='Sternum'?'Sternum':viewer.displayName(focusedMesh)):'';
- $('#focus-trail').innerHTML='<button type="button" id="focus-overview">'+(viewer.division==='All'?'Skeleton':viewer.division)+'</button>'+(viewer.focus.level!=='overview'?'<span aria-hidden="true">›</span>'+(bone?'<button type="button" id="focus-region">'+escape(label)+'</button><span aria-hidden="true">›</span><strong>'+escape(bone)+'</strong>':'<strong>'+escape(label)+'</strong>'):'<span class="focus-intro">Double-click to explore</span>');
+ $('#focus-trail').innerHTML='<button type="button" id="focus-overview">'+(viewer.division==='All'?'Skeleton':viewer.division)+'</button>'+(viewer.focus.level!=='overview'?'<span aria-hidden="true">›</span>'+(bone?'<button type="button" id="focus-region">'+escape(label)+'</button><span aria-hidden="true">›</span><strong>'+escape(bone)+'</strong>':'<strong>'+escape(label)+'</strong>'):'<span class="focus-intro">'+escape(guidance.intro)+'</span>');
  $('#focus-overview').onclick=()=>viewer.reset();
  $('#focus-trail').title=[viewer.division==='All'?'Skeleton':viewer.division,viewer.focus.level!=='overview'?label:'',bone].filter(Boolean).join(' › ');
  if($('#focus-region'))$('#focus-region').onclick=()=>viewer.back();
  const hint=$('.viewer-hint');
- hint.textContent=blocked?'DRAG TO ORBIT · SCROLL TO ZOOM':viewer.focus.level==='overview'?'DOUBLE-CLICK A BONE TO EXPLORE ITS REGION':viewer.focus.level==='region'?'DOUBLE-CLICK A BONE TO FOCUS IT ALONE':'BACK TO RETURN TO THE REGION · DRAG TO ORBIT';
+ hint.textContent=guidance.hint;
  $$('#desktop-region,#desktop-division,#structure-search').forEach(e=>e.disabled=blocked);
  $('#exact-only').disabled=blocked||browseMode==='landmarks';
  const isBone=!!viewer.selected[0]&&!!boneFamily(viewer.selected[0].userData.zname);
+ const next=$('#focus-next');next.hidden=blocked||!isBone||viewer.peel;next.textContent=guidance.action;next.onclick=()=>viewer.focus.level==='bone'?viewer.back():viewer.navigateBone(viewer.selected[0]);
  $('#focus-btn').setAttribute('aria-label',blocked?'Focus selected target':isBone?'Explore selected bone’s region':'Focus selected structure');
  $('#focus-btn').title=$('#focus-btn').getAttribute('aria-label');
  $('#focus-btn').querySelector('span').textContent=blocked?'Focus':'Region';
@@ -80,6 +84,7 @@ document.addEventListener('atlasfocuschange',()=>{
  syncFilters();renderList();updateButtons();$('#rotate-btn').setAttribute('aria-pressed','false');
 });
 $('#focus-back').onclick=()=>viewer.back();
+document.addEventListener('viewerinputchange',syncFocusControls);
 function syncFilters(){
  syncSkullControls();
  $$('[data-division]').forEach(b=>{b.disabled=assessmentColors;b.classList.toggle('active',b.dataset.division===viewer.division);b.setAttribute('aria-pressed',b.dataset.division===viewer.division);});
@@ -111,7 +116,7 @@ $('#isolate-btn').onclick=()=>{if(viewer.quiz||!boneFamily(viewer.selected[0]?.u
 $('#peel-btn').onclick=()=>{viewer.peel=!viewer.peel;$('#peel-btn').setAttribute('aria-pressed',viewer.peel);toast(viewer.peel?'Peel is on: click surfaces to hide them. Turn Peel off to select or answer.':'Peel is off: click to select or answer.');};
 $('#restore-btn').onclick=()=>viewer.restore();
 $('#tissues-btn').onclick=()=>{viewer.tissues=!viewer.tissues;viewer.applyVisibility();$('#tissues-btn').setAttribute('aria-pressed',viewer.tissues);};
-document.addEventListener('layerschanged',()=>{$('#restore-btn').disabled=!viewer.hiddenMeshes.size;$('#peel-btn').setAttribute('aria-pressed',viewer.peel);});
+document.addEventListener('layerschanged',()=>{$('#restore-btn').disabled=!viewer.hiddenMeshes.size;$('#peel-btn').setAttribute('aria-pressed',viewer.peel);syncFocusControls();});
 function credits(){dialog(`<h2>A study space<br><em>with real foundations.</em></h2><p>Double-click a bone to explore its region, then double-click again to focus that bone alone. Back returns to the previous view. The Region and Bone buttons provide the same actions without a gesture. Regional bone colors have a persistent On / Off control and an optional key; skeleton overviews stay neutral.</p><p>Drag to orbit, scroll to zoom and use right-drag to pan. Enable Peel to click away covering surfaces, then disable it to select a deeper structure. Restore brings all hidden surfaces back. Shift-click is a peeling shortcut. On touch, use one finger to rotate and two fingers to zoom or pan. Anatomical left and right always refer to the specimen. Use the searchable structure list for keyboard access.</p><p>The specimen comes from <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noreferrer">Z-Anatomy</a> (CC BY-SA 4.0), derived from BodyParts3D © The Database Center for Life Science (CC BY-SA 2.1 Japan). Web export: <a href="https://github.com/SeemaBansal1/3d-human-body-anatomy" target="_blank" rel="noreferrer">3d-human-body-anatomy</a>. The adult skeleton and 81 additional course tissue objects include bones, cartilage, teeth, ligaments, discs and vertebral arteries. Landmark references combine original validated Z-Anatomy annotations with manually curated surface and opening references. Magnified long-bone, flat-bone and osteon teaching reconstructions are separate from the adult specimen. The previous newborn calvarial and round-window models have been withdrawn; use the labeled textbook comparison and optional UCSF fetal-skull scan. Additional source geometry reveals the bony labyrinth and ligament-bounded spaces. Pins mark reference locations rather than complete surface boundaries.</p><p>Learning content is adapted from OpenStax Anatomy and Physiology 2e, © 2026 Rice University, CC BY-NC-SA 4.0. Access for free at <a href="https://openstax.org/details/books/anatomy-and-physiology-2e" target="_blank" rel="noreferrer">openstax.org</a>. Lab scope follows the supplied BI 231 Fall 2024 list.</p><p>Progress stays in this browser. Export a backup before changing devices or clearing browser data. The tool is an independent study companion.</p><p><a href="accuracy.html" target="_blank">Landmark accuracy review ↗</a> · <a href="CREDITS.md" target="_blank">Complete credits and licenses ↗</a> · <a href="PLAN.md" target="_blank">Education and design plan ↗</a> · <a href="TUTOR.md" target="_blank">Local tutor setup guide ↗</a></p>`);}
 $('#help-btn').onclick=credits;$('#credits-btn').onclick=credits;
 $('#coverage-btn').onclick=()=>{const c=coverage();dialog(`<h2>Every course item.<br><em>A suitable target.</em></h2><div class="score-row">${Object.entries(c).map(([k,n])=>`<div class="stat"><strong>${n}</strong><span>${labels[k]}</span></div>`).join('')}</div><p><button id="coverage-landmarks" class="primary">Open 310-feature textbook bank ↗</button> · <a href="LANDMARKS.md" target="_blank">Expanded feature coverage ↗</a></p><p>All 177 original course IDs are preserved. Supported anatomy uses locating and identification exercises. Unresolved anatomy uses source study and recall while spatial scoring is withheld. Native geometry, source annotations and explanatory teaching models are distinguished in the <a href="accuracy.html" target="_blank">landmark accuracy review ↗</a>. Drawer tests use movement and ligament reasoning. Pins are reference points, not full surface segmentations. Adult geometry is never used to represent infant fontanelles.</p><table><thead><tr><th>Region</th><th>Course items</th><th>Represented</th></tr></thead><tbody>${regions.slice(1).map(r=>`<tr><td>${r}</td><td>${terms.filter(t=>t.region===r).length}</td><td>${terms.filter(t=>t.region===r&&t.representation).length}</td></tr>`).join('')}</tbody></table><p><a href="COVERAGE.csv" download>Download the item-by-item audit ↓</a> · <a href="PLAN.md" target="_blank">Learning and design plan ↗</a></p>`);$('#coverage-landmarks').onclick=()=>{$('#info-dialog').close();document.dispatchEvent(new Event('landmarkbank'));};};
@@ -127,6 +132,7 @@ initTutor({escape,toast});
 landmarkUI=initLandmarks({viewer,selectTerm,setView,dialog,escape});
 document.addEventListener('landmarkcontext',ev=>{if(ready)selectTerm(ev.detail);});
 initWorkspace();
+initViewerRoom({viewer,toast});
 document.addEventListener('landmarkpick',ev=>{if(!document.body.dataset.precisionActive)selectTerm(ev.detail);});
 document.addEventListener('viewchange',ev=>{if(ev.detail==='atlas'&&!document.body.classList.contains('quiz-active')){if(ready&&viewer.region!==region)viewer.setRegion(region);if(selected){if(viewer.selectedTerm?.id!==selected.id)selectTerm(selected);else detail(selected);}else resetDetail();syncFilters();}});
 

@@ -1,5 +1,21 @@
 # Responsive workspace plan
 
+## Viewer review — 2026-11-02
+
+At a 1366 × 650 laptop viewport, the old atlas stage was 439 pixels tall but the actual canvas was only 218 pixels tall. The introduction and separate control rows consumed the rest. A wider canvas alone would leave the skeleton just as short, so this revision reclaims vertical space first.
+
+| Screen | Default atlas | Larger study view |
+| --- | --- | --- |
+| Laptop / narrow desktop, 1000–1599 px | Search column plus large specimen; Details opens on demand. Short screens use a compact title and navigation. | Expand viewer fills the browser window. |
+| Large desktop, 1600 px and above | Search, specimen and selected-structure panels remain together. | The same expansion is available for detailed inspection. |
+| Phone / narrow tablet | Specimen, Browse and Details controls; natural reading flow. | Expansion fills the dynamic viewport, including portrait and landscape layouts. |
+
+Camera/action controls share one bottom row when there is enough room; narrower stages retain two accessible rows. Camera framing adapts to the new space while retaining the viewing direction, region and selected target. Full screen is an optional browser capability invoked only by its visible button; window-filling expansion remains available if that request is unavailable or refused. The implementation follows the [Fullscreen API guide](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API/Guide).
+
+Discovery has three layers: a readable “double-click / double-tap → region → one bone” cue, an explicit Zoom to region / View bone alone action after selection, and a Controls guide with rotate/zoom/pan instructions. A short cue animation respects reduced-motion preferences. Practice suppresses exploration instructions and target names, and expanding/returning retains the current question and draft. Escape closes the guide first, then expanded view; the Back arrow restores the previous anatomical view. Background controls are inert during expansion and keyboard focus stays in the viewer.
+
+The earlier plan below describes the content workspace that remains in place.
+
 The previous design stacked a large introduction, a fixed 780-pixel specimen and long study panels. This pushed controls below a laptop screen. On phones, filters and details appeared far below the specimen, and the floating tutor could cover controls.
 
 ## Desktop

@@ -1,4 +1,16 @@
-# Current validation — local AI answer review, 2026-10-30
+# Current validation — larger 3D workspace, 2026-11-02
+
+All 86 automated checks pass, including two new gesture/guidance tests. They verify the overview → region → bone teaching sequence, practice-safe instructions, and double-tap discrimination across component meshes of the same bone versus another bone, a delayed tap or a large displacement. Existing anatomy, geometry, content, scoring and local-tutor checks remain in place. Content audits retain 177 course concepts, 182 required-list questions, 310 named features and all chapter 6–9 content. No model geometry or landmark coordinates changed.
+
+At 1366 × 650 the original atlas canvas measured 834 × 218 pixels. The revised default canvas measured 1125 × 380; expanded view measured 1366 × 510. At 1024 × 640 the revised default was 783 × 370 with no document overflow. At 1920 × 1080 both side panels remained visible and the canvas measured 1388 × 693. These are CSS-viewport observations in the preview browser, not physical monitor sizes or performance guarantees.
+
+Browser checks exercised actual canvas double-clicks from full skeleton into a pelvis region and then an isolated sacrum; the explicit Zoom to region / View bone alone buttons; Back; opening/closing the Controls guide; the laptop Details panel; native browser full-screen entry/exit; Escape; keyboard focus wrapping inside expanded view; and the regional color key while expanded. Expansion marks background controls inert, restores them on exit and retains the existing stage rather than cloning the WebGL model. A required-list identification question kept its target unnamed and restored an unsubmitted typed draft after expanding and returning; its guide showed practice-specific controls without answer hints.
+
+At 390 × 844 the expanded canvas measured 390 × 598 without horizontal overflow, and the guide fitted the screen. At 844 × 390 landscape it measured 844 × 276 with separate usable camera/action docks. Additional checks found a 1039 × 450 default canvas at 1280 × 720, and a 320 × 494 expanded canvas at 320 × 740 with its toolbar inside the screen width. No preview console errors or warnings were captured. Temporary viewport overrides were reset after verification. Double-tap timing/identity logic is tested; physical-device touch verification remains separate. All synthetic answers/drafts used the local preview, leaving public study history untouched.
+
+---
+
+# Local AI answer-review validation — 2026-10-30
 
 All 84 automated checks pass: the preceding 72 checks plus 12 answer-review checks covering response/key binding, typo credit, semantic equivalents, conservative anatomy/count/side guards, exact-match preservation, selected-answer scoring, malformed/incomplete/cloud generation rejection, cancellation, escaped feedback, persisted evidence, bone-list typed drafts and chapter 8/9 tutor references.
 

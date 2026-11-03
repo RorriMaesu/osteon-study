@@ -210,3 +210,96 @@
 @media(min-width:1000px){.exam-practice-actions button{min-height:32px;font-size:12px;padding:7px 12px}.exam-question-content .exam-figure svg{max-height:200px}.exam-question-content .exam-figure figcaption{font-size:8px;line-height:1.4}.exam-question-content .quiz-top{margin-bottom:8px}.exam-question-content .page-flow h2{margin:8px 0}}
 @media(min-width:1000px){.exam-response .sequence-items{break-inside:avoid}}
 @media(min-width:1000px) and (max-height:700px){.exam-question-content .quiz-top{margin-bottom:6px}.exam-question-content .quiz-top button{min-height:26px}.exam-question-content .page-flow h2{font-size:18px;line-height:1.25;margin:6px 0}.exam-response .tiny{margin:4px 0;line-height:1.3}.exam-response .sequence-item{min-height:34px;padding:5px 8px}.exam-response .sequence-item button{min-height:24px}}
+
+/* A generous canvas at every size; the same stage can fill the window. */
+.specimen-stage{container-type:inline-size}
+.viewer-room-tools{position:absolute;top:8px;right:12px;z-index:7;display:flex;align-items:center;gap:6px}
+.viewer-room-tools button{min-height:32px;padding:6px 10px;font-size:11px;background:#16282df2;white-space:nowrap;border-color:#57716a}
+#viewer-expand{background:var(--mint);color:#19362a;border-color:var(--mint);font-weight:600}
+#viewer-expand>span:first-child{font-size:17px;vertical-align:middle;margin-right:4px}
+.specimen-stage .stage-header{top:16px;right:260px;pointer-events:none}
+.specimen-stage #model-state{display:none}
+.specimen-stage .exploration-bar{top:48px;left:12px;right:12px}
+.specimen-stage #viewer,.specimen-stage[data-exploring=true] #viewer{top:90px;bottom:106px}
+.specimen-stage[data-exploring=false] #viewer{top:54px}
+.specimen-stage .view-controls{bottom:52px;white-space:nowrap}
+.specimen-stage .viewer-actions{bottom:10px;flex-wrap:nowrap;max-width:none;margin:0;gap:4px}
+.specimen-stage .viewer-hint{display:block;bottom:94px;font-size:11px;letter-spacing:0;text-transform:none;line-height:1.4;color:#d1e5d7;padding:0 8px}
+.specimen-stage .axis-marker{bottom:130px}
+#focus-trail .focus-intro{color:#e0eddf;font-size:11px;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#focus-trail .focus-intro::before{content:'◉ ◉';display:inline-block;color:var(--orange);font-size:9px;letter-spacing:-3px;margin-right:8px;animation:gesture-cue 1.3s ease-out 3}
+.exploration-bar .focus-next{background:#365544;color:#e8f0dc;border-color:#799b7b;font-size:11px;margin-left:auto}
+.focus-next[hidden]{display:none!important}
+#hover-label{max-width:min(330px,calc(100% - 12px));white-space:normal;line-height:1.5}
+@keyframes gesture-cue{50%{opacity:.35;transform:scale(.85)}to{opacity:1}}
+.viewer-control-guide[hidden],.viewer-room[hidden]{display:none!important}
+.viewer-control-guide{position:absolute;z-index:9;right:12px;top:48px;width:min(390px,calc(100% - 24px));max-height:calc(100% - 60px);overflow:auto;padding:18px;border:1px solid #8ca68a;border-radius:12px;background:#192c2cf7;box-shadow:0 15px 50px #0007;backdrop-filter:blur(18px);color:var(--text);overscroll-behavior:contain}
+.viewer-guide-heading{display:flex;align-items:center;gap:10px;justify-content:space-between;font-family:var(--serif);font-size:24px;line-height:1.15}
+.viewer-guide-heading>strong{font-weight:400}.viewer-guide-heading button{min-width:36px;min-height:36px;padding:5px;font-size:20px}
+.viewer-guide-steps{margin:15px 0}.viewer-guide-steps p{display:flex;gap:12px;align-items:center;margin:12px 0;font-size:12px;line-height:1.55}
+.viewer-guide-steps p>b{flex:none;display:grid;place-items:center;border:1px solid #76957a;border-radius:50%;width:30px;height:30px;color:var(--mint);font-size:15px}
+.viewer-guide-steps strong{display:block;font-size:13px;color:var(--mint)}
+.viewer-guide-motion{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:13px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:10px;line-height:1.5;color:var(--muted)}
+.viewer-guide-motion strong{display:block;color:var(--text);font-size:13px;margin-top:3px}
+.viewer-guide-keyboard,.viewer-guide-practice{font-size:12px;line-height:1.6;margin:14px 0}
+#viewer-guide-done{width:100%;min-height:40px;background:var(--mint);color:#1b3629;font-size:12px}
+body.viewer-room-open{overflow:hidden!important}
+.viewer-room{position:fixed;inset:0;z-index:1000;background:var(--bg);width:100%;height:100dvh;display:block;padding:0;overflow:hidden}
+.viewer-room>.specimen-stage{width:100%;height:100%;min-height:0!important;max-height:none!important;border:0;border-radius:0;display:block!important;contain:layout}
+.viewer-room-placeholder{min-height:0;min-width:0;pointer-events:none}
+.viewer-room :focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+.viewer-room .viewer-room-tools{top:max(8px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right))}
+.viewer-room .viewer-actions{padding-bottom:env(safe-area-inset-bottom)}
+.viewer-room .viewer-actions button span{display:inline;font-size:10px}.viewer-room .viewer-actions button{min-height:36px;padding:7px 10px}
+.viewer-room .view-controls button{min-height:34px}
+@container(min-width:780px){
+ .specimen-stage .view-controls{left:12px;transform:none;bottom:12px}
+ .specimen-stage .viewer-actions{left:auto;right:12px;bottom:12px;padding:0}
+ .specimen-stage .viewer-hint{bottom:60px}
+ .specimen-stage #viewer,.specimen-stage[data-exploring=true] #viewer{bottom:86px}
+ .specimen-stage .axis-marker{bottom:98px}
+}
+@media(min-width:1000px) and (max-height:800px){
+ body{grid-template-rows:48px minmax(0,1fr) 22px}.topbar{height:48px}main{padding:6px 12px}footer{height:22px;padding-top:2px;padding-bottom:2px}
+ #atlas-view>.intro{min-height:42px;padding:0 0 6px;gap:10px}#atlas-view>.intro h1{font-size:24px;margin:0}#atlas-view>.intro .eyebrow,#atlas-view>.intro p,#atlas-view>.atlas-bottom{display:none}
+ .atlas-workspace .stage-header,.viewer-room .stage-header{display:none}
+ .atlas-workspace .exploration-bar,.viewer-room .exploration-bar{top:8px;right:calc(var(--viewer-tools-width,238px) + 24px)}
+ .atlas-workspace .specimen-stage #viewer,.atlas-workspace .specimen-stage[data-exploring=true] #viewer,.viewer-room .specimen-stage #viewer{top:54px}
+ .course-layout{grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr)}
+}
+@media(max-width:999px){
+ #atlas-view>.intro{padding:8px 0;min-height:52px}#atlas-view>.intro h1{font-size:24px}#atlas-view>.intro .eyebrow{display:none}
+ .atlas-pane-tabs{margin-bottom:6px;padding:3px 0}.atlas-workspace>.specimen-stage{height:max(440px,calc(100svh - var(--nav-height,104px) - var(--atlas-tools-height,120px)));min-height:440px}
+ .specimen-stage .viewer-room-tools{right:8px;top:6px;gap:4px}.viewer-room-tools button{min-height:40px;font-size:11px;padding:6px 9px}
+ .specimen-stage .stage-header{top:18px;left:12px;right:205px}.specimen-stage .stage-header .tiny{display:none}
+ .specimen-stage .exploration-bar{top:52px;left:8px;right:8px}.specimen-stage #viewer,.specimen-stage[data-exploring=true] #viewer{top:104px;bottom:142px}.specimen-stage[data-exploring=false] #viewer{top:55px}
+ .specimen-stage .view-controls{bottom:60px;left:50%;transform:translateX(-50%)}.specimen-stage .view-controls button{min-width:39px;min-height:44px;padding:6px 9px}
+ .specimen-stage .viewer-actions{bottom:8px;left:0;right:0;justify-content:center;padding:0 4px;gap:3px}.specimen-stage .viewer-actions button{width:44px;min-width:0;min-height:44px;padding:4px}
+ .specimen-stage .viewer-actions button span{display:block;font-size:7px}.specimen-stage .viewer-hint{bottom:112px;font-size:11px;line-height:1.5}.specimen-stage .axis-marker{display:none}
+ #focus-trail .focus-intro{font-size:10px;line-height:1.5;white-space:normal}#focus-trail .focus-intro::before{display:none}.exploration-bar .focus-next{font-size:10px;min-height:44px;padding:5px 7px}
+ .viewer-control-guide{top:51px;right:8px;width:calc(100% - 16px);padding:16px;max-height:calc(100% - 60px)}.viewer-guide-heading{font-size:23px}.viewer-guide-heading button,#viewer-guide-done{min-height:44px}.viewer-guide-heading button{min-width:44px}
+ .viewer-room .viewer-actions button{width:44px;padding:4px}.viewer-room .viewer-actions button span{font-size:7px}.viewer-room .view-controls button{min-height:44px}
+}
+@media(max-width:999px) and (max-height:500px){
+ .viewer-room .stage-header,.viewer-room .viewer-hint{display:none}.viewer-room .exploration-bar{top:6px;right:320px}.viewer-room .specimen-stage #viewer{top:58px;bottom:56px}
+ .viewer-room .view-controls{left:8px;bottom:5px;transform:none}.viewer-room .viewer-actions{left:auto;right:8px;bottom:5px;width:auto}.viewer-room .viewer-actions button span{display:none}.viewer-room .viewer-actions button{width:35px;min-height:40px}.viewer-room .view-controls button{min-width:34px;min-height:40px;padding:5px}
+}
+@media(prefers-reduced-motion:reduce){#focus-trail .focus-intro::before{animation:none}}
+@container(max-width:680px){
+ .specimen-stage .stage-header{display:none}
+ .specimen-stage .exploration-bar{top:52px;right:8px}
+ .specimen-stage #viewer,.specimen-stage[data-exploring=true] #viewer,.atlas-workspace .specimen-stage[data-exploring=true] #viewer{top:104px}
+ #focus-trail .focus-intro{font-size:10px;white-space:normal;line-height:1.5}
+}
+#viewer-details,.viewer-details-close{display:none}
+@media(min-width:1000px) and (max-width:1599px){
+ .atlas-workspace{position:relative;grid-template-columns:215px minmax(0,1fr)}
+ .atlas-workspace>.specimen-stage{grid-column:2}
+ .atlas-workspace>.detail-sidebar{display:none}
+ .atlas-workspace #viewer-details{display:block}
+ #atlas-view[data-details-open=true] .atlas-workspace>.detail-sidebar{display:flex;position:absolute;z-index:8;top:0;right:0;bottom:0;width:min(330px,calc(100% - 20px));height:100%;background:#192a2ff5;box-shadow:-20px 0 50px #0006;border-left:1px solid #58716b}
+ .viewer-details-close{display:block;min-height:34px;align-self:flex-start;margin:0 0 12px;font-size:11px}
+ .course-layout .viewer-details-close{display:none}
+}
+.viewer-room #viewer-details,.viewer-room .viewer-details-close{display:none!important}
+@media(max-width:999px) and (max-height:500px){.viewer-room .specimen-stage[data-exploring=true] #viewer{top:58px}}

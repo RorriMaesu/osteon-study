@@ -53,6 +53,8 @@ The atlas combines two-stage double-click navigation, colors in focused regions,
 
 Read [the responsive workspace plan](RESPONSIVE-PLAN.md) for the desktop and mobile layout review. Desktop widths from 1000 pixels use a viewport-sized application with Previous / Next content pages, including the atlas lists, lessons, reading text and tutor history. Phones and narrower tablets use Specimen / Browse / Details atlas controls and natural vertical reading. Search, answer drafts and progress are preserved when the layout changes.
 
+Use **Expand viewer** on the model to fill the browser window on any screen. **Full screen** can also hide browser chrome when supported; **Exit expanded view** or Escape returns to the workspace. In practice, **Back to question** restores the existing question and typed draft. Laptop layouts give more height to the canvas and put selected-structure information behind **Details**; large desktops keep both side panels. **Controls** explains double-click/double-tap navigation, rotation, zoom and pan. Selecting a bone also offers an explicit **Zoom to region** action.
+
 This is a static GitHub Pages site. No server account is required. Study progress stays in the browser. The original course documents and personal file paths are not published.
 
 ## Development

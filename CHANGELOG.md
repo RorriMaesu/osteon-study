@@ -1,3 +1,11 @@
+# 2026-11-02 — A larger, more discoverable 3D viewer
+
+- Reclaim laptop canvas height and move selected-structure details behind an on-demand panel at 1000–1599 pixels. Keep both side panels on large desktops.
+- Add Expand viewer on every 3D stage, optional browser Full screen, clear exit controls, keyboard containment and return to the existing practice question/draft.
+- Add readable contextual gesture cues, explicit Zoom to region / View bone alone buttons, hover hints and a Controls guide. Respect reduced motion and keep navigation help separate from assessment answers.
+- Improve double-tap tolerance for component meshes of the same bone while rejecting neighboring bones and multitouch gestures; retain viewing direction when resizing.
+- Preserve anatomy, landmark references, source holds and model files.
+
 # 2026-10-30 — Optional local AI answer review
 
 - Add an opt-in Ollama reviewer to typed 3D practice, the required BI 231 test, concept practice and chapter/cumulative exams. Select an installed, verified local chat model through Models & connection.

@@ -8,6 +8,7 @@ import modelAssets from './model-assets.json' with {type:'json'};
 import {termForMesh,refinementForMesh,wholeStructureLabel} from './mesh-term.js';
 import {meshRegion,meshDivision,meshInRegion} from './anatomy.js';
 import {areas,areaForBone,areaLabel,inArea,boneFamily,boneId,boneSide,navigationAction} from './exploration.js';
+import {doubleTap} from './viewer-guidance.js';
 
 export class AnatomyViewer {
  constructor(el,onPick,onReady,onError){
@@ -24,7 +25,7 @@ export class AnatomyViewer {
   const ring=new THREE.Mesh(new THREE.RingGeometry(.22,.223,96),new THREE.MeshBasicMaterial({color:0x789d8c,transparent:true,opacity:.35,side:THREE.DoubleSide}));ring.rotation.x=-Math.PI/2;ring.position.y=.005;ring.userData.ground=true;this.scene.add(ring);
   this.ray=new THREE.Raycaster();this.pointer=new THREE.Vector2();this.down=null;
   this.activePointers=new Set();
-  el.addEventListener('pointerdown',e=>{this.activePointers.add(e.pointerId);if(this.activePointers.size>1){this.multiTouch=true;this.lastTap=null;}this.down=[e.clientX,e.clientY];this.tween=null;});
+  el.addEventListener('pointerdown',e=>{const touch=e.pointerType==='touch';if(this.touchInput!==touch){this.touchInput=touch;document.dispatchEvent(new Event('viewerinputchange'));}this.activePointers.add(e.pointerId);if(this.activePointers.size>1){this.multiTouch=true;this.lastTap=null;}this.down=[e.clientX,e.clientY];this.tween=null;});
   el.addEventListener('pointercancel',e=>{this.activePointers.delete(e.pointerId);this.down=null;this.lastTap=null;if(!this.activePointers.size)this.multiTouch=false;});
   el.addEventListener('pointerup',e=>{
    const tapped=this.down&&!this.multiTouch&&Math.hypot(e.clientX-this.down[0],e.clientY-this.down[1])<6;
@@ -32,16 +33,16 @@ export class AnatomyViewer {
    if(tapped&&e.button===0){const m=this.hit(e);if(m){if(this.peel||e.shiftKey){this.lastTap=null;this.hiddenMeshes.add(m);document.querySelector('#hover-label').hidden=true;this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}else{
     this.onPick(m);
     if(e.pointerType==='touch'){
-     const now=performance.now(),last=this.lastTap;
-     if(last&&last.mesh===m&&now-last.time<380&&Math.hypot(e.clientX-last.x,e.clientY-last.y)<20){this.lastTap=null;this.touchNavigationAt=now;this.navigateBone(m);e.preventDefault();}
-     else this.lastTap={mesh:m,time:now,x:e.clientX,y:e.clientY};
+     const now=performance.now(),next={bone:boneId(m.userData.zname),time:now,x:e.clientX,y:e.clientY};
+     if(doubleTap(this.lastTap,next)){this.lastTap=null;this.touchNavigationAt=now;this.navigateBone(m);e.preventDefault();}
+     else this.lastTap=next;
     }
    }}else this.lastTap=null;}else this.lastTap=null;
    this.down=null;
   });
   el.addEventListener('dblclick',e=>{e.preventDefault();if(performance.now()-(this.touchNavigationAt||-1000)<800||this.peel||e.shiftKey)return;const m=this.hit(e);if(m)this.navigateBone(m);});
   el.addEventListener('keydown',e=>{if(this.quiz||e.target!==el)return;if(e.key==='Enter'){e.preventDefault();if(this.selected[0])this.navigateBone(this.selected[0]);}else if(e.key==='Escape'){e.preventDefault();this.back();}});
-  el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.down){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.peel?'Hide this surface':this.displayName(m);const r=el.getBoundingClientRect();label.style.left=Math.min(e.clientX-r.left+14,r.width-185)+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+this.el.offsetTop+'px';}el.style.cursor=m?'pointer':'grab';});
+  el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.down||e.pointerType==='touch'){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.peel?'Hide this surface':this.displayName(m)+(boneFamily(m.userData.zname)?this.focus.level==='overview'?' · Double-click → region':this.focus.level==='region'?' · Double-click → one bone':'':'');const r=el.getBoundingClientRect();label.style.left=Math.max(4,Math.min(e.clientX-r.left+14,r.width-250))+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+this.el.offsetTop+'px';}el.style.cursor=m?'pointer':'grab';});
   el.addEventListener('pointerleave',()=>{document.querySelector('#hover-label').hidden=true;});
   this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(el);
   this.controls.addEventListener('start',()=>{this.tween=null;document.querySelectorAll('[data-camera]').forEach(b=>b.classList.remove('active'));});
@@ -93,7 +94,7 @@ export class AnatomyViewer {
  termFor(m){return termForMesh(m);}
  hit(e){if(!this.loaded)return null;const r=this.el.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);this.ray.setFromCamera(this.pointer,this.camera);return this.ray.intersectObjects(this.meshes.filter(m=>m.visible&&(!m.userData.detailGroup||this.peel||e.shiftKey)),false)[0]?.object||null;}
  snapshot(){return{focus:{...this.focus},region:this.region,selected:[...this.selected],selectedTerm:this.selectedTerm,activeDetail:this.activeDetail,cutaway:this.cutaway,isolated:this.isolated,ghost:this.ghost,pins:(this.pins||[]).map(p=>({term:p.term,point:[...p.point],label:p.label})),pinLabels:this.pinLabels,hiddenMeshes:new Set(this.hiddenMeshes),position:(this.tween?.to||this.camera.position).clone(),target:(this.tween?.targetTo||this.controls.target).clone()};}
- notifyFocus(){this.el.dataset.focus=this.focus.level;this.el.dataset.area=this.focus.areaId||'';document.dispatchEvent(new CustomEvent('atlasfocuschange'));}
+ notifyFocus(){this.el.dataset.focus=this.focus.level;this.el.dataset.area=this.focus.areaId||'';document.querySelector('#hover-label').hidden=true;document.dispatchEvent(new CustomEvent('atlasfocuschange'));}
  focusLabel(){return this.focus.areaId?areaLabel(this.focus.areaId,this.focus.side):this.region;}
  scopeContains(m){
   if(!this.focus.areaId||this.quiz)return meshInRegion(m.userData.zname,m.userData.region,this.region);
@@ -187,7 +188,7 @@ export class AnatomyViewer {
 
  isolate(){if(!this.selected.length)return false;this.isolated=!this.isolated;this.ghost=false;this.applyVisibility();if(this.isolated){if(pointKinds.includes(this.selectedTerm?.representation?.kind))this.focusFeature();else this.frame(this.selected);}return this.isolated;}
  xray(){if(!this.selected.length)return false;this.ghost=!this.ghost;this.isolated=false;this.applyVisibility();return this.ghost;}
- resize(){const w=this.el.clientWidth,h=this.el.clientHeight;if(!w||!h||!this.renderer)return;const previous=this.camera.aspect;this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);if(this.loaded&&Math.abs(Math.log(this.camera.aspect/previous))>.12){if(this.pins?.length){const center=new THREE.Vector3();this.pins.forEach(p=>center.add(p.position));this.focusFeature();}else this.frameScope();}}
+ resize(){const w=this.el.clientWidth,h=this.el.clientHeight;if(!w||!h||!this.renderer)return;const previous=this.camera.aspect,direction=(this.tween?.to||this.camera.position).clone().sub(this.tween?.targetTo||this.controls.target).normalize().toArray();this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);if(this.loaded&&Math.abs(Math.log(this.camera.aspect/previous))>.12){if(this.pins?.length)this.focusFeature();else this.frameScope(direction);}}
  frameScope(side='front'){
   if(this.activeDetail){this.frame(this.meshes.filter(m=>m.visible),side);return;}
   if(!this.quiz&&this.focus.areaId&&this.focus.level==='region'){
@@ -199,7 +200,7 @@ export class AnatomyViewer {
  frame(ms,side='front'){if(!ms.length)return;const box=new THREE.Box3();for(const m of ms)box.union(m.userData.bounds);this.frameBox(box,side);}
  frameBox(box,side='front'){
   const center=box.getCenter(new THREE.Vector3()),dirs={front:[0,.04,1],back:[0,.04,-1],left:[1,.04,0],right:[-1,.04,0],top:[0,1,.001],bottom:[0,-1,.001]};
-  const direction=new THREE.Vector3(...dirs[side]).normalize(),right=new THREE.Vector3(0,1,0).cross(direction).normalize(),up=direction.clone().cross(right),points=[];
+  const direction=new THREE.Vector3(...(Array.isArray(side)?side:dirs[side])).normalize(),right=new THREE.Vector3(0,1,0).cross(direction).normalize();if(right.lengthSq()<.001)right.set(1,0,0);const up=direction.clone().cross(right),points=[];
   for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z])points.push(new THREE.Vector3(x,y,z).sub(center));
   const span=axis=>Math.max(.002,Math.max(...points.map(p=>p.dot(axis)))-Math.min(...points.map(p=>p.dot(axis))));
   const distance=Math.max(span(up),span(right)/Math.max(this.camera.aspect,.4))*.5/Math.tan(THREE.MathUtils.degToRad(16))*1.18+span(direction)*.5+.002;
