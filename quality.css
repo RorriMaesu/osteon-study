@@ -32,3 +32,5 @@
 #atlas-joint-context{width:100%;min-height:40px;font-size:12px;margin-bottom:7px}#atlas-joint-context[hidden]{display:none}
 
 @media(min-width:1000px){.exam-question-content .exam-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.exam-question-content .exam-options label{min-height:50px;align-items:flex-start}.exam-question-content .exam-options input{margin-top:2px}.exam-question-content .exam-options span{font-size:13px;line-height:1.5}.exam-question-content .quiz-top .exam-confidence{font-size:11px;margin:0;gap:6px}.exam-question-content .quiz-top .exam-confidence select{min-height:30px;max-width:130px;font-size:11px;padding:5px 8px}.exam-question-content .quiz-top{justify-content:flex-start}.exam-question-content .quiz-top .pill{margin-right:auto}}
+
+@media(min-width:1000px){.daily-plan{margin-bottom:10px}.chapter-route-grid>button{padding:10px;gap:5px}}
