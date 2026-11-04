@@ -1,3 +1,4 @@
+import {newTutorSession,tutorSessionInstruction,completeTutorTurn} from './tutor-session.js';
 import { getLearningContext } from './learning-context.js';
 import { sanitizeConversation, citationParts, CHAT_LIMIT } from './tutor-state.js';
 import { checkTutorReply } from './tutor-checks.js';
@@ -11,6 +12,7 @@ function initTutor({escape:e,toast}) {
   const $=s=>document.querySelector(s);
   let client=localAI.client, connected=false, choice=localAI.state.model, models=[], tab='setup', busy=false, controller=null, job=null;
   let context=getLearningContext(), hardware={}, os=detectOS(), chat=[], draft='', lastFocus=null;
+  let guided=null;
   let setupPage='auto', sample='', returnToReview=false, assistantFinished=false, opening=false, pollTimer=null, pollRun=0;
   let benchmarkText='', generationText='', downloadState={model:downloadModels[0].name,text:'',progress:null};
   try {
@@ -163,8 +165,9 @@ function initTutor({escape:e,toast}) {
   }
   function renderChat() {
     const assessed = context.type === "assessment";
-    $("#tutor-body").innerHTML = `<div class="tutor-chat-controls">${modelSelector()}<div id="tutor-context" class="tutor-context"><span>LEARNING CONTEXT</span><strong>${e(context.label)}</strong></div><p id="tutor-assessment-note" class="tiny warning-text" ${assessed ? "" : "hidden"}>Using tutor help marks the current unanswered attempt as assisted before a reply is generated.</p></div><div id="tutor-messages" aria-live="off">${chat.length ? chat.map((m, i) => messageHTML(m, i)).join("") : '<div class="tutor-welcome"><span>\u2733</span><h3>A question.<br>A connection.<br>Your understanding.</h3><p>Choose a structure or lesson, then ask me to help you reason through it.</p></div>'}</div><div id="tutor-generation-status" class="tiny" role="status">${e(generationText)}</div><div class="tutor-quick"><button data-tutor-mode="socratic">Ask me about this</button><button data-tutor-mode="hint">Small hint</button><button data-tutor-mode="explain">Explain clearly</button></div><form id="tutor-form"><label for="tutor-input" class="sr-only">Your anatomy question or answer</label><textarea id="tutor-input" rows="2" maxlength="1500" placeholder="Your question, prediction or answer\u2026">${e(draft)}</textarea><p class="composer-help">Enter to send \xB7 Shift + Enter for a new line</p><div class="tutor-send-row"><button id="tutor-clear" type="button">Clear chat</button><button id="tutor-stop" type="button" ${busy ? "" : "hidden"}>Stop</button><button class="primary" id="tutor-send" ${!connected || !choice || busy ? "disabled" : ""}>Send \u2197</button></div></form>${!connected ? '<p class="tiny">Connect to your local Ollama to send a question. <button type="button" id="chat-connect">Open connection setup \u2197</button></p>' : ""}`;
+    $("#tutor-body").innerHTML = `<div class="tutor-chat-controls">${modelSelector()}<div id="tutor-context" class="tutor-context"><span>LEARNING CONTEXT</span><strong>${e(context.label)}</strong></div><p id="tutor-assessment-note" class="tiny warning-text" ${assessed ? "" : "hidden"}>Using tutor help marks the current unanswered attempt as assisted before a reply is generated.</p></div><div class="tutor-session"><button id="tutor-session-options" type="button">${guided?guided.completed>=guided.total?'Session complete · choose next topic':'Guided practice · '+guided.completed+'/'+guided.total+' replies':'Start a short guided practice'}</button>${guided?`<span class="tiny">${e(guided.topic)} · ${guided.completed>=guided.total?'Try the independent task before more hints.':'One question at a time; direct explanations remain available.'}</span>`:''}</div><div id="tutor-messages" aria-live="off">${chat.length ? chat.map((m, i) => messageHTML(m, i)).join("") : '<div class="tutor-welcome"><span>\u2733</span><h3>A question.<br>A connection.<br>Your understanding.</h3><p>Choose a structure or lesson, then ask me to help you reason through it.</p></div>'}</div><div id="tutor-generation-status" class="tiny" role="status">${e(generationText)}</div><div class="tutor-quick"><button data-tutor-mode="socratic">Ask me about this</button><button data-tutor-mode="hint">Small hint</button><button data-tutor-mode="explain">Explain clearly</button></div><form id="tutor-form"><label for="tutor-input" class="sr-only">Your anatomy question or answer</label><textarea id="tutor-input" rows="2" maxlength="1500" placeholder="Your question, prediction or answer\u2026">${e(draft)}</textarea><p class="composer-help">Enter to send \xB7 Shift + Enter for a new line</p><div class="tutor-send-row"><button id="tutor-clear" type="button">Clear chat</button><button id="tutor-stop" type="button" ${busy ? "" : "hidden"}>Stop</button><button class="primary" id="tutor-send" ${!connected || !choice || busy ? "disabled" : ""}>Send \u2197</button></div></form>${!connected ? '<p class="tiny">Connect to your local Ollama to send a question. <button type="button" id="chat-connect">Open connection setup \u2197</button></p>' : ""}`;
     bindModel();
+    $('#tutor-session-options').disabled=busy;$('#tutor-session-options').onclick=()=>{captureDraft();const row=document.createElement('div');row.className='tutor-session-form';row.innerHTML=`<label for="tutor-session-topic">Small topic to practice</label><input id="tutor-session-topic" maxlength="120" value="${e(guided?.topic||context.label)}"><label for="tutor-session-length">Session length</label><select id="tutor-session-length"><option value="3">3 AI replies · quick check</option><option value="5">5 AI replies · deeper practice</option></select><p class="tiny">The last reply requests a recap and an independent task. AI output still needs source checking. Only completed replies count.</p><button type="button" id="tutor-session-start" class="primary">Start guided session</button><button type="button" id="tutor-session-free">Use open chat</button>`;panel.querySelector('.tutor-session').replaceChildren(row);$('#tutor-session-start').onclick=()=>{guided=newTutorSession($('#tutor-session-topic').value,+$('#tutor-session-length').value);generationText='Guided practice ready. Ask about the topic or choose Ask me about this.';render();};$('#tutor-session-free').onclick=()=>{guided=null;render();};};
     $("#tutor-input").oninput = () => {
       draft = $("#tutor-input").value;
       saveDraft();
@@ -185,6 +188,7 @@ function initTutor({escape:e,toast}) {
     $("#tutor-clear").onclick = () => {
       if (busy) return;
       chat = [];
+      guided=null;
       generationText = "";
       save();
       render();
@@ -214,9 +218,10 @@ function initTutor({escape:e,toast}) {
     if (busy || !connected || !choice) return;
     captureDraft();
     if (!draft.trim() && !allowPrompt) return;
-    const query = draft.trim() || (mode === "explain" ? `Explain ${context.label} clearly.` : mode === "hint" ? `Give me a small hint about ${context.label}.` : `Ask me one question about ${context.label}.`), model = choice;
+    const query = draft.trim() || (guided&&guided.completed<guided.total?`Ask me one focused question about ${guided.topic}.`:mode === "explain" ? `Explain ${context.label} clearly.` : mode === "hint" ? `Give me a small hint about ${context.label}.` : `Ask me one question about ${context.label}.`), model = choice;
     document.dispatchEvent(new Event("studyassistance"));
-    const { sources, messages, retrievalTopic } = buildTutorMessages(query, chat, context, mode);
+    const { sources, messages, retrievalTopic } = buildTutorMessages(query, chat, guided&&guided.completed<guided.total?{...context,label:guided.topic}:context, mode);
+    const contract=tutorSessionInstruction(guided);if(contract)messages[0].content+="\n"+contract;
     chat.push({ role: "user", content: query });
     const reply = { role: "assistant", content: "", model, pending: true, sources: sources.map(({ id, pdf, title, text }) => ({ id, pdf, title, text })) };
     chat.push(reply);
@@ -231,7 +236,9 @@ function initTutor({escape:e,toast}) {
     $("#tutor-body").scrollTop = $("#tutor-body").scrollHeight;
     try {
       const info = await checkedModel(model);
+      const started=performance.now();let firstText=null;
       await client.chat(model, messages, (text) => {
+        if(firstText===null&&text.trim())firstText=(performance.now()-started)/1000;
         reply.content = text;
         if (tab === "chat" && $("#tutor-messages")) {
           const body = $("#tutor-body"), follow = body.scrollHeight - body.scrollTop - body.clientHeight < 160, el = $("#tutor-messages").lastElementChild?.querySelector(".tutor-message-text");
@@ -246,7 +253,8 @@ function initTutor({escape:e,toast}) {
         reply.reference = correction.reference;
       }
       localAI.markResponded(model);
-      generationText = "Reply ready \xB7 " + model + ". Check the source readings.";
+      if(contract)guided=completeTutorTurn(guided);
+      generationText = "Reply ready \xB7 " + model + ". Check the source readings."+(firstText>20?" First text took "+Math.round(firstText)+" seconds; a smaller installed model may feel quicker alongside the atlas.":"");
     } catch (err) {
       reply.error = true;
       reply.content += (reply.content ? "\n\n" : "") + (controller.signal.aborted ? "Stopped." : err.message?.includes("fetch") ? "Connection lost. Check Ollama and retry." : err.message || "No answer received.");

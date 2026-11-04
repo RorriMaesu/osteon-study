@@ -1,3 +1,5 @@
+import {EXPOSURE_KEY,validExposure} from './exam-exposure.js';
+import {LESSON_WORK_KEY,validLessonWork} from './lesson-flow.js';
 import {STORAGE_KEY,blankProgress,validProgress} from './storage.js';
 import {validSession} from './exam-core.js';
 import {questions} from './learning-data.js';
@@ -6,20 +8,20 @@ import {sanitizeConversation} from './tutor-state.js';
 
 const EXAMS='osteon-exams-v1';
 const CHAT='osteon-tutor-chat-v1';
-const preferences=['osteon-local-ai-v2','osteon-answer-review-v1','osteon-bone-colors','osteon-atlas-landmarks','osteon-study-plan-v1'];
+const preferences=['osteon-local-ai-v2','osteon-answer-review-v1','osteon-bone-colors','osteon-atlas-landmarks','osteon-study-plan-v1','osteon-practice-options-v1'];
 const read=(storage,key,fallback=null)=>{const raw=storage.getItem(key);if(raw===null)return fallback;try{return JSON.parse(raw);}catch{return raw;}};
 const safeTree=(value,depth=0)=>depth<35&&(value===null||typeof value==='boolean'||typeof value==='string'&&value.length<=100000||typeof value==='number'&&Number.isFinite(value)||Array.isArray(value)&&value.length<=50000&&value.every(v=>safeTree(v,depth+1))||typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).length<=50000&&Object.entries(value).every(([k,v])=>!['__proto__','constructor','prototype'].includes(k)&&safeTree(v,depth+1)));
 function validExams(x){return x===null||!!x&&Array.isArray(x.history)&&x.history.length<=20&&x.history.every(s=>validSession(s,questions)&&s.status==='submitted')&&(!x.active||validSession(x.active,questions)&&x.active.status==='active')&&(x.archives===undefined||Array.isArray(x.archives)&&x.archives.length<=20&&safeTree(x.archives));}
 function validLab(x){return x===null||!!x&&(!x.current||validLabRun(x.current))&&Array.isArray(x.history)&&x.history.length<=8&&x.history.every(validLabRun);}
 export function createStudyBackup(storage,{includeChat=false,includeSettings=false,now=Date.now()}={}){
- const backup={kind:'osteon-full-backup',schema:1,createdAt:now,progress:read(storage,STORAGE_KEY,blankProgress()),exams:read(storage,EXAMS),labTest:read(storage,LAB_TEST_KEY)};
+ const backup={kind:'osteon-full-backup',schema:1,createdAt:now,progress:read(storage,STORAGE_KEY,blankProgress()),exams:read(storage,EXAMS),labTest:read(storage,LAB_TEST_KEY),lessonWork:read(storage,LESSON_WORK_KEY),questionExposure:read(storage,EXPOSURE_KEY)};
  if(includeChat)backup.chat={messages:read(storage,CHAT,[]),draft:storage.getItem('osteon-tutor-draft-v1')||''};
  if(includeSettings)backup.settings=Object.fromEntries(preferences.filter(k=>storage.getItem(k)!==null).map(k=>[k,storage.getItem(k)]));
  validateStudyBackup(backup);return backup;
 }
 export function validateStudyBackup(x){
  if(validProgress(x))return {legacy:true,attempts:x.attempts.length,examReports:0,hasExamDraft:false,hasLabDraft:false,chat:false,settings:false};
- if(!x||x.kind!=='osteon-full-backup'||x.schema!==1||!Number.isFinite(x.createdAt)||!safeTree(x)||!validProgress(x.progress)||!validExams(x.exams)||!validLab(x.labTest))throw new Error('This is not a valid complete Osteon backup. Nothing was changed.');
+ if(!x||x.kind!=='osteon-full-backup'||x.schema!==1||!Number.isFinite(x.createdAt)||!safeTree(x)||!validProgress(x.progress)||!validExams(x.exams)||!validLab(x.labTest)||(x.lessonWork!==undefined&&!validLessonWork(x.lessonWork))||(x.questionExposure!==undefined&&!validExposure(x.questionExposure)))throw new Error('This is not a valid complete Osteon backup. Nothing was changed.');
  if(x.chat!==undefined&&(!x.chat||!Array.isArray(x.chat.messages)||x.chat.messages.length>30||x.chat.messages.some(m=>!m||typeof m.content!=='string'||!['user','assistant'].includes(m.role))||typeof x.chat.draft!=='string'||x.chat.draft.length>1500))throw new Error('The optional chat backup is invalid.');
  if(x.settings!==undefined&&(!x.settings||Array.isArray(x.settings)||Object.entries(x.settings).some(([k,v])=>!preferences.includes(k)||typeof v!=='string'||v.length>10000)))throw new Error('The optional settings backup is invalid.');
  // Local connection preferences must never import a remote or arbitrary endpoint.
@@ -30,6 +32,8 @@ export function restoreStudyBackup(storage,x){
  const preview=validateStudyBackup(x),writes=preview.legacy?[[STORAGE_KEY,JSON.stringify(x)]]:[[STORAGE_KEY,JSON.stringify(x.progress)],[EXAMS,x.exams===null?null:JSON.stringify(x.exams)],[LAB_TEST_KEY,x.labTest===null?null:JSON.stringify(x.labTest)]];
  if(x.chat)writes.push([CHAT,JSON.stringify(sanitizeConversation(x.chat.messages))],['osteon-tutor-draft-v1',x.chat.draft]);
  if(x.settings)for(const [key,value]of Object.entries(x.settings))writes.push([key,value]);
+ if(x.lessonWork!==undefined)writes.push([LESSON_WORK_KEY,x.lessonWork===null?null:JSON.stringify(x.lessonWork)]);
+ if(x.questionExposure!==undefined)writes.push([EXPOSURE_KEY,x.questionExposure===null?null:JSON.stringify(x.questionExposure)]);
  const before=writes.map(([k])=>[k,storage.getItem(k)]);
  try{for(const [k,v]of writes)v===null?storage.removeItem(k):storage.setItem(k,v);}
  catch(err){for(const [k,v]of before)try{v===null?storage.removeItem(k):storage.setItem(k,v);}catch{}throw new Error('The browser could not restore this backup. Keep this page open and free storage before retrying.');}

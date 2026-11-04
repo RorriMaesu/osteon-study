@@ -2,7 +2,10 @@
 export function initWorkspace() {
   const desktop=matchMedia('(min-width:1000px)'), records=new Map(),cache=new WeakMap();
   const main=document.querySelector('main');
-  let queued=false,working=false,pane='specimen';
+  let queued=false,working=false,pane='specimen',pointerFocus=false;
+  document.addEventListener('pointerdown',()=>{pointerFocus=true;},{capture:true});
+  document.addEventListener('pointerup',()=>{pointerFocus=false;},{capture:true});
+  document.addEventListener('pointercancel',()=>{pointerFocus=false;},{capture:true});
   const tabs=document.createElement('div');
   tabs.className='atlas-pane-tabs';tabs.setAttribute('aria-label','Atlas workspace');
   tabs.innerHTML=['specimen','browse','details'].map((id,i)=>`<button type="button" data-atlas-pane="${id}" aria-pressed="${i===0}" aria-controls="${id==='specimen'?'atlas-specimen':id==='browse'?'atlas-browser':'atlas-details'}">${id[0].toUpperCase()+id.slice(1)}</button>`).join('');
@@ -62,7 +65,10 @@ export function initWorkspace() {
       tools.querySelector('.page-prev').onclick=()=>go(record.index-1);
       tools.querySelector('.page-next').onclick=()=>go(record.index+1);
       tools.querySelector('select').onchange=ev=>go(+ev.target.value);
+      // Keyboard focus follows a page; pointer focus must not move its target
+      // between pointerdown and click (which would cancel the first activation).
       flow.addEventListener('focusin',ev=>{
+        if(pointerFocus)return;
         const rect=ev.target.getBoundingClientRect(),base=win.getBoundingClientRect();
         go(Math.floor((rect.left-base.left+win.scrollLeft+2)/(record.width+24)));
       });
@@ -82,7 +88,7 @@ export function initWorkspace() {
     const feedback=record.flow.querySelector('#concept-feedback:not(:empty),#course-feedback:not(:empty),#spatial-feedback:not(:empty),#exam-feedback:not(:empty),[data-result-focus],#relationship-feedback:not(:empty)');
     const signature=feedback?.textContent||'';
     if(signature&&signature!==record.feedback){const x=feedback.getBoundingClientRect().left-record.window.getBoundingClientRect().left+record.window.scrollLeft;record.index=Math.floor((x+2)/(record.width+24));}
-    record.feedback=signature;record.signature=record.flow.textContent;record.go(record.index);
+    record.tools.dataset.pageCount=String(record.count);record.feedback=signature;record.signature=record.flow.textContent;record.go(record.index);
   }
   function refresh(){
     if(working)return;working=true;observer.disconnect();
@@ -100,19 +106,19 @@ export function initWorkspace() {
         if(specialized){
           root.classList.add('workspace-special');
           if(specialized.classList.contains('exam-hub-layout')){}
-          else if(specialized.classList.contains('exam-layout'))mount(root.querySelector('.exam-question-content'),'Exam question');
+          else if(specialized.classList.contains('exam-layout')){const content=root.querySelector('.exam-question-content');mount(content,'Exam question',[...content.children].filter(n=>n.matches('.quiz-top,.exam-evidence-line,#exam-prompt')));}
           else if(specialized.classList.contains('landmark-bank-layout')||specialized.classList.contains('lab-list-layout')){}else if(specialized.classList.contains('reader-layout')){
             mount(root.querySelector('#reader-results'),'Reading results');
             if(root.querySelector('.reader-text'))mount(root.querySelector('.reader-paper'),'Textbook text');
           }else if(specialized.id==='study-body')mount(specialized,'Study content',[...specialized.children].filter(n=>n.classList.contains('control-row')));
-          else if(specialized.classList.contains('lesson-layout'))mount(root.querySelector('.lesson-content'),'Lesson');
+          else if(specialized.classList.contains('lesson-layout'))mount(root.querySelector('.lesson-content .flow-body')||root.querySelector('.lesson-content'),'Lesson step');
           else mount(root.querySelector('#course-prompt'),'Course question');
         }else{
           root.classList.remove('workspace-special');
           mount(root,id==='study-view'?'Study studio':id==='practice-view'?'Practice':'Progress',[...root.children].filter(n=>n.classList.contains('section-intro')));
         }
       }
-      if(document.querySelector('#info-dialog').open)mount(document.querySelector('#dialog-content'),'Reference');
+      if(document.querySelector('#info-dialog').open&&!document.querySelector('#dialog-content>.figure-zoom'))mount(document.querySelector('#dialog-content'),'Reference');
       if(document.querySelector('#tutor-panel').open){
         const body=document.querySelector('#tutor-body'),chat=!!body.querySelector('#tutor-form');
         body.classList.toggle('tutor-chat-layout',chat);

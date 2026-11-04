@@ -1,3 +1,23 @@
+# Current validation — learning quality implementation, 2026-11-04
+
+**145 automated checks pass.** Coverage remains 177 teacher entries / 182 dedicated questions, 310 textbook features, 24 sections, 74 source objectives, 400 chapter-bank items (100 per chapter), 104 supplementary items and 544 glossary definitions. All accuracy-held representations remain qualified and excluded from spatial scoring. No anatomy geometry or authored anchor coordinates changed.
+
+New checks cover 60 seeded retake pairs per chapter (at most four shared items for the tested forms), masked source-figure targets/local assets, saved legacy choice snapshots, exposure isolated from scoring, lesson draft backups, genuine zero-results searches, compound diagnostics, weighted custom practice/capacity/exposure, varied objective repair sets, final-week chapter mixing, bounded tutor contracts, authored distractor feedback, issue-draft privacy and imported timer/confidence validation. These are software/content invariants, not independent subject-expert review.
+
+Browser checks used a fresh local origin, preserving the user's public progress and the older local exam draft. At 1024 × 640, prompts, figures and inputs remain together; multiple-choice options use two columns, confidence stays in the question header, and essential actions remain visible. Initial testing exposed empty first content pages and pointer focus canceling the first activation of an off-page button; both were corrected. Enlarged source views retain the same target and masked names. The active-time goal can pass without locking/submitting answers. Custom 3-item chapter-9 practice retained its selected answer and confidence across save/reload.
+
+A visual-practice trial credited **vertebral foramenn** as spelling, kept the original text, and saved a spelling note. A different descriptive response stayed pending; results separated one correct, one pending and eighteen unanswered. Standard-wording rehearsal accepted **intercondylar fossa** without changing that original pending response or its score. The reader search **zygomatticc** showed an explicit empty state; Return to section 6.3 restored the Retrieve step and its exact written reasoning.
+
+The complete backup download included the isolated unfinished 3-item exam, one completed report and the 6.3 lesson draft. Chat/preferences were excluded by default. The import preview accurately listed its contents. Restoring/reloading retained the chosen answer, confidence, time and saved report. Automated tests separately cover simultaneous lab/exam drafts, invalid imports and failed-write rollback.
+
+The final atlas journey exposed a camera fault when the model loaded in a hidden zero-size workspace. Framing now defers until layout is available and rejects nonfinite camera destinations. Browser evidence observed `waiting-for-layout` with a loaded model at 0 × 0, then `ready` and a visible skeleton at 783 × 370 after returning to the atlas. The joint-context chooser, selected fossa card, landmark toggle and model rendering were sampled. No console errors/warnings occurred in the sampled final atlas view. Rendering/occlusion is throttled; no battery or frame-rate improvement is claimed without profiling.
+
+Phone-width 390 × 844 previews show named lesson steps, a saved reasoning field and natural vertical flow. This does not test a real mobile software keyboard, hardware gestures, NVDA, 200–400% zoom, every color/contrast state, WebGL context restoration or interrupted downloads. New tutor contract code is covered by bounded-turn tests; real-model adherence, broad factual accuracy and cross-model grading repeatability remain open. Source permission/provenance, classmate pilot and independent anatomical/item review remain open. See QUALITY-IMPLEMENTATION.md for all 70 review items and explicit partial/external statuses.
+
+Earlier validation records below describe their respective releases.
+
+---
+
 # 2026-11-03 — Clear landmark presentation and reliable study records
 
 132 automated checks pass. New regressions cover distant support-tissue regions, attachment-feature categories, shared anatomical typo grading with explicit side policies, complete exam/lab backup round trips, invalid/remote setting rejection, failed-write rollback and bounded annotation drawing space. Browser preview confirmed olecranon-fossa selection survives bone isolation and comparison remains explicit. Phone-width preview uses an outside focus card and small markers. Further whole-course and device validation is tracked with the broader quality work. Model geometry and authored coordinates are unchanged.

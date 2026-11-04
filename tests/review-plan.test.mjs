@@ -42,7 +42,7 @@ test('repeated immediate answers do not count as a retrieval at least 24 hours l
 
 test('lab and chapter plans contain every intended target once and prioritize unresolved evidence',()=>{
   assert.equal(retrievalPlan(terms,[]).unpracticed.length,177);
-  assert.equal(retrievalPlan(questions,[]).unpracticed.length,360);
+  assert.equal(retrievalPlan(questions,[]).unpracticed.length,504);
   const plan=retrievalPlan(terms,[attempt(terms[1].id,5,{correct:false}),attempt(terms[0].id,10,{assisted:true})]);
   assert.deepEqual(plan.next.slice(0,2).map(t=>t.id),[terms[1].id,terms[0].id]);
   assert.equal(new Set(plan.next.map(t=>t.id)).size,177);

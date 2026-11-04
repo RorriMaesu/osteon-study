@@ -8,7 +8,7 @@ export function attachSpecimenAnnotations({viewer,escape:e,onBestView}){
  const names=document.createElement('div');names.className='annotation-names';card.append(names);
  const actions=document.createElement('div');actions.className='annotation-actions';actions.innerHTML='<button type="button" data-annotation-best>Show best view</button><button type="button" data-annotation-compare aria-pressed="false">Compare: Off</button>';card.append(actions);
  const note=document.createElement('p');note.className='annotation-note';card.append(note);viewer.el.append(card);
- let active=null,comparisons=[],neighbors=[],enabled=false,comparing=false,signature='',lastMotion=0,lastOcclusion=0,cameraKey='',currentContext='',rendered='';
+ let active=null,comparisons=[],neighbors=[],enabled=false,comparing=false,signature='',lastMotion=0,lastOcclusion=0,lastOcclusionKey='',lastScene=-1,cameraKey='',currentContext='',rendered='';
  const all=()=>[...(viewer.pinLabels?viewer.pins||[]:[]),...neighbors];
  function item(p){return {...p,name:annotationName(p.term,p.label),key:pointKey(p),point:p.point||p.anchor?.point,side:p.anchor?.parent?.endsWith('.r')?'Right':p.anchor?.parent?.endsWith('.l')?'Left':null};}
  function choose(p,{focus=false}={}){
@@ -49,7 +49,7 @@ export function attachSpecimenAnnotations({viewer,escape:e,onBestView}){
   card.hidden=!active;if(active)paint();comparisons=comparisons.slice(-comparisonLimit(w,h));
   const base=viewer.el.getBoundingClientRect(),dock=viewer.el.querySelector('.atlas-landmark-dock'),tools=viewer.detailTools,top=Math.max(10,dock&&!dock.hidden?dock.getBoundingClientRect().bottom-base.top+8:0,tools&&!tools.hidden?tools.getBoundingClientRect().bottom-base.top+8:0);
   viewer.el.style.setProperty('--annotation-top',top+'px');
-  const check=force||now-lastOcclusion>250,solids=check?viewer.meshes.filter(m=>m.visible&&m.material.opacity>.45):[];if(check)lastOcclusion=now;
+  const check=force||now-lastOcclusion>200&&(lastOcclusionKey!==cameraKey||lastScene!==viewer.sceneRevision),solids=check?viewer.meshes.filter(m=>m.visible&&m.material.opacity>.45):[];if(check){lastOcclusion=now;lastOcclusionKey=cameraKey;lastScene=viewer.sceneRevision;}
   const placed=[];
   for(const p of all().slice().sort((a,b)=>Number(pointKey(b)===active?.key)-Number(pointKey(a)===active?.key))){
    adopt(p);const position=p.position||new THREE.Vector3(...p.point),q=position.clone().project(viewer.camera);if(check)p.covered=isCovered(p,solids);

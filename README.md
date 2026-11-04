@@ -37,7 +37,7 @@ Fontanelles open a **locally bundled, rotatable UCSF fetal-skull scan**, with su
 
 [Open the exam center ↗](https://rorrimaesu.github.io/osteon-study/?exam=1#practice) · [Teaching plan](CHAPTERS-6-9-PLAN.md) · [Objective coverage](CURRICULUM-COVERAGE.csv)
 
-Study all **24 sections** with complete source readings and figures, guided notes, comparisons, closed-book retrieval and application. All 99 source figures have direct lesson links. New relationship labs and a movement explorer connect the chapter 8/9 notes with practice. The four **50-question chapter exams** cover every section in their chapter. The **100-question cumulative exam** includes 25 questions per chapter and samples all **74 source objectives**. Short 20-question practice is explicitly a sample; full-bank review contains every one of the 256 new exam questions.
+Study all **24 sections** with complete source readings and figures, guided notes, comparisons, closed-book retrieval and application. All 99 source figures have direct lesson links. New relationship labs and a movement explorer connect the chapter 8/9 notes with practice. The four **50-question chapter exams** cover every section in their chapter. The **100-question cumulative exam** includes 25 questions per chapter and samples all **74 source objectives**. Short 20-question practice is explicitly a sample; full-bank review contains all 400 exam-bank questions (100 per chapter).
 
 Multiple choice, typed recall, anatomical schematic identification, matching and ordering use explicit answer keys and source-linked explanations. Full exams delay feedback until submission. Save a draft, flag questions, edit answers and review section/objective results. Source or tutor assistance stays attached after reload and is separated from independently correct answers. One point per question; all matching/ordering parts must be correct. Export completed reports; up to 20 sessions remain in this browser. Earlier question versions are retained for export rather than silently regraded. These are original study questions, not the instructor’s exam.
 
@@ -78,7 +78,7 @@ Model and content credits are maintained in CREDITS.md. See PLAN.md for the educ
 - All 177 BI 231 lab IDs are preserved. Supported targets have locating/identification exercises; unresolved anatomy uses source study and recall while spatial grading is withheld. See the [current accuracy review](accuracy.html).
 - Adult skeleton, 81 course tissue objects, additional anatomical detail, and labeled teaching reconstructions. Scene objects include bones, cartilage, teeth, ligaments, discs, sinus volumes, and vertebral arteries; mesh counts are not a biological bone count.
 - Full source reader: all 172 pages of chapters 6–9, plus eight supplemental reference pages; 180 page images with searchable extracted text. Source pages load on demand.
-- 24 teaching sections, all 74 source learning objectives, 360 authored questions (256 new mixed-format exam items plus 104 supplementary questions), 544 textbook glossary definitions and 19 guided activities.
+- 24 teaching sections, all 74 source learning objectives, 504 authored questions (400 mixed-format exam items plus 104 supplementary questions), 544 textbook glossary definitions and 19 guided activities.
 - Locate and name practice, a systematic unpracticed-first course pass, region/session controls, missed-item retries, local review scheduling, score separation and progress backup/restore.
 
 **My progress** now maps all 177 lab targets by their latest scored attempt and starts a focused ten-target identification session or ten-question chapter session. Missed or assisted items come first, followed by untried items. Full-course identification clears atlas filters. Lesson cards show their question evidence separately from reading status. Self-rated recall updates card scheduling but does not clear a scored retrieval gap; neither a correct latest answer nor a repeated answer after 24 hours is a guarantee of mastery.
@@ -112,3 +112,10 @@ Three missing openings now use direct Blender bone edits: the supraorbital foram
 
 
 Complete study backups in My progress now include exam drafts and reports, the required bone-list test, review cards and spelling notes. Tutor chat and AI preferences are optional. Restore previews the contents and preserves earlier progress-only backup compatibility.
+
+
+## Learning and exam update — November 4
+
+Lessons now use **Orient, Understand, Explore, Retrieve and Apply**, with saved personal reasoning and a direct source-return path. A daily route combines due review, a weak section and varied retrieval. Exams offer visual/3D practicals, custom chapter or section weights, optional active-time goals and sparse confidence checks. Clear typos retain credit; uncertain wording stays pending and has a separate non-AI rehearsal. Detailed exam figures can be enlarged without revealing their masked names.
+
+[Implementation tracker for the 70-point review](QUALITY-IMPLEMENTATION.md) records delivered features and outstanding expert, device and permission validation. Full backups now also include lesson drafts and question exposure. Automated coverage is not an independent anatomical or item-quality certification.

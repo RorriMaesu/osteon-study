@@ -51,11 +51,11 @@ The machine-readable syllabus in `src/curriculum-syllabus.json` preserves all **
 
 - Four chapter exams: **50 questions each**, with the section allocations above.
 - Cumulative exam: **100 questions**, **25 from each chapter**, with every section and objective represented.
-- Full-bank review: every audited new exam-bank item, with save/resume. Short practice is explicitly a sample.
-- Formats: multiple choice, controlled typed recall, anatomical schematic identification, matching and sequence ordering. Application reasoning is assessed through explicit problems and explanations. Free explanations in lessons remain self-checks.
+- Full-bank review: all 400 authored exam-bank items (100 per chapter), with save/resume. Short practice is explicitly a sample.
+- Formats: multiple choice, controlled typed recall, anatomical source-figure and schematic identification, matching and sequence ordering. Application reasoning is assessed through explicit problems and explanations. Free explanations in lessons remain self-checks.
 - Each question cites a textbook section and names the learning objective it actually tests. A coverage check rejects missing objectives or an impossible blueprint rather than silently shortening the exam.
 - Questions and choices are shuffled once per saved session. Exam answers are editable and flaggable until submission. Feedback is delayed until submission; practice gives immediate feedback.
-- All-or-nothing marking gives one point per question, including matching and ordering. Exact accepted synonyms are disclosed after submission. No fuzzy or LLM grading.
+- All-or-nothing marking gives one point per question, including matching and ordering. Exact accepted synonyms are disclosed after submission. Built-in, question-specific spelling and equivalent-wording support preserves clear intended answers. Optional local AI may review uncertain wording; uncertainty remains pending. Original answers, grading versions and AI evidence are preserved.
 - Hints, source reading and tutor use mark an affected response as assisted. Results distinguish content accuracy from independent correctness. A guessed or recalled answer does not establish clinical competence.
 - Reports show chapter, section and objective coverage; missed/assisted retries have their own denominators. Attempt records preserve existing study history.
 
@@ -83,3 +83,8 @@ The final study pass adds 99 direct figure links, 12 new guided activities (19 t
 Validation checks all 74 objective mappings, all 172 chapter source pages, accepted/rejected response formats, corrupted or outdated drafts, assistance persistence, and legacy study identifiers. Randomized exam forms are checked for section quotas and objective coverage. Browser review includes desktop and phone layouts, source reading, matching, delayed feedback and interrupted-session recovery. The published curriculum coverage file makes the finite bank reviewable.
 
 The final browser pass also moved practice Check/Reveal controls outside the content pager and automatically brings generated feedback into view. This keeps feedback accessible when a figure or explanation needs a second content page. Older exam-key versions remain exportable; they are not silently scored using changed keys.
+
+
+### November 4 implementation
+
+The five-step lesson route, daily repair route, 144 parallel exam items, unseen-first selection, 20-item visual practical and 10-target 3D route are implemented. Custom practice can use chapter/section weights and 1–100 items; these smaller custom sets do not promise complete objective coverage. Timing is an optional active-time goal, never an automatic lock or submission. Confidence is optional every fifth question. Compound diagnostics retain the all-parts/one-point rule. See QUALITY-IMPLEMENTATION.md for independent review still required.

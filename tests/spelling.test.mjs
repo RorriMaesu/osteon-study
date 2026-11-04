@@ -9,8 +9,8 @@ import {resultExport} from '../src/exam-report.js';
 import {spellingDiff,validSpellingState,spellingId} from '../src/spelling-data.js';
 import {addSpellingNote,practiceSpelling,getProgress,resetProgress,recordAttempt,validProgress} from '../src/storage.js';
 const byId=id=>examBank.find(q=>q.id==='ex-'+id),typed=examBank.filter(q=>['text','identify'].includes(q.type));
-test('all 63 typed questions have explicit policies, accept their source forms, and reject the nearest different exam key',()=>{
- assert.equal(typed.length,63);assert.deepEqual(new Set(Object.keys(answerPolicies)),new Set(typed.map(q=>q.id)));
+test('all 120 typed questions have explicit policies, accept their source forms, and reject the nearest different exam key',()=>{
+ assert.equal(typed.length,120);assert.deepEqual(new Set(Object.keys(answerPolicies)),new Set(typed.filter(q=>!q.answerPolicy).map(q=>q.id)));
  for(const q of typed){for(const a of [q.answer,...(q.aliases||[])])assert.ok(outcomeCorrect(assessTyped(q,a)),q.id+': '+a);const allowed=acceptedForms(q).map(fold),rival=typed.filter(x=>!allowed.includes(fold(x.answer))).sort((a,b)=>editDistance(fold(q.answer),fold(a.answer))-editDistance(fold(q.answer),fold(b.answer)))[0];assert.ok(!outcomeCorrect(assessTyped(q,rival.answer)),q.id+': '+rival.answer);}
 });
 test('clear omissions, extra letters and transpositions receive credit without a local model',()=>{

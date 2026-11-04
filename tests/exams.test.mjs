@@ -14,7 +14,7 @@ test('every source objective has multiple explicit questions, with complete modu
  for(const s of syllabus.sections){assert.ok(lessons.find(l=>l.id===s.id)?.syllabus);for(const o of s.objectives)assert.ok(examBank.filter(q=>q.objectives.includes(o.id)).length>=2,o.id);}
  const objectives=new Set(syllabus.sections.flatMap(s=>s.objectives.map(o=>o.id)));
  for(const q of examBank){assert.ok(q.objectives.every(id=>objectives.has(id)&&id.startsWith(q.lesson+'.')),q.id);assert.ok(q.source.includes(q.lesson));assert.ok(q.explanation.length>25);assert.ok(gradeQuestion(q,key(q)),q.id);assert.ok(validSession(createSession([q])),q.id);if(q.type==='match')assert.equal(new Set(q.pairs.map(p=>p.right)).size,q.pairs.length);}
- assert.equal(examBank.length,256);assert.equal(new Set(examBank.map(q=>q.id)).size,256);
+ assert.equal(examBank.length,400);assert.equal(new Set(examBank.map(q=>q.id)).size,400);
  assert.deepEqual(new Set(examBank.map(q=>q.type)),new Set(['choice','text','identify','match','order']));
 });
 function key(q){return q.type==='match'?Object.fromEntries(q.pairs.map(p=>[p.left,p.right])):q.type==='order'?[...q.steps]:q.answer;}

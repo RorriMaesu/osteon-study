@@ -1,9 +1,11 @@
-import {reviewHTML} from './answer-review-ui.js';
+import {openWordingPractice} from './wording-practice.js';
+import {anatomyQuestion} from './anatomy-answer.js';
+import {reviewHTML,builtinReviewHTML} from './answer-review-ui.js';
 import {labListSource,labScopes,listEntries,listQuestions,listStats,listQuestionById,entryStatus,LAB_TEST_KEY,validLabRun,makeLabRun,labRunSummary} from './lab-list.js';
 import {shuffle} from './storage.js';
 import {setLearningContext} from './learning-context.js';
 
-export function initLabList({viewer,setView,selectTerm,precision,toast,escape:e}){
+export function initLabList({viewer,setView,selectTerm,precision,toast,dialog,escape:e}){
  const $=s=>document.querySelector(s);
  let scope='all',length='all',order='source',query='',page=0,screen=null,onlyMissed=false,current=null,history=[],persistent=true;
  try{const saved=JSON.parse(localStorage.getItem(LAB_TEST_KEY)||'null');if(validLabRun(saved?.current))current=saved.current;history=(Array.isArray(saved?.history)?saved.history:[]).filter(validLabRun).slice(-8);}catch{}
@@ -40,6 +42,7 @@ export function initLabList({viewer,setView,selectTerm,precision,toast,escape:e}
   $('#lab-list-pages').innerHTML=`<button id="lab-list-prev" ${page?'':'disabled'} aria-label="Previous checklist page">←</button><label for="lab-list-page" class="sr-only">Checklist page</label><select id="lab-list-page">${Array.from({length:pages},(_,i)=>`<option value="${i}" ${i===page?'selected':''}>${i+1} / ${pages}</option>`).join('')}</select><span>${rows.length} ${screen==='results'?(rows.length===1?'result':'results'):(rows.length===1?'entry':'entries')}</span><button id="lab-list-next" ${page<pages-1?'':'disabled'} aria-label="Next checklist page">→</button>`;
   const refresh=()=>screen==='results'?renderResults():renderChecklist();
   $('#lab-list-prev').onclick=()=>{page--;refresh();};$('#lab-list-next').onclick=()=>{page++;refresh();};$('#lab-list-page').onchange=ev=>{page=+ev.target.value;refresh();};
+  document.querySelectorAll('[data-lab-wording]').forEach(b=>b.onclick=()=>openWordingPractice({...anatomyQuestion(listQuestionById.get(b.dataset.labWording)),prompt:'Recall the required anatomical term or count.'},{dialog,escape:e}));
   document.querySelectorAll('[data-lab-study]').forEach(b=>b.onclick=()=>study(b.dataset.labStudy));
  }
  function renderChecklist(){
@@ -65,8 +68,8 @@ export function initLabList({viewer,setView,selectTerm,precision,toast,escape:e}
   $('#lab-list-retry').onclick=()=>begin(current.scope,s.review);$('#lab-list-home').onclick=()=>{page=0;home();};$('#lab-list-export').onclick=()=>download(JSON.stringify({source:labListSource.source,current,history},null,2),'osteon-bone-list-results.json','application/json');$('#lab-list-missed').onchange=ev=>{onlyMissed=ev.target.checked;page=0;renderResults();};renderResults();
  }
  function renderResults(){
-  const rows=current.results.filter(r=>!onlyMissed||!r.correct||r.assisted);
-  paginate(rows,r=>{const t=listQuestionById.get(r.id);return `<article class="lab-list-row"><div><strong>${e(t.testLabel||t.name)}</strong><small>${e(t.region)}</small></div><div><span>${e(r.response)}</span><small>${e(t.listRecall?.kind||entryStatus(t))}</small>${reviewHTML(r.review)}</div><span class="lab-list-status ${!r.correct||r.assisted?'hold':''}">${r.assisted?'Assisted':r.correct?'Correct':'Review again'}</span><button data-lab-study="${r.id}" ${viewer.loaded?'':'disabled'}>Study ↗</button></article>`;});
+  const rows=current.results.filter(r=>!onlyMissed||!r.pending&&(!r.correct||r.assisted));
+  paginate(rows,r=>{const t=listQuestionById.get(r.id);return `<article class="lab-list-row"><div><strong>${e(t.testLabel||t.name)}</strong><small>${e(t.region)}</small></div><div><span>${e(r.response)}</span><small>${e(t.listRecall?.kind||entryStatus(t))}</small>${builtinReviewHTML(r.outcome)}${reviewHTML(r.review,{pending:r.pending})}${r.pending?`<button data-lab-wording="${r.id}">Practice wording without AI</button>`:''}</div><span class="lab-list-status ${!r.correct||r.assisted?'hold':''}">${r.pending?'Meaning pending':r.assisted?'Assisted':r.correct?'Correct':'Review again'}</span><button data-lab-study="${r.id}" ${viewer.loaded?'':'disabled'}>Study ↗</button></article>`;});
  }
  function download(text,name,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  document.addEventListener('lablist',()=>{page=0;home();});

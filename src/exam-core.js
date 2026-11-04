@@ -1,3 +1,4 @@
+import {exposureCount} from './exam-exposure.js';
 import syllabus from './curriculum-syllabus.json' with {type:'json'};
 import {examBank,EXAM_VERSION,LEGACY_EXAM_VERSION} from './exam-bank.js';
 import {validAnswerReview,reviewedCorrect,reviewMatches} from './answer-review-data.js';
@@ -27,22 +28,26 @@ export function gradeWithReview(q,response,review,options){return assessQuestion
 export function sessionOutcome(s,q){return assessQuestion(q,s.responses[q.id],s.aiReviews?.[q.id],{legacy:s.gradingVersion!==GRADING_VERSION});}
 export function answeredCount(s,bank=examBank){const byId=new Map(bank.map(q=>[q.id,q]));return s.ids.filter(id=>byId.has(id)&&answered(byId.get(id),s.responses[id])).length;}
 const cumulative={6:[2,2,7,5,2,4,3],7:[4,9,6,3,3],8:[3,7,5,7,3],9:[3,3,3,5,3,6,2]};
-export function selectExam(scope,bank=examBank,rng=Math.random){
- if(scope==='bank')return shuffled(bank,rng);
+export function selectExam(scope,bank=examBank,rng=Math.random,{seen={}}={}){
+ if(scope==='bank')return shuffled(bank,rng).sort((a,b)=>exposureCount(seen,a.id)-exposureCount(seen,b.id));
  const sections=syllabus.sections.filter(s=>scope==='all'||String(s.chapter)===String(scope)),selected=[];
  if(!sections.length)throw new Error('Choose a chapter or cumulative exam.');
  for(const section of sections){
   const quota=scope==='all'?cumulative[section.chapter][+section.id.split('.')[1]-1]:section.examWeight;
-  const pool=shuffled(bank.filter(q=>q.lesson===section.id),rng),uncovered=new Set(section.objectives.map(o=>o.id)),chosen=[];
+  const pool=shuffled(bank.filter(q=>q.lesson===section.id),rng).sort((a,b)=>exposureCount(seen,a.id)-exposureCount(seen,b.id));
   if(pool.length<quota)throw new Error(`Section ${section.id} has too few questions for its blueprint.`);
-  while(uncovered.size){
-   const candidates=pool.filter(q=>!chosen.includes(q)).map(q=>({q,score:q.objectives.filter(id=>uncovered.has(id)).length})).sort((a,b)=>b.score-a.score);
-   if(!candidates[0]?.score||chosen.length>=quota)throw new Error(`Section ${section.id} cannot cover its learning objectives.`);
-   const q=candidates[0].q;chosen.push(q);q.objectives.forEach(id=>uncovered.delete(id));
-  }
-  // Prefer missing response formats when filling a section's remaining slots.
-  while(chosen.length<quota){const used=new Set(chosen.map(q=>q.type)),remaining=pool.filter(q=>!chosen.includes(q));chosen.push(remaining.find(q=>!used.has(q.type))||remaining[0]);}
-  selected.push(...chosen);
+  const choose=source=>{
+   const uncovered=new Set(section.objectives.map(o=>o.id)),chosen=[];
+   while(uncovered.size){
+    const candidates=source.filter(q=>!chosen.includes(q)).map(q=>({q,score:q.objectives.filter(id=>uncovered.has(id)).length})).sort((a,b)=>b.score-a.score||exposureCount(seen,a.q.id)-exposureCount(seen,b.q.id));
+    if(!candidates[0]?.score||chosen.length>=quota)return null;
+    const q=candidates[0].q;chosen.push(q);q.objectives.forEach(id=>uncovered.delete(id));
+   }
+   while(chosen.length<quota){const used=new Set(chosen.map(q=>q.type)),remaining=source.filter(q=>!chosen.includes(q));if(!remaining.length)return null;const lowest=exposureCount(seen,remaining[0].id),freshest=remaining.filter(q=>exposureCount(seen,q.id)===lowest);chosen.push(freshest.find(q=>!used.has(q.type))||freshest[0]);}
+   return chosen;
+  };
+  const fresh=pool.filter(q=>!exposureCount(seen,q.id)),chosen=(fresh.length>=quota?choose(fresh):null)||choose(pool);
+  if(!chosen)throw new Error(`Section ${section.id} cannot cover its learning objectives.`);selected.push(...chosen);
  }
  return shuffled(selected,rng);
 }
@@ -51,13 +56,17 @@ export function createSession(items,{scope='custom',mode='exam',rng=Math.random,
 }
 export function validSession(s,bank=examBank){
  if(!s||![EXAM_VERSION,LEGACY_EXAM_VERSION].includes(s.version)||(s.version===EXAM_VERSION&&s.gradingVersion!==GRADING_VERSION)||(s.version===LEGACY_EXAM_VERSION&&s.gradingVersion!==undefined)||!['active','submitted'].includes(s.status)||!['practice','exam'].includes(s.mode)||typeof s.id!=='string'||s.id.length>100||typeof s.scope!=='string'||(s.status==='submitted'&&!Number.isFinite(s.submitted))||!Array.isArray(s.ids)||!s.ids.length||s.ids.length>1000||new Set(s.ids).size!==s.ids.length||!Number.isFinite(s.started)||!Number.isInteger(s.index)||s.index<0||s.index>=s.ids.length)return false;
+ for(const key of ['presented','exposure','confidence'])if(s[key]!==undefined&&(!s[key]||Array.isArray(s[key])||Object.entries(s[key]).some(([id,v])=>!s.ids.includes(id)||(key==='confidence'?!['unsure','fairly sure','confident'].includes(v):!Number.isFinite(v)||v<0))))return false;
+ if(s.elapsedMs!==undefined&&(!Number.isFinite(s.elapsedMs)||s.elapsedMs<0))return false;
+ if(s.timeGoalMinutes!==undefined&&(!Number.isFinite(s.timeGoalMinutes)||s.timeGoalMinutes<0||s.timeGoalMinutes>240))return false;
+ if(s.confidenceEnabled!==undefined&&typeof s.confidenceEnabled!=='boolean')return false;
  const byId=new Map(bank.map(q=>[q.id,q]));
  for(const key of ['options','responses','assisted','flags','checked'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
  if(s.aiReviews!==undefined&&(!s.aiReviews||typeof s.aiReviews!=='object'||Array.isArray(s.aiReviews)||Object.entries(s.aiReviews).some(([id,r])=>!s.ids.includes(id)||!validAnswerReview(r)||r.target!==id||r.answer!==byId.get(id)?.answer||(['text','identify'].includes(byId.get(id)?.type)&&r.response!==s.responses[id]))))return false;
  if(s.reviewHistory!==undefined&&(!Array.isArray(s.reviewHistory)||s.reviewHistory.length>1000||s.reviewHistory.some(r=>!s.ids.includes(r?.target)||!validAnswerReview(r)||r.answer!==byId.get(r.target)?.answer||r.response!==s.responses[r.target])))return false;
  if(s.initialOutcomes!==undefined&&(!s.initialOutcomes||typeof s.initialOutcomes!=='object'||Array.isArray(s.initialOutcomes)||Object.entries(s.initialOutcomes).some(([id,o])=>!s.ids.includes(id)||!o||!['correct','spelling','equivalent','pending','incorrect','unanswered'].includes(o.status)||typeof o.correct!=='boolean'||typeof o.strictCorrect!=='boolean'||typeof o.reason!=='string'||o.reason.length>2000)))return false;
- for(const id of s.ids){const q=byId.get(id);if(!q)return false;const expected=q.type==='match'?q.pairs.map(p=>p.right):q.type==='order'?q.steps:q.type==='choice'||!q.type?[q.answer,...q.distractors]:[],actual=s.options[id];if(!Array.isArray(actual)||actual.length!==expected.length||new Set(actual).size!==expected.length||!expected.every(v=>actual.includes(v)))return false;
-  const r=s.responses[id];if(r!==undefined){if(q.type==='match'){if(!r||typeof r!=='object'||Array.isArray(r)||Object.entries(r).some(([a,b])=>!q.pairs.some(p=>p.left===a)||!expected.includes(b)))return false;}else if(q.type==='order'){if(!Array.isArray(r)||r.length!==expected.length||new Set(r).size!==expected.length||!expected.every(v=>r.includes(v)))return false;}else if(typeof r!=='string'||r.length>2000||(q.type==='choice'&&!expected.includes(r)))return false;}
+ for(const id of s.ids){const q=byId.get(id);if(!q)return false;const expected=q.type==='match'?q.pairs.map(p=>p.right):q.type==='order'?q.steps:q.type==='choice'||!q.type?[q.answer,...q.distractors]:[],actual=s.options[id];const allowedOptions=q.type==='choice'&&q.legacyDistractors?[...expected,...q.legacyDistractors]:expected;if(!Array.isArray(actual)||actual.length!==expected.length||new Set(actual).size!==expected.length||(q.type==='choice'&&q.legacyDistractors?(!actual.includes(q.answer)||!actual.every(v=>allowedOptions.includes(v))):!expected.every(v=>actual.includes(v))))return false;
+  const r=s.responses[id];if(r!==undefined){if(q.type==='match'){if(!r||typeof r!=='object'||Array.isArray(r)||Object.entries(r).some(([a,b])=>!q.pairs.some(p=>p.left===a)||!expected.includes(b)))return false;}else if(q.type==='order'){if(!Array.isArray(r)||r.length!==expected.length||new Set(r).size!==expected.length||!expected.every(v=>r.includes(v)))return false;}else if(typeof r!=='string'||r.length>2000||(q.type==='choice'&&!actual.includes(r)))return false;}
  }
  return ['assisted','flags','checked'].every(k=>Object.entries(s[k]).every(([id,v])=>s.ids.includes(id)&&typeof v==='boolean'));
 }

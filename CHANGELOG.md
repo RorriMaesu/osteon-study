@@ -1,3 +1,15 @@
+# 2026-11-04 — Guided learning, broader exams and clearer feedback
+
+- Add five named lesson steps, saved reasoning, direct source return, explicit reader empty states and a daily study route with optional exam date/time.
+- Expand to 100 chapter-bank questions per chapter (400 total plus 104 supplementary), retaining earlier keys and saved choices. Favor unseen questions while preserving default objective blueprints.
+- Add masked source-figure and movement questions, visual/3D practical routes, large figure inspection, custom weights, optional active timing and sparse confidence.
+- Explain matching/sequence components and 54 revised distractors. Preserve original answers during spelling/uncertain-wording rehearsal; pending answers remain distinct from mistakes.
+- Keep prompt/choices visible in sampled short laptop layouts. Fix pointer focus moving a paginated button before its first click. Improve phone lesson layout and forced-color support.
+- Include lesson drafts/exposure in complete backups; add item-specific GitHub issue drafts excluding student history/chat.
+- Add short local tutor session contracts and observed slow-response advice; retain local setup and source/factual limitations.
+- Defer camera fitting while the atlas has zero-size layout; reject nonfinite camera destinations. Pause unnecessary 3D rendering and throttle occlusion work; offer graphics/model recovery and an assisted text alternative. No unmeasured performance or recovery-success claim.
+- Preserve all teacher IDs, source holds, anatomy assets and authored coordinates. QUALITY-IMPLEMENTATION.md tracks the remaining expert, pilot, accessibility, model and permission work.
+
 # 2026-11-03 — Focused landmarks, shared spelling and full backups
 
 - One active landmark name outside the model, small markers, optional comparison and coherent feature groups.

@@ -1,0 +1,5 @@
+import {assessTyped,outcomeCorrect} from './typed-answer.js';
+export function openWordingPractice(q,{dialog,escape:e}){
+ dialog(`<h2>Practice the standard wording</h2><p>${e(q.prompt)}</p><p>Standard answer: <b>${e(q.answer)}</b></p><p>${e(q.explanation||q.cue||'')}</p><label for="wording-rehearsal">Hide the answer in your mind, then type the term</label><input id="wording-rehearsal" maxlength="300" autocomplete="off" spellcheck="false"><button class="primary" id="wording-check">Check practice wording</button><p id="wording-result" role="status"></p><p class="tiny">This is a learning exercise. Your original test response, pending decision and score remain saved exactly as submitted.</p>`);
+ const input=document.querySelector('#wording-rehearsal'),check=()=>{const outcome=assessTyped(q,input.value);document.querySelector('#wording-result').textContent=(outcomeCorrect(outcome)?'Yes. ':'Keep practicing. ')+outcome.reason+' Standard form: '+q.answer;};document.querySelector('#wording-check').onclick=check;input.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();check();}};input.focus();
+}

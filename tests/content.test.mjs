@@ -40,7 +40,7 @@ test('numbered and regional meshes do not accept neighboring bones',()=>{
 test('all twenty-four sections teach, apply and assess distinct concepts',()=>{
  assert.deepEqual(lessons.map(l=>l.id),['6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4','7.5','8.1','8.2','8.3','8.4','8.5','9.1','9.2','9.3','9.4','9.5','9.6','9.7']);
  for(const l of lessons){assert.ok(l.objective.length>35);assert.ok(l.sections.length>=3);assert.ok(l.compare.length>=2);assert.equal(l.recall.length,2);assert.equal(l.application.length,2);assert.ok(l.questions.length>=4);}
- assert.equal(questions.length,360);assert.equal(new Set(questions.map(q=>q.id)).size,questions.length);
+ assert.equal(questions.length,504);assert.equal(new Set(questions.map(q=>q.id)).size,questions.length);
  for(const q of questions){if(q.type==='choice'){assert.equal(q.distractors.length,3);assert.equal(new Set([q.answer,...q.distractors]).size,4);}assert.ok(q.explanation.length>25);}
 });
 test('complete glossary extraction excludes page furniture and broken glyphs',()=>{
