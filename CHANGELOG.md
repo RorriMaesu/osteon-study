@@ -1,3 +1,12 @@
+# 2026-11-04 — Stable disc context and viewer interaction
+
+- Separate intervertebral discs from optional tissues; retain neighboring discs in curvature, foraminal and regional views, with an explicit On/Off control and count.
+- Correct transitional disc, thorax/pelvis and nasal-cartilage context; prevent highlights floating after their parent is peeled.
+- Synchronize layer buttons, keep feature framing during camera changes, fit curvature specimens and measure phone control rows.
+- Remove buried/offscreen locating choices; use profile recall for spinal curves and a per-question recall fallback when clear choices are unavailable. Preserve later tasks and spelling support.
+- Withhold answer highlights during locating questions and preserve the original target numbers during feedback.
+- Restore alignment guides during questions and support direct section-hash navigation. Geometry, coordinates and saved public results are unchanged. [Review and verification](VIEWER-REVIEW.md).
+
 # 2026-11-04 — Practical landmark and movement clarity
 
 - Review all sixteen reported targets; restore native source resolution and add scoped surface/length guides.

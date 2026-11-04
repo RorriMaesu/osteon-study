@@ -29,6 +29,8 @@ The narrated videos use actual app interactions: a clear foramen magnum example,
 
 [Try the revised 16-target practical ↗](https://rorrimaesu.github.io/osteon-study/?clarity=1#practice). Small facets, openings and broad surfaces now have clearer views, surface patches or length traces. The drawer questions use real source bone meshes with a fixed femur, 90° flexion, direction arrows, replay and a neutral reference. All model edits were backed up first in Blender 4.5. [What changed, source evidence and limits](EXAM-LANDMARK-CLARITY.md).
 
+The **Discs** control keeps spinal disc context separate from optional tissues and reports the current specimen count. Curvature practice uses the assembled spinal profile; single-bone isolation intentionally omits surrounding discs until Back. [Viewer fixes and verification](VIEWER-REVIEW.md).
+
 ## Landmarks directly on the model
 
 Turn on **Landmarks** above the 3D viewer. Double-click a bone to see labels for its region, then repeat to study one bone. Small hollow markers keep the model clear. Select a marker to read one full name in a separate focus card. **Show best view** opens its authored study view; **Compare** deliberately adds up to three names on desktop or two on a phone. Local groups and marker pages keep related features together; **Find landmarks** searches the complete collection. **Teacher list** covers the required features; **All anatomy** adds the wider textbook collection and bone microanatomy. Switching Landmarks off hides annotations without changing tissues or the camera. Identification questions automatically conceal study labels.

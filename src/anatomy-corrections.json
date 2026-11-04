@@ -2416,5 +2416,14 @@
     "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json",
     "presentAllPoints": false,
     "object": "Middle concha of right ethmoid"
+  },
+  "cervical-curvature": {
+    "fitToContext": true
+  },
+  "thoracic-curvature": {
+    "fitToContext": true
+  },
+  "lumbar-curvature": {
+    "fitToContext": true
   }
 }

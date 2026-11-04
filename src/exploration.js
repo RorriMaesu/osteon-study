@@ -3,7 +3,7 @@ import {skullFamily,tissueAreas} from './anatomy.js';
 export const baseName=name=>name.replace(/\.[lr]$/,'');
 export const boneId=name=>/^(Manubrium of sternum|Body of sternum|Xiphoid process)$/.test(baseName(name))?'Sternum':name;
 export const boneSide=name=>name.endsWith('.l')?'l':name.endsWith('.r')?'r':null;
-export const isBone=name=>!/^Sinus /i.test(name)&&!/cartilage|tooth|canine|incisor|premolar|ligament|artery|disc|pulposus|symphysis/i.test(name);
+export const isBone=name=>!/^Sinus /i.test(name)&&!/cartilage|tooth|canine|incisor|premolar|ligament|artery|disc|pulposus|symphysis|tendon|retinaculum/i.test(name);
 const hand=/metacarpal|of hand|Scaphoid|Pisiform|Lunate|Triquetrum|Trapez|Capitate|Hamate/;
 const foot=/Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot/;
 const neck=/^Atlas|^Axis|^Vertebra C|^Hyoid/;
