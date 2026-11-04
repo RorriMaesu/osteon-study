@@ -27,7 +27,7 @@ The narrated videos use actual app interactions: a clear foramen magnum example,
 
 ## Landmarks directly on the model
 
-Turn on **Landmarks** above the 3D viewer. Double-click a bone to see labels for its region, then repeat to study one bone. Use the arrow buttons for more labels, or **Find landmarks** to search and focus a feature within the same viewer. **Teacher list** covers the required features; **All anatomy** adds the wider textbook collection and bone microanatomy. Switching Landmarks off hides selected labels too. Identification questions automatically conceal study labels.
+Turn on **Landmarks** above the 3D viewer. Double-click a bone to see labels for its region, then repeat to study one bone. Small hollow markers keep the model clear. Select a marker to read one full name in a separate focus card. **Show best view** opens its authored study view; **Compare** deliberately adds up to three names on desktop or two on a phone. Local groups and marker pages keep related features together; **Find landmarks** searches the complete collection. **Teacher list** covers the required features; **All anatomy** adds the wider textbook collection and bone microanatomy. Switching Landmarks off hides annotations without changing tissues or the camera. Identification questions automatically conceal study labels.
 
 The review reconciles all **177 teacher-list entries**: 59 direct bone entries and 118 integrated landmark/tissue/reference entries. Existing spatial practice remains 173 entries, with two source-recall items and two movement tests. Ligaments, discs, arteries and joint tissues now remain with their anatomical region when zoomed in. [Full in-view coverage checklist](ATLAS-LANDMARK-COVERAGE.csv).
 
@@ -109,3 +109,6 @@ The review reconciles all **310 named textbook features** and **422 atlas/course
 [Browse every review record](accuracy.html) · [Methods and limits](REVIEW.md)
 
 Three missing openings now use direct Blender bone edits: the supraorbital foramen, stylomastoid foramen and nasolacrimal canal. Their labels identify actual sculpted rims; [construction evidence and limits](REVIEW.md) distinguish these edits from untouched native anatomy.
+
+
+Complete study backups in My progress now include exam drafts and reports, the required bone-list test, review cards and spelling notes. Tutor chat and AI preferences are optional. Restore previews the contents and preserves earlier progress-only backup compatibility.

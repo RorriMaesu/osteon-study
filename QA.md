@@ -1,3 +1,7 @@
+# 2026-11-03 — Clear landmark presentation and reliable study records
+
+132 automated checks pass. New regressions cover distant support-tissue regions, attachment-feature categories, shared anatomical typo grading with explicit side policies, complete exam/lab backup round trips, invalid/remote setting rejection, failed-write rollback and bounded annotation drawing space. Browser preview confirmed olecranon-fossa selection survives bone isolation and comparison remains explicit. Phone-width preview uses an outside focus card and small markers. Further whole-course and device validation is tracked with the broader quality work. Model geometry and authored coordinates are unchanged.
+
 # Current validation — guided local AI setup, 2026-11-02
 
 All **125 automated checks** pass, including eleven setup/connection checks and the existing anatomy/exam regression suite. Checks cover readiness only after a completed response, preference migration and changed-weight identity, canceled/unreachable checks, cloud exclusion, empty/unfinished streams, lost connections, model changes, bounded untrusted assistant fragments, conservative hardware suggestions, optional hardware, mobile requirements, and separate installed/download paths.

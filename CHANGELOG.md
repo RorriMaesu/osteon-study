@@ -1,3 +1,12 @@
+# 2026-11-03 — Focused landmarks, shared spelling and full backups
+
+- One active landmark name outside the model, small markers, optional comparison and coherent feature groups.
+- Corrected misplaced pelvic/foot tissues and six attachment-feature categories; labels no longer toggle tissue geometry.
+- Preserved the selected landmark during bone isolation; protected drawing space during camera framing.
+- Shared built-in spelling support for specimen recall, with unresolved meaning kept separate from anatomy mistakes.
+- Complete progress/exam/lab-test backup with preview, optional chat/settings and transactional restore.
+- Clearer initial asset-loading phases and inactive/hidden-view animation pause.
+
 # 2026-11-02 — Guided local AI setup
 
 - Replace three setup tabs and paginated instructions with a guided connection/install/model/test flow, a pinned primary action, optional hardware, and concise recovery branches.

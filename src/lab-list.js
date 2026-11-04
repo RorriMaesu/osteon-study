@@ -45,7 +45,7 @@ export function validLabRun(run){
  if(!Array.isArray(run.questionIds)||!run.questionIds.length||run.questionIds.length>182||new Set(run.questionIds).size!==run.questionIds.length)return false;
  const allowed=new Set(listQuestions(run.scope).map(t=>t.id));if(run.questionIds.some(id=>!allowed.has(id)))return false;
  if(!Array.isArray(run.results)||run.results.length>run.questionIds.length)return false;
- return run.results.every((r,i)=>r&&r.id===run.questionIds[i]&&typeof r.correct==='boolean'&&typeof r.assisted==='boolean'&&typeof r.response==='string'&&r.response.length<=500&&Number.isFinite(r.at)&&(r.review===undefined||validAnswerReview(r.review)));
+ return run.results.every((r,i)=>r&&r.id===run.questionIds[i]&&typeof r.correct==='boolean'&&typeof r.assisted==='boolean'&&typeof r.response==='string'&&r.response.length<=500&&Number.isFinite(r.at)&&(r.pending===undefined||typeof r.pending==='boolean')&&(r.review===undefined||validAnswerReview(r.review)));
 }
 export function makeLabRun(scope,questionIds,now=Date.now()){
  const run={schema:1,source:source.source.sha256,scope,questionIds:[...questionIds],startedAt:now,assisted:false,results:[]};
@@ -53,5 +53,5 @@ export function makeLabRun(scope,questionIds,now=Date.now()){
 }
 export function labRunSummary(run){
  const independent=run.results.filter(r=>r.correct&&!r.assisted).length;
- return {answered:run.results.length,total:run.questionIds.length,independent,assisted:run.results.filter(r=>r.assisted).length,review:run.results.filter(r=>!r.correct||r.assisted).map(r=>r.id),complete:run.results.length===run.questionIds.length};
+ return {answered:run.results.length,total:run.questionIds.length,independent,pending:run.results.filter(r=>r.pending).length,assisted:run.results.filter(r=>r.assisted).length,review:run.results.filter(r=>!r.pending&&(!r.correct||r.assisted)).map(r=>r.id),complete:run.results.length===run.questionIds.length};
 }

@@ -40,7 +40,7 @@ test('saved tests retain exact question order, assisted evidence and honest subs
  run.results.push({id:qs[0].id,correct:true,assisted:false,response:qs[0].name,at:1235});
  run.results.push({id:qs[1].id,correct:true,assisted:true,response:qs[1].name,at:1236});run.assisted=true;
  const restored=JSON.parse(JSON.stringify(run));assert.ok(validLabRun(restored));assert.equal(restored.questionIds[restored.results.length],qs[2].id);assert.equal(restored.assisted,true);
- assert.deepEqual(labRunSummary(restored),{answered:2,total:10,independent:1,assisted:1,review:[qs[1].id],complete:false});
+ assert.deepEqual(labRunSummary(restored),{answered:2,total:10,independent:1,pending:0,assisted:1,review:[qs[1].id],complete:false});
  for(const changed of [{source:'changed'},{scope:'unknown'},{questionIds:['invented']},{results:[{...run.results[0],id:qs[1].id}]},{questionIds:[qs[0].id,qs[0].id]},{results:[{...run.results[0],correct:'true'}]}])assert.equal(validLabRun({...run,...changed}),false);
  assert.throws(()=>makeLabRun('shoulder',['sacrum']));
 });

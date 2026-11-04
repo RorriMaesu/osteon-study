@@ -8,7 +8,20 @@ import {inDivision} from './anatomy.js';
 export const teacherIds=new Set(source.rows.flatMap(r=>r.termIds));
 const parts=new Set(['manubrium','body-of-sternum','xiphoid-process']);
 export const isOverlayLandmark=t=>t.type!=='bone'||parts.has(t.id);
-export function category(t){return /ligament|joint|tissue|vessel|test/.test(t.type)?'joints':/opening|cavity/.test(t.type)?'openings':/microstructure|development/.test(t.type)||t.region==='Bone structure'?'development':'surfaces';}
+export function category(t){return /ligament|joint|tissue|vessel|test/.test(t.type)?'joints':/microstructure|development/.test(t.type)||t.region==='Bone structure'?'development':/opening|cavity/.test(t.type)&&t.feature?.featureType!=='Articular feature'?'openings':'surfaces';}
+export function featureGroup(t){
+ const n=t.name.toLowerCase(),parent=t.representation?.parentPattern||t.pattern||'';
+ if(t.region==='Bone structure')return /osteon|canalicul|lacuna|lamella|central canal|perforating canal|trabecul/.test(n)?'Microscopic bone':'Long-bone structure';
+ if(/fontanel/.test(n))return 'Developmental sites';
+ if(/labyrinth|cochlea|semicircular|vestibule|oval window|round window/.test(n))return 'Inner-ear spaces';
+ if(t.region==='Skull')return /sinus|air cell/.test(n)?'Sinuses':/cranial fossa|sella|petrous|foramen ovale|rotundum|spinosum|lacerum|hypoglossal|carotid|jugular|internal acoustic/.test(n)?'Cranial base & interior':/suture|calvaria|pterion|nuchal|temporal line|occipital protuberance/.test(n)?'Vault & boundaries':'Face & lateral skull';
+ if(t.region==='Spine')return /curvature/.test(n)?'Column overview':/sacr|coccy/.test(n+parent.toLowerCase())?'Sacrum & coccyx':/atlas|axis|dens|transverse foramen/.test(n+parent.toLowerCase())?'Cervical region':'Vertebral features & discs';
+ if(t.region==='Thorax')return /stern|xiphoid|manubrium|jugular notch|clavicular notch/.test(n)?'Sternum':'Ribs & attachments';
+ if(t.region==='Upper limb')return /scapul|glenoid|acrom|corac|clavicl/.test(n+parent.toLowerCase())?'Shoulder girdle':/humer|tubercle|capitulum|trochlea|fossa/.test(n+parent.toLowerCase())?'Humerus & elbow':/radius|ulna|radial|ulnar/.test(n+parent.toLowerCase())?'Forearm':'Wrist & hand';
+ if(t.region==='Pelvis')return /sacr|sciatic|auricular/.test(n)?'Sacral & sciatic connections':/iliac|ilium/.test(n)?'Ilium':'Pubis, ischium & pelvic boundaries';
+ if(t.region==='Lower limb')return /femur|femor|trochanter|patell|adductor|fovea/.test(n+parent.toLowerCase())?'Femur & knee':/tibia|fibula|malleol/.test(n+parent.toLowerCase())?'Leg & ankle':'Foot & arches';
+ return /drawer|cruciate|collateral|patellar/.test(n)?'Knee':/femur|iliofemoral/.test(n)?'Hip':'Shoulder & other tissues';
+}
 export const atlasLandmarks=allTerms.filter(isOverlayLandmark).map(term=>({term,teacher:teacherIds.has(term.id),category:category(term),anchors:authored.anchors[term.id]||[],held:term.representation.assessment==='learn-only',retired:!!term.representation.retiredModel}));
 export function anchorMatchesView(anchor,{visibleNames,detailGroup,bone,side}={}){
  if((anchor.detailGroup||null)!==(detailGroup||null))return false;

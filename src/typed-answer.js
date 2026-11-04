@@ -29,6 +29,7 @@ export function assessTyped(q,response){
  const input=fold(response),p=answerPolicy(q),forms=acceptedForms(q),expected=fold(q.answer);
  const result=(status,reason,correction=q.answer)=>({schema:1,version:GRADING_VERSION,target:q.id,answer:q.answer,response:String(response??''),status,reason,correction});
  if(!input)return result('unanswered','No response was submitted.');
+ if(p.allowAnySide&&/^(left|right) /.test(input)){const o=assessTyped({...q,answerPolicy:{...p,allowAnySide:false}},input.replace(/^(left|right) /,''));return result(o.status==='correct'?'equivalent':o.status,'This prompt tests the structure name; side is not assessed. '+o.reason,o.correction);}
  if(p.side&&new RegExp('\\b'+(p.side==='right'?'left':'right')+'\\b').test(input))return result('incorrect','The response names the opposite anatomical side.');
  if(p.side&&input.startsWith(p.side+' ')){const o=assessTyped({...q,answerPolicy:{...p,side:null}},input.slice(p.side.length+1));if(outcomeCorrect(o))return result(o.status==='spelling'?'spelling':'equivalent','The stated anatomical side agrees with this specimen.',o.correction);}
  const allowed=forms.flatMap(pluralForms),exact=allowed.includes(input);

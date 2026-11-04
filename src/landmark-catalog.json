@@ -6560,7 +6560,7 @@
       "region": "Lower limb",
       "section": "8.4",
       "category": "macroscopic",
-      "featureType": "Articular feature",
+      "featureType": "Projection or bone region",
       "description": "Roughened area of the femur located on the lateral side of the lateral condyle.",
       "sources": [
         {
@@ -6778,7 +6778,7 @@
       "region": "Lower limb",
       "section": "8.4",
       "category": "macroscopic",
-      "featureType": "Articular feature",
+      "featureType": "Projection or bone region",
       "description": "Roughened area of the distal femur located on the medial side of the medial condyle.",
       "sources": [
         {
@@ -8762,7 +8762,7 @@
       "region": "Upper limb",
       "section": "8.1",
       "category": "macroscopic",
-      "featureType": "Articular feature",
+      "featureType": "Projection or bone region",
       "description": "Small bump or roughened area located on the lateral border of the scapula, near the inferior margin of the glenoid cavity.",
       "sources": [
         {
@@ -8953,7 +8953,7 @@
       "region": "Upper limb",
       "section": "8.2",
       "category": "macroscopic",
-      "featureType": "Articular feature",
+      "featureType": "Projection or bone region",
       "description": "Small projection located on the lateral side of the distal humerus.",
       "sources": [
         {
@@ -9083,7 +9083,7 @@
       "region": "Upper limb",
       "section": "8.2",
       "category": "macroscopic",
-      "featureType": "Articular feature",
+      "featureType": "Projection or bone region",
       "description": "Enlarged projection located on the medial side of the distal humerus.",
       "sources": [
         {
@@ -9709,7 +9709,7 @@
       "region": "Upper limb",
       "section": "8.1",
       "category": "macroscopic",
-      "featureType": "Articular feature",
+      "featureType": "Projection or bone region",
       "description": "Small bump located at the superior margin of the glenoid cavity.",
       "sources": [
         {
