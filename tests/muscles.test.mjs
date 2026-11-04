@@ -30,4 +30,6 @@ test('regional atlas coverage preserves source sides and corrected anatomical gr
  const pectoralHeads=manifest.components.filter(c=>/head of pectoralis major/.test(c.sourceName));assert.ok(pectoralHeads.length);assert.ok(pectoralHeads.every(c=>c.region==='trunk-back'));
  const upper=manifest.components.filter(c=>c.name==='Upper (descending) part of trapezius'),lower=manifest.components.filter(c=>c.name==='Lower (ascending) part of trapezius');assert.equal(upper.length,2);assert.equal(lower.length,2);assert.ok(Math.min(...upper.map(c=>c.bounds.min[1]))>Math.min(...lower.map(c=>c.bounds.min[1])));
  const iliocostalis=manifest.components.find(c=>c.sourceName==='Iliocostalis colli muscle');assert.equal(iliocostalis.side,'left');
+ const buccinators=manifest.components.filter(c=>c.sourceName.startsWith('Bucinator'));assert.equal(buccinators.length,2);assert.ok(buccinators.every(c=>c.name==='Buccinator muscle'&&c.nameCorrection));
+ assert.equal(muscleBoneContext('Third costal cartilage.r','head-neck','right'),false);assert.equal(muscleBoneContext('Thyroid cartilage','head-neck','right'),true);assert.equal(muscleBoneContext('Vertebra C4','head-neck','right'),true);
 });

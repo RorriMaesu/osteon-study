@@ -1,4 +1,4 @@
-﻿ID,Display name,Original source name,Muscle group,Side,Region,Kind,Depth subset,Review status,Assessment,Source-label correction,Asset
+ID,Display name,Original source name,Muscle group,Side,Region,Kind,Depth subset,Review status,Assessment,Source-label correction,Asset
 muscle-lateral-rectus-muscle-l,Lateral rectus muscle,Lateral rectus muscle.l,Lateral rectus muscle,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-lateral-rectus-muscle-r,Lateral rectus muscle,Lateral rectus muscle.r,Lateral rectus muscle,right,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-superior-oblique-muscle-l,Superior oblique muscle,Superior oblique muscle.l,Superior oblique muscle,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
@@ -49,7 +49,7 @@ muscle-levator-labii-superioris-r,Levator labii superioris,Levator labii superio
 muscle-depressor-septi-nasi-r,Depressor septi nasi,Depressor septi nasi.r,Depressor septi nasi,right,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-mentalis-muscle-r,Mentalis muscle,Mentalis muscle.r,Mentalis muscle,right,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-levator-nasolabialis-r,Levator nasolabialis,Levator nasolabialis.r,Levator nasolabialis,right,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
-muscle-bucinator-r,Bucinator,Bucinator.r,Bucinator,right,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
+muscle-bucinator-r,Buccinator muscle,Bucinator.r,Buccinator muscle,right,head-neck,muscle,unassigned,source-aligned-reference,learn-only,Source spelling corrected to the standard anatomical name: buccinator.,muscles-head-neck.glb
 muscle-zygomaticus-major-muscle-l,Zygomaticus major muscle,Zygomaticus major muscle.l,Zygomaticus major muscle,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-corrugator-supercilii-l,Corrugator supercilii,Corrugator supercilii.l,Corrugator supercilii,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-depressor-anguli-oris-l,Depressor anguli oris,Depressor anguli oris.l,Depressor anguli oris,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
@@ -62,7 +62,7 @@ muscle-levator-labii-superioris-l,Levator labii superioris,Levator labii superio
 muscle-depressor-septi-nasi-l,Depressor septi nasi,Depressor septi nasi.l,Depressor septi nasi,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-mentalis-muscle-l,Mentalis muscle,Mentalis muscle.l,Mentalis muscle,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-levator-nasolabialis-l,Levator nasolabialis,Levator nasolabialis.l,Levator nasolabialis,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
-muscle-bucinator-l,Bucinator,Bucinator.l,Bucinator,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,,muscles-head-neck.glb
+muscle-bucinator-l,Buccinator muscle,Bucinator.l,Buccinator muscle,left,head-neck,muscle,unassigned,source-aligned-reference,learn-only,Source spelling corrected to the standard anatomical name: buccinator.,muscles-head-neck.glb
 muscle-superficial-part-of-masseter-r,Superficial part of masseter,Superficial part of masseter.r,Superficial part of masseter,right,head-neck,muscle,superficial,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-deep-part-of-masseter-r,Deep part of masseter,Deep part of masseter.r,Deep part of masseter,right,head-neck,muscle,superficial,source-aligned-reference,learn-only,,muscles-head-neck.glb
 muscle-superficial-part-of-masseter-l,Superficial part of masseter,Superficial part of masseter.l,Superficial part of masseter,left,head-neck,muscle,superficial,source-aligned-reference,learn-only,,muscles-head-neck.glb

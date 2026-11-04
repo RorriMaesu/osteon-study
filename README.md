@@ -1,6 +1,6 @@
 # Osteon
 
-**A&P study, in another dimension.** Explore the skeleton, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6, 7, 8 and 9, alongside the dedicated BI 231 bone-list test.
+**A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6–10, alongside the dedicated BI 231 bone-list test.
 
 [![Watch the Osteon demo: See it. Name it. Recall it.](demo/poster.jpg)](https://rorrimaesu.github.io/osteon-study/demo/)
 

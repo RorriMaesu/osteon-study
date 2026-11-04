@@ -295,3 +295,9 @@ Blender 4.5 exported a bilateral 28-part shoulder/upper-arm pilot with original 
 ## Chapter 10 expansion — phase 5
 
 Added all 669 muscular-system source components in five on-demand regional GLBs (485 muscle parts, 184 supporting components; 8.25 MB total compressed). Whole-body mode loads all regions explicitly and switches to both sides. Kept heads grouped with individual part inspection. Corrected hierarchy-based region assignment, the left-side iliocostalis colli source name, and superior/inferior trapezius part display labels. Source identities and all backup evidence remain recorded. Layer subsets are labeled as examples; All layers includes the unassigned structures. Added the complete muscle coverage CSV and a direct shared muscle-atlas link.
+
+## Chapter 10 expansion — phase 6
+
+Completed laptop and phone review. Fixed muscle Peel/Restore availability, shared focus buttons, region details, camera reset, search behavior, screen-reader instructions and return to the bone atlas. Muscle labels use an unobstructive caption above narrow viewers and a surface leader beside wider viewers. Corrected the source's buccinator display spelling without changing original mesh identity. Reduced repeated selection lookups when updating labels.
+
+The exam center uses two rows on short desktop screens, including when a draft is saved. The muscle browser adapts its page size and spacing so its navigation remains accessible at 1024×600. Updated the practice launch screen, progress topics and default tutor context to include Chapter 10. Browser checks covered 390×844, 1024×600, 1280×620 and 1366×768; the comprehensive exam retained its response and position through save/reload/resume. All 173 automated checks and the curriculum, bone-list and anatomy coverage audits pass. The original Blender source hash remains unchanged and release backup manifests are present.

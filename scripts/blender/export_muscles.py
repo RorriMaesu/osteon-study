@@ -73,6 +73,7 @@ for original in source_objects:
  group=next((p[:-2]for p in parents if re.search(r'(?<!s) muscle\.g$',p,re.I)),None)
  display=re.sub(r'\.[lr]$','',source_name);muscle_name=group or re.sub(r'^(?:Long|Short|Medial|Lateral) head of ','',display,flags=re.I)
  correction=None
+ if source_name.startswith('Bucinator'):display='Buccinator muscle';muscle_name='Buccinator muscle';correction='Source spelling corrected to the standard anatomical name: buccinator.'
  if re.match(r'Ascending part of trapezius',source_name):display='Upper (descending) part of trapezius';correction='Source part label corrected to match the superior, occipital/cervical geometry.'
  if re.match(r'Descending part of trapezius',source_name):display='Lower (ascending) part of trapezius';correction='Source part label corrected to match the inferior, thoracic geometry.'
  depth='superficial'if superficial.search(source_name)else 'deeper'if deep.search(source_name)else 'unassigned'

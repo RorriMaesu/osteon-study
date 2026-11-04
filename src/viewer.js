@@ -215,10 +215,11 @@ export class AnatomyViewer {
  syncLayerControls(){
   const button=document.querySelector('#discs-btn'),tissues=document.querySelector('#tissues-btn');
   for(const [id,value]of [['peel-btn',this.peel],['isolate-btn',this.isolated],['ghost-btn',this.ghost],['rotate-btn',this.controls.autoRotate]])document.getElementById(id)?.setAttribute('aria-pressed',String(!!value));
-  const restore=document.querySelector('#restore-btn');if(restore)restore.disabled=!this.hiddenMeshes.size;
+  const restore=document.querySelector('#restore-btn');if(restore)restore.disabled=!(this.hiddenMeshes.size||this.muscleLayer?.hasHidden());
   if(tissues){tissues.setAttribute('aria-pressed',String(!!this.tissues));tissues.disabled=!!this.activeDetail;tissues.title='Additional ligaments and soft tissues. Selected targets stay visible.';}
+  this.muscleLayer?.syncControls();
   if(!button)return;const count=this.meshes.filter(m=>m.visible&&isIntervertebralDisc(m.userData.zname)).length,target=this.selected.some(m=>isIntervertebralDisc(m.userData.zname));
-  const relevant=!this.activeDetail&&(this.region==='All regions'||['Spine','Pelvis','Thorax'].includes(this.region)||this.focus.areaId==='neck'||target);
+  const relevant=(!this.muscleLayer?.ownsFocus()||count>0)&&!this.activeDetail&&(this.region==='All regions'||['Spine','Pelvis','Thorax'].includes(this.region)||this.focus.areaId==='neck'||target);
   button.hidden=!relevant;button.disabled=this.isolated||target;button.setAttribute('aria-pressed',String(this.discs||target));button.querySelector('span').textContent='Discs: '+(target?'Target':this.discs?'On':'Off');button.querySelector('small').textContent=String(count);
   button.title=target?'The selected disc target stays visible.':this.isolated?'Single bone view hides surrounding discs. Use Back to restore the region.':count+' intervertebral discs in the current specimen context. This layer is separate from additional tissues.';
  }
