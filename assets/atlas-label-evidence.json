@@ -1,8 +1,8 @@
 {
   "blenderVersion": "4.5.1 LTS",
-  "backup": "atlas-labels-20261103-042238-613271",
+  "backup": "atlas-labels-20261104-101925-101484",
   "entries": 422,
-  "anchors": 495,
+  "anchors": 498,
   "teacherEntries": 177,
   "project": "annotated-atlas.blend",
   "annotationAsset": "course-landmark-labels.glb",
@@ -10,6 +10,6 @@
   "sourceHashes": {
     "skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",
     "course-tissues.glb": "1c21915e10455a58c72c860ef9a85eee6e92793c65865fe8ae20f7f4c9823d83",
-    "landmark-details.glb": "6d1677b71dfdd0c56f5d16cf5f214984ab1769f454ee6478aca212136974150b"
+    "landmark-details.glb": "3792ff38588d442966248044d38929d2a97ae5a72e7b3484c96cebb993381f2c"
   }
 }

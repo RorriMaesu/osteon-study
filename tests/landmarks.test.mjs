@@ -12,7 +12,7 @@ import pages from '../src/reader-pages.json' with {type:'json'};
 test('the audited textbook inventory resolves every canonical feature without changing the lab checklist',()=>{
  assert.equal(catalog.entries.length,330);assert.equal(textbookTerms.length,310);assert.equal(markingVocabulary.length,20);
  assert.equal(new Set(textbookTerms.map(t=>t.id)).size,310);assert.equal(terms.length,177);
- assert.equal(Object.values(coverage()).reduce((a,b)=>a+b,0),177);assert.equal(coverage()['source-pin'],45);
+ assert.equal(Object.values(coverage()).reduce((a,b)=>a+b,0),177);assert.equal(coverage()['source-pin'],38);
  for(const c of catalog.entries.filter(c=>c.termId)){
   const t=allTerms.find(t=>t.id===c.termId);assert.ok(t,c.name);assert.equal(t.feature.id,c.id);
   assert.ok(t.feature.description.length>15,t.name);assert.ok(t.representation,t.name);

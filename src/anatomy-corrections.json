@@ -13,9 +13,38 @@
   },
   "lambdoid-suture": {
     "parentPattern": "Occipital bone||Parietal bone.r||Parietal bone.l",
-    "contextPatterns": [],
+    "points": [
+      {
+        "point": [
+          -0.027731051668524742,
+          1.6311757564544678,
+          -0.10076921433210373
+        ],
+        "parent": "Occipital bone||Parietal bone.r||Parietal bone.l",
+        "label": "Lambdoid suture"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.027731051668524742,
+        1.6311757564544678,
+        -0.10076921433210373
+      ],
+      "direction": [
+        0,
+        0.1,
+        -1
+      ],
+      "distance": 0.32
+    },
     "isolateContext": true,
-    "frameContext": true
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
   },
   "squamous-suture": {
     "parentPattern": "Temporal bone.r||Parietal bone.r",
@@ -410,23 +439,91 @@
     "kind": "3d-landmark"
   },
   "vertebral-canal": {
+    "id": "vertebral-canal",
+    "name": "Vertebral canal",
+    "region": "Spine",
+    "kind": "3d-landmark",
+    "status": "accepted-reference",
+    "anchorType": "opening-or-passage",
+    "intendedParentPattern": "Vertebra L3",
+    "preferredView": "top",
+    "points": [
+      {
+        "point": [
+          -0.0002,
+          1.1069149165153502,
+          -0.03148071654140949
+        ],
+        "parent": "Vertebra L1",
+        "label": "Canal at lumbar level 1"
+      },
+      {
+        "point": [
+          -0.0002,
+          1.0463669090270995,
+          -0.025163275189697742
+        ],
+        "parent": "Vertebra L3",
+        "label": "Canal at lumbar level 3"
+      },
+      {
+        "point": [
+          -0.0002,
+          0.9858057289123535,
+          -0.038010288029909134
+        ],
+        "parent": "Vertebra L5",
+        "label": "Canal at lumbar level 5"
+      }
+    ],
+    "reference": "7.3",
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "verification": {
+      "method": "Six orthographic actual-mesh views with coordinate grid; manually selected anatomical surface or verified opening; ray-triangle projection for surface points.",
+      "surfaceEvidence": {
+        "type": "Visible opening/space reference; intentionally not snapped to generic parent surface."
+      },
+      "modelViewImage": "vertebra-l3-views.png",
+      "textbookSources": [
+        {
+          "term": "vertebral (spinal) canal",
+          "section": "7.3",
+          "pdf": 291,
+          "printed": 275,
+          "kind": "Chapter key terms"
+        }
+      ],
+      "limits": "Reference point identifies one instance/part of the feature; does not segment its full extent or imply every vertebral/rib level is identical."
+    },
+    "point": [
+      0,
+      1.047,
+      -0.024
+    ],
     "parentPattern": "Vertebra L1||Vertebra L2||Vertebra L3||Vertebra L4||Vertebra L5",
+    "isolateContext": true,
     "contextPatterns": [
       "Intervertebral disc L1-L2",
       "Intervertebral disc L2-L3",
       "Intervertebral disc L3-L4",
       "Intervertebral disc L4-L5"
     ],
-    "frameContext": true,
-    "isolateContext": true,
     "view": {
+      "center": [
+        -0.0002,
+        1.0463669090270995,
+        -0.025163275189697742
+      ],
       "direction": [
         1,
-        0.15,
-        0
+        0.09,
+        0.05
       ],
-      "distance": 0.62
+      "distance": 0.34
     },
+    "sourcePlate": "vertebra",
+    "frameContext": true,
     "cutaway": {
       "normal": [
         -1,
@@ -434,7 +531,10 @@
         0
       ],
       "constant": 0
-    }
+    },
+    "focusGuide": true,
+    "refinement": "Source-aligned exam clarity",
+    "singlePinIndex": 1
   },
   "trochlea": {
     "kind": "3d-landmark",
@@ -473,40 +573,39 @@
     "source": "Independently reviewed source morphology / original radial-nerve course; corrected manual surface reference"
   },
   "radial-nerve-sulcus": {
-    "kind": "3d-landmark",
-    "point": [
-      -0.19906212389469147,
-      1.2570483684539795,
-      -0.04381401836872101
-    ],
+    "parentPattern": "Humerus.r",
     "points": [
       {
         "point": [
-          -0.19906212389469147,
-          1.2570483684539795,
-          -0.04381401836872101
+          -0.19912202656269073,
+          1.2578779458999634,
+          -0.043099720031023026
         ],
         "parent": "Humerus.r",
         "label": "Radial nerve sulcus"
       }
     ],
-    "parentPattern": "Humerus.r",
     "view": {
+      "center": [
+        -0.19912202656269073,
+        1.2578779458999634,
+        -0.043099720031023026
+      ],
       "direction": [
-        0,
         0.1,
+        0.06,
         -1
       ],
-      "distance": 0.18,
-      "center": [
-        -0.19906212389469147,
-        1.2570483684539795,
-        -0.04381401836872101
-      ]
+      "distance": 0.24
     },
     "isolateContext": true,
-    "note": "Actual source radial nerve course independently constrains the posterior humeral groove site; source cortex is coarse, so this is a location reference rather than a segmented full sulcus.",
-    "source": "Independently reviewed source morphology / original radial-nerve course; corrected manual surface reference"
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
   },
   "malleus": {
     "parentPattern": "Malleus.r",
@@ -1174,7 +1273,7 @@
           -0.0070103000000000006
         ],
         "parent": "Temporal bone.r",
-        "label": "Carotid canal \u00b7 inferior opening"
+        "label": "Carotid canal · inferior opening"
       }
     ],
     "evidenceImages": [
@@ -1695,5 +1794,627 @@
     "evidenceImages": [
       "work/blender-landmarks/nasolacrimal-canal-bone-edit.png"
     ]
+  },
+  "superior-costal-facet": {
+    "parentPattern": "Vertebra T6",
+    "points": [
+      {
+        "point": [
+          -0.01473972573876381,
+          1.3299394845962524,
+          -0.05896764621138573
+        ],
+        "parent": "Vertebra T6",
+        "label": "Superior costal facet"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.01473972573876381,
+        1.3299394845962524,
+        -0.05896764621138573
+      ],
+      "direction": [
+        -1,
+        0.25,
+        0.45
+      ],
+      "distance": 0.11
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "inferior-costal-facet": {
+    "parentPattern": "Vertebra T6",
+    "points": [
+      {
+        "point": [
+          -0.016545085236430168,
+          1.3131338357925415,
+          -0.05800021439790726
+        ],
+        "parent": "Vertebra T6",
+        "label": "Inferior costal facet"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.016545085236430168,
+        1.3131338357925415,
+        -0.05800021439790726
+      ],
+      "direction": [
+        -1,
+        0.25,
+        0.45
+      ],
+      "distance": 0.11
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "transverse-costal-facet": {
+    "parentPattern": "Vertebra T6",
+    "points": [
+      {
+        "point": [
+          -0.03180985525250435,
+          1.3299849033355713,
+          -0.08082244545221329
+        ],
+        "parent": "Vertebra T6",
+        "label": "Transverse costal facet"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.03180985525250435,
+        1.3299849033355713,
+        -0.08082244545221329
+      ],
+      "direction": [
+        -1,
+        0.25,
+        0.45
+      ],
+      "distance": 0.11
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "costal-facets": {
+    "parentPattern": "Vertebra T6",
+    "points": [
+      {
+        "point": [
+          -0.01473972573876381,
+          1.3299394845962524,
+          -0.05896764621138573
+        ],
+        "parent": "Vertebra T6",
+        "label": "Superior costal facet"
+      },
+      {
+        "point": [
+          -0.03180985525250435,
+          1.3299849033355713,
+          -0.08082244545221329
+        ],
+        "parent": "Vertebra T6",
+        "label": "Transverse costal facet"
+      },
+      {
+        "point": [
+          -0.016545085236430168,
+          1.3131338357925415,
+          -0.05800021439790726
+        ],
+        "parent": "Vertebra T6",
+        "label": "Inferior costal facet"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.019,
+        1.322,
+        -0.067
+      ],
+      "direction": [
+        -1,
+        0.27,
+        0.45
+      ],
+      "distance": 0.11
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json",
+    "presentAllPoints": true
+  },
+  "tibial-tuberosity": {
+    "parentPattern": "Tibia.r",
+    "points": [
+      {
+        "point": [
+          -0.08839843422174454,
+          0.3980225622653961,
+          0.005351027473807335
+        ],
+        "parent": "Tibia.r",
+        "label": "Tibial tuberosity"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.08839843422174454,
+        0.3980225622653961,
+        0.005351027473807335
+      ],
+      "direction": [
+        0.18,
+        0.14,
+        1
+      ],
+      "distance": 0.25
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "ischial-tuberosity": {
+    "parentPattern": "Hip bone.r",
+    "points": [
+      {
+        "point": [
+          -0.06808950752019882,
+          0.8149594664573669,
+          -0.047613002359867096
+        ],
+        "parent": "Hip bone.r",
+        "label": "Ischial tuberosity"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.06808950752019882,
+        0.8149594664573669,
+        -0.047613002359867096
+      ],
+      "direction": [
+        -0.3,
+        -0.18,
+        -1
+      ],
+      "distance": 0.25
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "acromioclavicular-facet": {
+    "parentPattern": "Scapula.r",
+    "points": [
+      {
+        "point": [
+          -0.15074478089809418,
+          1.4141852855682373,
+          -0.03731903061270714
+        ],
+        "parent": "Scapula.r",
+        "label": "Acromioclavicular facet"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.15074478089809418,
+        1.4141852855682373,
+        -0.03731903061270714
+      ],
+      "direction": [
+        1,
+        0.35,
+        0.12
+      ],
+      "distance": 0.13
+    },
+    "isolateContext": true,
+    "contextPatterns": [
+      "Clavicle.r"
+    ],
+    "ghostContext": true,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "anterior-border-of-tibia": {
+    "parentPattern": "Tibia.r",
+    "points": [
+      {
+        "point": [
+          -0.08996012061834335,
+          0.28977760672569275,
+          -0.007245881482958794
+        ],
+        "parent": "Tibia.r",
+        "label": "Anterior border of tibia"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.08996012061834335,
+        0.28977760672569275,
+        -0.007245881482958794
+      ],
+      "direction": [
+        0.35,
+        0.04,
+        1
+      ],
+      "distance": 0.67
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "viewSpan": 0.28,
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "shaft-of-humerus": {
+    "parentPattern": "Humerus.r",
+    "points": [
+      {
+        "point": [
+          -0.1922827512025833,
+          1.2657299041748047,
+          -0.025977522134780884
+        ],
+        "parent": "Humerus.r",
+        "label": "Shaft of humerus"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.1922827512025833,
+        1.2657299041748047,
+        -0.025977522134780884
+      ],
+      "direction": [
+        0.12,
+        0.05,
+        1
+      ],
+      "distance": 0.72
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "infraspinous-fossa": {
+    "parentPattern": "Scapula.r",
+    "points": [
+      {
+        "point": [
+          -0.0966193899512291,
+          1.3302102088928223,
+          -0.09205687791109085
+        ],
+        "parent": "Scapula.r",
+        "label": "Infraspinous fossa"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.0966193899512291,
+        1.3302102088928223,
+        -0.09205687791109085
+      ],
+      "direction": [
+        0,
+        0.08,
+        -1
+      ],
+      "distance": 0.29
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "lesser-tubercle": {
+    "parentPattern": "Humerus.r",
+    "points": [
+      {
+        "point": [
+          -0.16708649694919586,
+          1.3845993280410767,
+          -0.003521644975990057
+        ],
+        "parent": "Humerus.r",
+        "label": "Lesser tubercle"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.16708649694919586,
+        1.3845993280410767,
+        -0.003521644975990057
+      ],
+      "direction": [
+        -0.45,
+        0.2,
+        1
+      ],
+      "distance": 0.14
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "mandibular-foramina": {
+    "parentPattern": "Mandible",
+    "points": [
+      {
+        "point": [
+          -0.03676893189549446,
+          1.5434901714324951,
+          0.02319590002298355
+        ],
+        "parent": "Mandible",
+        "label": "Mandibular foramina"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.03676893189549446,
+        1.5434901714324951,
+        0.02319590002298355
+      ],
+      "direction": [
+        1,
+        0.25,
+        -0.65
+      ],
+      "distance": 0.075
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "cutaway": {
+      "normal": [
+        -1,
+        0,
+        0
+      ],
+      "constant": -0.001
+    },
+    "verificationNote": "Native source mandibular aperture retained; inferior alveolar nerve route and medial-ramus render reviewed.",
+    "note": "Source geometry restored and feature presentation reviewed. Area/trace is a visual identification guide, not complete segmentation.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "jugular-foramen": {
+    "parentPattern": "Temporal bone.r||Occipital bone",
+    "points": [
+      {
+        "point": [
+          -0.04560983553528786,
+          1.567661166191101,
+          -0.02182851731777191
+        ],
+        "parent": "Temporal bone.r||Occipital bone",
+        "label": "Jugular foramen"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.04560983553528786,
+        1.567661166191101,
+        -0.02182851731777191
+      ],
+      "direction": [
+        0,
+        -1,
+        0.1
+      ],
+      "distance": 0.15
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "ghostContext": false,
+    "kind": "3d-landmark",
+    "requiredContext": [
+      "Temporal bone.r",
+      "Occipital bone"
+    ],
+    "reviewStatus": "modeled-opening-verified",
+    "note": "Reconstructed bony exit following the terminal source sigmoid-sinus route. Margin and caliber are explanatory teaching refinements, not clinical measurements.",
+    "refinement": "Source-aligned exam clarity",
+    "focusGuide": true,
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json"
+  },
+  "superior-and-middle-nasal-conchae": {
+    "kind": "teaching-pin",
+    "detailGroup": "ethmoid-conchae",
+    "parentPattern": "Ethmoid cutaway context||Superior concha of right ethmoid||Middle concha of right ethmoid",
+    "points": [
+      {
+        "point": [
+          -0.0076411133632063866,
+          1.5942050218582153,
+          0.042500000447034836
+        ],
+        "parent": "Superior concha of right ethmoid",
+        "label": "Superior nasal concha"
+      },
+      {
+        "point": [
+          -0.004538846667855978,
+          1.5850732326507568,
+          0.05550000071525574
+        ],
+        "parent": "Middle concha of right ethmoid",
+        "label": "Middle nasal concha"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.01,
+        1.589,
+        0.052
+      ],
+      "direction": [
+        1,
+        0.25,
+        0.36
+      ],
+      "distance": 0.105
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "cutaway": null,
+    "teachingMorphology": true,
+    "focusGuide": true,
+    "reviewStatus": "source-aligned-teaching-refinement",
+    "verificationNote": "Right nasal-wall teaching cutaway; two conchae are parts of ethmoid, not independent bones. Adult source Ethmoid is retained for other features.",
+    "note": "Separate teaching cutaway: reconstructed superior and middle curled lamellae of the ethmoid. Their relative arrangement is explanatory. The inferior concha is a separate bone and is not shown here.",
+    "refinement": "Source-aligned exam clarity",
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json",
+    "presentAllPoints": true
+  },
+  "superior-nasal-concha": {
+    "kind": "teaching-pin",
+    "detailGroup": "ethmoid-conchae",
+    "parentPattern": "Ethmoid cutaway context||Superior concha of right ethmoid||Middle concha of right ethmoid",
+    "points": [
+      {
+        "point": [
+          -0.0076411133632063866,
+          1.5942050218582153,
+          0.042500000447034836
+        ],
+        "parent": "Superior concha of right ethmoid",
+        "label": "Superior nasal concha"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.01,
+        1.589,
+        0.052
+      ],
+      "direction": [
+        1,
+        0.25,
+        0.36
+      ],
+      "distance": 0.105
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "cutaway": null,
+    "teachingMorphology": true,
+    "focusGuide": true,
+    "reviewStatus": "source-aligned-teaching-refinement",
+    "verificationNote": "Right nasal-wall teaching cutaway; two conchae are parts of ethmoid, not independent bones. Adult source Ethmoid is retained for other features.",
+    "note": "Separate teaching cutaway: reconstructed superior and middle curled lamellae of the ethmoid. Their relative arrangement is explanatory. The inferior concha is a separate bone and is not shown here.",
+    "refinement": "Source-aligned exam clarity",
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json",
+    "presentAllPoints": false,
+    "object": "Superior concha of right ethmoid"
+  },
+  "middle-nasal-concha": {
+    "kind": "teaching-pin",
+    "detailGroup": "ethmoid-conchae",
+    "parentPattern": "Ethmoid cutaway context||Superior concha of right ethmoid||Middle concha of right ethmoid",
+    "points": [
+      {
+        "point": [
+          -0.004538846667855978,
+          1.5850732326507568,
+          0.05550000071525574
+        ],
+        "parent": "Middle concha of right ethmoid",
+        "label": "Middle nasal concha"
+      }
+    ],
+    "view": {
+      "center": [
+        -0.01,
+        1.589,
+        0.052
+      ],
+      "direction": [
+        1,
+        0.25,
+        0.36
+      ],
+      "distance": 0.105
+    },
+    "isolateContext": true,
+    "contextPatterns": [],
+    "cutaway": null,
+    "teachingMorphology": true,
+    "focusGuide": true,
+    "reviewStatus": "source-aligned-teaching-refinement",
+    "verificationNote": "Right nasal-wall teaching cutaway; two conchae are parts of ethmoid, not independent bones. Adult source Ethmoid is retained for other features.",
+    "note": "Separate teaching cutaway: reconstructed superior and middle curled lamellae of the ethmoid. Their relative arrangement is explanatory. The inferior concha is a separate bone and is not shown here.",
+    "refinement": "Source-aligned exam clarity",
+    "source": "Blender 4.5 source-aligned teaching refinement of Z-Anatomy; see exam-clarity-evidence.json",
+    "presentAllPoints": false,
+    "object": "Middle concha of right ethmoid"
   }
 }

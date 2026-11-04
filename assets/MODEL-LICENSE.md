@@ -53,3 +53,7 @@ The following models have been used as reference/included and adapted:
     Paola Perin, Daniele Cossellu, Elisa Vivado (Italian translation of the anatomical structures) 
     Jadwiga Palosz (Polish translation of the anatomical structures) 
     Shariar Ahmadpour (Parsi translation of the anatomical structures)
+
+## November 4, 2026 derivative changes
+
+Osteon modified copies of Z-Anatomy / BodyParts3D geometry in Blender 4.5.1 LTS: native-resolution right humerus, scapula, tibia, hip, T6 and mandible; local educational groove/facet/crest/tuberosity contours; occipital/parietal suture context; a jugular exit following the source sigmoid-sinus route; representative surface/length guides; and cropped/posed native knee bones. A separate qualitative ethmoid-wall/concha teaching cutaway was authored. These derivative anatomy assets and guides retain CC BY-SA 4.0 and upstream attribution. They are described in ../EXAM-LANDMARK-CLARITY.md and ../src/exam-clarity-evidence.json. Original adult skeleton/tissue GLBs and the original source Blender file were retained unchanged. Backup snapshots remain local.

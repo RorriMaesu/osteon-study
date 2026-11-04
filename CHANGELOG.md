@@ -1,3 +1,11 @@
+# 2026-11-04 — Practical landmark and movement clarity
+
+- Review all sixteen reported targets; restore native source resolution and add scoped surface/length guides.
+- Use Blender 4.5 for a source-route jugular opening, clearer local facet/groove/tuberosity contours, and a separate labeled ethmoid-concha teaching cutaway.
+- Replace drawer blocks with native bone meshes at 90° flexion, opposite AP translations, neutral comparison and playback/scrub controls.
+- Improve lighting, precise close-ups, numbered feedback and phone viewing space. Add a focused sixteen-target practical without replacing saved exam/list drafts.
+- Preserve SHA-256-verified backups before each model save/export. Retain existing anatomy holds and earlier native/reconstructed passages. [Item-by-item review and limits](EXAM-LANDMARK-CLARITY.md).
+
 # 2026-11-04 — Guided learning, broader exams and clearer feedback
 
 - Add five named lesson steps, saved reasoning, direct source return, explicit reader empty states and a daily study route with optional exam date/time.

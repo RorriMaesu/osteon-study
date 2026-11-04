@@ -1,3 +1,9 @@
+# 2026-11-04 — Practical landmark review
+
+The sixteen user-reported questions were inspected in source geometry and exercised in an isolated browser origin at 1280 × 720. Facet groups show all three targets before an answer; broader surfaces use representative amber patches and lengths use traces. Medial/inferior cameras expose the native mandibular aperture and reconstructed jugular exit. Feedback keeps target names beside the model. Both drawer questions were answered with the appropriate movement/restraint; replay, neutral and displacement inspection were exercised. A 390 × 844 expanded viewer check exposed and corrected control overlap and an offscreen direction label. No warnings/errors were captured in the sampled final drawer views.
+
+New geometry regressions check the jugular lumen, guide ownership, separate concha surfaces, source-resolution preservation, fixed/moving knee roles, monotonic AP playback, scrub continuity and backup evidence. Existing lumen/carotid, teacher-list, curriculum, grading and annotation checks remain required. This is source/geometry/browser review, with independent anatomy and physical-device review still open. [Detailed review](EXAM-LANDMARK-CLARITY.md).
+
 # Current validation — learning quality implementation, 2026-11-04
 
 **145 automated checks pass.** Coverage remains 177 teacher entries / 182 dedicated questions, 310 textbook features, 24 sections, 74 source objectives, 400 chapter-bank items (100 per chapter), 104 supplementary items and 544 glossary definitions. All accuracy-held representations remain qualified and excluded from spatial scoring. No anatomy geometry or authored anchor coordinates changed.

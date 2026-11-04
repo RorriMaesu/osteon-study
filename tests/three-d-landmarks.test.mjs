@@ -32,5 +32,5 @@ test('native sacral spaces, explanatory microscopy and withdrawn models remain d
  for(const name of ['Sacral canal','Sacral hiatus']){const r=get(name);assert.equal(r.kind,'3d-landmark');assert.equal(r.object,'Sacrum native neural passage');assert.match(r.note,/Native|native/);}
  assert.equal(get('Oval window').detailGroup,'inner-ear');assert.equal(get('Oval window').kind,'3d-landmark');
  assert.notEqual(get('Round window').detailGroup,get('Oval window').detailGroup);
- const conchae=['Superior nasal concha','Middle nasal concha'].map(get);assert.notDeepEqual(conchae[0].points[0].point,conchae[1].points[0].point);assert.ok(conchae.every(r=>r.cutaway?.constant===-.002));
+ const conchae=['Superior nasal concha','Middle nasal concha'].map(get);assert.notDeepEqual(conchae[0].points[0].point,conchae[1].points[0].point);assert.ok(conchae.every(r=>r.detailGroup==='ethmoid-conchae'&&r.teachingMorphology&&r.kind==='teaching-pin'));assert.notEqual(conchae[0].object,conchae[1].object);
 });

@@ -72,7 +72,7 @@ test('review intervals, backups and malformed imports behave deliberately',()=>{
 });
 
 test('all course concepts remain represented and accuracy holds exclude spatial grading',()=>{
- assert.equal(Object.values(coverage()).reduce((a,b)=>a+b,0),177);assert.equal(coverage()['source-pin'],45);
+ assert.equal(Object.values(coverage()).reduce((a,b)=>a+b,0),177);assert.equal(coverage()['source-pin'],38);
  for(const t of terms){const r=t.representation;assert.ok(r.reference,t.name);assert.ok(['mesh','source-pin','3d-landmark','teaching-pin','concept','reference'].includes(r.kind),t.name);if(r.kind==='reference'){assert.equal(r.assessment,'learn-only');assert.ok(r.reviewStatus);}}
  assert.deepEqual(terms.filter(t=>t.representation.kind==='concept').map(t=>t.name),['Anterior drawer','Posterior drawer']);
  assert.equal(terms.find(t=>t.name==='Fontanelles').representation.kind,'reference');

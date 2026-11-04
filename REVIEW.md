@@ -1,3 +1,7 @@
+# Focused practical follow-up — 2026-11-04
+
+The [sixteen-target review](EXAM-LANDMARK-CLARITY.md) supersedes older target positions and presentation for the reported questions. It distinguishes restored native apertures, source-route teaching reconstructions and representative surface/length guides. The concha teaching cutaway is qualitative; it is not a newly acquired anatomical scan. Existing unresolved anatomy remains held. Earlier audit images below may depict the problems before correction.
+
 # Anatomy review — 2026-10-19
 
 The review reconciles all **310 named textbook features** and **422 atlas/course entries**. All **177 original lab IDs** are preserved. Of the textbook features, **55 have applied corrections**, **247 retain supported source/morphology references**, and **8 remain study references excluded from scored locating**. These counts describe review dispositions, not clinical certification.

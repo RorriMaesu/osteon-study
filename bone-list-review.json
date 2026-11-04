@@ -113,7 +113,8 @@
         "Vertebra T11",
         "Vertebra T12",
         "Vertebra T8",
-        "Vertebra T1"
+        "Vertebra T1",
+        "Vertebra T6"
       ],
       "aliases": []
     },
@@ -345,7 +346,8 @@
         "Vertebra T11",
         "Vertebra T12",
         "Vertebra T8",
-        "Vertebra T1"
+        "Vertebra T1",
+        "Vertebra T6"
       ],
       "aliases": [
         "thoracic vertebra"
@@ -479,6 +481,7 @@
       "assessment": "supported",
       "reference": "7.3",
       "geometry": [
+        "Vertebra T6",
         "Vertebra T6"
       ],
       "aliases": [
@@ -1142,6 +1145,8 @@
       "reference": "7.2",
       "geometry": [
         "Parietal bone.r",
+        "Parietal bone.l",
+        "Parietal bone.r",
         "Parietal bone.l"
       ],
       "aliases": [
@@ -1169,7 +1174,9 @@
         "Parietal bone.r",
         "Parietal bone.l",
         "Frontal bone",
-        "Frontal bone"
+        "Frontal bone",
+        "Parietal bone.r",
+        "Parietal bone.l"
       ],
       "aliases": []
     },
@@ -1191,6 +1198,8 @@
       "assessment": "supported",
       "reference": "7.2",
       "geometry": [
+        "Parietal bone.r",
+        "Parietal bone.l",
         "Parietal bone.r",
         "Parietal bone.l"
       ],
@@ -1390,8 +1399,8 @@
       "geometry": [
         "Occipital bone",
         "Temporal bone.r",
-        "Occipital bone",
-        "Temporal bone.r"
+        "Temporal bone.r",
+        "Occipital bone"
       ],
       "aliases": []
     },
@@ -1512,6 +1521,8 @@
         "Parietal bone.r",
         "Parietal bone.l",
         "Occipital bone",
+        "Parietal bone.r",
+        "Parietal bone.l",
         "Occipital bone"
       ],
       "aliases": []
@@ -1699,12 +1710,13 @@
         "Lab 6 · Cranial bones"
       ],
       "status": "3D reference label",
-      "kind": "3d-landmark",
+      "kind": "teaching-pin",
       "assessment": "supported",
       "reference": "7.2",
       "geometry": [
-        "Ethmoid bone",
-        "Ethmoid bone"
+        "Superior concha of right ethmoid",
+        "Middle concha of right ethmoid",
+        "Ethmoid cutaway context"
       ],
       "aliases": []
     },
@@ -1871,6 +1883,7 @@
       "assessment": "supported",
       "reference": "7.2",
       "geometry": [
+        "Mandible",
         "Mandible"
       ],
       "aliases": []
@@ -1893,6 +1906,7 @@
       "assessment": "supported",
       "reference": "7.2",
       "geometry": [
+        "Mandible",
         "Mandible"
       ],
       "aliases": [
@@ -1919,6 +1933,7 @@
       "assessment": "supported",
       "reference": "7.2",
       "geometry": [
+        "Mandible",
         "Mandible"
       ],
       "aliases": []
@@ -1941,6 +1956,7 @@
       "assessment": "supported",
       "reference": "7.2",
       "geometry": [
+        "Mandible",
         "Mandible"
       ],
       "aliases": [
@@ -1965,6 +1981,7 @@
       "assessment": "supported",
       "reference": "7.2",
       "geometry": [
+        "Mandible",
         "Mandible"
       ],
       "aliases": []
@@ -2127,7 +2144,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": [
         "scapula"
@@ -2152,7 +2170,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": []
     },
@@ -2175,7 +2194,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": [
         "Acromial process",
@@ -2201,7 +2221,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": [
         "spine of the scapula"
@@ -2226,7 +2247,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": []
     },
@@ -2249,7 +2271,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": []
     },
@@ -2272,7 +2295,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": []
     },
@@ -2290,12 +2314,12 @@
         "Lab 7 · Thoracic Limb"
       ],
       "status": "3D reference label",
-      "kind": "source-pin",
+      "kind": "3d-landmark",
       "assessment": "supported",
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.r"
       ],
       "aliases": []
     },
@@ -2313,12 +2337,12 @@
         "Lab 7 · Thoracic Limb"
       ],
       "status": "3D reference label",
-      "kind": "source-pin",
+      "kind": "3d-landmark",
       "assessment": "supported",
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.r"
       ],
       "aliases": []
     },
@@ -2341,7 +2365,8 @@
       "reference": "8.2",
       "geometry": [
         "Scapula.r",
-        "Scapula.l"
+        "Scapula.l",
+        "Scapula.r"
       ],
       "aliases": [
         "vertebral border",
@@ -2368,7 +2393,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": [
         "humerus"
@@ -2393,7 +2419,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": [
         "Head of the humerus"
@@ -2418,7 +2445,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": [
         "anatomical neck"
@@ -2438,12 +2466,12 @@
         "Lab 7 · Thoracic Limb"
       ],
       "status": "3D reference label",
-      "kind": "source-pin",
+      "kind": "3d-landmark",
       "assessment": "supported",
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.r"
       ],
       "aliases": [
         "Shaft of the humerus"
@@ -2468,7 +2496,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": []
     },
@@ -2486,12 +2515,12 @@
         "Lab 7 · Thoracic Limb"
       ],
       "status": "3D reference label",
-      "kind": "source-pin",
+      "kind": "3d-landmark",
       "assessment": "supported",
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.r"
       ],
       "aliases": []
     },
@@ -2514,7 +2543,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": [
         "Medial epicondyle of the humerus"
@@ -2539,7 +2569,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": [
         "Lateral epicondyle of the humerus"
@@ -2564,7 +2595,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": []
     },
@@ -2586,6 +2618,7 @@
       "assessment": "supported",
       "reference": "8.2",
       "geometry": [
+        "Humerus.r",
         "Humerus.r"
       ],
       "aliases": []
@@ -2609,7 +2642,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": []
     },
@@ -2632,7 +2666,8 @@
       "reference": "8.2",
       "geometry": [
         "Humerus.r",
-        "Humerus.l"
+        "Humerus.l",
+        "Humerus.r"
       ],
       "aliases": []
     },
@@ -2654,6 +2689,7 @@
       "assessment": "supported",
       "reference": "8.2",
       "geometry": [
+        "Humerus.r",
         "Humerus.r"
       ],
       "aliases": []
@@ -3241,7 +3277,8 @@
         "Hip bone.r",
         "Sacrum",
         "Hip bone.l",
-        "Sacrum"
+        "Sacrum",
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3310,7 +3347,8 @@
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.l",
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3333,7 +3371,8 @@
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.l",
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3356,7 +3395,8 @@
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.l",
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3379,7 +3419,8 @@
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.l",
+        "Hip bone.r"
       ],
       "aliases": [
         "Pelvic inlet"
@@ -3404,7 +3445,8 @@
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.l",
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3427,7 +3469,8 @@
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.l",
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3445,12 +3488,12 @@
         "Lab 7 · Pelvic Limb · pelvis"
       ],
       "status": "3D reference label",
-      "kind": "source-pin",
+      "kind": "3d-landmark",
       "assessment": "supported",
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3473,7 +3516,8 @@
       "reference": "8.3",
       "geometry": [
         "Hip bone.r",
-        "Hip bone.l"
+        "Hip bone.l",
+        "Hip bone.r"
       ],
       "aliases": []
     },
@@ -3689,7 +3733,8 @@
       "reference": "8.4",
       "geometry": [
         "Tibia.r",
-        "Tibia.l"
+        "Tibia.l",
+        "Tibia.r"
       ],
       "aliases": [
         "tibia"
@@ -3709,12 +3754,12 @@
         "Lab 7 · Pelvic Limb · lower limb"
       ],
       "status": "3D reference label",
-      "kind": "source-pin",
+      "kind": "3d-landmark",
       "assessment": "supported",
       "reference": "8.4",
       "geometry": [
         "Tibia.r",
-        "Tibia.l"
+        "Tibia.r"
       ],
       "aliases": []
     },
@@ -3732,12 +3777,12 @@
         "Lab 7 · Pelvic Limb · lower limb"
       ],
       "status": "3D reference label",
-      "kind": "source-pin",
+      "kind": "3d-landmark",
       "assessment": "supported",
       "reference": "8.4",
       "geometry": [
         "Tibia.r",
-        "Tibia.l"
+        "Tibia.r"
       ],
       "aliases": [
         "Anterior border of the tibia"
@@ -3762,7 +3807,8 @@
       "reference": "8.4",
       "geometry": [
         "Tibia.r",
-        "Tibia.l"
+        "Tibia.l",
+        "Tibia.r"
       ],
       "aliases": []
     },

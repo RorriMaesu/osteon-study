@@ -2,13 +2,14 @@
   "courseConcepts": 177,
   "representations": {
     "mesh": 80,
-    "source-pin": 45,
-    "3d-landmark": 49,
+    "source-pin": 38,
+    "3d-landmark": 55,
+    "teaching-pin": 1,
     "reference": 1,
     "concept": 2
   },
   "unrepresented": 0,
-  "modelObjects": 1156,
+  "modelObjects": 1178,
   "lessons": 24,
   "authoredQuestions": 504,
   "textbookTerms": 544,
