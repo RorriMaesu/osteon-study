@@ -35,10 +35,10 @@ export class AnatomyViewer {
   el.addEventListener('pointerup',e=>{
    const tapped=this.down&&!this.multiTouch&&Math.hypot(e.clientX-this.down[0],e.clientY-this.down[1])<6;
    this.activePointers.delete(e.pointerId);if(!this.activePointers.size)this.multiTouch=false;
-   if(tapped&&e.button===0){const m=this.hit(e);if(m){if(this.peel||e.shiftKey){this.lastTap=null;this.hiddenMeshes.add(m);document.querySelector('#hover-label').hidden=true;this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}else{
+   if(tapped&&e.button===0){const m=this.hit(e);if(m){if(this.peel||e.shiftKey){this.lastTap=null;if(m.userData.muscleId)this.muscleLayer.hide(m);else this.hiddenMeshes.add(m);document.querySelector('#hover-label').hidden=true;this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}else{
     this.onPick(m);
     if(e.pointerType==='touch'){
-     const now=performance.now(),next={bone:boneId(m.userData.zname),time:now,x:e.clientX,y:e.clientY};
+     const now=performance.now(),next={bone:m.userData.muscleId?(m.userData.component.muscleName+'|'+m.userData.component.side):boneId(m.userData.zname),time:now,x:e.clientX,y:e.clientY};
      if(doubleTap(this.lastTap,next)){this.lastTap=null;this.touchNavigationAt=now;this.navigateBone(m);e.preventDefault();}
      else this.lastTap=next;
     }
@@ -107,7 +107,7 @@ export class AnatomyViewer {
  }
 
  termFor(m){return termForMesh(m);}
- hit(e){if(!this.loaded)return null;const r=this.el.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);this.ray.setFromCamera(this.pointer,this.camera);return this.ray.intersectObjects(this.meshes.filter(m=>m.visible&&!m.userData.guideOnly&&(!m.userData.detailGroup||this.peel||e.shiftKey)),false)[0]?.object||null;}
+ hit(e){if(!this.loaded)return null;const r=this.el.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);this.ray.setFromCamera(this.pointer,this.camera);const hit=this.ray.intersectObjects(this.meshes.filter(m=>m.visible&&!m.userData.guideOnly&&(!m.userData.detailGroup||this.peel||e.shiftKey)),false)[0];if(this.muscleLayer?.ownsFocus())return this.muscleLayer.pick(this.ray,hit);return hit?.object||null;}
  snapshot(){return{focus:{...this.focus},region:this.region,selected:[...this.selected],selectedTerm:this.selectedTerm,activeDetail:this.activeDetail,cutaway:this.cutaway,isolated:this.isolated,ghost:this.ghost,pins:(this.pins||[]).map(p=>({term:p.term,point:[...p.point],label:p.label})),pinLabels:this.pinLabels,hiddenMeshes:new Set(this.hiddenMeshes),position:(this.tween?.to||this.camera.position).clone(),target:(this.tween?.targetTo||this.controls.target).clone()};}
  notifyFocus(){this.el.dataset.focus=this.focus.level;this.el.dataset.area=this.focus.areaId||'';document.querySelector('#hover-label').hidden=true;document.dispatchEvent(new CustomEvent('atlasfocuschange'));}
  focusLabel(){if(this.activeDetail==='fetal-skull')return 'Fetal skull · site guide';return this.focus.areaId?areaLabel(this.focus.areaId,this.focus.side):this.region;}
@@ -117,7 +117,7 @@ export class AnatomyViewer {
   return inArea(n,this.focus.areaId,this.focus.side)||(this.focus.areaId==='skull'&&m.userData.region==='Skull')||(this.focus.areaId==='thorax'&&/^Costal cartilage/.test(n))||(this.focus.areaId==='neck'&&/Thyroid cartilage|Cricoid cartilage|Arytenoid cartilage|Corniculate cartilage/.test(n));
  }
  boneMeshes(m){const id=boneId(m.userData.zname);return this.meshes.filter(x=>boneId(x.userData.zname)===id);}
- navigateBone(m){const action=navigationAction(this.focus,m.userData.zname,this.quiz||this.peel);if(action==='region')this.exploreBoneRegion(m);else if(action==='bone')this.focusBone(m);}
+ navigateBone(m){if(m.userData.muscleId){this.muscleLayer?.navigate(m);return;}const action=navigationAction(this.focus,m.userData.zname,this.quiz||this.peel);if(action==='region')this.exploreBoneRegion(m);else if(action==='bone')this.focusBone(m);}
  exploreBoneRegion(m=this.selected[0]){
   if(!m||this.quiz)return;
   this.peel=false;document.dispatchEvent(new Event('layerschanged'));
@@ -135,6 +135,7 @@ export class AnatomyViewer {
   const landmark=this.selectedTerm&&!this.selectedTerm.exact&&this.find(this.selectedTerm).some(x=>boneId(x.userData.zname)===boneId(m.userData.zname))?this.selectedTerm:null;const retained=this.pins.map(p=>({term:p.term,point:p.point,label:p.label}));this.clearPins();this.selected=this.boneMeshes(m);this.selected.forEach(x=>this.hiddenMeshes.delete(x));this.selectedTerm=this.focus.boneId==='Sternum'?allTerms.find(t=>t.name==='Sternum'):this.termFor(m);if(landmark){this.selectedTerm=landmark;this.showPins(retained,{labelled:true});this.showOutline(landmark.representation?.outline);}this.isolated=true;this.ghost=false;this.controls.autoRotate=false;this.applyVisibility();this.frame(this.selected);this.notifyFocus();
  }
  back(){
+  if(this.muscleLayer?.back())return;
   if(this.quiz)return;
   const previous=this.focusHistory.pop();
   if(!previous){if(this.focus.level!=='overview')this.reset();return;}
@@ -207,7 +208,7 @@ export class AnatomyViewer {
    m.material.opacity=display.opacity;m.material.transparent=display.opacity<1;m.material.depthWrite=!m.material.transparent;
    const family=this.skullColors&&!this.quiz&&this.focus.level!=='overview'&&!m.userData.nonbone?boneFamily(m.userData.zname):null;
    const c=family?parseInt(family.color.slice(1),16):selected.has(m)?(pointKinds.includes(r?.kind)?0xe5e1cd:0xb5e6be):m.userData.sinus?0xa1b59b:m.userData.tissue?/artery/.test(m.userData.zname)?0xd98878:0xc9aa7b:m.userData.nonbone?0x9da9a1:0xe5e1cd;m.material.color.setHex(c);m.material.emissive.setHex(selected.has(m)&&!pointKinds.includes(r?.kind)?0x14291b:0x000000);
-  }this.syncLayerControls();this.refreshLandmarkTools();
+  }this.muscleLayer?.updateVisibility();this.syncLayerControls();this.refreshLandmarkTools();
  }
 
 
@@ -226,6 +227,7 @@ export class AnatomyViewer {
  xray(){if(!this.selected.length)return false;this.ghost=!this.ghost;this.isolated=false;this.applyVisibility();return this.ghost;}
  resize(){this.needsRender=true;const w=this.el.clientWidth,h=this.el.clientHeight;if(!w||!h||!this.renderer)return;const previous=this.camera.aspect,direction=(this.tween?.to||this.camera.position).clone().sub(this.tween?.targetTo||this.controls.target).normalize().toArray();this.camera.aspect=w/h;this.camera.updateProjectionMatrix();this.renderer.setSize(w,h,false);if(this.pendingFrame){const pending=this.pendingFrame;this.pendingFrame=null;this.frameBox(pending.box,pending.side);return;}if(this.drawerMotion?.active){this.drawerMotion.frame(direction);return;}if(this.loaded&&Math.abs(Math.log(this.camera.aspect/previous))>.12){if(this.pins?.length)this.focusFeature(undefined,{direction});else this.frameScope(direction);}}
  frameScope(side='front'){
+  if(this.muscleLayer?.ownsFocus()){this.muscleLayer.frame(side);return;}
   if(this.drawerMotion?.active){this.drawerMotion.frame(side);return;}
   if(this.activeDetail){this.frame(this.meshes.filter(m=>m.visible),side);return;}
   if(!this.quiz&&this.focus.areaId&&this.focus.level==='region'){
@@ -250,7 +252,7 @@ export class AnatomyViewer {
  moveFramedCamera(center,direction,distance,rect=null){const target=center.clone();if(rect){const right=new THREE.Vector3(0,1,0).cross(direction);if(right.lengthSq()<.001)right.set(1,0,0);right.normalize();const up=direction.clone().cross(right),nx=(rect.x+rect.width/2)/this.el.clientWidth*2-1,ny=1-(rect.y+rect.height/2)/this.el.clientHeight*2,scale=distance*Math.tan(THREE.MathUtils.degToRad(16));target.addScaledVector(right,-nx*scale*this.camera.aspect).addScaledVector(up,-ny*scale);}this.moveCamera(target.clone().addScaledVector(direction,distance),target);}
  moveCamera(pos,target){if(!pos.toArray().every(Number.isFinite)||!target.toArray().every(Number.isFinite))return;this.needsRender=true;if(!this.camera.position.toArray().every(Number.isFinite)||!this.controls.target.toArray().every(Number.isFinite)){this.camera.position.copy(pos);this.controls.target.copy(target);this.controls.update();this.tween=null;return;}if(this.reduced){this.camera.position.copy(pos);this.controls.target.copy(target);this.controls.update();return;}this.tween={start:performance.now(),from:this.camera.position.clone(),to:pos,targetFrom:this.controls.target.clone(),targetTo:target};}
  view(side){this.controls.autoRotate=false;const direction={front:[0,.04,1],back:[0,.04,-1],left:[1,.04,0],right:[-1,.04,0],top:[0,1,.001],bottom:[0,-1,.001]}[side];if(direction&&pointKinds.includes(this.selectedTerm?.representation?.kind))this.focusFeature(undefined,{direction});else this.frameScope(side);document.querySelectorAll('[data-camera]').forEach(b=>b.classList.toggle('active',b.dataset.camera===side));}
- restore(){this.hiddenMeshes.clear();this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}
- reset(){this.assessmentTask=null;this.answerRevealed=false;this.drawerMotion?.stop();this.activeDetail=null;this.cutaway=null;this.sinuses=false;this.controls.autoRotate=false;this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];this.lastTap=null;document.querySelector('#rotate-btn').setAttribute('aria-pressed','false');this.clearPins();this.annotationUI?.clear();this.hiddenMeshes.clear();this.peel=false;document.dispatchEvent(new Event('layerschanged'));this.selected=[];this.selectedTerm=null;this.isolated=false;this.ghost=false;this.region='All regions';this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));this.notifyFocus();}
- animate(){if(!this.running)return;requestAnimationFrame(()=>this.animate());if(document.hidden||!this.el.getClientRects().length)return;if(this.tween){const t=Math.min((performance.now()-this.tween.start)/700,1),e=1-Math.pow(1-t,3);this.camera.position.lerpVectors(this.tween.from,this.tween.to,e);this.controls.target.lerpVectors(this.tween.targetFrom,this.tween.targetTo,e);if(t===1)this.tween=null;}this.controls.update();this.drawerMotion?.update();if(this.needsRender||performance.now()-(this.lastAnnotationUpdate||0)>250){this.layoutPins();this.landmarkOverlay?.update();this.lastAnnotationUpdate=performance.now();}if(!this.graphicsLost&&!this.referenceOpen&&this.el.clientWidth&&this.el.clientHeight&&(this.needsRender||this.tween||this.controls.autoRotate||this.drawerMotion?.moving)){this.renderer.render(this.scene,this.camera);this.needsRender=false;}}
+ restore(){this.muscleLayer?.restore();this.hiddenMeshes.clear();this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}
+ reset(){this.muscleLayer?.release();this.assessmentTask=null;this.answerRevealed=false;this.drawerMotion?.stop();this.activeDetail=null;this.cutaway=null;this.sinuses=false;this.controls.autoRotate=false;this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];this.lastTap=null;document.querySelector('#rotate-btn').setAttribute('aria-pressed','false');this.clearPins();this.annotationUI?.clear();this.hiddenMeshes.clear();this.peel=false;document.dispatchEvent(new Event('layerschanged'));this.selected=[];this.selectedTerm=null;this.isolated=false;this.ghost=false;this.region='All regions';this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));this.notifyFocus();}
+ animate(){if(!this.running)return;requestAnimationFrame(()=>this.animate());if(document.hidden||!this.el.getClientRects().length)return;if(this.tween){const t=Math.min((performance.now()-this.tween.start)/700,1),e=1-Math.pow(1-t,3);this.camera.position.lerpVectors(this.tween.from,this.tween.to,e);this.controls.target.lerpVectors(this.tween.targetFrom,this.tween.targetTo,e);if(t===1)this.tween=null;}this.controls.update();this.drawerMotion?.update();if(this.needsRender||performance.now()-(this.lastAnnotationUpdate||0)>250){this.layoutPins();this.landmarkOverlay?.update();this.muscleLayer?.updateLabel();this.lastAnnotationUpdate=performance.now();}if(!this.graphicsLost&&!this.referenceOpen&&this.el.clientWidth&&this.el.clientHeight&&(this.needsRender||this.tween||this.controls.autoRotate||this.drawerMotion?.moving)){this.renderer.render(this.scene,this.camera);this.needsRender=false;}}
 }

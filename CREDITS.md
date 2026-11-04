@@ -84,3 +84,7 @@ The long-bone, osteon, vertebra and right-limb exam schematics are original simp
 ## Chapter 10 muscle-tissue extension
 
 The complete Chapter 10 source reader (PDF pages 385–424), 85 glossary entries and 27-objective index are from the supplied OpenStax Anatomy and Physiology 2e, © 2026 Rice University, CC BY-NC-SA 4.0. Access for free at openstax.org. New explanations, assessments and qualitative teaching schematics are educational adaptations under the same content license. Schematics are explicitly not micrographs or calibrated simulations. Raw Chapter 10 textbook text is not supplied to local AI. The unreviewed muscular-system inventory is derived from Z-Anatomy and retains its CC BY-SA 4.0 provenance.
+
+## Regional muscle atlas
+
+The optional regional muscle GLBs are exported from the preserved Z-Anatomy / BodyParts3D Blender atlas using Blender 4.5.1 LTS. Individual source identities, anatomical sides and world transforms are retained. Compression changes storage, not the intended anatomy. Named component geometry and model-derived metadata retain CC BY-SA 4.0 with the original Z-Anatomy and BodyParts3D attribution above. This is a static anatomical reference, not a validated motion or attachment-footprint simulation. Backups of every changed model destination and the original source remain outside the public repository.

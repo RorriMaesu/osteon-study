@@ -1,3 +1,4 @@
+import {initMuscleAtlas} from './muscle-atlas.js';
 import {attachDrawerMotion} from './drawer-motion.js';
 import {initClarityPractical} from './clarity-practical.js';
 import {attachViewerRecovery} from './viewer-recovery.js';
@@ -158,3 +159,5 @@ initClarityPractical({viewer,setView});
 const requestedFeature=new URLSearchParams(location.search).get('feature');
 if(requestedFeature){const term=allTerms.find(t=>t.id===requestedFeature||t.feature?.id===requestedFeature);if(term)selectTerm(term);}
 document.addEventListener('click',event=>{const id=event.target.closest('[data-member-term]')?.dataset.memberTerm;if(id){const term=allTerms.find(t=>t.id===id);if(term)selectTerm(term);}});
+
+export const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region=viewer.region;selected=null;syncFilters();resetDetail();renderList();updateButtons();}});

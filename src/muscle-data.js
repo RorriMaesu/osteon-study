@@ -1,0 +1,19 @@
+export const muscleRegions={'head-neck':'Head & neck','trunk-back':'Trunk & back','shoulder-arm':'Shoulder & upper arm','forearm-hand':'Forearm & hand','pelvis-leg-foot':'Pelvis, leg & foot'};
+export function componentVisible(c,s){return s.enabled&&!s.quiz&&!s.activeDetail&&!s.hidden.has(c.id)&&(s.region==='all'||c.region===s.region)&&(s.side==='both'||c.side===s.side||c.side==='midline')&&(s.support||c.kind==='muscle')&&(s.depth==='all'||c.depth===s.depth)&&(!s.focused||(s.selectedIds?s.selectedIds.has(c.id):c.id===s.selected));}
+export function muscleBoneContext(name,region,side){
+ if(side!=='both'&&/\.[lr]$/.test(name)&&!name.endsWith(side==='right'?'.r':'.l'))return false;
+ return ({'shoulder-arm':/^(Clavicle|Scapula|Humerus|Radius|Ulna)/,'forearm-hand':/^(Humerus|Radius|Ulna)|of hand|carpal|Scaphoid|Lunate|Triquetrum|Pisiform|Trapez|Capitate|Hamate/i,'head-neck':/Skull|Vertebra C|Atlas|Axis|Hyoid|bone|cartilage/i,'trunk-back':/rib|vertebra|Sternum|Manubrium|Xiphoid|Scapula|Clavicle|Hip bone|Sacrum|Coccyx|cartilage/i,'pelvis-leg-foot':/Hip bone|Sacrum|Coccyx|Femur|Patella|Tibia|Fibula|Talus|Calcaneus|Navicular|Cuboid|cuneiform|metatarsal|of foot|symphysis/i}[region]||/.*/).test(name);
+}
+export function componentColor(name){let h=0;for(const c of name)h=(Math.imul(h,31)+c.charCodeAt(0))>>>0;return ['#b97765','#b69bc8','#70b7aa','#dfb867','#8eaed1','#d48d9b','#a8b66c','#c58f58'][h%8];}
+const pilotFacts=[
+ [/biceps brachii/i,'Biceps brachii','Long head: supraglenoid tubercle; short head: coracoid process.','Radial tuberosity, with the bicipital aponeurosis also transmitting force into forearm fascia.','Flexes the elbow and supinates the forearm; also assists shoulder flexion.'],
+ [/triceps brachii/i,'Triceps brachii','Long head: infraglenoid tubercle; other heads: posterior humerus on the corresponding sides of the radial groove.','Olecranon of the ulna through the triceps tendon.','Extends the elbow; the long head also crosses the shoulder.'],
+ [/deltoid muscle/i,'Deltoid','Lateral clavicle, acromion and spine of the scapula, according to the part.','Deltoid tuberosity of the humerus.','Acromial fibers abduct; anterior and posterior parts contribute different flexion and rotation actions.'],
+ [/^Brachialis/i,'Brachialis','Distal anterior humerus.','Ulnar tuberosity and coronoid-process region.','Flexes the elbow.'],
+ [/Coracobrachialis/i,'Coracobrachialis','Coracoid process.','Medial humeral shaft.','Assists shoulder flexion and adduction.'],
+ [/Supraspinatus/i,'Supraspinatus','Supraspinous fossa.','Superior facet of the greater tubercle and adjacent capsule.','Assists initiation of abduction and contributes to rotator-cuff stabilization.'],
+ [/Infraspinatus/i,'Infraspinatus','Infraspinous fossa.','Middle facet of the greater tubercle and adjacent capsule.','Laterally rotates the humerus and stabilizes the shoulder.'],
+ [/Teres minor/i,'Teres minor','Lateral scapular border.','Inferior facet of the greater tubercle and adjacent capsule.','Laterally rotates the humerus and contributes to cuff stabilization.'],
+ [/Subscapularis/i,'Subscapularis','Subscapular fossa.','Lesser tubercle and adjacent capsule.','Medially rotates the humerus and stabilizes the shoulder.']
+];
+export function muscleFacts(c){const row=pilotFacts.find(([rx])=>rx.test(c.sourceName));return row?{name:row[1],origin:row[2],insertion:row[3],action:row[4],reference:'11.5'}:null;}

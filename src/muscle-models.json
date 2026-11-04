@@ -1,0 +1,1004 @@
+{
+  "schema": 1,
+  "source": "Z-Anatomy original Startup.blend",
+  "sourceURL": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+  "sourceSHA256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd",
+  "license": "CC BY-SA 4.0",
+  "blender": "4.5.1 LTS",
+  "phase": "pilot",
+  "initialBackup": "muscles-20261104-211139-494953",
+  "assets": {
+    "shoulder-arm": {
+      "file": "muscles-shoulder-arm.glb",
+      "bytes": 360036,
+      "sha256": "05c3cad82d0c612c950e57a8ab9deedf5b4411ba7ff4ad9a14297c1fdddbb6be",
+      "components": 30,
+      "backup": "muscles-20261104-211144-590913"
+    }
+  },
+  "components": [
+    {
+      "id": "muscle-acromial-part-of-deltoid-muscle-r",
+      "sourceName": "Acromial part of deltoid muscle.r",
+      "name": "Acromial part of deltoid muscle",
+      "muscleName": "Deltoid muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Deltoid muscle.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2964,
+      "bounds": {
+        "min": [
+          -0.23491400480270386,
+          1.2686067819595337,
+          -0.06286647170782089
+        ],
+        "max": [
+          -0.15944331884384155,
+          1.4162116050720215,
+          0.0005333274602890015
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-clavicular-part-of-deltoid-muscle-r",
+      "sourceName": "Clavicular part of deltoid muscle.r",
+      "name": "Clavicular part of deltoid muscle",
+      "muscleName": "Deltoid muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Deltoid muscle.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2902,
+      "bounds": {
+        "min": [
+          -0.21046648919582367,
+          1.268237829208374,
+          -0.03443631902337074
+        ],
+        "max": [
+          -0.08446329087018967,
+          1.423707365989685,
+          0.020371250808238983
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "sourceName": "Scapular spinal part of deltoid muscle.r",
+      "name": "Scapular spinal part of deltoid muscle",
+      "muscleName": "Deltoid muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Deltoid muscle.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 4378,
+      "bounds": {
+        "min": [
+          -0.2270682454109192,
+          1.250761866569519,
+          -0.1030786782503128
+        ],
+        "max": [
+          -0.09030629694461823,
+          1.407200813293457,
+          -0.023013509809970856
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-acromial-part-of-deltoid-muscle-l",
+      "sourceName": "Acromial part of deltoid muscle.l",
+      "name": "Acromial part of deltoid muscle",
+      "muscleName": "Deltoid muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Deltoid muscle.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2964,
+      "bounds": {
+        "min": [
+          0.15944330394268036,
+          1.2686067819595337,
+          -0.06286647915840149
+        ],
+        "max": [
+          0.23491400480270386,
+          1.4162116050720215,
+          0.0005333349108695984
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-clavicular-part-of-deltoid-muscle-l",
+      "sourceName": "Clavicular part of deltoid muscle.l",
+      "name": "Clavicular part of deltoid muscle",
+      "muscleName": "Deltoid muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Deltoid muscle.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2902,
+      "bounds": {
+        "min": [
+          0.08446326851844788,
+          1.268237829208374,
+          -0.034436315298080444
+        ],
+        "max": [
+          0.21046647429466248,
+          1.423707365989685,
+          0.02037126198410988
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "sourceName": "Scapular spinal part of deltoid muscle.l",
+      "name": "Scapular spinal part of deltoid muscle",
+      "muscleName": "Deltoid muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Deltoid muscle.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 4378,
+      "bounds": {
+        "min": [
+          0.09030627459287643,
+          1.250761866569519,
+          -0.1030786857008934
+        ],
+        "max": [
+          0.2270682454109192,
+          1.407200813293457,
+          -0.02301350235939026
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-subscapularis-muscle-r",
+      "sourceName": "Subscapularis muscle.r",
+      "name": "Subscapularis muscle",
+      "muscleName": "Subscapularis muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2954,
+      "bounds": {
+        "min": [
+          -0.17015749216079712,
+          1.2775102853775024,
+          -0.1063304990530014
+        ],
+        "max": [
+          -0.06513305008411407,
+          1.3920843601226807,
+          -0.0013665184378623962
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-supraspinatus-muscle-r",
+      "sourceName": "Supraspinatus muscle.r",
+      "name": "Supraspinatus muscle",
+      "muscleName": "Supraspinatus muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 1430,
+      "bounds": {
+        "min": [
+          -0.1947879046201706,
+          1.37852144241333,
+          -0.0958818718791008
+        ],
+        "max": [
+          -0.06973342597484589,
+          1.4112880229949951,
+          -0.011102188378572464
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-teres-minor-muscle-r",
+      "sourceName": "Teres minor muscle.r",
+      "name": "Teres minor muscle",
+      "muscleName": "Teres minor muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 1522,
+      "bounds": {
+        "min": [
+          -0.19722731411457062,
+          1.2947170734405518,
+          -0.09728660434484482
+        ],
+        "max": [
+          -0.10110703110694885,
+          1.3842159509658813,
+          -0.021403536200523376
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-infraspinatus-muscle-r",
+      "sourceName": "Infraspinatus muscle.r",
+      "name": "Infraspinatus muscle",
+      "muscleName": "Infraspinatus muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3166,
+      "bounds": {
+        "min": [
+          -0.1955491602420807,
+          1.285933256149292,
+          -0.11704857647418976
+        ],
+        "max": [
+          -0.06298725306987762,
+          1.3994914293289185,
+          -0.025253135710954666
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-subscapularis-muscle-l",
+      "sourceName": "Subscapularis muscle.l",
+      "name": "Subscapularis muscle",
+      "muscleName": "Subscapularis muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2954,
+      "bounds": {
+        "min": [
+          0.06513303518295288,
+          1.277510166168213,
+          -0.106330506503582
+        ],
+        "max": [
+          0.17015749216079712,
+          1.3920842409133911,
+          -0.0013665072619915009
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-supraspinatus-muscle-l",
+      "sourceName": "Supraspinatus muscle.l",
+      "name": "Supraspinatus muscle",
+      "muscleName": "Supraspinatus muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 1430,
+      "bounds": {
+        "min": [
+          0.0697334036231041,
+          1.3785213232040405,
+          -0.0958818793296814
+        ],
+        "max": [
+          0.1947878897190094,
+          1.4112879037857056,
+          -0.011102180927991867
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-teres-minor-muscle-l",
+      "sourceName": "Teres minor muscle.l",
+      "name": "Teres minor muscle",
+      "muscleName": "Teres minor muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 1522,
+      "bounds": {
+        "min": [
+          0.10110701620578766,
+          1.2947169542312622,
+          -0.09728659689426422
+        ],
+        "max": [
+          0.19722729921340942,
+          1.3842158317565918,
+          -0.021403521299362183
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-infraspinatus-muscle-l",
+      "sourceName": "Infraspinatus muscle.l",
+      "name": "Infraspinatus muscle",
+      "muscleName": "Infraspinatus muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Rotator cuff muscles.g",
+        "Scapulohumeral muscles.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3166,
+      "bounds": {
+        "min": [
+          0.06298723071813583,
+          1.2859331369400024,
+          -0.11704858392477036
+        ],
+        "max": [
+          0.1955491453409195,
+          1.399491310119629,
+          -0.02525312453508377
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-long-head-of-biceps-brachii-r",
+      "sourceName": "Long head of biceps brachii.r",
+      "name": "Long head of biceps brachii",
+      "muscleName": "Biceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Biceps brachii muscle.g",
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3218,
+      "bounds": {
+        "min": [
+          -0.23747877776622772,
+          1.0508124828338623,
+          -0.04129200056195259
+        ],
+        "max": [
+          -0.1422821283340454,
+          1.407930850982666,
+          0.008411533199250698
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-short-head-of-biceps-brachii-r",
+      "sourceName": "Short head of biceps brachii.r",
+      "name": "Short head of biceps brachii",
+      "muscleName": "Biceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Biceps brachii muscle.g",
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2696,
+      "bounds": {
+        "min": [
+          -0.2196807861328125,
+          1.1241426467895508,
+          -0.02649921551346779
+        ],
+        "max": [
+          -0.13818997144699097,
+          1.397200107574463,
+          0.007932032458484173
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-long-head-of-biceps-brachii-l",
+      "sourceName": "Long head of biceps brachii.l",
+      "name": "Long head of biceps brachii",
+      "muscleName": "Biceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Biceps brachii muscle.g",
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3218,
+      "bounds": {
+        "min": [
+          0.1422821283340454,
+          1.0508121252059937,
+          -0.04129200056195259
+        ],
+        "max": [
+          0.23747877776622772,
+          1.4079303741455078,
+          0.008411535061895847
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-short-head-of-biceps-brachii-l",
+      "sourceName": "Short head of biceps brachii.l",
+      "name": "Short head of biceps brachii",
+      "muscleName": "Biceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Biceps brachii muscle.g",
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2696,
+      "bounds": {
+        "min": [
+          0.13818995654582977,
+          1.1241422891616821,
+          -0.02649921365082264
+        ],
+        "max": [
+          0.2196807712316513,
+          1.3971997499465942,
+          0.007932035252451897
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-brachialis-muscle-r",
+      "sourceName": "Brachialis muscle.r",
+      "name": "Brachialis muscle",
+      "muscleName": "Brachialis muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3478,
+      "bounds": {
+        "min": [
+          -0.24288880825042725,
+          1.0521903038024902,
+          -0.04225198179483414
+        ],
+        "max": [
+          -0.18199317157268524,
+          1.2844921350479126,
+          -0.015104075893759727
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-coracobrachialis-muscle-r",
+      "sourceName": "Coracobrachialis muscle.r",
+      "name": "Coracobrachialis muscle",
+      "muscleName": "Coracobrachialis muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 1160,
+      "bounds": {
+        "min": [
+          -0.19567076861858368,
+          1.2329797744750977,
+          -0.03592050075531006
+        ],
+        "max": [
+          -0.13484403491020203,
+          1.391714096069336,
+          -0.000899219885468483
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-brachialis-muscle-l",
+      "sourceName": "Brachialis muscle.l",
+      "name": "Brachialis muscle",
+      "muscleName": "Brachialis muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3478,
+      "bounds": {
+        "min": [
+          0.18199311196804047,
+          1.0521903038024902,
+          -0.04225197806954384
+        ],
+        "max": [
+          0.24288874864578247,
+          1.2844921350479126,
+          -0.015104073099792004
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-coracobrachialis-muscle-l",
+      "sourceName": "Coracobrachialis muscle.l",
+      "name": "Coracobrachialis muscle",
+      "muscleName": "Coracobrachialis muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Anterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 1160,
+      "bounds": {
+        "min": [
+          0.13484397530555725,
+          1.2329797744750977,
+          -0.03592050075531006
+        ],
+        "max": [
+          0.1956707090139389,
+          1.391714096069336,
+          -0.000899219885468483
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-medial-head-of-triceps-brachii-r",
+      "sourceName": "Medial head of triceps brachii.r",
+      "name": "Medial head of triceps brachii",
+      "muscleName": "Triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Triceps brachii muscle.g",
+        "Posterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2686,
+      "bounds": {
+        "min": [
+          -0.2346428483724594,
+          1.0871999263763428,
+          -0.05738057196140289
+        ],
+        "max": [
+          -0.17233848571777344,
+          1.3215361833572388,
+          -0.03065553680062294
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-lateral-head-of-triceps-brachii-r",
+      "sourceName": "Lateral head of triceps brachii.r",
+      "name": "Lateral head of triceps brachii",
+      "muscleName": "Triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Triceps brachii muscle.g",
+        "Posterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3628,
+      "bounds": {
+        "min": [
+          -0.23628494143486023,
+          1.0940253734588623,
+          -0.08418194949626923
+        ],
+        "max": [
+          -0.18009915947914124,
+          1.3588143587112427,
+          -0.03348429873585701
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-long-head-of-triceps-brachii-r",
+      "sourceName": "Long head of triceps brachii.r",
+      "name": "Long head of triceps brachii",
+      "muscleName": "Triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Triceps brachii muscle.g",
+        "Posterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3950,
+      "bounds": {
+        "min": [
+          -0.22357085347175598,
+          1.093281865119934,
+          -0.08574287593364716
+        ],
+        "max": [
+          -0.13185079395771027,
+          1.3653568029403687,
+          -0.03835517540574074
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-medial-head-of-triceps-brachii-l",
+      "sourceName": "Medial head of triceps brachii.l",
+      "name": "Medial head of triceps brachii",
+      "muscleName": "Triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Triceps brachii muscle.g",
+        "Posterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 2686,
+      "bounds": {
+        "min": [
+          0.17233845591545105,
+          1.0871996879577637,
+          -0.057380564510822296
+        ],
+        "max": [
+          0.23464280366897583,
+          1.3215359449386597,
+          -0.030655531212687492
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-lateral-head-of-triceps-brachii-l",
+      "sourceName": "Lateral head of triceps brachii.l",
+      "name": "Lateral head of triceps brachii",
+      "muscleName": "Triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Triceps brachii muscle.g",
+        "Posterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3628,
+      "bounds": {
+        "min": [
+          0.18009912967681885,
+          1.0940251350402832,
+          -0.08418193459510803
+        ],
+        "max": [
+          0.23628489673137665,
+          1.3588141202926636,
+          -0.03348429501056671
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-long-head-of-triceps-brachii-l",
+      "sourceName": "Long head of triceps brachii.l",
+      "name": "Long head of triceps brachii",
+      "muscleName": "Triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "superficial",
+      "parents": [
+        "Triceps brachii muscle.g",
+        "Posterior compartment of arm.g",
+        "Muscles of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 3950,
+      "bounds": {
+        "min": [
+          0.13185074925422668,
+          1.093281626701355,
+          -0.08574286103248596
+        ],
+        "max": [
+          0.2235708087682724,
+          1.3653564453125,
+          -0.03835517168045044
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-subtendinous-bursa-of-triceps-brachii-muscle-r",
+      "sourceName": "Subtendinous bursa of triceps brachii muscle.r",
+      "name": "Subtendinous bursa of triceps brachii muscle",
+      "muscleName": "Subtendinous bursa of triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "right",
+      "kind": "support",
+      "depth": "deeper",
+      "parents": [
+        "Bursae of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 736,
+      "bounds": {
+        "min": [
+          -0.23094387352466583,
+          1.0936435461044312,
+          -0.06320935487747192
+        ],
+        "max": [
+          -0.20079410076141357,
+          1.1238317489624023,
+          -0.04692539945244789
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "id": "muscle-subtendinous-bursa-of-triceps-brachii-muscle-l",
+      "sourceName": "Subtendinous bursa of triceps brachii muscle.l",
+      "name": "Subtendinous bursa of triceps brachii muscle",
+      "muscleName": "Subtendinous bursa of triceps brachii muscle",
+      "region": "shoulder-arm",
+      "side": "left",
+      "kind": "support",
+      "depth": "deeper",
+      "parents": [
+        "Bursae of upper limb.g",
+        "Muscular system of upper limb.g",
+        "Muscular system.g"
+      ],
+      "sourcePolygons": 736,
+      "bounds": {
+        "min": [
+          0.20079416036605835,
+          1.0936435461044312,
+          -0.06320935487747192
+        ],
+        "max": [
+          0.2309439331293106,
+          1.1238317489624023,
+          -0.04692539945244789
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    }
+  ],
+  "note": "Component count is not distinct muscle count. Depth is a regional study filter, not a complete dissection plane. No movement rig or certified insertion footprint is asserted."
+}

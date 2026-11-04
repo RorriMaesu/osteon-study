@@ -287,3 +287,7 @@ Added all nine guided muscle-tissue sections and 27 source objectives, 85 glossa
 ## Chapter 10 expansion — phase 3
 
 Added nine guided physiology labs: tissue evidence, organization scale, sliding-filament and ATP/calcium controls, recruitment and stimulus traces, fiber types, exercise, cardiac connections, smooth-muscle regulation, and repair. Corrected desktop pagination so diagrams and controls stay together. All 169 checks pass; contraction activity visually reviewed at 1280×720.
+
+## Chapter 10 expansion — phase 4
+
+Blender 4.5 exported a bilateral 28-part shoulder/upper-arm pilot with original world transforms, verified source backups and destination snapshots before every save/export. The optional muscle layer groups heads into muscles while retaining part selection, provides labels, colors, side/depth filters, muscle/bone picking, focus and attachment teaching. Muscle geometry is hidden during assessments. Pilot source geometry is learn-only; precise attachment footprints and movement are not certified. All 172 checks pass.
