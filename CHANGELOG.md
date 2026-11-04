@@ -275,3 +275,7 @@ Earlier release notes below describe historical states and are superseded by thi
 - Final live review also corrected compressed-transfer percentages and reserved clear specimen space above the camera controls.
 
 - Versioned application and stylesheet URLs by content hash after a live browser retained a cached prior-stage stylesheet.
+
+## Chapter 10 expansion — phase 1
+
+Whole chapter-number parsing now supports Chapter 10 in question authoring, scheduling, weighting, progress and saved lesson work. Added the complete 40-page Chapter 10 reader and its 27-objective source index. The 669-component muscular source inventory is explicitly unreviewed. Existing exams and keys retain their scope and versions. Raw Chapter 10 source text is excluded from local-AI retrieval. No model geometry changed.

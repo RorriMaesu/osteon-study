@@ -1,0 +1,3352 @@
+{
+  "source": "Z-Anatomy original atlas",
+  "license": "CC BY-SA 4.0",
+  "note": "Components include heads, tendons, fascia and other support structures; this is not a count of distinct muscles. No spatial scoring approval is implied.",
+  "components": [
+    {
+      "sourceName": "Lateral rectus muscle.l",
+      "polygons": 1600,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral rectus muscle.r",
+      "polygons": 1600,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior oblique muscle.l",
+      "polygons": 1750,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior oblique muscle.r",
+      "polygons": 1750,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Common tendinous ring.r",
+      "polygons": 362,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior oblique muscle.r",
+      "polygons": 1148,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior rectus muscle.r",
+      "polygons": 1736,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior tarsus.r",
+      "polygons": 106,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator palpebrae superioris.r",
+      "polygons": 2152,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial rectus muscle.r",
+      "polygons": 1252,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior rectus muscle.r",
+      "polygons": 1284,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior tarsus.r",
+      "polygons": 178,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochlea of superior oblique muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Common tendinous ring.l",
+      "polygons": 362,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior oblique muscle.l",
+      "polygons": 1148,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior rectus muscle.l",
+      "polygons": 1736,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior tarsus.l",
+      "polygons": 106,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator palpebrae superioris.l",
+      "polygons": 2152,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial rectus muscle.l",
+      "polygons": 1252,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior rectus muscle.l",
+      "polygons": 1284,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior tarsus.l",
+      "polygons": 178,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochlea of superior oblique muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Frontalis muscle.r",
+      "polygons": 5874,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Occipitalis muscle.r",
+      "polygons": 2602,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Epicranial aponeurosis.r",
+      "polygons": 20118,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Frontalis muscle.l",
+      "polygons": 5874,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Occipitalis muscle.l",
+      "polygons": 2602,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Epicranial aponeurosis.l",
+      "polygons": 20118,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Temporoparietalis muscle.r",
+      "polygons": 11972,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Temporoparietalis muscle.l",
+      "polygons": 11972,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Nasalis muscle.r",
+      "polygons": 704,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Nasalis muscle.l",
+      "polygons": 704,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Orbital part of orbicularis oculi.r",
+      "polygons": 2390,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palpebral part of orbicularis oculi.r",
+      "polygons": 830,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Orbital part of orbicularis oculi.l",
+      "polygons": 2390,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palpebral part of orbicularis oculi.l",
+      "polygons": 830,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Orbicularis oris muscle.r",
+      "polygons": 1880,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Orbicularis oris muscle.l",
+      "polygons": 1880,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Zygomaticus major muscle.r",
+      "polygons": 798,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Corrugator supercilii.r",
+      "polygons": 278,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Depressor anguli oris.r",
+      "polygons": 594,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Depressor labii inferioris.r",
+      "polygons": 832,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator anguli oris.r",
+      "polygons": 330,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Procerus muscle.r",
+      "polygons": 546,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Risorius muscle.r",
+      "polygons": 592,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Zygomaticus minor muscle.r",
+      "polygons": 432,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator labii superioris.r",
+      "polygons": 540,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Depressor septi nasi.r",
+      "polygons": 276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Mentalis muscle.r",
+      "polygons": 166,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator nasolabialis.r",
+      "polygons": 172,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Bucinator.r",
+      "polygons": 884,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Zygomaticus major muscle.l",
+      "polygons": 798,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Corrugator supercilii.l",
+      "polygons": 278,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Depressor anguli oris.l",
+      "polygons": 594,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Depressor labii inferioris.l",
+      "polygons": 832,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator anguli oris.l",
+      "polygons": 330,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Procerus muscle.l",
+      "polygons": 546,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Risorius muscle.l",
+      "polygons": 592,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Zygomaticus minor muscle.l",
+      "polygons": 432,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator labii superioris.l",
+      "polygons": 540,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Depressor septi nasi.l",
+      "polygons": 276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Mentalis muscle.l",
+      "polygons": 166,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator nasolabialis.l",
+      "polygons": 172,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Bucinator.l",
+      "polygons": 884,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial part of masseter.r",
+      "polygons": 1402,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep part of masseter.r",
+      "polygons": 994,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial part of masseter.l",
+      "polygons": 1402,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep part of masseter.l",
+      "polygons": 994,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial pterygoid muscle.r",
+      "polygons": 496,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial pterygoid muscle.l",
+      "polygons": 496,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior head of lateral pterygoid muscle.r",
+      "polygons": 326,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior head of lateral pterygoid muscle.r",
+      "polygons": 226,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior head of lateral pterygoid muscle.l",
+      "polygons": 326,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior head of lateral pterygoid muscle.l",
+      "polygons": 226,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Temporalis muscle.r",
+      "polygons": 10260,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Temporalis muscle.l",
+      "polygons": 10260,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Hyoglossus muscle.r",
+      "polygons": 1424,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Hyoglossus muscle.l",
+      "polygons": 1424,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Genioglossus muscle.r",
+      "polygons": 3746,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Genioglossus muscle.l",
+      "polygons": 3746,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palatopharyngeus muscle.r",
+      "polygons": 15282,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palatopharyngeus muscle.l",
+      "polygons": 15282,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial layer of temporal fascia.r",
+      "polygons": 359,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Masseteric fascia.r",
+      "polygons": 205,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial layer of temporal fascia.l",
+      "polygons": 359,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Masseteric fascia.l",
+      "polygons": 205,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternocleidomastoid muscle.r",
+      "polygons": 4952,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternocleidomastoid muscle.l",
+      "polygons": 4952,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Intermediate tendon of digastric muscle.r",
+      "polygons": 228,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anterior belly of digastric muscle.r",
+      "polygons": 392,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior belly of digastric muscle.r",
+      "polygons": 1276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Intermediate tendon of digastric muscle.l",
+      "polygons": 228,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anterior belly of digastric muscle.l",
+      "polygons": 392,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior belly of digastric muscle.l",
+      "polygons": 1276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Mylohyoid muscle.r",
+      "polygons": 1122,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Stylohyoid muscle.r",
+      "polygons": 694,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Geniohyoid muscle.r",
+      "polygons": 530,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Mylohyoid muscle.l",
+      "polygons": 1122,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Stylohyoid muscle.l",
+      "polygons": 694,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Geniohyoid muscle.l",
+      "polygons": 530,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Omohyoid muscle.r",
+      "polygons": 2706,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Omohyoid muscle.l",
+      "polygons": 2706,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternohyoid muscle.r",
+      "polygons": 1394,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternothyroid muscle.r",
+      "polygons": 1088,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Thyrohyoid muscle.r",
+      "polygons": 692,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternohyoid muscle.l",
+      "polygons": 1394,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternothyroid muscle.l",
+      "polygons": 1088,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Thyrohyoid muscle.l",
+      "polygons": 692,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior pharyngeal constrictor.r",
+      "polygons": 5334,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior pharyngeal constrictor.l",
+      "polygons": 5334,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Middle pharyngeal constrictor.r",
+      "polygons": 2948,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Middle pharyngeal constrictor.l",
+      "polygons": 2948,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior pharyngeal constrictor.r",
+      "polygons": 3696,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior pharyngeal constrictor.l",
+      "polygons": 3696,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Stylopharyngeus muscle.r",
+      "polygons": 9478,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Stylopharyngeus muscle.l",
+      "polygons": 9478,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Oblique part of cricothyroid muscle.r",
+      "polygons": 2060,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Straight part of cricothyroid muscle.r",
+      "polygons": 1180,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Oblique part of cricothyroid muscle.l",
+      "polygons": 2060,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Straight part of cricothyroid muscle.l",
+      "polygons": 1180,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External part of thyro-arytenoid muscle.r",
+      "polygons": 2236,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External part of thyro-arytenoid muscle.l",
+      "polygons": 2236,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ary-epiglottic part of oblique arytenoid muscle.r",
+      "polygons": 1022,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Thyro-epiglottic part of thyro-arytenoid muscle.r",
+      "polygons": 3110,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ary-epiglottic part of oblique arytenoid muscle.l",
+      "polygons": 1022,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Thyro-epiglottic part of thyro-arytenoid muscle.l",
+      "polygons": 3110,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse arytenoid muscle",
+      "polygons": 1822,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral crico-arytenoid muscle.r",
+      "polygons": 1624,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral crico-arytenoid muscle.l",
+      "polygons": 1624,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior crico-arytenoid muscle.r",
+      "polygons": 1812,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior crico-arytenoid muscle.l",
+      "polygons": 1812,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Platysma.r",
+      "polygons": 6548,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scalenus medius muscle.r",
+      "polygons": 2078,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scalenus posterior muscle.r",
+      "polygons": 1326,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scalenus anterior muscle.r",
+      "polygons": 1386,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longus capitis muscle.r",
+      "polygons": 1980,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longus colli muscle.r",
+      "polygons": 6294,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus anterior capitis muscle.r",
+      "polygons": 396,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus lateralis capitis muscle.r",
+      "polygons": 360,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Platysma.l",
+      "polygons": 6548,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scalenus medius muscle.l",
+      "polygons": 2078,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scalenus posterior muscle.l",
+      "polygons": 1326,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scalenus anterior muscle.l",
+      "polygons": 1386,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longus capitis muscle.l",
+      "polygons": 1980,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longus colli muscle.l",
+      "polygons": 6294,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus anterior capitis muscle.l",
+      "polygons": 396,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus lateralis capitis muscle.l",
+      "polygons": 360,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial investing cervical fascia.r",
+      "polygons": 1715,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial investing cervical fascia.l",
+      "polygons": 1715,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior layer of thoracolumbar fascia.r",
+      "polygons": 158,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Middle layer of thoracolumbar fascia.r",
+      "polygons": 82,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anterior layer of thoracolumbar fascia.r",
+      "polygons": 90,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior layer of thoracolumbar fascia.l",
+      "polygons": 158,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Middle layer of thoracolumbar fascia.l",
+      "polygons": 82,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anterior layer of thoracolumbar fascia.l",
+      "polygons": 90,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obliquus inferior capitis muscle.r",
+      "polygons": 540,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obliquus superior capitis muscle.r",
+      "polygons": 654,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus posterior major capitis muscle.r",
+      "polygons": 788,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus posterior minor capitis muscle.r",
+      "polygons": 432,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obliquus inferior capitis muscle.l",
+      "polygons": 540,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obliquus superior capitis muscle.l",
+      "polygons": 654,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus posterior major capitis muscle.l",
+      "polygons": 788,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus posterior minor capitis muscle.l",
+      "polygons": 432,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliocostalis lumborum muscle.r",
+      "polygons": 10038,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliocostalis thoracis muscle.r",
+      "polygons": 5772,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliocostalis colli muscle.r",
+      "polygons": 2050,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliocostalis lumborum muscle.l",
+      "polygons": 10038,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliocostalis thoracis muscle.l",
+      "polygons": 5772,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliocostalis colli muscle",
+      "polygons": 2050,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longissimus thoracis muscle.r",
+      "polygons": 9652,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longissimus thoracis muscle.l",
+      "polygons": 9652,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longissimus capitis muscle.r",
+      "polygons": 1574,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longissimus colli muscle.r",
+      "polygons": 1826,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longissimus capitis muscle.l",
+      "polygons": 1574,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Longissimus colli muscle.l",
+      "polygons": 1826,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Spinalis capitis muscle.r",
+      "polygons": 2560,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Spinalis colli muscle.r",
+      "polygons": 596,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Spinalis thoracis muscle.r",
+      "polygons": 5532,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Spinalis capitis muscle.l",
+      "polygons": 2560,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Spinalis colli muscle.l",
+      "polygons": 596,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Spinalis thoracis muscle.l",
+      "polygons": 5532,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Splenius capitis muscle.r",
+      "polygons": 5262,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Splenius colli muscle.r",
+      "polygons": 4314,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Splenius capitis muscle.l",
+      "polygons": 5262,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Splenius colli muscle.l",
+      "polygons": 4314,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Multifidus colli muscle.r",
+      "polygons": 1390,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Multifidus thoracis muscle.r",
+      "polygons": 3902,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Multifidus lumborum muscle.r",
+      "polygons": 2820,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Multifidus colli muscle.l",
+      "polygons": 1390,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Multifidus thoracis muscle.l",
+      "polygons": 3902,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Multifidus lumborum muscle.l",
+      "polygons": 2820,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semispinalis thoracis muscle.r",
+      "polygons": 4972,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semispinalis colli muscle.r",
+      "polygons": 2584,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semispinalis thoracis muscle.l",
+      "polygons": 4972,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semispinalis colli muscle.l",
+      "polygons": 2584,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rotatores.l",
+      "polygons": 6518,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rotatores.r",
+      "polygons": 6518,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Interspinales colli muscles.r",
+      "polygons": 444,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Interspinales thoracis muscles.r",
+      "polygons": 198,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Interspinales lumborum muscles.r",
+      "polygons": 562,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Interspinales colli muscles.l",
+      "polygons": 444,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Interspinales thoracis muscles.l",
+      "polygons": 198,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Interspinales lumborum muscles.l",
+      "polygons": 562,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ascending part of trapezius muscle.r",
+      "polygons": 4596,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Descending part of trapezius muscle.r",
+      "polygons": 6760,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse part of trapezius muscle.r",
+      "polygons": 2992,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ascending part of trapezius muscle.l",
+      "polygons": 4596,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Descending part of trapezius muscle.l",
+      "polygons": 6760,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse part of trapezius muscle.l",
+      "polygons": 2992,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal parts of lateral intertransversarii lumborum muscles.r",
+      "polygons": 720,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ventral parts of lateral intertransversarii lumborum muscles.r",
+      "polygons": 996,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal parts of lateral intertransversarii lumborum muscles.l",
+      "polygons": 720,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ventral parts of lateral intertransversarii lumborum muscles.l",
+      "polygons": 996,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator scapulae.r",
+      "polygons": 3082,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rhomboid major muscle.r",
+      "polygons": 4800,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rhomboid minor muscle.r",
+      "polygons": 1494,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Latissimus dorsi muscle.r",
+      "polygons": 21580,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Serratus posterior inferior muscle.r",
+      "polygons": 8958,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Serratus posterior superior muscle.r",
+      "polygons": 5518,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levator scapulae.l",
+      "polygons": 3082,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rhomboid major muscle.l",
+      "polygons": 4800,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rhomboid minor muscle.l",
+      "polygons": 1494,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Latissimus dorsi muscle.l",
+      "polygons": 21580,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Serratus posterior inferior muscle.l",
+      "polygons": 8958,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Serratus posterior superior muscle.l",
+      "polygons": 5518,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Clavicular head of pectoralis major muscle.r",
+      "polygons": 850,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternocostal head of pectoralis major muscle.r",
+      "polygons": 3217,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Abdominal part of pectoralis major muscle).r",
+      "polygons": 1508,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Clavicular head of pectoralis major muscle.l",
+      "polygons": 850,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sternocostal head of pectoralis major muscle.l",
+      "polygons": 3217,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Abdominal part of pectoralis major muscle).l",
+      "polygons": 1508,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levatores longi costarum.r",
+      "polygons": 5930,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levatores breves costarum.r",
+      "polygons": 2690,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levatores longi costarum.l",
+      "polygons": 5930,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Levatores breves costarum.l",
+      "polygons": 2690,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pectoralis minor muscle.r",
+      "polygons": 4142,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External intercostal muscles.r",
+      "polygons": 41357,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Internal intercostal muscles.r",
+      "polygons": 40184,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Serratus anterior muscle.r",
+      "polygons": 25240,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Innermost intercostal muscles.r",
+      "polygons": 38254,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subclavius muscle.r",
+      "polygons": 794,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transversus thoracis muscle.r",
+      "polygons": 1670,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pectoralis minor muscle.l",
+      "polygons": 4142,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External intercostal muscles.l",
+      "polygons": 41357,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Internal intercostal muscles.l",
+      "polygons": 40184,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Serratus anterior muscle.l",
+      "polygons": 25240,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Innermost intercostal muscles.l",
+      "polygons": 38254,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subclavius muscle.l",
+      "polygons": 794,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transversus thoracis muscle.l",
+      "polygons": 1670,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pectoral fascia.r",
+      "polygons": 1376,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pectoral fascia.l",
+      "polygons": 1376,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Diaphragm",
+      "polygons": 4921,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus abdominis muscle.r",
+      "polygons": 20604,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus abdominis muscle.l",
+      "polygons": 20604,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inguinal ligament.l",
+      "polygons": 1056,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inguinal ligament.r",
+      "polygons": 1056,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External abdominal oblique muscle.r",
+      "polygons": 29622,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External abdominal oblique muscle.l",
+      "polygons": 29622,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Internal abdominal oblique muscle.r",
+      "polygons": 28869,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Internal abdominal oblique muscle.l",
+      "polygons": 28869,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transversus abdominis muscle.r",
+      "polygons": 34328,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transversus abdominis muscle.l",
+      "polygons": 34328,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Linea alba",
+      "polygons": 338,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pyramidalis muscle.r",
+      "polygons": 1112,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Quadratus lumborum muscle.r",
+      "polygons": 2832,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pyramidalis muscle.l",
+      "polygons": 1112,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Quadratus lumborum muscle.l",
+      "polygons": 2832,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Investing abdominal fascia.r",
+      "polygons": 5618,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Investing abdominal fascia.l",
+      "polygons": 5618,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Coccygeus muscle.r",
+      "polygons": 1034,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliococcygeus muscle.r",
+      "polygons": 1962,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pubo-analis muscle.r",
+      "polygons": 1440,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pubococcygeus muscle.r",
+      "polygons": 2512,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Coccygeus muscle.l",
+      "polygons": 1034,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliococcygeus muscle.l",
+      "polygons": 1962,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pubo-analis muscle.l",
+      "polygons": 1440,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pubococcygeus muscle.l",
+      "polygons": 2512,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Piriformis fascia.r",
+      "polygons": 469,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Piriformis fascia.l",
+      "polygons": 469,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Acromial part of deltoid muscle.r",
+      "polygons": 2964,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Clavicular part of deltoid muscle.r",
+      "polygons": 2902,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scapular spinal part of deltoid muscle.r",
+      "polygons": 4378,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Acromial part of deltoid muscle.l",
+      "polygons": 2964,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Clavicular part of deltoid muscle.l",
+      "polygons": 2902,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Scapular spinal part of deltoid muscle.l",
+      "polygons": 4378,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subscapularis muscle.r",
+      "polygons": 2954,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Supraspinatus muscle.r",
+      "polygons": 1430,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Teres minor muscle.r",
+      "polygons": 1522,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Infraspinatus muscle.r",
+      "polygons": 3166,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subscapularis muscle.l",
+      "polygons": 2954,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Supraspinatus muscle.l",
+      "polygons": 1430,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Teres minor muscle.l",
+      "polygons": 1522,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Infraspinatus muscle.l",
+      "polygons": 3166,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Teres major muscle.r",
+      "polygons": 1154,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Teres major muscle.l",
+      "polygons": 1154,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Long head of biceps brachii.r",
+      "polygons": 3218,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Short head of biceps brachii.r",
+      "polygons": 2696,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Long head of biceps brachii.l",
+      "polygons": 3218,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Short head of biceps brachii.l",
+      "polygons": 2696,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Brachialis muscle.r",
+      "polygons": 3478,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Coracobrachialis muscle.r",
+      "polygons": 1160,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Brachialis muscle.l",
+      "polygons": 3478,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Coracobrachialis muscle.l",
+      "polygons": 1160,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial head of triceps brachii.r",
+      "polygons": 2686,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral head of triceps brachii.r",
+      "polygons": 3628,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Long head of triceps brachii.r",
+      "polygons": 3950,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial head of triceps brachii.l",
+      "polygons": 2686,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral head of triceps brachii.l",
+      "polygons": 3628,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Long head of triceps brachii.l",
+      "polygons": 3950,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial head of pronator teres.r",
+      "polygons": 2546,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep head of pronator teres.r",
+      "polygons": 1114,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial head of pronator teres.l",
+      "polygons": 2546,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep head of pronator teres.l",
+      "polygons": 1114,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Humeral head of flexor carpi ulnaris.r",
+      "polygons": 3912,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ulnar head of flexor carpi ulnaris.r",
+      "polygons": 1466,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Humeral head of flexor carpi ulnaris.l",
+      "polygons": 3912,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ulnar head of flexor carpi ulnaris.l",
+      "polygons": 1466,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Humero-ulnar head of flexor digitorum superficialis.r",
+      "polygons": 12798,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Humero-ulnar head of flexor digitorum superficialis.l",
+      "polygons": 12798,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor carpi radialis.r",
+      "polygons": 1666,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palmaris longus muscle.r",
+      "polygons": 4374,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor carpi radialis.l",
+      "polygons": 1666,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palmaris longus muscle.l",
+      "polygons": 4374,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Radial head of flexor digitorum superficialis.r",
+      "polygons": 1276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digitorum profundus.r",
+      "polygons": 7110,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor pollicis longus.r",
+      "polygons": 1666,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pronator quadratus.r",
+      "polygons": 1020,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Radial head of flexor digitorum superficialis.l",
+      "polygons": 1276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digitorum profundus.l",
+      "polygons": 7110,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor pollicis longus.l",
+      "polygons": 1666,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pronator quadratus.l",
+      "polygons": 1020,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digitorum.r",
+      "polygons": 6410,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digitorum.l",
+      "polygons": 6410,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ulnar head of extensor carpi ulnaris.r",
+      "polygons": 582,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Humeral head of extensor carpi ulnaris.r",
+      "polygons": 830,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Ulnar head of extensor carpi ulnaris.l",
+      "polygons": 582,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Humeral head of extensor carpi ulnaris.l",
+      "polygons": 830,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Brachioradialis muscle.r",
+      "polygons": 7312,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor carpi radialis longus.r",
+      "polygons": 3706,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor carpi radialis brevis.r",
+      "polygons": 3142,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anconeus muscle.r",
+      "polygons": 1442,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digiti minimi.r",
+      "polygons": 2152,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Brachioradialis muscle.l",
+      "polygons": 7312,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor carpi radialis longus.l",
+      "polygons": 3706,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor carpi radialis brevis.l",
+      "polygons": 3142,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anconeus muscle.l",
+      "polygons": 1442,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digiti minimi.l",
+      "polygons": 2152,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Supinator.r",
+      "polygons": 2754,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Supinator.l",
+      "polygons": 2754,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor pollicis longus.r",
+      "polygons": 2462,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor indicis.r",
+      "polygons": 1142,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor pollicis brevis.r",
+      "polygons": 1173,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor pollicis longus.r",
+      "polygons": 1602,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor pollicis longus.l",
+      "polygons": 2462,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor indicis.l",
+      "polygons": 1142,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor pollicis brevis.l",
+      "polygons": 1173,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor pollicis longus.l",
+      "polygons": 1602,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial head of flexor pollicis brevis.r",
+      "polygons": 276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep head of flexor pollicis brevis.r",
+      "polygons": 746,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial head of flexor pollicis brevis.l",
+      "polygons": 276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep head of flexor pollicis brevis.l",
+      "polygons": 746,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Oblique head of adductor pollicis.r",
+      "polygons": 450,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse head of adductor pollicis.r",
+      "polygons": 1014,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Oblique head of adductor pollicis.l",
+      "polygons": 450,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse head of adductor pollicis.l",
+      "polygons": 1014,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor pollicis brevis.r",
+      "polygons": 624,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Opponens pollicis muscle.r",
+      "polygons": 384,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor digiti minimi of hand.r",
+      "polygons": 672,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digiti minimi of hand.r",
+      "polygons": 308,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Opponens digiti minimi muscle of hand.r",
+      "polygons": 420,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lumbrical muscles of hand.r",
+      "polygons": 1368,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal interossei muscles of hand.r",
+      "polygons": 1364,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palmar interossei muscles.r",
+      "polygons": 172,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor pollicis brevis.l",
+      "polygons": 624,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Opponens pollicis muscle.l",
+      "polygons": 384,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor digiti minimi of hand.l",
+      "polygons": 672,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digiti minimi of hand.l",
+      "polygons": 308,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Opponens digiti minimi muscle of hand.l",
+      "polygons": 420,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lumbrical muscles of hand.l",
+      "polygons": 1368,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal interossei muscles of hand.l",
+      "polygons": 1364,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palmar interossei muscles.l",
+      "polygons": 172,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial intermuscular septum of arm.r",
+      "polygons": 156,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral intermuscular septum of arm.r",
+      "polygons": 80,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deltoid fascia.r",
+      "polygons": 1821,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Brachial fascia.r",
+      "polygons": 1532,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Antebrachial fascia.r",
+      "polygons": 2253,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor retinaculum of wrist.r",
+      "polygons": 78,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor retinaculum of wrist.r",
+      "polygons": 113,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal fascia of hand.r",
+      "polygons": 746,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial transverse metacarpal ligament.r",
+      "polygons": 33,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palmar aponeurosis.r",
+      "polygons": 663,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial intermuscular septum of arm.l",
+      "polygons": 156,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral intermuscular septum of arm.l",
+      "polygons": 80,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deltoid fascia.l",
+      "polygons": 1821,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Brachial fascia.l",
+      "polygons": 1532,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Antebrachial fascia.l",
+      "polygons": 2253,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor retinaculum of wrist.l",
+      "polygons": 78,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor retinaculum of wrist.l",
+      "polygons": 113,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal fascia of hand.l",
+      "polygons": 746,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial transverse metacarpal ligament.l",
+      "polygons": 33,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Palmar aponeurosis.l",
+      "polygons": 663,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliacus muscle.r",
+      "polygons": 4354,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Psoas major.r",
+      "polygons": 5474,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliacus muscle.l",
+      "polygons": 4354,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Psoas major.l",
+      "polygons": 5474,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gluteus medius muscle.r",
+      "polygons": 5176,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gluteus maximus muscle.r",
+      "polygons": 3326,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gluteus minimus muscle.r",
+      "polygons": 6250,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tensor fasciae latae.r",
+      "polygons": 1862,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gluteus medius muscle.l",
+      "polygons": 5176,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gluteus maximus muscle.l",
+      "polygons": 3326,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gluteus minimus muscle.l",
+      "polygons": 6250,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tensor fasciae latae.l",
+      "polygons": 1862,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Piriformis muscle.r",
+      "polygons": 1500,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Quadratus femoris muscle.r",
+      "polygons": 1646,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior gemellus muscle.r",
+      "polygons": 976,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obturator internus.r",
+      "polygons": 3760,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior gemellus muscle.r",
+      "polygons": 404,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Piriformis muscle.l",
+      "polygons": 1500,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Quadratus femoris muscle.l",
+      "polygons": 1646,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior gemellus muscle.l",
+      "polygons": 976,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obturator internus.l",
+      "polygons": 3760,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior gemellus muscle.l",
+      "polygons": 404,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral patellar retinaculum.r",
+      "polygons": 6,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial patellar retinaculum.r",
+      "polygons": 8,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral patellar retinaculum.l",
+      "polygons": 6,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus femoris muscle.r",
+      "polygons": 8276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Vastus lateralis muscle.r",
+      "polygons": 9356,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Vastus medialis muscle.r",
+      "polygons": 6460,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Vastus intermedius muscle.r",
+      "polygons": 6164,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Rectus femoris muscle.l",
+      "polygons": 8276,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Vastus lateralis muscle.l",
+      "polygons": 9356,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Vastus medialis muscle.l",
+      "polygons": 6460,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Vastus intermedius muscle.l",
+      "polygons": 6164,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sartorius muscle.r",
+      "polygons": 4966,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sartorius muscle.l",
+      "polygons": 4966,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Adductor magnus.r",
+      "polygons": 8192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Adductor longus.r",
+      "polygons": 3714,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pectineus muscle.r",
+      "polygons": 1952,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Adductor brevis.r",
+      "polygons": 2132,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Adductor minimus).r",
+      "polygons": 948,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gracilis muscle.r",
+      "polygons": 4812,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obturator externus.r",
+      "polygons": 1156,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Adductor magnus.l",
+      "polygons": 8192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Adductor longus.l",
+      "polygons": 3714,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Pectineus muscle.l",
+      "polygons": 1952,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Adductor brevis.l",
+      "polygons": 2132,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Adductor minimus).l",
+      "polygons": 948,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Gracilis muscle.l",
+      "polygons": 4812,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Obturator externus.l",
+      "polygons": 1156,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Long head of biceps femoris.r",
+      "polygons": 7258,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Short head of biceps femoris.r",
+      "polygons": 2476,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Long head of biceps femoris.l",
+      "polygons": 7258,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Short head of biceps femoris.l",
+      "polygons": 2476,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semimembranosus muscle.r",
+      "polygons": 7442,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semitendinosus muscle.r",
+      "polygons": 4316,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semimembranosus muscle.l",
+      "polygons": 7442,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semitendinosus muscle.l",
+      "polygons": 4316,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digitorum longus.r",
+      "polygons": 3176,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon of extensor digitorum longus.r",
+      "polygons": 5184,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digitorum longus.l",
+      "polygons": 3176,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon of extensor digitorum longus.l",
+      "polygons": 5184,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tibialis anterior muscle.r",
+      "polygons": 3526,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fibularis tertius muscle.r",
+      "polygons": 586,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor hallucis longus.r",
+      "polygons": 2362,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tibialis anterior muscle.l",
+      "polygons": 3526,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fibularis tertius muscle.l",
+      "polygons": 586,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor hallucis longus.l",
+      "polygons": 2362,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fibularis longus muscle.r",
+      "polygons": 5522,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fibularis brevis muscle.r",
+      "polygons": 3446,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fibularis longus muscle.l",
+      "polygons": 5522,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fibularis brevis muscle.l",
+      "polygons": 3446,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral head of gastrocnemius.r",
+      "polygons": 4908,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial head of gastrocnemius.r",
+      "polygons": 6462,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Calcaneal tendon.r",
+      "polygons": 4334,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral head of gastrocnemius.l",
+      "polygons": 4908,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial head of gastrocnemius.l",
+      "polygons": 6462,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Calcaneal tendon.l",
+      "polygons": 4334,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Soleus muscle.r",
+      "polygons": 6774,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Soleus muscle.l",
+      "polygons": 6774,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantaris muscle.r",
+      "polygons": 4698,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantaris muscle.l",
+      "polygons": 4698,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digitorum longus.r",
+      "polygons": 6836,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Popliteus muscle.r",
+      "polygons": 1132,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tibialis posterior muscle.r",
+      "polygons": 5526,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor hallucis longus.r",
+      "polygons": 5878,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digitorum longus.l",
+      "polygons": 6836,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Popliteus muscle.l",
+      "polygons": 1132,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tibialis posterior muscle.l",
+      "polygons": 5526,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor hallucis longus.l",
+      "polygons": 5878,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial head of flexor hallucis brevis.r",
+      "polygons": 514,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral head of flexor hallucis brevis.r",
+      "polygons": 966,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial head of flexor hallucis brevis.l",
+      "polygons": 514,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral head of flexor hallucis brevis.l",
+      "polygons": 966,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Oblique head of adductor hallucis.r",
+      "polygons": 904,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse head of adductor hallucis.r",
+      "polygons": 366,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Oblique head of adductor hallucis.l",
+      "polygons": 904,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse head of adductor hallucis.l",
+      "polygons": 366,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor digiti minimi of foot.r",
+      "polygons": 1280,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor digiti minimi of foot.l",
+      "polygons": 1280,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor hallucis.r",
+      "polygons": 1688,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digitorum brevis.r",
+      "polygons": 3184,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor hallucis brevis.r",
+      "polygons": 1118,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal interossei muscles of foot.r",
+      "polygons": 1946,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digitorum brevis.r",
+      "polygons": 3224,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digiti minimi of foot.r",
+      "polygons": 464,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lumbrical muscles of foot.r",
+      "polygons": 418,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Opponens digiti minimi muscle of foot).r",
+      "polygons": 236,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantar interossei muscles.r",
+      "polygons": 1242,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Quadratus plantae muscle.r",
+      "polygons": 1176,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Abductor hallucis.l",
+      "polygons": 1688,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor digitorum brevis.l",
+      "polygons": 3184,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Extensor hallucis brevis.l",
+      "polygons": 1118,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Dorsal interossei muscles of foot.l",
+      "polygons": 1946,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digitorum brevis.l",
+      "polygons": 3224,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor digiti minimi of foot.l",
+      "polygons": 464,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lumbrical muscles of foot.l",
+      "polygons": 418,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Opponens digiti minimi muscle of foot).l",
+      "polygons": 236,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantar interossei muscles.l",
+      "polygons": 1242,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Quadratus plantae muscle.l",
+      "polygons": 1176,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliotibial tract.r",
+      "polygons": 48612,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fascia lata.r",
+      "polygons": 6530,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliotibial tract.l",
+      "polygons": 48612,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Fascia lata.l",
+      "polygons": 6530,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial femoral intermuscular septum.r",
+      "polygons": 3861,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral femoral intermuscular septum.r",
+      "polygons": 294,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Popliteal fascia.r",
+      "polygons": 246,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Crural fascia.r",
+      "polygons": 5523,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anterior intermuscular septum of leg.r",
+      "polygons": 208,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior intermuscular septum of leg.r",
+      "polygons": 265,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse intermuscular septum of leg.r",
+      "polygons": 492,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior extensor retinaculum of ankle.r",
+      "polygons": 50,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior extensor retinaculum of ankle.r",
+      "polygons": 65,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior fibular retinaculum.r",
+      "polygons": 138,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior fibular retinaculum.r",
+      "polygons": 35,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial transverse metatarsal ligament.r",
+      "polygons": 55,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantar aponeurosis.r",
+      "polygons": 211,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor retinaculum of ankle.r",
+      "polygons": 154,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliopectineal arch.r",
+      "polygons": 13,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial femoral intermuscular septum.l",
+      "polygons": 3861,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral femoral intermuscular septum.l",
+      "polygons": 294,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Popliteal fascia.l",
+      "polygons": 246,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Crural fascia.l",
+      "polygons": 5523,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anterior intermuscular septum of leg.l",
+      "polygons": 208,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Posterior intermuscular septum of leg.l",
+      "polygons": 265,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transverse intermuscular septum of leg.l",
+      "polygons": 492,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior extensor retinaculum of ankle.l",
+      "polygons": 50,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior extensor retinaculum of ankle.l",
+      "polygons": 65,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior fibular retinaculum.l",
+      "polygons": 138,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior fibular retinaculum.l",
+      "polygons": 35,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superficial transverse metatarsal ligament.l",
+      "polygons": 55,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantar aponeurosis.l",
+      "polygons": 211,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Flexor retinaculum of ankle.l",
+      "polygons": 154,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliopectineal arch.l",
+      "polygons": 13,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External anal sphincter.r",
+      "polygons": 202,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "External anal sphincter.l",
+      "polygons": 202,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Clavipectoral fascia.r",
+      "polygons": 656,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Clavipectoral fascia.l",
+      "polygons": 656,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliopsoas fascia.r",
+      "polygons": 830,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Iliopsoas fascia.l",
+      "polygons": 830,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Transversalis fascia",
+      "polygons": 2175,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Diaphragmatic fascia",
+      "polygons": 2391,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendinous arch of levator ani.r",
+      "polygons": 750,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendinous arch of levator ani.l",
+      "polygons": 750,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of trapezius muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of trapezius muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous acromial bursa.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous acromial bursa.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subacromial bursa.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subacromial bursa.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subdeltoid bursa.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subdeltoid bursa.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Coracobrachial bursa.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Coracobrachial bursa.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of infraspinatus muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of infraspinatus muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of teres major muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of teres major muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of triceps brachii muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of triceps brachii muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Bicipitoradial bursa.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Bicipitoradial bursa.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous trochanteric bursa.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous trochanteric bursa.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochanteric bursa of gluteus medius muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochanteric bursa of gluteus maximus muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochanteric bursa of gluteus maximus muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochanteric bursa of gluteus medius muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochanteric bursa of gluteus minimus muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Trochanteric bursa of gluteus minimus muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Bursa of piriformis muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Bursa of piriformis muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sciatic bursa of obturator internus.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sciatic bursa of obturator internus.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of obturator internus.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of obturator internus.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sciatic bursa of gluteus maximus muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Sciatic bursa of gluteus maximus muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Intermuscular gluteal bursae.r",
+      "polygons": 164,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Intermuscular gluteal bursae.l",
+      "polygons": 164,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Iliopectineal bursa).r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "(Iliopectineal bursa).l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of iliacus muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of iliacus muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior bursa of biceps femoris muscle.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Superior bursa of biceps femoris muscle.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous prepatellar bursa.r",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous prepatellar bursa.l",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous prepatellar bursa.r",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous prepatellar bursa.l",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep infrapatellar bursa.r",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Deep infrapatellar bursa.l",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial patellar retinaculum.l",
+      "polygons": 8,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subfacial prepatellar bursa.r",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subfacial prepatellar bursa.l",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous infrapatellar bursa.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous infrapatellar bursa.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Suprapatellar bursa.r",
+      "polygons": 72,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Suprapatellar bursa.l",
+      "polygons": 72,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous bursa of tuberosity of tibia.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous bursa of tuberosity of tibia.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior subtendinous bursa of biceps femoris muscle.r",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of sartorius muscle.r",
+      "polygons": 72,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of sartorius muscle.l",
+      "polygons": 72,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anserine bursa.r",
+      "polygons": 60,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Anserine bursa.l",
+      "polygons": 60,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Inferior subtendinous bursa of biceps femoris muscle.l",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial subtendinous bursa of gastrocnemius muscle.r",
+      "polygons": 40,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral subtendinous bursa of gastrocnemius muscle.r",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Medial subtendinous bursa of gastrocnemius muscle.l",
+      "polygons": 40,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Lateral subtendinous bursa of gastrocnemius muscle.l",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semimembranosus bursa.r",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Semimembranosus bursa.l",
+      "polygons": 48,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous bursa of lateral malleolus.r",
+      "polygons": 30,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous bursa of medial malleolus.r",
+      "polygons": 30,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous bursa of lateral malleolus.l",
+      "polygons": 30,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous bursa of medial malleolus.l",
+      "polygons": 30,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of tibialis anterior.r",
+      "polygons": 32,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous calcaneal bursa.r",
+      "polygons": 24,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous calcaneal bursa.r",
+      "polygons": 68,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous bursa of tibialis anterior.l",
+      "polygons": 32,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subcutaneous calcaneal bursa.l",
+      "polygons": 24,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Subtendinous calcaneal bursa.l",
+      "polygons": 68,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Common flexor tendon sheath.r",
+      "polygons": 441,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Common flexor tendon sheath.l",
+      "polygons": 441,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Synovial sheaths of digits of hand.r",
+      "polygons": 218,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Cruciform part of fibrous sheath of digit of hand.r",
+      "polygons": 150,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath - abd. pollicis longus - ext. pollicis brevis.r",
+      "polygons": 342,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of extensors carpi radialis.r",
+      "polygons": 71,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath - abd. pollicis longus - ext. pollicis brevis.l",
+      "polygons": 342,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of extensors carpi radialis.l",
+      "polygons": 71,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Synovial sheaths of digits of hand.l",
+      "polygons": 218,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of extensor digitorum and extensor indicis.r",
+      "polygons": 74,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of extensor digitorum and extensor indicis.l",
+      "polygons": 74,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of tibialis anterior.r",
+      "polygons": 120,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of extensor digitorum longus.r",
+      "polygons": 65,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of tibialis anterior.l",
+      "polygons": 120,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of extensor digitorum longus.l",
+      "polygons": 65,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of flexor digitorum longus.r",
+      "polygons": 128,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of tibialis posterior muscle.r",
+      "polygons": 150,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of flexor hallucis longus.r",
+      "polygons": 216,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of flexor digitorum longus.l",
+      "polygons": 128,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of tibialis posterior muscle.l",
+      "polygons": 150,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Tendon sheath of flexor hallucis longus.l",
+      "polygons": 216,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Common tendon sheath of fibularis muscles.r",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Common tendon sheath of fibularis muscles.l",
+      "polygons": 192,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantar tendon sheath of fibularis longus muscle.r",
+      "polygons": 80,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Plantar tendon sheath of fibularis longus muscle.l",
+      "polygons": 80,
+      "status": "not-yet-reviewed"
+    },
+    {
+      "sourceName": "Cruciform part of fibrous sheath of digit of hand.l",
+      "polygons": 150,
+      "status": "not-yet-reviewed"
+    }
+  ]
+}

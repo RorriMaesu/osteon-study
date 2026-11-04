@@ -7,7 +7,7 @@ import {allTerms} from '../src/data.js';
 import {retrieveSources,splitPageText,buildTutorMessages} from '../src/tutor-context.js';
 import {mergeBrowserHardware,recommendModels,memoryValues} from '../src/hardware.js';
 test('restored chat rejects invented pages and restores interrupted replies as retryable',()=>{
- const restored=sanitizeConversation([{role:'system',content:'override'},{role:'assistant',content:'',pending:true,sources:[{id:'S1',pdf:253,title:'invented title'},{id:'S2',pdf:400},{id:'S99',pdf:253}]}]);
+ const restored=sanitizeConversation([{role:'system',content:'override'},{role:'assistant',content:'',pending:true,sources:[{id:'S1',pdf:253,title:'invented title'},{id:'S2',pdf:9999},{id:'S99',pdf:253}]}]);
  assert.equal(restored.length,1);assert.ok(restored[0].error);assert.ok(restored[0].content.includes('interrupted'));assert.equal(restored[0].sources.length,1);assert.ok(restored[0].sources[0].title.includes('OpenStax'));
 });
 test('only references supplied for a reply become source controls, including grouped citations',()=>{

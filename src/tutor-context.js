@@ -16,7 +16,8 @@ export function splitPageText(raw){
  }
  return out;
 }
-const chunks=pages.flatMap(p=>splitPageText(p.text).map(text=>({pdf:p.pdf,printed:p.printed,chapter:p.chapter,text,words:new Set(tokenize(text))})));
+// Chapter 10 source reading is not ingested into AI retrieval.
+const chunks=pages.filter(p=>p.chapter!==10).flatMap(p=>splitPageText(p.text).map(text=>({pdf:p.pdf,printed:p.printed,chapter:p.chapter,text,words:new Set(tokenize(text))})));
 const frequencies=new Map();for(const c of chunks)for(const w of c.words)frequencies.set(w,(frequencies.get(w)||0)+1);
 export function retrieveSources(query,context={}){
  const term=allTerms.find(t=>t.id===context.termId),weights=new Map();

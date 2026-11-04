@@ -1,0 +1,372 @@
+{
+  "chapter": 10,
+  "title": "Muscle Tissue",
+  "pdfStart": 385,
+  "pdfEnd": 424,
+  "printedStart": 369,
+  "printedEnd": 408,
+  "sourceURL": "https://openstax.org/books/anatomy-and-physiology-2e/pages/10-introduction",
+  "license": "CC BY-NC-SA 4.0",
+  "status": "source-ready",
+  "sections": [
+    {
+      "id": "10.1",
+      "chapter": 10,
+      "title": "Overview of Muscle Tissues",
+      "pdfStart": 385,
+      "pdfEnd": 387,
+      "examWeight": 3,
+      "objectives": [
+        {
+          "id": "10.1.1",
+          "text": "Describe the different types of muscle"
+        },
+        {
+          "id": "10.1.2",
+          "text": "Explain contractibility and extensibility"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.1",
+          "pdf": 385
+        },
+        {
+          "number": "10.2",
+          "pdf": 386
+        }
+      ],
+      "prerequisites": [
+        "9.5"
+      ]
+    },
+    {
+      "id": "10.2",
+      "chapter": 10,
+      "title": "Skeletal Muscle",
+      "pdfStart": 387,
+      "pdfEnd": 392,
+      "examWeight": 8,
+      "objectives": [
+        {
+          "id": "10.2.1",
+          "text": "Describe the layers of connective tissues packaging skeletal muscle"
+        },
+        {
+          "id": "10.2.2",
+          "text": "Explain how muscles work with tendons to move the body"
+        },
+        {
+          "id": "10.2.3",
+          "text": "Identify areas of the skeletal muscle fibers"
+        },
+        {
+          "id": "10.2.4",
+          "text": "Describe excitation-contraction coupling"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.3",
+          "pdf": 388
+        },
+        {
+          "number": "10.4",
+          "pdf": 389
+        },
+        {
+          "number": "10.5",
+          "pdf": 390
+        },
+        {
+          "number": "10.6",
+          "pdf": 391
+        },
+        {
+          "number": "10.7",
+          "pdf": 392
+        }
+      ],
+      "prerequisites": [
+        "10.1"
+      ]
+    },
+    {
+      "id": "10.3",
+      "chapter": 10,
+      "title": "Muscle Fiber Contraction and Relaxation",
+      "pdfStart": 392,
+      "pdfEnd": 400,
+      "examWeight": 10,
+      "objectives": [
+        {
+          "id": "10.3.1",
+          "text": "Describe the components involved in a muscle contraction"
+        },
+        {
+          "id": "10.3.2",
+          "text": "Explain how muscles contract and relax"
+        },
+        {
+          "id": "10.3.3",
+          "text": "Describe the sliding filament model of muscle contraction"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.7",
+          "pdf": 392
+        },
+        {
+          "number": "10.8",
+          "pdf": 393
+        },
+        {
+          "number": "10.9",
+          "pdf": 394
+        },
+        {
+          "number": "10.10",
+          "pdf": 395
+        },
+        {
+          "number": "10.11",
+          "pdf": 396
+        },
+        {
+          "number": "10.12",
+          "pdf": 398
+        }
+      ],
+      "prerequisites": [
+        "10.2"
+      ]
+    },
+    {
+      "id": "10.4",
+      "chapter": 10,
+      "title": "Nervous System Control of Muscle Tension",
+      "pdfStart": 400,
+      "pdfEnd": 405,
+      "examWeight": 9,
+      "objectives": [
+        {
+          "id": "10.4.1",
+          "text": "Explain concentric, isotonic, and eccentric contractions"
+        },
+        {
+          "id": "10.4.2",
+          "text": "Describe the length-tension relationship"
+        },
+        {
+          "id": "10.4.3",
+          "text": "Describe the three phases of a muscle twitch"
+        },
+        {
+          "id": "10.4.4",
+          "text": "Define wave summation, tetanus, and treppe"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.13",
+          "pdf": 401
+        },
+        {
+          "number": "10.14",
+          "pdf": 403
+        },
+        {
+          "number": "10.15",
+          "pdf": 403
+        },
+        {
+          "number": "10.16",
+          "pdf": 404
+        },
+        {
+          "number": "10.17",
+          "pdf": 405
+        }
+      ],
+      "prerequisites": [
+        "10.3"
+      ]
+    },
+    {
+      "id": "10.5",
+      "chapter": 10,
+      "title": "Types of Muscle Fibers",
+      "pdfStart": 405,
+      "pdfEnd": 406,
+      "examWeight": 4,
+      "objectives": [
+        {
+          "id": "10.5.1",
+          "text": "Describe the types of skeletal muscle fibers"
+        },
+        {
+          "id": "10.5.2",
+          "text": "Explain fast and slow muscle fibers"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.17",
+          "pdf": 405
+        }
+      ],
+      "prerequisites": [
+        "10.4"
+      ]
+    },
+    {
+      "id": "10.6",
+      "chapter": 10,
+      "title": "Exercise and Muscle Performance",
+      "pdfStart": 406,
+      "pdfEnd": 409,
+      "examWeight": 4,
+      "objectives": [
+        {
+          "id": "10.6.1",
+          "text": "Describe hypertrophy and atrophy"
+        },
+        {
+          "id": "10.6.2",
+          "text": "Explain how resistance exercise builds muscle"
+        },
+        {
+          "id": "10.6.3",
+          "text": "Explain how performance-enhancing substances affect muscle"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.18",
+          "pdf": 407
+        },
+        {
+          "number": "10.19",
+          "pdf": 408
+        },
+        {
+          "number": "10.20",
+          "pdf": 409
+        }
+      ],
+      "prerequisites": [
+        "10.5"
+      ]
+    },
+    {
+      "id": "10.7",
+      "chapter": 10,
+      "title": "Cardiac Muscle Tissue",
+      "pdfStart": 409,
+      "pdfEnd": 411,
+      "examWeight": 4,
+      "objectives": [
+        {
+          "id": "10.7.1",
+          "text": "Describe intercalated discs and gap junctions"
+        },
+        {
+          "id": "10.7.2",
+          "text": "Describe a desmosome"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.20",
+          "pdf": 409
+        },
+        {
+          "number": "10.21",
+          "pdf": 410
+        },
+        {
+          "number": "10.22",
+          "pdf": 410
+        }
+      ],
+      "prerequisites": [
+        "10.6"
+      ]
+    },
+    {
+      "id": "10.8",
+      "chapter": 10,
+      "title": "Smooth Muscle",
+      "pdfStart": 411,
+      "pdfEnd": 414,
+      "examWeight": 5,
+      "objectives": [
+        {
+          "id": "10.8.1",
+          "text": "Describe a dense body"
+        },
+        {
+          "id": "10.8.2",
+          "text": "Explain how smooth muscle works with internal organs and passageways through the body"
+        },
+        {
+          "id": "10.8.3",
+          "text": "Explain how smooth muscles differ from skeletal and cardiac muscles"
+        },
+        {
+          "id": "10.8.4",
+          "text": "Explain the difference between single-unit and multi-unit smooth muscle"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.23",
+          "pdf": 412
+        },
+        {
+          "number": "10.24",
+          "pdf": 413
+        },
+        {
+          "number": "10.25",
+          "pdf": 414
+        }
+      ],
+      "prerequisites": [
+        "10.7"
+      ]
+    },
+    {
+      "id": "10.9",
+      "chapter": 10,
+      "title": "Development and Regeneration of Muscle Tissue",
+      "pdfStart": 414,
+      "pdfEnd": 415,
+      "examWeight": 3,
+      "objectives": [
+        {
+          "id": "10.9.1",
+          "text": "Describe the function of satellite cells"
+        },
+        {
+          "id": "10.9.2",
+          "text": "Define fibrosis"
+        },
+        {
+          "id": "10.9.3",
+          "text": "Explain which muscle has the greatest regeneration ability"
+        }
+      ],
+      "figures": [
+        {
+          "number": "10.25",
+          "pdf": 414
+        }
+      ],
+      "prerequisites": [
+        "10.8"
+      ]
+    }
+  ]
+}

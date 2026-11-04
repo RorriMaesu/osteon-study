@@ -1,3 +1,4 @@
+import {chapterOf,activeChapters} from './chapters.js';
 import {questions,lessons,reviewCards} from './learning-data.js';
 import {terms} from './data.js';
 import {getProgress} from './storage.js';
@@ -17,7 +18,7 @@ export function dailyRoute(progress,{minutes=20,examDate='',now=Date.now()}={}){
  const chosen=evidence[0],pool=[...terms,...reviewCards],unique=[...new Map(pool.map(t=>[t.id,t])).values()],due=unique.filter(t=>Number.isFinite(progress.cards[t.id]?.due)&&progress.cards[t.id].due<=now).sort((a,b)=>progress.cards[a.id].due-progress.cards[b.id].due).slice(0,Math.max(1,Math.min(5,Math.floor(minutes/4))));
  const days=examDate?Math.ceil((new Date(examDate+'T23:59:59').getTime()-now)/86400000):null,mixed=days!==null&&days>=0&&days<=7;
  const count=Math.max(3,Math.min(10,Math.floor(minutes/2)));let items;
- if(mixed){const chapters=[chosen.lesson.id[0],...['6','7','8','9'].filter(c=>c!==chosen.lesson.id[0])],pools=chapters.map(c=>variedQuestions(questions.filter(q=>q.lesson[0]===c),progress.attempts,count));items=[];for(let i=0;items.length<count&&i<count;i++)for(const pool of pools)if(items.length<count&&pool[i])items.push(pool[i]);}
+ if(mixed){const chapters=[chapterOf(chosen.lesson.id),...activeChapters.map(c=>String(c.id)).filter(c=>c!==chapterOf(chosen.lesson.id))],pools=chapters.map(c=>variedQuestions(questions.filter(q=>chapterOf(q.lesson)===c),progress.attempts,count));items=[];for(let i=0;items.length<count&&i<count;i++)for(const pool of pools)if(items.length<count&&pool[i])items.push(pool[i]);}
  else items=variedQuestions(questions.filter(q=>q.lesson===chosen.lesson.id),progress.attempts,count);
  return {lesson:chosen.lesson,weak:chosen.weak,due,items,minutes,days,mixed};
 }
