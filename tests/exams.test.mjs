@@ -10,17 +10,17 @@ import {regions} from '../src/data.js';
 import {retrieveSources,buildTutorMessages} from '../src/tutor-context.js';
 const rng=seed=>()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296;};
 test('every source objective has multiple explicit questions, with complete modules and source destinations',()=>{
- assert.equal(syllabus.sections.length,24);assert.equal(syllabus.sections.flatMap(s=>s.objectives).length,74);
+ assert.equal(syllabus.sections.length,33);assert.equal(syllabus.sections.flatMap(s=>s.objectives).length,101);
  for(const s of syllabus.sections){assert.ok(lessons.find(l=>l.id===s.id)?.syllabus);for(const o of s.objectives)assert.ok(examBank.filter(q=>q.objectives.includes(o.id)).length>=2,o.id);}
  const objectives=new Set(syllabus.sections.flatMap(s=>s.objectives.map(o=>o.id)));
  for(const q of examBank){assert.ok(q.objectives.every(id=>objectives.has(id)&&id.startsWith(q.lesson+'.')),q.id);assert.ok(q.source.includes(q.lesson));assert.ok(q.explanation.length>25);assert.ok(gradeQuestion(q,key(q)),q.id);assert.ok(validSession(createSession([q])),q.id);if(q.type==='match')assert.equal(new Set(q.pairs.map(p=>p.right)).size,q.pairs.length);}
- assert.equal(examBank.length,400);assert.equal(new Set(examBank.map(q=>q.id)).size,400);
+ assert.equal(examBank.length,520);assert.equal(new Set(examBank.map(q=>q.id)).size,520);
  assert.deepEqual(new Set(examBank.map(q=>q.type)),new Set(['choice','text','identify','match','order']));
 });
 function key(q){return q.type==='match'?Object.fromEntries(q.pairs.map(p=>[p.left,p.right])):q.type==='order'?[...q.steps]:q.answer;}
 test('chapter and cumulative blueprints hold across different randomized forms and never truncate to 20',()=>{
  for(let seed=1;seed<=60;seed++)for(const scope of ['6','7','8','9','all']){
-  const items=selectExam(scope,examBank,rng(seed)),sections=syllabus.sections.filter(s=>scope==='all'||String(s.chapter)===scope);
+  const items=selectExam(scope,examBank,rng(seed)),sections=syllabus.sections.filter(s=>(scope==='all'&&s.chapter<=9)||String(s.chapter)===scope);
   assert.equal(items.length,scope==='all'?100:50);assert.equal(new Set(items.map(q=>q.id)).size,items.length);
   for(const s of sections){const a=items.filter(q=>q.lesson===s.id);assert.ok(a.length,s.id);if(scope!=='all')assert.equal(a.length,s.examWeight,s.id);for(const o of s.objectives)assert.ok(a.some(q=>q.objectives.includes(o.id)),o.id);}
   if(scope==='all')for(const c of [6,7,8,9])assert.equal(items.filter(q=>q.lesson[0]==c).length,25);
@@ -51,7 +51,7 @@ test('legacy question and glossary identifiers stay usable, and new glossary has
 test('every lesson anatomy route exists and every direct figure link resolves its actual source caption',()=>{
  assert.deepEqual(Object.keys(links),lessons.map(l=>l.id));let figures=0;
  for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region),id);for(const f of l.figures){figures++;const page=pages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
- assert.equal(figures,99);const all=new Set(pages.filter(p=>[6,7,8,9].includes(p.chapter)).flatMap(p=>[...p.text.matchAll(/FIGURE\s+(\d+\.\d+)\s/g)].map(m=>m[1])));assert.deepEqual(new Set(Object.values(links).flatMap(l=>l.figures.map(f=>f.number))),all);
+ assert.ok(figures>=124);const all=new Set(pages.filter(p=>[6,7,8,9,10].includes(p.chapter)).flatMap(p=>[...p.text.matchAll(/FIGURE\s+(\d+\.\d+)\s/g)].map(m=>m[1])));assert.deepEqual(new Set(Object.values(links).flatMap(l=>l.figures.map(f=>f.number))),all);
 });
 test('the local tutor retrieves the newly complete development sections and names the full four-chapter scope',()=>{
  assert.ok(retrieveSources('apical ectodermal ridge limb buds',{reference:'8.5'}).some(s=>s.pdf===324));

@@ -1,3 +1,4 @@
+import {muscleExamFigure} from './muscle-diagrams.js';
 // Original, deliberately simplified teaching schematics; never patient images.
 import {plates} from './representations.js';
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -14,6 +15,7 @@ function motionFigure(kind){
 const ink='#dfe6d6',line='#839c8d';
 const marker=(id,x,y,tx,ty,active)=>`<path d="M${x} ${y}L${tx} ${ty}" stroke="${id===active?'#efa778':line}" stroke-width="2"/><circle cx="${tx}" cy="${ty}" r="4" fill="${id===active?'#efa778':ink}"/><circle cx="${x}" cy="${y}" r="15" fill="${id===active?'#efa778':'#233b37'}" stroke="${line}"/><text x="${x}" y="${y+5}" text-anchor="middle" fill="${id===active?'#122328':ink}" font-family="sans-serif" font-size="14">${id}</text>`;
 export function examFigure(name,active){
+ const muscle=muscleExamFigure(name,active);if(muscle)return muscle;
  if(name.startsWith('source:'))return sourceFigure(name.slice(7),active);
  if(name.startsWith('schematic:'))return motionFigure(name.slice(10));
  let body='',caption='';

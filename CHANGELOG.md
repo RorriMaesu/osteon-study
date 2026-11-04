@@ -279,3 +279,7 @@ Earlier release notes below describe historical states and are superseded by thi
 ## Chapter 10 expansion — phase 1
 
 Whole chapter-number parsing now supports Chapter 10 in question authoring, scheduling, weighting, progress and saved lesson work. Added the complete 40-page Chapter 10 reader and its 27-objective source index. The 669-component muscular source inventory is explicitly unreviewed. Existing exams and keys retain their scope and versions. Raw Chapter 10 source text is excluded from local-AI retrieval. No model geometry changed.
+
+## Chapter 10 expansion — phase 2
+
+Added all nine guided muscle-tissue sections and 27 source objectives, 85 glossary entries, and 120 authored mixed-format questions. Chapter 10 has a 50-question exam; the separate 150-question Chapters 6–10 form covers all 101 source objectives. The original Chapters 6–9 exam and saved sessions retain their scope. Added surface-specific organization, sarcomere and tissue schematics for identification. All 168 checks pass, including randomized objective coverage, restored sessions and near-neighbor terminology.

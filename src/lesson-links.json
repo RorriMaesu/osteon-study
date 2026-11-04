@@ -513,5 +513,175 @@
   "9.7": {
     "region": "Joints",
     "figures": []
+  },
+  "10.1": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.1",
+        "pdf": 385
+      },
+      {
+        "number": "10.2",
+        "pdf": 386
+      }
+    ],
+    "terms": []
+  },
+  "10.2": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.3",
+        "pdf": 388
+      },
+      {
+        "number": "10.4",
+        "pdf": 389
+      },
+      {
+        "number": "10.5",
+        "pdf": 390
+      },
+      {
+        "number": "10.6",
+        "pdf": 391
+      },
+      {
+        "number": "10.7",
+        "pdf": 392
+      }
+    ],
+    "terms": []
+  },
+  "10.3": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.7",
+        "pdf": 392
+      },
+      {
+        "number": "10.8",
+        "pdf": 393
+      },
+      {
+        "number": "10.9",
+        "pdf": 394
+      },
+      {
+        "number": "10.10",
+        "pdf": 395
+      },
+      {
+        "number": "10.11",
+        "pdf": 396
+      },
+      {
+        "number": "10.12",
+        "pdf": 398
+      }
+    ],
+    "terms": []
+  },
+  "10.4": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.13",
+        "pdf": 401
+      },
+      {
+        "number": "10.14",
+        "pdf": 403
+      },
+      {
+        "number": "10.15",
+        "pdf": 403
+      },
+      {
+        "number": "10.16",
+        "pdf": 404
+      },
+      {
+        "number": "10.17",
+        "pdf": 405
+      }
+    ],
+    "terms": []
+  },
+  "10.5": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.17",
+        "pdf": 405
+      }
+    ],
+    "terms": []
+  },
+  "10.6": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.18",
+        "pdf": 407
+      },
+      {
+        "number": "10.19",
+        "pdf": 408
+      },
+      {
+        "number": "10.20",
+        "pdf": 409
+      }
+    ],
+    "terms": []
+  },
+  "10.7": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.20",
+        "pdf": 409
+      },
+      {
+        "number": "10.21",
+        "pdf": 410
+      },
+      {
+        "number": "10.22",
+        "pdf": 410
+      }
+    ],
+    "terms": []
+  },
+  "10.8": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.23",
+        "pdf": 412
+      },
+      {
+        "number": "10.24",
+        "pdf": 413
+      },
+      {
+        "number": "10.25",
+        "pdf": 414
+      }
+    ],
+    "terms": []
+  },
+  "10.9": {
+    "region": "Upper limb",
+    "figures": [
+      {
+        "number": "10.25",
+        "pdf": 414
+      }
+    ],
+    "terms": []
   }
 }

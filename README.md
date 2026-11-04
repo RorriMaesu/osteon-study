@@ -125,3 +125,7 @@ Complete study backups in My progress now include exam drafts and reports, the r
 Lessons now use **Orient, Understand, Explore, Retrieve and Apply**, with saved personal reasoning and a direct source-return path. A daily route combines due review, a weak section and varied retrieval. Exams offer visual/3D practicals, custom chapter or section weights, optional active-time goals and sparse confidence checks. Clear typos retain credit; uncertain wording stays pending and has a separate non-AI rehearsal. Detailed exam figures can be enlarged without revealing their masked names.
 
 [Implementation tracker for the 70-point review](QUALITY-IMPLEMENTATION.md) records delivered features and outstanding expert, device and permission validation. Full backups now also include lesson drafts and question exposure. Automated coverage is not an independent anatomical or item-quality certification.
+
+### Muscle tissue: Chapter 10
+
+The study studio now includes all nine Chapter 10 sections, complete source reading, 85 key terms, 120 mixed-format questions and a 50-question chapter exam. A separate 150-question comprehensive exam spans Chapters 6–10 and all 101 source objectives; the original Chapters 6–9 exam remains available. Spelling support preserves intended answers while protecting distinct anatomical terms. Whole-body muscle anatomy is being released separately with explicit model review status.

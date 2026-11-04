@@ -80,3 +80,7 @@ The long-bone, osteon, vertebra and right-limb exam schematics are original simp
 ## Integrated atlas annotation layer
 
 `assets/course-landmark-labels.glb` and `src/atlas-label-anchors.json` are annotation derivatives of the licensed Z-Anatomy/BodyParts3D models and existing source-backed educational reference work. They retain CC BY-SA 4.0 for the model-derived content. Blender 4.5 assembles editable annotation nodes without moving the authored opening/surface references or changing the three existing anatomy GLBs. Whole-structure surface labels are distinguished from precise landmark references. The teacher's original document is not redistributed.
+
+## Chapter 10 muscle-tissue extension
+
+The complete Chapter 10 source reader (PDF pages 385–424), 85 glossary entries and 27-objective index are from the supplied OpenStax Anatomy and Physiology 2e, © 2026 Rice University, CC BY-NC-SA 4.0. Access for free at openstax.org. New explanations, assessments and qualitative teaching schematics are educational adaptations under the same content license. Schematics are explicitly not micrographs or calibrated simulations. Raw Chapter 10 textbook text is not supplied to local AI. The unreviewed muscular-system inventory is derived from Z-Anatomy and retains its CC BY-SA 4.0 provenance.

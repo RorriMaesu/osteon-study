@@ -88,3 +88,9 @@ The final browser pass also moved practice Check/Reveal controls outside the con
 ### November 4 implementation
 
 The five-step lesson route, daily repair route, 144 parallel exam items, unseen-first selection, 20-item visual practical and 10-target 3D route are implemented. Custom practice can use chapter/section weights and 1–100 items; these smaller custom sets do not promise complete objective coverage. Timing is an optional active-time goal, never an automatic lock or submission. Confidence is optional every fifth question. Compound diagnostics retain the all-parts/one-point rule. See QUALITY-IMPLEMENTATION.md for independent review still required.
+
+## Chapter 10 extension (November 2026)
+
+The active curriculum now contains 33 sections and 101 source objectives across Chapters 6–10. Chapter 10 adds 40 complete source pages, 85 key terms and 120 exam-bank items. Its chapter-exam weights for 10.1–10.9 are 3, 8, 10, 9, 4, 4, 4, 5, 3 (50 total). The original 100-question Chapters 6–9 form remains available. A separate 150-question form selects 30 per chapter, with a minimum allocation for every source objective. Historical sessions freeze their question IDs and keys.
+
+The Chapter 10 lessons distinguish gross anatomy from microscopic tissue organization. Whole-body muscle anatomy is an independently staged atlas expansion; its review status must not be inferred from the completeness of the Chapter 10 course. Source images are for human reading. Raw Chapter 10 textbook text is excluded from local-AI retrieval.

@@ -28,12 +28,19 @@ export function gradeWithReview(q,response,review,options){return assessQuestion
 export function sessionOutcome(s,q){return assessQuestion(q,s.responses[q.id],s.aiReviews?.[q.id],{legacy:s.gradingVersion!==GRADING_VERSION});}
 export function answeredCount(s,bank=examBank){const byId=new Map(bank.map(q=>[q.id,q]));return s.ids.filter(id=>byId.has(id)&&answered(byId.get(id),s.responses[id])).length;}
 const cumulative={6:[2,2,7,5,2,4,3],7:[4,9,6,3,3],8:[3,7,5,7,3],9:[3,3,3,5,3,6,2]};
+function comprehensiveQuotas(chapter){
+ const sections=syllabus.sections.filter(s=>s.chapter===chapter),result=Object.fromEntries(sections.map(s=>[s.id,s.objectives.length]));
+ let used=Object.values(result).reduce((a,b)=>a+b,0);if(used>30)throw Error('Comprehensive blueprint cannot cover this chapter.');
+ while(used<30){const next=[...sections].sort((a,b)=>(b.examWeight/50*30-result[b.id])-(a.examWeight/50*30-result[a.id]))[0];result[next.id]++;used++;}
+ return result;
+}
 export function selectExam(scope,bank=examBank,rng=Math.random,{seen={}}={}){
  if(scope==='bank')return shuffled(bank,rng).sort((a,b)=>exposureCount(seen,a.id)-exposureCount(seen,b.id));
- const sections=syllabus.sections.filter(s=>scope==='all'||String(s.chapter)===String(scope)),selected=[];
+ const sections=syllabus.sections.filter(s=>scope==='all10'||(scope==='all'&&s.chapter<=9)||String(s.chapter)===String(scope)),selected=[];
+ const expanded=scope==='all10'?Object.assign({},...syllabus.chapters.map(c=>comprehensiveQuotas(c.id))):null;
  if(!sections.length)throw new Error('Choose a chapter or cumulative exam.');
  for(const section of sections){
-  const quota=scope==='all'?cumulative[section.chapter][+section.id.split('.')[1]-1]:section.examWeight;
+  const quota=expanded?expanded[section.id]:scope==='all'?cumulative[section.chapter][+section.id.split('.')[1]-1]:section.examWeight;
   const pool=shuffled(bank.filter(q=>q.lesson===section.id),rng).sort((a,b)=>exposureCount(seen,a.id)-exposureCount(seen,b.id));
   if(pool.length<quota)throw new Error(`Section ${section.id} has too few questions for its blueprint.`);
   const choose=source=>{

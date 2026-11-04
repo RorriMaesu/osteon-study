@@ -11,14 +11,14 @@ import {issueDraft} from '../src/issue-report.js';
 import {lessons,questions} from '../src/learning-data.js';
 
 test('custom blueprints honor chapter and section weights, capacities, exposure and uniqueness',()=>{
- const items=weightedPractice(examBank,{6:1,7:2,8:1,9:0},40);assert.equal(items.length,40);assert.equal(new Set(items.map(q=>q.id)).size,40);assert.deepEqual(['6','7','8','9'].map(c=>items.filter(q=>q.lesson[0]===c).length),[10,20,10,0]);
+ const items=weightedPractice(examBank,{6:1,7:2,8:1,9:0},40);assert.equal(items.length,40);assert.equal(new Set(items.map(q=>q.id)).size,40);assert.deepEqual(['6','7','8','9'].map(c=>items.filter(q=>q.lesson.split('.')[0]===c).length),[10,20,10,0]);
  const small=weightedPractice(examBank,{'6.1':1,'9.7':1},100);assert.ok(small.every(q=>['6.1','9.7'].includes(q.lesson)));assert.equal(new Set(small.map(q=>q.id)).size,small.length);
- const seen=Object.fromEntries(examBank.filter(q=>q.lesson[0]==='8').slice(0,90).map(q=>[q.id,{count:2,at:1}]));assert.ok(weightedPractice(examBank,{8:1},10,{seen}).every(q=>!seen[q.id]));assert.throws(()=>weightedPractice(examBank,{6:0},5));assert.throws(()=>weightedPractice(examBank,{6:1},NaN));const session=createSession(items);session.timeGoalMinutes='<img src=x onerror=alert(1)>';assert.equal(validSession(session,examBank),false);session.timeGoalMinutes=240;session.confidenceEnabled=true;assert.ok(validSession(session,examBank));session.confidenceEnabled='true';assert.equal(validSession(session,examBank),false);
+ const seen=Object.fromEntries(examBank.filter(q=>q.lesson.split('.')[0]==='8').slice(0,90).map(q=>[q.id,{count:2,at:1}]));assert.ok(weightedPractice(examBank,{8:1},10,{seen}).every(q=>!seen[q.id]));assert.throws(()=>weightedPractice(examBank,{6:0},5));assert.throws(()=>weightedPractice(examBank,{6:1},NaN));const session=createSession(items);session.timeGoalMinutes='<img src=x onerror=alert(1)>';assert.equal(validSession(session,examBank),false);session.timeGoalMinutes=240;session.confidenceEnabled=true;assert.ok(validSession(session,examBank));session.confidenceEnabled='true';assert.equal(validSession(session,examBank),false);
 });
 test('daily study uses scored weaknesses and mixes all four chapters in the final week',()=>{
  const p=blankProgress(),weak=questions.find(q=>q.lesson==='9.6'),now=new Date('2026-11-04T12:00:00').getTime();p.attempts=[{id:weak.id,correct:false,at:now-1000},{id:questions.find(q=>q.lesson==='6.1').id,correct:false,selfRated:true,at:now}];
  const ordinary=dailyRoute(p,{minutes:20,now});assert.equal(ordinary.lesson.id,'9.6');assert.ok(ordinary.items.every(q=>q.lesson==='9.6'));
- const final=dailyRoute(p,{minutes:20,examDate:'2026-11-08',now});assert.equal(final.mixed,true);assert.equal(new Set(final.items.map(q=>q.lesson[0])).size,4);assert.equal(new Set(final.items.map(q=>q.id)).size,final.items.length);assert.equal(dailyRoute(p,{examDate:'2026-10-01',now}).mixed,false);
+ const final=dailyRoute(p,{minutes:20,examDate:'2026-11-08',now});assert.equal(final.mixed,true);assert.equal(new Set(final.items.map(q=>q.lesson.split('.')[0])).size,5);assert.equal(new Set(final.items.map(q=>q.id)).size,final.items.length);assert.equal(dailyRoute(p,{examDate:'2026-10-01',now}).mixed,false);
 });
 test('repair sets spread objectives rather than filling with near-duplicate items',()=>{
  const l=lessons.find(l=>l.id==='6.3'),items=questions.filter(q=>q.lesson===l.id),set=variedQuestions(items,[],5);assert.equal(set.length,5);assert.equal(new Set(set.map(q=>q.objectives?.[0]||q.lesson)).size,5);
