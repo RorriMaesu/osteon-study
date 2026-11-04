@@ -10,6 +10,7 @@ import {bank10} from '../src/bank10.js';
 import {selectExam,createSession,validSession,syllabus} from '../src/exam-core.js';
 import {assessTyped,outcomeCorrect} from '../src/typed-answer.js';
 import {sarcomereGeometry,muscleExamFigure} from '../src/muscle-diagrams.js';
+import {crossBridgePermission,tensionTrace} from '../src/muscle-labs.js';
 
 test('multi-digit chapter IDs survive authoring and weighted practice',()=>{
  assert.equal(chapterOf('10.9'),'10');assert.equal(chapterOf('6.3'),'6');assert.equal(chapterOf('bad'),'');
@@ -34,6 +35,12 @@ test('muscle terminology preserves spelling credit without merging different str
 test('sarcomere geometry preserves filament and A-band length during shortening',()=>{
  const rest=sarcomereGeometry(0),short=sarcomereGeometry(1);assert.equal(rest.aBand,short.aBand);assert.equal(rest.thinLength,short.thinLength);assert.ok(short.length<rest.length);assert.ok(short.iBand<rest.iBand);assert.ok(short.hZone<rest.hZone);
  for(const q of bank10.filter(q=>q.figure))assert.ok(muscleExamFigure(q.figure,q.target)?.includes('<svg'),q.id);
+});
+test('physiology controls keep energy, timing and recruitment distinct',()=>{
+ assert.ok(crossBridgePermission(0,{calcium:false}));assert.ok(crossBridgePermission(3,{atp:false}));assert.ok(crossBridgePermission(4,{atp:false}));assert.equal(crossBridgePermission(2,{atp:true,calcium:true}),'');
+ const low=tensionTrace('summation',1),high=tensionTrace('summation',5);assert.deepEqual(low.pulses,high.pulses);assert.ok(high.points.some((p,i)=>p[1]>low.points[i][1]));
+ const treppe=tensionTrace('treppe');for(let j=0;j<4;j++)assert.ok(treppe.points.some(([t,f])=>t>treppe.pulses[j]+.51&&t<treppe.pulses[j+1]&&f===0));
+ assert.ok(tensionTrace('fused').pulses.length>tensionTrace('unfused').pulses.length);
 });
 test('Chapter 10 drafts and progress round-trip alongside older lessons',()=>{
  const p=blankProgress();p.lessons={'6.3':true,'10.9':true};assert.ok(validProgress(p));p.lessons['10.10']=true;assert.ok(!validProgress(p));

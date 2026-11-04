@@ -283,3 +283,7 @@ Whole chapter-number parsing now supports Chapter 10 in question authoring, sche
 ## Chapter 10 expansion — phase 2
 
 Added all nine guided muscle-tissue sections and 27 source objectives, 85 glossary entries, and 120 authored mixed-format questions. Chapter 10 has a 50-question exam; the separate 150-question Chapters 6–10 form covers all 101 source objectives. The original Chapters 6–9 exam and saved sessions retain their scope. Added surface-specific organization, sarcomere and tissue schematics for identification. All 168 checks pass, including randomized objective coverage, restored sessions and near-neighbor terminology.
+
+## Chapter 10 expansion — phase 3
+
+Added nine guided physiology labs: tissue evidence, organization scale, sliding-filament and ATP/calcium controls, recruitment and stimulus traces, fiber types, exercise, cardiac connections, smooth-muscle regulation, and repair. Corrected desktop pagination so diagrams and controls stay together. All 169 checks pass; contraction activity visually reviewed at 1280×720.

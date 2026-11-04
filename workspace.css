@@ -399,3 +399,30 @@ body.viewer-room-open{overflow:hidden!important}
 .ai-setup-footer.has-primary>.primary{order:2;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:9px;padding:9px 14px;font-size:12px;min-height:42px;background:var(--orange);color:#172723;border:1px solid var(--orange)}
 @media(max-width:650px){.ai-setup-footer.has-primary>span{flex-basis:100%}.ai-setup-footer.has-primary>.primary{flex:1;min-height:44px}.ai-setup-footer.has-primary>[data-ai-action="close"]{min-height:44px}}
 @media(min-width:1000px) and (max-height:760px){#tutor-body .ai-setup-content{padding:14px 24px}#tutor-body .ai-setup-content h3{font-size:26px;margin-bottom:8px}#tutor-body .ai-setup-content p{font-size:12px;line-height:1.5;margin:8px 0}.ai-ready-icon{display:none}.ai-summary{padding:10px 14px;gap:5px;margin:10px 0}.ai-sample{padding:9px 12px;font-size:11px}.ai-steps{padding-top:10px;padding-bottom:10px}.ai-setup-footer{padding-top:9px;padding-bottom:9px}}
+
+/* Chapter 10: compact, controllable physiology activities. */
+.muscle-lab{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(220px,1fr);gap:20px;align-items:start}
+.muscle-lab>*{min-width:0}.muscle-lab-visual{max-width:900px;margin:0 auto}.muscle-lab-visual svg{display:block;width:100%;max-height:250px;height:auto}.muscle-lab label{display:block;margin:10px 0 6px}.muscle-lab input[type=range]{width:100%;accent-color:#b0d6c3}.muscle-lab select{width:100%}.muscle-lab .control-row label{display:flex;align-items:center;gap:7px;margin:3px 0;font-size:12px}.muscle-lab-feedback{padding:12px 14px;border-left:3px solid #b0d6c3;background:#233b37;border-radius:0 9px 9px 0;font-size:13px;line-height:1.55}.muscle-event-step{padding:12px 14px;background:#162c30;border:1px solid #3c5854;border-radius:12px}.muscle-event-step h4{margin:5px 0}.muscle-exam-figure svg{width:100%;height:auto;max-height:420px}.muscle-exam-figure{width:100%}
+@media(max-width:760px){.muscle-lab{grid-template-columns:1fr;gap:8px}.muscle-lab-visual svg{max-height:200px}.muscle-lab .control-row{gap:7px}.muscle-lab-feedback{padding:10px}.muscle-event-step{padding:10px}}
+@media(prefers-reduced-motion:reduce){.muscle-lab *{animation:none!important;transition:none!important}}
+
+@media(min-width:1000px){
+ .flow-body.muscle-interactive-step{display:flex;flex-direction:column;min-height:0;overflow:hidden;gap:7px}
+ .muscle-interactive-step>.control-row{margin:0;gap:7px;flex:none}.muscle-interactive-step>.control-row button{min-height:32px;padding:6px 10px;font-size:11px}
+ .muscle-interactive-step #lesson-activity{margin:0;padding:10px;min-height:0;flex:1;overflow:hidden}
+ .muscle-interactive-step #lesson-activity>h3{font-family:inherit;font-size:15px;line-height:1.25;margin:4px 0 8px}
+ .muscle-interactive-step .muscle-lab{gap:14px;grid-template-columns:minmax(0,1fr) minmax(240px,1fr)}
+ .muscle-interactive-step .muscle-lab p{font-size:11px;line-height:1.5;margin:5px 0}.muscle-interactive-step .muscle-lab h4{font-size:14px;margin:5px 0}
+ .muscle-interactive-step .muscle-lab-visual svg{max-height:190px}.muscle-interactive-step #lesson-activity>.tiny{font-size:8px;line-height:1.35;margin:5px 0 0}
+ .muscle-interactive-step .muscle-lab label{font-size:10px;margin:4px 0}.muscle-interactive-step input[type=range]{height:24px;min-height:24px;margin:2px 0}
+ .muscle-interactive-step .muscle-lab .control-row label{font-size:10px;line-height:1.4}.muscle-interactive-step .muscle-lab input[type=checkbox]{width:13px;min-height:13px;height:13px;margin:0}
+ .muscle-interactive-step .muscle-event-step{padding:8px}.muscle-interactive-step .muscle-lab-feedback{padding:7px 9px;font-size:11px;line-height:1.4;margin:6px 0}
+ .muscle-interactive-step #lesson-activity button{min-height:29px;font-size:10px;padding:5px 9px}.muscle-interactive-step #lesson-activity select{min-height:30px;font-size:11px;padding:5px}
+ .muscle-interactive-step .muscle-case-text .flow-question{font-size:15px;margin:10px 0}.muscle-interactive-step .muscle-case-text{max-width:850px}
+}
+
+@media(min-width:1000px){
+ .lesson-content .flow-body.muscle-interactive-step #lesson-activity p{font-size:11px!important;line-height:1.5!important;margin:5px 0!important}
+ .lesson-content .flow-body.muscle-interactive-step #lesson-activity>.tiny{font-size:8px!important;line-height:1.35!important;margin:5px 0 0!important}
+ .lesson-content .flow-body.muscle-interactive-step .muscle-lab-visual svg{max-height:180px}
+}
