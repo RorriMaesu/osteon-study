@@ -160,4 +160,6 @@ const requestedFeature=new URLSearchParams(location.search).get('feature');
 if(requestedFeature){const term=allTerms.find(t=>t.id===requestedFeature||t.feature?.id===requestedFeature);if(term)selectTerm(term);}
 document.addEventListener('click',event=>{const id=event.target.closest('[data-member-term]')?.dataset.memberTerm;if(id){const term=allTerms.find(t=>t.id===id);if(term)selectTerm(term);}});
 
-export const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region=viewer.region;selected=null;syncFilters();resetDetail();renderList();updateButtons();}});
+export const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region=viewer.region;selected=null;$$('[data-browse-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.browseMode===browseMode)));syncFilters();resetDetail();renderList();updateButtons();}});
+
+if(new URLSearchParams(location.search).get('muscles')==='1')document.addEventListener('anatomyready',()=>muscleAtlas.openRegion(new URLSearchParams(location.search).get('muscleRegion')||'shoulder-arm'),{once:true});

@@ -24,3 +24,10 @@ test('the shoulder pilot contains both sides, separate heads and explicit attach
  for(const name of ['biceps brachii','triceps brachii','deltoid','Brachialis','Subscapularis','Supraspinatus','Infraspinatus','Teres minor'])for(const side of ['left','right']){const c=manifest.components.find(c=>c.side===side&&c.sourceName.toLowerCase().includes(name.toLowerCase()));assert.ok(c,name+' '+side);assert.ok(muscleFacts(c)?.origin);}
  assert.ok(manifest.components.filter(c=>c.side==='right'&&/head of biceps brachii/.test(c.sourceName)).length===2);
 });
+test('regional atlas coverage preserves source sides and corrected anatomical grouping',()=>{
+ assert.equal(manifest.components.length,669);assert.equal(Object.keys(manifest.assets).length,5);
+ for(const c of manifest.components){if(c.side==='right')assert.ok(c.bounds.min[0]<.002,c.sourceName);if(c.side==='left')assert.ok(c.bounds.max[0]>-.002,c.sourceName);}
+ const pectoralHeads=manifest.components.filter(c=>/head of pectoralis major/.test(c.sourceName));assert.ok(pectoralHeads.length);assert.ok(pectoralHeads.every(c=>c.region==='trunk-back'));
+ const upper=manifest.components.filter(c=>c.name==='Upper (descending) part of trapezius'),lower=manifest.components.filter(c=>c.name==='Lower (ascending) part of trapezius');assert.equal(upper.length,2);assert.equal(lower.length,2);assert.ok(Math.min(...upper.map(c=>c.bounds.min[1]))>Math.min(...lower.map(c=>c.bounds.min[1])));
+ const iliocostalis=manifest.components.find(c=>c.sourceName==='Iliocostalis colli muscle');assert.equal(iliocostalis.side,'left');
+});

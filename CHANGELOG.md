@@ -291,3 +291,7 @@ Added nine guided physiology labs: tissue evidence, organization scale, sliding-
 ## Chapter 10 expansion — phase 4
 
 Blender 4.5 exported a bilateral 28-part shoulder/upper-arm pilot with original world transforms, verified source backups and destination snapshots before every save/export. The optional muscle layer groups heads into muscles while retaining part selection, provides labels, colors, side/depth filters, muscle/bone picking, focus and attachment teaching. Muscle geometry is hidden during assessments. Pilot source geometry is learn-only; precise attachment footprints and movement are not certified. All 172 checks pass.
+
+## Chapter 10 expansion — phase 5
+
+Added all 669 muscular-system source components in five on-demand regional GLBs (485 muscle parts, 184 supporting components; 8.25 MB total compressed). Whole-body mode loads all regions explicitly and switches to both sides. Kept heads grouped with individual part inspection. Corrected hierarchy-based region assignment, the left-side iliocostalis colli source name, and superior/inferior trapezius part display labels. Source identities and all backup evidence remain recorded. Layer subsets are labeled as examples; All layers includes the unassigned structures. Added the complete muscle coverage CSV and a direct shared muscle-atlas link.

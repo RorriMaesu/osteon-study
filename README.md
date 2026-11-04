@@ -129,3 +129,7 @@ Lessons now use **Orient, Understand, Explore, Retrieve and Apply**, with saved 
 ### Muscle tissue: Chapter 10
 
 The study studio now includes all nine Chapter 10 sections, complete source reading, 85 key terms, 120 mixed-format questions and a 50-question chapter exam. A separate 150-question comprehensive exam spans Chapters 6–10 and all 101 source objectives; the original Chapters 6–9 exam remains available. Spelling support preserves intended answers while protecting distinct anatomical terms. Whole-body muscle anatomy is being released separately with explicit model review status.
+
+### Optional 3D muscle layer
+
+[Open the muscle atlas](https://rorrimaesu.github.io/osteon-study/?muscles=1#atlas). Use Muscles to toggle the layer, choose a region and side, search by name, or focus a whole muscle and inspect its heads. Labels and regional colors can be switched off. The five regional downloads total about 8.25 MB and contain 485 muscle parts plus 184 supporting components from Z-Anatomy. [Muscle coverage](MUSCLE-COVERAGE.csv) records every source component and its review status. This is source-aligned static reference anatomy; precise attachment footprints and movement remain excluded from spatial scoring. It does not certify that every anatomical variant or every human muscle is modeled.

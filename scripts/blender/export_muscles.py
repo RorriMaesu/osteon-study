@@ -40,10 +40,18 @@ def ancestry(o):
  return out
 def region_for(name,parents,center):
  text=' '.join([name,*parents]).lower()
- if pilot.search(name):return 'shoulder-arm'
+ hierarchy=' '.join(parents).lower()
+ if pilot.search(name)or re.search(r'teres major|deltoid|subacromial',name,re.I):return 'shoulder-arm'
+ # Use the source regional hierarchy before geometric fallbacks. A muscle's
+ # "clavicular head" is not a head/neck region simply because it says head.
+ if 'compartment of arm.g' in hierarchy:return 'shoulder-arm'
+ if any(w in hierarchy for w in ['muscular system of upper limb','muscles of upper limb']):return 'forearm-hand'
+ if any(w in hierarchy for w in ['muscular system of lower limb','muscles of lower limb']):return 'pelvis-leg-foot'
+ if any(w in hierarchy for w in ['abdominal part','muscles of abdomen','thoracic part','muscles of thorax','dorsal part','muscles of back']):return 'trunk-back'
+ if any(w in hierarchy for w in ['muscles of head','muscles of face','muscles of neck','cervical part','head and neck']):return 'head-neck'
  if any(w in text for w in ['upper limb','forearm','of hand','carpi','digitorum superficialis','digitorum profundus','pollicis','pronator','supinator','brachioradialis']):return 'forearm-hand'
  if any(w in text for w in ['lower limb','of thigh','of leg','of foot','femoris','gastrocnemius','soleus','tibialis','fibularis','hallucis']):return 'pelvis-leg-foot'
- if any(w in text for w in ['head','face','neck','pharyn','laryn','tongue','extraocular','masseter','temporalis','pterygoid','platysma','capitis','colli','scalen']):return 'head-neck'
+ if any(w in text for w in ['of head','of face','of neck','pharyn','laryn','tongue','extraocular','masseter','temporalis','pterygoid','platysma','capitis','colli','scalen']):return 'head-neck'
  if any(w in text for w in ['pelvi','perine','coccyg','ani','obturator','piriformis']):return 'pelvis-leg-foot'
  if center.z>1.43:return 'head-neck'
  if abs(center.x)>.22 and center.z>0.75:return 'forearm-hand'
@@ -51,6 +59,7 @@ def region_for(name,parents,center):
  return 'trunk-back'
 support=re.compile(r'fascia|retinacul|tendon sheath|bursa|tarsus|tendinous ring|trochlea|ligament|aponeurosis|tendon|adipose',re.I)
 superficial=re.compile(r'deltoid|biceps brachii|lateral head of triceps|long head of triceps|trapezius|latissimus|pectoralis major|rectus abdominis|external oblique|gluteus maximus|sartorius|rectus femoris|vastus|gastrocnemius|tibialis anterior|sternocleidomastoid|platysma|masseter|temporalis|facial|frontalis|orbicularis',re.I)
+deep=re.compile(r'subscapularis|supraspinatus|infraspinatus|teres minor|brachialis|coracobrachialis|medial head of triceps|pronator quadratus|supinator|digitorum profundus|transversus abdominis|internal oblique|multifidus|rotator|interosse|lumbrical|psoas|iliacus|obturator|piriformis|popliteus|tibialis posterior|longus colli|longus capitis|pharyngeal',re.I)
 scene=bpy.data.scenes.new('Osteon muscle anatomy');source_objects=[bpy.data.objects[n]for n in names]
 deps=bpy.context.evaluated_depsgraph_get();records=[];objects=[]
 for original in source_objects:
@@ -59,11 +68,14 @@ for original in source_objects:
  obj=bpy.data.objects.new(original.name,me);scene.collection.objects.link(obj)
  points=[v.co for v in me.vertices];lo=Vector(tuple(min(p[i]for p in points)for i in range(3)));hi=Vector(tuple(max(p[i]for p in points)for i in range(3)));center=(lo+hi)*.5
  kind='support' if support.search(original.name)else 'muscle';region=region_for(original.name,parents,center)
- side='right' if original.name.endswith('.r')else 'left'if original.name.endswith('.l')else 'midline'
+ side='right' if original.name.endswith('.r')else 'left'if original.name.endswith('.l')else 'right'if hi.x<-.001 else 'left'if lo.x>.001 else 'midline'if original.name in ['Linea alba','Transverse arytenoid muscle']else 'bilateral'
  source_name=original.name;identity='muscle-'+re.sub(r'[^a-z0-9]+','-',source_name.lower()).strip('-')
  group=next((p[:-2]for p in parents if re.search(r'(?<!s) muscle\.g$',p,re.I)),None)
  display=re.sub(r'\.[lr]$','',source_name);muscle_name=group or re.sub(r'^(?:Long|Short|Medial|Lateral) head of ','',display,flags=re.I)
- depth='superficial'if superficial.search(source_name)else 'deeper'
+ correction=None
+ if re.match(r'Ascending part of trapezius',source_name):display='Upper (descending) part of trapezius';correction='Source part label corrected to match the superior, occipital/cervical geometry.'
+ if re.match(r'Descending part of trapezius',source_name):display='Lower (ascending) part of trapezius';correction='Source part label corrected to match the inferior, thoracic geometry.'
+ depth='superficial'if superficial.search(source_name)else 'deeper'if deep.search(source_name)else 'unassigned'
  obj['zname']=source_name;obj['muscleId']=identity;obj['muscleRegion']=region;obj['muscleKind']=kind;obj['muscleDepth']=depth;obj['source']='Z-Anatomy / BodyParts3D; world transforms preserved';obj['anatomicalSide']=side
  mat=bpy.data.materials.get('Osteon muscle'if kind=='muscle'else 'Osteon muscle support')
  if mat is None:
@@ -72,10 +84,18 @@ for original in source_objects:
  # Keep attachment shapes. Moderate polygon reduction is for large source surfaces.
  if PHASE!='pilot'and len(me.polygons)>7000:
   modifier=obj.modifiers.new('Conservative web simplification','DECIMATE');modifier.ratio=.70
- records.append({'id':identity,'sourceName':source_name,'name':display,'muscleName':muscle_name,'region':region,'side':side,'kind':kind,'depth':depth,'parents':parents,'sourcePolygons':len(me.polygons),'bounds':{'min':[lo.x,lo.z,-hi.y],'max':[hi.x,hi.z,-lo.y]},'status':'source-aligned-reference','assessment':'learn-only','reviewNotice':'Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring.'})
+ records.append({'id':identity,'sourceName':source_name,'name':display,'muscleName':muscle_name,'nameCorrection':correction,'region':region,'side':side,'kind':kind,'depth':depth,'parents':parents,'sourcePolygons':len(me.polygons),'bounds':{'min':[lo.x,lo.z,-hi.y],'max':[hi.x,hi.z,-lo.y]},'status':'source-aligned-reference','assessment':'learn-only','reviewNotice':'Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring.'})
  objects.append(obj)
 
 bpy.context.window.scene=scene
+# The editable derivative needs only the exported anatomy, not every original
+# atlas scene, font and unrelated organ. The original .blend stays untouched.
+for old in list(bpy.data.scenes):
+ if old!=scene:bpy.data.scenes.remove(old)
+keep=set(objects)
+for old in list(bpy.data.objects):
+ if old not in keep:bpy.data.objects.remove(old,do_unlink=True)
+bpy.data.orphans_purge(do_local_ids=True,do_linked_ids=True,do_recursive=True)
 for obj in scene.objects:obj.select_set(False)
 backup('Immediately before saving the derived editable Blender muscle project',[PROJECT])
 bpy.ops.wm.save_as_mainfile(filepath=str(PROJECT),check_existing=False)
@@ -83,7 +103,7 @@ regions=sorted(set(r['region']for r in records));assets={}
 for region in regions:
  for obj in scene.objects:obj.select_set(obj['muscleRegion']==region)
  selected=[o for o in scene.objects if o.select_get()];bpy.context.view_layer.objects.active=selected[0]
- target=REPO/'assets'/('muscles-'+region+'.glb');snapshot=backup('Immediately before exporting '+region,[target,PROJECT])
+ target=REPO/'assets'/('muscles-'+region+'.glb');snapshot=backup('Immediately before exporting '+region,[target])
  bpy.ops.export_scene.gltf(filepath=str(target),export_format='GLB',use_selection=True,export_extras=True,export_animations=False,export_apply=True,export_yup=True,export_draco_mesh_compression_enable=True,export_draco_mesh_compression_level=6,export_draco_position_quantization=16,export_draco_normal_quantization=10)
  assets[region]={'file':target.name,'bytes':target.stat().st_size,'sha256':digest(target),'components':len(selected),'backup':snapshot}
 print('MUSCLE_EXPORTS',json.dumps(assets),flush=True)
