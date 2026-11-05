@@ -97,7 +97,7 @@ The Chapter 10 lessons distinguish gross anatomy from microscopic tissue organiz
 
 ### Published muscle reference and final review
 
-The optional atlas now contains all 669 components in the Z-Anatomy muscular-system export: 485 muscle parts and 184 supporting components, divided into five regional downloads. These counts describe source components, including separate heads and sides; they are not a claim of 485 distinct muscles or coverage of every human muscle. Original model coordinates are retained. Blender 4.5 backup snapshots precede every project save and model export. The source project is hash-verified as unchanged.
+The optional atlas now contains all 669 components in the Z-Anatomy muscular-system export: 462 muscle parts and 207 supporting components, divided into five regional downloads. These counts describe source components, including separate heads and sides; they are not a claim of 485 distinct muscles or coverage of every human muscle. Original model coordinates are retained. Blender 4.5 backup snapshots precede every project save and model export. The source project is hash-verified as unchanged.
 
 Muscle navigation supports side, regional colors, search, selected labels, head/part inspection, focus, surface peeling and restore. Small screens keep selected labels above the model; short desktop screens reduce browser page size while retaining every result. Muscles are excluded from bone assessments. Static proximity is not proof of a certified attachment: exact attachment footprints, full dissection planes and moving-muscle rigs remain outside validated spatial assessment. Chapter 10 mechanisms instead use explicit qualitative tissue, sarcomere, activation and tension activities.
 

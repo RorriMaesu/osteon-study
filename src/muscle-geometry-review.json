@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "method": "Read-only Blender 4.5 source mesh connectivity and world bounds, compared with regional anatomical references. Connectivity is a diagnostic, not a certified muscle count.",
+  "sourceSHA256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd",
+  "reviews": {
+    "Palmar interossei muscles": {
+      "status": "incomplete-group",
+      "expectedMembersPerSide": 3,
+      "localizedSourceMeshesPerSide": 1,
+      "note": "The source provides one localized mesh per hand. It does not separately demonstrate all three usual palmar interossei. This aggregate label must not be treated as proof that the group is complete."
+    },
+    "Lumbrical muscles of foot": {
+      "status": "incomplete-group",
+      "expectedMembersPerSide": 4,
+      "localizedSourceMeshesPerSide": 1,
+      "note": "The source provides one localized mesh per foot. It does not separately demonstrate all four usual lumbricals. Further members require reference-based reconstruction and verification."
+    },
+    "Spinalis capitis muscle": {
+      "status": "naming-review",
+      "note": "The source has no separately named semispinalis capitis mesh. Review the attachment relationships of this spinalis capitis mesh before deciding whether semispinalis is omitted, fused, or mislabeled."
+    },
+    "Pubo-analis muscle": {
+      "status": "naming-review",
+      "note": "Puboanalis and puborectalis must not be treated as automatic synonyms. The pelvic-floor sling and attachment relationships require anatomical review."
+    }
+  },
+  "references": [
+    "https://www.anatomyatlases.org/HumanAnatomy/4Section/30.shtml",
+    "https://ta2viewer.openanatomy.org/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC1415268/",
+    "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/"
+  ]
+}

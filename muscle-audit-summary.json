@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "referenceChecks": 226,
+  "muscleParts": 462,
+  "supportParts": 207,
+  "counts": {
+    "named-geometry": 160,
+    "represented-by-components": 6,
+    "no-named-mesh": 51,
+    "not-separately-resolved": 4,
+    "partial-model": 3,
+    "needs-anatomical-review": 2
+  },
+  "geometryCertified": false,
+  "sourceSHA256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd"
+}

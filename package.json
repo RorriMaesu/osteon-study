@@ -9,7 +9,8 @@
     "test": "node --test tests/*.test.mjs",
     "audit": "node scripts/audit.mjs",
     "audit:lab-list": "node scripts/audit-lab-list.mjs",
-    "audit:curriculum": "node scripts/audit-curriculum.mjs"
+    "audit:curriculum": "node scripts/audit-curriculum.mjs",
+    "audit:muscles": "node scripts/audit-muscles.mjs"
   },
   "dependencies": {
     "three": "0.180.0"

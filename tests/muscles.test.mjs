@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import manifest from '../src/muscle-models.json' with {type:'json'};
-import {componentVisible,muscleBoneContext,muscleFacts} from '../src/muscle-data.js';
+import {componentVisible,muscleBoneContext,muscleFacts,muscleLabelPosition} from '../src/muscle-data.js';
+import {muscleKind,muscleGroup} from '../src/muscle-taxonomy.js';
+import {muscleCoverage,auditMuscleCoverage} from '../src/muscle-coverage.js';
 
 test('every shipped muscle component retains source identity, finite bounds and a matching asset',()=>{
  assert.equal(new Set(manifest.components.map(c=>c.id)).size,manifest.components.length);assert.equal(manifest.license,'CC BY-SA 4.0');
@@ -13,6 +15,33 @@ test('every shipped muscle component retains source identity, finite bounds and 
   assert.deepEqual(new Set(ids),new Set(manifest.components.filter(c=>c.region===region).map(c=>c.id)));assert.equal(ids.length,asset.components);
  }
  for(const c of manifest.components){assert.ok(c.sourceName&&c.parents.length);assert.equal(c.assessment,'learn-only');assert.equal(c.bounds.min.length,3);for(let i=0;i<3;i++)assert.ok(Number.isFinite(c.bounds.min[i])&&Number.isFinite(c.bounds.max[i])&&c.bounds.min[i]<=c.bounds.max[i]);}
+});
+
+test('tissue classification exposes tensor fasciae latae and excludes connective coverings',()=>{
+ for(const c of manifest.components){assert.equal(c.kind,muscleKind(c.sourceName),c.id);assert.equal(c.muscleName,muscleGroup(c),c.id);}
+ for(const side of ['right','left']){
+  const c=manifest.components.find(c=>c.sourceName==='Tensor fasciae latae.'+(side==='right'?'r':'l'));assert.equal(c.kind,'muscle');
+  assert.ok(componentVisible(c,{enabled:true,region:c.region,side,depth:'all',support:false,hidden:new Set()}));assert.equal(c.depth,'superficial');
+ }
+ for(const term of ['Linea alba','Iliotibial tract.r','Medial intermuscular septum of arm.r','Tendinous arch of levator ani.l','Synovial sheaths of digits of hand.r'])assert.equal(muscleKind(term),'support',term);
+ assert.equal(muscleCoverage.muscleParts,462);assert.equal(muscleCoverage.supportParts,207);
+});
+test('reviewed whole-muscle grouping preserves separate heads and trapezius parts',()=>{
+ for(const [name,count]of [['Trapezius muscle',3],['Pronator teres muscle',2],['Flexor carpi ulnaris',2],['Adductor pollicis muscle',2]])for(const side of ['right','left'])assert.equal(manifest.components.filter(c=>c.kind==='muscle'&&c.muscleName===name&&c.side===side).length,count,name+' '+side);
+});
+test('coverage separates missing names, partial geometry and unresolved neighboring anatomy',()=>{
+ const row=id=>muscleCoverage.rows.find(r=>r.id===id);
+ assert.equal(muscleCoverage.referenceChecks,226);assert.equal(row('ta2-2520').status,'no-named-mesh');assert.equal(row('ta2-2602').status,'named-geometry');
+ assert.equal(row('ta2-2283').status,'needs-anatomical-review');assert.ok(row('ta2-2283').componentIds.some(id=>id.includes('spinalis-capitis')));
+ for(const id of ['ta2-2534','ta2-2685','ta2-2203'])assert.equal(row(id).status,'partial-model');
+ assert.equal(row('clinical-puborectalis').status,'needs-anatomical-review');assert.equal(muscleCoverage.geometryCertified,false);assert.ok(muscleCoverage.rows.every(r=>r.attachmentCertified===false));
+ const fewer=auditMuscleCoverage(manifest.components.filter(c=>c.sourceName!=='Tensor fasciae latae.l'));assert.equal(fewer.rows.find(r=>r.ta2===2602).status,'side-review');
+ const missingPart=auditMuscleCoverage(manifest.components.filter(c=>!c.sourceName.startsWith('Vastus medialis')));assert.equal(missingPart.rows.find(r=>r.ta2===2613).status,'no-named-mesh');
+});
+test('muscle captions avoid an open details drawer and stay above narrow viewers',()=>{
+ const p=muscleLabelPosition({width:1028,height:500,ax:510,ay:240,rightEdge:690,labelWidth:250});assert.ok(p.x+125<690);assert.ok(Math.abs(p.x-510)>=125);
+ assert.equal(muscleLabelPosition({width:1028,height:500,ax:760,ay:240,rightEdge:690}),null);
+ const phone=muscleLabelPosition({width:390,height:650,ax:190,ay:300,labelWidth:250});assert.deepEqual(phone,{x:195,y:25});
 });
 test('muscles respect assessment, side, layer, support and isolation visibility',()=>{
  const c=manifest.components.find(c=>c.side==='right'&&c.kind==='muscle'),s={enabled:true,region:c.region,side:'right',depth:'all',support:false,hidden:new Set(),selected:c.id};assert.ok(componentVisible(c,s));

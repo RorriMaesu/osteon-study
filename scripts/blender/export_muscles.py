@@ -57,7 +57,9 @@ def region_for(name,parents,center):
  if abs(center.x)>.22 and center.z>0.75:return 'forearm-hand'
  if center.z<.90:return 'pelvis-leg-foot'
  return 'trunk-back'
-support=re.compile(r'fascia|retinacul|tendon sheath|bursa|tarsus|tendinous ring|trochlea|ligament|aponeurosis|tendon|adipose',re.I)
+taxonomy=json.loads((REPO/'src/muscle-taxonomy.json').read_text(encoding='utf-8'))
+support=re.compile(taxonomy['supportPattern'],re.I)
+geometry_reviews=json.loads((REPO/'src/muscle-geometry-review.json').read_text(encoding='utf-8'))['reviews']
 superficial=re.compile(r'deltoid|biceps brachii|lateral head of triceps|long head of triceps|trapezius|latissimus|pectoralis major|rectus abdominis|external oblique|gluteus maximus|sartorius|rectus femoris|vastus|gastrocnemius|tibialis anterior|sternocleidomastoid|platysma|masseter|temporalis|facial|frontalis|orbicularis',re.I)
 deep=re.compile(r'subscapularis|supraspinatus|infraspinatus|teres minor|brachialis|coracobrachialis|medial head of triceps|pronator quadratus|supinator|digitorum profundus|transversus abdominis|internal oblique|multifidus|rotator|interosse|lumbrical|psoas|iliacus|obturator|piriformis|popliteus|tibialis posterior|longus colli|longus capitis|pharyngeal',re.I)
 scene=bpy.data.scenes.new('Osteon muscle anatomy');source_objects=[bpy.data.objects[n]for n in names]
@@ -67,16 +69,19 @@ for original in source_objects:
  if not me.vertices:raise ValueError('Empty source anatomy '+original.name)
  obj=bpy.data.objects.new(original.name,me);scene.collection.objects.link(obj)
  points=[v.co for v in me.vertices];lo=Vector(tuple(min(p[i]for p in points)for i in range(3)));hi=Vector(tuple(max(p[i]for p in points)for i in range(3)));center=(lo+hi)*.5
- kind='support' if support.search(original.name)else 'muscle';region=region_for(original.name,parents,center)
+ kind='muscle' if re.sub(r'\.[lr]$','',original.name) in taxonomy['muscleOverrides'] else 'support' if support.search(original.name)else 'muscle';region=region_for(original.name,parents,center)
  side='right' if original.name.endswith('.r')else 'left'if original.name.endswith('.l')else 'right'if hi.x<-.001 else 'left'if lo.x>.001 else 'midline'if original.name in ['Linea alba','Transverse arytenoid muscle']else 'bilateral'
  source_name=original.name;identity='muscle-'+re.sub(r'[^a-z0-9]+','-',source_name.lower()).strip('-')
  group=next((p[:-2]for p in parents if re.search(r'(?<!s) muscle\.g$',p,re.I)),None)
  display=re.sub(r'\.[lr]$','',source_name);muscle_name=group or re.sub(r'^(?:Long|Short|Medial|Lateral) head of ','',display,flags=re.I)
+ if kind=='muscle':muscle_name=next((g['name'] for g in taxonomy['groups'] if re.search(g['pattern'],source_name,re.I)),muscle_name)
+ else:muscle_name=display
  correction=None
  if source_name.startswith('Bucinator'):display='Buccinator muscle';muscle_name='Buccinator muscle';correction='Source spelling corrected to the standard anatomical name: buccinator.'
  if re.match(r'Ascending part of trapezius',source_name):display='Upper (descending) part of trapezius';correction='Source part label corrected to match the superior, occipital/cervical geometry.'
  if re.match(r'Descending part of trapezius',source_name):display='Lower (ascending) part of trapezius';correction='Source part label corrected to match the inferior, thoracic geometry.'
  depth='superficial'if superficial.search(source_name)else 'deeper'if deep.search(source_name)else 'unassigned'
+ depth=taxonomy['depthOverrides'].get(re.sub(r'\.[lr]$','',source_name),depth)
  obj['zname']=source_name;obj['muscleId']=identity;obj['muscleRegion']=region;obj['muscleKind']=kind;obj['muscleDepth']=depth;obj['source']='Z-Anatomy / BodyParts3D; world transforms preserved';obj['anatomicalSide']=side
  mat=bpy.data.materials.get('Osteon muscle'if kind=='muscle'else 'Osteon muscle support')
  if mat is None:
@@ -86,6 +91,7 @@ for original in source_objects:
  if PHASE!='pilot'and len(me.polygons)>7000:
   modifier=obj.modifiers.new('Conservative web simplification','DECIMATE');modifier.ratio=.70
  records.append({'id':identity,'sourceName':source_name,'name':display,'muscleName':muscle_name,'nameCorrection':correction,'region':region,'side':side,'kind':kind,'depth':depth,'parents':parents,'sourcePolygons':len(me.polygons),'bounds':{'min':[lo.x,lo.z,-hi.y],'max':[hi.x,hi.z,-lo.y]},'status':'source-aligned-reference','assessment':'learn-only','reviewNotice':'Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring.'})
+ if re.sub(r'\.[lr]$','',source_name) in geometry_reviews:records[-1]['geometryReview']=geometry_reviews[re.sub(r'\.[lr]$','',source_name)]
  objects.append(obj)
 
 bpy.context.window.scene=scene
