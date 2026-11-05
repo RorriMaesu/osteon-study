@@ -2,7 +2,7 @@ import checklist from './muscle-reference-checklist.json' with {type:'json'};
 import manifest from './muscle-models.json' with {type:'json'};
 export function muscleTermKey(value){return String(value).toLowerCase().replace(/\.[lr]$/,'').replace(/\bmuscles?\b/g,'').replace(/[^a-z0-9]+/g,' ').trim();}
 export function auditMuscleCoverage(components,reference=checklist.items){
- const muscles=components.filter(c=>c.kind==='muscle'),index=new Map();
+ const active=components.filter(c=>!c.retired),muscles=active.filter(c=>c.kind==='muscle'),index=new Map();
  for(const c of muscles)for(const name of [c.name,c.sourceName,c.muscleName]){const key=muscleTermKey(name);if(!index.has(key))index.set(key,new Map());index.get(key).set(c.id,c);}
  const matches=name=>[...(index.get(muscleTermKey(name))?.values()||[])];
  const rows=reference.map(r=>{
@@ -12,6 +12,6 @@ export function auditMuscleCoverage(components,reference=checklist.items){
   return {...r,status,componentIds:ids,matchedGroups:hits.filter(h=>h.length).length,requiredGroupCount:groups.length,attachmentCertified:false};
  });
  const counts={};for(const r of rows)counts[r.status]=(counts[r.status]||0)+1;
- return {scope:checklist.scope,referenceChecks:rows.length,componentCount:components.length,muscleParts:muscles.length,supportParts:components.length-muscles.length,counts,geometryCertified:false,rows};
+ return {scope:checklist.scope,referenceChecks:rows.length,componentCount:active.length,retiredCount:components.length-active.length,muscleParts:muscles.length,supportParts:active.length-muscles.length,counts,geometryCertified:false,rows};
 }
 export const muscleCoverage=auditMuscleCoverage(manifest.components);

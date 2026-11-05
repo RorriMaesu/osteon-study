@@ -5,15 +5,15 @@
   "sourceSHA256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd",
   "license": "CC BY-SA 4.0",
   "blender": "4.5.1 LTS",
-  "phase": "full",
+  "phase": "recovered-hand-and-foot-groups",
   "initialBackup": "muscles-20261104-212926-915485",
   "assets": {
     "forearm-hand": {
       "file": "muscles-forearm-hand.glb",
-      "bytes": 1017940,
-      "sha256": "1f40151cb981883b96bf725e738c924299abeef573b52d3c42864996d835f774",
-      "components": 112,
-      "backup": "muscles-20261104-213138-445056"
+      "bytes": 1045080,
+      "sha256": "dd0a6704b175780203ac8bc619ebaeb624214cc75c5ba7f06bbbbf9a0f8757f0",
+      "components": 118,
+      "backup": "muscles-20261105-013123-987060"
     },
     "head-neck": {
       "file": "muscles-head-neck.glb",
@@ -24,10 +24,10 @@
     },
     "pelvis-leg-foot": {
       "file": "muscles-pelvis-leg-foot.glb",
-      "bytes": 2578508,
-      "sha256": "4c91e6b24e501ccbfc245319eff02ff4ac69ce060a9c46df9a7938915868cf90",
-      "components": 242,
-      "backup": "muscles-20261104-213139-847706"
+      "bytes": 2620964,
+      "sha256": "0c84c835078c350bcddd9b31b2c5773d70b644018dbc8be9807f0cbc6ace66a2",
+      "components": 250,
+      "backup": "muscles-20261105-013125-235764"
     },
     "shoulder-arm": {
       "file": "muscles-shoulder-arm.glb",
@@ -796,7 +796,7 @@
           0.04262733459472656
         ],
         "max": [
-          -0.00004194490611553192,
+          -4.194490611553192e-05,
           1.6743444204330444,
           0.08951129019260406
         ]
@@ -864,7 +864,7 @@
           -0.10519097745418549
         ],
         "max": [
-          -0.000009879469871520996,
+          -9.879469871520996e-06,
           1.7075750827789307,
           0.08331423997879028
         ]
@@ -893,7 +893,7 @@
       "sourcePolygons": 5874,
       "bounds": {
         "min": [
-          0.000041930004954338074,
+          4.1930004954338074e-05,
           1.6042183637619019,
           0.04262733459472656
         ],
@@ -961,7 +961,7 @@
       "sourcePolygons": 20118,
       "bounds": {
         "min": [
-          0.000009864568710327148,
+          9.864568710327148e-06,
           1.59852135181427,
           -0.10519097745418549
         ],
@@ -1272,7 +1272,7 @@
           0.06751629710197449
         ],
         "max": [
-          -0.000037933699786663055,
+          -3.7933699786663055e-05,
           1.5540815591812134,
           0.09512050449848175
         ]
@@ -1301,7 +1301,7 @@
       "sourcePolygons": 1880,
       "bounds": {
         "min": [
-          0.00003791879862546921,
+          3.791879862546921e-05,
           1.5086880922317505,
           0.06751629710197449
         ],
@@ -1510,7 +1510,7 @@
           0.08336269110441208
         ],
         "max": [
-          -0.00004235096275806427,
+          -4.235096275806427e-05,
           1.6303153038024902,
           0.08945010602474213
         ]
@@ -1646,7 +1646,7 @@
           0.08167172223329544
         ],
         "max": [
-          -0.000048619695007801056,
+          -4.8619695007801056e-05,
           1.5578426122665405,
           0.08924543857574463
         ]
@@ -1947,7 +1947,7 @@
       "sourcePolygons": 546,
       "bounds": {
         "min": [
-          0.00004233606159687042,
+          4.233606159687042e-05,
           1.5937745571136475,
           0.08336269110441208
         ],
@@ -2083,7 +2083,7 @@
       "sourcePolygons": 276,
       "bounds": {
         "min": [
-          0.00004860479384660721,
+          4.860479384660721e-05,
           1.5417115688323975,
           0.08167172223329544
         ],
@@ -3209,7 +3209,7 @@
           0.03462023288011551
         ],
         "max": [
-          -0.000036572571843862534,
+          -3.6572571843862534e-05,
           1.5261794328689575,
           0.0724044144153595
         ]
@@ -3275,7 +3275,7 @@
           0.02976643294095993
         ],
         "max": [
-          -0.00006802147254347801,
+          -6.802147254347801e-05,
           1.5108181238174438,
           0.06982535123825073
         ]
@@ -3303,7 +3303,7 @@
       "sourcePolygons": 1122,
       "bounds": {
         "min": [
-          0.00003664707764983177,
+          3.664707764983177e-05,
           1.4981966018676758,
           0.03462023288011551
         ],
@@ -3369,7 +3369,7 @@
       "sourcePolygons": 530,
       "bounds": {
         "min": [
-          0.00006809597834944725,
+          6.809597834944725e-05,
           1.5006808042526245,
           0.02976643294095993
         ],
@@ -5002,7 +5002,7 @@
           -0.09007995575666428
         ],
         "max": [
-          2.60770320892334e-8,
+          2.60770320892334e-08,
           1.1630704402923584,
           -0.0462622344493866
         ]
@@ -5090,7 +5090,7 @@
       "sourcePolygons": 158,
       "bounds": {
         "min": [
-          2.60770320892334e-8,
+          2.60770320892334e-08,
           0.9273415803909302,
           -0.09007995575666428
         ],
@@ -5289,7 +5289,7 @@
           -0.06857308000326157
         ],
         "max": [
-          -0.00004057586193084717,
+          -4.057586193084717e-05,
           1.5644986629486084,
           -0.043278325349092484
         ]
@@ -5416,7 +5416,7 @@
       "sourcePolygons": 432,
       "bounds": {
         "min": [
-          0.0000405777245759964,
+          4.05777245759964e-05,
           1.5385160446166992,
           -0.06857308000326157
         ],
@@ -8302,7 +8302,7 @@
           0.011491142213344574
         ],
         "max": [
-          0.0000030547380447387695,
+          3.0547380447387695e-06,
           1.414556622505188,
           0.1269620656967163
         ]
@@ -8328,7 +8328,7 @@
       "sourcePolygons": 1376,
       "bounds": {
         "min": [
-          -0.000002995133399963379,
+          -2.995133399963379e-06,
           1.217682957649231,
           0.011491082608699799
         ],
@@ -8877,7 +8877,7 @@
           -0.1311129331588745
         ],
         "max": [
-          2.9802322387695312e-8,
+          2.9802322387695312e-08,
           1.3972382545471191,
           0.1260915845632553
         ]
@@ -8903,7 +8903,7 @@
       "sourcePolygons": 5618,
       "bounds": {
         "min": [
-          2.9802322387695312e-8,
+          2.9802322387695312e-08,
           0.8441170454025269,
           -0.13111308217048645
         ],
@@ -8975,7 +8975,7 @@
           -0.07037235051393509
         ],
         "max": [
-          -0.00004585087299346924,
+          -4.585087299346924e-05,
           0.8681824207305908,
           0.005351055413484573
         ]
@@ -9009,7 +9009,7 @@
           -0.06367144733667374
         ],
         "max": [
-          0.00001792237162590027,
+          1.792237162590027e-05,
           0.8403139710426331,
           0.020586920902132988
         ]
@@ -9047,7 +9047,7 @@
           -0.07540886849164963
         ],
         "max": [
-          0.00009830668568611145,
+          9.830668568611145e-05,
           0.8628289699554443,
           0.018147878348827362
         ]
@@ -9109,7 +9109,7 @@
       "sourcePolygons": 1962,
       "bounds": {
         "min": [
-          0.00004585087299346924,
+          4.585087299346924e-05,
           0.8234556317329407,
           -0.07037235051393509
         ],
@@ -9143,7 +9143,7 @@
       "sourcePolygons": 1440,
       "bounds": {
         "min": [
-          -0.00001792237162590027,
+          -1.792237162590027e-05,
           0.8100696802139282,
           -0.06367144733667374
         ],
@@ -9181,7 +9181,7 @@
       "sourcePolygons": 2512,
       "bounds": {
         "min": [
-          -0.00009830668568611145,
+          -9.830668568611145e-05,
           0.8145400881767273,
           -0.07540886849164963
         ],
@@ -12435,7 +12435,13 @@
         "expectedMembersPerSide": 3,
         "localizedSourceMeshesPerSide": 1,
         "note": "The source provides one localized mesh per hand. It does not separately demonstrate all three usual palmar interossei. This aggregate label must not be treated as proof that the group is complete."
-      }
+      },
+      "retired": true,
+      "supersededBy": [
+        "muscle-bp43-palmar-interosseous-second-right",
+        "muscle-bp43-palmar-interosseous-fourth-right",
+        "muscle-bp43-palmar-interosseous-fifth-right"
+      ]
     },
     {
       "id": "muscle-abductor-pollicis-brevis-l",
@@ -12705,7 +12711,13 @@
         "expectedMembersPerSide": 3,
         "localizedSourceMeshesPerSide": 1,
         "note": "The source provides one localized mesh per hand. It does not separately demonstrate all three usual palmar interossei. This aggregate label must not be treated as proof that the group is complete."
-      }
+      },
+      "retired": true,
+      "supersededBy": [
+        "muscle-bp43-palmar-interosseous-second-left",
+        "muscle-bp43-palmar-interosseous-fourth-left",
+        "muscle-bp43-palmar-interosseous-fifth-left"
+      ]
     },
     {
       "id": "muscle-medial-intermuscular-septum-of-arm-r",
@@ -16861,7 +16873,14 @@
         "expectedMembersPerSide": 4,
         "localizedSourceMeshesPerSide": 1,
         "note": "The source provides one localized mesh per foot. It does not separately demonstrate all four usual lumbricals. Further members require reference-based reconstruction and verification."
-      }
+      },
+      "retired": true,
+      "supersededBy": [
+        "muscle-bp43-lumbrical-foot-1-right",
+        "muscle-bp43-lumbrical-foot-2-right",
+        "muscle-bp43-lumbrical-foot-3-right",
+        "muscle-bp43-lumbrical-foot-4-right"
+      ]
     },
     {
       "id": "muscle-opponens-digiti-minimi-muscle-of-foot-r",
@@ -17197,7 +17216,14 @@
         "expectedMembersPerSide": 4,
         "localizedSourceMeshesPerSide": 1,
         "note": "The source provides one localized mesh per foot. It does not separately demonstrate all four usual lumbricals. Further members require reference-based reconstruction and verification."
-      }
+      },
+      "retired": true,
+      "supersededBy": [
+        "muscle-bp43-lumbrical-foot-1-left",
+        "muscle-bp43-lumbrical-foot-2-left",
+        "muscle-bp43-lumbrical-foot-3-left",
+        "muscle-bp43-lumbrical-foot-4-left"
+      ]
     },
     {
       "id": "muscle-opponens-digiti-minimi-muscle-of-foot-l",
@@ -17354,7 +17380,7 @@
           -0.11433850973844528
         ],
         "max": [
-          2.9802322387695312e-8,
+          2.9802322387695312e-08,
           1.0006111860275269,
           0.060800157487392426
         ]
@@ -17414,7 +17440,7 @@
       "sourcePolygons": 6530,
       "bounds": {
         "min": [
-          -5.960464477539063e-8,
+          -5.960464477539063e-08,
           0.43069708347320557,
           -0.11433853209018707
         ],
@@ -18382,7 +18408,7 @@
           -0.06796052306890488
         ],
         "max": [
-          -0.00004813307896256447,
+          -4.813307896256447e-05,
           0.8217949271202087,
           -0.045137807726860046
         ]
@@ -18410,7 +18436,7 @@
       "sourcePolygons": 202,
       "bounds": {
         "min": [
-          0.00004813307896256447,
+          4.813307896256447e-05,
           0.8001943826675415,
           -0.06796052306890488
         ],
@@ -22076,7 +22102,1489 @@
       "status": "source-aligned-reference",
       "assessment": "learn-only",
       "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1511_BP22900_FMA42402_Set of palmar interossei of right hand.obj",
+      "sourceSHA256": "0796b6675a59e1784224a52a7fab1cc497d4a0cf548619358d7d38691ed58a6c",
+      "id": "muscle-bp43-palmar-interosseous-second-right",
+      "sourceName": "Set of palmar interossei of right hand (FJ1511), digit 2",
+      "name": "Palmar interosseous muscle of index finger",
+      "muscleName": "Palmar interosseous muscle of index finger",
+      "memberOf": "Palmar interossei muscles",
+      "region": "forearm-hand",
+      "side": "right",
+      "mirrorSource": false,
+      "registration": {
+        "scale": 1.0339887658486226,
+        "rotation": [
+          [
+            0.9999999505246392,
+            6.037260607683997e-05,
+            0.00030871648323281
+          ],
+          [
+            -6.030190578628376e-05,
+            0.9999999719572541,
+            -0.00022901783605698488
+          ],
+          [
+            -0.00030873030097883946,
+            0.000228999208533965,
+            0.999999926122479
+          ]
+        ],
+        "translation": [
+          0.0005397659092022389,
+          0.10487970934260167,
+          0.0233621729423501
+        ],
+        "errors": [
+          {
+            "reference": "Second metacarpal bone.r",
+            "medianMM": 0.17143455600896107,
+            "p95MM": 1.878301353121047
+          },
+          {
+            "reference": "Fifth metacarpal bone.r",
+            "medianMM": 0.18115378885911307,
+            "p95MM": 2.183571626642362
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.r",
+            "medianMM": 0.15846714459892183,
+            "p95MM": 1.7553138332831197
+          },
+          {
+            "reference": "Fourth metacarpal bone.r",
+            "medianMM": 0.13763437731817402,
+            "p95MM": 0.4358191123411723
+          },
+          {
+            "reference": "Proximal phalanx of second finger of hand.r",
+            "medianMM": 0.18186514501785983,
+            "p95MM": 0.671936642794182
+          },
+          {
+            "reference": "Proximal phalanx of third finger of hand.r",
+            "medianMM": 0.1888368349093035,
+            "p95MM": 1.7711579707383167
+          },
+          {
+            "reference": "Proximal phalanx of fourth finger of hand.r",
+            "medianMM": 0.21283272516340712,
+            "p95MM": 1.6978835579423497
+          },
+          {
+            "reference": "Proximal phalanx of fifth finger of hand.r",
+            "medianMM": 0.14572489374644382,
+            "p95MM": 0.46350063687127674
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmar interosseous muscle of index finger",
+        "origin": "Ulnar (medial) surface of the second metacarpal.",
+        "insertion": "Base of the proximal phalanx and extensor expansion of digit 2, on the side facing the middle finger.",
+        "action": "Adducts its finger toward digit 3; also assists metacarpophalangeal flexion and interphalangeal extension.",
+        "sourceURL": "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Palmar interossei muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 398,
+      "bounds": {
+        "min": [
+          -0.29072358398137543,
+          0.7632343586029723,
+          0.028176830465033678
+        ],
+        "max": [
+          -0.28328518983661527,
+          0.8148853058850873,
+          0.042578460179414315
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1511_BP22900_FMA42402_Set of palmar interossei of right hand.obj",
+      "sourceSHA256": "0796b6675a59e1784224a52a7fab1cc497d4a0cf548619358d7d38691ed58a6c",
+      "id": "muscle-bp43-palmar-interosseous-fourth-right",
+      "sourceName": "Set of palmar interossei of right hand (FJ1511), digit 4",
+      "name": "Palmar interosseous muscle of ring finger",
+      "muscleName": "Palmar interosseous muscle of ring finger",
+      "memberOf": "Palmar interossei muscles",
+      "region": "forearm-hand",
+      "side": "right",
+      "mirrorSource": false,
+      "registration": {
+        "scale": 1.0339887658486226,
+        "rotation": [
+          [
+            0.9999999505246392,
+            6.037260607683997e-05,
+            0.00030871648323281
+          ],
+          [
+            -6.030190578628376e-05,
+            0.9999999719572541,
+            -0.00022901783605698488
+          ],
+          [
+            -0.00030873030097883946,
+            0.000228999208533965,
+            0.999999926122479
+          ]
+        ],
+        "translation": [
+          0.0005397659092022389,
+          0.10487970934260167,
+          0.0233621729423501
+        ],
+        "errors": [
+          {
+            "reference": "Second metacarpal bone.r",
+            "medianMM": 0.17143455600896107,
+            "p95MM": 1.878301353121047
+          },
+          {
+            "reference": "Fifth metacarpal bone.r",
+            "medianMM": 0.18115378885911307,
+            "p95MM": 2.183571626642362
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.r",
+            "medianMM": 0.15846714459892183,
+            "p95MM": 1.7553138332831197
+          },
+          {
+            "reference": "Fourth metacarpal bone.r",
+            "medianMM": 0.13763437731817402,
+            "p95MM": 0.4358191123411723
+          },
+          {
+            "reference": "Proximal phalanx of second finger of hand.r",
+            "medianMM": 0.18186514501785983,
+            "p95MM": 0.671936642794182
+          },
+          {
+            "reference": "Proximal phalanx of third finger of hand.r",
+            "medianMM": 0.1888368349093035,
+            "p95MM": 1.7711579707383167
+          },
+          {
+            "reference": "Proximal phalanx of fourth finger of hand.r",
+            "medianMM": 0.21283272516340712,
+            "p95MM": 1.6978835579423497
+          },
+          {
+            "reference": "Proximal phalanx of fifth finger of hand.r",
+            "medianMM": 0.14572489374644382,
+            "p95MM": 0.46350063687127674
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmar interosseous muscle of ring finger",
+        "origin": "Radial (lateral) surface of the fourth metacarpal.",
+        "insertion": "Base of the proximal phalanx and extensor expansion of digit 4, on the side facing the middle finger.",
+        "action": "Adducts its finger toward digit 3; also assists metacarpophalangeal flexion and interphalangeal extension.",
+        "sourceURL": "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Palmar interossei muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 230,
+      "bounds": {
+        "min": [
+          -0.26311642698193705,
+          0.7725612551692281,
+          0.02350291615226431
+        ],
+        "max": [
+          -0.2561163159849078,
+          0.8133031228772194,
+          0.04454025166041527
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1511_BP22900_FMA42402_Set of palmar interossei of right hand.obj",
+      "sourceSHA256": "0796b6675a59e1784224a52a7fab1cc497d4a0cf548619358d7d38691ed58a6c",
+      "id": "muscle-bp43-palmar-interosseous-fifth-right",
+      "sourceName": "Set of palmar interossei of right hand (FJ1511), digit 5",
+      "name": "Palmar interosseous muscle of little finger",
+      "muscleName": "Palmar interosseous muscle of little finger",
+      "memberOf": "Palmar interossei muscles",
+      "region": "forearm-hand",
+      "side": "right",
+      "mirrorSource": false,
+      "registration": {
+        "scale": 1.0339887658486226,
+        "rotation": [
+          [
+            0.9999999505246392,
+            6.037260607683997e-05,
+            0.00030871648323281
+          ],
+          [
+            -6.030190578628376e-05,
+            0.9999999719572541,
+            -0.00022901783605698488
+          ],
+          [
+            -0.00030873030097883946,
+            0.000228999208533965,
+            0.999999926122479
+          ]
+        ],
+        "translation": [
+          0.0005397659092022389,
+          0.10487970934260167,
+          0.0233621729423501
+        ],
+        "errors": [
+          {
+            "reference": "Second metacarpal bone.r",
+            "medianMM": 0.17143455600896107,
+            "p95MM": 1.878301353121047
+          },
+          {
+            "reference": "Fifth metacarpal bone.r",
+            "medianMM": 0.18115378885911307,
+            "p95MM": 2.183571626642362
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.r",
+            "medianMM": 0.15846714459892183,
+            "p95MM": 1.7553138332831197
+          },
+          {
+            "reference": "Fourth metacarpal bone.r",
+            "medianMM": 0.13763437731817402,
+            "p95MM": 0.4358191123411723
+          },
+          {
+            "reference": "Proximal phalanx of second finger of hand.r",
+            "medianMM": 0.18186514501785983,
+            "p95MM": 0.671936642794182
+          },
+          {
+            "reference": "Proximal phalanx of third finger of hand.r",
+            "medianMM": 0.1888368349093035,
+            "p95MM": 1.7711579707383167
+          },
+          {
+            "reference": "Proximal phalanx of fourth finger of hand.r",
+            "medianMM": 0.21283272516340712,
+            "p95MM": 1.6978835579423497
+          },
+          {
+            "reference": "Proximal phalanx of fifth finger of hand.r",
+            "medianMM": 0.14572489374644382,
+            "p95MM": 0.46350063687127674
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmar interosseous muscle of little finger",
+        "origin": "Radial (lateral) surface of the fifth metacarpal.",
+        "insertion": "Base of the proximal phalanx and extensor expansion of digit 5, on the side facing the middle finger.",
+        "action": "Adducts its finger toward digit 3; also assists metacarpophalangeal flexion and interphalangeal extension.",
+        "sourceURL": "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Palmar interossei muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 338,
+      "bounds": {
+        "min": [
+          -0.2476959979277527,
+          0.7776815368885299,
+          0.028327192982189456
+        ],
+        "max": [
+          -0.2418556514144382,
+          0.816464517475962,
+          0.046413479895823104
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1383_BP21072_FMA37717_First lumbrical of right foot.obj",
+      "sourceSHA256": "e52a56eb4e12bf5925c8e5e825b5075b4560a3cf4c4561bc8efff83dd760edf9",
+      "id": "muscle-bp43-lumbrical-foot-1-right",
+      "sourceName": "First lumbrical of right foot (FJ1383)",
+      "name": "First lumbrical muscle of foot",
+      "muscleName": "First lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "right",
+      "registration": {
+        "scale": 1.0339968482241888,
+        "rotation": [
+          [
+            0.972073234345696,
+            0.23463257322328557,
+            0.004602461441168145
+          ],
+          [
+            -0.23463138555839727,
+            0.9720840840979732,
+            -0.0008039616609731771
+          ],
+          [
+            -0.004662615107921635,
+            -0.00029837229284827697,
+            0.9999890854376018
+          ]
+        ],
+        "translation": [
+          -0.020740019475332647,
+          0.13142618663556446,
+          0.08264977196463232
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.r",
+            "medianMM": 0.1401867093455545,
+            "p95MM": 1.950742462935422
+          },
+          {
+            "reference": "Fifth metatarsal bone.r",
+            "medianMM": 0.18502546235307732,
+            "p95MM": 1.6261848812042998
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.r",
+            "medianMM": 0.17144754076740978,
+            "p95MM": 1.4116675768587847
+          },
+          {
+            "reference": "Fourth metatarsal bone.r",
+            "medianMM": 0.14558298727986352,
+            "p95MM": 3.0784023135213476
+          },
+          {
+            "reference": "Proximal phalanx of second finger of foot.r",
+            "medianMM": 0.11667203932685213,
+            "p95MM": 0.36822087090935235
+          },
+          {
+            "reference": "Proximal phalanx of third finger of foot.r",
+            "medianMM": 0.12107857683823638,
+            "p95MM": 0.3454557506323782
+          },
+          {
+            "reference": "Proximal phalanx of fourth finger of foot.r",
+            "medianMM": 0.097586904518509,
+            "p95MM": 0.265772482811767
+          },
+          {
+            "reference": "Proximal phalanx of fifth finger of foot.r",
+            "medianMM": 0.10832719788906855,
+            "p95MM": 0.3765247955923797
+          }
+        ]
+      },
+      "teaching": {
+        "name": "First lumbrical muscle of foot",
+        "origin": "Medial side of the flexor digitorum longus tendon to toe 2.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 2.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 2.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 646,
+      "bounds": {
+        "min": [
+          -0.08821732317593804,
+          0.012953457785867303,
+          -0.005899420818486212
+        ],
+        "max": [
+          -0.07261690589869035,
+          0.03331746071663242,
+          0.0884927307523283
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1385_BP21063_FMA37719_Second lumbrical of right foot.obj",
+      "sourceSHA256": "27adfc88f0c09e35a10d241d692af4d7ce33cc9de4e2dd968143fbe7ac2bb05b",
+      "id": "muscle-bp43-lumbrical-foot-2-right",
+      "sourceName": "Second lumbrical of right foot (FJ1385)",
+      "name": "Second lumbrical muscle of foot",
+      "muscleName": "Second lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "right",
+      "registration": {
+        "scale": 1.0339968482241888,
+        "rotation": [
+          [
+            0.972073234345696,
+            0.23463257322328557,
+            0.004602461441168145
+          ],
+          [
+            -0.23463138555839727,
+            0.9720840840979732,
+            -0.0008039616609731771
+          ],
+          [
+            -0.004662615107921635,
+            -0.00029837229284827697,
+            0.9999890854376018
+          ]
+        ],
+        "translation": [
+          -0.020740019475332647,
+          0.13142618663556446,
+          0.08264977196463232
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.r",
+            "medianMM": 0.1401867093455545,
+            "p95MM": 1.950742462935422
+          },
+          {
+            "reference": "Fifth metatarsal bone.r",
+            "medianMM": 0.18502546235307732,
+            "p95MM": 1.6261848812042998
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.r",
+            "medianMM": 0.17144754076740978,
+            "p95MM": 1.4116675768587847
+          },
+          {
+            "reference": "Fourth metatarsal bone.r",
+            "medianMM": 0.14558298727986352,
+            "p95MM": 3.0784023135213476
+          },
+          {
+            "reference": "Proximal phalanx of second finger of foot.r",
+            "medianMM": 0.11667203932685213,
+            "p95MM": 0.36822087090935235
+          },
+          {
+            "reference": "Proximal phalanx of third finger of foot.r",
+            "medianMM": 0.12107857683823638,
+            "p95MM": 0.3454557506323782
+          },
+          {
+            "reference": "Proximal phalanx of fourth finger of foot.r",
+            "medianMM": 0.097586904518509,
+            "p95MM": 0.265772482811767
+          },
+          {
+            "reference": "Proximal phalanx of fifth finger of foot.r",
+            "medianMM": 0.10832719788906855,
+            "p95MM": 0.3765247955923797
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Second lumbrical muscle of foot",
+        "origin": "Adjacent sides of flexor digitorum longus tendons.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 3.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 3.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 266,
+      "bounds": {
+        "min": [
+          -0.10558659617965875,
+          0.01234803153274984,
+          0.012476131145971875
+        ],
+        "max": [
+          -0.07990111291522328,
+          0.027072844774453375,
+          0.0851909686170069
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1387_BP21115_FMA37485_Third lumbrical of right foot.obj",
+      "sourceSHA256": "47092a2f2183cee4c2b257ee38dbb46213d2f3fda51a000c3512d386eee9d6ae",
+      "id": "muscle-bp43-lumbrical-foot-3-right",
+      "sourceName": "Third lumbrical of right foot (FJ1387)",
+      "name": "Third lumbrical muscle of foot",
+      "muscleName": "Third lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "right",
+      "registration": {
+        "scale": 1.0339968482241888,
+        "rotation": [
+          [
+            0.972073234345696,
+            0.23463257322328557,
+            0.004602461441168145
+          ],
+          [
+            -0.23463138555839727,
+            0.9720840840979732,
+            -0.0008039616609731771
+          ],
+          [
+            -0.004662615107921635,
+            -0.00029837229284827697,
+            0.9999890854376018
+          ]
+        ],
+        "translation": [
+          -0.020740019475332647,
+          0.13142618663556446,
+          0.08264977196463232
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.r",
+            "medianMM": 0.1401867093455545,
+            "p95MM": 1.950742462935422
+          },
+          {
+            "reference": "Fifth metatarsal bone.r",
+            "medianMM": 0.18502546235307732,
+            "p95MM": 1.6261848812042998
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.r",
+            "medianMM": 0.17144754076740978,
+            "p95MM": 1.4116675768587847
+          },
+          {
+            "reference": "Fourth metatarsal bone.r",
+            "medianMM": 0.14558298727986352,
+            "p95MM": 3.0784023135213476
+          },
+          {
+            "reference": "Proximal phalanx of second finger of foot.r",
+            "medianMM": 0.11667203932685213,
+            "p95MM": 0.36822087090935235
+          },
+          {
+            "reference": "Proximal phalanx of third finger of foot.r",
+            "medianMM": 0.12107857683823638,
+            "p95MM": 0.3454557506323782
+          },
+          {
+            "reference": "Proximal phalanx of fourth finger of foot.r",
+            "medianMM": 0.097586904518509,
+            "p95MM": 0.265772482811767
+          },
+          {
+            "reference": "Proximal phalanx of fifth finger of foot.r",
+            "medianMM": 0.10832719788906855,
+            "p95MM": 0.3765247955923797
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Third lumbrical muscle of foot",
+        "origin": "Adjacent sides of flexor digitorum longus tendons.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 4.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 4.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 368,
+      "bounds": {
+        "min": [
+          -0.11691385495410082,
+          0.011832412267648931,
+          0.010974206512512796
+        ],
+        "max": [
+          -0.0857615495309088,
+          0.026644518794024165,
+          0.07620579219029189
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1389_BP21133_FMA37483_Fourth lumbrical of right foot.obj",
+      "sourceSHA256": "cf1b1227936528bb44894a49e77ed70b96ad21c72e303db334607b19baa2fbf7",
+      "id": "muscle-bp43-lumbrical-foot-4-right",
+      "sourceName": "Fourth lumbrical of right foot (FJ1389)",
+      "name": "Fourth lumbrical muscle of foot",
+      "muscleName": "Fourth lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "right",
+      "registration": {
+        "scale": 1.0339968482241888,
+        "rotation": [
+          [
+            0.972073234345696,
+            0.23463257322328557,
+            0.004602461441168145
+          ],
+          [
+            -0.23463138555839727,
+            0.9720840840979732,
+            -0.0008039616609731771
+          ],
+          [
+            -0.004662615107921635,
+            -0.00029837229284827697,
+            0.9999890854376018
+          ]
+        ],
+        "translation": [
+          -0.020740019475332647,
+          0.13142618663556446,
+          0.08264977196463232
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.r",
+            "medianMM": 0.1401867093455545,
+            "p95MM": 1.950742462935422
+          },
+          {
+            "reference": "Fifth metatarsal bone.r",
+            "medianMM": 0.18502546235307732,
+            "p95MM": 1.6261848812042998
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.r",
+            "medianMM": 0.17144754076740978,
+            "p95MM": 1.4116675768587847
+          },
+          {
+            "reference": "Fourth metatarsal bone.r",
+            "medianMM": 0.14558298727986352,
+            "p95MM": 3.0784023135213476
+          },
+          {
+            "reference": "Proximal phalanx of second finger of foot.r",
+            "medianMM": 0.11667203932685213,
+            "p95MM": 0.36822087090935235
+          },
+          {
+            "reference": "Proximal phalanx of third finger of foot.r",
+            "medianMM": 0.12107857683823638,
+            "p95MM": 0.3454557506323782
+          },
+          {
+            "reference": "Proximal phalanx of fourth finger of foot.r",
+            "medianMM": 0.097586904518509,
+            "p95MM": 0.265772482811767
+          },
+          {
+            "reference": "Proximal phalanx of fifth finger of foot.r",
+            "medianMM": 0.10832719788906855,
+            "p95MM": 0.3765247955923797
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Fourth lumbrical muscle of foot",
+        "origin": "Adjacent sides of flexor digitorum longus tendons.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 5.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 5.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 328,
+      "bounds": {
+        "min": [
+          -0.12857090423245632,
+          0.011972954869908084,
+          0.010901481813770625
+        ],
+        "max": [
+          -0.09219576601208236,
+          0.026715499439876937,
+          0.06292492895685789
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1511_BP22900_FMA42402_Set of palmar interossei of right hand.obj",
+      "sourceSHA256": "0796b6675a59e1784224a52a7fab1cc497d4a0cf548619358d7d38691ed58a6c",
+      "id": "muscle-bp43-palmar-interosseous-second-left",
+      "sourceName": "Set of palmar interossei of right hand (FJ1511), digit 2 — mirrored left derivative",
+      "name": "Palmar interosseous muscle of index finger",
+      "muscleName": "Palmar interosseous muscle of index finger",
+      "memberOf": "Palmar interossei muscles",
+      "region": "forearm-hand",
+      "side": "left",
+      "mirrorSource": true,
+      "registration": {
+        "scale": 1.0339885093474395,
+        "rotation": [
+          [
+            0.9999999505165204,
+            -6.033812885287693e-05,
+            -0.00030874951890849466
+          ],
+          [
+            6.026741915006786e-05,
+            0.9999999719579632,
+            -0.00022902381622100557
+          ],
+          [
+            0.00030876332911864953,
+            0.00022900519735201367,
+            0.9999999261109102
+          ]
+        ],
+        "translation": [
+          -0.0005397177833308398,
+          0.10487966173553391,
+          0.02336237528948726
+        ],
+        "errors": [
+          {
+            "reference": "Second metacarpal bone.l",
+            "medianMM": 0.17143584199070241,
+            "p95MM": 1.8783056346158336
+          },
+          {
+            "reference": "Fifth metacarpal bone.l",
+            "medianMM": 0.18115500699994105,
+            "p95MM": 2.1835760878719306
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.l",
+            "medianMM": 0.15846222992543352,
+            "p95MM": 1.7553160990252028
+          },
+          {
+            "reference": "Fourth metacarpal bone.l",
+            "medianMM": 0.1376295385611143,
+            "p95MM": 0.4358352887521241
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmar interosseous muscle of index finger",
+        "origin": "Ulnar (medial) surface of the second metacarpal.",
+        "insertion": "Base of the proximal phalanx and extensor expansion of digit 2, on the side facing the middle finger.",
+        "action": "Adducts its finger toward digit 3; also assists metacarpophalangeal flexion and interphalangeal extension.",
+        "sourceURL": "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Palmar interossei muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 398,
+      "bounds": {
+        "min": [
+          0.28328519815957354,
+          0.7632343686696,
+          0.0281768304556287
+        ],
+        "max": [
+          0.2907235899150737,
+          0.8148853032681065,
+          0.04257845673862583
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1511_BP22900_FMA42402_Set of palmar interossei of right hand.obj",
+      "sourceSHA256": "0796b6675a59e1784224a52a7fab1cc497d4a0cf548619358d7d38691ed58a6c",
+      "id": "muscle-bp43-palmar-interosseous-fourth-left",
+      "sourceName": "Set of palmar interossei of right hand (FJ1511), digit 4 — mirrored left derivative",
+      "name": "Palmar interosseous muscle of ring finger",
+      "muscleName": "Palmar interosseous muscle of ring finger",
+      "memberOf": "Palmar interossei muscles",
+      "region": "forearm-hand",
+      "side": "left",
+      "mirrorSource": true,
+      "registration": {
+        "scale": 1.0339885093474395,
+        "rotation": [
+          [
+            0.9999999505165204,
+            -6.033812885287693e-05,
+            -0.00030874951890849466
+          ],
+          [
+            6.026741915006786e-05,
+            0.9999999719579632,
+            -0.00022902381622100557
+          ],
+          [
+            0.00030876332911864953,
+            0.00022900519735201367,
+            0.9999999261109102
+          ]
+        ],
+        "translation": [
+          -0.0005397177833308398,
+          0.10487966173553391,
+          0.02336237528948726
+        ],
+        "errors": [
+          {
+            "reference": "Second metacarpal bone.l",
+            "medianMM": 0.17143584199070241,
+            "p95MM": 1.8783056346158336
+          },
+          {
+            "reference": "Fifth metacarpal bone.l",
+            "medianMM": 0.18115500699994105,
+            "p95MM": 2.1835760878719306
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.l",
+            "medianMM": 0.15846222992543352,
+            "p95MM": 1.7553160990252028
+          },
+          {
+            "reference": "Fourth metacarpal bone.l",
+            "medianMM": 0.1376295385611143,
+            "p95MM": 0.4358352887521241
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmar interosseous muscle of ring finger",
+        "origin": "Radial (lateral) surface of the fourth metacarpal.",
+        "insertion": "Base of the proximal phalanx and extensor expansion of digit 4, on the side facing the middle finger.",
+        "action": "Adducts its finger toward digit 3; also assists metacarpophalangeal flexion and interphalangeal extension.",
+        "sourceURL": "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Palmar interossei muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 230,
+      "bounds": {
+        "min": [
+          0.2561163306407634,
+          0.7725612638903535,
+          0.023502918246106244
+        ],
+        "max": [
+          0.2631164396205133,
+          0.8133031214793398,
+          0.044540248693437465
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1511_BP22900_FMA42402_Set of palmar interossei of right hand.obj",
+      "sourceSHA256": "0796b6675a59e1784224a52a7fab1cc497d4a0cf548619358d7d38691ed58a6c",
+      "id": "muscle-bp43-palmar-interosseous-fifth-left",
+      "sourceName": "Set of palmar interossei of right hand (FJ1511), digit 5 — mirrored left derivative",
+      "name": "Palmar interosseous muscle of little finger",
+      "muscleName": "Palmar interosseous muscle of little finger",
+      "memberOf": "Palmar interossei muscles",
+      "region": "forearm-hand",
+      "side": "left",
+      "mirrorSource": true,
+      "registration": {
+        "scale": 1.0339885093474395,
+        "rotation": [
+          [
+            0.9999999505165204,
+            -6.033812885287693e-05,
+            -0.00030874951890849466
+          ],
+          [
+            6.026741915006786e-05,
+            0.9999999719579632,
+            -0.00022902381622100557
+          ],
+          [
+            0.00030876332911864953,
+            0.00022900519735201367,
+            0.9999999261109102
+          ]
+        ],
+        "translation": [
+          -0.0005397177833308398,
+          0.10487966173553391,
+          0.02336237528948726
+        ],
+        "errors": [
+          {
+            "reference": "Second metacarpal bone.l",
+            "medianMM": 0.17143584199070241,
+            "p95MM": 1.8783056346158336
+          },
+          {
+            "reference": "Fifth metacarpal bone.l",
+            "medianMM": 0.18115500699994105,
+            "p95MM": 2.1835760878719306
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.l",
+            "medianMM": 0.15846222992543352,
+            "p95MM": 1.7553160990252028
+          },
+          {
+            "reference": "Fourth metacarpal bone.l",
+            "medianMM": 0.1376295385611143,
+            "p95MM": 0.4358352887521241
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmar interosseous muscle of little finger",
+        "origin": "Radial (lateral) surface of the fifth metacarpal.",
+        "insertion": "Base of the proximal phalanx and extensor expansion of digit 5, on the side facing the middle finger.",
+        "action": "Adducts its finger toward digit 3; also assists metacarpophalangeal flexion and interphalangeal extension.",
+        "sourceURL": "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Palmar interossei muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 338,
+      "bounds": {
+        "min": [
+          0.24185566986064236,
+          0.7776815449665466,
+          0.028327194258990926
+        ],
+        "max": [
+          0.24769601525600388,
+          0.8164645157087771,
+          0.04641347703170394
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1383M_BP21117_FMA37718_First lumbrical of left foot.obj",
+      "sourceSHA256": "48d6232439c9508b113c09a3b22d4cfd5ebedc0689aa6e42d6edb520f0469191",
+      "id": "muscle-bp43-lumbrical-foot-1-left",
+      "sourceName": "First lumbrical of left foot (FJ1383M)",
+      "name": "First lumbrical muscle of foot",
+      "muscleName": "First lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "left",
+      "registration": {
+        "scale": 1.0339967516444928,
+        "rotation": [
+          [
+            0.9720732573789113,
+            -0.23463247446875482,
+            -0.004602631141272297
+          ],
+          [
+            0.23463128656319543,
+            0.9720841079409068,
+            -0.0008040238992673097
+          ],
+          [
+            0.004662794704161674,
+            -0.0002983511354814031,
+            0.9999890846065005
+          ]
+        ],
+        "translation": [
+          0.020740012240955452,
+          0.13142616398563978,
+          0.08264977900393462
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.l",
+            "medianMM": 0.14018668883249139,
+            "p95MM": 1.9507444334784163
+          },
+          {
+            "reference": "Fifth metatarsal bone.l",
+            "medianMM": 0.18502702893208903,
+            "p95MM": 1.6261812038164685
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.l",
+            "medianMM": 0.17145332716975753,
+            "p95MM": 1.4116670519168266
+          },
+          {
+            "reference": "Fourth metatarsal bone.l",
+            "medianMM": 0.14557647674496835,
+            "p95MM": 3.0784016219352393
+          }
+        ]
+      },
+      "teaching": {
+        "name": "First lumbrical muscle of foot",
+        "origin": "Medial side of the flexor digitorum longus tendon to toe 2.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 2.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 2.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 646,
+      "bounds": {
+        "min": [
+          0.07261689771001606,
+          0.012953365709299156,
+          -0.005899414153202082
+        ],
+        "max": [
+          0.08821732009995287,
+          0.033317465474617135,
+          0.08849272736946803
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1385M_BP22721_FMA37720_Second lumbrical of left foot.obj",
+      "sourceSHA256": "fe8654d7ebec52d073f623cf68c23d9ccbde2e48217340fe3392721fc09b6e76",
+      "id": "muscle-bp43-lumbrical-foot-2-left",
+      "sourceName": "Second lumbrical of left foot (FJ1385M)",
+      "name": "Second lumbrical muscle of foot",
+      "muscleName": "Second lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "left",
+      "registration": {
+        "scale": 1.0339967516444928,
+        "rotation": [
+          [
+            0.9720732573789113,
+            -0.23463247446875482,
+            -0.004602631141272297
+          ],
+          [
+            0.23463128656319543,
+            0.9720841079409068,
+            -0.0008040238992673097
+          ],
+          [
+            0.004662794704161674,
+            -0.0002983511354814031,
+            0.9999890846065005
+          ]
+        ],
+        "translation": [
+          0.020740012240955452,
+          0.13142616398563978,
+          0.08264977900393462
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.l",
+            "medianMM": 0.14018668883249139,
+            "p95MM": 1.9507444334784163
+          },
+          {
+            "reference": "Fifth metatarsal bone.l",
+            "medianMM": 0.18502702893208903,
+            "p95MM": 1.6261812038164685
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.l",
+            "medianMM": 0.17145332716975753,
+            "p95MM": 1.4116670519168266
+          },
+          {
+            "reference": "Fourth metatarsal bone.l",
+            "medianMM": 0.14557647674496835,
+            "p95MM": 3.0784016219352393
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Second lumbrical muscle of foot",
+        "origin": "Adjacent sides of flexor digitorum longus tendons.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 3.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 3.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 266,
+      "bounds": {
+        "min": [
+          0.07990110467267392,
+          0.012348035661779319,
+          0.012476135490025686
+        ],
+        "max": [
+          0.10558659122286934,
+          0.027072848855650193,
+          0.0851909637789133
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1387M_BP21085_FMA37486_Third lumbrical of left foot.obj",
+      "sourceSHA256": "f417c15c0d0ab015059fa600424f5b31994b99c901fe53bd8a73b4f5f7da93fe",
+      "id": "muscle-bp43-lumbrical-foot-3-left",
+      "sourceName": "Third lumbrical of left foot (FJ1387M)",
+      "name": "Third lumbrical muscle of foot",
+      "muscleName": "Third lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "left",
+      "registration": {
+        "scale": 1.0339967516444928,
+        "rotation": [
+          [
+            0.9720732573789113,
+            -0.23463247446875482,
+            -0.004602631141272297
+          ],
+          [
+            0.23463128656319543,
+            0.9720841079409068,
+            -0.0008040238992673097
+          ],
+          [
+            0.004662794704161674,
+            -0.0002983511354814031,
+            0.9999890846065005
+          ]
+        ],
+        "translation": [
+          0.020740012240955452,
+          0.13142616398563978,
+          0.08264977900393462
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.l",
+            "medianMM": 0.14018668883249139,
+            "p95MM": 1.9507444334784163
+          },
+          {
+            "reference": "Fifth metatarsal bone.l",
+            "medianMM": 0.18502702893208903,
+            "p95MM": 1.6261812038164685
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.l",
+            "medianMM": 0.17145332716975753,
+            "p95MM": 1.4116670519168266
+          },
+          {
+            "reference": "Fourth metatarsal bone.l",
+            "medianMM": 0.14557647674496835,
+            "p95MM": 3.0784016219352393
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Third lumbrical muscle of foot",
+        "origin": "Adjacent sides of flexor digitorum longus tendons.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 4.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 4.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 368,
+      "bounds": {
+        "min": [
+          0.08576154067740803,
+          0.011832414346676257,
+          0.010974210353484004
+        ],
+        "max": [
+          0.11691384832858696,
+          0.026644522230352664,
+          0.07620578699416247
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "sourceURL": "https://lifesciencedb.jp/bp3d/",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ1389M_BP21095_FMA37484_Fourth lumbrical of left foot.obj",
+      "sourceSHA256": "c858a638e29051fb05f7d54d568eefaba76e8e51ad6ab70371945328c051cc9c",
+      "id": "muscle-bp43-lumbrical-foot-4-left",
+      "sourceName": "Fourth lumbrical of left foot (FJ1389M)",
+      "name": "Fourth lumbrical muscle of foot",
+      "muscleName": "Fourth lumbrical muscle of foot",
+      "memberOf": "Lumbrical muscles of foot",
+      "region": "pelvis-leg-foot",
+      "side": "left",
+      "registration": {
+        "scale": 1.0339967516444928,
+        "rotation": [
+          [
+            0.9720732573789113,
+            -0.23463247446875482,
+            -0.004602631141272297
+          ],
+          [
+            0.23463128656319543,
+            0.9720841079409068,
+            -0.0008040238992673097
+          ],
+          [
+            0.004662794704161674,
+            -0.0002983511354814031,
+            0.9999890846065005
+          ]
+        ],
+        "translation": [
+          0.020740012240955452,
+          0.13142616398563978,
+          0.08264977900393462
+        ],
+        "errors": [
+          {
+            "reference": "Second metatarsal bone.l",
+            "medianMM": 0.14018668883249139,
+            "p95MM": 1.9507444334784163
+          },
+          {
+            "reference": "Fifth metatarsal bone.l",
+            "medianMM": 0.18502702893208903,
+            "p95MM": 1.6261812038164685
+          }
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metatarsal bone.l",
+            "medianMM": 0.17145332716975753,
+            "p95MM": 1.4116670519168266
+          },
+          {
+            "reference": "Fourth metatarsal bone.l",
+            "medianMM": 0.14557647674496835,
+            "p95MM": 3.0784016219352393
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Fourth lumbrical muscle of foot",
+        "origin": "Adjacent sides of flexor digitorum longus tendons.",
+        "insertion": "Medial side of the extensor expansion and proximal-phalanx region of toe 5.",
+        "action": "Assists metatarsophalangeal flexion and interphalangeal extension of toe 5.",
+        "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+        "reference": "11.6"
+      },
+      "kind": "muscle",
+      "depth": "deeper",
+      "sourceDataset": "BodyParts3D 4.3",
+      "parents": [
+        "Lumbrical muscles of foot",
+        "Intrinsic muscles of foot"
+      ],
+      "sourcePolygons": 328,
+      "bounds": {
+        "min": [
+          0.09219575596327849,
+          0.011972953305729866,
+          0.010901485057387916
+        ],
+        "max": [
+          0.12857089407142397,
+          0.026715501811215514,
+          0.06292492395762372
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
     }
   ],
-  "note": "Component count is not distinct muscle count. Depth is a regional study filter, not a complete dissection plane. No movement rig or certified insertion footprint is asserted."
+  "note": "Component count is not distinct muscle count. Depth is a regional study filter, not a complete dissection plane. No movement rig or certified insertion footprint is asserted.",
+  "repairs": {
+    "recipe": "model-sources/muscle-repairs.json",
+    "stage": "hand-and-foot-groups",
+    "addedComponents": 14,
+    "retiredComponents": 4
+  }
 }

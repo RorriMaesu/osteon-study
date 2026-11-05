@@ -2,7 +2,7 @@
 
 **The current muscle atlas is incomplete. Named geometry is not a certificate of anatomical accuracy.**
 
-The source exports 669 components. Correct tissue classification gives **462 muscle parts and 207 supporting components**. Parts include separate heads, sides and aggregate groups; they are not counts of distinct human muscles. The previous 485-muscle-part figure included 25 connective components and excluded both tensor fasciae latae meshes. This audit corrects those classifications. Original mesh identities and all geometry are preserved.
+The atlas displays 679 active components (4 superseded objects are retained for rollback). Correct tissue classification gives **472 muscle parts and 207 supporting components**. Parts include separate heads, sides and aggregate groups; they are not counts of distinct human muscles. The previous 485-muscle-part figure included 25 connective components and excluded both tensor fasciae latae meshes. This audit corrects those classifications. Original mesh identities are preserved. Four incomplete aggregate objects are retained in the rollback record and model files but are hidden from selection and rendering; 14 recovered source surfaces replace them.
 
 ## What was checked
 
@@ -15,10 +15,10 @@ The source exports 669 components. Correct tissue classification gives **462 mus
 | Checklist result | Entries |
 |---|---:|
 | Named geometry found | 160 |
-| Composite represented by components | 6 |
+| Group represented by named components | 8 |
 | No named source mesh | 51 |
 | Not separately resolved | 4 |
-| Partial model | 3 |
+| Partial model | 1 |
 | Anatomical naming/attachment review | 2 |
 
 “No named source mesh” does not prove that all corresponding tissue is physically absent: it establishes that the learner cannot reliably select and identify that named structure in this atlas. Inconstant and sex-specific entries are included in this count; they must not all be called omissions from one normal specimen. All attachment certification fields remain No.
@@ -28,12 +28,12 @@ The source exports 669 components. Correct tissue classification gives **462 mus
 - Both tensor fasciae latae meshes are now muscles and are visible with supporting tissues switched off.
 - Linea alba, intermuscular septa, iliotibial tracts, tendinous arches and digital sheaths are supporting tissues, not muscles.
 - Named heads/parts are grouped into the corresponding whole muscle for search and selection, with individual source parts retained.
-- Incomplete groups and naming concerns appear beside the selected structure. The browser exposes a Known gaps report. No missing anatomy is replaced by an invented pin or generic shape.
+- Incomplete groups and naming concerns appear beside the selected structure. The browser exposes a Known gaps report. The hand/foot repairs use original source anatomy. No missing anatomy is replaced by an invented pin or generic shape.
 
-## Incomplete or unresolved geometry
+## Recovered groups and remaining unresolved geometry
 
-- **Palmar interossei:** one localized connected mesh per hand. The usual three digit-2/4/5 palmar interossei are not separately demonstrated. A possible pollical interosseous is tracked separately as a variant; conventions may count it as a fourth.
-- **Foot lumbricals:** one localized connected mesh per foot; four distinct lumbricals are not demonstrated.
+- **Palmar interossei, repaired:** three individual digit-2/4/5 surfaces per hand, recovered from the original BodyParts3D 4.3 set. Major connected members were separated and small source fragments assigned to their nearest member. The optional pollical variant remains a separate open entry.
+- **Foot lumbricals, repaired:** all four named source surfaces per foot are separately selectable. Individual origins, insertions and actions are provided. Regional registration is checked against corresponding metatarsals and held-out proximal phalanges; this is not a certificate of attachment anatomy.
 - **Oblique arytenoid:** only its ary-epiglottic extension is named.
 - **Semispinalis capitis:** no separately named mesh. The nearby source spinalis capitis needs attachment-based review before deciding between omission, fusion and mislabeling.
 - **Pelvic floor:** the puboanalis source must not automatically be relabeled puborectalis. The sling and attachment relationships need independent review.
@@ -97,18 +97,16 @@ The source exports 669 components. Correct tissue classification gives **462 mus
 | Sphincter urethrovaginalis | pelvis-leg-foot | No named source mesh | female |
 | Articularis cubiti muscle | shoulder-arm | Not separately resolved | No separately identified articularis cubiti. Review the deep triceps/capsular relationship before claiming the component is present or reconstructing it. |
 | Palmaris brevis muscle | forearm-hand | No named source mesh |  |
-| Palmar interossei muscles | forearm-hand | Partial model | Blender inspection found one localized connected mesh per hand, not three separately resolved palmar interossei. Mesh connectivity alone is not a muscle count, but the narrow bounds and single location require correction. |
 | (Pollical palmar interosseus muscle) | forearm-hand | No named source mesh | Listed inconstant in TA2 |
 | Psoas minor | pelvis-leg-foot | No named source mesh | Variable anatomy requires a documented specimen choice; lack of a named model is not proof that the structure is absent in all people. |
 | Articularis genus muscle | pelvis-leg-foot | Not separately resolved | No separately identified articularis genus. A vastus intermedius mesh alone does not establish its presence. |
-| Lumbrical muscles of foot | pelvis-leg-foot | Partial model | Blender inspection found one localized connected mesh per foot, not four separately resolved lumbricals. The current aggregate name overstates the demonstrated members. |
 | Puborectalis | pelvis-leg-foot | Anatomical naming/attachment review | Pelvic-floor nomenclature varies. Do not equate puboanalis with puborectalis automatically. Verify the anorectal sling and origin-insertion relationships. |
 
 The [complete flat checklist](MUSCLE-REFERENCE-AUDIT.csv) includes both open findings and named matches. [Source component coverage](MUSCLE-COVERAGE.csv) retains every original mesh name.
 
 ## Correction order and acceptance criteria
 
-1. Reconstruct and individually label the missing palmar interossei and foot lumbricals from verified references. Back up every affected GLB and Blender project before each change.
+1. Completed the hand/foot group recovery in Blender 4.5 with hash-verified backups before every model save/export. [Reproducible repair recipe and source hashes](model-sources/muscle-repairs.json) preserve the original surfaces, transforms and segmentation. Subsequent original-only rebuilds are blocked to prevent wiping these repairs.
 2. Add absent high-priority course anatomy: palmaris brevis; intrinsic tongue and styloglossus; soft-palate muscles; perineal muscles and male/female urethral-sphincter anatomy. Provide sex-specific views instead of superimposing incompatible anatomy.
 3. Resolve semispinalis/spinalis capitis and pelvic-floor attachment relationships. Review articularis muscles, subcostales, intertransversarii, auricular/middle-ear muscles and remaining open entries. Document variants instead of implying that all variants coexist in one specimen.
 4. For each muscle verify origin area, insertion area, tendon route, muscle belly, neighboring structures, side, relevant group members, selectable identity and uncluttered default view. Use independent anatomical review before marking a feature certified.
@@ -129,6 +127,7 @@ The [complete flat checklist](MUSCLE-REFERENCE-AUDIT.csv) includes both open fin
 - [OpenStax regional anatomy reference 4](https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs).
 - [Texas Tech anatomy tables: hand](https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html), including palmar-interosseous counting conventions.
 - [Plantar intrinsic muscle ultrasound and anatomical relationships](https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/).
+- [Original BodyParts3D source and download service](https://lifesciencedb.jp/bp3d/) · [current CC BY 4.0 license](https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html).
 - [Blender geometry inspection summary](muscle-geometry-inspection.json) and [read-only inspection script](scripts/blender/inspect_muscle_geometry.py).
 - [Levator ani anatomy evaluated by origin–insertion pairs](https://pmc.ncbi.nlm.nih.gov/articles/PMC1415268/).
 

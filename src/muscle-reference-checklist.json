@@ -1679,8 +1679,12 @@
       "inconstantInTA2": false,
       "entryType": "named-muscle-or-serial-group",
       "expectedSides": "left-and-right",
-      "reviewStatus": "partial-model",
-      "note": "Blender inspection found one localized connected mesh per hand, not three separately resolved palmar interossei. Mesh connectivity alone is not a muscle count, but the narrow bounds and single location require correction."
+      "note": "All usual group members are separately selectable on both sides, recovered from original BodyParts3D 4.3 source surfaces. Registered bone alignment is checked; attachment footprints are not certified.",
+      "requiredGroups": [
+        "Palmar interosseous muscle of index finger",
+        "Palmar interosseous muscle of ring finger",
+        "Palmar interosseous muscle of little finger"
+      ]
     },
     {
       "id": "ta2-2535",
@@ -2091,8 +2095,13 @@
       "inconstantInTA2": false,
       "entryType": "named-muscle-or-serial-group",
       "expectedSides": "left-and-right",
-      "reviewStatus": "partial-model",
-      "note": "Blender inspection found one localized connected mesh per foot, not four separately resolved lumbricals. The current aggregate name overstates the demonstrated members."
+      "note": "All usual group members are separately selectable on both sides, recovered from original BodyParts3D 4.3 source surfaces. Registered bone alignment is checked; attachment footprints are not certified.",
+      "requiredGroups": [
+        "First lumbrical muscle of foot",
+        "Second lumbrical muscle of foot",
+        "Third lumbrical muscle of foot",
+        "Fourth lumbrical muscle of foot"
+      ]
     },
     {
       "id": "ta2-2686",

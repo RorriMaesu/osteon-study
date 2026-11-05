@@ -13,6 +13,9 @@ args=sys.argv[sys.argv.index('--')+1:]
 ROOT=Path(args[0]).resolve();PHASE=args[1] if len(args)>1 else 'pilot'
 REPO=ROOT/'outputs/osteon-study';PROJECT=ROOT/'outputs/osteon-models/muscles.blend'
 BACKUPS=ROOT/'outputs/model-backups';SOURCE=ROOT/'work/complete-anatomy/source/Z-Anatomy/Startup.blend'
+existing_manifest=REPO/'src/muscle-models.json'
+if existing_manifest.exists() and json.loads(existing_manifest.read_text(encoding='utf-8')).get('repairs'):
+ raise RuntimeError('This atlas contains source repairs. Use repair_muscle_groups.py on the derived project; rebuilding from the original would erase repairs.')
 
 def digest(p):
  with p.open('rb')as f:return hashlib.file_digest(f,'sha256').hexdigest()

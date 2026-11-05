@@ -1,14 +1,14 @@
 {
   "schema": 1,
   "referenceChecks": 226,
-  "muscleParts": 462,
+  "muscleParts": 472,
   "supportParts": 207,
   "counts": {
     "named-geometry": 160,
-    "represented-by-components": 6,
+    "represented-by-components": 8,
     "no-named-mesh": 51,
     "not-separately-resolved": 4,
-    "partial-model": 3,
+    "partial-model": 1,
     "needs-anatomical-review": 2
   },
   "geometryCertified": false,

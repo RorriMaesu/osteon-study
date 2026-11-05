@@ -305,3 +305,10 @@ The exam center uses two rows on short desktop screens, including when a draft i
 ## Muscle completeness audit and classification corrections
 
 Audited a finite 226-entry reference checklist and inspected the original muscle meshes read-only in Blender 4.5. Identified 51 entries with no named mesh, three partial groups, four unsegmented entries and two naming/attachment concerns. Variants and sex-specific anatomy remain distinguished. Found incomplete palmar-interosseous and foot-lumbrical source geometry. Added a full report, reference CSV, reproducible audit and in-app Known gaps report. Corrected both tensor fasciae latae meshes to muscle, 25 connective components to support, and grouped named heads/parts under whole muscles. The corrected source count is 462 muscle parts and 207 support components; all 669 original identities and all five GLB hashes are preserved. Metadata was backed up before correction; no Blender or GLB geometry was edited.
+
+## Original-source hand and foot muscle repairs
+
+- Recovered all three usual palmar interossei and four foot lumbricals per side as 14 selectable surfaces in Blender 4.5; retired four incomplete aggregates from rendering and selection.
+- Added individual origins, insertions and actions, source hashes and a reproducible registration/segmentation recipe.
+- Preserved original source geometry and hash-verified project/GLB backups before every model write. Blocked original-only rebuilds that would erase repairs.
+- Validated assets, bilateral group coverage, missing-member detection and retired visibility; 178 automated checks pass.
