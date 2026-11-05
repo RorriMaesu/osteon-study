@@ -1,11 +1,14 @@
 // Toggling a layer must not invoke a navigation preset.
 import {areaForBone,boneSide} from './exploration.js';
 export function muscleContextForView({region,focus={}}){
- const area={skull:'head-neck',neck:'head-neck','thoracic-spine':'trunk-back','lower-back':'trunk-back',thorax:'trunk-back',shoulder:'shoulder-arm',arm:'shoulder-arm',forearm:'forearm-hand',hand:'forearm-hand',pelvis:'pelvis-leg-foot',thigh:'pelvis-leg-foot',knee:'pelvis-leg-foot',leg:'pelvis-leg-foot',foot:'pelvis-leg-foot'};
+ // The upper-arm view retains the radius and ulna; the forearm view also
+ // retains the humerus. Load both muscle files across that elbow boundary.
+ const area={skull:'head-neck',neck:'head-neck','thoracic-spine':'trunk-back','lower-back':'trunk-back',thorax:'trunk-back',shoulder:'shoulder-arm',arm:'upper-limb',forearm:'upper-limb',hand:'forearm-hand',pelvis:'pelvis-leg-foot',thigh:'pelvis-leg-foot',knee:'pelvis-leg-foot',leg:'pelvis-leg-foot',foot:'pelvis-leg-foot'};
  const macro={'Skull':'head-neck','Spine':'spine','Thorax':'trunk-back','Upper limb':'upper-limb','Pelvis':'pelvis-leg-foot','Lower limb':'pelvis-leg-foot'};
  const focusedBone=focus.level==='bone'?focus.boneId||'':'',side=focus.side||boneSide(focusedBone);
  return {region:area[focus.areaId||areaForBone(focusedBone)]||macro[region]||'all',side:side==='l'?'left':side==='r'?'right':'both'};
 }
+export function boneViewKey(viewer){const f=viewer.focus||{};return JSON.stringify([viewer.region,viewer.division,f.level,f.areaId,f.side,f.boneId]);}
 export function captureBoneView(viewer){return {...viewer.snapshot(),division:viewer.division,focusHistory:[...viewer.focusHistory],peel:viewer.peel,autoRotate:viewer.controls.autoRotate};}
 export function restoreBoneView(viewer,snapshot,{restoreCamera=false}={}){
  viewer.clearPins();

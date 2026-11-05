@@ -11,6 +11,8 @@
 
 The initial skeleton layer and the course-specific tissues listed below are included. The upstream project's kidney, brain and inner-ear soft-tissue assets are not included. Auditory ossicles in this skeleton are bone meshes from its skeleton layer.
 
+`assets/muscle-review/regions.jpg` is a Blender-rendered review of the delivered source geometry. It retains the Z-Anatomy / BodyParts3D CC BY-SA 4.0 attribution. Recovered BodyParts3D 4.3 and Open3D hand surfaces retain their separately documented component credits below. These renders document the geographic file contents and do not certify complete anatomy.
+
 ## Additional anatomical objects and landmarks
 
 `assets/course-tissues.glb` contains 81 selected Z-Anatomy objects, exported from the original `Z-Anatomy.zip` / `Startup.blend` using Blender 4.5.1. Original named geometry and world transforms are retained; curves are converted to mesh geometry, unrelated objects omitted and web materials applied. Objects are listed in `assets/course-tissues-manifest.json`. This derived model remains CC BY-SA 4.0 with the Z-Anatomy / BodyParts3D attribution above.

@@ -2,6 +2,8 @@
 
 **A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6–10, alongside the dedicated BI 231 bone-list test.
 
+**Muscle review in progress:** the humerus/forearm layer now includes the forearm muscles correctly. The atlas still has missing and unresolved anatomy; [read the current review and individual component checks](MUSCLE-VIEW-REVIEW.md). Further promotional-video work is on hold for the muscle review.
+
 [![Watch Osteon in action — free A&P study, with 3D anatomy, muscles, practice and a real local tutor](demo/promo-poster.jpg)](https://rorrimaesu.github.io/osteon-study/demo/#watch)
 
 **[Try Osteon free ↗](https://rorrimaesu.github.io/osteon-study/)** · **[Watch the 1:51 feature tour ▶](https://rorrimaesu.github.io/osteon-study/demo/#watch)** · [Download the 35-second vertical teaser](https://rorrimaesu.github.io/osteon-study/demo/osteon-promo-social.mp4) · [Get the new share kit](https://rorrimaesu.github.io/osteon-study/demo/osteon-promo-share-kit.zip)

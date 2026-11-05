@@ -9,6 +9,7 @@ The atlas displays 681 active components (4 superseded objects are retained for 
 - A finite flat checklist of **226 reference entries**, based on named TA2 skeletal-muscle terms, selected serial groups, common composites and one additional clinical pelvic-floor check. This is not every anatomical variant, a reproduction of TA2 hierarchy, or a universal muscle count.
 - Every shipped component against the source inventory, original ID, side and asset hash.
 - Read-only Blender 4.5 examination of all 669 source components (462 corrected muscle parts and 207 supporting components), including connectivity, finite coordinates and world-space bounds. The original source hash is unchanged. This is structural inspection, not a visual or anatomical certification of every surface.
+- Current delivered-model review: all 685 imported components, including the recovered hand/foot surfaces, were inspected in Blender 4.5. [Current view and geometry findings](MUSCLE-VIEW-REVIEW.md) and [per-component records](MUSCLE-COMPONENT-REVIEW.csv) separate geometry checks from anatomical certification.
 - Independent OpenStax regional muscle names, university anatomy tables, and published anatomical studies for identified gaps.
 - Normal variation, sex-specific structures, source naming ambiguity, unsegmented groups and complete absence of a named model are recorded separately.
 
@@ -107,7 +108,7 @@ The [complete flat checklist](MUSCLE-REFERENCE-AUDIT.csv) includes both open fin
 ## Correction order and acceptance criteria
 
 1. Completed the hand/foot group recovery in Blender 4.5 with hash-verified backups before every model save/export. [Reproducible repair recipe and source hashes](model-sources/muscle-repairs.json) preserve the original surfaces, transforms and segmentation. Subsequent original-only rebuilds are blocked to prevent wiping these repairs.
-2. Add absent high-priority course anatomy: palmaris brevis; intrinsic tongue and styloglossus; soft-palate muscles; perineal muscles and male/female urethral-sphincter anatomy. Provide sex-specific views instead of superimposing incompatible anatomy.
+2. Add absent high-priority course anatomy: intrinsic tongue and styloglossus; soft-palate muscles; perineal muscles and male/female urethral-sphincter anatomy. Provide sex-specific views instead of superimposing incompatible anatomy.
 3. Resolve semispinalis/spinalis capitis and pelvic-floor attachment relationships. Review articularis muscles, subcostales, intertransversarii, auricular/middle-ear muscles and remaining open entries. Document variants instead of implying that all variants coexist in one specimen.
 4. For each muscle verify origin area, insertion area, tendon route, muscle belly, neighboring structures, side, relevant group members, selectable identity and uncluttered default view. Use independent anatomical review before marking a feature certified.
 5. Validate multiple views, desktop and touch selection, exports and backups. Moving muscle rigs and precision attachment scoring stay disabled until their mapping is reviewed.
