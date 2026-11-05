@@ -1,3 +1,4 @@
+import {lessons} from './learning-data.js';
 import {newTutorSession,tutorSessionInstruction,completeTutorTurn} from './tutor-session.js';
 import { getLearningContext } from './learning-context.js';
 import { sanitizeConversation, citationParts, CHAT_LIMIT } from './tutor-state.js';
@@ -10,9 +11,9 @@ import { setupScreen } from './local-ai-setup.js';
 const CHAT_KEY='osteon-tutor-chat-v1', DRAFT_KEY='osteon-tutor-draft-v1', HARDWARE_KEY='osteon-tutor-device-v1';
 function initTutor({escape:e,toast}) {
   const $=s=>document.querySelector(s);
-  let client=localAI.client, connected=false, choice=localAI.state.model, models=[], tab='setup', busy=false, controller=null, job=null;
+  let client=localAI.client, connected=false, choice=localAI.state.model, models=[], tab='guide', busy=false, controller=null, job=null;
   let context=getLearningContext(), hardware={}, os=detectOS(), chat=[], draft='', lastFocus=null;
-  let guided=null;
+  let guided=null,guideSection='',guidePrompt='recall',guideReveal='';
   let setupPage='auto', sample='', returnToReview=false, assistantFinished=false, opening=false, pollTimer=null, pollRun=0;
   let benchmarkText='', generationText='', downloadState={model:downloadModels[0].name,text:'',progress:null};
   try {
@@ -30,7 +31,7 @@ function initTutor({escape:e,toast}) {
   }
   downloadState.model=recommendedDownload(hardware).name;
   const panel=document.createElement('dialog'); panel.id='tutor-panel'; panel.setAttribute('aria-labelledby','tutor-title');
-  panel.innerHTML=`<div class="tutor-top"><div><span class="eyebrow">PRIVATE AI / GUIDED RECALL</span><h2 id="tutor-title">Think it <em>through.</em></h2></div><button id="tutor-close" class="icon-btn" aria-label="Close tutor">×</button></div><div class="tutor-status"><i id="tutor-dot"></i><span id="tutor-status" role="status">Set up local AI</span></div><div class="tutor-tabs" role="group" aria-label="Tutor workspace"><button data-tutor-tab="setup">Set up AI</button><button data-tutor-tab="chat">Socratic tutor</button></div><div id="tutor-body"></div><div class="tutor-privacy">Conversations go directly to local Ollama on this computer. AI can make mistakes; use the supplied textbook sources to check explanations.</div>`;
+  panel.innerHTML=`<div class="tutor-top"><div><span class="eyebrow">GUIDED RECALL / OPTIONAL LOCAL AI</span><h2 id="tutor-title">Think it <em>through.</em></h2></div><button id="tutor-close" class="icon-btn" aria-label="Close tutor">×</button></div><div class="tutor-status"><i id="tutor-dot"></i><span id="tutor-status" role="status">Set up local AI</span></div><div class="tutor-tabs" role="group" aria-label="Tutor workspace"><button data-tutor-tab="guide">Textbook guide</button><button data-tutor-tab="chat">Socratic AI</button><button data-tutor-tab="setup">Enable local AI</button></div><div id="tutor-body"></div><div class="tutor-privacy">The textbook guide works without a model. Optional AI chat goes to Ollama on this computer.</div>`;
   document.body.append(panel);
   const launcher=document.createElement('button'); launcher.id='tutor-launch'; launcher.setAttribute('aria-controls','tutor-panel'); launcher.setAttribute('aria-expanded','false');
   launcher.innerHTML='<span class="tutor-spark">✳</span> Socratic tutor <span>↗</span>'; document.body.append(launcher);
@@ -41,9 +42,13 @@ function initTutor({escape:e,toast}) {
   function openPanel({setup=false,review=false,autoCheck=true}={}) {
     lastFocus=document.activeElement;returnToReview=review;
     if(!panel.open)showPanel();launcher.setAttribute('aria-expanded','true');
-    if(!busy){tab=setup||!localAI.state.ready?'setup':'chat';if(setup)setupPage='auto';}
+    if(!busy){
+     tab=setup?'setup':localAI.state.ready?'chat':'guide';
+     if(setup)setupPage='auto';
+     else if(tab==='guide'){guideSection=lessons.some(l=>l.id===context.reference)?context.reference:guideSection;guideReveal='';}
+    }
     render();$('#tutor-close').focus();
-    if(autoCheck&&!busy&&os!=='other'&&(!connected||Date.now()-localAI.state.checkedAt>60000)) {tab='setup';setupPage='auto';connect(true);}
+    if((setup||tab==='chat')&&autoCheck&&!busy&&os!=='other'&&(!connected||Date.now()-localAI.state.checkedAt>60000)) {tab='setup';setupPage='auto';connect(true);}
   }
   launcher.onclick=()=>openPanel(); $('#tutor-close').onclick=closePanel;
   panel.addEventListener('cancel',ev=>{ev.preventDefault();closePanel();});
@@ -56,7 +61,10 @@ function initTutor({escape:e,toast}) {
     }
   });
   compactTutor.addEventListener('change',()=>{if(panel.open){const focused=document.activeElement;panel.close();showPanel();if(panel.contains(focused))focused.focus({preventScroll:true});}});
-  panel.querySelectorAll('[data-tutor-tab]').forEach(b=>b.onclick=()=>{captureDraft();tab=b.dataset.tutorTab==='chat'&&!localAI.state.ready?'setup':b.dataset.tutorTab;setupPage='auto';render();});
+  panel.querySelectorAll('[data-tutor-tab]').forEach(b=>b.onclick=()=>{
+    captureDraft();tab=b.dataset.tutorTab;setupPage='auto';render();
+    if(tab==='setup'&&os!=='other'&&!localAI.state.ready&&!busy)connect(true);
+  });
   function status(text,ok=false){$('#tutor-status').textContent=text;$('#tutor-dot').classList.toggle('online',ok);}
   function syncConnection(state){
     client=localAI.client;connected=state.connected;models=state.models;choice=state.model;
@@ -78,8 +86,15 @@ function initTutor({escape:e,toast}) {
     const selection=activeID==='tutor-input'?[active.selectionStart,active.selectionEnd]:null;
     captureDraft();body.classList.toggle('ai-guided-setup',tab==='setup');body.classList.toggle('tutor-chat-layout',tab==='chat');
     panel.dataset.aiView=tab;
-    panel.querySelectorAll('[data-tutor-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.tutorTab===tab);b.setAttribute('aria-pressed',String(b.dataset.tutorTab===tab));});
-    if(tab==='setup')renderSetup();else renderChat();syncControls();
+    panel.querySelectorAll('[data-tutor-tab]').forEach(b=>{
+     const mode=b.dataset.tutorTab;b.classList.toggle('active',mode===tab);b.setAttribute('aria-pressed',String(mode===tab));
+     if(mode==='chat')b.hidden=!localAI.state.ready&&tab!=='chat';
+     if(mode==='setup')b.textContent=localAI.state.ready?'AI setup':os==='other'?'Local AI on a computer':'Enable local AI';
+    });
+    if(tab==='setup')renderSetup();else if(tab==='guide')renderTextbookGuide();else renderChat();
+    if(tab==='guide')status('Textbook guide · ready',true);
+    else if(tab==='setup'&&!busy&&!localAI.state.ready)status(connected?'Ollama connected · choose or test a model':os==='other'?'Desktop Ollama setup':localAI.state.phase==='unreachable'?'Connection needs attention':'Set up local AI');
+    syncControls();
     if(activeID&&$('#'+activeID)&&!$('#'+activeID).disabled){$('#'+activeID).focus({preventScroll:true});if(selection)$('#'+activeID).setSelectionRange(...selection);}
   }
   function syncControls(){
@@ -92,6 +107,23 @@ function initTutor({escape:e,toast}) {
   function endJob(){busy=false;controller=null;job=null;render();}
   function go(page){setupPage=page;render();$('#tutor-body .ai-setup-content')?.focus({preventScroll:true});}
   function finish(){if(returnToReview||os==='other'){closePanel();if(localAI.state.ready)toast('Local AI is ready for optional answer review.');}else{tab='chat';render();$('#tutor-input')?.focus();}}
+  function renderTextbookGuide(){
+    const lesson=lessons.find(l=>l.id===guideSection)||lessons[0],prompt=lesson[guidePrompt];
+    guideSection=lesson.id;
+    $('#tutor-body').innerHTML=`<div class="tutor-textbook-guide"><h3>Practice from the textbook</h3><p>Pick a section, try an answer aloud or on paper, then check your reasoning.</p>
+      <label for="tutor-guide-section">Textbook section</label><select id="tutor-guide-section">${lessons.map(l=>`<option value="${e(l.id)}" ${l.id===lesson.id?'selected':''}>${e(l.id+' · '+l.title)}</option>`).join('')}</select>
+      <div class="control-row" aria-label="Prompt type"><button type="button" data-guide-prompt="recall" aria-pressed="${guidePrompt==='recall'}">Recall</button><button type="button" data-guide-prompt="application" aria-pressed="${guidePrompt==='application'}">Apply it</button></div>
+      <div class="objective tutor-guide-prompt"><strong>${e(prompt[0])}</strong></div>
+      ${context.type==='assessment'?'<p class="tiny warning-text">Hints, model answers, and source reading count as assistance for the current question.</p>':''}
+      <div class="control-row"><button id="tutor-guide-hint" aria-expanded="${guideReveal==='hint'}">Show a hint</button><button id="tutor-guide-answer" aria-expanded="${guideReveal==='answer'}">Show model answer</button><button id="tutor-guide-source">Read §${e(lesson.id)} ↗</button></div>
+      <div id="tutor-guide-reveal" role="status">${guideReveal?`<p><strong>${guideReveal==='hint'?'What to focus on':'Model answer'}</strong></p><p>${e(guideReveal==='hint'?lesson.objective:prompt[1])}</p>`:''}</div></div>`;
+    $('#tutor-guide-section').onchange=ev=>{guideSection=ev.target.value;guideReveal='';render();};
+    panel.querySelectorAll('[data-guide-prompt]').forEach(button=>button.onclick=()=>{guidePrompt=button.dataset.guidePrompt;guideReveal='';render();panel.querySelector('[data-guide-prompt="'+guidePrompt+'"]').focus({preventScroll:true});});
+    const reveal=kind=>{if(guideReveal!==kind)document.dispatchEvent(new Event('studyassistance'));guideReveal=guideReveal===kind?'':kind;render();};
+    $('#tutor-guide-hint').onclick=()=>reveal('hint');
+    $('#tutor-guide-answer').onclick=()=>reveal('answer');
+    $('#tutor-guide-source').onclick=()=>{document.dispatchEvent(new Event('studyassistance'));closePanel();document.dispatchEvent(new CustomEvent('openreader',{detail:lesson.id}));};
+  }
   function renderSetup(){
     $('#tutor-body').innerHTML=setupScreen({state:localAI.snapshot(),page:setupPage,busy,job:job?.kind,os,hardware,download:downloadState,sample,testText:benchmarkText,returnToReview,assistantFinished,opening});
     // Keep the next action visible even on short laptop screens or with the
@@ -272,6 +304,7 @@ function initTutor({escape:e,toast}) {
   document.addEventListener("tutorcontext", (ev) => {
     context = { ...ev.detail };
     if ($("#tutor-assessment-note")) $("#tutor-assessment-note").hidden = context.type !== "assessment";
+    if(panel.open&&tab==='guide')render();
     if ($("#tutor-context")) $("#tutor-context").innerHTML = "<span>LEARNING CONTEXT</span><strong>" + e(context.label) + "</strong>";
   });
   window.addEventListener("pagehide", () => controller?.abort());

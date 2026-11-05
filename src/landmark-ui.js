@@ -35,6 +35,7 @@ export function initLandmarks({viewer,selectTerm,setView,dialog,escape:e}){
  }
  const launch=document.createElement('button');launch.type='button';launch.className='text-btn landmark-bank-launch';launch.textContent=`${textbookTerms.length} textbook features ↗`;launch.onclick=()=>{setView('practice');bank();};$('.coverage-note').prepend(launch);
  function bank(){
+  viewer.ensureBase().catch(()=>toast('The skeleton could not load. Source guides are still available.'));
   hide();setView('practice');const regions=[...new Set(textbookTerms.map(t=>t.region))],kinds=[...new Set(textbookTerms.map(t=>t.feature.featureType))],progress=getProgress();
   const eligible=textbookTerms.filter(t=>inDivision(t,viewer.division)&&(bankRegion==='All regions'||t.region===bankRegion)&&(bankKind==='all'||t.feature.featureType===bankKind)&&(!query||[t.name,t.cue,...t.aliases,...t.feature.parentBones].join(' ').toLowerCase().includes(query.toLowerCase())));
   const scored=eligible.filter(canLocate),retrieved=retrievalPlan(eligible,progress.attempts).retrieved,due=eligible.filter(t=>progress.cards[t.id]?.due<=Date.now()).sort((a,b)=>progress.cards[a.id].due-progress.cards[b.id].due);

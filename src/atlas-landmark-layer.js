@@ -31,7 +31,8 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
   if(!enabled||paused){closeFinder({focus:false});clear();return;}
   lastCheck=0;update(true);
  }
- function setEnabled(value){enabled=value;page=0;try{localStorage.setItem('osteon-atlas-landmarks',value?'on':'off');}catch{}refresh();if(value&&viewer.focus.level==='overview'&&!mobileDock.matches)toast('Double-click a bone to see regional labels, or choose Find landmarks.');}
+ function loadRegionalDetails(){if(enabled&&!viewer.quiz&&viewer.focus.level!=='overview')viewer.ensureDetails().catch(()=>{if(enabled)$('#atlas-landmark-status').textContent='Could not load details. Toggle Landmarks to retry.';});}
+ function setEnabled(value){enabled=value;page=0;try{localStorage.setItem('osteon-atlas-landmarks',value?'on':'off');}catch{}refresh();loadRegionalDetails();if(value&&viewer.focus.level==='overview'&&!mobileDock.matches)toast('Double-click a bone to see regional labels, or choose Find landmarks.');}
  toggle.onclick=()=>setEnabled(!enabled);
  $('#atlas-feature-group').onchange=ev=>{group=ev.target.value;page=0;lastCheck=0;update(true);};
  $('#atlas-landmark-scope').onchange=ev=>{scope=ev.target.value;page=findPage=0;lastState='';refresh();if(!panel.hidden)paintFinder();};
@@ -47,8 +48,14 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
   $('#atlas-find-results').innerHTML=list.slice(findPage*size,findPage*size+size).map(entry=>`<button type="button" data-atlas-find="${e(entry.term.id)}"><strong>${e(entry.term.name)}</strong><small>${e(entry.term.region)} · ${entry.term.representation.localSpecimen?'Fetal scan · developmental guide':entry.retired?'Source guide':entry.term.type==='test'?'Movement exercise':entry.held?'Partial 3D reference · source guide':entry.term.representation.detailGroup?'3D teaching specimen':entry.term.representation.kind==='mesh'?'Whole 3D structure':'3D reference'}${entry.teacher?' · Teacher list':''}</small></button>`).join('')||'<p>No matching landmark. Try another name or region.</p>';
   panel.querySelectorAll('[data-atlas-find]').forEach(button=>button.onclick=()=>{const entry=atlasLandmarks.find(x=>x.term.id===button.dataset.atlasFind);closeFinder({focus:false});focusEntry(entry);});
  }
- function focusEntry(entry){
-  if(!entry)return;const term=entry.term;selectTerm(term);if(term.type==='test'){document.dispatchEvent(new CustomEvent('practicetarget',{detail:term}));return;}
+ async function focusEntry(entry){
+  if(!entry)return;const term=entry.term;
+  if(['ligament','joint','tissue','vessel'].includes(term.type)){
+   const route=location.hash;
+   try{await viewer.ensureDetails();}catch{toast('Detailed anatomy could not load. Select the landmark to retry.');return;}
+   if(route!==location.hash)return;
+  }
+  selectTerm(term);if(term.type==='test'){document.dispatchEvent(new CustomEvent('practicetarget',{detail:term}));return;}
   if(term.representation.kind==='mesh'&&['ligament','joint','tissue','vessel'].includes(term.type)&&entry.anchors.length){
    const anchor=entry.anchors.find(a=>a.parent.endsWith('.r'))||entry.anchors[0],side=boneSide(anchor.parent),area=tissueAreas(anchor.parent)[0];
    if(area){viewer.focusHistory.push(viewer.snapshot());viewer.focus={level:'region',areaId:area,side,boneId:null};viewer.region=areas[area].macro;}
@@ -66,6 +73,9 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
  function update(force=false){
   if(!viewer.loaded)return;const paused=blocked();if(paused||!enabled){if(!dock.hidden){dock.hidden=layer.hidden=true;closeFinder({focus:false});clear();}return;}
   dock.hidden=layer.hidden=false;
+  if(viewer.focus.level!=='overview'&&!viewer.detailsLoaded){
+   layer.hidden=true;clear();$('#atlas-landmark-status').textContent='Detailed landmarks are loading. You can still rotate the specimen.';return;
+  }
   const now=performance.now(),state=[viewer.focus.level,viewer.focus.areaId,viewer.focus.boneId,viewer.region,viewer.division,viewer.activeDetail,viewer.isolated,viewer.selectedTerm?.id,viewer.meshes.filter(m=>m.visible).length].join('|');
   if(state!==lastState){lastState=state;page=0;lastCheck=0;anchorChoices.clear();}
   if(force||now-lastCheck>350){
@@ -88,6 +98,7 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
   if(!panel.hidden){layer.hidden=true;return;}layer.hidden=false;
   annotations.update(force);
  }
- for(const event of ['anatomyready','atlasfocuschange','layerschanged','structureselected','assessmentstart','assessmentend','viewchange'])document.addEventListener(event,()=>{lastState='';refresh();});
+ document.addEventListener('atlasfocuschange',loadRegionalDetails);
+ for(const event of ['anatomyready','anatomyassetsready','atlasfocuschange','layerschanged','structureselected','assessmentstart','assessmentend','viewchange'])document.addEventListener(event,()=>{lastState='';refresh();});
  viewer.landmarkOverlay={update,refresh,setEnabled};refresh();return{setEnabled,refresh};
 }

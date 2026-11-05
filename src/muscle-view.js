@@ -13,6 +13,7 @@ export function captureBoneView(viewer){return {...viewer.snapshot(),division:vi
 export function restoreBoneView(viewer,snapshot,{restoreCamera=false}={}){
  viewer.clearPins();
  for(const key of ['focus','region','division','selected','selectedTerm','activeDetail','cutaway','isolated','ghost','peel'])viewer[key]=snapshot[key];
+ viewer.selected=[...new Set(viewer.selected.map(m=>viewer.replacedMeshes?.get(m)||m))];
  viewer.focusHistory=[...snapshot.focusHistory];
  if(snapshot.pins.length)viewer.showPins(snapshot.pins,{labelled:snapshot.pinLabels});
  viewer.showOutline(snapshot.selectedTerm?.representation?.outline);

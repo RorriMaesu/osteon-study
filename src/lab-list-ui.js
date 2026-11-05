@@ -18,6 +18,7 @@ export function initLabList({viewer,setView,selectTerm,precision,toast,dialog,es
   $('#lab-list-exit').onclick=()=>{precision.stop();screen=null;delete document.body.dataset.labListActive;document.dispatchEvent(new Event('practicehome'));};
  }
  function home(){
+  viewer.ensureBase().catch(()=>toast('The skeleton could not load. Reopen the bone-list test to retry.'));
   precision.stop();screen='home';const s=listStats(scope),active=current&&!labRunSummary(current).complete;
   setLearningContext({type:'practice',label:'BI 231 · required bone-list checklist'});
   shell('Your exact <em>bone list.</em>','Checked against the supplied BI 231 Lab 6 and 7 document. Choose a scope, then name every target.',`

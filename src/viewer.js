@@ -53,33 +53,62 @@ export class AnatomyViewer {
   el.addEventListener('pointerleave',()=>{document.querySelector('#hover-label').hidden=true;});
   this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(el);
   this.controls.addEventListener('start',()=>{this.tween=null;document.querySelectorAll('[data-camera]').forEach(b=>b.classList.remove('active'));});
-  const decoder=new DRACOLoader();decoder.setDecoderPath(new URL('vendor/draco/',document.baseURI).href);decoder.setWorkerLimit(2);
-  const loader=new GLTFLoader();loader.setDRACOLoader(decoder);
-  loader.load(new URL('assets/skeleton.glb?v='+modelAssets['skeleton'],document.baseURI).href,async gltf=>{
-   try{
-   gltf.scene.traverse(m=>{if(!m.isMesh)return;const z=m.userData.zname||m.name.replace(/\.001$/,'');m.userData.zname=z;m.userData.region=this.meshRegion(z,m.userData.zgroup||'');m.userData.sinus=/^Sinus /.test(z);m.userData.nonbone=/cartilage|tooth|canine|incisor|premolar/i.test(z);m.material=new THREE.MeshStandardMaterial({color:m.userData.sinus?0xa8b5a0:m.userData.nonbone?0xa6b3ad:0xe5e1cd,roughness:.55,metalness:.04,side:THREE.DoubleSide});m.userData.initialPosition=m.position.clone();this.meshes.push(m);});
-   this.root=gltf.scene;this.scene.add(this.root);this.root.updateMatrixWorld(true);this.meshes.forEach(m=>{m.userData.bounds=new THREE.Box3().setFromObject(m);});
-   document.querySelector('#load-progress').textContent='Loading joint tissues · 2 of 3';
-   const tissues=await loader.loadAsync(new URL('assets/course-tissues.glb?v='+modelAssets['course-tissues'],document.baseURI).href);
-   tissues.scene.traverse(m=>{if(!m.isMesh)return;const z=m.userData.zname||m.name;m.userData.zname=z;m.userData.tissue=true;m.userData.region=/disc|pulposus|Vertebral artery/.test(z)?'Spine':/Stylohyoid/.test(z)?'Thorax':/Pubic symphysis/.test(z)?'Pelvis':'Joints';m.userData.nonbone=true;m.material=new THREE.MeshStandardMaterial({color:/artery/.test(z)?0xd98878:0xc9aa7b,roughness:.65,side:THREE.DoubleSide});this.meshes.push(m);});
-   this.scene.add(tissues.scene);tissues.scene.updateMatrixWorld(true);this.meshes.forEach(m=>{m.userData.bounds=new THREE.Box3().setFromObject(m);});
-   document.querySelector('#load-progress').textContent='Loading anatomical detail · 3 of 3';
-   const details=await loader.loadAsync(new URL('assets/landmark-details.glb?v='+modelAssets['landmark-details'],document.baseURI).href);
-   details.scene.traverse(m=>{if(!m.isMesh)return;const z=m.userData.zname||m.name;m.userData.zname=z;
-    if(m.userData.replacementAnatomy){const old=this.meshes.filter(x=>x.userData.zname===z);old.forEach(x=>{x.removeFromParent();this.meshes.splice(this.meshes.indexOf(x),1);});}
+  this.onReady=onReady;this.onError=onError;
+  this.replacedMeshes=new WeakMap();
+  this.detailTools=document.createElement('div');this.detailTools.className='landmark-3d-tools';this.detailTools.hidden=true;el.append(this.detailTools);
+  for(const event of ['pointerdown','pointerup','pointermove','dblclick'])this.detailTools.addEventListener(event,e=>e.stopPropagation());
+  this.pinLayer=document.createElement('div');this.pinLayer.className='pin-layer';el.append(this.pinLayer);this.pins=[];
+  this.running=true;this.animate();
+ }
+ async loadModel(name){
+  const decoder=new DRACOLoader();
+  decoder.setDecoderPath(new URL('vendor/draco/',document.baseURI).href);
+  decoder.setWorkerLimit(2);
+  const loader=new GLTFLoader().setDRACOLoader(decoder);
+  try{return (await loader.loadAsync(new URL('assets/'+name+'.glb?v='+modelAssets[name],document.baseURI).href)).scene;}
+  finally{decoder.dispose();}
+ }
+ addModel(scene,configure){
+  const added=[];
+  scene.traverse(mesh=>{if(!mesh.isMesh)return;configure(mesh);added.push(mesh);});
+  this.scene.add(scene);scene.updateMatrixWorld(true);
+  added.forEach(mesh=>{mesh.userData.bounds=new THREE.Box3().setFromObject(mesh);this.meshes.push(mesh);});
+ }
+ ensureBase(){
+  if(!this.renderer)return Promise.reject(Error('The 3D viewer is unavailable.'));
+  if(this.baseRequest)return this.baseRequest;
+  this.baseRequest=this.loadModel('skeleton').then(scene=>{
+   this.addModel(scene,m=>{const z=m.userData.zname||m.name.replace(/\.001$/,'');m.userData.zname=z;m.userData.region=this.meshRegion(z,m.userData.zgroup||'');m.userData.sinus=/^Sinus /.test(z);m.userData.nonbone=/cartilage|tooth|canine|incisor|premolar/i.test(z);m.material=new THREE.MeshStandardMaterial({color:m.userData.sinus?0xa8b5a0:m.userData.nonbone?0xa6b3ad:0xe5e1cd,roughness:.55,metalness:.04,side:THREE.DoubleSide});m.userData.initialPosition=m.position.clone();});
+   this.loaded=true;this.applyVisibility();this.resize();this.reset();this.el.dataset.loaded='true';this.onReady(this.meshes);
+  }).catch(error=>{this.baseRequest=null;this.onError(error);throw error;});
+  return this.baseRequest;
+ }
+ ensureTissues(){
+  if(this.tissuesRequest)return this.tissuesRequest;
+  this.tissuesRequest=this.ensureBase().then(()=>this.loadModel('course-tissues')).then(scene=>{
+   this.addModel(scene,m=>{const z=m.userData.zname||m.name;m.userData.zname=z;m.userData.tissue=true;m.userData.region=/disc|pulposus|Vertebral artery/.test(z)?'Spine':/Stylohyoid/.test(z)?'Thorax':/Pubic symphysis/.test(z)?'Pelvis':'Joints';m.userData.nonbone=true;m.material=new THREE.MeshStandardMaterial({color:/artery/.test(z)?0xd98878:0xc9aa7b,roughness:.65,side:THREE.DoubleSide});});
+   this.applyVisibility();document.dispatchEvent(new Event('anatomyassetsready'));
+  }).catch(error=>{this.tissuesRequest=null;throw error;});
+  return this.tissuesRequest;
+ }
+ ensureDetails(){
+  if(this.detailsRequest)return this.detailsRequest;
+  this.detailsRequest=Promise.all([this.ensureTissues(),this.ensureBase().then(()=>this.loadModel('landmark-details'))]).then(([,scene])=>{
+   this.addModel(scene,m=>{const z=m.userData.zname||m.name;m.userData.zname=z;
+    if(m.userData.replacementAnatomy){
+     const old=this.meshes.filter(mesh=>mesh.userData.zname===z);
+     old.forEach(mesh=>{this.replacedMeshes.set(mesh,m);mesh.removeFromParent();this.meshes.splice(this.meshes.indexOf(mesh),1);});
+    }
     m.userData.region=m.userData.anatomicalRegion||this.meshRegion(z,'');m.userData.tissue=!!m.userData.supportAnatomy;m.userData.nonbone=!!m.userData.supportAnatomy;
     if(m.userData.detailGroup){m.material=m.userData.guideOnly?new THREE.MeshBasicMaterial({color:0xf0ae67,side:THREE.DoubleSide}):m.material.clone();m.material.side=THREE.DoubleSide;m.userData.authoredColor=m.material.color.clone();m.userData.authoredOpacity=m.material.opacity;}
     else m.material=new THREE.MeshStandardMaterial({color:m.userData.nonbone?0xc9aa7b:0xe5e1cd,roughness:.6,side:THREE.DoubleSide});
-    this.meshes.push(m);
-   });this.scene.add(details.scene);details.scene.updateMatrixWorld(true);this.meshes.forEach(m=>{m.userData.bounds=new THREE.Box3().setFromObject(m);});
-   this.detailTools=document.createElement('div');this.detailTools.className='landmark-3d-tools';this.detailTools.hidden=true;el.append(this.detailTools);
-   // Overlay controls must not select or navigate the bone beneath them.
-   for(const event of ['pointerdown','pointerup','pointermove','dblclick'])this.detailTools.addEventListener(event,e=>e.stopPropagation());
-   this.pinLayer=document.createElement('div');this.pinLayer.className='pin-layer';el.append(this.pinLayer);this.pins=[];
-   this.loaded=true;this.applyVisibility();this.resize();this.reset();decoder.dispose();el.dataset.loaded='true';onReady(this.meshes);
-   }catch(err){onError(err);}
-  },p=>{if(p.total)document.querySelector('#load-progress').textContent=`Skeleton transfer ${Math.min(100,Math.round(p.loaded/p.total*100))}% · 1 of 3`;},onError);
-  this.running=true;this.animate();
+   });
+   this.selected=[...new Set(this.selected.map(m=>this.replacedMeshes.get(m)||m))];
+   this.peeledSurfaces=new Set([...this.peeledSurfaces].map(m=>this.replacedMeshes.get(m)||m));
+   this.detailsLoaded=true;this.el.dataset.detailsLoaded='true';
+   this.applyVisibility();document.dispatchEvent(new Event('anatomyassetsready'));
+  }).catch(error=>{this.detailsRequest=null;throw error;});
+  return this.detailsRequest;
  }
  meshRegion(n,g){return meshRegion(n,g);}
  displayName(m){const n=m.userData.zname;return n.replace(/finger of foot/g,'toe').replace(/finger of hand/g,'finger').replace(/\.l$/,' (left)').replace(/\.r$/,' (right)');}
@@ -145,7 +174,7 @@ export class AnatomyViewer {
   if(this.muscleLayer?.ownsFocus()){this.muscleLayer.back();return;}
   const previous=this.focusHistory.pop();
   if(!previous){this.reset();return;}
-  this.clearPins();Object.assign(this,{focus:previous.focus,region:previous.region,selected:previous.selected,selectedTerm:previous.selectedTerm,activeDetail:previous.activeDetail,cutaway:previous.cutaway,isolated:previous.isolated,ghost:previous.ghost});if(previous.pins.length)this.showPins(previous.pins,{labelled:previous.pinLabels});this.showOutline(previous.selectedTerm?.representation?.outline);this.controls.autoRotate=false;this.applyVisibility();this.moveCamera(previous.position,previous.target);this.notifyFocus();document.dispatchEvent(new Event('layerschanged'));
+  this.clearPins();Object.assign(this,{focus:previous.focus,region:previous.region,selected:[...new Set(previous.selected.map(m=>this.replacedMeshes.get(m)||m))],selectedTerm:previous.selectedTerm,activeDetail:previous.activeDetail,cutaway:previous.cutaway,isolated:previous.isolated,ghost:previous.ghost});if(previous.pins.length)this.showPins(previous.pins,{labelled:previous.pinLabels});this.showOutline(previous.selectedTerm?.representation?.outline);this.controls.autoRotate=false;this.applyVisibility();this.moveCamera(previous.position,previous.target);this.notifyFocus();document.dispatchEvent(new Event('layerschanged'));
  }
  select(term,{frame=true}={}){
   let found=this.find(term),changedContext=false;
@@ -300,5 +329,5 @@ export class AnatomyViewer {
  }
  restore(){this.peeledSurfaces.clear();if(this.muscleLayer)this.muscleLayer.restore();else this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}
  reset({division=this.division}={}){this.division=division;this.muscleLayer?.release();this.assessmentTask=null;this.answerRevealed=false;this.drawerMotion?.stop();this.activeDetail=null;this.cutaway=null;this.sinuses=false;this.controls.autoRotate=false;this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];this.lastTap=null;document.querySelector('#rotate-btn').setAttribute('aria-pressed','false');this.clearPins();this.annotationUI?.clear();this.peeledSurfaces.clear();this.peel=false;document.dispatchEvent(new Event('layerschanged'));this.selected=[];this.selectedTerm=null;this.isolated=false;this.ghost=false;this.region='All regions';this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));this.notifyFocus();}
- animate(){if(!this.running)return;requestAnimationFrame(()=>this.animate());if(document.hidden||!this.el.getClientRects().length)return;if(this.tween){const t=Math.min((performance.now()-this.tween.start)/700,1),e=1-Math.pow(1-t,3);this.camera.position.lerpVectors(this.tween.from,this.tween.to,e);this.controls.target.lerpVectors(this.tween.targetFrom,this.tween.targetTo,e);if(t===1)this.tween=null;}this.controls.update();this.drawerMotion?.update();if(this.needsRender||performance.now()-(this.lastAnnotationUpdate||0)>250){this.layoutPins();this.landmarkOverlay?.update();this.muscleLayer?.updateLabel();this.lastAnnotationUpdate=performance.now();}if(!this.graphicsLost&&!this.referenceOpen&&this.el.clientWidth&&this.el.clientHeight&&(this.needsRender||this.tween||this.controls.autoRotate||this.drawerMotion?.moving)){this.renderer.render(this.scene,this.camera);this.needsRender=false;}}
+ animate(){if(!this.running)return;requestAnimationFrame(()=>this.animate());if(!this.loaded||document.hidden||!this.el.getClientRects().length)return;if(this.tween){const t=Math.min((performance.now()-this.tween.start)/700,1),e=1-Math.pow(1-t,3);this.camera.position.lerpVectors(this.tween.from,this.tween.to,e);this.controls.target.lerpVectors(this.tween.targetFrom,this.tween.targetTo,e);if(t===1)this.tween=null;}this.controls.update();this.drawerMotion?.update();if(this.needsRender||performance.now()-(this.lastAnnotationUpdate||0)>250){this.layoutPins();this.landmarkOverlay?.update();this.muscleLayer?.updateLabel();this.lastAnnotationUpdate=performance.now();}if(!this.graphicsLost&&!this.referenceOpen&&this.el.clientWidth&&this.el.clientHeight&&(this.needsRender||this.tween||this.controls.autoRotate||this.drawerMotion?.moving)){this.renderer.render(this.scene,this.camera);this.needsRender=false;}}
 }
