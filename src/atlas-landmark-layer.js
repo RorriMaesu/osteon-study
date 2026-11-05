@@ -8,9 +8,14 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
  const stage=viewer.el.closest('.specimen-stage'),tools=stage.querySelector('.viewer-room-tools');
  const toggle=document.createElement('button');toggle.type='button';toggle.id='atlas-landmark-toggle';toggle.setAttribute('aria-pressed','false');toggle.textContent='Landmarks: Off';tools.prepend(toggle);
  const dock=document.createElement('div');dock.className='atlas-landmark-dock';dock.hidden=true;dock.innerHTML='<div class="atlas-landmark-bar"><label class="sr-only" for="atlas-landmark-scope">Landmark collection</label><select id="atlas-landmark-scope"><option value="teacher">Teacher list</option><option value="all">All anatomy</option></select><button type="button" id="atlas-landmark-find" aria-expanded="false" aria-controls="atlas-landmark-finder">Find landmarks</button><label class="sr-only" for="atlas-feature-group">Local landmark group</label><select id="atlas-feature-group"><option value="all">All local groups</option></select><div class="atlas-label-pages"><button type="button" id="atlas-label-prev" aria-label="Previous landmark markers">←</button><span id="atlas-label-page">1 / 1</span><button type="button" id="atlas-label-next" aria-label="Next landmark markers">→</button></div></div><p id="atlas-landmark-status" role="status"></p>';
- viewer.el.append(dock);
+ const mobileDock=matchMedia('(max-width: 999px)');
+ function positionDock(){
+  if(mobileDock.matches)viewer.el.before(dock,panel);
+  else viewer.el.append(dock,panel);
+ }
  const panel=document.createElement('section');panel.id='atlas-landmark-finder';panel.className='atlas-landmark-finder';panel.hidden=true;panel.setAttribute('aria-label','Find landmarks on this model');panel.innerHTML='<div class="atlas-landmark-finder-head"><strong>Find it on the model</strong><button type="button" id="atlas-find-close" aria-label="Close landmark finder">×</button></div><label for="atlas-find-query" class="sr-only">Search model landmarks</label><input type="search" id="atlas-find-query" placeholder="Foramen, fossa, ligament…" autocomplete="off"><div class="atlas-find-filters"><label class="sr-only" for="atlas-find-kind">Landmark type</label><select id="atlas-find-kind"><option value="all">All feature types</option><option value="openings">Openings & cavities</option><option value="surfaces">Surfaces & projections</option><option value="joints">Ligaments, tissues & joints</option><option value="development">Development & microanatomy</option></select><label class="sr-only" for="atlas-find-region">Landmark region</label><select id="atlas-find-region"><option>All regions</option><option>Skull</option><option>Spine</option><option>Thorax</option><option>Upper limb</option><option>Pelvis</option><option>Lower limb</option><option>Joints</option><option>Bone structure</option></select></div><p class="tiny" id="atlas-find-count"></p><div id="atlas-find-results"></div><div class="atlas-find-pages"><button type="button" id="atlas-find-prev">← Previous</button><span id="atlas-find-page"></span><button type="button" id="atlas-find-next">Next →</button></div><p class="tiny atlas-find-note">Reference labels locate a feature; they do not outline its whole surface. Source guides and movement tests are marked separately.</p>';
- viewer.el.append(panel);
+ positionDock();
+ mobileDock.addEventListener('change',positionDock);
  const layer=document.createElement('div');layer.className='pin-layer atlas-landmark-pins';layer.hidden=true;viewer.el.append(layer);
  const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.classList.add('pin-lines');layer.append(svg);
  let enabled=false,scope='teacher',group='all',anchorChoices=new Map(),page=0,findPage=0,pins=[],signature='',lastState='',lastCheck=0,entries=[],count=0;
@@ -26,7 +31,7 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
   if(!enabled||paused){closeFinder({focus:false});clear();return;}
   lastCheck=0;update(true);
  }
- function setEnabled(value){enabled=value;page=0;try{localStorage.setItem('osteon-atlas-landmarks',value?'on':'off');}catch{}refresh();if(value&&viewer.focus.level==='overview')toast('Double-click a bone to see regional labels, or choose Find landmarks.');}
+ function setEnabled(value){enabled=value;page=0;try{localStorage.setItem('osteon-atlas-landmarks',value?'on':'off');}catch{}refresh();if(value&&viewer.focus.level==='overview'&&!mobileDock.matches)toast('Double-click a bone to see regional labels, or choose Find landmarks.');}
  toggle.onclick=()=>setEnabled(!enabled);
  $('#atlas-feature-group').onchange=ev=>{group=ev.target.value;page=0;lastCheck=0;update(true);};
  $('#atlas-landmark-scope').onchange=ev=>{scope=ev.target.value;page=findPage=0;lastState='';refresh();if(!panel.hidden)paintFinder();};
@@ -76,7 +81,7 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
    });
    const target=viewer.selectedTerm?.representation?.points?.[0]?.point;if(target)projected.sort((a,b)=>new THREE.Vector3(...a.anchor.point).distanceToSquared(new THREE.Vector3(...target))-new THREE.Vector3(...b.anchor.point).distanceToSquared(new THREE.Vector3(...target)));
    count=projected.length;const size=viewer.el.clientWidth<600?8:12,pages=Math.max(1,Math.ceil(count/size));page=Math.max(0,Math.min(pages-1,page));makePins(projected.slice(page*size,page*size+size));annotations.setNeighbors(pins);
-   $('#atlas-label-page').textContent=(page+1)+' / '+pages;$('#atlas-label-prev').disabled=page===0;$('#atlas-label-next').disabled=page===pages-1;
+   $('.atlas-label-pages').hidden=pages<2;$('#atlas-label-page').textContent=(page+1)+' / '+pages;$('#atlas-label-prev').disabled=page===0;$('#atlas-label-next').disabled=page===pages-1;
    status.textContent=viewer.activeDetail==='fetal-skull'?'Qualified developmental sites · choose one marker; compare the newborn illustration.':viewer.selectedTerm?.representation?.assessment==='learn-only'?viewer.selectedTerm.representation.reviewNotice:overview?'Double-click a bone for local markers · Find searches every landmark.':entries.length?entries.length+' local features · choose a small marker to read its name. Rotate to see the far side.':'Choose a feature with Find landmarks to open its verified specimen or source view.';
   }
   if(!panel.hidden){layer.hidden=true;return;}layer.hidden=false;

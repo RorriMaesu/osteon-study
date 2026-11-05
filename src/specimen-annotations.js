@@ -7,7 +7,14 @@ export function attachSpecimenAnnotations({viewer,escape:e,onBestView}){
  const card=document.createElement('section');card.className='annotation-focus';card.hidden=true;card.setAttribute('aria-label','Selected landmark');
  const names=document.createElement('div');names.className='annotation-names';card.append(names);
  const actions=document.createElement('div');actions.className='annotation-actions';actions.innerHTML='<button type="button" data-annotation-best>Show best view</button><button type="button" data-annotation-compare aria-pressed="false">Compare: Off</button>';card.append(actions);
- const note=document.createElement('p');note.className='annotation-note';card.append(note);viewer.el.append(card);
+ const note=document.createElement('p');note.className='annotation-note';card.append(note);
+ const phone=matchMedia('(max-width: 599px)');
+ function positionCard(){
+  if(phone.matches)viewer.el.after(card);
+  else viewer.el.append(card);
+ }
+ positionCard();
+ phone.addEventListener('change',positionCard);
  let active=null,comparisons=[],neighbors=[],enabled=false,comparing=false,signature='',lastMotion=0,lastOcclusion=0,lastOcclusionKey='',lastScene=-1,cameraKey='',currentContext='',rendered='';
  const all=()=>[...(viewer.pinLabels?viewer.pins||[]:[]),...neighbors];
  function item(p){return {...p,name:annotationName(p.term,p.label),key:pointKey(p),point:p.point||p.anchor?.point,side:p.anchor?.parent?.endsWith('.r')?'Right':p.anchor?.parent?.endsWith('.l')?'Left':null};}
@@ -63,10 +70,10 @@ export function attachSpecimenAnnotations({viewer,escape:e,onBestView}){
    p.button.hidden=x<rect.x||x>rect.x+rect.width||y<rect.y||y>rect.y+rect.height||placed.some(a=>Math.hypot(a.x-x,a.y-y)<44);if(!p.button.hidden)placed.push({x,y});
    p.button.style.left=x+'px';p.button.style.top=y+'px';
    const index=(comparing?comparisons:active?[active]:[]).findIndex(c=>c.key===key),target=names.querySelector(`[data-annotation-name="${index}"]`);
-   if(target&&!p.button.hidden){const r=target.getBoundingClientRect(),tx=w<600?r.left-base.left+r.width/2:r.left-base.left,ty=r.top-base.top+r.height/2;p.line.style.display='';p.line.classList.remove('covered-pin');for(const [k,v]of Object.entries({x1:x,y1:y,x2:tx,y2:ty}))p.line.setAttribute(k,v);}
+   if(target&&!p.button.hidden&&!phone.matches){const r=target.getBoundingClientRect(),tx=r.left-base.left,ty=r.top-base.top+r.height/2;p.line.style.display='';p.line.classList.remove('covered-pin');for(const [k,v]of Object.entries({x1:x,y1:y,x2:tx,y2:ty}))p.line.setAttribute(k,v);}
   }
   if(active)paint();
  }
- function drawingArea(){const base=viewer.el.getBoundingClientRect(),dock=viewer.el.querySelector('.atlas-landmark-dock'),tools=viewer.detailTools,caption=viewer.el.querySelector('.fetal-specimen-caption'),top=Math.max(8,dock&&!dock.hidden?dock.getBoundingClientRect().bottom-base.top+8:0,tools&&!tools.hidden?tools.getBoundingClientRect().bottom-base.top+8:0),phone=viewer.el.clientWidth<600;return drawingRect(viewer.el.clientWidth,viewer.el.clientHeight,{top,bottom:(phone&&!card.hidden?card.offsetHeight+22:0)+(caption&&!caption.hidden?caption.offsetHeight+10:0),rail:!phone&&!card.hidden?Math.min(230,viewer.el.clientWidth*.28)+16:0});}
+ function drawingArea(){const base=viewer.el.getBoundingClientRect(),dock=viewer.el.querySelector('.atlas-landmark-dock'),tools=viewer.detailTools,caption=viewer.el.querySelector('.fetal-specimen-caption'),top=Math.max(8,dock&&!dock.hidden?dock.getBoundingClientRect().bottom-base.top+8:0,tools&&!tools.hidden?tools.getBoundingClientRect().bottom-base.top+8:0);return drawingRect(viewer.el.clientWidth,viewer.el.clientHeight,{top,bottom:caption&&!caption.hidden?caption.offsetHeight+10:0,rail:!phone.matches&&!card.hidden?Math.min(230,viewer.el.clientWidth*.28)+16:0});}
  return {update,drawingArea,choose,setEnabled(value){enabled=value;update(true);},setNeighbors(value){neighbors=value;update();},clear(){active=null;comparisons=[];signature='';card.hidden=true;},get active(){return active;}};
 }
