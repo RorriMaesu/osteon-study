@@ -96,10 +96,13 @@ test('every lesson anatomy route exists and every direct figure link resolves it
  for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region),id);for(const f of l.figures){figures++;const page=pages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
  assert.ok(figures>=124);const all=new Set(pages.filter(p=>[6,7,8,9,10].includes(p.chapter)).flatMap(p=>[...p.text.matchAll(/FIGURE\s+(\d+\.\d+)\s/g)].map(m=>m[1])));assert.deepEqual(new Set(Object.values(links).flatMap(l=>l.figures.map(f=>f.number))),all);
 });
-test('the local tutor retrieves the newly complete development sections and names the full four-chapter scope',()=>{
- assert.ok(retrieveSources('apical ectodermal ridge limb buds',{reference:'8.5'}).some(s=>s.pdf===324));
- assert.ok(retrieveSources('joint interzone cavity mesenchyme capsule',{reference:'9.7'}).some(s=>s.pdf===371));
- assert.ok(buildTutorMessages('Explain a joint interzone',[],{reference:'9.7'}).messages[0].content.includes('chapters 6, 7, 8 and 9'));
+test('the local tutor retrieves original notes for the development sections and expanded course',()=>{
+ assert.ok(retrieveSources('apical ectodermal ridge limb buds',{reference:'8.5'}).some(s=>s.reference==='8.5'&&/apical/i.test(s.text)));
+ assert.ok(retrieveSources('joint interzone cavity mesenchyme capsule',{reference:'9.7'}).some(s=>s.reference==='9.7'&&/interzone/i.test(s.text)));
+ const early=buildTutorMessages('Explain membrane diffusion',[],{type:'reading',pdf:104,text:'RAW_TEXTBOOK_TEST_SENTINEL'});
+ assert.ok(early.sources.some(s=>s.reference==='3.1'));
+ assert.ok(!early.messages[0].content.includes('RAW_TEXTBOOK_TEST_SENTINEL'));
+ assert.ok(buildTutorMessages('Explain a joint interzone',[],{reference:'9.7'}).messages[0].content.includes('chapters 1–10'));
 });
 test('recording a resumed exam does not duplicate existing attempts, and new lesson marks survive backup',async()=>{
  globalThis.localStorage={getItem:()=>null,setItem:()=>{}};globalThis.document=new EventTarget();

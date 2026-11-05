@@ -44,8 +44,9 @@ test('all thirty-three sections teach, apply and assess distinct concepts',()=>{
  for(const q of questions){if(q.type==='choice'){assert.ok(q.distractors.length>=1&&q.distractors.length<=3,q.id);assert.equal(new Set([q.answer,...q.distractors]).size,q.distractors.length+1,q.id);}assert.ok(q.explanation.length>25);}
 });
 test('complete glossary extraction excludes page furniture and broken glyphs',()=>{
- assert.equal(glossary.length,629);assert.equal(new Set(glossary.map(g=>g.id)).size,629);
- for(const g of glossary){assert.ok(g.name.length>2);assert.ok(g.cue.length>3);assert.ok(!/PDF PAGE|Access for free|Key Terms|\uFFFD/.test(g.cue+g.name),g.name);}
+ assert.equal(glossary.filter(g=>g.chapter>=6).length,629);assert.equal(new Set(glossary.map(g=>g.id)).size,glossary.length);
+ for(const chapter of [1,2,3,4,5])assert.ok(glossary.filter(g=>g.chapter===chapter).length>50);
+ for(const g of glossary){assert.ok(g.name.length>=2);assert.ok(g.cue.length>3);assert.ok(!/PDF PAGE|Access for free|Key Terms|\uFFFD/.test(g.cue+g.name),g.name);}
 });
 test('name recall accepts canonical synonyms without accepting other bones',()=>{
  assert.ok(acceptsAnswer(terms.find(t=>t.name==='Femora'),'Femur'));

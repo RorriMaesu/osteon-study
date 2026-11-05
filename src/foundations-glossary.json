@@ -1,0 +1,2949 @@
+[
+  {
+    "id": "g-1-abdominopelvic-cavity",
+    "name": "abdominopelvic cavity",
+    "cue": "division of the anterior (ventral) cavity that houses the abdominal and pelvic viscera",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-anabolism",
+    "name": "anabolism",
+    "cue": "assembly of more complex molecules from simpler molecules",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-anatomical-position",
+    "name": "anatomical position",
+    "cue": "standard reference position used for describing locations and directions on the human body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-anatomy",
+    "name": "anatomy",
+    "cue": "science that studies the form and composition of the body’s structures",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-anterior",
+    "name": "anterior",
+    "cue": "describes the front or direction toward the front of the body; also referred to as ventral",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-anterior-cavity",
+    "name": "anterior cavity",
+    "cue": "larger body cavity located anterior to the posterior (dorsal) body cavity; includes the serous membrane-lined pleural cavities for the lungs, pericardial cavity for the heart, and peritoneal cavity for the abdominal and pelvic organs; also referred to as ventral cavity",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-catabolism",
+    "name": "catabolism",
+    "cue": "breaking down of more complex molecules into simpler molecules",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-caudal",
+    "name": "caudal",
+    "cue": "describes a position below or lower than another part of the body proper; near or toward the tail (in humans, the coccyx, or lowest part of the spinal column); also referred to as inferior",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-cell",
+    "name": "cell",
+    "cue": "smallest independently functioning unit of all organisms; in animals, a cell contains cytoplasm, composed of fluid and organelles",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-computed-tomography-ct",
+    "name": "computed tomography (CT)",
+    "cue": "medical imaging technique in which a computer-enhanced cross- sectional X-ray image is obtained",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-control-center",
+    "name": "control center",
+    "cue": "compares values to their normal range; deviations cause the activation of an effector",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-cranial",
+    "name": "cranial",
+    "cue": "describes a position above or higher than another part of the body proper; also referred to as superior",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-cranial-cavity",
+    "name": "cranial cavity",
+    "cue": "division of the posterior (dorsal) cavity that houses the brain",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-deep",
+    "name": "deep",
+    "cue": "describes a position farther from the surface of the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-development",
+    "name": "development",
+    "cue": "changes an organism goes through during its life",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-differentiation",
+    "name": "differentiation",
+    "cue": "process by which unspecialized cells become specialized in structure and function",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-distal",
+    "name": "distal",
+    "cue": "describes a position farther from the point of attachment or the trunk of the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-dorsal",
+    "name": "dorsal",
+    "cue": "describes the back or direction toward the back of the body; also referred to as posterior",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-dorsal-cavity",
+    "name": "dorsal cavity",
+    "cue": "posterior body cavity that houses the brain and spinal cord; also referred to the posterior body cavity",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-effector",
+    "name": "effector",
+    "cue": "organ that can cause a change in a value",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-frontal-plane",
+    "name": "frontal plane",
+    "cue": "two-dimensional, vertical plane that divides the body or organ into anterior and posterior portions",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-gross-anatomy",
+    "name": "gross anatomy",
+    "cue": "study of the larger structures of the body, typically with the unaided eye; also referred to macroscopic anatomy",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-growth",
+    "name": "growth",
+    "cue": "process of increasing in size",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-homeostasis",
+    "name": "homeostasis",
+    "cue": "steady state of body systems that living organisms maintain",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-inferior",
+    "name": "inferior",
+    "cue": "describes a position below or lower than another part of the body proper; near or toward the tail (in humans, the coccyx, or lowest part of the spinal column); also referred to as caudal",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-lateral",
+    "name": "lateral",
+    "cue": "describes the side or direction toward the side of the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-magnetic-resonance-imaging-mri",
+    "name": "magnetic resonance imaging (MRI)",
+    "cue": "medical imaging technique in which a device generates a magnetic field to obtain detailed sectional images of the internal structures of the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-medial",
+    "name": "medial",
+    "cue": "describes the middle or direction toward the middle of the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-metabolism",
+    "name": "metabolism",
+    "cue": "sum of all of the body’s chemical reactions",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-microscopic-anatomy",
+    "name": "microscopic anatomy",
+    "cue": "study of very small structures of the body using magnification",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-negative-feedback",
+    "name": "negative feedback",
+    "cue": "homeostatic mechanism that tends to stabilize an upset in the body’s physiological condition by preventing an excessive response to a stimulus, typically as the stimulus is removed",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-normal-range",
+    "name": "normal range",
+    "cue": "range of values around the set point that do not cause a reaction by the control center",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-nutrient",
+    "name": "nutrient",
+    "cue": "chemical obtained from foods and beverages that is critical to human survival",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-oblique-plane",
+    "name": "oblique plane",
+    "cue": "two-dimensional, vertical plane that intersects the body at an angle and is not parallel of perpendicular to any of the other three commonly used planes",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-organ",
+    "name": "organ",
+    "cue": "functionally distinct structure composed of two or more types of tissues",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-organ-system",
+    "name": "organ system",
+    "cue": "group of organs that work together to carry out a particular function",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-organism",
+    "name": "organism",
+    "cue": "living being that has a cellular structure and that can independently perform all physiologic functions necessary for life",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-pericardium",
+    "name": "pericardium",
+    "cue": "sac that encloses the heart",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-peritoneum",
+    "name": "peritoneum",
+    "cue": "serous membrane that lines the abdominopelvic cavity and covers the organs found there",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-physiology",
+    "name": "physiology",
+    "cue": "science that studies the chemistry, biochemistry, and physics of the body’s functions",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-plane",
+    "name": "plane",
+    "cue": "imaginary two-dimensional surface that passes through the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-pleura",
+    "name": "pleura",
+    "cue": "serous membrane that lines the pleural cavity and covers the lungs",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-positive-feedback",
+    "name": "positive feedback",
+    "cue": "mechanism that intensifies a change in the body’s physiological condition in response to a stimulus",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-positron-emission-tomography-pet",
+    "name": "positron emission tomography (PET)",
+    "cue": "medical imaging technique in which radiopharmaceuticals are traced to reveal metabolic and physiological functions in tissues",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-posterior",
+    "name": "posterior",
+    "cue": "describes the back or direction toward the back of the body; also referred to as dorsal",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-posterior-cavity",
+    "name": "posterior cavity",
+    "cue": "posterior body cavity that houses the brain and spinal cord; also referred to as dorsal cavity",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-pressure",
+    "name": "pressure",
+    "cue": "force exerted by a substance in contact with another substance",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-prone",
+    "name": "prone",
+    "cue": "face down",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-proximal",
+    "name": "proximal",
+    "cue": "describes a position nearer to the point of attachment or the trunk of the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-regional-anatomy",
+    "name": "regional anatomy",
+    "cue": "study of the structures that contribute to specific body regions",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-renewal",
+    "name": "renewal",
+    "cue": "process by which worn-out cells are replaced",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-reproduction",
+    "name": "reproduction",
+    "cue": "process by which new organisms are generated",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-responsiveness",
+    "name": "responsiveness",
+    "cue": "ability of an organisms or a system to adjust to changes in conditions",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-sagittal-plane",
+    "name": "sagittal plane",
+    "cue": "two-dimensional, vertical plane that divides the body or organ into right and left sides",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-section",
+    "name": "section",
+    "cue": "in anatomy, a single flat surface of a three- dimensional structure that has been cut through",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-sensor",
+    "name": "sensor",
+    "cue": "(also, receptor) reports a monitored physiological value to the control center",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-serosa",
+    "name": "serosa",
+    "cue": "membrane that covers organs and reduces friction; also referred to as serous membrane",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-serous-membrane",
+    "name": "serous membrane",
+    "cue": "membrane that covers organs and reduces friction; also referred to as serosa",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-set-point",
+    "name": "set point",
+    "cue": "ideal value for a physiological parameter; the level or small range within which a physiological parameter such as blood pressure is stable and optimally healthful, that is, within its parameters of homeostasis",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-spinal-cavity",
+    "name": "spinal cavity",
+    "cue": "division of the dorsal cavity that houses the spinal cord; also referred to as vertebral cavity",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-superficial",
+    "name": "superficial",
+    "cue": "describes a position nearer to the surface of the body",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-superior",
+    "name": "superior",
+    "cue": "describes a position above or higher than another part of the body proper; also referred to as cranial",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-supine",
+    "name": "supine",
+    "cue": "face up",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-systemic-anatomy",
+    "name": "systemic anatomy",
+    "cue": "study of the structures that contribute to specific body systems",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-thoracic-cavity",
+    "name": "thoracic cavity",
+    "cue": "division of the anterior (ventral) cavity that houses the heart, lungs, esophagus, and trachea",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-tissue",
+    "name": "tissue",
+    "cue": "group of similar or closely related cells that act together to perform a specific function",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-transverse-plane",
+    "name": "transverse plane",
+    "cue": "two-dimensional, horizontal plane that divides the body or organ into superior and inferior portions",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-ultrasonography",
+    "name": "ultrasonography",
+    "cue": "application of ultrasonic waves to visualize subcutaneous body structures such as tendons and organs",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-ventral",
+    "name": "ventral",
+    "cue": "describes the front or direction toward the front of the body; also referred to as anterior",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-ventral-cavity",
+    "name": "ventral cavity",
+    "cue": "larger body cavity located anterior to the posterior (dorsal) body cavity; includes the serous membrane-lined pleural cavities for the lungs, pericardial cavity for the heart, and peritoneal cavity for the abdominal and pelvic organs; also referred to as anterior body cavity",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-1-x-ray",
+    "name": "X-ray",
+    "cue": "form of high energy electromagnetic radiation with a short wavelength capable of penetrating solids and ionizing gases; used in medicine as a diagnostic aid to visualize body structures such as bones",
+    "topic": "Chapter 1",
+    "chapter": 1
+  },
+  {
+    "id": "g-2-acid",
+    "name": "acid",
+    "cue": "compound that releases hydrogen ions (H+) in solution",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-activation-energy",
+    "name": "activation energy",
+    "cue": "amount of energy greater than the energy contained in the reactants, which must be overcome for a reaction to proceed",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-adenosine-triphosphate-atp",
+    "name": "adenosine triphosphate (ATP)",
+    "cue": "nucleotide containing ribose and an adenine base that is essential in energy transfer",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-amino-acid",
+    "name": "amino acid",
+    "cue": "building block of proteins; characterized by an amino and carboxyl functional groups and a variable side-chain",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-anion",
+    "name": "anion",
+    "cue": "atom with a negative charge",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-atom",
+    "name": "atom",
+    "cue": "smallest unit of an element that retains the unique properties of that element",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-atomic-number",
+    "name": "atomic number",
+    "cue": "number of protons in the nucleus of an atom",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-base",
+    "name": "base",
+    "cue": "compound that accepts hydrogen ions (H+) in solution",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-bond",
+    "name": "bond",
+    "cue": "electrical force linking atoms",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-buffer",
+    "name": "buffer",
+    "cue": "solution containing a weak acid or a weak base that opposes wide fluctuations in the pH of body fluids",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-carbohydrate",
+    "name": "carbohydrate",
+    "cue": "class of organic compounds built from sugars, molecules containing carbon, hydrogen, and oxygen in a 1-2-1 ratio",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-catalyst",
+    "name": "catalyst",
+    "cue": "substance that increases the rate of a chemical reaction without itself being changed in the process",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-cation",
+    "name": "cation",
+    "cue": "atom with a positive charge",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-chemical-energy",
+    "name": "chemical energy",
+    "cue": "form of energy that is absorbed as chemical bonds form, stored as they are maintained, and released as they are broken",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-colloid",
+    "name": "colloid",
+    "cue": "liquid mixture in which the solute particles consist of clumps of molecules large enough to scatter light",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-compound",
+    "name": "compound",
+    "cue": "substance composed of two or more different elements joined by chemical bonds",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-concentration",
+    "name": "concentration",
+    "cue": "number of particles within a given space",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-covalent-bond",
+    "name": "covalent bond",
+    "cue": "chemical bond in which two atoms share electrons, thereby completing their valence shells",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-decomposition-reaction",
+    "name": "decomposition reaction",
+    "cue": "type of catabolic reaction in which one or more bonds within a larger molecule are broken, resulting in the release of smaller molecules or atoms",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-denaturation",
+    "name": "denaturation",
+    "cue": "change in the structure of a molecule through physical or chemical means",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-deoxyribonucleic-acid-dna",
+    "name": "deoxyribonucleic acid (DNA)",
+    "cue": "deoxyribose-containing nucleotide that stores genetic information",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-disaccharide",
+    "name": "disaccharide",
+    "cue": "pair of carbohydrate monomers bonded by dehydration synthesis via a glycosidic bond",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-disulfide-bond",
+    "name": "disulfide bond",
+    "cue": "covalent bond formed within a polypeptide between sulfide groups of sulfur- containing amino acids, for example, cysteine",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-electron",
+    "name": "electron",
+    "cue": "subatomic particle having a negative charge and nearly no mass; found orbiting the atom’s nucleus",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-electron-shell",
+    "name": "electron shell",
+    "cue": "area of space a given distance from an atom’s nucleus in which electrons are grouped",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-element",
+    "name": "element",
+    "cue": "substance that cannot be created or broken down by ordinary chemical means",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-enzyme",
+    "name": "enzyme",
+    "cue": "protein or RNA that catalyzes chemical reactions",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-exchange-reaction",
+    "name": "exchange reaction",
+    "cue": "type of chemical reaction in which bonds are both formed and broken, resulting in the transfer of components",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-functional-group",
+    "name": "functional group",
+    "cue": "group of atoms linked by strong covalent bonds that tends to behave as a distinct unit in chemical reactions with other atoms",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-hydrogen-bond",
+    "name": "hydrogen bond",
+    "cue": "dipole-dipole bond in which a hydrogen atom covalently bonded to an electronegative atom is weakly attracted to a second electronegative atom",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-inorganic-compound",
+    "name": "inorganic compound",
+    "cue": "substance that does not contain both carbon and hydrogen",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-ion",
+    "name": "ion",
+    "cue": "atom with an overall positive or negative charge",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-ionic-bond",
+    "name": "ionic bond",
+    "cue": "attraction between an anion and a cation",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-isotope",
+    "name": "isotope",
+    "cue": "one of the variations of an element in which the number of neutrons differ from each other",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-kinetic-energy",
+    "name": "kinetic energy",
+    "cue": "energy that matter possesses because of its motion",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-lipid",
+    "name": "lipid",
+    "cue": "class of nonpolar organic compounds built from hydrocarbons and distinguished by the fact that they are not soluble in water",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-macromolecule",
+    "name": "macromolecule",
+    "cue": "large molecule formed by covalent bonding",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-mass-number",
+    "name": "mass number",
+    "cue": "sum of the number of protons and neutrons in the nucleus of an atom",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-matter",
+    "name": "matter",
+    "cue": "physical substance; that which occupies space and has mass",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-molecule",
+    "name": "molecule",
+    "cue": "two or more atoms covalently bonded together",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-monosaccharide",
+    "name": "monosaccharide",
+    "cue": "monomer of carbohydrate; also known as a simple sugar",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-neutron",
+    "name": "neutron",
+    "cue": "heavy subatomic particle having no electrical charge and found in the atom’s nucleus",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-nucleotide",
+    "name": "nucleotide",
+    "cue": "class of organic compounds composed of one or more phosphate groups, a pentose sugar, and a base",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-organic-compound",
+    "name": "organic compound",
+    "cue": "substance that contains both carbon and hydrogen",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-peptide-bond",
+    "name": "peptide bond",
+    "cue": "covalent bond formed by dehydration synthesis between two amino acids",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-periodic-table-of-the-elements",
+    "name": "periodic table of the elements",
+    "cue": "arrangement of the elements in a table according to their atomic number; elements having similar properties because of their electron arrangements compose columns in the table, while elements having the same number of valence shells compose rows in the table",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-ph",
+    "name": "pH",
+    "cue": "negative base-10 logarithm of hydrogen-ion activity, often estimated using hydrogen-ion concentration in dilute solutions",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-phospholipid",
+    "name": "phospholipid",
+    "cue": "a lipid compound in which a phosphate group is combined with a diglyceride",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-phosphorylation",
+    "name": "phosphorylation",
+    "cue": "addition of one or more phosphate groups to an organic compound",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-polar-molecule",
+    "name": "polar molecule",
+    "cue": "molecule with regions that have opposite charges resulting from uneven numbers of electrons in the nuclei of the atoms participating in the covalent bond",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-polysaccharide",
+    "name": "polysaccharide",
+    "cue": "compound consisting of more than two carbohydrate monomers bonded by dehydration synthesis via glycosidic bonds",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-potential-energy",
+    "name": "potential energy",
+    "cue": "stored energy matter possesses because of the positioning or structure of its components",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-product",
+    "name": "product",
+    "cue": "one or more substances produced by a chemical reaction",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-prostaglandin",
+    "name": "prostaglandin",
+    "cue": "lipid compound derived from fatty acid chains and important in regulating several body processes",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-protein",
+    "name": "protein",
+    "cue": "class of organic compounds that are composed of many amino acids linked together by peptide bonds",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-proton",
+    "name": "proton",
+    "cue": "heavy subatomic particle having a positive charge and found in the atom’s nucleus",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-purine",
+    "name": "purine",
+    "cue": "nitrogen-containing base with a double ring structure; adenine and guanine",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-pyrimidine",
+    "name": "pyrimidine",
+    "cue": "nitrogen-containing base with a single ring structure; cytosine, thiamine, and uracil",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-radioactive-isotope",
+    "name": "radioactive isotope",
+    "cue": "unstable, heavy isotope that gives off subatomic particles, or electromagnetic energy, as it decays; also called radioisotopes",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-reactant",
+    "name": "reactant",
+    "cue": "one or more substances that enter into the reaction",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-ribonucleic-acid-rna",
+    "name": "ribonucleic acid (RNA)",
+    "cue": "ribose-containing nucleotide that helps manifest the genetic code as protein",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-solution",
+    "name": "solution",
+    "cue": "homogeneous liquid mixture in which a solute is dissolved into molecules within a solvent",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-steroid",
+    "name": "steroid",
+    "cue": "(also, sterol) lipid compound composed of four hydrocarbon rings bonded to a variety of other atoms and molecules",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-substrate",
+    "name": "substrate",
+    "cue": "reactant in an enzymatic reaction",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-suspension",
+    "name": "suspension",
+    "cue": "liquid mixture in which particles distributed in the liquid settle out over time",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-synthesis-reaction",
+    "name": "synthesis reaction",
+    "cue": "type of anabolic reaction in which two or more atoms or molecules bond, resulting in the formation of a larger molecule",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-triglyceride",
+    "name": "triglyceride",
+    "cue": "lipid compound composed of a glycerol molecule bonded with three fatty acid chains",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-2-valence-shell",
+    "name": "valence shell",
+    "cue": "outermost electron shell of an atom",
+    "topic": "Chapter 2",
+    "chapter": 2
+  },
+  {
+    "id": "g-3-active-transport",
+    "name": "active transport",
+    "cue": "form of transport across the cell membrane that requires input of cellular energy",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-amphipathic",
+    "name": "amphipathic",
+    "cue": "describes a molecule that exhibits a difference in polarity between its two ends, resulting in a difference in water solubility",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-anaphase",
+    "name": "anaphase",
+    "cue": "third stage of mitosis (and meiosis), during which sister chromatids separate into two new nuclear regions of a dividing cell",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-anticodon",
+    "name": "anticodon",
+    "cue": "consecutive sequence of three nucleotides on a tRNA molecule that is complementary to a specific codon on an mRNA molecule",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-autolysis",
+    "name": "autolysis",
+    "cue": "breakdown of cells by their own enzymatic action",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-autophagy",
+    "name": "autophagy",
+    "cue": "lysosomal breakdown of a cell’s own components",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cell-cycle",
+    "name": "cell cycle",
+    "cue": "life cycle of a single cell, from its birth until its division into two new daughter cells",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cell-membrane",
+    "name": "cell membrane",
+    "cue": "membrane surrounding all animal cells, composed of a lipid bilayer interspersed with various molecules; also known as plasma membrane",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-centriole",
+    "name": "centriole",
+    "cue": "small, self-replicating organelle that provides the origin for microtubule growth and moves DNA during cell division",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-centromere",
+    "name": "centromere",
+    "cue": "region of attachment for two sister chromatids",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-centrosome",
+    "name": "centrosome",
+    "cue": "cellular structure that organizes microtubules during cell division",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-channel-protein",
+    "name": "channel protein",
+    "cue": "membrane-spanning protein that has an inner pore which allows the passage of one or more substances",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-checkpoint",
+    "name": "checkpoint",
+    "cue": "progress point in the cell cycle during which certain conditions must be met in order for the cell to proceed to a subsequence phase",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-chromatin",
+    "name": "chromatin",
+    "cue": "substance consisting of DNA and associated proteins",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-chromosome",
+    "name": "chromosome",
+    "cue": "condensed version of chromatin",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cilia",
+    "name": "cilia",
+    "cue": "small appendage on certain cells formed by microtubules and modified for movement of materials across the cellular surface",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cleavage-furrow",
+    "name": "cleavage furrow",
+    "cue": "contractile ring that forms around a cell during cytokinesis that pinches the cell into two halves",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-codon",
+    "name": "codon",
+    "cue": "consecutive sequence of three nucleotides on an mRNA molecule that corresponds to a specific amino acid",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-concentration-gradient",
+    "name": "concentration gradient",
+    "cue": "difference in the concentration of a substance between two regions",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cyclin",
+    "name": "cyclin",
+    "cue": "one of a group of proteins that function in the progression of the cell cycle",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cyclin-dependent-kinase-cdk",
+    "name": "cyclin-dependent kinase (CDK)",
+    "cue": "one of a group of enzymes associated with cyclins that help them perform their functions",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cytokinesis",
+    "name": "cytokinesis",
+    "cue": "final stage in cell division, where the cytoplasm divides to form two separate daughter cells",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cytoplasm",
+    "name": "cytoplasm",
+    "cue": "internal material between the cell membrane and nucleus of a cell, mainly consisting of a water-based fluid called cytosol, within which are all the other organelles and cellular solute and suspended materials",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cytoskeleton",
+    "name": "cytoskeleton",
+    "cue": "“skeleton” of a cell; formed by rod-like proteins that support the cell’s shape and provide, among other functions, locomotive abilities",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-cytosol",
+    "name": "cytosol",
+    "cue": "clear, semi-fluid medium of the cytoplasm, made up mostly of water",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-diffusion",
+    "name": "diffusion",
+    "cue": "movement of a substance from an area of higher concentration to one of lower concentration",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-diploid",
+    "name": "diploid",
+    "cue": "condition marked by the presence of a double complement of genetic material (two sets of chromosomes, one set inherited from each of two parents)",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-dna-polymerase",
+    "name": "DNA polymerase",
+    "cue": "enzyme that functions in adding new nucleotides to a growing strand of DNA during DNA replication",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-dna-replication",
+    "name": "DNA replication",
+    "cue": "process of duplicating a molecule of DNA",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-electrical-gradient",
+    "name": "electrical gradient",
+    "cue": "difference in the electrical charge (potential) between two regions",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-endocytosis",
+    "name": "endocytosis",
+    "cue": "import of material into the cell by formation of a membrane-bound vesicle",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-endoplasmic-reticulum-er",
+    "name": "endoplasmic reticulum (ER)",
+    "cue": "cellular organelle that consists of interconnected membrane-bound tubules, which may or may not be associated with ribosomes (rough type or smooth type, respectively)",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-exocytosis",
+    "name": "exocytosis",
+    "cue": "export of a substance out of a cell by formation of a membrane-bound vesicle",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-exon",
+    "name": "exon",
+    "cue": "one of the coding regions of an mRNA molecule that remain after splicing",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-extracellular-fluid-ecf",
+    "name": "extracellular fluid (ECF)",
+    "cue": "fluid exterior to cells; includes the interstitial fluid, blood plasma, and fluid found in other reservoirs in the body",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-facilitated-diffusion",
+    "name": "facilitated diffusion",
+    "cue": "diffusion of a substance with the aid of a membrane protein",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-flagellum",
+    "name": "flagellum",
+    "cue": "appendage on certain cells formed by microtubules and modified for movement",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-g0-phase",
+    "name": "G0 phase",
+    "cue": "phase of the cell cycle, usually entered from the G1 phase; characterized by long or permanent periods where the cell does not move forward into the DNA synthesis phase",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-g1-phase",
+    "name": "G1 phase",
+    "cue": "first phase of the cell cycle, after a new cell is born",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-g2-phase",
+    "name": "G2 phase",
+    "cue": "third phase of the cell cycle, after the DNA synthesis phase",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-gene",
+    "name": "gene",
+    "cue": "DNA sequence whose expression yields a functional RNA or protein product",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-gene-expression",
+    "name": "gene expression",
+    "cue": "active interpretation of the information coded in a gene to produce a functional gene product",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-genome",
+    "name": "genome",
+    "cue": "entire complement of an organism’s DNA; found within virtually every cell",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-glycocalyx",
+    "name": "glycocalyx",
+    "cue": "coating of sugar molecules that surrounds the cell membrane",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-glycoprotein",
+    "name": "glycoprotein",
+    "cue": "protein that has one or more carbohydrates attached",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-golgi-apparatus",
+    "name": "Golgi apparatus",
+    "cue": "cellular organelle formed by a series of flattened, membrane-bound sacs that functions in protein modification, tagging, packaging, and transport",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-helicase",
+    "name": "helicase",
+    "cue": "enzyme that functions to separate the two DNA strands of a double helix during DNA replication",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-histone",
+    "name": "histone",
+    "cue": "family of proteins that associate with DNA in the nucleus to form chromatin",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-homologous",
+    "name": "homologous",
+    "cue": "describes two copies of the same chromosome (not identical), one inherited from each parent",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-hydrophilic",
+    "name": "hydrophilic",
+    "cue": "describes a substance or structure attracted to water",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-hydrophobic",
+    "name": "hydrophobic",
+    "cue": "describes a substance or structure repelled by water",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-hypertonic",
+    "name": "hypertonic",
+    "cue": "describes a solution concentration that is higher than a reference concentration",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-hypotonic",
+    "name": "hypotonic",
+    "cue": "describes a solution concentration that is lower than a reference concentration",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-integral-protein",
+    "name": "integral protein",
+    "cue": "membrane-associated protein that spans the entire width of the lipid bilayer",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-intermediate-filament",
+    "name": "intermediate filament",
+    "cue": "type of cytoskeletal filament made of keratin, characterized by an intermediate thickness, and playing a role in resisting cellular tension",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-interphase",
+    "name": "interphase",
+    "cue": "entire life cycle of a cell, excluding mitosis",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-interstitial-fluid-if",
+    "name": "interstitial fluid (IF)",
+    "cue": "fluid in the small spaces between cells not contained within blood vessels",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-intracellular-fluid-icf",
+    "name": "intracellular fluid (ICF)",
+    "cue": "fluid in the cytosol of cells",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-intron",
+    "name": "intron",
+    "cue": "non-coding regions of a pre-mRNA transcript that may be removed during splicing",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-isotonic",
+    "name": "isotonic",
+    "cue": "describes a solution concentration that is the same as a reference concentration",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-kinetochore",
+    "name": "kinetochore",
+    "cue": "region of a centromere where microtubules attach to a pair of sister chromatids",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-ligand",
+    "name": "ligand",
+    "cue": "molecule that binds with specificity to a specific receptor molecule",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-lysosome",
+    "name": "lysosome",
+    "cue": "membrane-bound cellular organelle originating from the Golgi apparatus and containing digestive enzymes",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-messenger-rna-mrna",
+    "name": "messenger RNA (mRNA)",
+    "cue": "nucleotide molecule that serves as an intermediate in the genetic code between DNA and protein",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-metaphase",
+    "name": "metaphase",
+    "cue": "second stage of mitosis (and meiosis), characterized by the linear alignment of sister chromatids in the center of the cell",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-metaphase-plate",
+    "name": "metaphase plate",
+    "cue": "linear alignment of sister chromatids in the center of the cell, which takes place during metaphase",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-microfilament",
+    "name": "microfilament",
+    "cue": "the thinnest of the cytoskeletal filaments; composed of actin subunits that function in muscle contraction and cellular structural support",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-microtubule",
+    "name": "microtubule",
+    "cue": "the thickest of the cytoskeletal filaments, composed of tubulin subunits that function in cellular movement and structural support",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-mitochondrion",
+    "name": "mitochondrion",
+    "cue": "one of the cellular organelles bound by a double lipid bilayer that function primarily in the production of cellular energy (ATP)",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-mitosis",
+    "name": "mitosis",
+    "cue": "division of genetic material, during which the cell nucleus breaks down and two new, fully functional, nuclei are formed",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-mitotic-phase",
+    "name": "mitotic phase",
+    "cue": "phase of the cell cycle in which a cell undergoes mitosis",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-mitotic-spindle",
+    "name": "mitotic spindle",
+    "cue": "network of microtubules, originating from centrioles, that arranges and pulls apart chromosomes during mitosis",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-multipotent",
+    "name": "multipotent",
+    "cue": "describes the condition of being able to differentiate into different types of cells within a given cell lineage or small number of lineages, such as a red blood cell or white blood cell",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-mutation",
+    "name": "mutation",
+    "cue": "change in the nucleotide sequence in a gene within a cell’s DNA",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-nuclear-envelope",
+    "name": "nuclear envelope",
+    "cue": "membrane that surrounds the nucleus; consisting of a double lipid-bilayer",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-nuclear-pore",
+    "name": "nuclear pore",
+    "cue": "one of the small, protein-lined openings found scattered throughout the nuclear envelope",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-nucleolus",
+    "name": "nucleolus",
+    "cue": "small region of the nucleus that functions in ribosome synthesis",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-nucleosome",
+    "name": "nucleosome",
+    "cue": "unit of chromatin consisting of a DNA strand wrapped around histone proteins",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-nucleus",
+    "name": "nucleus",
+    "cue": "cell’s central organelle; contains the cell’s DNA",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-oligopotent",
+    "name": "oligopotent",
+    "cue": "describes the condition of being more specialized than multipotency; the condition of being able to differentiate into one of a few possible cell types",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-organelle",
+    "name": "organelle",
+    "cue": "any of several different types of membrane-enclosed specialized structures in the cell that perform specific functions for the cell",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-osmosis",
+    "name": "osmosis",
+    "cue": "net movement of water across a selectively permeable membrane toward the side with lower water potential",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-passive-transport",
+    "name": "passive transport",
+    "cue": "form of transport across the cell membrane that does not require input of cellular energy",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-peripheral-protein",
+    "name": "peripheral protein",
+    "cue": "membrane-associated protein that does not span the width of the lipid bilayer, but is attached peripherally to integral proteins, membrane lipids, or other components of the membrane",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-peroxisome",
+    "name": "peroxisome",
+    "cue": "membrane-bound organelle that contains enzymes primarily responsible for detoxifying harmful substances",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-phagocytosis",
+    "name": "phagocytosis",
+    "cue": "endocytosis of large particles",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-pinocytosis",
+    "name": "pinocytosis",
+    "cue": "endocytosis of fluid",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-pluripotent",
+    "name": "pluripotent",
+    "cue": "describes the condition of being able to differentiate into a large variety of cell types",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-polypeptide",
+    "name": "polypeptide",
+    "cue": "chain of amino acids linked by peptide bonds",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-polyribosome",
+    "name": "polyribosome",
+    "cue": "simultaneous translation of a single mRNA transcript by multiple ribosomes",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-promoter",
+    "name": "promoter",
+    "cue": "region of DNA that signals transcription to begin at that site within the gene",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-prophase",
+    "name": "prophase",
+    "cue": "first stage of mitosis (and meiosis), characterized by breakdown of the nuclear envelope and condensing of the chromatin to form chromosomes",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-proteome",
+    "name": "proteome",
+    "cue": "full complement of proteins produced by a cell (determined by the cell’s specific gene expression)",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-reactive-oxygen-species-ros",
+    "name": "reactive oxygen species (ROS)",
+    "cue": "a group of extremely reactive peroxides and oxygen-containing radicals that may contribute to cellular damage",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-receptor",
+    "name": "receptor",
+    "cue": "protein molecule that contains a binding site for another specific molecule (called a ligand)",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-receptor-mediated-endocytosis",
+    "name": "receptor-mediated endocytosis",
+    "cue": "endocytosis of ligands attached to membrane-bound receptors",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-ribosomal-rna-rrna",
+    "name": "ribosomal RNA (rRNA)",
+    "cue": "RNA that makes up the subunits of a ribosome",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-ribosome",
+    "name": "ribosome",
+    "cue": "cellular organelle that functions in protein synthesis",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-rna-polymerase",
+    "name": "RNA polymerase",
+    "cue": "enzyme that unwinds DNA and then adds new nucleotides to a growing strand of RNA for the transcription phase of protein synthesis",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-s-phase",
+    "name": "S phase",
+    "cue": "stage of the cell cycle during which DNA replication occurs",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-selective-permeability",
+    "name": "selective permeability",
+    "cue": "feature of any barrier that allows certain substances to cross but excludes others",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-sister-chromatid",
+    "name": "sister chromatid",
+    "cue": "one of a pair of identical chromosomes, formed during DNA replication",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-sodium-potassium-pump",
+    "name": "sodium-potassium pump",
+    "cue": "(also, Na+/K+ ATP-ase) membrane-embedded protein pump that uses ATP to move Na+ out of a cell and K+ into the cell",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-somatic-cell",
+    "name": "somatic cell",
+    "cue": "all cells of the body excluding gamete cells",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-spliceosome",
+    "name": "spliceosome",
+    "cue": "complex of enzymes that serves to splice out the introns of a pre-mRNA transcript",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-splicing",
+    "name": "splicing",
+    "cue": "the process of modifying a pre-mRNA transcript by removing certain, typically non-coding, regions",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-stem-cell",
+    "name": "stem cell",
+    "cue": "cell that is oligo-, multi-, or pleuripotent that has the ability to produce additional stem cells rather than becoming further specialized",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-telophase",
+    "name": "telophase",
+    "cue": "final stage of mitosis (and meiosis), preceding cytokinesis, characterized by the formation of two new daughter nuclei",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-totipotent",
+    "name": "totipotent",
+    "cue": "embryonic cells that have the ability to differentiate into any type of cell and organ in the body",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-transcription",
+    "name": "transcription",
+    "cue": "process of producing an mRNA molecule that is complementary to a particular gene of DNA",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-transcription-factor",
+    "name": "transcription factor",
+    "cue": "one of the proteins that regulate the transcription of genes",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-transfer-rna-trna",
+    "name": "transfer RNA (tRNA)",
+    "cue": "molecules of RNA that serve to bring amino acids to a growing polypeptide strand and properly place them into the sequence",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-translation",
+    "name": "translation",
+    "cue": "process of producing a protein from the nucleotide sequence code of an mRNA transcript",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-triplet",
+    "name": "triplet",
+    "cue": "consecutive sequence of three nucleotides on a DNA molecule that, when transcribed into an mRNA codon, corresponds to a particular amino acid",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-unipotent",
+    "name": "unipotent",
+    "cue": "describes the condition of being committed to a single specialized cell type",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-3-vesicle",
+    "name": "vesicle",
+    "cue": "membrane-bound structure that contains materials within or outside of the cell",
+    "topic": "Chapter 3",
+    "chapter": 3
+  },
+  {
+    "id": "g-4-adipocytes",
+    "name": "adipocytes",
+    "cue": "lipid storage cells",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-adipose-tissue",
+    "name": "adipose tissue",
+    "cue": "specialized areolar tissue rich in stored fat",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-anchoring-junction",
+    "name": "anchoring junction",
+    "cue": "mechanically attaches adjacent cells to each other or to the basement membrane",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-apical",
+    "name": "apical",
+    "cue": "that part of a cell or tissue which, in general, faces an open space",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-apocrine-secretion",
+    "name": "apocrine secretion",
+    "cue": "release of a substance along with the apical portion of the cell",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-apoptosis",
+    "name": "apoptosis",
+    "cue": "programmed cell death",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-areolar-tissue",
+    "name": "areolar tissue",
+    "cue": "(also, loose connective tissue) a type of connective tissue proper that shows little specialization with cells dispersed in the matrix",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-astrocyte",
+    "name": "astrocyte",
+    "cue": "star-shaped cell in the central nervous system that regulates ions and uptake and/or breakdown of some neurotransmitters and contributes to the formation of the blood-brain barrier",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-atrophy",
+    "name": "atrophy",
+    "cue": "loss of mass and function",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-basal-lamina",
+    "name": "basal lamina",
+    "cue": "thin extracellular layer that lies underneath epithelial cells and separates them from other tissues",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-basement-membrane",
+    "name": "basement membrane",
+    "cue": "in epithelial tissue, a thin layer of fibrous material that anchors the epithelial tissue to the underlying connective tissue; made up of the basal lamina and reticular lamina",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-cardiac-muscle",
+    "name": "cardiac muscle",
+    "cue": "heart muscle, under involuntary control, composed of striated cells that attach to form fibers, each cell contains a single nucleus, contracts autonomously",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-cell-junction",
+    "name": "cell junction",
+    "cue": "point of cell-to-cell contact that connects one cell to another in a tissue",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-chondrocytes",
+    "name": "chondrocytes",
+    "cue": "cells of the cartilage",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-clotting",
+    "name": "clotting",
+    "cue": "also called coagulation; complex process by which blood components form a plug to stop bleeding",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-collagen-fiber",
+    "name": "collagen fiber",
+    "cue": "flexible fibrous proteins that give connective tissue tensile strength",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-connective-tissue",
+    "name": "connective tissue",
+    "cue": "type of tissue that serves to hold in place, connect, and integrate the body’s organs and systems",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-connective-tissue-membrane",
+    "name": "connective tissue membrane",
+    "cue": "connective tissue that encapsulates organs and lines movable joints",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-connective-tissue-proper",
+    "name": "connective tissue proper",
+    "cue": "connective tissue containing a viscous matrix, fibers, and cells.",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-cutaneous-membrane",
+    "name": "cutaneous membrane",
+    "cue": "skin; epithelial tissue made up of a stratified squamous epithelial cells that cover the outside of the body",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-dense-connective-tissue",
+    "name": "dense connective tissue",
+    "cue": "connective tissue proper that contains many fibers that provide both elasticity and protection",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-ectoderm",
+    "name": "ectoderm",
+    "cue": "outermost embryonic germ layer from which the epidermis and the nervous tissue derive",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-elastic-cartilage",
+    "name": "elastic cartilage",
+    "cue": "type of cartilage, with elastin as the major protein, characterized by rigid support as well as elasticity",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-elastic-fiber",
+    "name": "elastic fiber",
+    "cue": "fibrous protein within connective tissue that contains a high percentage of the protein elastin that allows the fibers to stretch and return to original size",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-endocrine-gland",
+    "name": "endocrine gland",
+    "cue": "groups of cells that release chemical signals into the intercellular fluid to be picked up and transported to their target organs by blood",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-endoderm",
+    "name": "endoderm",
+    "cue": "innermost embryonic germ layer from which most of the digestive system and lower respiratory system derive",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-endothelium",
+    "name": "endothelium",
+    "cue": "tissue that lines vessels of the lymphatic and cardiovascular system, made up of a simple squamous epithelium",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-epithelial-membrane",
+    "name": "epithelial membrane",
+    "cue": "epithelium attached to a layer of connective tissue",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-epithelial-tissue",
+    "name": "epithelial tissue",
+    "cue": "type of tissue that serves primarily as a covering or lining of body parts, protecting the body; it also functions in absorption, transport, and secretion",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-exocrine-gland",
+    "name": "exocrine gland",
+    "cue": "group of epithelial cells that secrete substances through ducts that open to the skin or to internal body surfaces that lead to the exterior of the body",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-fibroblast",
+    "name": "fibroblast",
+    "cue": "most abundant cell type in connective tissue, secretes protein fibers and matrix into the extracellular space",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-fibrocartilage",
+    "name": "fibrocartilage",
+    "cue": "tough form of cartilage, made of thick bundles of collagen fibers embedded in chondroitin sulfate ground substance",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-fibrocyte",
+    "name": "fibrocyte",
+    "cue": "less active form of fibroblast",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-fluid-connective-tissue",
+    "name": "fluid connective tissue",
+    "cue": "specialized cells that circulate in a watery fluid containing salts, nutrients, and dissolved proteins",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-gap-junction",
+    "name": "gap junction",
+    "cue": "allows cytoplasmic communications to occur between cells",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-goblet-cell",
+    "name": "goblet cell",
+    "cue": "unicellular gland found in columnar epithelium that secretes mucous",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-ground-substance",
+    "name": "ground substance",
+    "cue": "fluid or semi-fluid portion of the matrix",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-histamine",
+    "name": "histamine",
+    "cue": "chemical compound released by mast cells in response to injury that causes vasodilation and endothelium permeability",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-histology",
+    "name": "histology",
+    "cue": "microscopic study of tissue architecture, organization, and function",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-holocrine-secretion",
+    "name": "holocrine secretion",
+    "cue": "release of a substance caused by the rupture of a gland cell, which becomes part of the secretion",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-hyaline-cartilage",
+    "name": "hyaline cartilage",
+    "cue": "most common type of cartilage, smooth and made of short collagen fibers embedded in a chondroitin sulfate ground substance",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-inflammation",
+    "name": "inflammation",
+    "cue": "response of tissue to injury",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-lacunae",
+    "name": "lacunae",
+    "cue": "(singular = lacuna) small spaces in bone or cartilage tissue that cells occupy",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-lamina-propria",
+    "name": "lamina propria",
+    "cue": "areolar connective tissue underlying a mucous membrane",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-loose-connective-tissue",
+    "name": "loose connective tissue",
+    "cue": "(also, areolar tissue) type of connective tissue proper that shows little specialization with cells dispersed in the matrix",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-matrix",
+    "name": "matrix",
+    "cue": "extracellular material which is produced by the cells embedded in it, containing ground substance and fibers",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-merocrine-secretion",
+    "name": "merocrine secretion",
+    "cue": "release of a substance from a gland via exocytosis",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-mesenchymal-cell",
+    "name": "mesenchymal cell",
+    "cue": "adult stem cell from which most connective tissue cells are derived",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-mesenchyme",
+    "name": "mesenchyme",
+    "cue": "embryonic tissue from which connective tissue cells derive",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-mesoderm",
+    "name": "mesoderm",
+    "cue": "middle embryonic germ layer from which connective tissue, muscle tissue, and some epithelial tissue derive",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-mesothelium",
+    "name": "mesothelium",
+    "cue": "simple squamous epithelial tissue which covers the major body cavities and is the epithelial portion of serous membranes",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-mucous-connective-tissue",
+    "name": "mucous connective tissue",
+    "cue": "specialized loose connective tissue present in the umbilical cord",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-mucous-gland",
+    "name": "mucous gland",
+    "cue": "group of cells that secrete mucous, a thick, slippery substance that keeps tissues moist and acts as a lubricant",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-mucous-membrane",
+    "name": "mucous membrane",
+    "cue": "tissue membrane that is covered by protective mucous and lines tissue exposed to the outside environment",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-muscle-tissue",
+    "name": "muscle tissue",
+    "cue": "type of tissue that is capable of contracting and generating tension in response to stimulation; produces movement.",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-myelin",
+    "name": "myelin",
+    "cue": "layer of lipid inside some neuroglial cells that wraps around the axons of some neurons",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-myocyte",
+    "name": "myocyte",
+    "cue": "muscle cells",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-necrosis",
+    "name": "necrosis",
+    "cue": "accidental death of cells and tissues",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-nervous-tissue",
+    "name": "nervous tissue",
+    "cue": "type of tissue that is capable of sending and receiving impulses through electrochemical signals.",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-neuroglia",
+    "name": "neuroglia",
+    "cue": "supportive neural cells",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-neuron",
+    "name": "neuron",
+    "cue": "excitable neural cell that transfer nerve impulses",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-oligodendrocyte",
+    "name": "oligodendrocyte",
+    "cue": "neuroglial cell that produces myelin in the brain",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-parenchyma",
+    "name": "parenchyma",
+    "cue": "functional cells of a gland or organ, in contrast with the supportive or connective tissue of a gland or organ",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-primary-union",
+    "name": "primary union",
+    "cue": "condition of a wound where the wound edges are close enough to be brought together and fastened if necessary, allowing quicker and more thorough healing",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-pseudostratified-columnar-epithelium",
+    "name": "pseudostratified columnar epithelium",
+    "cue": "tissue that consists of a single layer of irregularly shaped and sized cells that give the appearance of multiple layers; found in ducts of certain glands and the upper respiratory tract",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-reticular-fiber",
+    "name": "reticular fiber",
+    "cue": "fine fibrous protein, made of collagen subunits, which cross-link to form supporting “nets” within connective tissue",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-reticular-lamina",
+    "name": "reticular lamina",
+    "cue": "matrix containing collagen and elastin secreted by connective tissue; a component of the basement membrane",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-reticular-tissue",
+    "name": "reticular tissue",
+    "cue": "type of loose connective tissue that provides a supportive framework to soft organs, such as lymphatic tissue, spleen, and the liver",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-schwann-cell",
+    "name": "Schwann cell",
+    "cue": "neuroglial cell that produces myelin in the peripheral nervous system",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-secondary-union",
+    "name": "secondary union",
+    "cue": "wound healing facilitated by wound contraction",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-serous-gland",
+    "name": "serous gland",
+    "cue": "group of cells within the serous membrane that secrete a lubricating substance onto the surface",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-serous-membrane",
+    "name": "serous membrane",
+    "cue": "type of tissue membrane that lines body cavities and lubricates them with serous fluid",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-simple-columnar-epithelium",
+    "name": "simple columnar epithelium",
+    "cue": "tissue that consists of a single layer of column-like cells; promotes secretion and absorption in tissues and organs",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-simple-cuboidal-epithelium",
+    "name": "simple cuboidal epithelium",
+    "cue": "tissue that consists of a single layer of cube-shaped cells; promotes secretion and absorption in ducts and tubules",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-simple-squamous-epithelium",
+    "name": "simple squamous epithelium",
+    "cue": "tissue that consists of a single layer of flat scale-like cells; promotes diffusion and filtration across surface",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-skeletal-muscle",
+    "name": "skeletal muscle",
+    "cue": "usually attached to bone, under voluntary control, each cell is a fiber that is multinucleated and striated",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-smooth-muscle",
+    "name": "smooth muscle",
+    "cue": "under involuntary control, moves internal organs, cells contain a single nucleus, are spindle-shaped, and do not appear striated; each cell is a fiber",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-stratified-columnar-epithelium",
+    "name": "stratified columnar epithelium",
+    "cue": "tissue that consists of two or more layers of column-like cells, contains glands and is found in some ducts",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-stratified-cuboidal-epithelium",
+    "name": "stratified cuboidal epithelium",
+    "cue": "tissue that consists of two or more layers of cube-shaped cells, found in some ducts",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-stratified-squamous-epithelium",
+    "name": "stratified squamous epithelium",
+    "cue": "tissue that consists of multiple layers of cells with the most apical being flat scale-like cells; protects surfaces from abrasion",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-striation",
+    "name": "striation",
+    "cue": "alignment of parallel actin and myosin filaments which form a banded pattern",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-supportive-connective-tissue",
+    "name": "supportive connective tissue",
+    "cue": "type of connective tissue that provides strength to the body and protects soft tissue",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-synovial-membrane",
+    "name": "synovial membrane",
+    "cue": "connective tissue membrane that lines the cavities of freely movable joints, producing synovial fluid for lubrication",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-tight-junction",
+    "name": "tight junction",
+    "cue": "forms an impermeable barrier between cells",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-tissue",
+    "name": "tissue",
+    "cue": "group of cells that are similar in form and perform related functions",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-tissue-membrane",
+    "name": "tissue membrane",
+    "cue": "thin layer or sheet of cells that covers the outside of the body, organs, and internal cavities",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-totipotent",
+    "name": "totipotent",
+    "cue": "embryonic cells that have the ability to differentiate into any type of cell and organ in the body",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-transitional-epithelium",
+    "name": "transitional epithelium",
+    "cue": "form of stratified epithelium found in the urinary tract, characterized by an apical layer of cells that change shape in response to the presence of urine",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-vasodilation",
+    "name": "vasodilation",
+    "cue": "widening of blood vessels",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-4-wound-contraction",
+    "name": "wound contraction",
+    "cue": "process whereby the borders of a wound are physically drawn together",
+    "topic": "Chapter 4",
+    "chapter": 4
+  },
+  {
+    "id": "g-5-acne",
+    "name": "acne",
+    "cue": "inflammatory disorder of hair follicles and sebaceous glands involving plugging, sebum and microbial activity",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-albinism",
+    "name": "albinism",
+    "cue": "group of inherited conditions that reduce melanin production or distribution in the skin, hair or eyes",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-anagen",
+    "name": "anagen",
+    "cue": "active phase of the hair growth cycle",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-apocrine-sweat-gland",
+    "name": "apocrine sweat gland",
+    "cue": "type of sweat gland that is associated with hair follicles in the armpits and genital regions",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-arrector-pili",
+    "name": "arrector pili",
+    "cue": "smooth muscle that is activated in response to external stimuli that pull on hair follicles and make the hair “stand up”",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-basal-cell",
+    "name": "basal cell",
+    "cue": "type of stem cell found in the stratum basale and in the hair matrix that continually undergoes cell division, producing the keratinocytes of the epidermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-basal-cell-carcinoma",
+    "name": "basal cell carcinoma",
+    "cue": "cancer that originates from basal cells in the epidermis of the skin",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-bedsore",
+    "name": "bedsore",
+    "cue": "sore on the skin that develops when regions of the body start necrotizing due to constant pressure and lack of blood supply; also called decubitus ulcers",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-callus",
+    "name": "callus",
+    "cue": "thickened area of skin that arises due to constant abrasion",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-catagen",
+    "name": "catagen",
+    "cue": "transitional phase marking the end of the anagen phase of the hair growth cycle",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-corn",
+    "name": "corn",
+    "cue": "type of callus that is named for its shape and the elliptical motion of the abrasive force",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-cortex",
+    "name": "cortex",
+    "cue": "in hair, the second or middle layer of keratinocytes originating from the hair matrix, as seen in a cross-section of the hair bulb",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-cuticle",
+    "name": "cuticle",
+    "cue": "in hair, the outermost layer of keratinocytes originating from the hair matrix, as seen in a cross- section of the hair bulb",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-dermal-papilla",
+    "name": "dermal papilla",
+    "cue": "(plural = dermal papillae) extension of the papillary layer of the dermis that increases surface contact between the epidermis and dermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-dermis",
+    "name": "dermis",
+    "cue": "layer of skin between the epidermis and hypodermis, composed mainly of connective tissue and containing blood vessels, hair follicles, sweat glands, and other structures",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-desmosome",
+    "name": "desmosome",
+    "cue": "structure that forms an impermeable junction between cells",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-eccrine-sweat-gland",
+    "name": "eccrine sweat gland",
+    "cue": "type of sweat gland that is common throughout the skin surface; it produces a hypotonic sweat for thermoregulation",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-eczema",
+    "name": "eczema",
+    "cue": "skin condition due to an allergic reaction, which resembles a rash",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-elastin-fibers",
+    "name": "elastin fibers",
+    "cue": "fibers made of the protein elastin that increase the elasticity of the dermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-eleiden",
+    "name": "eleiden",
+    "cue": "clear protein-bound lipid found in the stratum lucidum that is derived from keratohyalin and helps to prevent water loss",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-epidermis",
+    "name": "epidermis",
+    "cue": "outermost tissue layer of the skin",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-eponychium",
+    "name": "eponychium",
+    "cue": "nail fold that meets the proximal end of the nail body, also called the cuticle",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-external-root-sheath",
+    "name": "external root sheath",
+    "cue": "outer layer of the hair follicle that is an extension of the epidermis, which encloses the hair root",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-first-degree-burn",
+    "name": "first-degree burn",
+    "cue": "superficial burn that injures only the epidermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-fourth-degree-burn",
+    "name": "fourth-degree burn",
+    "cue": "burn in which full thickness of the skin and underlying muscle and bone is damaged",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-glassy-membrane",
+    "name": "glassy membrane",
+    "cue": "the basement membrane that is found between the epithelium of the external root sheath and the connective tissue sheath",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hair",
+    "name": "hair",
+    "cue": "keratinous filament growing out of the epidermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hair-bulb",
+    "name": "hair bulb",
+    "cue": "structure at the base of the hair root that surrounds the dermal papilla",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hair-follicle",
+    "name": "hair follicle",
+    "cue": "cavity or sac from which hair originates",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hair-matrix",
+    "name": "hair matrix",
+    "cue": "layer of basal cells from which a strand of hair grows",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hair-papilla",
+    "name": "hair papilla",
+    "cue": "mass of connective tissue, blood capillaries, and nerve endings at the base of the hair follicle",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hair-root",
+    "name": "hair root",
+    "cue": "part of hair that is below the epidermis anchored to the follicle",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hair-shaft",
+    "name": "hair shaft",
+    "cue": "part of hair that is above the epidermis but is not anchored to the follicle",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hypodermis",
+    "name": "hypodermis",
+    "cue": "connective tissue connecting the integument to the underlying bone and muscle",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-hyponychium",
+    "name": "hyponychium",
+    "cue": "thickened layer of stratum corneum that lies below the free edge of the nail",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-integumentary-system",
+    "name": "integumentary system",
+    "cue": "skin and its accessory structures",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-internal-root-sheath",
+    "name": "internal root sheath",
+    "cue": "innermost layer of keratinocytes in the hair follicle that surround the hair root up to the hair shaft",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-keloid",
+    "name": "keloid",
+    "cue": "type of scar that has layers raised above the skin surface",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-keratin",
+    "name": "keratin",
+    "cue": "type of structural protein that gives skin, hair, and nails its hard, water-resistant properties",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-keratinocyte",
+    "name": "keratinocyte",
+    "cue": "cell that produces keratin and is the most predominant type of cell found in the epidermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-keratohyalin",
+    "name": "keratohyalin",
+    "cue": "granulated protein found in the stratum granulosum",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-langerhans-cell",
+    "name": "Langerhans cell",
+    "cue": "specialized dendritic cell found in the stratum spinosum that functions as a macrophage",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-lunula",
+    "name": "lunula",
+    "cue": "basal part of the nail body that consists of a crescent-shaped layer of thick epithelium",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-medulla",
+    "name": "medulla",
+    "cue": "in hair, the innermost layer of keratinocytes originating from the hair matrix",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-meissner-corpuscle",
+    "name": "Meissner corpuscle",
+    "cue": "(also, tactile corpuscle) receptor in the skin that responds to light touch",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-melanin",
+    "name": "melanin",
+    "cue": "pigment that determines the color of hair and skin",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-melanocyte",
+    "name": "melanocyte",
+    "cue": "cell found in the stratum basale of the epidermis that produces the pigment melanin",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-melanoma",
+    "name": "melanoma",
+    "cue": "type of skin cancer that originates from the melanocytes of the skin",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-melanosome",
+    "name": "melanosome",
+    "cue": "intercellular vesicle that transfers melanin from melanocytes into keratinocytes of the epidermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-merkel-cell",
+    "name": "Merkel cell",
+    "cue": "receptor cell in the stratum basale of the epidermis that responds to the sense of touch",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-metastasis",
+    "name": "metastasis",
+    "cue": "spread of cancer cells from a source to other parts of the body",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-nail-bed",
+    "name": "nail bed",
+    "cue": "layer of epidermis upon which the nail body forms",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-nail-body",
+    "name": "nail body",
+    "cue": "main keratinous plate that forms the nail",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-nail-cuticle",
+    "name": "nail cuticle",
+    "cue": "fold of epithelium that extends over the nail bed, also called the eponychium",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-nail-fold",
+    "name": "nail fold",
+    "cue": "fold of epithelium at that extend over the sides of the nail body, holding it in place",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-nail-root",
+    "name": "nail root",
+    "cue": "part of the nail that is lodged deep in the epidermis from which the nail grows",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-pacinian-corpuscle",
+    "name": "Pacinian corpuscle",
+    "cue": "(also, lamellated corpuscle) receptor in the skin that responds to vibration",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-papillary-layer",
+    "name": "papillary layer",
+    "cue": "superficial layer of the dermis, made of loose, areolar connective tissue",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-reticular-layer",
+    "name": "reticular layer",
+    "cue": "deeper layer of the dermis; it has a reticulated appearance due to the presence of abundant collagen and elastin fibers",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-rickets",
+    "name": "rickets",
+    "cue": "disease in children caused by vitamin D deficiency, which leads to the weakening of bones",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-scar",
+    "name": "scar",
+    "cue": "collagen-rich skin formed after the process of wound healing that is different from normal skin",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-sebaceous-gland",
+    "name": "sebaceous gland",
+    "cue": "type of oil gland found in the dermis all over the body and helps to lubricate and waterproof the skin and hair by secreting sebum",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-sebum",
+    "name": "sebum",
+    "cue": "oily substance that is composed of a mixture of lipids that lubricates the skin and hair",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-second-degree-burn",
+    "name": "second-degree burn",
+    "cue": "partial-thickness burn that injures the epidermis and a portion of the dermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-squamous-cell-carcinoma",
+    "name": "squamous cell carcinoma",
+    "cue": "type of skin cancer that originates from the stratum spinosum of the epidermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-stratum-basale",
+    "name": "stratum basale",
+    "cue": "deepest layer of the epidermis, made of epidermal stem cells",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-stratum-corneum",
+    "name": "stratum corneum",
+    "cue": "most superficial layer of the epidermis",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-stratum-granulosum",
+    "name": "stratum granulosum",
+    "cue": "layer of the epidermis superficial to the stratum spinosum",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-stratum-lucidum",
+    "name": "stratum lucidum",
+    "cue": "layer of the epidermis between the stratum granulosum and stratum corneum, found only in thick skin covering the palms, soles of the feet, and digits",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-stratum-spinosum",
+    "name": "stratum spinosum",
+    "cue": "layer of the epidermis superficial to the stratum basale, characterized by the presence of desmosomes",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-stretch-mark",
+    "name": "stretch mark",
+    "cue": "mark formed on the skin due to a sudden growth spurt and expansion of the dermis beyond its elastic limits",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-sudoriferous-gland",
+    "name": "sudoriferous gland",
+    "cue": "sweat gland",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-telogen",
+    "name": "telogen",
+    "cue": "resting phase of the hair growth cycle initiated with catagen and terminated by the beginning of a new anagen phase of hair growth",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-third-degree-burn",
+    "name": "third-degree burn",
+    "cue": "burn that penetrates and destroys the full thickness of the skin (epidermis and dermis)",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-vitamin-d",
+    "name": "vitamin D",
+    "cue": "compound that aids absorption of calcium and phosphates in the intestine to improve bone health",
+    "topic": "Chapter 5",
+    "chapter": 5
+  },
+  {
+    "id": "g-5-vitiligo",
+    "name": "vitiligo",
+    "cue": "skin condition in which melanocytes in certain areas lose the ability to produce melanin, possibly due an autoimmune reaction that leads to loss of color in patches",
+    "topic": "Chapter 5",
+    "chapter": 5
+  }
+]

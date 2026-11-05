@@ -1,6 +1,8 @@
+import {isLessonId} from './chapters.js';
+import foundationPages from './foundations-reader.json' with {type:'json'};
 import pages from './reader-pages.json' with {type:'json'};
-const pageMap=new Map(pages.map(p=>[p.pdf,p]));
-const validReference=s=>/^(?:6\.[1-7]|7\.[1-5]|8\.[1-5]|9\.[1-7])$/.test(s);
+const pageMap=new Map([...foundationPages,...pages].map(p=>[p.pdf,p]));
+const validReference=s=>isLessonId(s);
 export const CHAT_LIMIT=30;
 export function sanitizeConversation(value){
  if(!Array.isArray(value))return[];
@@ -9,7 +11,7 @@ export function sanitizeConversation(value){
   error:!!(m.error||m.pending),model:typeof m.model==='string'?m.model.slice(0,100):'',
   correction:typeof m.correction==='string'?m.correction.slice(0,300):'',reference:validReference(m.reference)?m.reference:undefined,
   sources:(Array.isArray(m.sources)?m.sources:[]).filter(s=>s&&/^S[1-4]$/.test(s.id)&&pageMap.has(s.pdf)).slice(0,4).map(s=>{
-   const p=pageMap.get(s.pdf);return{id:s.id,pdf:p.pdf,title:`OpenStax ch. ${p.chapter} · p. ${p.printed}`,text:typeof s.text==='string'?s.text.slice(0,1600):''};
+   const p=pageMap.get(s.pdf);return{id:s.id,pdf:p.pdf,title:validReference(s.reference)?`Osteon §${s.reference} · source p. ${p.printed}`:`OpenStax ch. ${p.chapter} · p. ${p.printed}`,reference:validReference(s.reference)?s.reference:undefined,text:typeof s.text==='string'?s.text.slice(0,1600):''};
   })
  })).filter(m=>m.content.trim());
 }

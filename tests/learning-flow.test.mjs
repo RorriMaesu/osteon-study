@@ -9,6 +9,8 @@ import {readExposure,markExposure,validExposure} from '../src/exam-exposure.js';
 import {matchingReaderPages} from '../src/reader.js';
 import {validLessonWork,readLessonWork,saveLessonWork,LESSON_WORK_KEY} from '../src/lesson-flow.js';
 import {componentFeedback,duplicateMatches} from '../src/exam-feedback.js';
+import {mergeLegacyStudy,previewLegacyStudy} from '../src/legacy-study.js';
+import {STORAGE_KEY} from '../src/storage.js';
 import {createStudyBackup,restoreStudyBackup} from '../src/study-backup.js';
 const memory=()=>{const values=new Map();return {getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v),removeItem:k=>values.delete(k)};};
 const rng=seed=>()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296;};
@@ -29,6 +31,17 @@ test('view exposure persists separately from score and only increments once per 
 });
 test('lesson position and explanation drafts survive complete backup and source-return reloads',()=>{
  const a=memory(),b=memory(),work={step:3,section:2,explore:'figure',figure:1,retrieval:'Central canal → canaliculi → lacuna.',application:''};saveLessonWork(a,'6.3',work);assert.ok(validLessonWork(JSON.parse(a.getItem(LESSON_WORK_KEY))));const saved=readLessonWork(a,'6.3');assert.ok(Number.isFinite(saved.updatedAt));restoreStudyBackup(b,createStudyBackup(a));assert.deepEqual(readLessonWork(b,'6.3'),saved);assert.throws(()=>saveLessonWork(a,'99.1',work));
+});
+test('legacy scores and review cards merge idempotently without rewriting the existing exam or legacy records',()=>{
+ const store=memory(),cell=examBank.find(q=>q.id.startsWith('cellstudio-')&&q.id.includes('-concept-')),trainer=examBank.find(q=>q.id.startsWith('atlas12-'));
+ const key=cell.id.slice('cellstudio-'.length).replace('-concept-','/concept/'),old=JSON.stringify({stats:{[key]:{lastCorrect:true,updatedAt:20},unexpected:{lastCorrect:false,updatedAt:4}}});
+ store.setItem('soma-cell-studio-v1',old);store.setItem('ap_v2_missed',JSON.stringify([trainer.id.slice('atlas12-'.length)]));
+ store.setItem('osteon-exams-v1','keep-this-draft');
+ const peek=previewLegacyStudy(store);assert.equal(peek.added.length,1);assert.equal(peek.due.length,1);assert.equal(store.getItem(STORAGE_KEY),null);
+ mergeLegacyStudy(store,null,60);const saved=JSON.parse(store.getItem(STORAGE_KEY));assert.equal(saved.attempts[0].id,cell.id);assert.equal(saved.cards[trainer.id].due,60);
+ assert.equal(previewLegacyStudy(store).added.length,0);assert.equal(previewLegacyStudy(store).due.length,0);
+ assert.equal(store.getItem('osteon-exams-v1'),'keep-this-draft');assert.equal(store.getItem('soma-cell-studio-v1'),old);
+ store.setItem(STORAGE_KEY,'invalid');assert.throws(()=>mergeLegacyStudy(store),/read safely/);assert.equal(store.getItem(STORAGE_KEY),'invalid');
 });
 test('reader searches all supplied words within the selected collection and exposes zero matches honestly',()=>{
  assert.equal(matchingReaderPages({query:'zygomatticc'}).length,0);const results=matchingReaderPages({chapter:'6',query:'osteocyte canaliculi'});assert.ok(results.length);assert.ok(results.every(p=>p.chapter===6&&/osteocyte/i.test(p.text)&&/canaliculi/i.test(p.text)));assert.equal(matchingReaderPages({query:'  '}).filter(p=>p.chapter>=6).length,220);

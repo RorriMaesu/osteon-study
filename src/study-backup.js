@@ -1,3 +1,4 @@
+import {showLegacyStudyImport} from './legacy-study.js';
 import {EXPOSURE_KEY,validExposure} from './exam-exposure.js';
 import {LESSON_WORK_KEY,validLessonWork} from './lesson-flow.js';
 import {STORAGE_KEY,blankProgress,validProgress} from './storage.js';
@@ -43,6 +44,9 @@ export function restoreStudyBackup(storage,x){
 export function bindStudyBackups(root,{dialog,toast,escape:e}){
  const button=root.querySelector('#export-data'),input=root.querySelector('#import-data');if(!button||!input)return;
  button.textContent='Back up all study work';
+ const legacy=Object.assign(document.createElement('button'),{type:'button',textContent:'Import earlier study progress'});
+ button.after(legacy);
+ legacy.onclick=()=>{try{showLegacyStudyImport({dialog,escape:e});}catch(err){root.querySelector('#import-status').textContent=err.message;}};
  button.before(Object.assign(document.createElement('p'),{className:'tiny',textContent:'Complete backup includes saved chapter exams, bone-list tests, results, review cards and spellings. Chat and preferences are optional.'}));
  button.onclick=()=>{
   dialog('<h2>Back up your study work</h2><p>Includes progress, exam drafts and reports, and the dedicated bone-list test. Keep this file before changing devices or clearing browser data.</p><label class="check-line"><input type="checkbox" id="backup-chat"> Include tutor conversation and draft</label><label class="check-line"><input type="checkbox" id="backup-settings"> Include AI and study preferences</label><button class="primary" id="backup-download">Download complete backup</button><p id="backup-error" role="status"></p>');

@@ -1,4 +1,4 @@
-const defaultContext={type:'study',label:'Chapters 6–10',text:'Bone tissue, axial and appendicular anatomy, joints, and muscle tissue.'};
+const defaultContext={type:'study',label:'Chapters 1–10',text:'Human body, chemistry, cells, tissues, skin, skeleton, joints and muscle tissue.'};
 let current={...defaultContext};
 export function getLearningContext(){return{...current};}
 export function setLearningContext(context){

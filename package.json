@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "BI 231 skeleton and muscle atlas with OpenStax chapters 6–10 study suite",
+  "description": "BI 231 skeleton and muscle atlas with OpenStax chapters 1–10 study suite",
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",
