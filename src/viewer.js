@@ -14,7 +14,7 @@ import {isIntervertebralDisc,isNucleus,vertebralLevel,betweenVisibleVertebrae} f
 
 export class AnatomyViewer {
  constructor(el,onPick,onReady,onError){
-  this.el=el;this.onPick=onPick;this.meshes=[];this.selected=[];this.isolated=false;this.ghost=false;this.region='All regions';this.division='All';this.skullColors=true;this.quiz=false;this.hiddenMeshes=new Set();this.peel=false;
+  this.el=el;this.onPick=onPick;this.meshes=[];this.selected=[];this.isolated=false;this.ghost=false;this.region='All regions';this.division='All';this.skullColors=true;this.quiz=false;this.peeledSurfaces=new Set();this.peel=false;
   this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];
   this.discs=true;
   this.reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -35,7 +35,7 @@ export class AnatomyViewer {
   el.addEventListener('pointerup',e=>{
    const tapped=this.down&&!this.multiTouch&&Math.hypot(e.clientX-this.down[0],e.clientY-this.down[1])<6;
    this.activePointers.delete(e.pointerId);if(!this.activePointers.size)this.multiTouch=false;
-   if(tapped&&e.button===0){const m=this.hit(e);if(m){if(this.peel||e.shiftKey){this.lastTap=null;if(m.userData.muscleId)this.muscleLayer.hide(m);else this.hiddenMeshes.add(m);document.querySelector('#hover-label').hidden=true;this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}else{
+   if(tapped&&e.button===0){const m=this.hit(e);if(m){if(this.peel||e.shiftKey){this.lastTap=null;document.querySelector('#hover-label').hidden=true;this.peelSurface(m);}else{
     this.onPick(m);
     if(e.pointerType==='touch'){
      const now=performance.now(),next={bone:m.userData.muscleId?(m.userData.component.muscleName+'|'+m.userData.component.side):boneId(m.userData.zname),time:now,x:e.clientX,y:e.clientY};
@@ -108,7 +108,7 @@ export class AnatomyViewer {
 
  termFor(m){return termForMesh(m);}
  hit(e){if(!this.loaded)return null;const r=this.el.getBoundingClientRect();this.pointer.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);this.ray.setFromCamera(this.pointer,this.camera);const hit=this.ray.intersectObjects(this.meshes.filter(m=>m.visible&&!m.userData.guideOnly&&(!m.userData.detailGroup||this.peel||e.shiftKey)),false)[0];if(this.muscleLayer?.ownsFocus())return this.muscleLayer.pick(this.ray,hit);return hit?.object||null;}
- snapshot(){return{focus:{...this.focus},region:this.region,selected:[...this.selected],selectedTerm:this.selectedTerm,activeDetail:this.activeDetail,cutaway:this.cutaway,isolated:this.isolated,ghost:this.ghost,pins:(this.pins||[]).map(p=>({term:p.term,point:[...p.point],label:p.label})),pinLabels:this.pinLabels,hiddenMeshes:new Set(this.hiddenMeshes),position:(this.tween?.to||this.camera.position).clone(),target:(this.tween?.targetTo||this.controls.target).clone()};}
+ snapshot(){return{focus:{...this.focus},region:this.region,selected:[...this.selected],selectedTerm:this.selectedTerm,activeDetail:this.activeDetail,cutaway:this.cutaway,isolated:this.isolated,ghost:this.ghost,pins:(this.pins||[]).map(p=>({term:p.term,point:[...p.point],label:p.label})),pinLabels:this.pinLabels,position:(this.tween?.to||this.camera.position).clone(),target:(this.tween?.targetTo||this.controls.target).clone()};}
  notifyFocus(){this.el.dataset.focus=this.focus.level;this.el.dataset.area=this.focus.areaId||'';document.querySelector('#hover-label').hidden=true;document.dispatchEvent(new CustomEvent('atlasfocuschange'));}
  focusLabel(){if(this.activeDetail==='fetal-skull')return 'Fetal skull · site guide';return this.focus.areaId?areaLabel(this.focus.areaId,this.focus.side):this.region;}
  scopeContains(m){
@@ -124,7 +124,7 @@ export class AnatomyViewer {
   const areaId=areaForBone(m.userData.zname);if(!areaId)return;
   if(this.focus.level==='bone'&&this.focus.areaId===areaId){this.back();return;}
   this.focusHistory.push(this.snapshot());this.focus={level:'region',areaId,side:boneSide(m.userData.zname),boneId:null};this.region=areas[areaId].macro;
-  this.clearPins();this.selected=[m];this.selectedTerm=this.termFor(m);this.hiddenMeshes.delete(m);this.isolated=false;this.ghost=false;this.controls.autoRotate=false;this.applyVisibility();this.frameScope();this.notifyFocus();
+  this.clearPins();this.selected=[m];this.selectedTerm=this.termFor(m);this.peeledSurfaces.delete(m);this.isolated=false;this.ghost=false;this.controls.autoRotate=false;this.applyVisibility();this.frameScope();this.notifyFocus();
  }
  focusBone(m=this.selected[0]){
   if(!m||this.quiz||!boneFamily(m.userData.zname))return;
@@ -132,7 +132,7 @@ export class AnatomyViewer {
   if(this.focus.level==='bone'&&this.focus.boneId===boneId(m.userData.zname))return;
   if(this.focus.level==='overview')this.exploreBoneRegion(m);
   this.focusHistory.push(this.snapshot());this.focus={...this.focus,level:'bone',boneId:boneId(m.userData.zname)};
-  const landmark=this.selectedTerm&&!this.selectedTerm.exact&&this.find(this.selectedTerm).some(x=>boneId(x.userData.zname)===boneId(m.userData.zname))?this.selectedTerm:null;const retained=this.pins.map(p=>({term:p.term,point:p.point,label:p.label}));this.clearPins();this.selected=this.boneMeshes(m);this.selected.forEach(x=>this.hiddenMeshes.delete(x));this.selectedTerm=this.focus.boneId==='Sternum'?allTerms.find(t=>t.name==='Sternum'):this.termFor(m);if(landmark){this.selectedTerm=landmark;this.showPins(retained,{labelled:true});this.showOutline(landmark.representation?.outline);}this.isolated=true;this.ghost=false;this.controls.autoRotate=false;this.applyVisibility();this.frame(this.selected);this.notifyFocus();
+  const landmark=this.selectedTerm&&!this.selectedTerm.exact&&this.find(this.selectedTerm).some(x=>boneId(x.userData.zname)===boneId(m.userData.zname))?this.selectedTerm:null;const retained=this.pins.map(p=>({term:p.term,point:p.point,label:p.label}));this.clearPins();this.selected=this.boneMeshes(m);this.selected.forEach(x=>this.peeledSurfaces.delete(x));this.selectedTerm=this.focus.boneId==='Sternum'?allTerms.find(t=>t.name==='Sternum'):this.termFor(m);if(landmark){this.selectedTerm=landmark;this.showPins(retained,{labelled:true});this.showOutline(landmark.representation?.outline);}this.isolated=true;this.ghost=false;this.controls.autoRotate=false;this.applyVisibility();this.frame(this.selected);this.notifyFocus();
  }
  canGoBack(){
   return !this.quiz&&(this.muscleLayer?.ownsFocus()?this.muscleLayer.canGoBack():!!this.activeDetail||this.focus.level!=='overview'||this.focusHistory.length>0);
@@ -143,7 +143,7 @@ export class AnatomyViewer {
   if(this.muscleLayer?.ownsFocus()){this.muscleLayer.back();return;}
   const previous=this.focusHistory.pop();
   if(!previous){this.reset();return;}
-  this.clearPins();Object.assign(this,{focus:previous.focus,region:previous.region,selected:previous.selected,selectedTerm:previous.selectedTerm,activeDetail:previous.activeDetail,cutaway:previous.cutaway,isolated:previous.isolated,ghost:previous.ghost,hiddenMeshes:previous.hiddenMeshes});if(previous.pins.length)this.showPins(previous.pins,{labelled:previous.pinLabels});this.showOutline(previous.selectedTerm?.representation?.outline);this.controls.autoRotate=false;this.applyVisibility();this.moveCamera(previous.position,previous.target);this.notifyFocus();document.dispatchEvent(new Event('layerschanged'));
+  this.clearPins();Object.assign(this,{focus:previous.focus,region:previous.region,selected:previous.selected,selectedTerm:previous.selectedTerm,activeDetail:previous.activeDetail,cutaway:previous.cutaway,isolated:previous.isolated,ghost:previous.ghost});if(previous.pins.length)this.showPins(previous.pins,{labelled:previous.pinLabels});this.showOutline(previous.selectedTerm?.representation?.outline);this.controls.autoRotate=false;this.applyVisibility();this.moveCamera(previous.position,previous.target);this.notifyFocus();document.dispatchEvent(new Event('layerschanged'));
  }
  select(term,{frame=true}={}){
   let found=this.find(term),changedContext=false;
@@ -152,7 +152,7 @@ export class AnatomyViewer {
    this.focusHistory.push(this.snapshot());this.focus={level:'region',areaId:null,side:null,boneId:null};this.region=term.region;changedContext=true;
   }else if(!this.quiz&&this.focus.level==='bone'&&!found.some(m=>boneId(m.userData.zname)===this.focus.boneId))this.back();
   if(!this.quiz&&this.focus.level==='bone')found=found.filter(m=>boneId(m.userData.zname)===this.focus.boneId);
-  this.activeDetail=term.representation?.retiredModel?null:term.representation?.detailGroup||null;this.cutaway=term.representation?.cutaway||null;this.clearPins();this.selected=found;this.selected.forEach(m=>this.hiddenMeshes.delete(m));this.selectedTerm=term;this.isolated=this.focus.level==='bone'&&!this.quiz;this.ghost=false;this.applyVisibility();
+  this.activeDetail=term.representation?.retiredModel?null:term.representation?.detailGroup||null;this.cutaway=term.representation?.cutaway||null;this.clearPins();this.selected=found;this.selected.forEach(m=>this.peeledSurfaces.delete(m));this.selectedTerm=term;this.isolated=this.focus.level==='bone'&&!this.quiz;this.ghost=false;this.applyVisibility();
   if(pointKinds.includes(term.representation?.kind)){this.showPins(term.representation.points.map(p=>({...p,term})),{labelled:true});this.showOutline(term.representation.outline);this.ghost=!!term.representation.ghostContext||(!this.activeDetail&&!term.representation.isolateContext);this.applyVisibility();if(frame)this.focusFeature(term);}
   else if(this.selected.length){if(wholeStructureLabel(term,this.quiz)){const p=this.selected[0].userData.bounds.getCenter(new THREE.Vector3()).toArray();this.showPins([{term,point:p}],{labelled:true});}if(frame){if(term.representation?.autoFocus)this.focusPoint(this.selected[0].userData.bounds.getCenter(new THREE.Vector3()).toArray(),term.representation.view);else this.frame(this.selected);}}
   this.refreshLandmarkTools();if(changedContext)this.notifyFocus();return this.selected;
@@ -197,16 +197,16 @@ export class AnatomyViewer {
   // Peeling one vertebra exposes its neighbors; it must not remove their discs.
   const adultStates=new Map(),levels=new Set(),innerDiscTarget=this.selected.some(m=>isNucleus(m.userData.zname));
   for(const m of this.meshes.filter(m=>!m.userData.detailGroup)){
-   const state={activeDetail:this.activeDetail,division:this.division,hidden:this.hiddenMeshes.has(m),selected:selected.has(m),focusedBone:this.focus.level==='bone'&&!this.quiz&&boneId(m.userData.zname)===this.focus.boneId,inScope:this.scopeContains(m),context:(r?.contextPatterns||[]).some(p=>matches(p,m.userData.zname)),isolateContext:!!r?.isolateContext,isolated:this.isolated,tissues:!!this.tissues,discs:this.discs,sinuses:!!this.sinuses,ghost:this.ghost,ghostContext:!!r?.ghostContext,innerDiscTarget};
+   const state={activeDetail:this.activeDetail,division:this.division,hidden:this.peeledSurfaces.has(m),selected:selected.has(m),focusedBone:this.focus.level==='bone'&&!this.quiz&&boneId(m.userData.zname)===this.focus.boneId,inScope:this.scopeContains(m),context:(r?.contextPatterns||[]).some(p=>matches(p,m.userData.zname)),isolateContext:!!r?.isolateContext,isolated:this.isolated,tissues:!!this.tissues,discs:this.discs,sinuses:!!this.sinuses,ghost:this.ghost,ghostContext:!!r?.ghostContext,innerDiscTarget};
    adultStates.set(m,state);const level=vertebralLevel(m.userData.zname);if(level&&adultVisibility({name:m.userData.zname,tissue:m.userData.tissue,sinus:m.userData.sinus},{...state,hidden:false}).visible)levels.add(level);
   }
   const adultDisplay=new Map(),visibleParents=new Set();
   for(const [m,state]of adultStates){state.discContext=betweenVisibleVertebrae(m.userData.zname,levels);const display=adultVisibility({name:m.userData.zname,tissue:m.userData.tissue,sinus:m.userData.sinus},state);adultDisplay.set(m,display);if(display.visible)visibleParents.add(m.userData.zname);}
-  for(const m of this.meshes)if(m.userData.detailGroup&&!m.userData.guideOnly&&m.userData.detailGroup===this.activeDetail&&!this.hiddenMeshes.has(m)&&(!this.isolated||selected.has(m)))visibleParents.add(m.userData.zname);
+  for(const m of this.meshes)if(m.userData.detailGroup&&!m.userData.guideOnly&&m.userData.detailGroup===this.activeDetail&&!this.peeledSurfaces.has(m)&&(!this.isolated||selected.has(m)))visibleParents.add(m.userData.zname);
   for(const m of this.meshes){
    const detail=m.userData.detailGroup;
    if(m.userData.focusFor){m.visible=focusGuideVisible(m.userData,{selectedIds:[this.selectedTerm?.id,this.selectedTerm?.feature?.id],activeDetail:this.activeDetail,visibleParents,assessmentTask:this.assessmentTask,answerRevealed:this.answerRevealed});m.material.transparent=true;m.material.opacity=m.userData.focusSpecimen?.includes('conchae') ? .24 : m.userData.zname.startsWith('Focus trace') ? .95 : .65;m.material.depthWrite=false;m.material.depthTest=true;m.material.polygonOffset=true;m.material.polygonOffsetFactor=-2;m.material.polygonOffsetUnits=-2;m.material.color.setHex(0xf0ae67);m.material.clippingPlanes=clipping;m.renderOrder=4;continue;}
-   if(detail){m.visible=detail===this.activeDetail&&!this.hiddenMeshes.has(m)&&(!this.isolated||selected.has(m));m.material.clippingPlanes=clipping;m.material.color.copy(m.userData.authoredColor);m.material.opacity=this.ghost&&!selected.has(m)?Math.min(.15,m.userData.authoredOpacity):m.userData.authoredOpacity;m.material.transparent=m.material.opacity<1;m.material.depthWrite=!m.material.transparent;continue;}
+   if(detail){m.visible=detail===this.activeDetail&&!this.peeledSurfaces.has(m)&&(!this.isolated||selected.has(m));m.material.clippingPlanes=clipping;m.material.color.copy(m.userData.authoredColor);m.material.opacity=this.ghost&&!selected.has(m)?Math.min(.15,m.userData.authoredOpacity):m.userData.authoredOpacity;m.material.transparent=m.material.opacity<1;m.material.depthWrite=!m.material.transparent;continue;}
    const display=adultDisplay.get(m);m.visible=display.visible;
    m.material.clippingPlanes=(m.userData.region==='Skull'||r?.isolateContext)?clipping:[];
    m.material.opacity=display.opacity;m.material.transparent=display.opacity<1;m.material.depthWrite=!m.material.transparent;
@@ -219,7 +219,16 @@ export class AnatomyViewer {
  syncLayerControls(){
   const button=document.querySelector('#discs-btn'),tissues=document.querySelector('#tissues-btn');
   for(const [id,value]of [['peel-btn',this.peel],['isolate-btn',this.isolated],['ghost-btn',this.ghost],['rotate-btn',this.controls.autoRotate]])document.getElementById(id)?.setAttribute('aria-pressed',String(!!value));
-  const restore=document.querySelector('#restore-btn');if(restore)restore.disabled=!(this.hiddenMeshes.size||this.muscleLayer?.hasHidden());
+  const hasPeels=this.peeledSurfaces.size>0;
+  for(const id of ['undo-peel-btn','restore-btn']){
+   const control=document.getElementById(id);
+   if(control)control.disabled=!hasPeels;
+  }
+  const mobileUndo=document.getElementById('mobile-undo-peel');
+  if(mobileUndo){
+   if(!hasPeels&&document.activeElement===mobileUndo)document.getElementById('viewer-action-toggle')?.focus({preventScroll:true});
+   mobileUndo.hidden=!hasPeels;
+  }
   if(tissues){tissues.setAttribute('aria-pressed',String(!!this.tissues));tissues.disabled=!!this.activeDetail;tissues.title='Additional ligaments and soft tissues. Selected targets stay visible.';}
   this.muscleLayer?.syncControls();
   if(!button)return;const count=this.meshes.filter(m=>m.visible&&isIntervertebralDisc(m.userData.zname)).length,target=this.selected.some(m=>isIntervertebralDisc(m.userData.zname));
@@ -263,7 +272,19 @@ export class AnatomyViewer {
   else this.view('front');
  }
  view(side){this.controls.autoRotate=false;const direction={front:[0,.04,1],back:[0,.04,-1],left:[1,.04,0],right:[-1,.04,0],top:[0,1,.001],bottom:[0,-1,.001]}[side];if(direction&&pointKinds.includes(this.selectedTerm?.representation?.kind))this.focusFeature(undefined,{direction});else this.frameScope(side);document.querySelectorAll('[data-camera]').forEach(b=>b.classList.toggle('active',b.dataset.camera===side));}
- restore(){this.muscleLayer?.restore();this.hiddenMeshes.clear();this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}
- reset({division=this.division}={}){this.division=division;this.muscleLayer?.release();this.assessmentTask=null;this.answerRevealed=false;this.drawerMotion?.stop();this.activeDetail=null;this.cutaway=null;this.sinuses=false;this.controls.autoRotate=false;this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];this.lastTap=null;document.querySelector('#rotate-btn').setAttribute('aria-pressed','false');this.clearPins();this.annotationUI?.clear();this.hiddenMeshes.clear();this.peel=false;document.dispatchEvent(new Event('layerschanged'));this.selected=[];this.selectedTerm=null;this.isolated=false;this.ghost=false;this.region='All regions';this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));this.notifyFocus();}
+ peelSurface(mesh){
+  // Muscles may share a component ID. Bone and specimen surfaces use mesh identity.
+  this.peeledSurfaces.add(mesh.userData.muscleId||mesh);
+  this.applyVisibility();
+  document.dispatchEvent(new Event('layerschanged'));
+ }
+ undoPeel(){
+  // Set insertion order is the peel history. Camera changes do not restore old peels.
+  if(!this.peeledSurfaces.delete([...this.peeledSurfaces].at(-1)))return;
+  this.applyVisibility();
+  document.dispatchEvent(new Event('layerschanged'));
+ }
+ restore(){this.peeledSurfaces.clear();if(this.muscleLayer)this.muscleLayer.restore();else this.applyVisibility();document.dispatchEvent(new Event('layerschanged'));}
+ reset({division=this.division}={}){this.division=division;this.muscleLayer?.release();this.assessmentTask=null;this.answerRevealed=false;this.drawerMotion?.stop();this.activeDetail=null;this.cutaway=null;this.sinuses=false;this.controls.autoRotate=false;this.focus={level:'overview',areaId:null,side:null,boneId:null};this.focusHistory=[];this.lastTap=null;document.querySelector('#rotate-btn').setAttribute('aria-pressed','false');this.clearPins();this.annotationUI?.clear();this.peeledSurfaces.clear();this.peel=false;document.dispatchEvent(new Event('layerschanged'));this.selected=[];this.selectedTerm=null;this.isolated=false;this.ghost=false;this.region='All regions';this.applyVisibility();this.frame(this.meshes.filter(m=>m.visible));this.notifyFocus();}
  animate(){if(!this.running)return;requestAnimationFrame(()=>this.animate());if(document.hidden||!this.el.getClientRects().length)return;if(this.tween){const t=Math.min((performance.now()-this.tween.start)/700,1),e=1-Math.pow(1-t,3);this.camera.position.lerpVectors(this.tween.from,this.tween.to,e);this.controls.target.lerpVectors(this.tween.targetFrom,this.tween.targetTo,e);if(t===1)this.tween=null;}this.controls.update();this.drawerMotion?.update();if(this.needsRender||performance.now()-(this.lastAnnotationUpdate||0)>250){this.layoutPins();this.landmarkOverlay?.update();this.muscleLayer?.updateLabel();this.lastAnnotationUpdate=performance.now();}if(!this.graphicsLost&&!this.referenceOpen&&this.el.clientWidth&&this.el.clientHeight&&(this.needsRender||this.tween||this.controls.autoRotate||this.drawerMotion?.moving)){this.renderer.render(this.scene,this.camera);this.needsRender=false;}}
 }

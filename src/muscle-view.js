@@ -12,7 +12,7 @@ export function boneViewKey(viewer){const f=viewer.focus||{};return JSON.stringi
 export function captureBoneView(viewer){return {...viewer.snapshot(),division:viewer.division,focusHistory:[...viewer.focusHistory],peel:viewer.peel,autoRotate:viewer.controls.autoRotate};}
 export function restoreBoneView(viewer,snapshot,{restoreCamera=false}={}){
  viewer.clearPins();
- for(const key of ['focus','region','division','selected','selectedTerm','activeDetail','cutaway','isolated','ghost','hiddenMeshes','peel'])viewer[key]=snapshot[key];
+ for(const key of ['focus','region','division','selected','selectedTerm','activeDetail','cutaway','isolated','ghost','peel'])viewer[key]=snapshot[key];
  viewer.focusHistory=[...snapshot.focusHistory];
  if(snapshot.pins.length)viewer.showPins(snapshot.pins,{labelled:snapshot.pinLabels});
  viewer.showOutline(snapshot.selectedTerm?.representation?.outline);

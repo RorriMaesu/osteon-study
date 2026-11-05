@@ -53,3 +53,26 @@ test('Back follows muscle navigation and is blocked during practice',()=>{
  assert.equal(viewer.canGoBack(),false);
  assert.equal(viewer.focusHistory.length,1);
 });
+
+test('undo peel restores one surface at a time across bone and muscle meshes',t=>{
+ const originalDocument=globalThis.document;
+ const events=[];
+ globalThis.document={dispatchEvent(event){events.push(event.type);}};
+ t.after(()=>{globalThis.document=originalDocument;});
+ const viewer=Object.assign(Object.create(AnatomyViewer.prototype),{
+  peeledSurfaces:new Set(),peel:true,applyVisibility(){},
+ });
+ const bone={userData:{}},muscle={userData:{muscleId:'biceps'}},otherBone={userData:{}};
+ viewer.peelSurface(bone);
+ viewer.peelSurface(muscle);
+ viewer.peelSurface(otherBone);
+ viewer.undoPeel();
+ assert.deepEqual([...viewer.peeledSurfaces],[bone,'biceps']);
+ viewer.undoPeel();
+ assert.deepEqual([...viewer.peeledSurfaces],[bone]);
+ assert.equal(viewer.peel,true);
+ viewer.restore();
+ viewer.undoPeel();
+ assert.equal(viewer.peeledSurfaces.size,0);
+ assert.deepEqual(events,Array(6).fill('layerschanged'));
+});

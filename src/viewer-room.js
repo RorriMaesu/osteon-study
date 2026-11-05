@@ -19,9 +19,10 @@ export function initViewerRoom({viewer,toast}){
  actions.id='viewer-action-menu';
  const mobileControls=document.createElement('div');
  mobileControls.className='viewer-mobile-controls';
- mobileControls.innerHTML='<select aria-label="Camera angle"><option value="">View angle</option></select><button type="button" aria-expanded="false" aria-controls="viewer-action-menu">Tools</button>';
+ mobileControls.innerHTML='<select aria-label="Camera angle"><option value="">View angle</option></select><button type="button" id="viewer-action-toggle" aria-expanded="false" aria-controls="viewer-action-menu">Tools</button><button type="button" id="mobile-undo-peel" hidden>Undo peel</button>';
  actions.before(mobileControls);
- const angle=mobileControls.querySelector('select'),more=mobileControls.querySelector('button');
+ const angle=mobileControls.querySelector('select'),more=mobileControls.querySelector('#viewer-action-toggle');
+ mobileControls.querySelector('#mobile-undo-peel').onclick=()=>{setMenu(false);viewer.undoPeel();};
  for(const preset of presets.querySelectorAll('[data-camera]')){
   const label=preset.getAttribute('aria-label')||preset.textContent.trim();
   angle.add(new Option(label,preset.dataset.camera));

@@ -43,6 +43,7 @@
 #discs-btn small{display:inline-block;min-width:1.5em;font-size:10px;line-height:1.6;border-radius:4px;background:#48665d66;padding:0 3px}#discs-btn[hidden]{display:none!important}
 #discs-btn span{display:inline!important}#discs-btn{white-space:nowrap}
 .viewer-mobile-controls,.viewer-mobile-help{display:none}
+.viewer-actions :is(#undo-peel-btn,#restore-btn)>b{font-weight:400}
 .atlas-label-pages[hidden]{display:none}
 
 @media(max-width:999px){
@@ -79,6 +80,10 @@
  .viewer-mobile-controls select,.viewer-mobile-controls button{margin:0;min-width:0;width:100%;min-height:44px}
  .viewer-mobile-controls select{font-size:16px}
  .viewer-mobile-controls button{font-size:14px}
+ #atlas-specimen .viewer-mobile-controls:has(#mobile-undo-peel:not([hidden])){grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr)}
+ #atlas-specimen .viewer-mobile-controls select{padding-inline:7px}
+ #atlas-specimen #mobile-undo-peel{padding-inline:4px;font-size:13px;background:#365544;border-color:#799b7b}
+ #atlas-specimen .viewer-actions #undo-peel-btn{display:none}
  #atlas-specimen .viewer-actions{grid-area:4/1/5/2;display:none;position:absolute;inset:auto 8px 4px;max-height:calc(100% - 8px);width:auto;margin:0;padding:7px;overflow:auto;overscroll-behavior:contain;align-content:start;z-index:8;background:#13272cfb;border:1px solid #617e73;border-radius:10px}
  #atlas-specimen.viewer-action-menu-open .viewer-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
  #atlas-specimen .viewer-actions button{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;width:100%;min-width:0;min-height:44px;padding:5px 3px;white-space:normal;line-height:1.2;font-size:14px;overflow-wrap:anywhere}
