@@ -1,0 +1,1512 @@
+{
+  "bank": [
+    {
+      "id": "lamina-skin-layers-001",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Skin proper consists of the:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Epidermis and dermis",
+      "distractors": [
+        "Epidermis and hypodermis only",
+        "Dermis and muscle only",
+        "Hypodermis alone"
+      ],
+      "explanation": "The hypodermis lies below the skin and helps anchor and insulate it, but is not part of skin proper."
+    },
+    {
+      "id": "lamina-skin-layers-002",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "The epidermis consists primarily of:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Keratinized stratified squamous epithelium",
+      "distractors": [
+        "Simple cuboidal epithelium",
+        "Dense irregular connective tissue",
+        "Smooth muscle"
+      ],
+      "explanation": "The epidermis is a protective stratified epithelial sheet; dermis is connective tissue."
+    },
+    {
+      "id": "lamina-skin-layers-003",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Which layer order runs from the surface toward the deepest epidermis in thick skin?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Corneum → lucidum → granulosum → spinosum → basale",
+      "distractors": [
+        "Basale → spinosum → granulosum → lucidum → corneum",
+        "Corneum → spinosum → lucidum → basale → granulosum",
+        "Lucidum → corneum → basale → spinosum → granulosum"
+      ],
+      "explanation": "Surface-to-deep order is C-L-G-S-B. Lucidum is present in thick skin."
+    },
+    {
+      "id": "lamina-skin-layers-004",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Which epidermal layer contains the principal mitotic basal cells?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Stratum basale",
+      "distractors": [
+        "Stratum corneum",
+        "Stratum lucidum",
+        "Outer granulosum only"
+      ],
+      "explanation": "Basal cells divide to replace keratinocytes lost from the surface."
+    },
+    {
+      "id": "lamina-skin-layers-005",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Which epidermal layer occurs in thick skin but is absent from thin skin?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Stratum lucidum",
+      "distractors": [
+        "Stratum basale",
+        "Stratum spinosum",
+        "Stratum corneum"
+      ],
+      "explanation": "Lucidum is the extra clear layer between granulosum and corneum in thick skin."
+    },
+    {
+      "id": "lamina-skin-layers-006",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Where is thick skin normally found?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Palms and soles",
+      "distractors": [
+        "Scalp and axilla only",
+        "Eyelids only",
+        "Entire body surface equally"
+      ],
+      "explanation": "Thick skin is specialized for high friction, has lucidum, and lacks hair follicles and sebaceous glands."
+    },
+    {
+      "id": "lamina-skin-layers-007",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Which structure is normally absent from thick skin?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Hair follicle",
+      "distractors": [
+        "Eccrine sweat gland",
+        "Stratum corneum",
+        "Dermal capillary"
+      ],
+      "explanation": "Thick skin lacks hair follicles and sebaceous glands but contains abundant eccrine glands."
+    },
+    {
+      "id": "lamina-skin-layers-008",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "The outer dead, keratin-rich epidermal cells are concentrated in the:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Stratum corneum",
+      "distractors": [
+        "Stratum basale",
+        "Papillary dermis",
+        "Hypodermis"
+      ],
+      "explanation": "The corneum contains flattened dead keratinized cells that provide a protective surface barrier."
+    },
+    {
+      "id": "lamina-skin-layers-009",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "The spiny appearance of stratum spinosum cells is associated with:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Desmosomal attachments between cells",
+      "distractors": [
+        "Bone canaliculi",
+        "Myelin wrapping",
+        "Peptide exit channels"
+      ],
+      "explanation": "Desmosomes maintain attachments as cells shrink during preparation, contributing to the spiny appearance."
+    },
+    {
+      "id": "lamina-skin-layers-010",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Which epidermal cell provides immune surveillance in the spinosum?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Langerhans cell",
+      "distractors": [
+        "Merkel cell",
+        "Melanocyte",
+        "Fibrocyte"
+      ],
+      "explanation": "Langerhans cells are dendritic immune cells; Merkel cells serve touch and melanocytes produce pigment."
+    },
+    {
+      "id": "lamina-skin-layers-011",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Which epidermal cell produces melanin?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Melanocyte",
+      "distractors": [
+        "Merkel cell",
+        "Langerhans cell",
+        "Fibroblast"
+      ],
+      "explanation": "Melanocytes in the basal region synthesize melanin and transfer it to neighboring keratinocytes."
+    },
+    {
+      "id": "lamina-skin-layers-012",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Melanin reaches surrounding keratinocytes through:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Melanosome transfer from melanocytes",
+      "distractors": [
+        "Red blood cells entering the epidermis",
+        "Mast-cell histamine release",
+        "Nail-plate diffusion only"
+      ],
+      "explanation": "Melanosomes carry pigment from melanocytes to keratinocytes, where it helps protect nuclear DNA."
+    },
+    {
+      "id": "lamina-skin-layers-013",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Which cell is associated with basal epidermal touch sensation?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Merkel cell",
+      "distractors": [
+        "Melanocyte",
+        "Langerhans cell",
+        "Osteocyte"
+      ],
+      "explanation": "Merkel cells form tactile associations near the stratum basale and support sustained touch sensation."
+    },
+    {
+      "id": "lamina-skin-layers-014",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Keratohyalin granules in the granular layer contain material associated mainly with:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Protein-mediated keratinization",
+      "distractors": [
+        "Mineralization of bone",
+        "Myelin formation",
+        "Histamine storage only"
+      ],
+      "explanation": "Keratohyalin contains proteins associated with keratin formation and organization."
+    },
+    {
+      "id": "lamina-skin-layers-015",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Lamellar granules contribute most directly to the epidermal:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Lipid water barrier",
+      "distractors": [
+        "Mitotic spindle",
+        "Blood supply",
+        "Collagen osteons"
+      ],
+      "explanation": "Lamellar granules release lipids that help form the barrier to water movement; do not confuse them with protein-rich keratohyalin."
+    },
+    {
+      "id": "lamina-skin-layers-016",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Why does a superficial epidermis-only scrape not cut an epidermal blood vessel?",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "The epidermis is avascular",
+      "distractors": [
+        "The epidermis contains only veins",
+        "All epidermal vessels are calcified",
+        "The epidermis has no living cells"
+      ],
+      "explanation": "Epidermal nutrition comes by diffusion from the underlying dermis."
+    },
+    {
+      "id": "lamina-skin-layers-017",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "The papillary dermis is composed mainly of:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Areolar connective tissue",
+      "distractors": [
+        "Dense regular connective tissue",
+        "Cartilage",
+        "Keratinized epithelium"
+      ],
+      "explanation": "The superficial papillary dermis contains loose areolar tissue, capillaries, and sensory structures."
+    },
+    {
+      "id": "lamina-skin-layers-018",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "The reticular dermis is composed mainly of:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Dense irregular connective tissue",
+      "distractors": [
+        "Areolar connective tissue only",
+        "Simple columnar epithelium",
+        "Fibrocartilage"
+      ],
+      "explanation": "Dense irregular collagen bundles provide dermal strength in multiple directions."
+    },
+    {
+      "id": "lamina-skin-layers-019",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Dermal papillae are:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Connective-tissue projections toward the epidermis",
+      "distractors": [
+        "Dead cells in the corneum",
+        "The marrow of a hair shaft",
+        "The apical parts of sebaceous cells"
+      ],
+      "explanation": "Papillae increase contact between dermis and epidermis and contain capillaries and sensory structures."
+    },
+    {
+      "id": "lamina-skin-layers-020",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "The hypodermis commonly contains abundant:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Adipose and areolar connective tissue",
+      "distractors": [
+        "Stratum lucidum",
+        "Articular cartilage",
+        "Simple squamous epidermis"
+      ],
+      "explanation": "Subcutaneous tissue anchors skin and helps cushion, insulate, and store energy."
+    },
+    {
+      "id": "lamina-skin-layers-021",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Most differences in normal skin pigmentation reflect differences in:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Melanin production, type, and distribution",
+      "distractors": [
+        "Every person having exactly the same melanin amount",
+        "Only the number of sweat glands",
+        "Only cartilage thickness"
+      ],
+      "explanation": "Melanocyte activity and pigment handling matter; pigmentation cannot be reduced simply to having more epidermal layers."
+    },
+    {
+      "id": "lamina-skin-layers-022",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Vitiligo is associated with:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Patchy loss of skin pigmentation",
+      "distractors": [
+        "Excessive growth of nail matrix",
+        "A type of skin carcinoma",
+        "Calcification of eccrine ducts"
+      ],
+      "explanation": "Vitiligo produces depigmented patches associated with loss or dysfunction of melanocytes."
+    },
+    {
+      "id": "lamina-skin-layers-023",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Albinism is most directly associated with impaired:",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "Melanin production",
+      "distractors": [
+        "Collagen tensile strength only",
+        "Eccrine sweat movement only",
+        "Nail-plate attachment only"
+      ],
+      "explanation": "Albinism involves defective melanin synthesis; distinguish it from patchy pigment loss in vitiligo."
+    },
+    {
+      "id": "lamina-accessories-001",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "New hair cells are produced by the:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Hair matrix",
+      "distractors": [
+        "Hair shaft cuticle only",
+        "Sebaceous duct",
+        "Stratum lucidum"
+      ],
+      "explanation": "Mitotically active matrix cells in the bulb form the growing hair."
+    },
+    {
+      "id": "lamina-accessories-002",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "The vascular connective-tissue projection feeding the hair bulb is the:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Hair papilla",
+      "distractors": [
+        "Hair cuticle",
+        "Nail bed",
+        "Arrector pili"
+      ],
+      "explanation": "The dermal hair papilla provides vessels and signaling support to the hair matrix."
+    },
+    {
+      "id": "lamina-accessories-003",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "From the center outward, the hair shaft layers are:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Medulla → cortex → cuticle",
+      "distractors": [
+        "Cuticle → cortex → medulla",
+        "Cortex → medulla → cuticle",
+        "Medulla → cuticle → cortex"
+      ],
+      "explanation": "The medulla is central when present, cortex surrounds it, and cuticle is outermost."
+    },
+    {
+      "id": "lamina-accessories-004",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Which structure is made of smooth muscle and produces goosebumps?",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Arrector pili",
+      "distractors": [
+        "Hair cortex",
+        "Hair matrix",
+        "Nail plate"
+      ],
+      "explanation": "Arrector pili contraction raises the follicle-associated hair and contributes to goosebumps."
+    },
+    {
+      "id": "lamina-accessories-005",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Hair is actively growing during:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Anagen",
+      "distractors": [
+        "Catagen",
+        "Telogen",
+        "Metastasis"
+      ],
+      "explanation": "Anagen is growth, catagen transition, and telogen rest."
+    },
+    {
+      "id": "lamina-accessories-006",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Which hair phase is the transition between active growth and rest?",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Catagen",
+      "distractors": [
+        "Anagen",
+        "Telogen",
+        "S phase"
+      ],
+      "explanation": "Catagen is the transition phase as active growth ends."
+    },
+    {
+      "id": "lamina-accessories-007",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Which hair phase is the resting phase?",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Telogen",
+      "distractors": [
+        "Anagen",
+        "Catagen",
+        "Prophase"
+      ],
+      "explanation": "Telogen is rest; hair-cycle phase names differ from general cell-cycle names."
+    },
+    {
+      "id": "lamina-accessories-008",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Sensory fibers wrapped around a hair follicle form a:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Hair root plexus",
+      "distractors": [
+        "Nail matrix",
+        "Nucleosome",
+        "Lamina propria"
+      ],
+      "explanation": "The root plexus detects movement of the hair."
+    },
+    {
+      "id": "lamina-accessories-009",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "The nail plate is produced mainly by mitosis in the:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Nail matrix",
+      "distractors": [
+        "Hyponychium alone",
+        "Free nail edge",
+        "Hair papilla"
+      ],
+      "explanation": "The matrix is the nail's growth region, whereas the bed supports the plate."
+    },
+    {
+      "id": "lamina-accessories-010",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "The tissue directly supporting the nail plate is the:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Nail bed",
+      "distractors": [
+        "Nail cuticle only",
+        "Hair medulla",
+        "Stratum lucidum only"
+      ],
+      "explanation": "The bed lies underneath and supports the plate; growth is centered in the matrix."
+    },
+    {
+      "id": "lamina-accessories-011",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "The pale crescent visible near the proximal nail is the:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Lunula",
+      "distractors": [
+        "Hyponychium",
+        "Hair cortex",
+        "Dermal papilla"
+      ],
+      "explanation": "Lunula is the visible pale crescent related to the underlying matrix region."
+    },
+    {
+      "id": "lamina-accessories-012",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "The proximal nail cuticle is also called the:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Eponychium",
+      "distractors": [
+        "Hyponychium",
+        "Perimysium",
+        "Endothelium"
+      ],
+      "explanation": "The eponychium is the proximal cuticle; the hyponychium lies under the distal free edge."
+    },
+    {
+      "id": "lamina-accessories-013",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Thickened tissue beneath the free distal edge of a nail is the:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Hyponychium",
+      "distractors": [
+        "Eponychium",
+        "Lunula",
+        "Hair matrix"
+      ],
+      "explanation": "Location distinguishes the distal hyponychium from the proximal eponychium."
+    },
+    {
+      "id": "lamina-accessories-014",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Which sweat gland typically opens directly onto the skin surface and aids cooling?",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Eccrine gland",
+      "distractors": [
+        "Apocrine gland opening to a follicle",
+        "Sebaceous gland",
+        "Endocrine thyroid gland"
+      ],
+      "explanation": "Eccrine sweat reaches the surface through a duct and cools by evaporation."
+    },
+    {
+      "id": "lamina-accessories-015",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Which gland usually empties into a hair follicle and is common in axillary and groin regions?",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Apocrine sweat gland",
+      "distractors": [
+        "Eccrine gland of the palm",
+        "Nail matrix",
+        "Dermal capillary"
+      ],
+      "explanation": "Apocrine sweat glands have a follicular outlet and characteristic regional distribution."
+    },
+    {
+      "id": "lamina-accessories-016",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Odor associated with apocrine sweat develops largely because of:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Bacterial action on the secretion",
+      "distractors": [
+        "Melanin synthesis in the duct",
+        "Keratin changing into bone",
+        "Red-cell lysis in the epidermis"
+      ],
+      "explanation": "The secretion itself becomes odorous through microbial breakdown at the skin surface."
+    },
+    {
+      "id": "lamina-accessories-017",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Sebaceous glands release:",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Sebum by holocrine secretion",
+      "distractors": [
+        "Watery sweat by simple diffusion",
+        "Calcitriol through a joint",
+        "Mucin through the nail bed"
+      ],
+      "explanation": "Sebaceous cells break down to contribute to the oily secretion called sebum."
+    },
+    {
+      "id": "lamina-accessories-018",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Which pairing is correct?",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Eccrine—surface duct; apocrine sweat—usually follicular duct",
+      "distractors": [
+        "Eccrine—no duct; sebaceous—bloodstream only",
+        "Apocrine sweat—nail plate; eccrine—bone marrow",
+        "Sebaceous—free nerve ending; apocrine sweat—artery"
+      ],
+      "explanation": "Gland outlet, product, and region are more reliable distinctions than assuming the gland's name defines its secretion mode."
+    },
+    {
+      "id": "lamina-accessories-019",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Why should the named apocrine sweat gland not automatically be identified with apical pinching in every diagram?",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Gland category and generic secretion mode are separate classifications",
+      "distractors": [
+        "All apocrine sweat glands are endocrine",
+        "All named glands lack cells",
+        "Apocrine sweat glands are cartilage"
+      ],
+      "explanation": "The generic apocrine mode depicts apical loss; the chapter describes sweat secretion through exocytosis. Classify the anatomical gland by its outlet and location."
+    },
+    {
+      "id": "lamina-sensation-001",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "A light-touch receptor in a dermal papilla that adapts rapidly is a:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Meissner corpuscle",
+      "distractors": [
+        "Merkel receptor",
+        "Deep Pacinian corpuscle",
+        "Free pain ending"
+      ],
+      "explanation": "Meissner corpuscles lie superficially in papillae and emphasize changing light touch."
+    },
+    {
+      "id": "lamina-sensation-002",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "A deep onion-like receptor responding to vibration is a:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Pacinian corpuscle",
+      "distractors": [
+        "Merkel cell",
+        "Langerhans cell",
+        "Hair matrix"
+      ],
+      "explanation": "Lamellated Pacinian corpuscles lie deep and respond rapidly to changing pressure and vibration."
+    },
+    {
+      "id": "lamina-sensation-003",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Which receptor is associated with slowly adapting basal epidermal touch?",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Merkel receptor",
+      "distractors": [
+        "Meissner corpuscle",
+        "Pacinian corpuscle",
+        "A sebaceous acinus"
+      ],
+      "explanation": "Merkel-associated receptors can continue signaling sustained touch; Meissner and Pacinian receptors adapt more rapidly."
+    },
+    {
+      "id": "lamina-sensation-004",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Pain and temperature are commonly detected by:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Free nerve endings",
+      "distractors": [
+        "Hair cuticle cells",
+        "Sebaceous cells",
+        "Osteocytes"
+      ],
+      "explanation": "Free sensory endings are important for pain and thermal sensation."
+    },
+    {
+      "id": "lamina-sensation-005",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "A rapidly adapting receptor responds especially well to:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "A change in the stimulus",
+      "distractors": [
+        "Every unchanging stimulus at a constant high rate forever",
+        "Only vitamin D concentrations",
+        "Only collagen synthesis"
+      ],
+      "explanation": "Rapid adaptation emphasizes onset, offset, and changes rather than steady unchanging stimulation."
+    },
+    {
+      "id": "lamina-sensation-006",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "A slowly adapting receptor is useful for detecting:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "A sustained stimulus",
+      "distractors": [
+        "Only the first instant of touch",
+        "Only evaporating sweat",
+        "Only a DNA mutation"
+      ],
+      "explanation": "Slowly adapting receptors continue to provide information during maintained stimulation."
+    },
+    {
+      "id": "lamina-sensation-007",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "When body temperature rises, dermal vessels normally:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Dilate to increase heat transfer toward the surface",
+      "distractors": [
+        "Constrict to maximize heat conservation",
+        "Become new cartilage",
+        "Lose all smooth muscle instantly"
+      ],
+      "explanation": "Vasodilation increases skin blood flow and assists heat loss when the environment permits it."
+    },
+    {
+      "id": "lamina-sensation-008",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "When cold, constriction of skin vessels helps:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Reduce heat loss at the surface",
+      "distractors": [
+        "Increase evaporation of every sweat droplet",
+        "Make a new stratum lucidum",
+        "Increase melanin instantly"
+      ],
+      "explanation": "Vasoconstriction reduces surface blood flow and conserves heat."
+    },
+    {
+      "id": "lamina-sensation-009",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Sweating cools the body most directly when sweat:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Evaporates",
+      "distractors": [
+        "Remains trapped without evaporation",
+        "Becomes sebum",
+        "Enters the bloodstream through a follicle"
+      ],
+      "explanation": "Evaporation removes heat; sweating is less effective when evaporation is limited."
+    },
+    {
+      "id": "lamina-sensation-010",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "UV exposure supports skin production of which vitamin-D precursor?",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Cholecalciferol, vitamin D3",
+      "distractors": [
+        "Calcitriol as the final kidney product",
+        "Insulin",
+        "Histamine"
+      ],
+      "explanation": "Skin forms D3, liver forms calcidiol, and kidney produces active calcitriol."
+    },
+    {
+      "id": "lamina-sensation-011",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Which organ converts vitamin D3 into calcidiol?",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Liver",
+      "distractors": [
+        "Kidney",
+        "Nail matrix",
+        "Sebaceous gland"
+      ],
+      "explanation": "The usual sequence is skin D3 → liver calcidiol → kidney calcitriol."
+    },
+    {
+      "id": "lamina-sensation-012",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "The final major conversion to active calcitriol occurs in the:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Kidney",
+      "distractors": [
+        "Liver",
+        "Stratum corneum",
+        "Sweat duct"
+      ],
+      "explanation": "The kidney produces active calcitriol after the liver's calcidiol step."
+    },
+    {
+      "id": "lamina-sensation-013",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Active vitamin D supports:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Intestinal calcium absorption",
+      "distractors": [
+        "Removal of all melanin",
+        "Sister-chromatid alignment only",
+        "Hair cuticle shedding only"
+      ],
+      "explanation": "Calcitriol supports calcium and phosphate balance, including intestinal absorption needed for normal mineralization."
+    },
+    {
+      "id": "lamina-sensation-014",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Which is a normal protective skin function?",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Limiting water loss and entry of pathogens",
+      "distractors": [
+        "Performing all blood-cell production",
+        "Making every body's digestive enzyme",
+        "Producing all ATP for the body"
+      ],
+      "explanation": "The epidermal barrier protects against water loss, physical insult, and pathogen entry."
+    },
+    {
+      "id": "lamina-sensation-015",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "With aging, loss of dermal collagen and elastic performance tends to produce:",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Reduced elasticity and more wrinkling",
+      "distractors": [
+        "More perfect recoil with every year",
+        "New articular cartilage in the epidermis",
+        "Elimination of all sensory endings at once"
+      ],
+      "explanation": "Changes to collagen, elastic fibers, glands, and vascularity affect aged skin function and appearance."
+    },
+    {
+      "id": "lamina-burns-001",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "A first-degree burn involves:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Epidermis only",
+      "distractors": [
+        "Entire epidermis and dermis",
+        "Muscle and bone",
+        "Only the subcutaneous fat beneath intact skin"
+      ],
+      "explanation": "Burn depth distinguishes epidermal, partial-thickness, full-thickness, and deeper injury."
+    },
+    {
+      "id": "lamina-burns-002",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "A painful burn with blisters involving the epidermis and part of the dermis is:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Second degree",
+      "distractors": [
+        "First degree",
+        "Third degree by definition",
+        "Fourth degree"
+      ],
+      "explanation": "Second-degree or partial-thickness burns extend into part of the dermis and often blister."
+    },
+    {
+      "id": "lamina-burns-003",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "A full-thickness burn destroys:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "The epidermis and full dermis",
+      "distractors": [
+        "Only dead corneal cells",
+        "Only part of the epidermis",
+        "Only the hair shaft above skin"
+      ],
+      "explanation": "Third-degree injury is full thickness; extension through muscle or bone indicates still deeper injury."
+    },
+    {
+      "id": "lamina-burns-004",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "A burn extending into muscle or bone is classified here as:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Fourth degree",
+      "distractors": [
+        "First degree",
+        "Second degree",
+        "An epidermal abrasion"
+      ],
+      "explanation": "Fourth-degree injury extends below the skin into deeper structures such as muscle and bone."
+    },
+    {
+      "id": "lamina-burns-005",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Why may the center of a full-thickness burn have reduced sensation?",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Sensory nerve endings have been destroyed",
+      "distractors": [
+        "Reduced pain proves the burn is shallow",
+        "The epidermis has become full of new vessels",
+        "Melanin permanently blocks every impulse"
+      ],
+      "explanation": "Loss of sensation can reflect severe nerve-ending injury, not a mild burn."
+    },
+    {
+      "id": "lamina-burns-006",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Major burns threaten fluid balance primarily because they:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Destroy the barrier that limits fluid loss",
+      "distractors": [
+        "Create functioning new nephrons",
+        "Increase the skin's watertightness",
+        "Transform all blood into lymph"
+      ],
+      "explanation": "Loss of the skin barrier causes major fluid losses and raises infection risk."
+    },
+    {
+      "id": "lamina-burns-007",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "In the adult rule of nines, the entire head and neck account for:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "9%",
+      "distractors": [
+        "18%",
+        "4.5%",
+        "1%"
+      ],
+      "explanation": "The adult head and neck together count as 9%; the anterior half is 4.5%."
+    },
+    {
+      "id": "lamina-burns-008",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "In the adult rule of nines, one entire arm accounts for:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "9%",
+      "distractors": [
+        "18%",
+        "1%",
+        "27%"
+      ],
+      "explanation": "Each whole adult arm is 9%; its anterior or posterior half is 4.5%."
+    },
+    {
+      "id": "lamina-burns-009",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "In the adult rule of nines, one entire leg accounts for:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "18%",
+      "distractors": [
+        "9%",
+        "4.5%",
+        "1%"
+      ],
+      "explanation": "Each whole leg is 18%, with 9% on each side."
+    },
+    {
+      "id": "lamina-burns-010",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "The entire anterior trunk plus one whole arm totals:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "27%",
+      "distractors": [
+        "36%",
+        "22.5%",
+        "18%"
+      ],
+      "explanation": "Anterior trunk 18% plus whole arm 9% equals 27%."
+    },
+    {
+      "id": "lamina-burns-011",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "The entire anterior trunk plus one whole leg plus the anterior surface of one arm totals:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "40.5%",
+      "distractors": [
+        "45%",
+        "36%",
+        "31.5%"
+      ],
+      "explanation": "18 + 18 + 4.5 = 40.5%. Count only the named half of the arm."
+    },
+    {
+      "id": "lamina-burns-012",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Both whole legs together account for:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "36%",
+      "distractors": [
+        "18%",
+        "27%",
+        "45%"
+      ],
+      "explanation": "Each adult leg is 18%, so both total 36%."
+    },
+    {
+      "id": "lamina-burns-013",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "The posterior trunk and posterior surface of one arm total:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "22.5%",
+      "distractors": [
+        "27%",
+        "36%",
+        "13.5%"
+      ],
+      "explanation": "Posterior trunk 18% plus posterior half-arm 4.5% equals 22.5%."
+    },
+    {
+      "id": "lamina-burns-014",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "The anterior surface of one leg and one whole arm total:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "18%",
+      "distractors": [
+        "27%",
+        "13.5%",
+        "36%"
+      ],
+      "explanation": "Anterior half-leg 9% plus whole arm 9% equals 18%."
+    },
+    {
+      "id": "lamina-burns-015",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Which adult region contributes the final 1% in the rule of nines?",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Perineum",
+      "distractors": [
+        "Each hand separately",
+        "Entire head",
+        "Each foot separately"
+      ],
+      "explanation": "The perineal region is 1%. Adult percentages should not be applied unchanged to young children."
+    },
+    {
+      "id": "lamina-disorders-001",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Basal cell carcinoma is associated in this chapter with cells of the:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Stratum basale",
+      "distractors": [
+        "Stratum lucidum",
+        "Hair cuticle only",
+        "Hypodermal fat only"
+      ],
+      "explanation": "The course mapping associates basal cell carcinoma with basal epidermal cells."
+    },
+    {
+      "id": "lamina-disorders-002",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Squamous cell carcinoma is associated in this chapter with keratinocytes of the:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Stratum spinosum",
+      "distractors": [
+        "Hair medulla",
+        "Dermal papilla only",
+        "Hypodermal adipose only"
+      ],
+      "explanation": "The chapter contrasts spinosum-associated squamous carcinoma with basal carcinoma and melanocyte-derived melanoma."
+    },
+    {
+      "id": "lamina-disorders-003",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Melanoma arises from:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Melanocytes",
+      "distractors": [
+        "Merkel cells",
+        "Fibrocytes",
+        "Osteocytes"
+      ],
+      "explanation": "Melanoma is a malignancy of pigment-producing melanocytes and can be highly metastatic."
+    },
+    {
+      "id": "lamina-disorders-004",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Which cancer in the chapter is particularly concerning for early metastasis?",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Melanoma",
+      "distractors": [
+        "A callus",
+        "Vitiligo",
+        "A pressure injury"
+      ],
+      "explanation": "Melanoma can spread early and is not interchangeable with a benign pigment change or noncancerous injury."
+    },
+    {
+      "id": "lamina-disorders-005",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "In the ABCDE melanoma mnemonic, A represents:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Asymmetry",
+      "distractors": [
+        "Anagen",
+        "Apocrine",
+        "Atrophy only"
+      ],
+      "explanation": "ABCDE refers to asymmetry, border irregularity, color variation, diameter, and evolution."
+    },
+    {
+      "id": "lamina-disorders-006",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "In ABCDE, E emphasizes:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Evolution or change over time",
+      "distractors": [
+        "Every lesion being harmless below 6 mm",
+        "Eccrine output",
+        "Elastic recoil"
+      ],
+      "explanation": "Change in a lesion matters. A diameter threshold is not a guarantee that a smaller lesion is harmless."
+    },
+    {
+      "id": "lamina-disorders-007",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "The EFG signs emphasized in the notes mean:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Elevated, firm, growing",
+      "distractors": [
+        "Elastic, flat, granular",
+        "Eccrine, follicular, glandular",
+        "Exon, frame, gene"
+      ],
+      "explanation": "EFG supplements ABCDE by emphasizing elevated, firm, growing lesions."
+    },
+    {
+      "id": "lamina-disorders-008",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Acne commonly begins when a follicle is obstructed by:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Sebum and shed keratin",
+      "distractors": [
+        "Calcitriol and bone mineral",
+        "Only clean water",
+        "Ribosomal subunits"
+      ],
+      "explanation": "Accumulated sebum and keratin can plug the follicle, followed by microbial growth and inflammation."
+    },
+    {
+      "id": "lamina-disorders-009",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Why can sustained pressure over a bony region cause a pressure injury?",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "It reduces local perfusion and causes ischemic tissue damage",
+      "distractors": [
+        "It makes the epidermis overvascularized",
+        "It always increases oxygen delivery",
+        "It changes every cell into cartilage"
+      ],
+      "explanation": "Prolonged pressure compromises blood flow and can cause tissue necrosis."
+    },
+    {
+      "id": "lamina-disorders-010",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "A callus develops mainly in response to repeated:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Friction or mechanical stress",
+      "distractors": [
+        "DNA replication in red cells",
+        "Myelin formation",
+        "Vitamin-D activation"
+      ],
+      "explanation": "Repeated mechanical stress stimulates local epidermal thickening; pressure injury instead involves impaired tissue perfusion."
+    },
+    {
+      "id": "lamina-disorders-011",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Excessive raised scar formation is a:",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Keloid",
+      "distractors": [
+        "Lunula",
+        "Melanosome",
+        "Hair papilla"
+      ],
+      "explanation": "Keloids represent excessive scar-tissue deposition rather than a normal nail or pigment structure."
+    },
+    {
+      "id": "lamina-disorders-012",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Which event characterizes wound granulation?",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "New vessels and fibroblast collagen deposition",
+      "distractors": [
+        "All skin glands immediately restored",
+        "A new layer of cartilage replacing epidermis",
+        "Permanent cessation of cell activity"
+      ],
+      "explanation": "Granulation tissue supports repair; later remodeling produces mature scar."
+    },
+    {
+      "id": "lamina-disorders-013",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Why can a mature deep-wound scar lack hair and sweat glands?",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "Fibrosis does not fully restore all original skin appendages",
+      "distractors": [
+        "Scar is an extra stratum lucidum",
+        "Sebum permanently replaces the whole dermis",
+        "Hair and sweat glands are always absent from normal skin"
+      ],
+      "explanation": "Collagen-rich repair can close a wound without recreating the original architecture and appendages."
+    },
+    {
+      "id": "lamina-tf-023",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "Thick skin has hair follicles and sebaceous glands.",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "False",
+      "distractors": [
+        "True"
+      ],
+      "explanation": "Thick skin of palms and soles lacks both; eccrine glands are present."
+    },
+    {
+      "id": "lamina-tf-024",
+      "lesson": "5.1",
+      "type": "choice",
+      "prompt": "The reticular dermis is dense irregular connective tissue.",
+      "source": "OpenStax §5.1 · Lamina",
+      "objectives": [],
+      "answer": "True",
+      "distractors": [
+        "False"
+      ],
+      "explanation": "The papillary dermis is the more superficial areolar layer."
+    },
+    {
+      "id": "lamina-tf-025",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "The nail bed is the principal growth region of the nail.",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "False",
+      "distractors": [
+        "True"
+      ],
+      "explanation": "The nail matrix is the main growth region; the bed supports the plate."
+    },
+    {
+      "id": "lamina-tf-026",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Meissner corpuscles generally adapt more rapidly than Merkel-associated receptors.",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "True",
+      "distractors": [
+        "False"
+      ],
+      "explanation": "Meissner emphasizes changing light touch; Merkel supports sustained touch."
+    },
+    {
+      "id": "lamina-tf-027",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "The liver performs the final conversion to active calcitriol.",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "False",
+      "distractors": [
+        "True"
+      ],
+      "explanation": "The liver forms calcidiol; the kidney forms active calcitriol."
+    },
+    {
+      "id": "lamina-tf-028",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Reduced sensation in the center of a burn proves the burn is shallow.",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "False",
+      "distractors": [
+        "True"
+      ],
+      "explanation": "A full-thickness burn can destroy sensory endings and reduce sensation."
+    },
+    {
+      "id": "lamina-tf-029",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "The entire anterior surface of an adult leg counts as 9% in the rule of nines.",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "True",
+      "distractors": [
+        "False"
+      ],
+      "explanation": "One whole leg is 18%, so its anterior half is 9%."
+    },
+    {
+      "id": "lamina-tf-030",
+      "lesson": "5.4",
+      "type": "choice",
+      "prompt": "Sustained pressure can reduce local blood flow and cause tissue necrosis.",
+      "source": "OpenStax §5.4 · Lamina",
+      "objectives": [],
+      "answer": "True",
+      "distractors": [
+        "False"
+      ],
+      "explanation": "Ischemia under prolonged pressure contributes to pressure injury."
+    },
+    {
+      "id": "lamina-diagram-01",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Name the structure at the end of leader A.",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Sebaceous gland",
+      "distractors": [
+        "Eccrine sweat gland",
+        "Hair papilla",
+        "Pacinian corpuscle"
+      ],
+      "explanation": "The left lower leader reaches the lobular gland emptying into the follicle; sebaceous cells produce sebum by holocrine secretion.",
+      "figure": "foundation:skin",
+      "target": "A"
+    },
+    {
+      "id": "lamina-diagram-02",
+      "lesson": "5.2",
+      "type": "choice",
+      "prompt": "Name the structure at the end of leader B.",
+      "source": "OpenStax §5.2 · Lamina",
+      "objectives": [],
+      "answer": "Arrector pili muscle",
+      "distractors": [
+        "Hair matrix",
+        "Sebaceous gland",
+        "Dermal capillary"
+      ],
+      "explanation": "The left upper leader reaches the oblique smooth-muscle band attached to the follicle.",
+      "figure": "foundation:skin",
+      "target": "B"
+    },
+    {
+      "id": "lamina-diagram-03",
+      "lesson": "5.3",
+      "type": "choice",
+      "prompt": "Name the structure at the end of leader C.",
+      "source": "OpenStax §5.3 · Lamina",
+      "objectives": [],
+      "answer": "Pacinian corpuscle",
+      "distractors": [
+        "Meissner corpuscle",
+        "Hair root plexus",
+        "Merkel cell"
+      ],
+      "explanation": "The deep right leader reaches the lamellated onion-like pressure/vibration receptor.",
+      "figure": "foundation:skin",
+      "target": "C"
+    }
+  ],
+  "written": {
+    "5.1": [
+      {
+        "id": "short-009",
+        "chapter": 5,
+        "topic": "skin-layers",
+        "type": "short",
+        "stem": "List epidermal layers from superficial to deep and identify the thick-skin exception. Include one key cell role.",
+        "rubric": [
+          "Superficial to deep: corneum, lucidum, granulosum, spinosum, basale.",
+          "Lucidum is present in thick skin, such as palms and soles, and absent in thin skin.",
+          "A correct role: basal cells divide; melanocytes make pigment; Merkel cells serve touch; Langerhans cells support immunity."
+        ],
+        "explanation": "Superficial to deep: corneum, lucidum, granulosum, spinosum, basale. Lucidum is present in thick skin, such as palms and soles, and absent in thin skin. A correct role: basal cells divide; melanocytes make pigment; Merkel cells serve touch; Langerhans cells support immunity.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §5.1",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/5-1-layers-of-the-skin"
+        }
+      }
+    ],
+    "5.2": [
+      {
+        "id": "short-010",
+        "chapter": 5,
+        "topic": "accessories",
+        "type": "short",
+        "stem": "Compare eccrine sweat, apocrine sweat, and sebaceous glands using product and outlet.",
+        "rubric": [
+          "Eccrine glands make watery sweat that reaches the surface and cools by evaporation.",
+          "Apocrine sweat glands usually empty into hair follicles in areas such as axilla/groin; bacterial action contributes to odor.",
+          "Sebaceous glands release oily sebum through holocrine secretion, usually into follicles."
+        ],
+        "explanation": "Eccrine glands make watery sweat that reaches the surface and cools by evaporation. Apocrine sweat glands usually empty into hair follicles in areas such as axilla/groin; bacterial action contributes to odor. Sebaceous glands release oily sebum through holocrine secretion, usually into follicles.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §5.2",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/5-2-accessory-structures-of-the-skin"
+        }
+      }
+    ],
+    "5.4": [
+      {
+        "id": "short-011",
+        "chapter": 5,
+        "topic": "burns",
+        "type": "short",
+        "stem": "Compare first-, second-, third-, and fourth-degree burns, then explain two major consequences of extensive skin damage.",
+        "rubric": [
+          "First is epidermis only; second extends into part of dermis and often blisters.",
+          "Third destroys full epidermis/dermis and may reduce sensation; fourth extends into deeper muscle or bone.",
+          "Extensive barrier loss causes fluid loss and increased infection risk."
+        ],
+        "explanation": "First is epidermis only; second extends into part of dermis and often blisters. Third destroys full epidermis/dermis and may reduce sensation; fourth extends into deeper muscle or bone. Extensive barrier loss causes fluid loss and increased infection risk.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §5.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/5-4-diseases-disorders-and-injuries-of-the-integumentary-system"
+        }
+      }
+    ],
+    "5.3": [
+      {
+        "id": "short-012",
+        "chapter": 5,
+        "topic": "sensation",
+        "type": "short",
+        "stem": "Explain skin responses to heat and cold, and the vitamin-D activation pathway.",
+        "rubric": [
+          "When warm, skin vessels dilate and eccrine sweat evaporation removes heat.",
+          "When cold, skin vasoconstriction reduces heat loss.",
+          "UV supports skin D3 production, liver forms calcidiol, kidney forms calcitriol, which supports intestinal calcium absorption."
+        ],
+        "explanation": "When warm, skin vessels dilate and eccrine sweat evaporation removes heat. When cold, skin vasoconstriction reduces heat loss. UV supports skin D3 production, liver forms calcidiol, kidney forms calcitriol, which supports intestinal calcium absorption.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §5.3",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/5-3-functions-of-the-integumentary-system"
+        }
+      }
+    ]
+  }
+}

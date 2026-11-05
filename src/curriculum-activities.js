@@ -1,3 +1,4 @@
+import {renderSkinActivity} from './foundations-skin.js';
 import {renderCellTissueActivity} from './foundations-celltissue.js';
 import {renderFoundationsActivity} from './foundations-activities.js';
 import {renderFoundationAtlas} from './foundations-atlas.js';
@@ -6,7 +7,7 @@ import {shuffled} from './exam-core.js';
 import {renderMuscleLab} from './muscle-labs.js';
 
 export function renderCurriculumActivity(root,section,e){
- if(renderCellTissueActivity(root,section,e)||renderFoundationsActivity(root,section)||renderFoundationAtlas(root,section,e)||renderMuscleLab(root,section))return;
+ if(renderSkinActivity(root,section,e)||renderCellTissueActivity(root,section,e)||renderFoundationsActivity(root,section)||renderFoundationAtlas(root,section,e)||renderMuscleLab(root,section))return;
  if(section==='9.5'){movementLab(root);return;}
  const q=examBank.find(q=>q.lesson===section&&q.type==='match');if(!q){root.innerHTML=`<h3>Reconstruct the sequence.</h3><p>Write the main stages from memory, then compare with the complete section reading. Explain what each stage contributes before continuing to Retrieve.</p>`;return;}
  let index=0,show=false,selected=null;const options=shuffled(q.pairs.map(p=>p.right));

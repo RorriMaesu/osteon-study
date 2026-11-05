@@ -347,3 +347,86 @@ Object.assign(objectiveChecks, {
   ]
  ]
 });
+
+Object.assign(objectiveChecks, {
+ "5.1": [
+  [
+   "What system includes skin, hair, nails and cutaneous glands?",
+   "Integumentary system",
+   "Which two layers make up the skin itself?",
+   "Epidermis and dermis"
+  ],
+  [
+   "Name the deepest epidermal stratum.",
+   "Stratum basale",
+   "What deeper skin layer contains blood vessels and sensory receptors?",
+   "Dermis"
+  ],
+  [
+   "What subcutaneous layer commonly contains abundant adipose tissue?",
+   "Hypodermis",
+   "What dense investment surrounds many muscles below the hypodermis?",
+   "Deep fascia"
+  ],
+  [
+   "What is the predominant epidermal cell type?",
+   "Keratinocyte",
+   "From which epidermal layer do most replacement keratinocytes arise?",
+   "Stratum basale"
+  ],
+  [
+   "What epidermal cells make melanin?",
+   "Melanocytes",
+   "What pigment is transferred to keratinocytes to help protect nuclear DNA against UV?",
+   "Melanin"
+  ]
+ ],
+ "5.2": [
+  [
+   "Which skin accessory is a hard plate covering the dorsal distal digit?",
+   "Nail",
+   "Which accessory projects above the surface as a shaft and is produced in a follicle?",
+   "Hair"
+  ],
+  [
+   "Where do dividing cells generate the growing nail plate?",
+   "Nail matrix",
+   "What widened region at the base of the hair root contains the hair matrix?",
+   "Hair bulb"
+  ],
+  [
+   "Which skin gland typically opens directly onto the surface and supports evaporative cooling?",
+   "Eccrine sweat gland",
+   "What oily substance do sebaceous glands release?",
+   "Sebum"
+  ]
+ ],
+ "5.3": [
+  [
+   "What outer epidermal layer forms the main cornified barrier?",
+   "Stratum corneum",
+   "Which radiation initiates vitamin D3 production in the skin?",
+   "UVB"
+  ],
+  [
+   "Which change in skin vessel diameter helps release heat in warm conditions?",
+   "Vasodilation",
+   "What process removes heat when liquid sweat becomes water vapor?",
+   "Evaporation"
+  ]
+ ],
+ "5.4": [
+  [
+   "What malignant skin tumor arises from melanocytes?",
+   "Melanoma",
+   "Which carcinoma arises from basal-type epithelial cells in the skin?",
+   "Basal cell carcinoma"
+  ],
+  [
+   "What depth category includes a burn that extends into dermis without destroying its full thickness?",
+   "Partial thickness",
+   "What later stage of repair reorganizes collagen in scar tissue?",
+   "Remodeling"
+  ]
+ ]
+});

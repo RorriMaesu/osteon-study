@@ -1,6 +1,6 @@
 # Osteon
 
-**A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6–10, alongside the dedicated BI 231 bone-list test.
+**A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 1–10, alongside the dedicated BI 231 bone-list test.
 
 **Muscle review in progress:** the humerus/forearm layer now includes the forearm muscles correctly. The atlas still has missing and unresolved anatomy; [read the current review and individual component checks](MUSCLE-VIEW-REVIEW.md). Further promotional-video work is on hold for the muscle review.
 
@@ -42,6 +42,14 @@ Turn on **Landmarks** above the 3D viewer. Double-click a bone to see labels for
 The review reconciles all **177 teacher-list entries**: 59 direct bone entries and 118 integrated landmark/tissue/reference entries. Existing spatial practice remains 173 entries, with two source-recall items and two movement tests. Ligaments, discs, arteries and joint tissues now remain with their anatomical region when zoomed in. [Full in-view coverage checklist](ATLAS-LANDMARK-COVERAGE.csv).
 
 Fontanelles open a **locally bundled, rotatable UCSF fetal-skull scan**, with superior, posterior and left/right developmental site guides plus the labeled newborn comparison. Some sites are narrowed or closed in the specimen, so the guides do not assert six open gaps. The ethmoidal air-cell region is also available, but individual drainage ostia remain unverified. Both limitations stay explicit and excluded from exact spatial scoring. [Model credits and separate specimen license](CREDITS.md).
+
+## Chapters 1–5 foundations
+
+- [Study Studio](https://rorrimaesu.github.io/osteon-study/#study) brings the earlier learning apps into the same chapter library, with a full source reader, a guided lesson and scored practice for every section.
+- Chapters 1–2 combine the original body worksheets, interactive cutting planes, organ systems, chemistry activities and the 239-question trainer.
+- Chapters 3–4 include hands-on cell activities, a captioned protein-synthesis animation, tissue figure tours and textbook micrograph identification.
+- Chapter 5 uses the original Lamina skin diagram with direct visual targets, skin lessons and written-response rubrics.
+- [Practice Lab](https://rorrimaesu.github.io/osteon-study/#exam-center) offers individual 50-question exams, mixed exams for Chapters 1–2 and 3–5, and a 300-question comprehensive exam across Chapters 1–10. The existing skeletal exam options are also available.
 
 ## Chapters 6–9 exam preparation
 

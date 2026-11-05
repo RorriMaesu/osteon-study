@@ -42,6 +42,14 @@ test('cell and tissue exams cover each objective and preserve the full-bank sess
  const bankSession=createSession(examBank,{scope:'bank',mode:'practice'});
  assert.ok(validSession(JSON.parse(JSON.stringify(bankSession))));
 });
+test('skin and expanded cumulative forms include every assigned chapter objective',()=>{
+ for(const [scope,chapterIds,size] of [['5',[5],50],['foundations35',[3,4,5],90],['course1to10',[1,2,3,4,5,6,7,8,9,10],300]]){
+  const items=selectExam(scope,examBank,rng(280));
+  assert.equal(items.length,size);
+  for(const section of syllabus.sections.filter(s=>chapterIds.includes(s.chapter)))for(const goal of section.objectives)assert.ok(items.some(q=>q.objectives.includes(goal.id)),goal.id);
+ }
+ assert.deepEqual(examBank.filter(q=>q.figure==='foundation:skin').map(q=>q.target),['A','B','C']);
+});
 function key(q){return q.type==='multi'?[...q.correctChoices]:q.type==='match'?Object.fromEntries(q.pairs.map(p=>[p.left,p.right])):q.type==='order'?[...q.steps]:q.answer;}
 test('chapter and cumulative blueprints hold across different randomized forms and never truncate to 20',()=>{
  for(let seed=1;seed<=60;seed++)for(const scope of ['6','7','8','9','all']){
