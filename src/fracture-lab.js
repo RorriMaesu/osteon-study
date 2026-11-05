@@ -33,7 +33,7 @@ const domains={all:'All bone and fracture topics',patterns:'Fracture patterns',c
 const domainOptions=[...new Set(fracture.bank.map(q=>q.domain))];
 export function renderFractureLab(root,section,e){
  if(section!=='6.5')return false;
- root.classList.add('muscle-interactive-step','foundation-studio');
+ root.classList.add('foundation-studio');
  let view='repair',index=0,pattern='transverse',domain='all',playing=false,timer;
  const stop=()=>{clearTimeout(timer);playing=false;};
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;

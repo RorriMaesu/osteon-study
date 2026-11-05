@@ -18,7 +18,20 @@ export function mountPlaneModel(root,fallback){
  scene.add(new THREE.HemisphereLight(0xffffff,0x536067,2));
  const light=new THREE.DirectionalLight(0xffefd9,2);light.position.set(3,4,3);scene.add(light);
  const draw=()=>renderer.render(scene,camera),materials=[];
- const resize=new ResizeObserver(()=>{if(!stage.clientWidth||!stage.clientHeight)return;renderer.setSize(stage.clientWidth,stage.clientHeight,false);camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();draw();});
+ let bounds,lastFit;
+ function fit(){
+  if(!bounds)return;
+  const halfVertical=THREE.MathUtils.degToRad(camera.fov/2),halfHorizontal=Math.atan(Math.tan(halfVertical)*camera.aspect);
+  const distance=1.04*bounds.radius/Math.sin(Math.min(halfVertical,halfHorizontal));
+  const offset=camera.position.clone().sub(orbit.target);
+  const relative=lastFit?offset.length()/lastFit:1;
+  orbit.target.copy(bounds.center);
+  orbit.maxDistance=Math.max(6,distance*2.5);
+  camera.position.copy(orbit.target).add(offset.setLength(THREE.MathUtils.clamp(distance*relative,orbit.minDistance,orbit.maxDistance)));
+  lastFit=distance;
+  orbit.update();
+ }
+ const resize=new ResizeObserver(()=>{if(!stage.clientWidth||!stage.clientHeight)return;renderer.setSize(stage.clientWidth,stage.clientHeight,false);camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();fit();draw();});
  resize.observe(stage);orbit.addEventListener('change',draw);
  stage.tabIndex=0;stage.setAttribute('aria-label','3D body planes. Drag or use the arrow keys to rotate. Scroll, pinch, or use plus and minus to zoom.');
  stage.onkeydown=event=>{
@@ -37,6 +50,8 @@ export function mountPlaneModel(root,fallback){
  asset.then(gltf=>{
   if(stopped)return;
   const model=gltf.scene.clone(true),surfaces=planes.map(name=>model.getObjectByName(name));scene.add(model);
+  bounds=new THREE.Box3().setFromObject(model).getBoundingSphere(new THREE.Sphere());
+  fit();
   surfaces.forEach((surface,i)=>{surface.material=new THREE.MeshBasicMaterial({color:colors[i],transparent:true,opacity:.39,side:THREE.DoubleSide,depthWrite:false});surface.renderOrder=3;materials.push(surface.material);});
   function show(index){
    surfaces.forEach((s,i)=>{s.visible=index===i;});

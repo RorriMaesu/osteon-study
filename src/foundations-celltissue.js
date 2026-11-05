@@ -13,8 +13,8 @@ function cellDiagram(d,index){
  const marker=`<circle cx="${x}" cy="${y}" r="12" fill="none" stroke="#ffb081" stroke-width="5"/><circle cx="${x}" cy="${y}" r="3" fill="#ffb081"/>`;
  return d.svg.replace('</svg>',marker+'</svg>');
 }
-function specimenFigure(s,visible){
- return `<figure class="exam-figure foundation-figure"><img src="${path}chapter4/${s.src.replace('assets/','')}" alt="${visible?escape(s.name):'Unlabeled textbook tissue micrograph'}" loading="lazy"><figcaption>${escape(s.credit)} · Textbook practice specimen.</figcaption></figure>`;
+function specimenFigure(s,visible,exam=false){
+ return `<figure class="${exam?'exam-figure ':''}foundation-figure"><img src="${path}chapter4/${s.src.replace('assets/','')}" alt="${visible?escape(s.name):'Unlabeled textbook tissue micrograph'}" loading="lazy"><figcaption>${escape(s.credit)} · Textbook practice specimen.</figcaption></figure>`;
 }
 export function cellTissueExamFigure(name,target){
  if(name.startsWith('cell:')){
@@ -23,7 +23,7 @@ export function cellTissueExamFigure(name,target){
  }
  if(name.startsWith('tissue-specimen:')){
   const s=data.specimens.find(s=>s.id===name.slice(16));
-  return s?specimenFigure(s,false):'';
+  return s?specimenFigure(s,false,true):'';
  }
  if(name.startsWith('tissue-diagram:')&&target){
   const d=lab(target.module,{...target,labels:false});
@@ -38,14 +38,14 @@ const player=`<h3>Protein synthesis in two minutes</h3><video class="foundation-
 export function renderCellTissueActivity(root,section){
  const cell=data.cell[section], tissue=data.tissue[section];
  if(!cell&&!tissue)return false;
- root.classList.add('muscle-interactive-step','foundation-studio');
+ root.classList.add('foundation-studio');
  const diagrams=Object.entries(data.diagrams).filter(([id])=>id.startsWith(cell+'-'));
  const refs=cell?data.references.filter(f=>f.section===cell):figures.filter(f=>f.module===tissue);
  const specimens=data.specimens.filter(s=>s.module===tissue);
  const written=data.written[section]||[];
  const views={lab:'Activity',...(diagrams.length?{schematic:'Cell diagrams'}:{}),...(refs.length?{figures:'Textbook figures'}:{}),...(specimens.length?{specimens:'Microscope'}:{}),...(section==='3.4'?{video:'Watch animation'}:{}),...(written.length?{written:'Written practice'}:{})};
  let view='lab',diagram=diagrams[0]?.[0],point=0,ref=0,specimen=0,reveal=false;
- const state=tissue?{mode:labOptions[tissue][0][0],step:0,labels:true,detail:true}:{};
+ const state=tissue?{mode:labOptions[tissue][0][0],step:0,labels:true,detail:false}:{};
  function drawBody(){
   root.innerHTML=`<div class="control-row" aria-label="Studio activities">${Object.entries(views).map(([id,label])=>`<button type="button" data-foundation-view="${id}" aria-pressed="${id===view}">${label}</button>`).join('')}</div><div class="foundation-studio-content"></div>`;
   const panel=root.querySelector('.foundation-studio-content');

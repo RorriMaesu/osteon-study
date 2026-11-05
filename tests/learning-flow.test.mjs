@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import {examBank} from '../src/exam-bank.js';
 import {selectExam,createSession,validSession,gradeQuestion} from '../src/exam-core.js';
 import {examFigure} from '../src/exam-figures.js';
+import {lab} from '../src/tissue-labs.js';
 import {plates} from '../src/representations.js';
 import {readExposure,markExposure,validExposure} from '../src/exam-exposure.js';
 import {matchingReaderPages} from '../src/reader.js';
@@ -22,6 +23,21 @@ test('source-figure assessments resolve authored points, local assets and mask n
  const source=examBank.filter(q=>q.figure?.startsWith('source:'));assert.ok(source.length>=25);assert.ok(source.some(q=>q.lesson.startsWith('9.')));
  for(const q of source){const p=plates[q.figure.slice(7)];assert.ok(p.points.some(x=>x[0]===q.target),q.id);assert.ok(fs.existsSync(new URL('../assets/figures/'+(p.image||q.figure.slice(7))+'.jpg',import.meta.url)));const html=examFigure(q.figure,q.target);assert.ok(html.includes('<svg'));assert.ok(!html.toLowerCase().includes(q.answer.toLowerCase()),q.id+' leaked name');}
  assert.ok(examFigure('schematic:flexion','A').includes('smaller included elbow angle'));
+});
+test('every exam image resolves, and simultaneously open tissue figures keep separate crops',()=>{
+ const visual=examBank.filter(q=>q.figure);
+ assert.ok(visual.length>=260);
+ for(const q of visual){
+  const html=examFigure(q.figure,q.target);
+  assert.ok(/<figure\b/.test(html)&&/<(?:svg|img)\b/.test(html),q.id);
+  for(const [,file] of html.matchAll(/(?:href|src)="(assets\/[^"#]+)"/g))assert.ok(fs.existsSync(new URL('../'+file,import.meta.url)),q.id+' · '+file);
+ }
+ const whole=lab('epithelial',{detail:false}),detail=lab('epithelial',{detail:true});
+ const id=html=>html.match(/<clipPath id="([^"]+)"/)[1];
+ assert.notEqual(id(whole.svg),id(detail.svg));
+ assert.ok(whole.svg.includes('clip-path="url(#'+id(whole.svg)+')"'));
+ assert.ok(detail.svg.includes('clip-path="url(#'+id(detail.svg)+')"'));
+ assert.notEqual(whole.svg.match(/viewBox="[^"]+"/)[0],detail.svg.match(/viewBox="[^"]+"/)[0]);
 });
 test('revised distractors preserve older frozen option snapshots and their scores',()=>{
  for(const q of examBank.filter(q=>q.legacyDistractors)){const s=createSession([q]);s.options[q.id]=[q.answer,...q.legacyDistractors];s.responses[q.id]=q.legacyDistractors[0];assert.ok(validSession(s),q.id);assert.equal(gradeQuestion(q,s.responses[q.id]),false);s.responses[q.id]=q.answer;assert.equal(gradeQuestion(q,s.responses[q.id]),true);s.options[q.id][1]='unrecognized injected option';assert.equal(validSession(s),false);}

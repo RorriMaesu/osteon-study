@@ -22,6 +22,7 @@ export const tours={
 export const labOptions={types:[['families','Tissue families'],['membranes','Membranes'],['origins','Germ layers']],epithelial:[['classifier','Layers & shape'],['junctions','Junction details'],['transitional','Transitional tissue'],['secretion','Secretion mechanisms']],connective:[['regular','Dense regular'],['irregular','Dense irregular'],['elastic','Matrix & fibers'],['cartilage','Cartilage']],muscle:[['skeletal','Skeletal specimen'],['cardiac','Cardiac specimen'],['smooth','Smooth specimen']],nervous:[['signal','Information flow'],['support','Glial support']],repair:[['healing','Healing sequence'],['outcomes','Repair outcomes']]};
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function rect(box,f){return [box[0]*f.width,box[1]*f.height,box[2]*f.width,box[3]*f.height];}
+let cropSerial=0;
 export function lab(module,{mode=labOptions[module][0][0],labels=true,step=0,layers=1,shape='cuboidal',secretion='merocrine',detail=true}={}){
  let tour=tours[mode],controls='';
  if(mode==='classifier'){
@@ -40,7 +41,8 @@ export function lab(module,{mode=labOptions[module][0][0],labels=true,step=0,lay
   const row=[.07,.405,.75][i],height=[.235,.23,.23][i];
   overlay+=`<g class="secretion-guide" aria-hidden="true">${[.205,.35,.495].map((x,n)=>`<rect class="process-focus" style="--phase:${n}" x="${f.width*x}" y="${f.height*row}" width="${f.width*.16}" height="${f.height*height}" rx="${stroke*5}" fill="none" stroke="#7650c9" stroke-width="${stroke*2}"/>`).join('')}</g>`;
  }
- const svg=`<svg class="textbook-study" viewBox="${view.join(' ')}" role="img" aria-label="${labels?escape(s.name+' — original textbook figure '+f.id):'Unlabeled textbook detail'}" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="study-crop"><rect x="${view[0]}" y="${view[1]}" width="${view[2]}" height="${view[3]}"/></clipPath></defs><g clip-path="url(#study-crop)"><image href="${f.src}" x="0" y="0" width="${f.width}" height="${f.height}"/>${overlay}</g></svg>`;
+ const clip='tissue-crop-'+(++cropSerial);
+ const svg=`<svg class="textbook-study" viewBox="${view.join(' ')}" role="img" aria-label="${labels?escape(s.name+' — original textbook figure '+f.id):'Unlabeled textbook detail'}" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="${clip}"><rect x="${view[0]}" y="${view[1]}" width="${view[2]}" height="${view[3]}"/></clipPath></defs><g clip-path="url(#${clip})"><image href="${f.src}" x="0" y="0" width="${f.width}" height="${f.height}"/>${overlay}</g></svg>`;
  controls+=tour.steps.length>1?`<div class="tour-steps">${tour.steps.map((x,n)=>`<button data-tour-step="${n}" aria-pressed="${n===i}">${n+1}. ${escape(x.name)}</button>`).join('')}</div>`:'';
  return {title:s.name,caption:s.description,question:s.question,controls,svg,figure:f,step:i,steps:tour.steps.length};
 }

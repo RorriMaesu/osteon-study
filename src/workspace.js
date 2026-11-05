@@ -45,7 +45,7 @@ export function initWorkspace() {
     if(!root||root.getClientRects().length===0)return;
     // A lab is a coordinated control surface: CSS columns would separate its
     // diagram from its controls, sometimes leaving a nearly empty first page.
-    if(root.classList.contains('muscle-interactive-step')){const old=records.get(root);if(old)dismantle(root,old);return;}
+    if(root.classList.contains('lesson-explore-step')){const old=records.get(root);if(old)dismantle(root,old);return;}
     let record=records.get(root);
     if(record&&record.window.parentNode!==root){records.delete(root);record=null;}
     if(!record){
