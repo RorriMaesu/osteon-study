@@ -3,4 +3,4 @@ import foundations from './foundations-syllabus.json' with {type:'json'};
 
 export const syllabus={...osteon,chapters:[...foundations.chapters,...osteon.chapters],sections:[...foundations.sections,...osteon.sections]};
 export const publishedChapterIds=syllabus.chapters.filter(c=>c.status!=='pilot').map(c=>c.id);
-export const legacyChapterGroups={all:[6,7,8,9],all10:[6,7,8,9,10]};
+export const legacyChapterGroups={all:[6,7,8,9],all10:[6,7,8,9,10],foundations12:[1,2],foundations35:[3,4,5],course1to10:[1,2,3,4,5,6,7,8,9,10]};

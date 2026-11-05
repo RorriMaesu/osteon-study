@@ -2526,5 +2526,1527 @@
         ]
       }
     ]
+  },
+  {
+    "id": "organs",
+    "title": "Organs & systems",
+    "summary": "Explore major organs in context, then isolate each of the eleven organ systems. Select a numbered marker to connect location with function.",
+    "views": [
+      {
+        "id": "torso",
+        "title": "Organs in context · anterior view",
+        "src": "torso.png",
+        "size": [
+          1367,
+          1897
+        ],
+        "targets": [
+          {
+            "name": "Brain",
+            "x": 50,
+            "y": 9,
+            "teach": "In the cranial cavity, superior to the spinal cord.",
+            "aliases": []
+          },
+          {
+            "name": "Thyroid gland",
+            "x": 52.5,
+            "y": 35,
+            "teach": "In the anterior neck, inferior to the larynx and anterior to the trachea.",
+            "aliases": [],
+            "pin": [
+              70,
+              34
+            ]
+          },
+          {
+            "name": "Trachea",
+            "x": 50,
+            "y": 39,
+            "teach": "The airway anterior to the esophagus; descends from the larynx toward the main bronchi.",
+            "aliases": [],
+            "pin": [
+              28,
+              40
+            ]
+          },
+          {
+            "name": "Right lung",
+            "x": 40,
+            "y": 49,
+            "teach": "In the right thorax; right means the subject’s right, which appears on your left.",
+            "aliases": []
+          },
+          {
+            "name": "Left lung",
+            "x": 62,
+            "y": 50,
+            "teach": "In the left thorax, lateral to the heart.",
+            "aliases": []
+          },
+          {
+            "name": "Heart",
+            "x": 53,
+            "y": 55,
+            "teach": "In the middle mediastinum between the lungs, superior to the diaphragm; the apex points left.",
+            "aliases": []
+          },
+          {
+            "name": "Liver",
+            "x": 38,
+            "y": 66,
+            "teach": "Predominantly in the right upper abdomen immediately inferior to the diaphragm.",
+            "aliases": [],
+            "pin": [
+              18,
+              63
+            ]
+          },
+          {
+            "name": "Gallbladder",
+            "x": 42,
+            "y": 70.5,
+            "teach": "A small sac on the inferior surface of the liver; stores and concentrates bile.",
+            "aliases": [],
+            "pin": [
+              20,
+              71
+            ]
+          },
+          {
+            "name": "Stomach",
+            "x": 58,
+            "y": 68,
+            "teach": "In the left upper abdomen, inferior to the diaphragm; partly overlaps the pancreas in this transparent view.",
+            "aliases": [],
+            "pin": [
+              78,
+              65
+            ]
+          },
+          {
+            "name": "Right kidney",
+            "x": 37.5,
+            "y": 75,
+            "teach": "Posterior abdominal wall, retroperitoneal. The right kidney is usually slightly lower than the left.",
+            "aliases": [],
+            "pin": [
+              22,
+              79
+            ]
+          },
+          {
+            "name": "Left kidney",
+            "x": 62.5,
+            "y": 74,
+            "teach": "Posterior abdominal wall, retroperitoneal. Kidneys are not in the peritoneal cavity.",
+            "aliases": [],
+            "pin": [
+              80,
+              75
+            ]
+          },
+          {
+            "name": "Small intestine",
+            "x": 49,
+            "y": 84,
+            "teach": "Coiled loops occupy much of the central and lower abdominopelvic region; most nutrient absorption occurs here.",
+            "aliases": []
+          },
+          {
+            "name": "Large intestine",
+            "x": 68,
+            "y": 83,
+            "teach": "Frames the small intestine; absorbs water and electrolytes and forms feces.",
+            "aliases": []
+          },
+          {
+            "name": "Urinary bladder",
+            "x": 50,
+            "y": 95,
+            "teach": "In the pelvis, posterior to the pubic symphysis; stores urine.",
+            "aliases": []
+          }
+        ],
+        "mask": [],
+        "source": {
+          "label": "Mikael Häggström · Wikimedia Commons",
+          "url": "https://commons.wikimedia.org/wiki/File:Man_shadow_with_organs.png",
+          "credit": "CC0 public-domain dedication. Transparent layers show structures at different depths; markers added."
+        },
+        "customLeaders": true
+      },
+      {
+        "id": "integumentary",
+        "title": "Integumentary",
+        "src": "integumentary.png",
+        "size": [
+          201,
+          526
+        ],
+        "mask": [],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Skin",
+            "x": 27.363184079601986,
+            "y": 22.24334600760456,
+            "teach": "Covers the external body surface. A protective barrier containing receptors for touch, temperature, and other stimuli.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "leader": [
+              [
+                0.5,
+                116.513
+              ],
+              [
+                55,
+                117
+              ]
+            ]
+          },
+          {
+            "name": "Hair",
+            "x": 43.28358208955223,
+            "y": 4.942965779467681,
+            "teach": "Projects from follicles in the skin. Helps protect parts of the body and contributes to sensation.",
+            "aliases": [],
+            "pin": [
+              88,
+              48
+            ],
+            "leader": [
+              [
+                0.5,
+                26.5
+              ],
+              [
+                87,
+                26
+              ]
+            ]
+          },
+          {
+            "name": "Nails",
+            "x": 17.412935323383085,
+            "y": 58.55513307984791,
+            "teach": "Cover the dorsal tips of fingers and toes. Protect the ends of fingers and toes.",
+            "aliases": [],
+            "pin": [
+              12,
+              84
+            ],
+            "detail": [
+              7,
+              266,
+              60,
+              66
+            ],
+            "leader": [
+              [
+                -0.132,
+                357.053
+              ],
+              [
+                35,
+                308
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Skin forms a barrier that limits water loss. Sensory receptors detect stimuli; evaporating sweat helps release heat.",
+        "memory": "Imagine a jacket with sensors and built-in cooling.",
+        "focusBox": [
+          0,
+          0,
+          201,
+          353.00000000000006
+        ]
+      },
+      {
+        "id": "skeletal",
+        "title": "Skeletal",
+        "src": "skeletal.png",
+        "size": [
+          240,
+          526
+        ],
+        "mask": [
+          [
+            0,
+            5.513307984790875,
+            12.5,
+            5.32319391634981
+          ],
+          [
+            88.75,
+            0,
+            11.25,
+            18.250950570342205
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Bones",
+            "x": 21.25,
+            "y": 33.26996197718631,
+            "teach": "Form the axial and appendicular skeleton. Support, protect, and act as levers for movement.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "leader": [
+              [
+                0.48,
+                206.469
+              ],
+              [
+                51,
+                175
+              ]
+            ]
+          },
+          {
+            "name": "Cartilage",
+            "x": 49.166666666666664,
+            "y": 8.935361216730039,
+            "teach": "Occurs at joints and in supportive structures such as the nose and airway. Supports structures; articular cartilage cushions and reduces friction at many joints.",
+            "aliases": [],
+            "pin": [
+              88,
+              48
+            ],
+            "detail": [
+              78,
+              19,
+              77,
+              70
+            ],
+            "leader": [
+              [
+                30.5,
+                47.5
+              ],
+              [
+                118,
+                47
+              ]
+            ]
+          },
+          {
+            "name": "Joints",
+            "x": 35.833333333333336,
+            "y": 68.44106463878326,
+            "teach": "At articulations between bones. Places where bones meet; many permit movement.",
+            "aliases": [],
+            "pin": [
+              12,
+              84
+            ],
+            "detail": [
+              64,
+              333,
+              57,
+              64
+            ],
+            "leader": [
+              [
+                0.206,
+                403.899
+              ],
+              [
+                86,
+                360
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Bones provide support and act as levers. Muscles pull on bones across joints to produce movement.",
+        "memory": "A frame is useful. A frame with motors can move.",
+        "focusBox": [
+          0,
+          0,
+          240,
+          404.99999999999994
+        ]
+      },
+      {
+        "id": "muscular",
+        "title": "Muscular",
+        "src": "muscular.png",
+        "size": [
+          228,
+          526
+        ],
+        "mask": [
+          [
+            87.71929824561404,
+            0,
+            12.280701754385966,
+            25.665399239543728
+          ],
+          [
+            0,
+            73.19391634980988,
+            3.508771929824561,
+            4.562737642585551
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Skeletal muscles",
+            "x": 35.526315789473685,
+            "y": 51.33079847908745,
+            "teach": "Attach to the skeleton, often through tendons. Contract to pull on bones, support posture, and generate heat.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "leader": [
+              [
+                4.325,
+                228.839
+              ],
+              [
+                81,
+                270
+              ]
+            ]
+          },
+          {
+            "name": "Tendons",
+            "x": 34.64912280701755,
+            "y": 84.22053231939164,
+            "teach": "Connect muscles to bones. Connect muscle to bone and transmit pulling force.",
+            "aliases": [],
+            "pin": [
+              88,
+              84
+            ],
+            "detail": [
+              54,
+              392,
+              61,
+              88
+            ],
+            "leader": [
+              [
+                8.072,
+                403.221
+              ],
+              [
+                79,
+                443
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Skeletal muscles contract. Tendons transmit their pulling force to bones; muscle activity also produces heat.",
+        "memory": "Shivering is muscular work that generates heat."
+      },
+      {
+        "id": "nervous",
+        "title": "Nervous",
+        "src": "nervous.png",
+        "size": [
+          241,
+          526
+        ],
+        "mask": [
+          [
+            88.38174273858921,
+            0,
+            11.618257261410788,
+            25.665399239543728
+          ],
+          [
+            0,
+            57.60456273764259,
+            2.904564315352697,
+            4.182509505703422
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Brain",
+            "x": 47.71784232365145,
+            "y": 5.893536121673003,
+            "teach": "Inside the cranial cavity. Processes information and coordinates many responses.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "leader": [
+              [
+                0.5,
+                30.506
+              ],
+              [
+                115,
+                31
+              ]
+            ]
+          },
+          {
+            "name": "Spinal cord",
+            "x": 49.79253112033195,
+            "y": 27.186311787072242,
+            "teach": "Within the vertebral canal. Carries signals and helps coordinate reflexes.",
+            "aliases": [],
+            "pin": [
+              88,
+              48
+            ],
+            "leader": [
+              [
+                0.562,
+                159.917
+              ],
+              [
+                120,
+                143
+              ]
+            ]
+          },
+          {
+            "name": "Peripheral nerves",
+            "x": 36.09958506224066,
+            "y": 78.70722433460075,
+            "teach": "Extend throughout the body outside the brain and spinal cord. Connect the brain and spinal cord with the rest of the body.",
+            "aliases": [],
+            "pin": [
+              12,
+              84
+            ],
+            "detail": [
+              67,
+              352,
+              54,
+              101
+            ],
+            "leader": [
+              [
+                7.58,
+                315.245
+              ],
+              [
+                87,
+                414
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Sensory information reaches processing centers. Neural signals then activate effectors such as muscles and glands.",
+        "memory": "Sense the change. Sort the information. Send the response."
+      },
+      {
+        "id": "endocrine",
+        "title": "Endocrine",
+        "src": "endocrine.png",
+        "size": [
+          231,
+          522
+        ],
+        "mask": [
+          [
+            83.54978354978356,
+            0,
+            16.450216450216452,
+            27.586206896551722
+          ],
+          [
+            0,
+            64.55938697318008,
+            16.883116883116884,
+            5.555555555555555
+          ],
+          [
+            77.92207792207792,
+            65.13409961685824,
+            22.07792207792208,
+            34.86590038314176
+          ],
+          [
+            0,
+            34.86590038314176,
+            3.0303030303030303,
+            2.681992337164751
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Pituitary gland",
+            "x": 48.05194805194805,
+            "y": 7.662835249042145,
+            "teach": "At the base of the brain, in the sella turcica. Releases hormones involved in growth, reproduction, and regulation of other glands.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "detail": [
+              70,
+              8,
+              82,
+              85
+            ],
+            "leader": [
+              [
+                0.5,
+                39.506
+              ],
+              [
+                111,
+                40
+              ]
+            ]
+          },
+          {
+            "name": "Thyroid gland",
+            "x": 49.35064935064935,
+            "y": 17.624521072796934,
+            "teach": "Anterior neck, just inferior to the larynx. Produces hormones involved in metabolism.",
+            "aliases": [],
+            "pin": [
+              88,
+              30
+            ],
+            "detail": [
+              72,
+              69,
+              85,
+              64
+            ],
+            "leader": [
+              [
+                0.5,
+                91.506
+              ],
+              [
+                114,
+                92
+              ]
+            ]
+          },
+          {
+            "name": "Pancreas",
+            "x": 48.05194805194805,
+            "y": 36.206896551724135,
+            "teach": "Upper abdomen, posterior to the stomach; mostly retroperitoneal. Its endocrine cells release hormones involved in blood glucose regulation.",
+            "aliases": [],
+            "pin": [
+              12,
+              48
+            ],
+            "detail": [
+              67,
+              157,
+              94,
+              83
+            ],
+            "leader": [
+              [
+                7.5,
+                188.518
+              ],
+              [
+                111,
+                189
+              ]
+            ]
+          },
+          {
+            "name": "Adrenal glands",
+            "x": 41.125541125541126,
+            "y": 41.37931034482759,
+            "teach": "Superior to the kidneys. Release hormones involved in stress responses and fluid regulation.",
+            "aliases": [],
+            "pin": [
+              88,
+              66
+            ],
+            "detail": [
+              66,
+              174,
+              99,
+              72
+            ],
+            "leader": [
+              [
+                0.431,
+                249.327
+              ],
+              [
+                95,
+                216
+              ]
+            ]
+          },
+          {
+            "name": "Testes",
+            "x": 48.05194805194805,
+            "y": 53.06513409961686,
+            "teach": "In the scrotum, outside the pelvic cavity. Produce sex hormones and also function in reproduction.",
+            "aliases": [],
+            "pin": [
+              12,
+              84
+            ],
+            "detail": [
+              79,
+              251,
+              71,
+              63
+            ],
+            "leader": [
+              [
+                40.516,
+                350.517
+              ],
+              [
+                111,
+                277
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Endocrine glands release hormones into blood. Cells with appropriate receptors respond to those hormonal messages.",
+        "memory": "A circulating message needs the right receiver.",
+        "focusBox": [
+          0,
+          0,
+          231,
+          322.00000000000006
+        ]
+      },
+      {
+        "id": "cardiovascular",
+        "title": "Cardiovascular",
+        "src": "cardiovascular.png",
+        "size": [
+          238,
+          522
+        ],
+        "mask": [
+          [
+            88.65546218487395,
+            0,
+            11.344537815126051,
+            26.628352490421456
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Heart",
+            "x": 53.78151260504202,
+            "y": 26.81992337164751,
+            "teach": "Middle mediastinum, between the lungs. Pumps blood through the circulation.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "detail": [
+              80,
+              89,
+              92,
+              103
+            ],
+            "leader": [
+              [
+                0.5,
+                141.496
+              ],
+              [
+                128,
+                140
+              ]
+            ]
+          },
+          {
+            "name": "Blood vessels",
+            "x": 34.45378151260504,
+            "y": 42.5287356321839,
+            "teach": "Extend throughout the body. Provide routes for blood flow and exchange with tissues.",
+            "aliases": [],
+            "pin": [
+              88,
+              84
+            ],
+            "leader": [
+              [
+                0.5,
+                345.5
+              ],
+              [
+                25,
+                346
+              ],
+              [
+                82,
+                222
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "The heart pumps blood through vessels. Blood transports substances between tissues and organs, including organs that remove wastes.",
+        "memory": "The heart is the pump; vessels are the delivery routes.",
+        "focusBox": [
+          0,
+          0,
+          238,
+          267
+        ]
+      },
+      {
+        "id": "lymphatic",
+        "title": "Lymphatic",
+        "src": "lymphatic.png",
+        "size": [
+          303,
+          704
+        ],
+        "mask": [
+          [
+            0,
+            7.244318181818182,
+            2.6402640264026402,
+            3.5511363636363638
+          ],
+          [
+            0,
+            71.30681818181819,
+            9.570957095709572,
+            5.823863636363637
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Thymus",
+            "x": 50.165016501650165,
+            "y": 21.306818181818183,
+            "teach": "In the anterior superior thorax, behind the sternum. Supports maturation of T cells involved in immune defense.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "detail": [
+              114,
+              106,
+              77,
+              94
+            ],
+            "leader": [
+              [
+                8.143,
+                63.087
+              ],
+              [
+                152,
+                150
+              ]
+            ]
+          },
+          {
+            "name": "Lymph nodes",
+            "x": 22.112211221122113,
+            "y": 24.289772727272727,
+            "teach": "Along lymphatic vessels, with clusters in the neck, axillae and groin. Filter lymph and support immune responses.",
+            "aliases": [],
+            "pin": [
+              88,
+              36
+            ],
+            "detail": [
+              54,
+              142,
+              75,
+              89
+            ],
+            "leader": [
+              [
+                0.339,
+                151.092
+              ],
+              [
+                67,
+                171
+              ]
+            ]
+          },
+          {
+            "name": "Spleen",
+            "x": 61.05610561056105,
+            "y": 34.23295454545455,
+            "teach": "Left upper abdomen, lateral to the stomach. Filters blood and contributes to immune defense.",
+            "aliases": [],
+            "pin": [
+              12,
+              60
+            ],
+            "detail": [
+              140,
+              210,
+              82,
+              77
+            ],
+            "leader": [
+              [
+                0.5,
+                241.5
+              ],
+              [
+                185,
+                241
+              ]
+            ]
+          },
+          {
+            "name": "Lymphatic vessels",
+            "x": 10.891089108910892,
+            "y": 56.53409090909091,
+            "teach": "Distributed throughout most tissues. Collect and transport lymph back toward the bloodstream.",
+            "aliases": [],
+            "pin": [
+              88,
+              84
+            ],
+            "leader": [
+              [
+                33.5,
+                519.5
+              ],
+              [
+                33,
+                398
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.5",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Lymphatic vessels collect excess tissue fluid and return it to the circulation. Lymphatic organs support immune defenses.",
+        "memory": "Return the leak. Patrol and seek.",
+        "focusBox": [
+          0,
+          0,
+          303,
+          443
+        ]
+      },
+      {
+        "id": "respiratory",
+        "title": "Respiratory",
+        "src": "respiratory.png",
+        "size": [
+          252,
+          704
+        ],
+        "mask": [
+          [
+            0,
+            9.090909090909092,
+            23.41269841269841,
+            4.261363636363637
+          ],
+          [
+            93.25396825396825,
+            0,
+            6.746031746031746,
+            5.113636363636363
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Nasal passage",
+            "x": 49.2063492063492,
+            "y": 11.221590909090908,
+            "teach": " Provides an entry route for air; helps warm, moisten, and filter it.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "detail": [
+              84,
+              35,
+              83,
+              87
+            ],
+            "leader": [
+              [
+                62.496,
+                78.741
+              ],
+              [
+                124,
+                79
+              ]
+            ]
+          },
+          {
+            "name": "Trachea",
+            "x": 50.39682539682539,
+            "y": 18.46590909090909,
+            "teach": "Anterior to the esophagus in the neck and superior thorax. Conducts air toward the lungs.",
+            "aliases": [],
+            "pin": [
+              88,
+              48
+            ],
+            "detail": [
+              98,
+              112,
+              61,
+              79
+            ],
+            "leader": [
+              [
+                0.394,
+                167.144
+              ],
+              [
+                127,
+                130
+              ]
+            ]
+          },
+          {
+            "name": "Lungs",
+            "x": 38.88888888888889,
+            "y": 26.136363636363637,
+            "teach": "Right and left thoracic compartments. Contain the airways and alveoli where gas exchange occurs.",
+            "aliases": [],
+            "pin": [
+              12,
+              84
+            ],
+            "leader": [
+              [
+                -0.018,
+                239.584
+              ],
+              [
+                98,
+                184
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.5",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Ventilation moves air. At the alveoli, oxygen diffuses into blood and carbon dioxide diffuses from blood into the air spaces to be exhaled.",
+        "memory": "Air moves. Gases cross. Blood delivers.",
+        "focusBox": [
+          0,
+          0,
+          252,
+          229
+        ]
+      },
+      {
+        "id": "digestive",
+        "title": "Digestive",
+        "src": "digestive.png",
+        "size": [
+          307,
+          701
+        ],
+        "mask": [
+          [
+            90.55374592833876,
+            0,
+            9.446254071661238,
+            6.419400855920114
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Stomach",
+            "x": 57.98045602605863,
+            "y": 33.80884450784593,
+            "teach": "Left upper abdomen. Mixes food and contributes to chemical digestion.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "detail": [
+              92,
+              192,
+              113,
+              96
+            ],
+            "leader": [
+              [
+                0.029,
+                123.239
+              ],
+              [
+                178,
+                237
+              ]
+            ]
+          },
+          {
+            "name": "Liver",
+            "x": 38.762214983713356,
+            "y": 32.95292439372325,
+            "teach": "Predominantly right upper abdomen. Produces bile, which helps with fat digestion.",
+            "aliases": [],
+            "pin": [
+              88,
+              30
+            ],
+            "leader": [
+              [
+                0.5,
+                231.494
+              ],
+              [
+                119,
+                231
+              ]
+            ]
+          },
+          {
+            "name": "Gallbladder",
+            "x": 42.01954397394137,
+            "y": 34.8074179743224,
+            "teach": "On the inferior surface of the liver. Stores and concentrates bile.",
+            "aliases": [],
+            "pin": [
+              12,
+              48
+            ],
+            "detail": [
+              98,
+              214,
+              66,
+              66
+            ],
+            "leader": [
+              [
+                0.137,
+                287.449
+              ],
+              [
+                129,
+                244
+              ]
+            ]
+          },
+          {
+            "name": "Small intestine",
+            "x": 51.79153094462541,
+            "y": 45.22111269614836,
+            "teach": "Central and lower abdominopelvic region. Site of most nutrient absorption.",
+            "aliases": [],
+            "pin": [
+              88,
+              66
+            ],
+            "detail": [
+              96,
+              255,
+              116,
+              102
+            ],
+            "leader": [
+              [
+                -0.25,
+                514.888
+              ],
+              [
+                159,
+                317
+              ]
+            ]
+          },
+          {
+            "name": "Large intestine",
+            "x": 43.648208469055376,
+            "y": 38.80171184022825,
+            "teach": "Frames the small intestine. Absorbs water and forms feces.",
+            "aliases": [],
+            "pin": [
+              12,
+              84
+            ],
+            "detail": [
+              94,
+              250,
+              119,
+              110
+            ],
+            "leader": [
+              [
+                -0.143,
+                401.828
+              ],
+              [
+                134,
+                272
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.5",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Food is broken down mechanically and chemically. Most nutrients are absorbed in the small intestine; the large intestine absorbs more water and forms feces.",
+        "memory": "Break food apart. Take nutrients in. Send leftovers out.",
+        "focusBox": [
+          0,
+          0,
+          307,
+          362
+        ]
+      },
+      {
+        "id": "urinary",
+        "title": "Urinary",
+        "src": "urinary.png",
+        "size": [
+          252,
+          701
+        ],
+        "mask": [
+          [
+            94.04761904761905,
+            0,
+            5.9523809523809526,
+            5.420827389443652
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Kidneys",
+            "x": 40.87301587301587,
+            "y": 39.229671897289585,
+            "teach": "Posterior abdominal wall, retroperitoneal. Form urine while regulating water and dissolved substances.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "detail": [
+              70,
+              251,
+              105,
+              105
+            ],
+            "leader": [
+              [
+                0.328,
+                222.843
+              ],
+              [
+                103,
+                275
+              ]
+            ]
+          },
+          {
+            "name": "Urinary bladder",
+            "x": 49.2063492063492,
+            "y": 48.35948644793152,
+            "teach": "Pelvis, posterior to the pubic symphysis. Stores urine before it leaves the body.",
+            "aliases": [],
+            "pin": [
+              88,
+              84
+            ],
+            "detail": [
+              87,
+              294,
+              78,
+              78
+            ],
+            "leader": [
+              [
+                0.199,
+                376.507
+              ],
+              [
+                124,
+                339
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.5",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Kidneys filter blood, reclaim needed substances, and secrete some substances into forming urine. Ureters carry urine to the bladder; the urethra carries it out.",
+        "memory": "Kidneys make it. Ureters take it. Bladder holds it. Urethra lets it go.",
+        "focusBox": [
+          0,
+          0,
+          252,
+          384
+        ]
+      },
+      {
+        "id": "reproductive-male",
+        "title": "Testis & epididymis · enlarged section",
+        "src": "testis-detail.jpg",
+        "size": [
+          743,
+          686
+        ],
+        "mask": [
+          [
+            0,
+            43,
+            11,
+            6
+          ],
+          [
+            80,
+            40,
+            20,
+            9
+          ],
+          [
+            54,
+            95,
+            26,
+            5
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Testes",
+            "x": 50,
+            "y": 65,
+            "teach": "The large oval organ in this section is one testis (plural: testes). Its seminiferous tubules produce sperm. The testes lie in the scrotum, outside the pelvic cavity.",
+            "aliases": [
+              "testis",
+              "testicle",
+              "testicles"
+            ],
+            "pin": [
+              88,
+              72
+            ],
+            "focusPin": [
+              91,
+              62
+            ]
+          },
+          {
+            "name": "Epididymis",
+            "x": 32.8,
+            "y": 51.7,
+            "teach": "The epididymis is the pale coiled duct attached along the posterior surface of the testis. Its head, body and tail support sperm maturation and storage; it is outside the testicular tissue.",
+            "aliases": [],
+            "pin": [
+              8,
+              36
+            ],
+            "focusPin": [
+              8,
+              44
+            ],
+            "leader": [
+              [
+                77,
+                302
+              ],
+              [
+                253,
+                352
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 27.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/27-1-anatomy-and-physiology-of-the-testicular-reproductive-system",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "This later-chapter close-up separates the same two organs introduced in Chapter 1.",
+        "memory": "Testis = sperm factory. Epididymis = the coiled finishing and storage duct along its back.",
+        "focusBox": [
+          110,
+          120,
+          480,
+          545
+        ],
+        "orientation": "Sagittal section of one testis. The epididymis curves around its posterior surface."
+      },
+      {
+        "id": "reproductive-female",
+        "title": "Reproductive · female",
+        "src": "reproductive-female.png",
+        "size": [
+          252,
+          696
+        ],
+        "mask": [
+          [
+            91.26984126984127,
+            0,
+            8.73015873015873,
+            11.063218390804598
+          ],
+          [
+            0,
+            16.522988505747126,
+            2.7777777777777777,
+            3.5919540229885056
+          ]
+        ],
+        "alwaysMask": true,
+        "targets": [
+          {
+            "name": "Ovaries",
+            "x": 42.46031746031746,
+            "y": 48.41954022988506,
+            "teach": "Lateral to the uterus in the pelvis. Produce egg cells and sex hormones.",
+            "aliases": [],
+            "pin": [
+              12,
+              12
+            ],
+            "detail": [
+              79,
+              310,
+              94,
+              83
+            ],
+            "leader": [
+              [
+                0.393,
+                296.887
+              ],
+              [
+                107,
+                337
+              ]
+            ]
+          },
+          {
+            "name": "Uterus",
+            "x": 49.2063492063492,
+            "y": 50.287356321839084,
+            "teach": "Pelvis, between the bladder and rectum. Supports the developing embryo and fetus.",
+            "aliases": [],
+            "pin": [
+              88,
+              48
+            ],
+            "detail": [
+              79,
+              310,
+              94,
+              83
+            ],
+            "leader": [
+              [
+                0.086,
+                445.984
+              ],
+              [
+                124,
+                350
+              ]
+            ]
+          },
+          {
+            "name": "Mammary glands",
+            "x": 32.53968253968254,
+            "y": 28.448275862068968,
+            "teach": "Within the breasts on the anterior chest wall. Produce milk to nourish an infant.",
+            "aliases": [],
+            "pin": [
+              12,
+              84
+            ],
+            "leader": [
+              [
+                10.313,
+                130.701
+              ],
+              [
+                82,
+                198
+              ]
+            ]
+          }
+        ],
+        "source": {
+          "label": "OpenStax A&P 2e · Fig. 1.5",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-2-structural-organization-of-the-human-body",
+          "credit": "© 2026 Rice University · CC BY-NC-SA 4.0. Extracted from your textbook; interactive markers and label covers added."
+        },
+        "note": "Testes produce sperm; ovaries produce egg cells. The uterus supports the developing embryo and fetus, and mammary glands produce milk.",
+        "memory": "Two textbook views. One reproductive system.",
+        "focusBox": [
+          0,
+          0,
+          252,
+          395
+        ]
+      }
+    ]
   }
 ]

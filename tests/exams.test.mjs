@@ -15,9 +15,25 @@ test('every source objective has multiple explicit questions, with complete modu
  const objectives=new Set(syllabus.sections.flatMap(s=>s.objectives.map(o=>o.id)));
  for(const q of examBank){assert.ok(q.objectives.every(id=>objectives.has(id)&&id.startsWith(q.lesson+'.')),q.id);assert.ok(q.source.includes(q.lesson));assert.ok(q.explanation.length>25);assert.ok(gradeQuestion(q,key(q)),q.id);assert.ok(validSession(createSession([q])),q.id);if(q.type==='match')assert.equal(new Set(q.pairs.map(p=>p.right)).size,q.pairs.length);}
  assert.equal(examBank.filter(q=>Number(q.lesson.split('.')[0])>=6).length,520);assert.equal(new Set(examBank.map(q=>q.id)).size,examBank.length);
- assert.deepEqual(new Set(examBank.map(q=>q.type)),new Set(['choice','text','identify','match','order']));
+ assert.deepEqual(new Set(examBank.map(q=>q.type)),new Set(['choice','text','identify','match','order','multi']));
 });
-function key(q){return q.type==='match'?Object.fromEntries(q.pairs.map(p=>[p.left,p.right])):q.type==='order'?[...q.steps]:q.answer;}
+test('foundations exams sample both chapters, and select-all wording survives a saved draft',()=>{
+ for(const scope of ['1','2','foundations12']){
+  const items=selectExam(scope,examBank,rng(128));
+  assert.equal(items.length,50);
+  const chapters=scope==='foundations12'?[1,2]:[Number(scope)];
+  for(const section of syllabus.sections.filter(s=>chapters.includes(s.chapter)))for(const goal of section.objectives)assert.ok(items.some(q=>q.objectives.includes(goal.id)),goal.id);
+ }
+ const question=examBank.find(q=>q.type==='multi'&&q.wordings?.length&&q.correctChoices.length>1);
+ assert.ok(question);
+ const draft=createSession([question],{rng:()=>0.9});
+ draft.responses[question.id]=question.correctChoices.slice(1);
+ assert.ok(validSession(JSON.parse(JSON.stringify(draft))));
+ assert.ok(draft.wording[question.id]>0);
+ assert.ok(!gradeQuestion(question,draft.responses[question.id]));
+ assert.ok(gradeQuestion(question,[...question.correctChoices].reverse()));
+});
+function key(q){return q.type==='multi'?[...q.correctChoices]:q.type==='match'?Object.fromEntries(q.pairs.map(p=>[p.left,p.right])):q.type==='order'?[...q.steps]:q.answer;}
 test('chapter and cumulative blueprints hold across different randomized forms and never truncate to 20',()=>{
  for(let seed=1;seed<=60;seed++)for(const scope of ['6','7','8','9','all']){
   const items=selectExam(scope,examBank,rng(seed)),sections=syllabus.sections.filter(s=>(scope==='all'&&s.chapter>=6&&s.chapter<=9)||String(s.chapter)===scope);

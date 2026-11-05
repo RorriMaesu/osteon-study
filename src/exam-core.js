@@ -8,12 +8,13 @@ export {syllabus};
 export const normalize=s=>String(s??'').normalize('NFKC').toLowerCase().replace(/[’']/g,'').replace(/[^a-z0-9]+/g,' ').replace(/\b(a|an|the|and)\b/g,' ').replace(/\s+/g,' ').trim();
 export function shuffled(a,rng=Math.random){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 export function gradeQuestion(q,response){
+ if(q.type==='multi')return Array.isArray(response)&&response.length===q.correctChoices.length&&new Set(response).size===response.length&&q.correctChoices.every(value=>response.includes(value));
  if(q.type==='match')return !!response&&q.pairs.every(p=>response[p.left]===p.right);
  if(q.type==='order')return Array.isArray(response)&&response.length===q.steps.length&&q.steps.every((v,i)=>v===response[i]);
  if(q.type==='choice'||!q.type)return response===q.answer;
  return normalize(response)!==''&&[q.answer,...(q.aliases||[])].some(a=>normalize(a)===normalize(response));
 }
-export function answered(q,response){if(q.type==='match')return !!response&&q.pairs.every(p=>typeof response[p.left]==='string'&&response[p.left]);if(q.type==='order')return Array.isArray(response)&&response.length===q.steps.length;return typeof response==='string'&&!!response.trim();}
+export function answered(q,response){if(q.type==='multi')return Array.isArray(response)&&response.length>0;if(q.type==='match')return !!response&&q.pairs.every(p=>typeof response[p.left]==='string'&&response[p.left]);if(q.type==='order')return Array.isArray(response)&&response.length===q.steps.length;return typeof response==='string'&&!!response.trim();}
 export function assessQuestion(q,response,review,{legacy=false}={}){
  const strict=gradeQuestion(q,response),typed=['text','identify'].includes(q.type);
  if(legacy||!typed){const correct=typed?reviewedCorrect(strict,review,q,response):strict;return {status:!answered(q,response)?'unanswered':correct?(review&&!strict?review.verdict==='spelling'?'spelling':'equivalent':'correct'):'incorrect',reason:legacy?'Original grading rules retained.':correct?'The answer matches the key.':'Compare your response with the answer key.',correction:q.answer,correct,strictCorrect:strict,source:review&&!strict&&correct?'ai':'key'};}
@@ -28,17 +29,18 @@ export function gradeWithReview(q,response,review,options){return assessQuestion
 export function sessionOutcome(s,q){return assessQuestion(q,s.responses[q.id],s.aiReviews?.[q.id],{legacy:s.gradingVersion!==GRADING_VERSION});}
 export function answeredCount(s,bank=examBank){const byId=new Map(bank.map(q=>[q.id,q]));return s.ids.filter(id=>byId.has(id)&&answered(byId.get(id),s.responses[id])).length;}
 const cumulative={6:[2,2,7,5,2,4,3],7:[4,9,6,3,3],8:[3,7,5,7,3],9:[3,3,3,5,3,6,2]};
-function comprehensiveQuotas(chapter){
+function comprehensiveQuotas(chapter,length=30){
  const sections=syllabus.sections.filter(s=>s.chapter===chapter),result=Object.fromEntries(sections.map(s=>[s.id,s.objectives.length]));
- let used=Object.values(result).reduce((a,b)=>a+b,0);if(used>30)throw Error('Comprehensive blueprint cannot cover this chapter.');
- while(used<30){const next=[...sections].sort((a,b)=>(b.examWeight/50*30-result[b.id])-(a.examWeight/50*30-result[a.id]))[0];result[next.id]++;used++;}
+ let used=Object.values(result).reduce((a,b)=>a+b,0);if(used>length)throw Error('Comprehensive blueprint cannot cover this chapter.');
+ while(used<length){const next=[...sections].sort((a,b)=>(b.examWeight/50*length-result[b.id])-(a.examWeight/50*length-result[a.id]))[0];result[next.id]++;used++;}
  return result;
 }
 export function selectExam(scope,bank=examBank,rng=Math.random,{seen={}}={}){
  if(scope==='bank')return shuffled(bank,rng).sort((a,b)=>exposureCount(seen,a.id)-exposureCount(seen,b.id));
  const chapters=Object.hasOwn(legacyChapterGroups,scope)?legacyChapterGroups[scope]:publishedChapterIds.filter(id=>String(id)===String(scope));
  const sections=syllabus.sections.filter(s=>chapters.includes(s.chapter)),selected=[];
- const expanded=scope==='all10'?Object.assign({},...chapters.map(comprehensiveQuotas)):null;
+ if(chapters.some(c=>!publishedChapterIds.includes(c)))throw Error('This exam is available when all assigned chapters are published.');
+ const expanded=chapters.length>1&&scope!=='all'?Object.assign({},...chapters.map(c=>comprehensiveQuotas(c,scope==='foundations12'?25:30))):null;
  if(!sections.length)throw new Error('Choose a chapter or cumulative exam.');
  for(const section of sections){
   const quota=expanded?expanded[section.id]:scope==='all'?cumulative[section.chapter][+section.id.split('.')[1]-1]:section.examWeight;
@@ -59,8 +61,10 @@ export function selectExam(scope,bank=examBank,rng=Math.random,{seen={}}={}){
  }
  return shuffled(selected,rng);
 }
+const optionSet=q=>q.type==='multi'?q.choiceOrder:q.type==='match'?q.pairs.map(p=>p.right):q.type==='order'?q.steps:q.type==='choice'||!q.type?[q.answer,...q.distractors]:[];
+export function choiceLabel(session,q,option){const wordings=q.wordings||[];const index=session.wording?.[q.id];return Number.isInteger(index)&&index>0?wordings[index-1]?.[q.choiceOrder.indexOf(option)]||option:option;}
 export function createSession(items,{scope='custom',mode='exam',rng=Math.random,now=Date.now()}={}){
- return {version:EXAM_VERSION,gradingVersion:GRADING_VERSION,id:`${now}-${Math.floor(rng()*1e9)}`,scope,mode,status:'active',started:now,submitted:null,ids:items.map(q=>q.id),options:Object.fromEntries(items.map(q=>[q.id,q.type==='match'?shuffled(q.pairs.map(p=>p.right),rng):q.type==='order'?shuffled(q.steps,rng):q.type==='choice'||!q.type?shuffled([q.answer,...q.distractors],rng):[]])),responses:{},assisted:{},flags:{},checked:{},index:0};
+ return {version:EXAM_VERSION,gradingVersion:GRADING_VERSION,id:`${now}-${Math.floor(rng()*1e9)}`,scope,mode,status:'active',started:now,submitted:null,ids:items.map(q=>q.id),options:Object.fromEntries(items.map(q=>[q.id,shuffled(optionSet(q),rng)])),wording:Object.fromEntries(items.filter(q=>q.wordings?.length).map(q=>[q.id,Math.floor(rng()*(q.wordings.length+1))])),responses:{},assisted:{},flags:{},checked:{},index:0};
 }
 export function validSession(s,bank=examBank){
  if(!s||![EXAM_VERSION,LEGACY_EXAM_VERSION].includes(s.version)||(s.version===EXAM_VERSION&&s.gradingVersion!==GRADING_VERSION)||(s.version===LEGACY_EXAM_VERSION&&s.gradingVersion!==undefined)||!['active','submitted'].includes(s.status)||!['practice','exam'].includes(s.mode)||typeof s.id!=='string'||s.id.length>100||typeof s.scope!=='string'||(s.status==='submitted'&&!Number.isFinite(s.submitted))||!Array.isArray(s.ids)||!s.ids.length||s.ids.length>1000||new Set(s.ids).size!==s.ids.length||!Number.isFinite(s.started)||!Number.isInteger(s.index)||s.index<0||s.index>=s.ids.length)return false;
@@ -69,12 +73,13 @@ export function validSession(s,bank=examBank){
  if(s.timeGoalMinutes!==undefined&&(!Number.isFinite(s.timeGoalMinutes)||s.timeGoalMinutes<0||s.timeGoalMinutes>240))return false;
  if(s.confidenceEnabled!==undefined&&typeof s.confidenceEnabled!=='boolean')return false;
  const byId=new Map(bank.map(q=>[q.id,q]));
+ if(s.wording!==undefined&&(!s.wording||Array.isArray(s.wording)||Object.entries(s.wording).some(([id,n])=>!s.ids.includes(id)||!Number.isInteger(n)||n<0||n>(byId.get(id)?.wordings?.length||0))))return false;
  for(const key of ['options','responses','assisted','flags','checked'])if(!s[key]||typeof s[key]!=='object'||Array.isArray(s[key]))return false;
  if(s.aiReviews!==undefined&&(!s.aiReviews||typeof s.aiReviews!=='object'||Array.isArray(s.aiReviews)||Object.entries(s.aiReviews).some(([id,r])=>!s.ids.includes(id)||!validAnswerReview(r)||r.target!==id||r.answer!==byId.get(id)?.answer||(['text','identify'].includes(byId.get(id)?.type)&&r.response!==s.responses[id]))))return false;
  if(s.reviewHistory!==undefined&&(!Array.isArray(s.reviewHistory)||s.reviewHistory.length>1000||s.reviewHistory.some(r=>!s.ids.includes(r?.target)||!validAnswerReview(r)||r.answer!==byId.get(r.target)?.answer||r.response!==s.responses[r.target])))return false;
  if(s.initialOutcomes!==undefined&&(!s.initialOutcomes||typeof s.initialOutcomes!=='object'||Array.isArray(s.initialOutcomes)||Object.entries(s.initialOutcomes).some(([id,o])=>!s.ids.includes(id)||!o||!['correct','spelling','equivalent','pending','incorrect','unanswered'].includes(o.status)||typeof o.correct!=='boolean'||typeof o.strictCorrect!=='boolean'||typeof o.reason!=='string'||o.reason.length>2000)))return false;
- for(const id of s.ids){const q=byId.get(id);if(!q)return false;const expected=q.type==='match'?q.pairs.map(p=>p.right):q.type==='order'?q.steps:q.type==='choice'||!q.type?[q.answer,...q.distractors]:[],actual=s.options[id];const allowedOptions=q.type==='choice'&&q.legacyDistractors?[...expected,...q.legacyDistractors]:expected;if(!Array.isArray(actual)||actual.length!==expected.length||new Set(actual).size!==expected.length||(q.type==='choice'&&q.legacyDistractors?(!actual.includes(q.answer)||!actual.every(v=>allowedOptions.includes(v))):!expected.every(v=>actual.includes(v))))return false;
-  const r=s.responses[id];if(r!==undefined){if(q.type==='match'){if(!r||typeof r!=='object'||Array.isArray(r)||Object.entries(r).some(([a,b])=>!q.pairs.some(p=>p.left===a)||!expected.includes(b)))return false;}else if(q.type==='order'){if(!Array.isArray(r)||r.length!==expected.length||new Set(r).size!==expected.length||!expected.every(v=>r.includes(v)))return false;}else if(typeof r!=='string'||r.length>2000||(q.type==='choice'&&!actual.includes(r)))return false;}
+ for(const id of s.ids){const q=byId.get(id);if(!q)return false;const expected=optionSet(q),actual=s.options[id];const allowedOptions=q.type==='choice'&&q.legacyDistractors?[...expected,...q.legacyDistractors]:expected;if(!Array.isArray(actual)||actual.length!==expected.length||new Set(actual).size!==expected.length||(q.type==='choice'&&q.legacyDistractors?(!actual.includes(q.answer)||!actual.every(v=>allowedOptions.includes(v))):!expected.every(v=>actual.includes(v))))return false;
+  const r=s.responses[id];if(r!==undefined){if(q.type==='multi'){if(!Array.isArray(r)||new Set(r).size!==r.length||r.some(v=>!actual.includes(v)))return false;}else if(q.type==='match'){if(!r||typeof r!=='object'||Array.isArray(r)||Object.entries(r).some(([a,b])=>!q.pairs.some(p=>p.left===a)||!expected.includes(b)))return false;}else if(q.type==='order'){if(!Array.isArray(r)||r.length!==expected.length||new Set(r).size!==expected.length||!expected.every(v=>r.includes(v)))return false;}else if(typeof r!=='string'||r.length>2000||(q.type==='choice'&&!actual.includes(r)))return false;}
  }
  return ['assisted','flags','checked'].every(k=>Object.entries(s[k]).every(([id,v])=>s.ids.includes(id)&&typeof v==='boolean'));
 }

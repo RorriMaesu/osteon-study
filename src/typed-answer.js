@@ -1,3 +1,4 @@
+import {objectiveChecks} from './foundations-objective-checks.js';
 import {allTerms} from './data.js';
 import glossary from './glossary.json' with {type:'json'};
 import {answerPolicies,GRADING_VERSION} from './exam-answer-policies.js';
@@ -8,7 +9,8 @@ const pluralForms=s=>{const key=fold(s),singular=Object.keys(plurals).find(k=>pl
 const lexicon=[...allTerms,...glossary].flatMap(t=>[t.name,...(t.aliases||[])]).filter(Boolean);
 // Include easy-to-confuse terms beyond the four assigned chapters.
 const extra=['ileum','ilium','ischium','pubis','osteoblast','osteoclast','osteocyte','calcitonin','calcitriol','abduction','adduction','inversion','eversion','supination','pronation','flexion','extension','condyle','epicondyle','head','neck','foramen','fossa','canal'];
-const known=new Set([...lexicon,...extra].flatMap(pluralForms));
+const foundationKeys=Object.values(objectiveChecks).flatMap(rows=>rows.flatMap(([,a,,b])=>[a,b]));
+const known=new Set([...lexicon,...extra,...foundationKeys].flatMap(pluralForms));
 const words=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
 const opposed=[['left','right'],['anterior','posterior'],['superior','inferior'],['medial','lateral'],['proximal','distal'],['head','neck'],['condyle','epicondyle'],['foramen','fossa','canal'],['abduction','adduction'],['inversion','eversion'],['osteoblast','osteoclast','osteocyte'],['ilium','ileum','ischium'],['calcitonin','calcitriol']];
 export function answerPolicy(q){return q.answerPolicy||answerPolicies[q.id]||{kind:'structure',bone:q.type==='bone'};}
