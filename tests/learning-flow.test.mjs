@@ -29,6 +29,16 @@ test('revised distractors preserve older frozen option snapshots and their score
 test('view exposure persists separately from score and only increments once per question in a session',()=>{
  const storage=memory(),q=examBank[0],s=createSession([q]);assert.equal(markExposure(storage,s,q.id,10),0);assert.equal(markExposure(storage,s,q.id,20),0);assert.equal(readExposure(storage)[q.id].count,1);const next=createSession([q]);assert.equal(markExposure(storage,next,q.id,30),1);assert.equal(next.responses[q.id],undefined);assert.ok(validExposure(readExposure(storage)));assert.ok(validSession(next));
 });
+test('all imported exam questions retain exposure counts and can be backed up',()=>{
+ const storage=memory(),session=createSession(examBank);
+ const history=Object.fromEntries(examBank.map(q=>[q.id,{count:1,at:10}]));
+ assert.ok(validExposure(history));
+ storage.setItem('osteon-question-exposure-v1',JSON.stringify(history));
+ const q=examBank.find(q=>q.id.startsWith('cellstudio-'));
+ assert.equal(markExposure(storage,session,q.id,20),1);
+ assert.equal(readExposure(storage)[q.id].count,2);
+ assert.equal(createStudyBackup(storage).questionExposure[q.id].count,2);
+});
 test('lesson position and explanation drafts survive complete backup and source-return reloads',()=>{
  const a=memory(),b=memory(),work={step:3,section:2,explore:'figure',figure:1,retrieval:'Central canal → canaliculi → lacuna.',application:''};saveLessonWork(a,'6.3',work);assert.ok(validLessonWork(JSON.parse(a.getItem(LESSON_WORK_KEY))));const saved=readLessonWork(a,'6.3');assert.ok(Number.isFinite(saved.updatedAt));restoreStudyBackup(b,createStudyBackup(a));assert.deepEqual(readLessonWork(b,'6.3'),saved);assert.throws(()=>saveLessonWork(a,'99.1',work));
 });
