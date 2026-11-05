@@ -173,7 +173,7 @@
 "ta2-2515","2515","Extensor indicis","forearm-hand","named-geometry","No","not sex-specific","muscle-extensor-indicis-r | muscle-extensor-indicis-l","","No"
 "ta2-2516","2516","Extensor pollicis longus","forearm-hand","named-geometry","No","not sex-specific","muscle-extensor-pollicis-longus-r | muscle-extensor-pollicis-longus-l","","No"
 "ta2-2518","2518","Extensor pollicis brevis","forearm-hand","named-geometry","No","not sex-specific","muscle-extensor-pollicis-brevis-r | muscle-extensor-pollicis-brevis-l","","No"
-"ta2-2520","2520","Palmaris brevis muscle","forearm-hand","no-named-mesh","No","not sex-specific","","","No"
+"ta2-2520","2520","Palmaris brevis muscle","forearm-hand","named-geometry","No","not sex-specific","muscle-open3d-palmaris-brevis-right | muscle-open3d-palmaris-brevis-left","","No"
 "ta2-2525","2525","Opponens pollicis muscle","forearm-hand","named-geometry","No","not sex-specific","muscle-opponens-pollicis-muscle-r | muscle-opponens-pollicis-muscle-l","","No"
 "ta2-2531","2531","Opponens digiti minimi muscle of hand","forearm-hand","named-geometry","No","not sex-specific","muscle-opponens-digiti-minimi-muscle-of-hand-r | muscle-opponens-digiti-minimi-muscle-of-hand-l","","No"
 "ta2-2532","2532","Lumbrical muscles of hand","forearm-hand","named-geometry","No","not sex-specific","muscle-lumbrical-muscles-of-hand-r | muscle-lumbrical-muscles-of-hand-l","","No"

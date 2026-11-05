@@ -2,7 +2,7 @@
 
 **The current muscle atlas is incomplete. Named geometry is not a certificate of anatomical accuracy.**
 
-The atlas displays 679 active components (4 superseded objects are retained for rollback). Correct tissue classification gives **472 muscle parts and 207 supporting components**. Parts include separate heads, sides and aggregate groups; they are not counts of distinct human muscles. The previous 485-muscle-part figure included 25 connective components and excluded both tensor fasciae latae meshes. This audit corrects those classifications. Original mesh identities are preserved. Four incomplete aggregate objects are retained in the rollback record and model files but are hidden from selection and rendering; 14 recovered source surfaces replace them.
+The atlas displays 681 active components (4 superseded objects are retained for rollback). Correct tissue classification gives **474 muscle parts and 207 supporting components**. Parts include separate heads, sides and aggregate groups; they are not counts of distinct human muscles. The previous 485-muscle-part figure included 25 connective components and excluded both tensor fasciae latae meshes. This audit corrects those classifications. Original mesh identities are preserved. Four incomplete aggregate objects are retained in the rollback record and model files but are hidden from selection and rendering; 14 recovered source surfaces replace them; two additional palmaris brevis surfaces come from the revised LUMC Open3D hand.
 
 ## What was checked
 
@@ -14,9 +14,9 @@ The atlas displays 679 active components (4 superseded objects are retained for 
 
 | Checklist result | Entries |
 |---|---:|
-| Named geometry found | 160 |
+| Named geometry found | 161 |
 | Group represented by named components | 8 |
-| No named source mesh | 51 |
+| No named source mesh | 50 |
 | Not separately resolved | 4 |
 | Partial model | 1 |
 | Anatomical naming/attachment review | 2 |
@@ -28,11 +28,12 @@ The atlas displays 679 active components (4 superseded objects are retained for 
 - Both tensor fasciae latae meshes are now muscles and are visible with supporting tissues switched off.
 - Linea alba, intermuscular septa, iliotibial tracts, tendinous arches and digital sheaths are supporting tissues, not muscles.
 - Named heads/parts are grouped into the corresponding whole muscle for search and selection, with individual source parts retained.
-- Incomplete groups and naming concerns appear beside the selected structure. The browser exposes a Known gaps report. The hand/foot repairs use original source anatomy. No missing anatomy is replaced by an invented pin or generic shape.
+- Incomplete groups and naming concerns appear beside the selected structure. The browser exposes a Known gaps report. The hand/foot repairs and palmaris brevis additions use original source anatomy. No missing anatomy is replaced by an invented pin or generic shape.
 
 ## Recovered groups and remaining unresolved geometry
 
 - **Palmar interossei, repaired:** three individual digit-2/4/5 surfaces per hand, recovered from the original BodyParts3D 4.3 set. Major connected members were separated and small source fragments assigned to their nearest member. The optional pollical variant remains a separate open entry.
+- **Palmaris brevis, added:** the revised Open3DModel hand supplies a separately named surface. Both sides are available; the left is explicitly mirrored from the right-hand source. Geometry is registered to the existing hand, with source attribution and attachment teaching. This is not an independently certified bilateral specimen.
 - **Foot lumbricals, repaired:** all four named source surfaces per foot are separately selectable. Individual origins, insertions and actions are provided. Regional registration is checked against corresponding metatarsals and held-out proximal phalanges; this is not a certificate of attachment anatomy.
 - **Oblique arytenoid:** only its ary-epiglottic extension is named.
 - **Semispinalis capitis:** no separately named mesh. The nearby source spinalis capitis needs attachment-based review before deciding between omission, fusion and mislabeling.
@@ -96,7 +97,6 @@ The atlas displays 679 active components (4 superseded objects are retained for 
 | Compressor urethrae | pelvis-leg-foot | No named source mesh | female |
 | Sphincter urethrovaginalis | pelvis-leg-foot | No named source mesh | female |
 | Articularis cubiti muscle | shoulder-arm | Not separately resolved | No separately identified articularis cubiti. Review the deep triceps/capsular relationship before claiming the component is present or reconstructing it. |
-| Palmaris brevis muscle | forearm-hand | No named source mesh |  |
 | (Pollical palmar interosseus muscle) | forearm-hand | No named source mesh | Listed inconstant in TA2 |
 | Psoas minor | pelvis-leg-foot | No named source mesh | Variable anatomy requires a documented specimen choice; lack of a named model is not proof that the structure is absent in all people. |
 | Articularis genus muscle | pelvis-leg-foot | Not separately resolved | No separately identified articularis genus. A vastus intermedius mesh alone does not establish its presence. |

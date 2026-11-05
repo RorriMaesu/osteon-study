@@ -5,15 +5,15 @@
   "sourceSHA256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd",
   "license": "CC BY-SA 4.0",
   "blender": "4.5.1 LTS",
-  "phase": "recovered-hand-and-foot-groups",
+  "phase": "recovered-source-muscles",
   "initialBackup": "muscles-20261104-212926-915485",
   "assets": {
     "forearm-hand": {
       "file": "muscles-forearm-hand.glb",
-      "bytes": 1045080,
-      "sha256": "dd0a6704b175780203ac8bc619ebaeb624214cc75c5ba7f06bbbbf9a0f8757f0",
-      "components": 118,
-      "backup": "muscles-20261105-013123-987060"
+      "bytes": 1073236,
+      "sha256": "23fd9639d6c3da947ff4fe8e850c5ae4b85cb08b5cbbd3f1995de93cbf0c96c1",
+      "components": 120,
+      "backup": "muscles-20261105-013916-454049"
     },
     "head-neck": {
       "file": "muscles-head-neck.glb",
@@ -796,7 +796,7 @@
           0.04262733459472656
         ],
         "max": [
-          -4.194490611553192e-05,
+          -0.00004194490611553192,
           1.6743444204330444,
           0.08951129019260406
         ]
@@ -864,7 +864,7 @@
           -0.10519097745418549
         ],
         "max": [
-          -9.879469871520996e-06,
+          -0.000009879469871520996,
           1.7075750827789307,
           0.08331423997879028
         ]
@@ -893,7 +893,7 @@
       "sourcePolygons": 5874,
       "bounds": {
         "min": [
-          4.1930004954338074e-05,
+          0.000041930004954338074,
           1.6042183637619019,
           0.04262733459472656
         ],
@@ -961,7 +961,7 @@
       "sourcePolygons": 20118,
       "bounds": {
         "min": [
-          9.864568710327148e-06,
+          0.000009864568710327148,
           1.59852135181427,
           -0.10519097745418549
         ],
@@ -1272,7 +1272,7 @@
           0.06751629710197449
         ],
         "max": [
-          -3.7933699786663055e-05,
+          -0.000037933699786663055,
           1.5540815591812134,
           0.09512050449848175
         ]
@@ -1301,7 +1301,7 @@
       "sourcePolygons": 1880,
       "bounds": {
         "min": [
-          3.791879862546921e-05,
+          0.00003791879862546921,
           1.5086880922317505,
           0.06751629710197449
         ],
@@ -1510,7 +1510,7 @@
           0.08336269110441208
         ],
         "max": [
-          -4.235096275806427e-05,
+          -0.00004235096275806427,
           1.6303153038024902,
           0.08945010602474213
         ]
@@ -1646,7 +1646,7 @@
           0.08167172223329544
         ],
         "max": [
-          -4.8619695007801056e-05,
+          -0.000048619695007801056,
           1.5578426122665405,
           0.08924543857574463
         ]
@@ -1947,7 +1947,7 @@
       "sourcePolygons": 546,
       "bounds": {
         "min": [
-          4.233606159687042e-05,
+          0.00004233606159687042,
           1.5937745571136475,
           0.08336269110441208
         ],
@@ -2083,7 +2083,7 @@
       "sourcePolygons": 276,
       "bounds": {
         "min": [
-          4.860479384660721e-05,
+          0.00004860479384660721,
           1.5417115688323975,
           0.08167172223329544
         ],
@@ -3209,7 +3209,7 @@
           0.03462023288011551
         ],
         "max": [
-          -3.6572571843862534e-05,
+          -0.000036572571843862534,
           1.5261794328689575,
           0.0724044144153595
         ]
@@ -3275,7 +3275,7 @@
           0.02976643294095993
         ],
         "max": [
-          -6.802147254347801e-05,
+          -0.00006802147254347801,
           1.5108181238174438,
           0.06982535123825073
         ]
@@ -3303,7 +3303,7 @@
       "sourcePolygons": 1122,
       "bounds": {
         "min": [
-          3.664707764983177e-05,
+          0.00003664707764983177,
           1.4981966018676758,
           0.03462023288011551
         ],
@@ -3369,7 +3369,7 @@
       "sourcePolygons": 530,
       "bounds": {
         "min": [
-          6.809597834944725e-05,
+          0.00006809597834944725,
           1.5006808042526245,
           0.02976643294095993
         ],
@@ -5002,7 +5002,7 @@
           -0.09007995575666428
         ],
         "max": [
-          2.60770320892334e-08,
+          2.60770320892334e-8,
           1.1630704402923584,
           -0.0462622344493866
         ]
@@ -5090,7 +5090,7 @@
       "sourcePolygons": 158,
       "bounds": {
         "min": [
-          2.60770320892334e-08,
+          2.60770320892334e-8,
           0.9273415803909302,
           -0.09007995575666428
         ],
@@ -5289,7 +5289,7 @@
           -0.06857308000326157
         ],
         "max": [
-          -4.057586193084717e-05,
+          -0.00004057586193084717,
           1.5644986629486084,
           -0.043278325349092484
         ]
@@ -5416,7 +5416,7 @@
       "sourcePolygons": 432,
       "bounds": {
         "min": [
-          4.05777245759964e-05,
+          0.0000405777245759964,
           1.5385160446166992,
           -0.06857308000326157
         ],
@@ -8302,7 +8302,7 @@
           0.011491142213344574
         ],
         "max": [
-          3.0547380447387695e-06,
+          0.0000030547380447387695,
           1.414556622505188,
           0.1269620656967163
         ]
@@ -8328,7 +8328,7 @@
       "sourcePolygons": 1376,
       "bounds": {
         "min": [
-          -2.995133399963379e-06,
+          -0.000002995133399963379,
           1.217682957649231,
           0.011491082608699799
         ],
@@ -8877,7 +8877,7 @@
           -0.1311129331588745
         ],
         "max": [
-          2.9802322387695312e-08,
+          2.9802322387695312e-8,
           1.3972382545471191,
           0.1260915845632553
         ]
@@ -8903,7 +8903,7 @@
       "sourcePolygons": 5618,
       "bounds": {
         "min": [
-          2.9802322387695312e-08,
+          2.9802322387695312e-8,
           0.8441170454025269,
           -0.13111308217048645
         ],
@@ -8975,7 +8975,7 @@
           -0.07037235051393509
         ],
         "max": [
-          -4.585087299346924e-05,
+          -0.00004585087299346924,
           0.8681824207305908,
           0.005351055413484573
         ]
@@ -9009,7 +9009,7 @@
           -0.06367144733667374
         ],
         "max": [
-          1.792237162590027e-05,
+          0.00001792237162590027,
           0.8403139710426331,
           0.020586920902132988
         ]
@@ -9047,7 +9047,7 @@
           -0.07540886849164963
         ],
         "max": [
-          9.830668568611145e-05,
+          0.00009830668568611145,
           0.8628289699554443,
           0.018147878348827362
         ]
@@ -9109,7 +9109,7 @@
       "sourcePolygons": 1962,
       "bounds": {
         "min": [
-          4.585087299346924e-05,
+          0.00004585087299346924,
           0.8234556317329407,
           -0.07037235051393509
         ],
@@ -9143,7 +9143,7 @@
       "sourcePolygons": 1440,
       "bounds": {
         "min": [
-          -1.792237162590027e-05,
+          -0.00001792237162590027,
           0.8100696802139282,
           -0.06367144733667374
         ],
@@ -9181,7 +9181,7 @@
       "sourcePolygons": 2512,
       "bounds": {
         "min": [
-          -9.830668568611145e-05,
+          -0.00009830668568611145,
           0.8145400881767273,
           -0.07540886849164963
         ],
@@ -17380,7 +17380,7 @@
           -0.11433850973844528
         ],
         "max": [
-          2.9802322387695312e-08,
+          2.9802322387695312e-8,
           1.0006111860275269,
           0.060800157487392426
         ]
@@ -17440,7 +17440,7 @@
       "sourcePolygons": 6530,
       "bounds": {
         "min": [
-          -5.960464477539063e-08,
+          -5.960464477539063e-8,
           0.43069708347320557,
           -0.11433853209018707
         ],
@@ -18408,7 +18408,7 @@
           -0.06796052306890488
         ],
         "max": [
-          -4.813307896256447e-05,
+          -0.00004813307896256447,
           0.8217949271202087,
           -0.045137807726860046
         ]
@@ -18436,7 +18436,7 @@
       "sourcePolygons": 202,
       "bounds": {
         "min": [
-          4.813307896256447e-05,
+          0.00004813307896256447,
           0.8001943826675415,
           -0.06796052306890488
         ],
@@ -22123,11 +22123,11 @@
         "rotation": [
           [
             0.9999999505246392,
-            6.037260607683997e-05,
+            0.00006037260607683997,
             0.00030871648323281
           ],
           [
-            -6.030190578628376e-05,
+            -0.00006030190578628376,
             0.9999999719572541,
             -0.00022901783605698488
           ],
@@ -22239,11 +22239,11 @@
         "rotation": [
           [
             0.9999999505246392,
-            6.037260607683997e-05,
+            0.00006037260607683997,
             0.00030871648323281
           ],
           [
-            -6.030190578628376e-05,
+            -0.00006030190578628376,
             0.9999999719572541,
             -0.00022901783605698488
           ],
@@ -22355,11 +22355,11 @@
         "rotation": [
           [
             0.9999999505246392,
-            6.037260607683997e-05,
+            0.00006037260607683997,
             0.00030871648323281
           ],
           [
-            -6.030190578628376e-05,
+            -0.00006030190578628376,
             0.9999999719572541,
             -0.00022901783605698488
           ],
@@ -22931,11 +22931,11 @@
         "rotation": [
           [
             0.9999999505165204,
-            -6.033812885287693e-05,
+            -0.00006033812885287693,
             -0.00030874951890849466
           ],
           [
-            6.026741915006786e-05,
+            0.00006026741915006786,
             0.9999999719579632,
             -0.00022902381622100557
           ],
@@ -23027,11 +23027,11 @@
         "rotation": [
           [
             0.9999999505165204,
-            -6.033812885287693e-05,
+            -0.00006033812885287693,
             -0.00030874951890849466
           ],
           [
-            6.026741915006786e-05,
+            0.00006026741915006786,
             0.9999999719579632,
             -0.00022902381622100557
           ],
@@ -23123,11 +23123,11 @@
         "rotation": [
           [
             0.9999999505165204,
-            -6.033812885287693e-05,
+            -0.00006033812885287693,
             -0.00030874951890849466
           ],
           [
-            6.026741915006786e-05,
+            0.00006026741915006786,
             0.9999999719579632,
             -0.00022902381622100557
           ],
@@ -23578,13 +23578,200 @@
       "status": "source-aligned-reference",
       "assessment": "learn-only",
       "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "id": "muscle-open3d-palmaris-brevis-right",
+      "name": "Palmaris brevis muscle",
+      "muscleName": "Palmaris brevis muscle",
+      "sourceName": "Palmaris brevis muscle — right source",
+      "region": "forearm-hand",
+      "side": "right",
+      "depth": "superficial",
+      "mirrorSource": false,
+      "sourceDataset": "Open3DModel hand (LUMC)",
+      "sourceUnits": "metres",
+      "sourceFile": "model-sources/open3d-hand-palmaris-brevis.obj",
+      "sourceSHA256": "85d0d00ef207020d43a0f1904982a55a1cf793ece9a8340131123d78f802181b",
+      "originalDownloadSHA256": "63364c4aadbcbcdf5665e1892dace62f52b6970e6dbebbdc472fae6c94c68a9e",
+      "sourceURL": "https://caskanatomy.info/open3dviewer/?model=hand",
+      "sourceDownloadURL": "https://caskanatomy.info/open3dviewer/3dmodels/hand/hand.glb",
+      "sourceLicense": "CC BY-SA",
+      "sourceLicenseURL": "https://www.eungyeol-lee.com/open3dman",
+      "sourceAttribution": "Open3D project, Jan Kooloos (RadboudUMC), Marco C. DeRuiter, Eungyeol Lee, Daniel Jansma (LUMC), et al.; based on BodyParts3D and Z-Anatomy. CC BY-SA. Geometry only; no source textures.",
+      "registration": {
+        "scale": 1.0088280573612418,
+        "rotation": [
+          [
+            0.9999965502410363,
+            0.0015456141408840241,
+            -0.0021238133048322645
+          ],
+          [
+            -0.001564909131306512,
+            0.9999572453810243,
+            -0.009113641939569364
+          ],
+          [
+            0.0021096363281468355,
+            0.009116934074535395,
+            0.9999562145152372
+          ]
+        ],
+        "translation": [
+          0.0017846469796842235,
+          -0.010777380611053888,
+          -0.008765725018958226
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.r",
+            "medianMM": 1.4125294302799896,
+            "p95MM": 3.70270090631802
+          },
+          {
+            "reference": "Fourth metacarpal bone.r",
+            "medianMM": 1.274497674587654,
+            "p95MM": 2.9619274597633933
+          },
+          {
+            "reference": "second proximal phalanx.r",
+            "medianMM": 1.3910497106991235,
+            "p95MM": 4.266197433909937
+          },
+          {
+            "reference": "fourth proximal phalanx.r",
+            "medianMM": 1.4255075565649977,
+            "p95MM": 3.9003879139225948
+          },
+          {
+            "reference": "fifth proximal phalanx.r",
+            "medianMM": 1.1848484303799938,
+            "p95MM": 3.0334805097980966
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmaris brevis muscle",
+        "origin": "Palmar aponeurosis and flexor-retinaculum region.",
+        "insertion": "Skin and fascia along the medial (ulnar) border of the palm; it has no bony insertion.",
+        "action": "Wrinkles the skin over the hypothenar eminence and helps deepen the hollow of the palm during gripping.",
+        "sourceURL": "https://onlinelibrary.wiley.com/doi/10.1111/joa.12675",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "parents": [
+        "Intrinsic muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 2890,
+      "bounds": {
+        "min": [
+          -0.25406857936831645,
+          0.8359393623088915,
+          0.032981360011668646
+        ],
+        "max": [
+          -0.24003517689619266,
+          0.8546804278343408,
+          0.038384128433989854
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "id": "muscle-open3d-palmaris-brevis-left",
+      "name": "Palmaris brevis muscle",
+      "muscleName": "Palmaris brevis muscle",
+      "sourceName": "Palmaris brevis muscle — mirrored left derivative",
+      "region": "forearm-hand",
+      "side": "left",
+      "depth": "superficial",
+      "mirrorSource": true,
+      "sourceDataset": "Open3DModel hand (LUMC)",
+      "sourceUnits": "metres",
+      "sourceFile": "model-sources/open3d-hand-palmaris-brevis.obj",
+      "sourceSHA256": "85d0d00ef207020d43a0f1904982a55a1cf793ece9a8340131123d78f802181b",
+      "originalDownloadSHA256": "63364c4aadbcbcdf5665e1892dace62f52b6970e6dbebbdc472fae6c94c68a9e",
+      "sourceURL": "https://caskanatomy.info/open3dviewer/?model=hand",
+      "sourceDownloadURL": "https://caskanatomy.info/open3dviewer/3dmodels/hand/hand.glb",
+      "sourceLicense": "CC BY-SA",
+      "sourceLicenseURL": "https://www.eungyeol-lee.com/open3dman",
+      "sourceAttribution": "Open3D project, Jan Kooloos (RadboudUMC), Marco C. DeRuiter, Eungyeol Lee, Daniel Jansma (LUMC), et al.; based on BodyParts3D and Z-Anatomy. CC BY-SA. Geometry only; no source textures.",
+      "registration": {
+        "scale": 1.0088277249176656,
+        "rotation": [
+          [
+            0.9999965503924861,
+            -0.0015455864058832266,
+            0.0021237621783165685
+          ],
+          [
+            0.0015648809431647634,
+            0.999957245373779,
+            -0.009113647574722324
+          ],
+          [
+            -0.0021095854478591324,
+            0.009116939571175278,
+            0.9999562145724646
+          ]
+        ],
+        "translation": [
+          -0.0017845868438079449,
+          -0.010777398491763443,
+          -0.008765442689644964
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.l",
+            "medianMM": 1.4125288865676164,
+            "p95MM": 3.702700523356922
+          },
+          {
+            "reference": "Fourth metacarpal bone.l",
+            "medianMM": 1.2744945463533144,
+            "p95MM": 2.9619373482400904
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmaris brevis muscle",
+        "origin": "Palmar aponeurosis and flexor-retinaculum region.",
+        "insertion": "Skin and fascia along the medial (ulnar) border of the palm; it has no bony insertion.",
+        "action": "Wrinkles the skin over the hypothenar eminence and helps deepen the hollow of the palm during gripping.",
+        "sourceURL": "https://onlinelibrary.wiley.com/doi/10.1111/joa.12675",
+        "reference": "11.5"
+      },
+      "kind": "muscle",
+      "parents": [
+        "Intrinsic muscles",
+        "Intrinsic muscles of hand"
+      ],
+      "sourcePolygons": 2890,
+      "bounds": {
+        "min": [
+          0.2400352019473198,
+          0.8359393538505714,
+          0.032981358836099636
+        ],
+        "max": [
+          0.2540685992635272,
+          0.8546804129775631,
+          0.038384125707462996
+        ]
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
     }
   ],
   "note": "Component count is not distinct muscle count. Depth is a regional study filter, not a complete dissection plane. No movement rig or certified insertion footprint is asserted.",
   "repairs": {
     "recipe": "model-sources/muscle-repairs.json",
-    "stage": "hand-and-foot-groups",
-    "addedComponents": 14,
+    "stage": "hand-foot-groups-and-palmaris-brevis",
+    "addedComponents": 16,
     "retiredComponents": 4
   }
 }

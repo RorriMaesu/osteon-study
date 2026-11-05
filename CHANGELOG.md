@@ -312,3 +312,9 @@ Audited a finite 226-entry reference checklist and inspected the original muscle
 - Added individual origins, insertions and actions, source hashes and a reproducible registration/segmentation recipe.
 - Preserved original source geometry and hash-verified project/GLB backups before every model write. Blocked original-only rebuilds that would erase repairs.
 - Validated assets, bilateral group coverage, missing-member detection and retired visibility; 178 automated checks pass.
+
+## Hand completion and serial-group study
+
+- Added palmaris brevis from the revised LUMC Open3D hand, with a documented mirrored left derivative, origin/insertion/action notes and source links.
+- Added Study all group members for recovered palmar interossei and foot lumbricals. Individual labels remain selective, and switching members retains the group view.
+- Preserved source OBJ bytes across Windows checkouts so provenance hashes remain reproducible.

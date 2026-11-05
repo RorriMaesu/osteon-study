@@ -1,6 +1,8 @@
 app.js linguist-generated=true
 assets/reader/*.jpg binary
 assets/figures/*.jpg binary
-*.glb binary
-
 setup/*.command text eol=lf
+
+# Anatomical source hashes must survive Windows checkouts byte for byte.
+model-sources/**/*.obj -text
+*.glb binary

@@ -3105,6 +3105,151 @@
         "sourceURL": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
         "reference": "11.6"
       }
+    },
+    {
+      "id": "muscle-open3d-palmaris-brevis-right",
+      "name": "Palmaris brevis muscle",
+      "muscleName": "Palmaris brevis muscle",
+      "sourceName": "Palmaris brevis muscle — right source",
+      "region": "forearm-hand",
+      "side": "right",
+      "depth": "superficial",
+      "mirrorSource": false,
+      "sourceDataset": "Open3DModel hand (LUMC)",
+      "sourceUnits": "metres",
+      "sourceFile": "model-sources/open3d-hand-palmaris-brevis.obj",
+      "sourceSHA256": "85d0d00ef207020d43a0f1904982a55a1cf793ece9a8340131123d78f802181b",
+      "originalDownloadSHA256": "63364c4aadbcbcdf5665e1892dace62f52b6970e6dbebbdc472fae6c94c68a9e",
+      "sourceURL": "https://caskanatomy.info/open3dviewer/?model=hand",
+      "sourceDownloadURL": "https://caskanatomy.info/open3dviewer/3dmodels/hand/hand.glb",
+      "sourceLicense": "CC BY-SA",
+      "sourceLicenseURL": "https://www.eungyeol-lee.com/open3dman",
+      "sourceAttribution": "Open3D project, Jan Kooloos (RadboudUMC), Marco C. DeRuiter, Eungyeol Lee, Daniel Jansma (LUMC), et al.; based on BodyParts3D and Z-Anatomy. CC BY-SA. Geometry only; no source textures.",
+      "registration": {
+        "scale": 1.0088280573612418,
+        "rotation": [
+          [
+            0.9999965502410363,
+            0.0015456141408840241,
+            -0.0021238133048322645
+          ],
+          [
+            -0.001564909131306512,
+            0.9999572453810243,
+            -0.009113641939569364
+          ],
+          [
+            0.0021096363281468355,
+            0.009116934074535395,
+            0.9999562145152372
+          ]
+        ],
+        "translation": [
+          0.0017846469796842235,
+          -0.010777380611053888,
+          -0.008765725018958226
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.r",
+            "medianMM": 1.4125294302799896,
+            "p95MM": 3.70270090631802
+          },
+          {
+            "reference": "Fourth metacarpal bone.r",
+            "medianMM": 1.274497674587654,
+            "p95MM": 2.9619274597633933
+          },
+          {
+            "reference": "second proximal phalanx.r",
+            "medianMM": 1.3910497106991235,
+            "p95MM": 4.266197433909937
+          },
+          {
+            "reference": "fourth proximal phalanx.r",
+            "medianMM": 1.4255075565649977,
+            "p95MM": 3.9003879139225948
+          },
+          {
+            "reference": "fifth proximal phalanx.r",
+            "medianMM": 1.1848484303799938,
+            "p95MM": 3.0334805097980966
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmaris brevis muscle",
+        "origin": "Palmar aponeurosis and flexor-retinaculum region.",
+        "insertion": "Skin and fascia along the medial (ulnar) border of the palm; it has no bony insertion.",
+        "action": "Wrinkles the skin over the hypothenar eminence and helps deepen the hollow of the palm during gripping.",
+        "sourceURL": "https://onlinelibrary.wiley.com/doi/10.1111/joa.12675",
+        "reference": "11.5"
+      }
+    },
+    {
+      "id": "muscle-open3d-palmaris-brevis-left",
+      "name": "Palmaris brevis muscle",
+      "muscleName": "Palmaris brevis muscle",
+      "sourceName": "Palmaris brevis muscle — mirrored left derivative",
+      "region": "forearm-hand",
+      "side": "left",
+      "depth": "superficial",
+      "mirrorSource": true,
+      "sourceDataset": "Open3DModel hand (LUMC)",
+      "sourceUnits": "metres",
+      "sourceFile": "model-sources/open3d-hand-palmaris-brevis.obj",
+      "sourceSHA256": "85d0d00ef207020d43a0f1904982a55a1cf793ece9a8340131123d78f802181b",
+      "originalDownloadSHA256": "63364c4aadbcbcdf5665e1892dace62f52b6970e6dbebbdc472fae6c94c68a9e",
+      "sourceURL": "https://caskanatomy.info/open3dviewer/?model=hand",
+      "sourceDownloadURL": "https://caskanatomy.info/open3dviewer/3dmodels/hand/hand.glb",
+      "sourceLicense": "CC BY-SA",
+      "sourceLicenseURL": "https://www.eungyeol-lee.com/open3dman",
+      "sourceAttribution": "Open3D project, Jan Kooloos (RadboudUMC), Marco C. DeRuiter, Eungyeol Lee, Daniel Jansma (LUMC), et al.; based on BodyParts3D and Z-Anatomy. CC BY-SA. Geometry only; no source textures.",
+      "registration": {
+        "scale": 1.0088277249176656,
+        "rotation": [
+          [
+            0.9999965503924861,
+            -0.0015455864058832266,
+            0.0021237621783165685
+          ],
+          [
+            0.0015648809431647634,
+            0.999957245373779,
+            -0.009113647574722324
+          ],
+          [
+            -0.0021095854478591324,
+            0.009116939571175278,
+            0.9999562145724646
+          ]
+        ],
+        "translation": [
+          -0.0017845868438079449,
+          -0.010777398491763443,
+          -0.008765442689644964
+        ],
+        "heldOutValidation": [
+          {
+            "reference": "Third metacarpal bone.l",
+            "medianMM": 1.4125288865676164,
+            "p95MM": 3.702700523356922
+          },
+          {
+            "reference": "Fourth metacarpal bone.l",
+            "medianMM": 1.2744945463533144,
+            "p95MM": 2.9619373482400904
+          }
+        ]
+      },
+      "teaching": {
+        "name": "Palmaris brevis muscle",
+        "origin": "Palmar aponeurosis and flexor-retinaculum region.",
+        "insertion": "Skin and fascia along the medial (ulnar) border of the palm; it has no bony insertion.",
+        "action": "Wrinkles the skin over the hypothenar eminence and helps deepen the hollow of the palm during gripping.",
+        "sourceURL": "https://onlinelibrary.wiley.com/doi/10.1111/joa.12675",
+        "reference": "11.5"
+      }
     }
   ],
   "superseded": {
@@ -3130,5 +3275,6 @@
       "muscle-bp43-lumbrical-foot-3-left",
       "muscle-bp43-lumbrical-foot-4-left"
     ]
-  }
+  },
+  "stage": "hand-foot-groups-and-palmaris-brevis"
 }

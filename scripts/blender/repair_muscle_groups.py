@@ -38,7 +38,7 @@ for r in pending:
  p=REPO/r['sourceFile'];assert digest(p)==r['sourceSHA256'],p
  verts=[];faces=[]
  for line in p.read_text().splitlines():
-  if line.startswith('v '):verts.append([float(x)*.001 for x in line.split()[1:4]])
+  if line.startswith('v '):verts.append([float(x)*(1 if r.get('sourceUnits')=='metres'else .001) for x in line.split()[1:4]])
   elif line.startswith('f '):faces.append([int(x.split('/')[0])-1 for x in line.split()[1:]])
  if 'sourceFaceIndices'in r:faces=[faces[i]for i in r['sourceFaceIndices']]
  used=sorted({i for f in faces for i in f});index={i:j for j,i in enumerate(used)}
@@ -55,10 +55,10 @@ for r in pending:
  obj=bpy.data.objects.new(r['name']+'.'+('r'if r['side']=='right'else'l'),me);scene.collection.objects.link(obj)
  material=bpy.data.materials.get('Osteon muscle');assert material
  me.materials.append(material)
- obj['muscleId']=r['id'];obj['muscleRegion']=r['region'];obj['muscleKind']='muscle';obj['muscleDepth']='deeper';obj['zname']=r['sourceName'];obj['anatomicalSide']=r['side'];obj['source']='BodyParts3D 4.3 original anatomy; registered derivative';obj['sourceFile']=r['sourceFile'];obj['sourceSHA256']=r['sourceSHA256']
+ obj['muscleId']=r['id'];obj['muscleRegion']=r['region'];obj['muscleKind']='muscle';obj['muscleDepth']=r.get('depth','deeper');obj['zname']=r['sourceName'];obj['anatomicalSide']=r['side'];obj['source']=r.get('sourceDataset','BodyParts3D 4.3')+' original anatomy; registered derivative';obj['sourceFile']=r['sourceFile'];obj['sourceSHA256']=r['sourceSHA256']
  lo=[min(v[j]for v in moved)for j in range(3)];hi=[max(v[j]for v in moved)for j in range(3)]
  record={k:v for k,v in r.items()if k not in ['sourceFaceIndices']}
- record.update(kind='muscle',depth='deeper',sourceDataset='BodyParts3D 4.3',parents=[r['memberOf'],'Intrinsic muscles of '+('hand'if r['region']=='forearm-hand'else'foot')],sourcePolygons=len(poly),bounds={'min':[lo[0],lo[2],-hi[1]],'max':[hi[0],hi[2],-lo[1]]},status='source-aligned-reference',assessment='learn-only',reviewNotice='Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified.')
+ record.update(kind='muscle',depth=r.get('depth','deeper'),sourceDataset=r.get('sourceDataset','BodyParts3D 4.3'),parents=[r.get('memberOf','Intrinsic muscles'),'Intrinsic muscles of '+('hand'if r['region']=='forearm-hand'else'foot')],sourcePolygons=len(poly),bounds={'min':[lo[0],lo[2],-hi[1]],'max':[hi[0],hi[2],-lo[1]]},status='source-aligned-reference',assessment='learn-only',reviewNotice='Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified.')
  manifest['components'].append(record);regions.add(r['region'])
 for c in manifest['components']:
  if c['id']in recipe['superseded']:
@@ -75,8 +75,8 @@ for region in sorted(regions):
  snapshot=backup('Immediately before exporting repaired '+region,[target])
  bpy.ops.export_scene.gltf(filepath=str(target),export_format='GLB',use_selection=True,export_extras=True,export_animations=False,export_apply=True,export_yup=True,export_draco_mesh_compression_enable=True,export_draco_mesh_compression_level=6,export_draco_position_quantization=16,export_draco_normal_quantization=10)
  manifest['assets'][region]={'file':target.name,'bytes':target.stat().st_size,'sha256':digest(target),'components':len(selected),'backup':snapshot}
-manifest['repairs']={'recipe':'model-sources/muscle-repairs.json','stage':'hand-and-foot-groups','addedComponents':len(recipe['additions']),'retiredComponents':len(recipe['superseded'])}
-manifest['phase']='recovered-hand-and-foot-groups'
+manifest['repairs']={'recipe':'model-sources/muscle-repairs.json','stage':recipe.get('stage','hand-and-foot-groups'),'addedComponents':len(recipe['additions']),'retiredComponents':len(recipe['superseded'])}
+manifest['phase']='recovered-source-muscles'
 manifest_path.write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 assert digest(source)==source_hash,'Original source unexpectedly changed'
 print('REPAIRED',len(pending),'components; original source preserved',source_hash,flush=True)
