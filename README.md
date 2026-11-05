@@ -45,7 +45,7 @@ Fontanelles open a **locally bundled, rotatable UCSF fetal-skull scan**, with su
 
 ## Chapters 1–5 foundations
 
-- [Study Studio](https://rorrimaesu.github.io/osteon-study/#study) brings the earlier learning apps into the same chapter library, with a full source reader, a guided lesson and scored practice for every section. The coverage audit maps 61 sections and 200 source objectives to the exam bank, and the reader includes 402 chapter pages.
+- [Study Studio](https://rorrimaesu.github.io/osteon-study/#study) brings the earlier learning apps into the same chapter library, with a full source reader, a guided lesson and scored practice for every section. Every section also has a visual activity. Open **Explore → Full view** to use the controls alongside the larger diagram. Source-based landmark views are available under **Locate structures**. The coverage audit maps 61 sections and 200 source objectives to the exam bank, and the reader includes 402 chapter pages.
 - Chapters 1–2 combine the original body worksheets, interactive cutting planes, organ systems, chemistry activities and the 239-question trainer.
 - Chapters 3–4 include hands-on cell activities, a captioned protein-synthesis animation, tissue figure tours and textbook micrograph identification.
 - Chapter 5 uses the original Lamina skin diagram with direct visual targets, skin lessons and written-response rubrics.

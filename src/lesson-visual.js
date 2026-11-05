@@ -1,6 +1,6 @@
 const lessonMedia='svg, img, video, canvas, .foundation-plane-stage, .process-visual, .lab-root';
 const canExpand=root=>!!root.querySelector(lessonMedia);
-const fittedMedia='.foundation-atlas-layout svg, .foundation-tissue-layout svg, .foundation-figure img, .foundation-video, .foundation-plane-stage, .motion-lab>svg, .osteon-layout>svg, .muscle-lab-visual svg, .lab-osmosis svg, .lab-division svg';
+const fittedMedia='.section-diagram-media svg, .foundation-atlas-layout svg, .foundation-tissue-layout svg, .foundation-figure img, .foundation-video, .foundation-plane-stage, .motion-lab>svg, .osteon-layout>svg, .muscle-lab-visual svg, .lab-osmosis svg, .lab-division svg';
 
 function openFigureView(root,trigger,title,refit){
  const marker=document.createComment('Lesson activity position');

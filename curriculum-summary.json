@@ -1,6 +1,9 @@
 {
   "chapters": 10,
   "sections": 61,
+  "interactiveSections": 61,
+  "addedVisualSections": 38,
+  "interactiveSourceViews": 51,
   "sourceObjectives": 200,
   "examBank": 1999,
   "supplementaryQuestions": 104,

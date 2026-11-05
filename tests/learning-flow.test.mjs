@@ -2,7 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {examBank} from '../src/exam-bank.js';
-import {selectExam,createSession,validSession,gradeQuestion} from '../src/exam-core.js';
+import {interactiveSections,diagramSourceKeys,newVisualSections} from '../src/section-diagrams.js';
+import {foundationsVisuals} from '../src/visual-foundations.js';
+import {systemsVisuals} from '../src/visual-systems.js';
+import {syllabus,selectExam,createSession,validSession,gradeQuestion} from '../src/exam-core.js';
 import {examFigure} from '../src/exam-figures.js';
 import {lab} from '../src/tissue-labs.js';
 import {plates} from '../src/representations.js';
@@ -38,6 +41,22 @@ test('every exam image resolves, and simultaneously open tissue figures keep sep
  assert.ok(whole.svg.includes('clip-path="url(#'+id(whole.svg)+')"'));
  assert.ok(detail.svg.includes('clip-path="url(#'+id(detail.svg)+')"'));
  assert.notEqual(whole.svg.match(/viewBox="[^"]+"/)[0],detail.svg.match(/viewBox="[^"]+"/)[0]);
+});
+test('every published section has an interactive visual and every new source view resolves',()=>{
+ assert.deepEqual(interactiveSections,new Set(syllabus.sections.map(s=>s.id)));
+ assert.ok(newVisualSections.length>=38);
+ for(const key of diagramSourceKeys()){
+  const plate=plates[key];
+  assert.ok(plate?.crop.length===4&&plate.crop.every(Number.isFinite),key);
+  assert.ok(fs.existsSync(new URL('../assets/figures/'+(plate.image||key)+'.jpg',import.meta.url)),key);
+ }
+ for(const [id,topic] of Object.entries({...foundationsVisuals,...systemsVisuals})){
+  assert.ok(topic.title&&topic.states.length>=2,id);
+  for(const [index,[label,description]] of topic.states.entries()){
+   assert.ok(label&&description.length>30,id);
+   if(typeof topic.art==='function')assert.ok(/^<(path|rect|circle|g|text)\b/.test(topic.art(index)),id+' state '+index);
+  }
+ }
 });
 test('revised distractors preserve older frozen option snapshots and their scores',()=>{
  for(const q of examBank.filter(q=>q.legacyDistractors)){const s=createSession([q]);s.options[q.id]=[q.answer,...q.legacyDistractors];s.responses[q.id]=q.legacyDistractors[0];assert.ok(validSession(s),q.id);assert.equal(gradeQuestion(q,s.responses[q.id]),false);s.responses[q.id]=q.answer;assert.equal(gradeQuestion(q,s.responses[q.id]),true);s.options[q.id][1]='unrecognized injected option';assert.equal(validSession(s),false);}
