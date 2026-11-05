@@ -25,6 +25,7 @@ export function attachFetalSpecimen({viewer,toast}){
   viewer.fetalSiteView=key;const config=views[key],sites=specimen.sites.filter(s=>config.ids.includes(s.id)),specific=termId&&termId!=='fontanelles'?sites.filter(s=>s.termId===termId):[];
   const chosen=specific.length?specific:sites;viewer.showPins(chosen.map(s=>({term:viewer.selectedTerm,point:s.point,label:s.label})),{labelled:true});viewer.applyVisibility();viewer.frame(viewer.meshes.filter(m=>m.userData.detailGroup==='fetal-skull'),config.direction);
  }
+ viewer.recenterFetalSpecimen=()=>show(viewer.fetalSiteView||'superior',viewer.selectedTerm?.id);
  viewer.renderFetalTools=()=>{
   const active=viewer.activeDetail==='fetal-skull'&&!viewer.quiz;caption.hidden=!active;if(!active)return false;
   const tools=viewer.detailTools;tools.hidden=false;tools.replaceChildren();const badge=document.createElement('span');badge.textContent='UCSF scan · developmental sites';tools.append(badge);

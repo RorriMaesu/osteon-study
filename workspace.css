@@ -23,12 +23,11 @@
 .exploration-bar{position:absolute;top:38px;left:14px;right:14px;min-height:36px;display:flex;align-items:center;gap:5px;z-index:4;padding:3px 4px;background:#132027e8;border:1px solid #39504d;border-radius:9px;backdrop-filter:blur(12px)}
 .exploration-bar[hidden],.exploration-bar [hidden]{display:none!important}
 .exploration-bar button{font-size:10px;min-height:30px;white-space:nowrap;padding:4px 8px;border-radius:6px}
-#focus-back{width:30px;padding:0;flex:none;font-size:16px}
-#focus-trail{display:flex;align-items:center;gap:6px;min-width:0;flex:1;overflow:hidden;font-size:10px;white-space:nowrap}
-#focus-trail button{border:0;padding:3px 1px;color:var(--mint);flex-shrink:0}
-#focus-trail strong{font-weight:500;overflow:hidden;text-overflow:ellipsis;min-width:0}
-#focus-trail .focus-intro{color:var(--muted);overflow:hidden;text-overflow:ellipsis}
-#focus-trail>span[aria-hidden]{color:#75968a}
+.focus-navigation,.focus-options{display:flex;align-items:center;gap:4px;flex:none}
+.focus-options:not(:has(>:not([hidden]))){display:none}
+#focus-overview{background:#cce3d5;color:#142923;border-color:#cce3d5;font-weight:650}
+#focus-overview:hover{background:#edf8ec}
+#focus-trail{min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;font-size:11px;white-space:nowrap;padding-inline:4px}
 #skull-controls{flex:none;margin:0}#skull-colors[aria-pressed=true]{background:#2c4339;border-color:#658773;color:var(--mint)}
 #skull-key{flex:none;margin:0}
 .specimen-stage[data-exploring=true] .specimen-label{display:none}
@@ -38,8 +37,7 @@
 .region-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:16px 0}
 .region-legend button{display:flex;align-items:center;gap:9px;text-align:left;font-size:12px;min-height:40px;padding:7px 9px;break-inside:avoid}
 .region-legend i{display:block;flex:none;width:13px;height:13px;border-radius:4px;background:var(--bone-color);box-shadow:0 0 12px color-mix(in srgb,var(--bone-color) 22%,transparent)}
-@media(max-width:999px){#focus-region,#focus-region+span{display:none}}
-@media(max-width:999px){.exploration-bar{top:39px;left:9px;right:9px;gap:3px;padding:2px}.exploration-bar button{min-height:44px;font-size:10px;padding:5px 7px}#focus-back{width:44px;min-width:44px}#focus-trail{gap:3px;font-size:10px}#focus-trail button{padding:3px;min-width:0;flex-shrink:1;overflow:hidden;text-overflow:ellipsis}#focus-trail strong{max-width:145px}#skull-key{min-width:44px}.specimen-stage[data-exploring=true] #viewer{top:98px}.browse-modes button{min-height:44px;font-size:12px}.region-legend{grid-template-columns:repeat(2,minmax(0,1fr))}.region-legend button{min-height:44px;font-size:11px}}
+@media(max-width:999px){.exploration-bar{top:39px;left:9px;right:9px;gap:3px;padding:2px}.exploration-bar button{min-height:44px;font-size:10px;padding:5px 7px}#focus-back{min-width:44px}#skull-key{min-width:44px}.specimen-stage[data-exploring=true] #viewer{top:98px}.browse-modes button{min-height:44px;font-size:12px}.region-legend{grid-template-columns:repeat(2,minmax(0,1fr))}.region-legend button{min-height:44px;font-size:11px}}
 .desktop-filters{display:none}
 .page-flow h2,.page-flow h3{break-after:avoid}
 #concept-feedback,#course-feedback,#spatial-feedback{break-inside:avoid}
@@ -226,8 +224,8 @@
 .specimen-stage .viewer-actions{bottom:10px;flex-wrap:nowrap;max-width:none;margin:0;gap:4px}
 .specimen-stage .viewer-hint{display:block;bottom:94px;font-size:11px;letter-spacing:0;text-transform:none;line-height:1.4;color:#d1e5d7;padding:0 8px}
 .specimen-stage .axis-marker{bottom:130px}
-#focus-trail .focus-intro{color:#e0eddf;font-size:11px;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#focus-trail .focus-intro::before{content:'◉ ◉';display:inline-block;color:var(--orange);font-size:9px;letter-spacing:-3px;margin-right:8px;animation:gesture-cue 1.3s ease-out 3}
+#focus-trail.focus-intro{color:#e0eddf;font-size:11px;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#focus-trail.focus-intro::before{content:'◉ ◉';display:inline-block;color:var(--orange);font-size:9px;letter-spacing:-3px;margin-right:8px;animation:gesture-cue 1.3s ease-out 3}
 .exploration-bar .focus-next{background:#365544;color:#e8f0dc;border-color:#799b7b;font-size:11px;margin-left:auto}
 .focus-next[hidden]{display:none!important}
 #hover-label{max-width:min(330px,calc(100% - 12px));white-space:normal;line-height:1.5}
@@ -276,7 +274,7 @@ body.viewer-room-open{overflow:hidden!important}
  .specimen-stage .view-controls{bottom:60px;left:50%;transform:translateX(-50%)}.specimen-stage .view-controls button{min-width:39px;min-height:44px;padding:6px 9px}
  .specimen-stage .viewer-actions{bottom:8px;left:0;right:0;justify-content:center;padding:0 4px;gap:3px}.specimen-stage .viewer-actions button{width:44px;min-width:0;min-height:44px;padding:4px}
  .specimen-stage .viewer-actions button span{display:block;font-size:7px}.specimen-stage .viewer-hint{bottom:112px;font-size:11px;line-height:1.5}.specimen-stage .axis-marker{display:none}
- #focus-trail .focus-intro{font-size:10px;line-height:1.5;white-space:normal}#focus-trail .focus-intro::before{display:none}.exploration-bar .focus-next{font-size:10px;min-height:44px;padding:5px 7px}
+ #focus-trail.focus-intro{font-size:10px;line-height:1.5;white-space:normal}#focus-trail.focus-intro::before{display:none}.exploration-bar .focus-next{font-size:10px;min-height:44px;padding:5px 7px}
  .viewer-control-guide{top:51px;right:8px;width:calc(100% - 16px);padding:16px;max-height:calc(100% - 60px)}.viewer-guide-heading{font-size:23px}.viewer-guide-heading button,#viewer-guide-done{min-height:44px}.viewer-guide-heading button{min-width:44px}
  .viewer-room .viewer-actions button{width:44px;padding:4px}.viewer-room .viewer-actions button span{font-size:7px}.viewer-room .view-controls button{min-height:44px}
 }
@@ -284,12 +282,12 @@ body.viewer-room-open{overflow:hidden!important}
  .viewer-room .stage-header,.viewer-room .viewer-hint{display:none}.viewer-room .exploration-bar{top:6px;right:320px}.viewer-room .specimen-stage #viewer{top:58px;bottom:56px}
  .viewer-room .view-controls{left:8px;bottom:5px;transform:none}.viewer-room .viewer-actions{left:auto;right:8px;bottom:5px;width:auto}.viewer-room .viewer-actions button span{display:none}.viewer-room .viewer-actions button{width:35px;min-height:40px}.viewer-room .view-controls button{min-width:34px;min-height:40px;padding:5px}
 }
-@media(prefers-reduced-motion:reduce){#focus-trail .focus-intro::before{animation:none}}
+@media(prefers-reduced-motion:reduce){#focus-trail.focus-intro::before{animation:none}}
 @container(max-width:680px){
  .specimen-stage .stage-header{display:none}
  .specimen-stage .exploration-bar{top:52px;right:8px}
  .specimen-stage #viewer,.specimen-stage[data-exploring=true] #viewer,.atlas-workspace .specimen-stage[data-exploring=true] #viewer{top:104px}
- #focus-trail .focus-intro{font-size:10px;white-space:normal;line-height:1.5}
+ #focus-trail.focus-intro{font-size:10px;white-space:normal;line-height:1.5}
 }
 #viewer-details,.viewer-details-close{display:none}
 @media(min-width:1000px) and (max-width:1599px){

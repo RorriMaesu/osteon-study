@@ -9,7 +9,7 @@ import {captureBoneView,restoreBoneView,prepareMuscleNavigation,muscleContextFor
 import {muscleScopeRegions,muscleScopeNames,muscleRegions,componentVisible,componentColor,muscleBoneContext,muscleFacts,muscleLabelPosition} from './muscle-data.js';
 export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
  if(!viewer.scene||!viewer.renderer)return {unavailable:true,openRegion:async()=>toast('3D anatomy is unavailable here. The complete readings and exams remain available.')};
- const $=s=>document.querySelector(s),sidebar=$('.structure-sidebar'),oldPick=viewer.onPick,initialDescription=viewer.el.getAttribute('aria-label'),initialGhostTitle=$('#ghost-btn').title;
+ const $=s=>document.querySelector(s),sidebar=$('.structure-sidebar'),oldPick=viewer.onPick,initialGhostTitle=$('#ghost-btn').title;
  const state={enabled:false,region:'all',side:'both',depth:'all',support:false,focused:false,groupOnly:false,selected:null,colors:false,labels:true,pick:'muscles',query:'',page:0};
  const loaded=new Map(),loading=new Map(),meshes=[],hidden=new Set();let actionVersion=0,busy=false,level='region',before=null,overlayWasOn=false,loadStatus='',lastBoneView='';const initialTotal=$('#structure-total').textContent;
  const mainToggle=$('#main-muscles-toggle');
@@ -61,12 +61,21 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
   panel.querySelectorAll('[data-muscle-id]').forEach(b=>b.onclick=()=>select(b.dataset.muscleId));panel.querySelector('[data-muscle-prev]').onclick=()=>{state.page--;renderBrowser();};panel.querySelector('[data-muscle-next]').onclick=()=>{state.page++;renderBrowser();};panel.querySelector('[data-muscle-pick]').onclick=()=>{state.pick=state.pick==='muscles'?'bones':'muscles';lastBoneView=boneViewKey(viewer);viewer.applyVisibility();if(state.pick==='bones')viewer.notifyFocus();renderBrowser();};panel.querySelector('[data-muscle-colors]').onclick=()=>{state.colors=!state.colors;viewer.applyVisibility();renderBrowser();};panel.querySelector('[data-muscle-labels]').onclick=()=>{state.labels=!state.labels;viewer.needsRender=true;renderBrowser();};panel.querySelector('[data-muscle-show-region]').onclick=()=>{state.groupOnly=false;state.focused=!!state.selected&&!state.focused;level=state.focused?'muscle':'region';viewer.applyVisibility();frame();renderBrowser();if(state.selected)showDetail();document.dispatchEvent(new Event('structureselected'));};panel.querySelector('[data-muscle-exit]').onclick=()=>enable(false);panel.querySelector('[data-muscle-coverage]').onclick=coverageReport;panel.querySelector('[data-muscle-retry]')?.addEventListener('click',ensureRegion);
  }
  function syncToggle(){for(const control of [button,mainToggle]){control.disabled=!viewer.loaded||viewer.quiz||!!viewer.activeDetail;control.setAttribute('aria-pressed',String(state.enabled));control.setAttribute('aria-busy',String(state.enabled&&busy));control.querySelector('span:last-child').textContent='Muscles: '+(state.enabled?'On':'Off');control.title=control.disabled?'Return to the adult 3D atlas to use muscles':state.enabled?'Hide muscles and return to your bone view':'Show muscles here without moving the camera';}}
- async function enable(on,{requestedRegion=null,frameView=false}={}){
-  if(!viewer.loaded){toast('The skeleton is still loading.');return;}if(viewer.quiz||viewer.activeDetail){toast('Return to the adult atlas before opening muscles.');return;}
+ async function enable(on,{requestedRegion=null,frameView=false,restoreView=true}={}){
+  if(!viewer.loaded){toast('The skeleton is still loading.');return;}if(on&&(viewer.quiz||viewer.activeDetail)){toast('Return to the adult atlas before opening muscles.');return;}
   const revision=++actionVersion;
   if(on){if(!state.enabled){before=captureBoneView(viewer);overlayWasOn=!!viewer.landmarksVisible;}lastBoneView=boneViewKey(viewer);const context=muscleContextForView(viewer);Object.assign(state,context,{enabled:true,preserveBoneContext:true,focused:false,groupOnly:false,selected:null,partOnly:false,query:'',page:0,depth:'all',pick:'muscles'});if(requestedRegion)state.region=requestedRegion;hidden.clear();viewer.landmarkOverlay?.setEnabled(false);level=state.region==='all'?'overview':'region';showOverview();viewer.applyVisibility();await ensureRegion();if(frameView&&state.enabled&&revision===actionVersion)frame();}
-  else{const restoreCamera=!state.preserveBoneContext;state.enabled=false;state.selected=null;state.focused=false;state.groupOnly=false;hidden.clear();label.hidden=true;labelLine.style.display='none';renderBrowser();if(before)restoreBoneView(viewer,before,{restoreCamera});if(overlayWasOn)viewer.landmarkOverlay?.setEnabled(true);onExit?.();}
+  else{const restoreCamera=!state.preserveBoneContext;state.enabled=false;state.selected=null;state.focused=false;state.groupOnly=false;hidden.clear();label.hidden=true;labelLine.style.display='none';renderBrowser();if(restoreView&&before)restoreBoneView(viewer,before,{restoreCamera});if(overlayWasOn)viewer.landmarkOverlay?.setEnabled(true);if(restoreView)onExit?.();}
   renderBrowser();document.dispatchEvent(new Event('layerschanged'));
+ }
+ function syncNavigation(){
+  const trail=$('#focus-trail'),back=$('#focus-back'),backFocused=document.activeElement===back;
+  const text='Muscles › '+muscleScopeNames[state.region]+(state.selected?' › '+selectedName():'');
+  if(trail.textContent!==text)trail.textContent=text;
+  trail.title=text;trail.classList.remove('focus-intro');
+  back.hidden=!viewer.referenceOpen&&!api.canGoBack();
+  if(back.hidden&&backFocused)$('#focus-overview').focus({preventScroll:true});
+  $('.viewer-hint').textContent=viewer.peel?'Peel is on. Turn it off to select a muscle.':state.groupOnly?'Group view · '+groupMembers().length+' muscles · Select a member to compare':'Double-click or double-tap a muscle to focus · Drag to rotate';
  }
  const ray=new THREE.Raycaster();
  const api={
@@ -74,20 +83,19 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
   hasHidden:()=>hidden.size>0,
   syncControls(){
    syncToggle();
-   viewer.el.setAttribute('aria-label',api.ownsFocus()?'3D muscle atlas. Drag to rotate. Double-click or double-tap a muscle to focus. Show region restores neighbors. Enter focuses the selected muscle; Escape goes back. Browse offers searchable keyboard selection.':initialDescription);
    if(!api.ownsFocus()){$('#ghost-btn').title=initialGhostTitle;return;}
+   viewer.el.setAttribute('aria-label','3D muscle atlas. Drag to rotate. Double-click or double-tap a muscle to focus. Back goes one step. Full skeleton returns to the bone atlas.');
    $('#skull-controls').hidden=true;$('#skull-key').hidden=true;
-   $('#focus-trail').textContent='Muscles › '+(muscleScopeNames[state.region])+(state.selected?' › '+selectedName():'');
-   $('#focus-trail').title=$('#focus-trail').textContent;$('#focus-back').disabled=!state.focused;$('.viewer-hint').textContent=viewer.peel?'Peel: click a surface to hide it · Restore brings hidden surfaces back':state.groupOnly?'Group view · '+groupMembers().length+' muscles · Select a member to compare · Show region restores context':'Drag to rotate · Double-click or double-tap a muscle to focus · Show region restores context';
+   syncNavigation();
    const isolate=$('#isolate-btn'),focus=$('#focus-btn'),ghost=$('#ghost-btn'),next=$('#focus-next');
    isolate.disabled=!state.selected;isolate.setAttribute('aria-pressed',String(state.focused));isolate.querySelector('span').textContent='Muscle';isolate.setAttribute('aria-label',state.focused?'Return to muscle region':'Focus selected muscle alone');isolate.title=isolate.getAttribute('aria-label');
    focus.disabled=false;focus.querySelector('span').textContent='Region';focus.setAttribute('aria-label','Show muscle region');focus.title='Show muscle region';
    ghost.disabled=true;ghost.setAttribute('aria-pressed','false');ghost.title='Use Select: Bones to see the skeleton through the muscle layer.';
-   next.hidden=!state.selected||viewer.peel;next.textContent=state.focused?'Show region':'Focus muscle';next.onclick=()=>api.toggleIsolation();
+   next.hidden=viewer.referenceOpen||viewer.peel||state.focused;next.disabled=!state.selected;next.textContent='Focus muscle';next.onclick=()=>api.toggleIsolation();
   },
   updateVisibility(){
    group.visible=!viewer.quiz&&!viewer.activeDetail;if(state.enabled&&!viewer.quiz&&!viewer.activeDetail)for(const o of viewer.scene.children)if(o.userData.ground)o.visible=state.region==='all'&&!state.focused;
-   const selected=selectedRecord(),selectedIds=new Set(selectedComponents().map(c=>c.id)),focusIds=new Set(focusComponents().map(c=>c.id));if(state.enabled&&state.pick==='muscles'&&!viewer.quiz&&!viewer.activeDetail){const trail=$('#focus-trail');trail.textContent='Muscles › '+(muscleScopeNames[state.region])+(selected?' › '+selectedName():'');$('#focus-back').disabled=!state.focused;$('.viewer-hint').textContent=state.groupOnly?'Group view · '+groupMembers().length+' muscles · Select a member to compare · Show region restores context':'Drag to rotate · Double-click or double-tap a muscle to focus · Show region restores context';}for(const m of meshes){const c=m.userData.component;m.visible=componentVisible(c,{...state,quiz:viewer.quiz,activeDetail:viewer.activeDetail,hidden,selectedIds:focusIds});m.material.color.set(state.colors&&state.region!=='all'?componentColor(c.muscleName):c.kind==='support'?'#cfc1a3':'#ad6554');m.material.emissive.setHex(selectedIds.has(c.id)?0x342019:0);m.material.opacity=state.pick==='bones'?.13:1;m.material.transparent=m.material.opacity<1;m.material.depthWrite=!m.material.transparent;}
+   const selected=selectedRecord(),selectedIds=new Set(selectedComponents().map(c=>c.id)),focusIds=new Set(focusComponents().map(c=>c.id));if(api.ownsFocus())syncNavigation();for(const m of meshes){const c=m.userData.component;m.visible=componentVisible(c,{...state,quiz:viewer.quiz,activeDetail:viewer.activeDetail,hidden,selectedIds:focusIds});m.material.color.set(state.colors&&state.region!=='all'?componentColor(c.muscleName):c.kind==='support'?'#cfc1a3':'#ad6554');m.material.emissive.setHex(selectedIds.has(c.id)?0x342019:0);m.material.opacity=state.pick==='bones'?.13:1;m.material.transparent=m.material.opacity<1;m.material.depthWrite=!m.material.transparent;}
    if(state.enabled&&!viewer.quiz&&!viewer.activeDetail&&state.pick==='muscles'){
     const local=visibleTargets(),box=local.length?bounds(local).expandByScalar(.05):null;
     if(!state.preserveBoneContext&&state.region!=='all'&&box)for(const m of viewer.meshes)if(!m.userData.detailGroup){m.visible=!!(m.visible&&muscleBoneContext(m.userData.zname,state.region,state.side)&&box.intersectsBox(m.userData.bounds));}
@@ -100,9 +108,17 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
   ownsFocus:()=>state.enabled&&state.pick==='muscles'&&!viewer.quiz&&!viewer.activeDetail&&group.visible,frame,
   toggleIsolation(){if(!state.selected)return;state.groupOnly=false;state.focused=!state.focused;level=state.focused?'muscle':'region';viewer.applyVisibility();frame();renderBrowser();showDetail();},
   showRegion(){state.groupOnly=false;state.focused=false;level=state.region==='all'?'overview':'region';viewer.applyVisibility();frame();renderBrowser();if(state.selected)showDetail();else showOverview();},
-  resetView(){hidden.clear();state.selected=null;state.focused=false;state.partOnly=false;viewer.controls.autoRotate=false;api.showRegion();document.dispatchEvent(new Event('layerschanged'));},
+  exitToSkeleton(){if(state.enabled)enable(false,{restoreView:false});},
   release(){state.groupOnly=false;state.focused=false;state.selected=null;label.hidden=true;labelLine.style.display='none';},
-  back(){if(!state.enabled)return false;if(state.focused){api.showRegion();return true;}return false;},
+  canGoBack:()=>state.focused||state.region!=='all'||state.side!=='both',
+  async back(){
+   if(state.focused){api.showRegion();return;}
+   const revision=++actionVersion;
+   Object.assign(state,{region:'all',side:'both',selected:null,partOnly:false,page:0});
+   api.showRegion();
+   await ensureRegion();
+   if(api.ownsFocus()&&revision===actionVersion)frame();
+  },
   restore(){hidden.clear();state.groupOnly=false;state.focused=false;viewer.applyVisibility();if(state.enabled){renderBrowser();frame();}},
   hide(m){hidden.add(m.userData.muscleId);viewer.applyVisibility();},
   async openRegion(region=null){await enable(true,{requestedRegion:muscleScopeNames[region]?region:null,frameView:!!muscleScopeNames[region]});}

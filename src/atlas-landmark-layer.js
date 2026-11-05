@@ -37,6 +37,7 @@ export function initAtlasLandmarks({viewer,selectTerm,escape:e,toast}){
  $('#atlas-landmark-scope').onchange=ev=>{scope=ev.target.value;page=findPage=0;lastState='';refresh();if(!panel.hidden)paintFinder();};
  $('#atlas-landmark-find').onclick=()=>{panel.hidden=!panel.hidden;$('#atlas-landmark-find').setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden){findPage=0;paintFinder();$('#atlas-find-query').focus({preventScroll:true});}};
  $('#atlas-find-close').onclick=()=>closeFinder();
+ document.addEventListener('specimenreset',()=>closeFinder({focus:false}));
  for(const id of ['atlas-find-query','atlas-find-kind','atlas-find-region'])$('#'+id).addEventListener(id==='atlas-find-query'?'input':'change',()=>{findPage=0;paintFinder();});
  $('#atlas-find-prev').onclick=()=>{findPage--;paintFinder();};$('#atlas-find-next').onclick=()=>{findPage++;paintFinder();};
  $('#atlas-label-prev').onclick=()=>{page--;lastCheck=0;update(true);};$('#atlas-label-next').onclick=()=>{page++;lastCheck=0;update(true);};
