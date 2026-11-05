@@ -1,3 +1,4 @@
+import {fractureExamFigure} from './fracture-lab.js';
 import {skinFigure} from './foundations-skin.js';
 import {cellTissueExamFigure} from './foundations-celltissue.js';
 import {muscleExamFigure} from './muscle-diagrams.js';
@@ -17,6 +18,7 @@ function motionFigure(kind){
 const ink='#dfe6d6',line='#839c8d';
 const marker=(id,x,y,tx,ty,active)=>`<path d="M${x} ${y}L${tx} ${ty}" stroke="${id===active?'#efa778':line}" stroke-width="2"/><circle cx="${tx}" cy="${ty}" r="4" fill="${id===active?'#efa778':ink}"/><circle cx="${x}" cy="${y}" r="15" fill="${id===active?'#efa778':'#233b37'}" stroke="${line}"/><text x="${x}" y="${y+5}" text-anchor="middle" fill="${id===active?'#122328':ink}" font-family="sans-serif" font-size="14">${id}</text>`;
 export function examFigure(name,active){
+ const fracture=fractureExamFigure(name,active);if(fracture)return fracture;
  if(name==='foundation:skin')return skinFigure(active);
  const foundations=cellTissueExamFigure(name,active);if(foundations)return foundations;
  const muscle=muscleExamFigure(name,active);if(muscle)return muscle;

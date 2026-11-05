@@ -235,3 +235,4 @@
 .foundation-video{background:#0c161b}
 .foundation-studio .tour-steps{display:flex;flex-wrap:wrap;gap:.35rem}
 @media(max-width:700px){.foundation-tissue-layout{grid-template-columns:1fr;gap:.35rem}.foundation-studio-content .lab-root button{min-height:38px}}
+.fracture-figure svg{display:block;width:100%;max-height:380px}.fracture-figure .diagram-markers circle{fill:#182b30;stroke:#8cafa0;stroke-width:2}.fracture-figure .diagram-markers text{fill:#fff;text-anchor:middle;font:700 14px system-ui}.exam-figure.fracture-figure svg{max-height:clamp(110px,calc(100dvh - 470px),210px)}.figure-zoom .exam-figure.fracture-figure svg{max-height:none}

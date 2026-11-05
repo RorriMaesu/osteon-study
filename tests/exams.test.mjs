@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import fracture from '../src/fracture-lab-data.json' with {type:'json'};
+import {examFigure} from '../src/exam-figures.js';
 import {examBank} from '../src/exam-bank.js';
 import {questions,lessons,glossary} from '../src/learning-data.js';
 import {selectExam,createSession,validSession,gradeQuestion,answered,results,syllabus} from '../src/exam-core.js';
@@ -14,7 +16,7 @@ test('every source objective has multiple explicit questions, with complete modu
  for(const s of syllabus.sections){assert.ok(lessons.find(l=>l.id===s.id)?.syllabus);for(const o of s.objectives)assert.ok(examBank.filter(q=>q.objectives.includes(o.id)).length>=2,o.id);}
  const objectives=new Set(syllabus.sections.flatMap(s=>s.objectives.map(o=>o.id)));
  for(const q of examBank){assert.ok(q.objectives.every(id=>objectives.has(id)&&id.startsWith(q.lesson+'.')),q.id);assert.ok(q.source.includes(q.lesson));assert.ok(q.explanation.length>25);assert.ok(gradeQuestion(q,key(q)),q.id);assert.ok(validSession(createSession([q])),q.id);if(q.type==='match')assert.equal(new Set(q.pairs.map(p=>p.right)).size,q.pairs.length);}
- assert.equal(examBank.filter(q=>Number(q.lesson.split('.')[0])>=6).length,520);assert.equal(new Set(examBank.map(q=>q.id)).size,examBank.length);
+ assert.equal(examBank.filter(q=>Number(q.lesson.split('.')[0])>=6&&!q.id.startsWith('fracture-')).length,520);assert.equal(new Set(examBank.map(q=>q.id)).size,examBank.length);
  assert.deepEqual(new Set(examBank.map(q=>q.type)),new Set(['choice','text','identify','match','order','multi']));
 });
 test('foundations exams sample both chapters, and select-all wording survives a saved draft',()=>{
@@ -49,6 +51,14 @@ test('skin and expanded cumulative forms include every assigned chapter objectiv
   for(const section of syllabus.sections.filter(s=>chapterIds.includes(s.chapter)))for(const goal of section.objectives)assert.ok(items.some(q=>q.objectives.includes(goal.id)),goal.id);
  }
  assert.deepEqual(examBank.filter(q=>q.figure==='foundation:skin').map(q=>q.target),['A','B','C']);
+});
+test('fracture lab preserves all 84 families, original study cases and legible figures',()=>{
+ const items=examBank.filter(q=>q.id.startsWith('fracture-'));
+ assert.equal(items.length,252);
+ assert.equal(fracture.written.length,84);
+ assert.equal(new Set(items.map(q=>q.family)).size,84);
+ for(const q of items.filter(q=>q.figure))assert.ok(examFigure(q.figure,q.target).includes('<svg'),q.id);
+ for(const q of fracture.written)assert.equal(q.rubric.length,2);
 });
 function key(q){return q.type==='multi'?[...q.correctChoices]:q.type==='match'?Object.fromEntries(q.pairs.map(p=>[p.left,p.right])):q.type==='order'?[...q.steps]:q.answer;}
 test('chapter and cumulative blueprints hold across different randomized forms and never truncate to 20',()=>{

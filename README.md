@@ -49,6 +49,7 @@ Fontanelles open a **locally bundled, rotatable UCSF fetal-skull scan**, with su
 - Chapters 1–2 combine the original body worksheets, interactive cutting planes, organ systems, chemistry activities and the 239-question trainer.
 - Chapters 3–4 include hands-on cell activities, a captioned protein-synthesis animation, tissue figure tours and textbook micrograph identification.
 - Chapter 5 uses the original Lamina skin diagram with direct visual targets, skin lessons and written-response rubrics.
+- [Fracture Lab in §6.5](https://rorrimaesu.github.io/osteon-study/#lesson-6.5) compares eight fracture patterns and skin-status categories, walks through four repair stages, and offers 252 scored prompts plus 84 written rubrics.
 - [Practice Lab](https://rorrimaesu.github.io/osteon-study/#exam-center) offers individual 50-question exams, mixed exams for Chapters 1–2 and 3–5, and a 300-question comprehensive exam across Chapters 1–10. The existing skeletal exam options are also available.
 
 ## Chapters 6–9 exam preparation

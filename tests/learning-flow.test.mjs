@@ -14,7 +14,7 @@ const memory=()=>{const values=new Map();return {getItem:k=>values.get(k)??null,
 const rng=seed=>()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296;};
 
 test('parallel question coverage supports much less repetitive objective-complete chapter retakes',()=>{
- for(const c of ['6','7','8','9']){assert.equal(examBank.filter(q=>q.lesson.startsWith(c+'.')).length,100);for(let seed=1;seed<=60;seed++){const first=selectExam(c,examBank,rng(seed)),seen=new Set(first.map(q=>q.id)),next=selectExam(c,examBank,rng(seed+100),{seen});assert.ok(next.filter(q=>seen.has(q.id)).length<=4,c+' seed '+seed);}}
+ for(const c of ['6','7','8','9']){assert.equal(examBank.filter(q=>q.lesson.startsWith(c+'.')&&!q.id.startsWith('fracture-')).length,100);for(let seed=1;seed<=60;seed++){const first=selectExam(c,examBank,rng(seed)),seen=new Set(first.map(q=>q.id)),next=selectExam(c,examBank,rng(seed+100),{seen});assert.ok(next.filter(q=>seen.has(q.id)).length<=4,c+' seed '+seed);}}
 });
 test('source-figure assessments resolve authored points, local assets and mask names in the rendered markup',()=>{
  const source=examBank.filter(q=>q.figure?.startsWith('source:'));assert.ok(source.length>=25);assert.ok(source.some(q=>q.lesson.startsWith('9.')));
