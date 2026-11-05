@@ -1,5 +1,6 @@
 import {author} from './question-author.js';
 import {objectiveChecks} from './foundations-objective-checks.js';
+import cellTissue from './foundations-cell-bank.json' with {type:'json'};
 import imported from './foundations-import.json' with {type:'json'};
 const {items,m,t,x}=author();
 
@@ -13,9 +14,9 @@ m('1.6',4,'Which paired subdivisions belong to the posterior body cavity?','Cran
 t('1.6',4,'What muscular boundary separates the thoracic and abdominopelvic cavities?','Diaphragm',['Thoracic diaphragm'],'The diaphragm separates the thoracic compartment above from the abdominopelvic compartment below.');
 m('1.6',5,'Which serous layer covers the lung surface directly?','Visceral pleura',['Parietal pleura','Visceral pericardium','Parietal peritoneum'],'Visceral pleura adheres to the lung. Parietal pleura lines the chest wall and other boundaries of the pleural cavity.');
 t('1.6',5,'Name the serous layer that lines a cavity wall.','Parietal layer',['Parietal serosa','Parietal membrane','Parietal'],'Parietal refers to the cavity wall. The visceral layer is the organ-facing layer.');
-const aliases={Tissue:['Tissue level'],Organ:['Organ level'],Physiology:['Human physiology'],'Backward flow':['Backflow','Regurgitation'],'Plasma membrane':['Cell membrane'],'Pressure gradient':['Pressure difference'],Sensor:['Receptor'],'Positron emission tomography':['PET','PET scan'],'Valence electrons':['Valence electron'],'Ionizing radiation':['Ionising radiation'],Two:['2'],Four:['4'],Phospholipids:['Phospholipid'],Monosaccharides:['Monosaccharide'],'Hydrogen bond':['Hydrogen bonding'],'Hydrogen ion':['H+','Proton'],'Nucleic acids':['Nucleic acid']};
+const aliases={Tissue:['Tissue level'],Organ:['Organ level'],Physiology:['Human physiology'],'Backward flow':['Backflow','Regurgitation'],'Plasma membrane':['Cell membrane'],'Pressure gradient':['Pressure difference'],Sensor:['Receptor'],'Positron emission tomography':['PET','PET scan'],'Valence electrons':['Valence electron'],'Ionizing radiation':['Ionising radiation'],Two:['2'],Four:['4'],Phospholipids:['Phospholipid'],Monosaccharides:['Monosaccharide'],'Hydrogen bond':['Hydrogen bonding'],'Hydrogen ion':['H+','Proton'],'Nucleic acids':['Nucleic acid'],'Rough endoplasmic reticulum':['Rough ER','RER'],'Golgi apparatus':['Golgi body','Golgi complex'],Microtubules:['Microtubule'],Histones:['Histone'],Introns:['Intron'],Cyclins:['Cyclin'],'Mitochondrion':['Mitochondria'],'Nuclear pores':['Nuclear pore complexes','Nuclear pore'],'Transfer RNA':['tRNA'],'Spindle assembly checkpoint':['Spindle checkpoint','M checkpoint'],'S phase':['Synthesis phase'],'Totipotency':['Totipotent'],'Multipotency':['Multipotent'],'Epithelial tissue':['Epithelium'],'Neuroglia':['Glia','Glial cells'],'Hemostasis':['Haemostasis'],'Apoptosis':['Programmed cell death']};
 for(const [section,rows] of Object.entries(objectiveChecks))rows.forEach(([p,a,p2,a2],i)=>{
  t(section,i+1,p,a,aliases[a]||[],`The key is ${a}. Use the terms and examples in section ${section} to explain the underlying relationship.`);
  t(section,i+1,p2,a2,aliases[a2]||[],`The key is ${a2}. Compare this answer with the other examples in section ${section} before trying again.`);
 });
-export const foundationsBank=[...items.map(q=>q.type==='text'?{...q,answerPolicy:{kind:'concept'}}:q),...imported];
+export const foundationsBank=[...items.map(q=>q.type==='text'?{...q,answerPolicy:{kind:'concept'}}:q),...imported,...cellTissue];

@@ -1,0 +1,854 @@
+[
+  {
+    "id": "3.1",
+    "title": "The Cell Membrane",
+    "short": "Control the border. Follow the gradients.",
+    "objective": "Build the fluid membrane, predict what can cross it, and connect transport to changes in cell volume.",
+    "sections": [
+      [
+        "A living boundary",
+        "The plasma membrane separates intracellular fluid (ICF) from extracellular fluid (ECF). Interstitial fluid is the ECF surrounding tissue cells; blood plasma is another ECF compartment. A selectively permeable boundary maintains different internal and external conditions while allowing exchange. This supports homeostasis, a changing balance within a useful range rather than complete sameness everywhere."
+      ],
+      [
+        "Build a phospholipid bilayer",
+        "Each phospholipid has a polar, hydrophilic head and nonpolar, hydrophobic tails. It is amphipathic because it has both regions. In the bilayer, heads contact watery fluid on both surfaces and tails face one another inside. Unsaturated tails contain bends that limit tight packing. Lipids and many proteins can move within the membrane; cholesterol helps regulate its fluidity and stability."
+      ],
+      [
+        "Proteins, identity, and messages",
+        "Integral proteins sit in the bilayer; transmembrane proteins span it. Peripheral proteins attach to a surface. Channels form selective passages, carriers bind and move cargo, receptors bind ligands and start responses, and some proteins act as enzymes or anchors. Carbohydrates attached to proteins and lipids project outward as the glycocalyx, supporting recognition and adhesion. Glycoproteins are proteins with carbohydrate groups."
+      ],
+      [
+        "Simple versus facilitated diffusion",
+        "Diffusion produces net movement down a concentration gradient through random molecular motion. Small nonpolar molecules, such as oxygen and carbon dioxide, cross the lipid bilayer readily. Ions and large polar molecules need suitable transport proteins. Facilitated diffusion uses channels or carriers but still moves down the relevant gradient without directly using cellular ATP. For ions, concentration and electrical forces together form an electrochemical gradient."
+      ],
+      [
+        "Water follows the effective solute difference",
+        "Osmosis is net water movement across a selectively permeable membrane. If a solute cannot cross, water tends to move toward the side with more of that solute. Aquaporins make water passage efficient, and some water also crosses the bilayer directly. Tonicity predicts sustained cell-volume change and depends on solutes that do not readily cross. Always compare the outside solution with the cell."
+      ],
+      [
+        "Hypertonic, isotonic, hypotonic",
+        "In a hypertonic surrounding solution, a cell loses water and shrinks. In an isotonic solution, there is no sustained net water movement and volume remains stable. In a hypotonic solution, a cell gains water, swells, and may lyse. These are relative descriptions: the same solution can be hypertonic to one cell and hypotonic to another if their effective internal solute concentrations differ."
+      ],
+      [
+        "Pressure can move fluid too",
+        "Filtration is passive movement driven by a hydrostatic pressure difference. Pressure pushes fluid and small solutes through an appropriate barrier. It helps exchange material across capillary walls and contributes to filtration in the kidneys. Diffusion is driven by concentration differences; filtration is driven by pressure. Temperature, distance, available area, and gradient size also influence how quickly diffusion occurs."
+      ],
+      [
+        "The sodium-potassium pump",
+        "Primary active transport directly uses energy to move cargo against its electrochemical gradient. Each cycle of the sodium-potassium ATPase uses one ATP to move three Na+ out and two K+ in. This maintains high Na+ outside and high K+ inside and contributes to the electrical difference across the membrane. Ion channels and their selective permeability also shape membrane voltage."
+      ],
+      [
+        "Use one gradient to power another journey",
+        "Secondary active transport couples downhill movement of one solute to uphill movement of another. The Na+ gradient often supplies the energy and was established by the ATP-driven sodium-potassium pump. A symporter moves coupled substances in the same direction, such as Na+ and glucose entering together. An antiporter moves them in opposite directions, such as Na+ entering while H+ leaves."
+      ],
+      [
+        "Move large cargo in vesicles",
+        "Endocytosis brings material inward when the membrane encloses it in a vesicle. Phagocytosis engulfs large particles, pinocytosis takes in fluid, and receptor-mediated endocytosis selectively captures bound ligands. In exocytosis, an internal vesicle fuses with the plasma membrane and releases cargo outside. Digestive-enzyme secretion is an example. These energy-dependent membrane movements differ from passage through a channel."
+      ],
+      [
+        "A channel connects genes to symptoms",
+        "CFTR is an ATP-regulated anion channel. Chloride passes through an open CFTR channel down its electrochemical gradient; ATP regulates channel gating rather than pumping chloride uphill. Disrupted CFTR function changes ion and water movement across airway epithelia, contributing to dehydrated mucus and impaired clearance. This example links a DNA change to a membrane protein, fluid balance, and tissue function."
+      ]
+    ],
+    "compare": [
+      [
+        "A house needs walls and controlled doors, while its rooms can still differ from the weather outside.",
+        "Selective permeability does not mean that the membrane blocks all substances or makes every concentration equal."
+      ],
+      [
+        "Heads hug water; tails tuck together. The membrane is a moving mosaic, not a brick wall.",
+        "Both membrane surfaces have heads. The hydrophobic region is the interior of the bilayer, not the entire inner-facing surface."
+      ],
+      [
+        "A ligand is a matching key; a receptor is its lock. The glycocalyx is part of the cell’s outward-facing identification.",
+        "A protein in the membrane is not automatically a pump. Its structure determines whether it transports, signals, anchors, or catalyzes."
+      ],
+      [
+        "Downhill can mean an open slope or a tunnel through a hill; both are passive routes.",
+        "Using a protein does not make transport active. At equilibrium, molecules still move in both directions; net movement is zero."
+      ],
+      [
+        "For a trapped solute: water heads toward the more crowded side.",
+        "A solute entering the cell can change the prediction. The simple tonicity diagrams assume water can move while the illustrated solute cannot."
+      ],
+      [
+        "Hyper: water hikes out. Hypo: water hops in. Iso: volume stays similar.",
+        "Isotonic does not mean no water crosses; inward and outward movement balance."
+      ],
+      [
+        "Diffusion spreads a scent; filtration resembles pushing water through a filter.",
+        "Filtration does not require the solute to move down its own concentration gradient, and it is not an ATP-powered membrane pump."
+      ],
+      [
+        "Three sodium out, two potassium in: 3–2–1, with one ATP.",
+        "The pump moves potassium into the cell. It supports membrane potential but is not the only factor determining the voltage."
+      ],
+      [
+        "Symport: same direction. Antiport: apart in direction. One downhill passenger helps lift another uphill.",
+        "The cotransporter may not split ATP itself, but maintaining the driving gradient still costs energy. A sodium channel alone is facilitated diffusion, not secondary active transport."
+      ],
+      [
+        "Phago = eating; pino = drinking; exo = exit. Vesicles are membrane-wrapped delivery parcels.",
+        "In exocytosis the vesicle membrane joins the plasma membrane; the whole vesicle does not simply travel through a channel."
+      ],
+      [
+        "An altered instruction can change a door, which changes water balance across an entire lining.",
+        "ATP involvement alone does not prove that an ion is being pumped against its gradient. Avoid treating CFTR as a sodium-potassium-style pump."
+      ]
+    ],
+    "recall": [
+      "Which arrangement keeps a phospholipid bilayer stable in water?",
+      "Heads face water; tails face one another. Polar heads interact with the fluid on both sides, while nonpolar tails form the internal hydrophobic region."
+    ],
+    "application": [
+      "Which observation best illustrates a receptor’s role?",
+      "A specific signal binds and changes cell activity. A receptor binds a ligand selectively and couples that binding to a cellular response; it need not transport the ligand across the membrane."
+    ],
+    "questions": []
+  },
+  {
+    "id": "3.2",
+    "title": "The Cytoplasm and Cellular Organelles",
+    "short": "Trace a shipment through a microscopic city.",
+    "objective": "Locate organelles, connect their shapes to their jobs, and follow proteins, energy, recycling, and movement.",
+    "sections": [
+      [
+        "Read a generalized cell",
+        "The cytoplasm comprises cytosol and cellular structures outside the nucleus. Cytosol is the water-rich reaction medium; an organelle is a specialized cellular structure. A generalized diagram combines common features, but real cells differ in size, shape, and organelle abundance. A secretory cell emphasizes protein production, while a muscle cell needs abundant energy-producing machinery."
+      ],
+      [
+        "Rough ER and ribosomes",
+        "Ribosomes assemble polypeptides using an mRNA template. Ribosomes on rough endoplasmic reticulum (RER) make many proteins destined for secretion, membranes, or the endomembrane system. The RER provides space for folding and early modification, including addition of carbohydrate groups. Transport vesicles carry products onward. Free ribosomes also synthesize proteins, including many used in the cytosol."
+      ],
+      [
+        "Smooth ER changes the job description",
+        "Smooth ER lacks attached ribosomes. It synthesizes lipids, including phospholipids and steroid hormones, stores and regulates Ca2+, participates in carbohydrate metabolism, and helps detoxify substances. Cells that make steroid hormones have abundant smooth ER. Specialized smooth ER in muscle cells stores calcium used in contraction."
+      ],
+      [
+        "The Golgi delivery route",
+        "Vesicles carry ER products to the receiving side of the Golgi apparatus. Through its flattened membrane sacs, proteins and lipids undergo further modification and sorting. Shipping vesicles leave the opposite side with destinations such as the plasma membrane, secretion, or lysosomal compartments. A secreted enzyme follows a coordinated route: ribosome/RER, transport vesicle, Golgi, secretory vesicle, then exocytosis."
+      ],
+      [
+        "Lysosomes recycle and digest",
+        "Lysosomes contain digestive enzymes that break down engulfed material and worn cellular components. Autophagy delivers the cell’s own material for recycling. Phagocytic cells also use lysosomal digestion to process captured microbes. Autolysis means breakdown by a cell’s own enzymes; apoptosis is a regulated cell-death program and is not simply another name for accidental lysosome rupture."
+      ],
+      [
+        "Mitochondria convert energy",
+        "A mitochondrion has outer and inner membranes. The inner membrane folds into cristae, increasing the area available for machinery involved in aerobic ATP production. Reactions draw energy from nutrients and require oxygen for sustained oxidative ATP production. Cells with high ATP demand, such as muscle and nerve cells, generally have many mitochondria. ATP powers transport, movement, and synthesis throughout the cell."
+      ],
+      [
+        "Peroxisomes and reactive oxygen",
+        "Peroxisomes participate in lipid metabolism and detoxification. Some of their reactions produce hydrogen peroxide, and enzymes such as catalase convert it to less harmful products. Reactive oxygen species (ROS) can participate in signaling and defense, but excess ROS can damage DNA, proteins, and lipids. Antioxidant defenses limit these reactions. Oxidative stress occurs when damaging oxidant activity exceeds protective capacity."
+      ],
+      [
+        "Three kinds of internal support",
+        "Microtubules are hollow tubulin-based structures that resist compression, organize traffic, and form the spindle. Microfilaments are thin actin-based fibers involved in shape, movement, muscle contraction with myosin, and cytokinesis. Intermediate filaments, including keratins in epithelial cells, resist tension and provide durable mechanical support. Their relative thickness is microfilaments < intermediate filaments < microtubules."
+      ],
+      [
+        "Cilia, flagella, and centrioles",
+        "Microtubules help construct motile cilia and flagella. Many short cilia move material across a cell surface, such as mucus in airways. A human sperm cell’s long flagellum propels the cell. Centrioles are cylindrical microtubule structures associated with centrosomes and basal bodies. A centrosome, including its surrounding material, organizes microtubules and contributes spindle poles during cell division."
+      ]
+    ],
+    "compare": [
+      [
+        "A city map shows useful categories of buildings; not every city has the same buildings in the same proportions.",
+        "Cytosol and cytoplasm are not synonyms. A prototypical human cell is a teaching model, not one exact cell type."
+      ],
+      [
+        "Ribosomes build; rough ER begins processing. The dots on rough ER explain its rough appearance.",
+        "The ER does not read DNA directly. Ribosomes translate mRNA, and not every ribosome is attached to the ER."
+      ],
+      [
+        "Smooth ER: steroids, storage of calcium, and some detoxification.",
+        "Smooth and rough ER are related membrane networks with different emphases; smooth ER is not simply an inactive rough ER."
+      ],
+      [
+        "Build → refine → address → deliver. Golgi is the sorting center, not the original instruction library.",
+        "A protein does not need to leave a membrane-bound pathway and pass through the cytosol as naked cargo at every step."
+      ],
+      [
+        "Lysosomes are controlled recycling rooms. Autophagy: self-material goes in for recovery.",
+        "Recycling one damaged organelle does not mean the entire cell must die. Autophagy, autolysis, and apoptosis describe different processes."
+      ],
+      [
+        "Cristae create more working surface inside a small power-conversion site.",
+        "Mitochondria transform energy rather than create it from nothing. Not all ATP production occurs inside mitochondria."
+      ],
+      [
+        "Peroxisomes process reactive chemicals in a controlled workspace, including cleanup of the peroxide they generate.",
+        "Not every ROS is a free radical: hydrogen peroxide has no unpaired electron. Oxidative damage contributes to aging biology but is not a complete explanation of aging."
+      ],
+      [
+        "Actin acts; intermediate filaments hold; tubulin builds tubes and tracks.",
+        "Intermediate filaments are a family of proteins, not all keratin. Microtubules and microfilaments have different compositions and division roles."
+      ],
+      [
+        "Cilia sweep the surface; a flagellum drives the cell.",
+        "A centriole is not a centromere. A centriole belongs to the microtubule-organizing machinery; a centromere is a chromosome region."
+      ]
+    ],
+    "recall": [
+      "Which statement distinguishes cytosol from cytoplasm?",
+      "Cytosol is the fluid component; cytoplasm also includes structures outside the nucleus. Cytoplasm includes cytosol plus organelles and other material outside the nucleus."
+    ],
+    "application": [
+      "A cell cannot attach any ribosomes to its ER. Which function is most directly affected?",
+      "Production and processing of many secreted proteins. RER-associated translation feeds proteins into the secretory pathway. Free ribosomes can still make many cytosolic proteins."
+    ],
+    "questions": []
+  },
+  {
+    "id": "3.3",
+    "title": "The Nucleus and DNA Replication",
+    "short": "Unpack the archive. Copy the code.",
+    "objective": "Explore nuclear organization, complementary DNA strands, and how each new DNA molecule keeps one original strand.",
+    "sections": [
+      [
+        "A protected, connected archive",
+        "The nuclear envelope contains two membranes, each a lipid bilayer. Nuclear pore complexes regulate traffic between nucleoplasm and cytoplasm, including proteins, RNA, and ribosomal subunits. DNA remains in the nucleus during ordinary gene expression while RNA carries usable messages outward. The outer nuclear membrane connects with the ER."
+      ],
+      [
+        "What the nucleolus makes",
+        "The nucleolus is a dense nuclear region where ribosomal RNA is produced and ribosomal subunits are assembled with proteins. The subunits leave through nuclear pores and function in translation in the cytoplasm. Nucleoplasm is the fluid interior of the nucleus, while chromatin consists of DNA associated with proteins."
+      ],
+      [
+        "Package a very long molecule",
+        "DNA wraps around histone proteins to form nucleosomes. DNA and its associated proteins make chromatin. Chromatin is organized into chromosomes and becomes especially condensed for cell division. A chromosome does not suddenly appear from nothing during mitosis; its DNA is present during interphase in a less condensed arrangement."
+      ],
+      [
+        "Read the double helix",
+        "DNA consists of two antiparallel nucleotide strands. Alternating deoxyribose and phosphate groups form the backbones. The bases face inward and pair through hydrogen bonds: A with T, and C with G. Complementarity lets either strand serve as a template for the other. The order of bases stores information; the two strands are complementary rather than identical."
+      ],
+      [
+        "Start and extend a DNA copy",
+        "DNA replication precedes division and copies the genome. During initiation, enzymes including helicase separate the paired strands. During elongation, DNA polymerase adds complementary nucleotides to a growing strand, using the old strand as a template. Many locations are copied at the same time in human chromosomes. Replication is complete when the DNA has been copied; it is not the process that makes mRNA."
+      ],
+      [
+        "Keep one original strand",
+        "Replication is semiconservative: each resulting double-stranded DNA molecule contains one parental strand and one newly synthesized strand. Proofreading and repair mechanisms reduce copying errors. A lasting change in DNA sequence is a mutation; its consequences depend on where it occurs and what it changes. Faithful copying preserves information, while proofreading is highly effective but not perfect."
+      ],
+      [
+        "Nuclear exceptions reveal function",
+        "Most mature human cells have one nucleus, but skeletal muscle fibers are multinucleated because developing cells fuse. Mature human red blood cells expel their nuclei, leaving more room for hemoglobin; they cannot divide or transcribe new RNA. These examples show that a generalized cell diagram is a model with exceptions. Most nucleated somatic cells retain a complete nuclear genome."
+      ]
+    ],
+    "compare": [
+      [
+        "The archive has controlled doors: messages leave, and needed workers enter.",
+        "Two nuclear membranes means two bilayers, not two individual phospholipid layers."
+      ],
+      [
+        "Nucleus: archive. Nucleolus: ribosome workshop. Nuclear pore: controlled exit.",
+        "The nucleolus does not build an entire protein directly from DNA; it helps supply the ribosomal machinery that will translate mRNA."
+      ],
+      [
+        "DNA thread → histone spools → nucleosome beads → organized chromatin → condensed chromosome.",
+        "A chromosome is not necessarily X-shaped. The familiar X is a replicated chromosome whose two sister chromatids remain attached."
+      ],
+      [
+        "A–T and C–G are the matching partners on the ladder’s rungs.",
+        "Sugar and phosphate form the sides, not the rungs. Always pay attention to strand direction if 5′ and 3′ labels are shown."
+      ],
+      [
+        "Helicase opens; polymerase builds. Each exposed old strand guides a new partner.",
+        "DNA polymerase builds DNA. RNA polymerase performs transcription and builds RNA."
+      ],
+      [
+        "Semi = half: half of each daughter double helix is old, half is new.",
+        "Semiconservative does not mean that half the genes disappear or that one daughter molecule is entirely old and the other entirely new."
+      ],
+      [
+        "Structure follows the job: a long muscle fiber keeps many nuclei; an oxygen carrier gives up its nucleus.",
+        "“Every human cell contains one nucleus” is false. Gametes and mature red blood cells also require exceptions when discussing chromosome content."
+      ]
+    ],
+    "recall": [
+      "The nuclear envelope consists of:",
+      "Two membranes, each made of a lipid bilayer. The envelope has an inner and outer membrane. Each membrane is itself a phospholipid bilayer."
+    ],
+    "application": [
+      "Why can one mature skeletal muscle fiber have many nuclei?",
+      "Multiple developing cells fuse and retain their nuclei. Skeletal muscle fibers form through fusion of precursor cells, preserving multiple nuclei in one long cell."
+    ],
+    "questions": []
+  },
+  {
+    "id": "3.4",
+    "title": "Protein Synthesis",
+    "short": "Transcribe. Edit. Translate. Deliver.",
+    "objective": "Follow information from DNA through RNA to an amino-acid chain and distinguish every molecule’s role.",
+    "sections": [
+      [
+        "Information becomes function",
+        "A gene is a DNA segment whose expression produces a functional RNA or, for protein-coding genes, helps specify a protein. Gene expression connects information with cell behavior. A cell’s genome is its DNA set; its proteome is the proteins it contains under particular conditions. Proteins provide structure, catalyze reactions, transport materials, and participate in signaling."
+      ],
+      [
+        "DNA, RNA, and three kinds of RNA",
+        "RNA usually has one strand, contains ribose, and uses uracil (U) instead of thymine (T). Messenger RNA carries a sequence to be translated. Ribosomal RNA combines with proteins to form ribosomes and contributes catalytic activity. Transfer RNA carries a particular amino acid and pairs its anticodon with an mRNA codon. These RNAs cooperate, but they are not interchangeable."
+      ],
+      [
+        "Transcription makes an RNA message",
+        "In the nucleus, transcription begins near a promoter. RNA polymerase uses the DNA template strand to build complementary RNA. RNA base pairing uses A–U and C–G. As RNA elongates, the DNA behind the enzyme re-pairs. Termination ends transcription and releases the transcript. The coding DNA strand resembles the RNA sequence except that DNA has T where RNA has U."
+      ],
+      [
+        "Edit the message before export",
+        "A protein-coding transcript starts as pre-mRNA. Processing includes splicing: a spliceosome removes introns and joins retained exons. Mature mRNA also receives protective modifications, including a 5′ cap and usually a poly-A tail. Alternative splicing can join different combinations of exons, allowing one gene to contribute to multiple protein forms. The processed message exits through a nuclear pore."
+      ],
+      [
+        "Read codons in a frame",
+        "A codon is a three-nucleotide unit of mRNA. Most codons specify an amino acid, while stop codons end translation. AUG commonly serves as the start codon and specifies methionine. Read the message in consecutive groups of three from the start; shifting that reading frame changes the downstream interpretation. Several different codons can specify the same amino acid."
+      ],
+      [
+        "Translation builds the chain",
+        "Translation occurs on ribosomes in the cytoplasm, either free or associated with rough ER. Initiation brings the message, ribosomal subunits, and starting tRNA together. During elongation, matching tRNAs deliver amino acids, peptide bonds link them, and the ribosome advances along mRNA. At a stop codon, release factors end synthesis and the polypeptide is released. Ribosomal subunits can be reused."
+      ],
+      [
+        "Scale production and finish the product",
+        "Many ribosomes can translate one mRNA at the same time, forming a polyribosome and increasing protein output. A new polypeptide must fold and may undergo further modification or targeting before it functions. Proteins entering the secretory pathway can pass through rough ER and Golgi. A mutation may change a protein sequence, leave it unchanged, or affect whether and how much product is made."
+      ],
+      [
+        "Compare three easily confused processes",
+        "Replication copies DNA into DNA before division. Transcription copies information from a gene into RNA. Translation uses mRNA to assemble a polypeptide. Replication uses DNA polymerase; transcription uses RNA polymerase; translation uses ribosomes and tRNAs. The first two rely on complementary nucleotide pairing. Translation interprets groups of nucleotides as amino-acid instructions."
+      ]
+    ],
+    "compare": [
+      [
+        "DNA stores instructions; the proteome is the set of working products currently in use.",
+        "Different cells can share a genome while producing different proteins. DNA is not physically converted into the finished protein."
+      ],
+      [
+        "mRNA = message; rRNA = ribosome; tRNA = transfer of amino-acid cargo.",
+        "An anticodon belongs to tRNA. The codon read by a ribosome belongs to mRNA."
+      ],
+      [
+        "Transcribe keeps the information in a nucleotide alphabet; translate later changes it into an amino-acid sequence.",
+        "The template strand and coding strand are different. An RNA transcript is complementary to the template, not to the coding strand."
+      ],
+      [
+        "Introns intervene and are removed; exons exit in the processed message.",
+        "Exons are retained sequence and can include untranslated regions. Not every retained nucleotide becomes part of an amino-acid codon."
+      ],
+      [
+        "A sentence needs the right spaces; a protein message needs the right three-letter grouping.",
+        "A stop codon does not specify a special “stop amino acid.” Always use the mRNA sequence when consulting an RNA codon table."
+      ],
+      [
+        "The ribosome is the assembly station; tRNAs are matched delivery adapters.",
+        "A tRNA anticodon recognizes the codon, but the ribosome catalyzes peptide-bond formation. The tRNA alone is not a protein-building machine."
+      ],
+      [
+        "One message can support a row of assembly stations making the same product.",
+        "A polyribosome does not mean that several ribosomes are attached to one DNA strand; they share one mRNA."
+      ],
+      [
+        "Replicate the archive; transcribe a message; translate it into a product.",
+        "Making more protein does not require the cell to replicate its whole genome or divide."
+      ]
+    ],
+    "recall": [
+      "Which sequence shows the usual information flow for a protein-coding gene?",
+      "DNA → RNA → polypeptide. Transcription produces RNA from DNA, and translation uses mRNA to build a polypeptide."
+    ],
+    "application": [
+      "A single-base substitution changes an mRNA codon but the same amino acid is inserted. Why is this possible?",
+      "More than one codon can specify the same amino acid. The genetic code is redundant: different codons can specify the same amino acid, so some substitutions do not alter the protein sequence."
+    ],
+    "questions": []
+  },
+  {
+    "id": "3.5",
+    "title": "Cell Growth and Division",
+    "short": "Copy once. Separate precisely. Check before advancing.",
+    "objective": "Sequence the cell cycle, distinguish sister chromatids from homologs, and understand how checkpoints protect tissues.",
+    "sections": [
+      [
+        "The cycle serves growth and repair",
+        "A cell cycle includes preparation, DNA copying, and division. In many tissues, divisions replace worn cells or add cells for growth. Typical nucleated human somatic cells are diploid, with 46 chromosomes in 23 pairs: two sets inherited from the parents. Homologous chromosomes carry corresponding gene locations but need not have identical versions of each gene. Mature gametes have one set instead."
+      ],
+      [
+        "Interphase is active preparation",
+        "Interphase includes G1, S, and G2. In G1 the cell grows and performs normal work. In S phase DNA is replicated. In G2 the cell grows further, checks the copied material, and prepares division machinery. G0 describes a nondividing state entered by some cells; it can be temporary or long-lasting. A G0 cell may remain very metabolically active."
+      ],
+      [
+        "Count chromosomes carefully",
+        "After S phase, each chromosome contains two sister chromatids joined through the centromeric region. In a typical diploid human cell before anaphase, this gives 46 chromosomes and 92 chromatids. Count chromosomes by centromeres, not by the number of drawn arms. Sister chromatids are copies of one chromosome; homologs are corresponding chromosomes inherited from different parents."
+      ],
+      [
+        "Prophase prepares separation",
+        "During prophase, chromatin condenses and spindle organization begins as centrosomes move apart. In late prophase, often called prometaphase, the nuclear envelope breaks down and spindle microtubules attach to kinetochores on chromosomes. A kinetochore is a protein complex assembled at the centromere. These attachments prepare the sisters for accurate segregation."
+      ],
+      [
+        "Metaphase lines up; anaphase separates",
+        "At metaphase, duplicated chromosomes align near the spindle’s middle, the metaphase plate. Correct attachments connect each sister to an opposite pole. After the spindle checkpoint is satisfied, sister chromatids separate during anaphase and move toward opposite poles. Once separated, each former chromatid is counted as an individual chromosome."
+      ],
+      [
+        "Telophase resets; cytokinesis divides",
+        "In telophase, nuclear envelopes re-form around the separated chromosome sets, chromosomes decondense, and spindle structures disassemble. Cytokinesis divides the cytoplasm. In animal cells, an actin-and-myosin contractile ring creates a cleavage furrow. Cytokinesis can overlap late mitosis rather than waiting for every nuclear event to finish. The two daughter cells ordinarily receive matching chromosome sets."
+      ],
+      [
+        "Checkpoints make advancement conditional",
+        "Cell-cycle checkpoints respond to conditions such as cell growth, DNA damage, completed replication, and spindle attachment. G1 helps determine readiness to copy DNA. G2 helps determine readiness for mitosis. The spindle checkpoint prevents anaphase until chromosome attachments are appropriate. Cyclins help activate cyclin-dependent kinases (CDKs), whose actions regulate progression."
+      ],
+      [
+        "Balance the accelerator and brakes",
+        "Proto-oncogenes normally support regulated growth and division. Alterations can make them oncogenes that drive excessive growth signaling. Tumor suppressor genes help restrain division, maintain genome integrity, or promote elimination of severely damaged cells. Contact inhibition is one way normal cells respond to crowding. Losing control can permit inappropriate proliferation."
+      ],
+      [
+        "Cancer, apoptosis, and tissue homeostasis",
+        "Apoptosis is a regulated program for removing cells, including some with irreparable damage. Cancer can arise when accumulated changes disrupt normal controls over survival and proliferation. Benign tumors do not invade neighboring tissues in the way malignant tumors do; benign growths can still cause problems because of size or location. Malignant cells can invade, and some spread to distant sites through metastasis."
+      ],
+      [
+        "Connect the stages to the whole cell",
+        "DNA replication provides the copied chromosomes; microtubules organize and separate them; actin and myosin help divide the cell body. Membranes and organelles are distributed and rebuilt as daughters grow. The fate of each daughter depends on cell type and signals: it may keep cycling, differentiate, or enter G0. There is no universal rule that every mitosis makes one stem cell and one specialized cell."
+      ]
+    ],
+    "compare": [
+      [
+        "Homologs are a matched pair of editions; sister chromatids are copied pages from one edition.",
+        "Not every human cell is actively cycling. Mature red cells lack nuclei, and many highly specialized cells divide rarely or not at all."
+      ],
+      [
+        "G1: grow. S: synthesize DNA. G2: get ready again.",
+        "Interphase is not a stage of mitosis, and G0 does not mean the cell is dead or doing nothing."
+      ],
+      [
+        "One replicated X still counts as one chromosome until its sisters separate.",
+        "DNA amount doubles in S phase, but chromosome number does not double simply because each chromosome has been copied."
+      ],
+      [
+        "Prophase prepares: pack the DNA and position the pulling machinery.",
+        "Centrosome, centromere, and kinetochore are different structures: an organizing center, a DNA region, and an attachment complex."
+      ],
+      [
+        "Metaphase = middle. Anaphase = apart.",
+        "Mitosis separates sister chromatids. It does not pair and separate homologs as in the first division of meiosis."
+      ],
+      [
+        "Telophase = two nuclei. Cytokinesis = split the cell body. PMAT: prepare, middle, apart, two.",
+        "Mitosis is nuclear division; cytokinesis is cytoplasmic division. A cell can complete nuclear division without completely separating into two cells."
+      ],
+      [
+        "Check the materials before copying, inspect the copy before dividing, and secure every attachment before pulling.",
+        "A checkpoint is a regulatory decision, not a separate physical organelle. A “go” signal should not override unresolved damage."
+      ],
+      [
+        "A stuck accelerator and failed brakes can both make a regulated cycle unsafe.",
+        "A normal proto-oncogene is not inherently a cancer gene in action. Both excessive growth signals and missing restraints can contribute to cancer."
+      ],
+      [
+        "Healthy tissue balances production, restraint, and removal of cells.",
+        "Benign does not mean harmless in every situation, and a single mutation does not inevitably produce a cancer."
+      ],
+      [
+        "Archive copied, cargo separated, room divided: the chapter’s systems cooperate in one event.",
+        "Mitosis usually preserves ploidy. Gamete production requires meiosis, which is a different process from the somatic-cell cycle studied here."
+      ]
+    ],
+    "recall": [
+      "Which order correctly describes interphase?",
+      "G1 → S → G2. Interphase normally progresses through G1 growth, S-phase replication, and G2 preparation."
+    ],
+    "application": [
+      "A severely damaged cell activates an orderly program of death and removal. This is:",
+      "Apoptosis. Apoptosis removes cells in a regulated way and helps balance growth, repair, and tissue homeostasis."
+    ],
+    "questions": []
+  },
+  {
+    "id": "3.6",
+    "title": "Cellular Differentiation",
+    "short": "One genome. Many possible jobs.",
+    "objective": "Compare stem-cell potential, follow cell lineages, and explain how different patterns of gene expression create specialized cells.",
+    "sections": [
+      [
+        "Specialization changes the working cell",
+        "Differentiation gives a relatively unspecialized cell a more specific structure and function. Most nucleated somatic cells contain essentially the same genome, yet express different sets of genes. Different proteins alter shape, metabolism, communication, and behavior. A neuron’s long processes help communication; tightly arranged epithelial cells form barriers; muscle cells emphasize contraction."
+      ],
+      [
+        "Stem cells renew as well as specialize",
+        "A stem cell can produce more stem cells through self-renewal and can generate differentiated descendants. Signals from the surrounding environment help regulate these choices. Divisions can maintain or expand a stem-cell population, or generate descendants that specialize. Stem cells support development and, in many adult tissues, replacement and repair."
+      ],
+      [
+        "Read the potency ladder",
+        "Potency describes the range of cell types a stem cell can generate. Totipotent cells can contribute to both the embryo and supporting extraembryonic structures. Pluripotent cells can generate the major body-cell types but cannot by themselves form an entire organism with its support structures. Multipotent cells produce multiple related cell types within a restricted developmental range."
+      ],
+      [
+        "Narrow the options further",
+        "Oligopotent cells have a small set of related developmental options. Unipotent stem cells produce one cell type while retaining self-renewal. These categories form a useful hierarchy of increasingly restricted potential. A lineage diagram shows allowed descendant relationships; it does not mean that every descendant is produced at the same time or at equal rates."
+      ],
+      [
+        "Blood provides a lineage example",
+        "Hematopoietic stem cells in bone marrow are multipotent. Their descendants include red blood cells, many kinds of white blood cells, and the megakaryocytes that shed platelets. Different progenitors narrow these possibilities as cells differentiate. Adult stem populations also contribute to tissue maintenance in places such as skin. Tissue context limits the normal choices of adult stem cells."
+      ],
+      [
+        "Transcription factors help select the program",
+        "Transcription factors bind regulatory DNA regions or interact with other transcription machinery to increase or decrease gene transcription. Cells respond to signals by altering which genes are active and how strongly they are expressed. This changes their RNA and protein profiles. Differentiation involves coordinated patterns of regulation rather than a single universal switch."
+      ],
+      [
+        "Compare sources of stem cells",
+        "Embryonic stem cells are pluripotent. Many adult stem-cell populations have a narrower, often multipotent, range. Umbilical cord blood contains blood-forming stem cells. Induced pluripotent stem cells (iPSCs) are made by reprogramming somatic cells into a pluripotent state. Origin and potency are related concepts, but they answer different questions: where a cell comes from versus what it can become."
+      ],
+      [
+        "Repair is a goal, not a guarantee",
+        "Stem-cell research explores replacement of damaged cells, models of disease, and development of new treatments. Useful cell-based therapies require reliable differentiation, control of unwanted growth, integration into the target tissue, and attention to immune compatibility. Embryonic sources raise ethical questions; patient-derived and reprogrammed cells offer different advantages and challenges. A promising laboratory result is not by itself proof of a safe, effective treatment."
+      ]
+    ],
+    "compare": [
+      [
+        "The same collection of instructions can support different jobs when each cell uses a different subset.",
+        "Differentiation generally changes gene expression, not the wholesale removal of every gene a cell no longer uses."
+      ],
+      [
+        "A renewable workshop keeps some apprentices while sending other descendants into specialized jobs.",
+        "Not every daughter of every stem-cell division must differentiate. Self-renewal is essential to preserve the stem-cell population."
+      ],
+      [
+        "Toti: total developmental potential. Pluri: many body-cell possibilities. Multi: multiple related choices.",
+        "Potency describes range, not how fast a cell divides or how much ATP it makes."
+      ],
+      [
+        "Oligo = a few; uni = one. Follow branches outward to see options narrow.",
+        "A unipotent stem cell is not identical to any fully mature cell: it must retain the ability to renew the stem-cell population."
+      ],
+      [
+        "One blood-forming source branches toward oxygen transport, defense, and platelet production.",
+        "Platelets are cell fragments produced by megakaryocytes. A blood stem cell is not normally a source of every cell type in the body."
+      ],
+      [
+        "Transcription factors help choose which instructions are read and how loudly they are expressed.",
+        "Turning a gene off does not normally remove it from DNA. Genes can also be regulated at stages after transcription."
+      ],
+      [
+        "Source is the starting address; potency is the destination menu.",
+        "An iPSC is not an embryo and does not have totipotency merely because it is pluripotent. “Adult” does not automatically specify every cell’s precise potency."
+      ],
+      [
+        "To repair a tissue, the cells need the right identity, safe behavior, and a working connection with their neighbors.",
+        "High potency is not automatically better for every use. Uncontrolled growth and incomplete differentiation can undermine a proposed repair."
+      ]
+    ],
+    "recall": [
+      "A neuron and a skin cell behave differently despite sharing essentially the same genome. What best explains this?",
+      "They express different combinations of genes. Different gene-expression programs produce different RNA and protein profiles, creating different structures and functions."
+    ],
+    "application": [
+      "A proposed cell-replacement therapy produces the desired cell type in a dish. What remains essential?",
+      "Demonstrating controlled growth, compatibility, integration, and useful function. Generating a cell type is only one step. A useful therapy must also work safely and appropriately in the tissue environment."
+    ],
+    "questions": []
+  },
+  {
+    "id": "4.1",
+    "title": "Types of Tissues",
+    "short": "The tissue map",
+    "objective": "One organ. Four cooperating tissue families.",
+    "sections": [
+      [
+        "Four families, different jobs",
+        "A tissue is a group of cells and their extracellular products organized for a shared function. Most organs combine several tissue types. Histology studies tissues microscopically; a specimen’s architecture helps explain its job."
+      ],
+      [
+        "Three embryonic starting points",
+        "Ectoderm, mesoderm and endoderm are embryonic germ layers. Nervous tissue arises primarily from ectoderm, muscle from mesoderm, and epithelial tissues can arise from all three. A germ layer is a developmental origin, not a fifth adult tissue family."
+      ],
+      [
+        "Membranes connect tissues to places",
+        "Epithelial membranes combine epithelium with underlying connective tissue. Mucous membranes line passages that open to the outside. Serous membranes line closed ventral cavities and cover organs; their fluid reduces friction. Skin is the cutaneous membrane. Synovial membranes are connective tissue membranes in movable joints."
+      ]
+    ],
+    "compare": [
+      [
+        "Cover · connect · contract · communicate.",
+        "An organ is not made of just one tissue family."
+      ],
+      [
+        "Ecto: outer · meso: middle · endo: inner.",
+        "Do not assign all epithelia to a single germ layer."
+      ],
+      [
+        "Mucous: passages · serous: slippery sacs · synovial: joints.",
+        "Mucous is an adjective; mucus is the secretion. Not every mucous membrane secretes mucus."
+      ]
+    ],
+    "recall": [
+      "A stomach wall contains a lining, supporting matrix, contractile layers and nerves. What does this illustrate?",
+      "An organ combines several tissue types. Organs combine tissues with complementary functions."
+    ],
+    "application": [
+      "Which statement correctly connects epithelium to embryonic origin?",
+      "Epithelia can arise from all three germ layers. Developmental origin and adult tissue classification are different questions."
+    ],
+    "questions": []
+  },
+  {
+    "id": "4.2",
+    "title": "Epithelial Tissue",
+    "short": "Surfaces & glands",
+    "objective": "Read the layers. Read the shape. Predict the job.",
+    "sections": [
+      [
+        "A sheet with two different sides",
+        "The apical surface faces a lumen or the exterior. The basal surface attaches to the basement membrane, including the basal lamina. Epithelium is avascular; nutrients diffuse from underlying connective tissue. Its cells are closely packed and often renew rapidly."
+      ],
+      [
+        "Seal, anchor or communicate",
+        "Tight junctions restrict passage between adjacent cells. Anchoring junctions mechanically attach cells; desmosomes help resist stress. Gap junctions contain channels allowing ions and small molecules to pass between cells. These functions can coexist in one sheet."
+      ],
+      [
+        "Name layers before surface shape",
+        "Simple means one layer: every cell contacts the basal lamina. Stratified means multiple layers and is named for the shape of the apical cells. Squamous cells are thin and flat, cuboidal cells are about as tall as wide, and columnar cells are tall. Sectioning angle changes appearances, so use several clues."
+      ],
+      [
+        "Structure predicts function",
+        "Simple squamous surfaces favor diffusion and filtration, as in lung alveoli. Simple cuboidal cells commonly absorb and secrete in kidney tubules. Simple columnar cells line much of the digestive tract. Stratified squamous epithelium protects against abrasion; the epidermis is keratinized, while the esophagus is nonkeratinized."
+      ],
+      [
+        "Two misleading appearances",
+        "Pseudostratified epithelium appears layered because nuclei occur at different heights, but every cell contacts the basal lamina. Not all reach the free surface. Transitional epithelium is stratified and changes its apparent thickness and apical cell shape as urinary organs stretch."
+      ],
+      [
+        "Where does the product go?",
+        "Endocrine glands release hormones into interstitial fluid and then the circulation, without ducts. Exocrine glands deliver products onto a surface or into a lumen, often through ducts. A simple gland has an unbranched duct; a compound gland has branched ducts. Tubular and acinar/alveolar describe the secretory units, not their release mechanism."
+      ],
+      [
+        "Three release mechanisms",
+        "Merocrine secretion uses exocytosis and leaves the cell intact. Apocrine secretion releases an apical portion with its product. Holocrine secretion destroys the secretory cell; the entire cell contributes to the product and must be replaced. Sebaceous glands are holocrine."
+      ]
+    ],
+    "compare": [
+      [
+        "Apical faces the space; basal faces the base.",
+        "Avascular does not mean no nutrient supply."
+      ],
+      [
+        "Tight seals · anchors hold · gaps talk.",
+        "Gap junctions connect cell interiors; they are not open tears between cells."
+      ],
+      [
+        "Count layers → inspect the top cells.",
+        "In stratified epithelium, do not name the tissue from the deepest cells."
+      ],
+      [
+        "Thin for exchange; many layers for wear.",
+        "Endothelium and mesothelium are specialized simple squamous epithelia, not connective tissue."
+      ],
+      [
+        "Pseudo: false layers. Transitional: changes with filling.",
+        "Stretching does not convert transitional tissue into a different tissue family."
+      ],
+      [
+        "Endocrine enters circulation; exocrine exits to a surface.",
+        "A branched secretory portion does not necessarily mean a compound duct system."
+      ],
+      [
+        "Mero: package · apo: top · holo: whole.",
+        "The name of a gland and its secretion mechanism are different classification questions."
+      ]
+    ],
+    "recall": [
+      "When naming a stratified epithelium, which cells determine the shape part of its name?",
+      "The apical cells. Stratified epithelia are named by the cells at the free surface."
+    ],
+    "application": [
+      "An epithelium has no blood vessels. How can its cells obtain nutrients?",
+      "Diffusion from the underlying connective tissue. Avascular tissue can receive nutrients by diffusion from nearby vascular tissue."
+    ],
+    "questions": []
+  },
+  {
+    "id": "4.3",
+    "title": "Connective Tissue Supports and Protects",
+    "short": "Cells & matrix",
+    "objective": "The material between cells is part of the story.",
+    "sections": [
+      [
+        "Cells plus extracellular material",
+        "Connective tissue contains cells embedded in extracellular matrix: fibers plus ground substance. Mesenchyme is an embryonic connective tissue. Fibroblasts build matrix; fibrocytes maintain it. Matrix composition, density and fiber orientation explain differences in strength, elasticity and transport."
+      ],
+      [
+        "Three fibers, three useful properties",
+        "Collagen fibers resist tensile forces. Elastic fibers stretch and recoil. Reticular fibers form delicate supporting networks. Macrophages remove debris, mast cells release inflammatory mediators, and plasma cells produce antibodies. These defense cells coexist with matrix-producing cells."
+      ],
+      [
+        "Loose connective tissues",
+        "Areolar tissue packs spaces and supports epithelia with a loose arrangement of cells and fibers. Adipose stores energy and cushions; white adipocytes have a large lipid droplet, while brown fat specializes in heat production. Reticular tissue forms a supportive framework in soft organs such as lymph nodes."
+      ],
+      [
+        "Follow the direction of the fibers",
+        "Dense regular tissue has largely parallel collagen bundles, matching pulling forces along one principal direction, as in tendons. Dense irregular tissue has interwoven bundles, resisting tension in multiple directions, as in the dermis. Elastic connective tissue supports stretch and recoil."
+      ],
+      [
+        "Three kinds of cartilage",
+        "Chondrocytes occupy lacunae in a firm hydrated matrix. Hyaline cartilage has a relatively smooth-looking matrix with fine collagen; elastic cartilage has a visible elastic fiber network; fibrocartilage has conspicuous collagen bundles and resists compression. Cartilage is avascular, which contributes to slow repair."
+      ],
+      [
+        "Solid and fluid connective tissues",
+        "Bone has a mineralized matrix that provides rigid support; osteocytes maintain it. Blood has a liquid matrix, plasma, containing formed elements. Erythrocytes transport respiratory gases, leukocytes defend, and platelets are fragments involved in clotting. Lymph returns excess interstitial fluid toward the blood and supports immune transport."
+      ]
+    ],
+    "compare": [
+      [
+        "Matrix = fibers + ground substance.",
+        "Adipose has little matrix; not every connective tissue is mostly visible fibers."
+      ],
+      [
+        "Collagen: cable · elastic: spring · reticular: net.",
+        "Fiber orientation matters as much as fiber abundance."
+      ],
+      [
+        "Areolar packs · adipose stores · reticular supports.",
+        "The clear space in a prepared adipocyte often reflects lipid removed during processing."
+      ],
+      [
+        "Regular: ropes in a row. Irregular: woven reinforcement.",
+        "A tendon is strong mainly along its fiber direction, not equally in every direction."
+      ],
+      [
+        "Hyaline: smooth support · elastic: flexible shape · fibro: tough cushion.",
+        "A lacuna is the space housing a cell, not the cell itself."
+      ],
+      [
+        "The matrix can be mineralized or liquid.",
+        "Platelets are cell fragments; plasma is the matrix, not a blood cell."
+      ]
+    ],
+    "recall": [
+      "An external ear must hold its shape yet bend. Which cartilage is well suited?",
+      "Elastic cartilage. Elastic fibers support flexibility with return toward the original shape."
+    ],
+    "application": [
+      "A prepared adipose specimen contains large clear spaces with thin cell rims. Why might lipid look empty?",
+      "Preparation can remove stored lipid. Processing can extract lipid, so specimen appearance differs from the living cell."
+    ],
+    "questions": []
+  },
+  {
+    "id": "4.4",
+    "title": "Muscle Tissue and Motion",
+    "short": "Three ways to move",
+    "objective": "Striations alone do not identify the muscle.",
+    "sections": [
+      [
+        "Compare shape, nuclei and striations",
+        "Skeletal muscle fibers are long cylinders with many peripheral nuclei and visible striations. Cardiac muscle cells branch, have striations and usually a central nucleus, and join at intercalated discs. Smooth muscle cells are spindle-shaped with one central nucleus and no visible striations."
+      ],
+      [
+        "Connect appearance with control",
+        "Skeletal muscle moves the skeleton and supports posture, usually under voluntary control. Cardiac muscle pumps blood in the heart and is involuntary. Smooth muscle moves material through hollow organs and adjusts tube diameter; it is involuntary. Excitability and contractility support all three."
+      ],
+      [
+        "How contraction produces movement",
+        "Skeletal muscle often pulls a tendon attached to bone. Circular smooth muscle can constrict a hollow organ, and coordinated cardiac contractions pump blood. In all three, actin and myosin generate force."
+      ]
+    ],
+    "compare": [
+      [
+        "Skeletal: cylinders · cardiac: branches · smooth: spindles.",
+        "Both skeletal and cardiac muscle are striated."
+      ],
+      [
+        "Heart pumps; hollow organs propel; skeletal muscles pull.",
+        "Voluntary is a useful classification, not a claim that every skeletal contraction is consciously chosen."
+      ]
+    ],
+    "recall": [
+      "A student sees stripes and immediately answers “skeletal.” What evidence is still needed?",
+      "Cell shape, nuclear position and branching. Both skeletal and cardiac muscle are striated; additional features distinguish them."
+    ],
+    "application": [
+      "Which muscle moves material along much of the digestive tract?",
+      "Involuntary smooth muscle. Smooth muscle in hollow organs contracts without conscious initiation."
+    ],
+    "questions": []
+  },
+  {
+    "id": "4.5",
+    "title": "Nervous Tissue Mediates Perception and Response",
+    "short": "Signals & support",
+    "objective": "Trace the message, then meet the support team.",
+    "sections": [
+      [
+        "A typical information pathway",
+        "Dendrites receive inputs; the cell body contains the nucleus and integrates activity. An axon carries action potentials away from the cell body toward other cells. Myelin insulates many axons and supports rapid conduction. The diagram is a simplified typical pathway, not a universal shape for every neuron."
+      ],
+      [
+        "Neurons need a support network",
+        "Astrocytes regulate the extracellular environment and support the blood–brain barrier. Oligodendrocytes form myelin in the central nervous system; Schwann cells do so in the peripheral nervous system. Microglia are resident immune cells with macrophage-related origins. Neuroglia do more than hold neurons in place."
+      ],
+      [
+        "From stimulus to response",
+        "A sensory neuron transmits information toward a processing center. Interneurons integrate signals, and a motor neuron can activate a muscle or gland. The first and final synapses depend on the pathway."
+      ]
+    ],
+    "compare": [
+      [
+        "Dendrites receive; axons send away.",
+        "A process visible in a micrograph cannot always be identified as axon or dendrite from appearance alone."
+      ],
+      [
+        "Oligodendrocytes: central. Schwann cells: peripheral.",
+        "Microglia differ in developmental origin from other glia; they are still classified among the nervous system’s supporting cells."
+      ]
+    ],
+    "recall": [
+      "Which is the typical information-flow order?",
+      "Dendrites → cell body → axon. The simplified pathway runs from receptive processes toward the soma and along an axon to output sites."
+    ],
+    "application": [
+      "A micrograph shows a neuronal process but no clear identifying landmarks. What is the strongest conclusion?",
+      "More evidence is needed to distinguish axon from dendrite. Do not infer more than the visible evidence supports."
+    ],
+    "questions": []
+  },
+  {
+    "id": "4.6",
+    "title": "Tissue Injury and Aging",
+    "short": "Repair & change",
+    "objective": "Follow the response from damage to remodeling.",
+    "sections": [
+      [
+        "Why injured tissue changes",
+        "Inflammation brings redness, heat, swelling and pain. Vasodilation increases local blood flow, while increased vascular permeability allows fluid and proteins into the tissue. Immune cells remove debris and microbes. Clotting helps stop bleeding and provides a temporary framework. Phases overlap in living tissue."
+      ],
+      [
+        "Replacement or repair by scar",
+        "Regeneration replaces lost cells with the same functional tissue. Fibrosis deposits collagen-rich scar tissue when full regeneration is limited. Fibroblasts lay down collagen during repair, and remodeling changes its organization over time. Tissue type, damage extent and blood supply affect recovery."
+      ],
+      [
+        "Cells die in different ways",
+        "Apoptosis is regulated cell death with organized dismantling and removal, usually without widespread inflammation. Necrosis follows severe damage with loss of membrane integrity and inflammation. Aging can reduce renewal and elasticity; atrophy is a decrease in tissue or organ size, often involving smaller cells."
+      ],
+      [
+        "When growth loses its normal organization",
+        "Cancer involves abnormal cell growth with the capacity to invade; malignant cells may spread to distant sites by metastasis. Hyperplasia is increased cell number and is not automatically cancer. Histological organization is one source of evidence, but this activity is not a diagnostic tool."
+      ]
+    ],
+    "compare": [
+      [
+        "More flow: red and warm. More fluid outside vessels: swelling.",
+        "Inflammation can occur without infection."
+      ],
+      [
+        "Regeneration restores; fibrosis patches.",
+        "A scar can restore continuity without restoring every original function."
+      ],
+      [
+        "Apoptosis: orderly removal. Necrosis: damaging breakdown.",
+        "Aging changes vary among tissues and individuals."
+      ],
+      [
+        "More cells is not the same as invasion.",
+        "A teaching image cannot establish a diagnosis or predict an individual outcome."
+      ]
+    ],
+    "recall": [
+      "Which mechanism most directly explains redness and heat around an injury?",
+      "Increased local blood flow. Vasodilation increases local flow; vascular permeability contributes more directly to swelling."
+    ],
+    "application": [
+      "An increased number of cells is reported. Does that alone establish cancer?",
+      "No; hyperplasia alone does not establish malignancy. Malignancy involves more than cell number, including invasive behavior."
+    ],
+    "questions": []
+  }
+]

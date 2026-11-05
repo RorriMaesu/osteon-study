@@ -221,3 +221,17 @@
 .foundation-plane-stage canvas{display:block;width:100%;height:100%}
 .foundation-plane-buttons button{min-height:42px}
 @media(max-width:599px){.foundation-atlas-layout{grid-template-columns:1fr}.foundation-atlas-layout svg{height:clamp(230px,46dvh,400px)}}
+
+/* Foundations cell and tissue activities */
+.foundation-studio{overflow:auto;overscroll-behavior:contain;padding-bottom:.65rem}
+.foundation-studio-content{min-width:0;margin-top:.8rem}
+.foundation-studio-content .lab-root{height:auto;min-height:0}
+.foundation-studio-content .lab-options button,.foundation-studio-content .tour-steps button{min-height:40px}
+.foundation-tissue-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:1rem;align-items:center}
+.foundation-tissue-layout figure,.foundation-figure{margin:.8rem 0}
+.foundation-tissue-layout svg,.foundation-figure img,.foundation-video{display:block;width:100%;max-height:min(57dvh,500px);object-fit:contain;border-radius:10px}
+.foundation-figure img{background:#15252c}
+.foundation-tissue-layout figcaption,.foundation-figure figcaption{font-size:.72rem;color:var(--muted);margin-top:.4rem}
+.foundation-video{background:#0c161b}
+.foundation-studio .tour-steps{display:flex;flex-wrap:wrap;gap:.35rem}
+@media(max-width:700px){.foundation-tissue-layout{grid-template-columns:1fr;gap:.35rem}.foundation-studio-content .lab-root button{min-height:38px}}

@@ -14,7 +14,7 @@ import {crossBridgePermission,tensionTrace} from '../src/muscle-labs.js';
 
 test('multi-digit chapter IDs survive authoring and weighted practice',()=>{
  assert.equal(chapterOf('10.9'),'10');assert.equal(chapterOf('6.3'),'6');assert.equal(chapterOf('bad'),'');
- assert.ok(isLessonId('10.9'));for(const id of ['10.0','10.10','1.1','__proto__','10.1.1'])assert.ok(!isLessonId(id));
+ assert.ok(isLessonId('10.9'));for(const id of ['10.0','10.10','1.8','__proto__','10.1.1'])assert.ok(!isLessonId(id));
  for(const make of [author,transferAuthor]){const a=make();a.t('10.2',1,'Name the covering.','Epimysium',[],'The outer covering surrounds the whole muscle.');assert.equal(a.items[0].topic,'Chapter 10');assert.equal(a.items[0].objectives[0],'10.2.1');assert.equal(weightedPractice(a.items,{10:1},1)[0].id,a.items[0].id);}
 });
 test('Chapter 10 and comprehensive forms cover every assigned objective; old scope is retained',()=>{

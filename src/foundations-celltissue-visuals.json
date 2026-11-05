@@ -1,0 +1,953 @@
+{
+  "cell": {
+    "3.1": "membrane",
+    "3.2": "organelles",
+    "3.3": "nucleus",
+    "3.4": "protein",
+    "3.5": "division",
+    "3.6": "differentiation"
+  },
+  "tissue": {
+    "4.1": "types",
+    "4.2": "epithelial",
+    "4.3": "connective",
+    "4.4": "muscle",
+    "4.5": "nervous",
+    "4.6": "repair"
+  },
+  "diagrams": {
+    "membrane-membrane-structure": {
+      "id": "membrane-structure",
+      "title": "The selective boundary",
+      "description": "A cutaway of the fluid mosaic membrane. The two leaflets face water; the nonpolar tails face one another.",
+      "source": "OpenStax §3.1, Figs. 3.2–3.4",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><path d=\"M49 245l-3 26M59 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M49 295l-3 -23M59 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"54\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"54\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M78 245l-3 26M88 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M78 295l-3 -23M88 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"83\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"83\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M107 245l-3 26M117 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M107 295l-3 -23M117 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"112\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"112\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M136 245l-3 26M146 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M136 295l-3 -23M146 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"141\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"141\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M165 245l-3 26M175 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M165 295l-3 -23M175 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"170\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M194 245l-3 26M204 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M194 295l-3 -23M204 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"199\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"199\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M223 245l-3 26M233 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M223 295l-3 -23M233 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"228\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"228\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M252 245l-3 26M262 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M252 295l-3 -23M262 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"257\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"257\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M281 245l-3 26M291 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M281 295l-3 -23M291 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"286\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"286\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M397 245l-3 26M407 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M397 295l-3 -23M407 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"402\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"402\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M426 245l-3 26M436 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M426 295l-3 -23M436 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"431\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"431\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M455 245l-3 26M465 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M455 295l-3 -23M465 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"460\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"460\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M484 245l-3 26M494 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M484 295l-3 -23M494 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"489\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"489\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M513 245l-3 26M523 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M513 295l-3 -23M523 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"518\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"518\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M629 245l-3 26M639 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M629 295l-3 -23M639 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"634\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"634\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M658 245l-3 26M668 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M658 295l-3 -23M668 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"663\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"663\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M687 245l-3 26M697 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M687 295l-3 -23M697 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"692\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"692\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M716 245l-3 26M726 245l4 12l-7 14\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M716 295l-3 -23M726 295l5 -12l-7 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"721\" cy=\"230\" r=\"13\" fill=\"#6ee7e7\" /><circle cx=\"721\" cy=\"310\" r=\"13\" fill=\"#6ee7e7\" /><path d=\"M330 200Q308 196 309 224L309 311Q310 343 337 337L339 206Z\" fill=\"#b89bff\"/><path d=\"M366 200Q390 196 391 225L391 311Q390 341 363 337L361 206Z\" fill=\"#b89bff\"/><path d=\"M350 187V348\" fill=\"none\" stroke=\"#d9e8ee\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"5 7\"/><path d=\"M536 214C518 191 550 171 572 187C597 169 617 202 595 221L594 320Q566 345 540 320Z\" fill=\"#66adff\"/><path d=\"M571 190V147L548 127M571 148L601 127L614 103M601 127L629 131\" fill=\"none\" stroke=\"#f8d977\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"548\" cy=\"127\" r=\"8\" fill=\"#f8d977\" /><circle cx=\"601\" cy=\"127\" r=\"8\" fill=\"#f8d977\" /><circle cx=\"614\" cy=\"103\" r=\"8\" fill=\"#f8d977\" /><circle cx=\"629\" cy=\"131\" r=\"8\" fill=\"#f8d977\" /><path d=\"M690 216V178L711 158M690 180L672 161\" fill=\"none\" stroke=\"#f8d977\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"711\" cy=\"158\" r=\"8\" fill=\"#f8d977\" /><circle cx=\"672\" cy=\"161\" r=\"8\" fill=\"#f8d977\" /><g fill=\"#f8d977\" stroke=\"#bfa34e\" stroke-width=\"2\"><path d=\"M208 259l10 -6l10 6v12l-10 6l-10 -6Z\"/><path d=\"M218 277l10 -6l10 6v12l-10 6l-10 -6Z\"/></g><ellipse cx=\"126\" cy=\"351\" rx=\"43\" ry=\"22\" fill=\"#b89bff\" /><path d=\"M65 408Q185 362 286 410T480 410T735 410\" fill=\"none\" stroke=\"#527188\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"132\" y=\"103\" fill=\"#527188\" font-size=\"15\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">OUTSIDE THE CELL</text><text x=\"643\" y=\"460\" fill=\"#527188\" font-size=\"15\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">INSIDE THE CELL</text></svg>",
+      "targets": [
+        {
+          "id": "phospholipid-head",
+          "name": "Hydrophilic head",
+          "x": 10.25,
+          "y": 44.230769230769226,
+          "description": "The polar phosphate-containing head interacts with water outside the cell or in the cytosol."
+        },
+        {
+          "id": "phospholipid-tails",
+          "name": "Hydrophobic tails",
+          "x": 18.875,
+          "y": 52.5,
+          "description": "The two nonpolar fatty-acid tails face the interior of the bilayer, away from water."
+        },
+        {
+          "id": "cholesterol",
+          "name": "Cholesterol",
+          "x": 27.75,
+          "y": 53.07692307692307,
+          "description": "Cholesterol sits among the lipid tails and helps regulate membrane fluidity and stability."
+        },
+        {
+          "id": "channel-protein",
+          "name": "Channel protein",
+          "x": 43.75,
+          "y": 49.80769230769231,
+          "description": "A membrane-spanning protein provides a selective, water-friendly passage through the hydrophobic bilayer."
+        },
+        {
+          "id": "glycoprotein",
+          "name": "Glycoprotein",
+          "x": 70.5,
+          "y": 52.69230769230769,
+          "description": "A protein with an outward-facing carbohydrate chain. Such tags participate in recognition and other interactions."
+        },
+        {
+          "id": "glycocalyx",
+          "name": "Glycocalyx",
+          "x": 76,
+          "y": 25,
+          "description": "Carbohydrate chains on proteins and lipids form an extracellular coat involved in protection, recognition, and adhesion."
+        },
+        {
+          "id": "glycolipid",
+          "name": "Glycolipid",
+          "x": 86.25,
+          "y": 37.11538461538461,
+          "description": "A lipid with an attached carbohydrate chain facing the extracellular fluid."
+        },
+        {
+          "id": "peripheral-protein",
+          "name": "Peripheral protein",
+          "x": 15.75,
+          "y": 67.88461538461539,
+          "description": "This protein associates with one membrane surface rather than crossing the entire bilayer."
+        }
+      ]
+    },
+    "organelles-human-cell": {
+      "id": "human-cell",
+      "title": "Inside a human cell",
+      "description": "A composite teaching cell: individual human cells differ in their organelles, shape, and specialization.",
+      "source": "OpenStax §3.2, Figs. 3.13–3.18",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><path d=\"M105 104C176 31 295 27 392 59C490 27 625 53 687 117C747 174 751 300 696 390C645 479 513 482 398 459C286 505 161 470 95 404C26 334 31 188 105 104Z\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M114 113C181 43 295 39 392 71C491 39 617 64 678 125C733 180 737 298 686 384C637 464 513 469 398 447C288 489 172 459 104 394C42 330 45 192 114 113Z\" fill=\"none\" stroke=\"#385569\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><ellipse cx=\"280\" cy=\"222\" rx=\"101\" ry=\"91\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"8\"/><ellipse cx=\"280\" cy=\"222\" rx=\"91\" ry=\"81\" fill=\"none\" stroke=\"#725b96\" stroke-width=\"3\"/><path d=\"M220 184Q241 157 262 189T317 194T327 250Q299 274 277 245T219 250\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"285\" cy=\"211\" r=\"25\" fill=\"#b89bff\" /><ellipse cx=\"379\" cy=\"222\" rx=\"7\" ry=\"5\" fill=\"#0b1728\" transform=\"rotate(0 379 222)\" stroke=\"#b89bff\" stroke-width=\"2\"/><ellipse cx=\"323.1325621813945\" cy=\"302.10893935370893\" rx=\"7\" ry=\"5\" fill=\"#0b1728\" transform=\"rotate(64.1712730546522 323.1325621813945 302.10893935370893)\" stroke=\"#b89bff\" stroke-width=\"2\"/><ellipse cx=\"218.5842004107447\" cy=\"291.8041173325134\" rx=\"7\" ry=\"5\" fill=\"#0b1728\" transform=\"rotate(128.3425461093044 218.5842004107447 291.8041173325134)\" stroke=\"#b89bff\" stroke-width=\"2\"/><ellipse cx=\"183.35186620843143\" cy=\"202.71591784552317\" rx=\"7\" ry=\"5\" fill=\"#0b1728\" transform=\"rotate(192.51381916395664 183.35186620843143 202.71591784552317)\" stroke=\"#b89bff\" stroke-width=\"2\"/><ellipse cx=\"257.2000088724762\" cy=\"135.39241049295953\" rx=\"7\" ry=\"5\" fill=\"#0b1728\" transform=\"rotate(256.6850922186088 257.2000088724762 135.39241049295953)\" stroke=\"#b89bff\" stroke-width=\"2\"/><ellipse cx=\"356.78102197251474\" cy=\"165.81726922936343\" rx=\"7\" ry=\"5\" fill=\"#0b1728\" transform=\"rotate(320.856365273261 356.78102197251474 165.81726922936343)\" stroke=\"#b89bff\" stroke-width=\"2\"/><path d=\"M151 236Q128 328 305 326Q365 318 387 272\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"168\" cy=\"311\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"199\" cy=\"316.0488259088474\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"230\" cy=\"316.4557845609541\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"261\" cy=\"311.8467200483592\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"292\" cy=\"306.45918502815243\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"323\" cy=\"305.24645435202115\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"354\" cy=\"309.32350701080645\" r=\"3.5\" fill=\"#f8d977\" /><path d=\"M148 259Q121 343 330 346Q378 326 392 287\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"168\" cy=\"331\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"199\" cy=\"336.0488259088474\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"230\" cy=\"336.4557845609541\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"261\" cy=\"331.8467200483592\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"292\" cy=\"326.45918502815243\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"323\" cy=\"325.24645435202115\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"354\" cy=\"329.32350701080645\" r=\"3.5\" fill=\"#f8d977\" /><path d=\"M145 282Q114 358 355 366Q391 334 397 302\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"168\" cy=\"351\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"199\" cy=\"356.0488259088474\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"230\" cy=\"356.4557845609541\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"261\" cy=\"351.8467200483592\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"292\" cy=\"346.45918502815243\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"323\" cy=\"345.24645435202115\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"354\" cy=\"349.32350701080645\" r=\"3.5\" fill=\"#f8d977\" /><path d=\"M142 305Q107 373 380 386Q404 342 402 317\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"168\" cy=\"371\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"199\" cy=\"376.0488259088474\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"230\" cy=\"376.4557845609541\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"261\" cy=\"371.8467200483592\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"292\" cy=\"366.45918502815243\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"323\" cy=\"365.24645435202115\" r=\"3.5\" fill=\"#f8d977\" /><circle cx=\"354\" cy=\"369.32350701080645\" r=\"3.5\" fill=\"#f8d977\" /><path d=\"M390 181C437 174 426 102 471 151S491 220 456 221S400 198 426 240S514 248 502 195M473 151Q518 99 537 166M455 223Q433 271 491 278\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"10\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M527 293Q584 316 620 282\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M524 311Q584 334 624 298\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M521 329Q584 352 628 314\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M518 347Q584 370 632 330\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"9\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"634\" cy=\"263\" r=\"13\" fill=\"#ff927d\" /><circle cx=\"643\" cy=\"344\" r=\"11\" fill=\"#ff927d\" /><g transform=\"translate(173 393) rotate(-15)\"><ellipse cx=\"0\" cy=\"0\" rx=\"61\" ry=\"31\" fill=\"#653c38\" stroke=\"#ff927d\" stroke-width=\"4\"/><ellipse cx=\"0\" cy=\"0\" rx=\"53\" ry=\"23\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"2\"/><path d=\"M-42 0L-32 -15L-21 15L-10 -15L2 15L14 -15L25 15L38 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></g><g transform=\"translate(585 194) rotate(25)\"><ellipse cx=\"0\" cy=\"0\" rx=\"61\" ry=\"31\" fill=\"#653c38\" stroke=\"#ff927d\" stroke-width=\"4\"/><ellipse cx=\"0\" cy=\"0\" rx=\"53\" ry=\"23\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"2\"/><path d=\"M-42 0L-32 -15L-21 15L-10 -15L2 15L14 -15L25 15L38 -11\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></g><circle cx=\"637\" cy=\"397\" r=\"25\" fill=\"#655322\" stroke=\"#f8d977\" stroke-width=\"3\"/><circle cx=\"629\" cy=\"389\" r=\"4\" fill=\"#f8d977\" /><circle cx=\"645\" cy=\"398\" r=\"4\" fill=\"#f8d977\" /><circle cx=\"635\" cy=\"408\" r=\"4\" fill=\"#f8d977\" /><circle cx=\"612\" cy=\"97\" r=\"22\" fill=\"#27483f\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><path d=\"M603 96h18M612 87v18\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><g transform=\"translate(409 100) rotate(22)\"><rect x=\"-26\" y=\"-9\" width=\"48\" height=\"18\" rx=\"5\" fill=\"#294961\" stroke=\"#66adff\" stroke-width=\"2\"/><path d=\"M-19 -4h32M-19 3h32\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><rect x=\"26\" y=\"9\" width=\"18\" height=\"45\" rx=\"5\" fill=\"#294961\" stroke=\"#66adff\" stroke-width=\"2\"/><path d=\"M32 15v33M38 15v33\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></g><circle cx=\"443\" cy=\"411\" r=\"4\" fill=\"#f8d977\" /><circle cx=\"468\" cy=\"394\" r=\"4\" fill=\"#f8d977\" /><circle cx=\"484\" cy=\"432\" r=\"4\" fill=\"#f8d977\" /><circle cx=\"506\" cy=\"409\" r=\"4\" fill=\"#f8d977\" /><circle cx=\"403\" cy=\"407\" r=\"4\" fill=\"#f8d977\" /><path d=\"M108 145Q128 89 192 86M84 291Q70 362 124 405M570 450Q646 446 685 366\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg>",
+      "targets": [
+        {
+          "id": "plasma-membrane",
+          "name": "Plasma membrane",
+          "x": 89.625,
+          "y": 50,
+          "description": "The selectively permeable boundary separates the cytoplasm from extracellular fluid."
+        },
+        {
+          "id": "nucleus",
+          "name": "Nucleus",
+          "x": 29.5,
+          "y": 36.34615384615385,
+          "description": "Houses most cellular DNA and is the site of transcription; its envelope separates it from the cytoplasm."
+        },
+        {
+          "id": "nucleolus",
+          "name": "Nucleolus",
+          "x": 35.875,
+          "y": 41.15384615384615,
+          "description": "Produces ribosomal RNA and assembles ribosomal subunits inside the nucleus."
+        },
+        {
+          "id": "rough-er",
+          "name": "Rough endoplasmic reticulum",
+          "x": 41.5,
+          "y": 66.53846153846153,
+          "description": "Membrane sacs with attached ribosomes make proteins destined for secretion, membranes, or certain organelles."
+        },
+        {
+          "id": "smooth-er",
+          "name": "Smooth endoplasmic reticulum",
+          "x": 59,
+          "y": 35,
+          "description": "A ribosome-free membrane network involved in lipid synthesis, calcium storage, and detoxification."
+        },
+        {
+          "id": "golgi",
+          "name": "Golgi apparatus",
+          "x": 71.5,
+          "y": 62.88461538461538,
+          "description": "Stacked flattened sacs modify, sort, and package products arriving from the ER."
+        },
+        {
+          "id": "mitochondrion",
+          "name": "Mitochondrion",
+          "x": 22,
+          "y": 75.57692307692308,
+          "description": "Its folded inner membrane supports much of the cell’s aerobic ATP production."
+        },
+        {
+          "id": "lysosome",
+          "name": "Lysosome",
+          "x": 79.625,
+          "y": 76.92307692307692,
+          "description": "Contains digestive enzymes that break down worn-out components and material brought into the cell."
+        },
+        {
+          "id": "peroxisome",
+          "name": "Peroxisome",
+          "x": 76.5,
+          "y": 18.653846153846153,
+          "description": "Carries out oxidative reactions; catalase helps convert hydrogen peroxide to water and oxygen."
+        },
+        {
+          "id": "centrioles",
+          "name": "Centrioles",
+          "x": 51.75,
+          "y": 21.153846153846153,
+          "description": "A paired set of cylindrical microtubule structures in the centrosome near the nucleus."
+        },
+        {
+          "id": "free-ribosome",
+          "name": "Free ribosomes",
+          "x": 58.5,
+          "y": 79.61538461538461,
+          "description": "Unbound ribosomes translate mRNA into proteins, including many used in the cytosol."
+        },
+        {
+          "id": "vesicle",
+          "name": "Transport vesicle",
+          "x": 79.25,
+          "y": 50.57692307692307,
+          "description": "A small membrane-bound carrier moves cargo between organelles or to the plasma membrane."
+        },
+        {
+          "id": "cytosol",
+          "name": "Cytosol",
+          "x": 12.875,
+          "y": 46.34615384615385,
+          "description": "The fluid portion of the cytoplasm around organelles. Cytoplasm includes both cytosol and organelles outside the nucleus."
+        }
+      ]
+    },
+    "organelles-cytoskeleton": {
+      "id": "cytoskeleton",
+      "title": "The cell’s support network",
+      "description": "Three filament types, enlarged separately. The small lower sketches connect filament structure to cellular movement and anchoring.",
+      "source": "OpenStax §3.2, Fig. 3.18",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><rect x=\"34\" y=\"43\" width=\"225\" height=\"432\" rx=\"22\" fill=\"#112339\" stroke=\"#2b455d\" stroke-width=\"2\"/><rect x=\"286\" y=\"43\" width=\"225\" height=\"432\" rx=\"22\" fill=\"#112339\" stroke=\"#2b455d\" stroke-width=\"2\"/><rect x=\"538\" y=\"43\" width=\"225\" height=\"432\" rx=\"22\" fill=\"#112339\" stroke=\"#2b455d\" stroke-width=\"2\"/><circle cx=\"92\" cy=\"103\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"103\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"103\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"103\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"103\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"124\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"124\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"124\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"124\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"124\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"145\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"145\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"145\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"145\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"145\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"166\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"166\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"166\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"166\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"166\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"187\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"187\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"187\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"187\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"187\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"208\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"208\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"208\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"208\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"208\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"229\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"229\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"229\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"229\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"229\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"250\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"250\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"250\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"250\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"250\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"271\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"271\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"271\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"271\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"271\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"292\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"292\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"292\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"292\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"292\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"313\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"313\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"313\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"313\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"313\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"92\" cy=\"334\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"118\" cy=\"334\" r=\"11\" fill=\"#66adff\" /><circle cx=\"144\" cy=\"334\" r=\"11\" fill=\"#6ee7e7\" /><circle cx=\"170\" cy=\"334\" r=\"11\" fill=\"#66adff\" /><circle cx=\"196\" cy=\"334\" r=\"11\" fill=\"#6ee7e7\" /><ellipse cx=\"144\" cy=\"89\" rx=\"66\" ry=\"20\" fill=\"#0b1728\" stroke=\"#6ee7e7\" stroke-width=\"4\"/><ellipse cx=\"144\" cy=\"89\" rx=\"42\" ry=\"10\" fill=\"#0b1728\" stroke=\"#527188\" stroke-width=\"2\"/><circle cx=\"400\" cy=\"93\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"400\" cy=\"93\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"412.1037281147208\" cy=\"113\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"387.8962718852792\" cy=\"113\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"419.27116370834386\" cy=\"133\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"380.72883629165614\" cy=\"133\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"418.5791943000774\" cy=\"153\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"381.4208056999226\" cy=\"153\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"410.31002743642927\" cy=\"173\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"389.68997256357073\" cy=\"173\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"397.8360973093978\" cy=\"193\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"402.1639026906022\" cy=\"193\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"386.2446768163205\" cy=\"213\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"413.7553231836795\" cy=\"213\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"380.26312282993524\" cy=\"233\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"419.73687717006476\" cy=\"233\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"382.33090688559696\" cy=\"253\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"417.66909311440304\" cy=\"253\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"391.6047196432028\" cy=\"273\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"408.3952803567972\" cy=\"273\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"404.3023997617563\" cy=\"293\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"395.6976002382437\" cy=\"293\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"415.2454218472282\" cy=\"313\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"384.7545781527718\" cy=\"313\" r=\"12\" fill=\"#f8d977\" /><circle cx=\"419.9708669074921\" cy=\"333\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"380.0291330925079\" cy=\"333\" r=\"12\" fill=\"#f8d977\" /><path d=\"M650 87L654.2493508622902 92L658.4069694962741 97L662.3831039294498 102L666.0919199524477 107L669.4533540522291 112L672.3948417712404 117L674.852884181823 122L676.774418659849 127L678.1179643662091 132L678.8545177082444 137L678.9681784504785 142L678.4564929585815 147L677.3305071668349 152L675.6145281256718 157L673.3455992768493 162L670.5727007836713 167L667.3556921790148 172L663.7640201565862 177L659.8752194007737 182L655.773238818206 187L651.5466293032433 192L647.2866321587468 197L643.0852094380525 202L639.0330587278546 207L635.2176552275718 212L631.7213633915197 217L628.6196588985312 222L625.97949933199 227L623.8578787429813 232L622.3005972997087 237L621.3412725831912 242L621.0006138727442 247L621.2859750874987 252L622.191196034769 257L623.6967353922932 262L625.7700925536158 267L628.3665092300832 272L631.4299356637299 277L634.8942405930717 282L638.6846388518564 287L642.7193057826919 292L646.91114361464 297L651.1696616733637 302L655.4029298350705 307L659.5195630543554 312L663.4306941252471 317L667.0518920887689 322L670.3049848736806 327L673.1197468244133 332L675.4354146869406 337L677.2019993264674 342L678.3813648604256 347\" fill=\"none\" stroke=\"#8870ac\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M670.5060966544099 87L673.2895053123929 92L675.5701552461163 97L677.2988132651034 102L678.4381622220532 107L678.9636065911955 112L678.8638034205375 117L678.1409071961484 122L676.8105233325132 127L674.901371292973 132L672.4546646125918 137L669.523221207112 142L666.1703231740709 147L662.4683506999537 152L658.4972195637076 157L654.3426559667761 162L650.0943459315038 167L645.8439992174989 172L641.6833695508681 177L637.7022739043316 182L633.9866535867134 187L630.6167189977476 192L627.665218098031 197L625.195865973268 202L623.2619693943558 207L621.9052760654133 212L621.1550734014425 217L621.0275562906221 222L621.5254774895735 227L622.6380881986375 232L624.3413700999845 237L626.5985538494704 242L629.3609128293724 247L632.5688150269856 252L636.1530103318079 257L640.0361254619778 262L644.1343342484629 267L648.3591672199885 272L652.6194214245603 277L656.8231292595958 282L660.879543808836 287L664.7010978278723 292L668.2052940889823 297L671.3164862777355 302L673.9675119965301 307L676.1011426228391 312L677.6713187235689 317L678.6441443562045 322L678.9986187924167 327L678.7270898681537 332L677.8354191735925 337L676.3428555169342 342L674.2816193936263 347\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M679 87L678.686983411456 92L677.7546908447692 97L676.22324802675 102L674.125714750946 107L671.5073712042783 112L668.4247404877547 117L664.9443684324527 122L661.1413870513115 127L657.0978926380013 132L652.9011735254222 137L648.6418257618293 142L644.4117973821453 147L640.3024034934637 152L636.4023550237856 157L632.7958436880858 162L629.560724512216 167L626.766835149139 172L624.4744882690064 177L622.7331695683826 182L621.5804695051456 187L621.0412718200824 192L621.1272163628435 197L621.8364478184232 202L623.1536557584964 207L625.0504051530077 212L627.4857502071438 217L630.4071182725755 222L633.7514447516669 227L637.4465344950755 232L641.4126203037777 237L645.5640848915862 242L649.8113091355538 247L654.0626067154302 252L658.2262033784335 257L662.2122181022517 262L665.9346033882132 267L669.313002798838 272L672.2744856404539 277L674.7551213436734 282L676.7013595550317 287L678.0711861472588 292L678.8350301929896 297L678.9764023227499 302L678.4922506867623 307L677.3930268362982 312L675.7024601023726 317L673.4570453423482 322L670.7052551126424 327L667.5064932746404 332L663.929812622694 337L660.0524242172157 342L655.9580306024224 347\" fill=\"none\" stroke=\"#8870ac\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M670.5060966544099 87L667.2800156916603 92L663.6809049660287 97L659.7864597437998 102L655.6807507806794 107L651.4524094568875 112L647.1927144604499 117L642.9936213221266 122L638.9457773390995 127L635.1365647399566 132L631.648214333858 137L628.5560303652012 142L625.9267648944702 147L623.8171767980807 152L622.2728064945956 157L621.3269928477283 162L621.0001534685921 167L621.2993439535635 172L622.2181055726473 177L623.7366046963475 182L625.8220609511877 187L628.4294548611372 192L631.5024996988383 197L634.9748565669436 202L638.771566479173 207L642.8106685262563 212L647.0049691948446 217L651.2639246444822 222L655.4955953092651 227L659.6086306295153 232L663.5142410683704 237L667.128114842675 242L670.3722379910317 247L673.1765784885638 252L675.4805980528123 257L677.2345590048848 262L678.4005979741844 267L678.9535432682779 272L678.8814582630545 277L678.1858990828189 282L676.8818810076903 287L674.9975543334808 292L672.5735966813812 297L669.6623348758766 302L666.3266153472232 307L662.6384474435039 312L658.6774489395598 317L654.529127300145 322L650.283033800277 327L646.0308303504362 332L641.8643107587374 337L637.8734191457802 342L634.1443082893533 347\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M650 87L645.7506491377098 92L641.593030503726 97L637.6168960705502 102L633.9080800475523 107L630.5466459477709 112L627.6051582287596 117L625.147115818177 122L623.225581340151 127L621.8820356337909 132L621.1454822917556 137L621.0318215495215 142L621.5435070414185 147L622.6694928331651 152L624.3854718743282 157L626.6544007231507 162L629.4272992163287 167L632.6443078209852 172L636.2359798434138 177L640.1247805992263 182L644.226761181794 187L648.4533706967566 192L652.7133678412532 197L656.9147905619475 202L660.9669412721454 207L664.7823447724282 212L668.2786366084803 217L671.3803411014688 222L674.02050066801 227L676.1421212570187 232L677.6994027002913 237L678.6587274168088 242L678.9993861272558 247L678.7140249125013 252L677.808803965231 257L676.3032646077068 262L674.2299074463842 267L671.6334907699168 272L668.5700643362702 277L665.1057594069283 282L661.3153611481436 287L657.2806942173081 292L653.08885638536 297L648.8303383266363 302L644.5970701649295 307L640.4804369456446 312L636.5693058747529 317L632.9481079112311 322L629.6950151263194 327L626.8802531755866 332L624.5645853130594 337L622.7980006735326 342L621.6186351395744 347\" fill=\"none\" stroke=\"#8870ac\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M629.4939033455901 87L626.7104946876071 92L624.4298447538837 97L622.7011867348966 102L621.5618377779468 107L621.0363934088045 112L621.1361965794625 117L621.8590928038516 122L623.1894766674868 127L625.098628707027 132L627.5453353874082 137L630.476778792888 142L633.8296768259291 147L637.5316493000463 152L641.5027804362924 157L645.6573440332239 162L649.9056540684962 167L654.1560007825011 172L658.3166304491319 177L662.2977260956684 182L666.0133464132866 187L669.3832810022525 192L672.334781901969 197L674.804134026732 202L676.7380306056442 207L678.0947239345867 212L678.8449265985575 217L678.9724437093779 222L678.4745225104265 227L677.3619118013625 232L675.6586299000155 237L673.4014461505296 242L670.6390871706276 247L667.4311849730144 252L663.8469896681921 257L659.9638745380222 262L655.8656657515371 267L651.6408327800115 272L647.3805785754398 277L643.1768707404042 282L639.120456191164 287L635.2989021721277 292L631.7947059110177 297L628.6835137222645 302L626.0324880034699 307L623.8988573771608 312L622.3286812764311 317L621.3558556437955 322L621.0013812075833 327L621.2729101318463 332L622.1645808264075 337L623.6571444830658 342L625.7183806063737 347\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M621 87L621.313016588544 92L622.2453091552308 97L623.77675197325 102L625.874285249054 107L628.4926287957217 112L631.5752595122453 117L635.0556315675473 122L638.8586129486885 127L642.9021073619987 132L647.0988264745778 137L651.3581742381707 142L655.5882026178547 147L659.6975965065363 152L663.5976449762144 157L667.2041563119142 162L670.439275487784 167L673.233164850861 172L675.5255117309936 177L677.2668304316174 182L678.4195304948544 187L678.9587281799176 192L678.8727836371565 197L678.1635521815768 202L676.8463442415036 207L674.9495948469923 212L672.5142497928562 217L669.5928817274245 222L666.2485552483331 227L662.5534655049246 232L658.5873796962225 237L654.4359151084138 242L650.1886908644462 247L645.9373932845698 252L641.7737966215665 257L637.7877818977483 262L634.0653966117868 267L630.686997201162 272L627.7255143595461 277L625.2448786563266 282L623.2986404449683 287L621.9288138527412 292L621.1649698070104 297L621.0235976772501 302L621.5077493132377 307L622.6069731637018 312L624.2975398976274 317L626.5429546576518 322L629.2947448873576 327L632.4935067253596 332L636.070187377306 337L639.9475757827843 342L644.0419693975776 347\" fill=\"none\" stroke=\"#8870ac\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M629.4939033455901 87L632.7199843083397 92L636.3190950339713 97L640.2135402562002 102L644.3192492193206 107L648.5475905431125 112L652.8072855395501 117L657.0063786778734 122L661.0542226609005 127L664.8634352600434 132L668.351785666142 137L671.4439696347988 142L674.0732351055298 147L676.1828232019193 152L677.7271935054044 157L678.6730071522717 162L678.9998465314079 167L678.7006560464365 172L677.7818944273527 177L676.2633953036525 182L674.1779390488123 187L671.5705451388628 192L668.4975003011617 197L665.0251434330564 202L661.2284335208269 207L657.1893314737437 212L652.9950308051554 217L648.7360753555178 222L644.5044046907349 227L640.3913693704847 232L636.4857589316296 237L632.871885157325 242L629.6277620089683 247L626.8234215114362 252L624.5194019471877 257L622.7654409951152 262L621.5994020258156 267L621.0464567317221 272L621.1185417369455 277L621.8141009171811 282L623.1181189923097 287L625.0024456665192 292L627.4264033186188 297L630.3376651241234 302L633.6733846527768 307L637.3615525564961 312L641.3225510604402 317L645.470872699855 322L649.716966199723 327L653.9691696495638 332L658.1356892412626 337L662.1265808542198 342L665.8556917106467 347\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M66 424Q100 395 132 419T226 416\" fill=\"none\" stroke=\"#527188\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M78 411Q70 374 90 368\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M100 411Q92 374 112 368\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M122 411Q114 374 134 368\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M144 411Q136 374 156 368\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M166 411Q158 374 178 368\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M188 411Q180 374 200 368\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M210 411Q202 374 222 368\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><ellipse cx=\"334\" cy=\"420\" rx=\"11\" ry=\"15\" fill=\"#6ee7e7\" /><path d=\"M344 420Q369 392 395 420T480 420\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M571 406H731M574 413H728\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M595 401l-10 -17M693 401l10 -17\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg>",
+      "targets": [
+        {
+          "id": "microtubule",
+          "name": "Microtubule",
+          "x": 18,
+          "y": 41.53846153846154,
+          "description": "A hollow tubulin cylinder; resists compression, forms intracellular transport tracks, and participates in the spindle, cilia, and flagella."
+        },
+        {
+          "id": "microfilament",
+          "name": "Microfilament",
+          "x": 50,
+          "y": 40.76923076923077,
+          "description": "Thin intertwined actin chains; important for cell shape, muscle contraction, and the cleavage furrow during cytokinesis."
+        },
+        {
+          "id": "intermediate-filament",
+          "name": "Intermediate filament",
+          "x": 80.875,
+          "y": 41.92307692307692,
+          "description": "Rope-like protein fibers resist tension and help anchor cells and organelles."
+        },
+        {
+          "id": "cilia",
+          "name": "Cilia",
+          "x": 18,
+          "y": 75.1923076923077,
+          "description": "Numerous short microtubule-based projections move material along a cell surface, as in the airways."
+        },
+        {
+          "id": "flagellum",
+          "name": "Flagellum",
+          "x": 51.75,
+          "y": 80.76923076923076,
+          "description": "The long microtubule-based projection that propels a sperm cell; sperm are the only flagellated human cells."
+        },
+        {
+          "id": "cell-junction-anchor",
+          "name": "Cytoskeletal anchoring",
+          "x": 80.75,
+          "y": 78.26923076923077,
+          "description": "Intermediate filaments attach to cellular junctions, helping tissues resist pulling forces."
+        }
+      ]
+    },
+    "nucleus-nucleus-packaging": {
+      "id": "nucleus-packaging",
+      "title": "From nucleus to chromosome",
+      "description": "The left cutaway shows the nuclear compartment. The right enlargement moves from DNA to nucleosomes to condensed chromosomes. Not to scale.",
+      "source": "OpenStax §3.3, Figs. 3.19, 3.22–3.23",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><circle cx=\"230\" cy=\"243\" r=\"151\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"12\"/><circle cx=\"230\" cy=\"243\" r=\"136\" fill=\"none\" stroke=\"#776391\" stroke-width=\"4\"/><circle cx=\"234\" cy=\"251\" r=\"40\" fill=\"#b89bff\" /><path d=\"M133 199C101 130 197 132 163 199S242 200 286 152S337 198 308 220M120 278C172 236 161 329 222 328S226 371 306 323S275 277 335 273\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"377.26061646114783\" cy=\"257.77534566373055\" r=\"12\" fill=\"#0b1728\" stroke=\"#b89bff\" stroke-width=\"3\"/><circle cx=\"309.96474126848466\" cy=\"367.5377057515687\" r=\"12\" fill=\"#0b1728\" stroke=\"#b89bff\" stroke-width=\"3\"/><circle cx=\"168.4102681910229\" cy=\"377.5760191702009\" r=\"12\" fill=\"#0b1728\" stroke=\"#b89bff\" stroke-width=\"3\"/><circle cx=\"86.91386749823977\" cy=\"205.17991690002899\" r=\"12\" fill=\"#0b1728\" stroke=\"#b89bff\" stroke-width=\"3\"/><circle cx=\"170.68172253216363\" cy=\"107.40744136108069\" r=\"12\" fill=\"#0b1728\" stroke=\"#b89bff\" stroke-width=\"3\"/><circle cx=\"285.94070592152104\" cy=\"105.97942701549559\" r=\"12\" fill=\"#0b1728\" stroke=\"#b89bff\" stroke-width=\"3\"/><path d=\"M403 244L447 244\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M438 251L447 244L438 237\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M475 114Q493 73 511 114T547 114T583 114T619 114T655 114T691 114T727 114\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M475 114Q493 155 511 114T547 114T583 114T619 114T655 114T691 114T727 114\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M484 100.5649711574556V127.4350288425444\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M496 95.6474093005077V132.35259069949228\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M508 109.08243814305212V118.91756185694788\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M520 127.4350288425444V100.5649711574556\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M532 132.3525906994923V95.6474093005077\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M544 118.9175618569479V109.0824381430521\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M556 100.5649711574556V127.4350288425444\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M568 95.6474093005077V132.3525906994923\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M580 109.0824381430521V118.9175618569479\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M592 127.43502884254441V100.56497115745559\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M604 132.3525906994923V95.6474093005077\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M616 118.91756185694793V109.08243814305207\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M628 100.56497115745559V127.43502884254441\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M640 95.64740930050769V132.3525906994923\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M652 109.08243814305213V118.91756185694787\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M664 127.43502884254441V100.56497115745559\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M676 132.3525906994923V95.64740930050769\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M688 118.91756185694794V109.08243814305206\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M700 100.56497115745559V127.43502884254441\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M712 95.64740930050769V132.3525906994923\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M476 236Q492 196 512 232T557 230T602 232T647 230T704 230\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"516\" cy=\"229\" r=\"15\" fill=\"#b89bff\" /><path d=\"M501 226Q512 209 529 220Q538 235 519 242\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"564\" cy=\"229\" r=\"15\" fill=\"#b89bff\" /><path d=\"M549 226Q560 209 577 220Q586 235 567 242\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"612\" cy=\"229\" r=\"15\" fill=\"#b89bff\" /><path d=\"M597 226Q608 209 625 220Q634 235 615 242\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"660\" cy=\"229\" r=\"15\" fill=\"#b89bff\" /><path d=\"M645 226Q656 209 673 220Q682 235 663 242\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><g transform=\"translate(585 367) scale(1.2)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><g transform=\"translate(684 367) scale(1.2)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><path d=\"M601 159L601 194\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M594 185L601 194L608 185\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M601 265L601 297\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M594 288L601 297L608 288\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg>",
+      "targets": [
+        {
+          "id": "nuclear-envelope",
+          "name": "Nuclear envelope",
+          "x": 13,
+          "y": 31.538461538461537,
+          "description": "Two lipid bilayers enclose the nucleus; the outer membrane is continuous with the rough ER."
+        },
+        {
+          "id": "nuclear-pore",
+          "name": "Nuclear pore",
+          "x": 47.125,
+          "y": 49.61538461538461,
+          "description": "A regulated passage through the envelope. RNA and ribosomal subunits leave; many proteins enter."
+        },
+        {
+          "id": "nucleolus-detail",
+          "name": "Nucleolus",
+          "x": 29,
+          "y": 48.46153846153846,
+          "description": "A region where rRNA is produced and ribosomal subunits are assembled; it has no enclosing membrane."
+        },
+        {
+          "id": "chromatin",
+          "name": "Chromatin",
+          "x": 25.5,
+          "y": 63.26923076923077,
+          "description": "DNA plus associated proteins within the nucleus. It condenses into visible chromosomes during division."
+        },
+        {
+          "id": "dna-double-helix",
+          "name": "DNA double helix",
+          "x": 75.125,
+          "y": 21.346153846153847,
+          "description": "Two antiparallel strands with sugar-phosphate backbones and complementary bases: A pairs with T; C with G."
+        },
+        {
+          "id": "nucleosome",
+          "name": "Nucleosome",
+          "x": 70.5,
+          "y": 44.61538461538461,
+          "description": "A length of DNA wrapped around histone proteins, the basic repeating unit of chromatin packaging."
+        },
+        {
+          "id": "chromosome",
+          "name": "Replicated chromosome",
+          "x": 73,
+          "y": 70.38461538461539,
+          "description": "A condensed chromosome after replication has two sister chromatids joined at a centromere. Each chromatid contains a DNA molecule."
+        },
+        {
+          "id": "homolog",
+          "name": "Homologous chromosome",
+          "x": 85.5,
+          "y": 70.57692307692308,
+          "description": "The corresponding chromosome inherited from the other parent. Homologs carry the same kinds of genes but can have different alleles."
+        }
+      ]
+    },
+    "nucleus-dna-replication": {
+      "id": "dna-replication",
+      "title": "Copy once, conserve half",
+      "description": "A simplified replication fork emphasizes the roles of helicase, polymerase, and template strands. Leading/lagging-strand details are omitted.",
+      "source": "OpenStax §3.3, Fig. 3.24",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><path d=\"M54 236H289Q340 228 393 150T740 113\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M54 282H289Q340 290 393 370T740 407\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M67 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M86 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M105 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M124 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M143 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M162 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M181 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M200 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M219 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M238 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M257 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M276 240V279\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M431 161Q530 133 734 139\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M431 357Q530 385 734 381\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M480 122V137M480 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M502 122V137M502 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M524 122V137M524 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M546 122V137M546 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M568 122V137M568 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M590 122V137M590 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M612 122V137M612 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M634 122V137M634 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M656 122V137M656 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M678 122V137M678 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M700 122V137M700 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M722 122V137M722 383V401\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M306 218L340 221L361 259L340 298L306 300L326 259Z\" fill=\"#f8d977\" stroke=\"#d7b755\" stroke-width=\"3\"/><ellipse cx=\"436\" cy=\"153\" rx=\"33\" ry=\"29\" fill=\"#b89bff\" /><ellipse cx=\"436\" cy=\"365\" rx=\"33\" ry=\"29\" fill=\"#b89bff\" /><circle cx=\"387\" cy=\"114\" r=\"8\" fill=\"#ff927d\" /><circle cx=\"417\" cy=\"95\" r=\"8\" fill=\"#ff927d\" /><circle cx=\"461\" cy=\"82\" r=\"8\" fill=\"#ff927d\" /><circle cx=\"479\" cy=\"188\" r=\"8\" fill=\"#ff927d\" /><circle cx=\"375\" cy=\"340\" r=\"8\" fill=\"#ff927d\" /><circle cx=\"400\" cy=\"416\" r=\"8\" fill=\"#ff927d\" /><circle cx=\"470\" cy=\"438\" r=\"8\" fill=\"#ff927d\" /><circle cx=\"493\" cy=\"341\" r=\"8\" fill=\"#ff927d\" /><path d=\"M225 189L90 189\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M99 182L90 189L99 196\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"154\" y=\"169\" fill=\"#527188\" font-size=\"13\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">FORK ADVANCES</text><rect x=\"570\" y=\"217\" width=\"179\" height=\"88\" rx=\"22\" fill=\"#112339\" stroke=\"#2b455d\" stroke-width=\"2\"/><path d=\"M591 240h131\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M591 271h131\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"656\" y=\"328\" fill=\"#527188\" font-size=\"13\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">ONE OLD + ONE NEW</text></svg>",
+      "targets": [
+        {
+          "id": "parental-dna",
+          "name": "Parental DNA",
+          "x": 18.25,
+          "y": 50,
+          "description": "Before copying, the two complementary DNA strands are paired together."
+        },
+        {
+          "id": "helicase",
+          "name": "Helicase",
+          "x": 41.625,
+          "y": 50,
+          "description": "Unwinds and separates the paired DNA strands at the replication fork."
+        },
+        {
+          "id": "template-strand",
+          "name": "Template strand",
+          "x": 71.625,
+          "y": 21.923076923076923,
+          "description": "Each original strand supplies the base sequence that directs synthesis of its new complementary strand."
+        },
+        {
+          "id": "dna-polymerase",
+          "name": "DNA polymerase",
+          "x": 54.625,
+          "y": 29.423076923076923,
+          "description": "Adds complementary nucleotides to the growing DNA strand. New DNA is synthesized in the 5′ to 3′ direction."
+        },
+        {
+          "id": "new-strand",
+          "name": "New DNA strand",
+          "x": 71.25,
+          "y": 73.84615384615384,
+          "description": "The newly assembled strand is complementary to its template. DNA polymerase and other enzymes also help limit copying errors."
+        },
+        {
+          "id": "free-nucleotides",
+          "name": "Free nucleotides",
+          "x": 52.5,
+          "y": 18.076923076923077,
+          "description": "Building blocks available for incorporation into a new DNA strand."
+        },
+        {
+          "id": "semiconservative",
+          "name": "Semiconservative product",
+          "x": 82,
+          "y": 49.03846153846154,
+          "description": "Each completed daughter DNA molecule contains one pre-existing strand and one newly synthesized strand."
+        }
+      ]
+    },
+    "protein-transcription-splicing": {
+      "id": "transcription-splicing",
+      "title": "Transcribe, then edit",
+      "description": "Top: a small region of DNA is transcribed. Bottom: introns are removed and exons joined before mature mRNA leaves the nucleus.",
+      "source": "OpenStax §3.4, Figs. 3.26–3.27",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><rect x=\"38\" y=\"40\" width=\"724\" height=\"208\" rx=\"22\" fill=\"#112339\" stroke=\"#2b455d\" stroke-width=\"2\"/><rect x=\"38\" y=\"279\" width=\"724\" height=\"194\" rx=\"22\" fill=\"#112339\" stroke=\"#2b455d\" stroke-width=\"2\"/><path d=\"M72 122H234Q324 58 421 122H731\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M72 162H234Q324 226 421 162H731\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M81 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M101 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M121 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M141 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M161 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M181 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M201 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M221 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M441 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M461 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M481 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M501 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M521 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M541 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M561 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M581 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M601 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M621 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M641 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M661 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M681 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M701 125V159\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><ellipse cx=\"345\" cy=\"144\" rx=\"59\" ry=\"57\" fill=\"#493b65\" stroke=\"#b89bff\" stroke-width=\"4\"/><path d=\"M342 165Q323 185 299 186L205 214H107\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"320\" y=\"169\" fill=\"#d9e8ee\" font-size=\"13\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">T A C</text><text x=\"331\" y=\"198\" fill=\"#d9e8ee\" font-size=\"13\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">A U G</text><path d=\"M476 216L670 216\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M661 223L670 216L661 209\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"81\" y=\"100\" fill=\"#66adff\" font-size=\"14\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">5′</text><text x=\"720\" y=\"100\" fill=\"#66adff\" font-size=\"14\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">3′</text><text x=\"81\" y=\"185\" fill=\"#6ee7e7\" font-size=\"14\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">3′</text><text x=\"720\" y=\"185\" fill=\"#6ee7e7\" font-size=\"14\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">5′</text><text x=\"102\" y=\"235\" fill=\"#ff927d\" font-size=\"14\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">5′</text><text x=\"350\" y=\"218\" fill=\"#ff927d\" font-size=\"14\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">3′</text><rect x=\"89\" y=\"319\" width=\"113\" height=\"27\" rx=\"5\" fill=\"#6ee7e7\"/><rect x=\"202\" y=\"319\" width=\"104\" height=\"27\" rx=\"5\" fill=\"#527188\"/><rect x=\"306\" y=\"319\" width=\"113\" height=\"27\" rx=\"5\" fill=\"#6ee7e7\"/><rect x=\"419\" y=\"319\" width=\"104\" height=\"27\" rx=\"5\" fill=\"#527188\"/><rect x=\"523\" y=\"319\" width=\"113\" height=\"27\" rx=\"5\" fill=\"#6ee7e7\"/><path d=\"M201 350Q253 398 306 350M419 350Q470 398 523 350\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-dasharray=\"5 6\"/><rect x=\"190\" y=\"412\" width=\"113\" height=\"27\" rx=\"5\" fill=\"#6ee7e7\"/><rect x=\"303\" y=\"412\" width=\"113\" height=\"27\" rx=\"5\" fill=\"#6ee7e7\"/><rect x=\"416\" y=\"412\" width=\"113\" height=\"27\" rx=\"5\" fill=\"#6ee7e7\"/><circle cx=\"177\" cy=\"425\" r=\"12\" fill=\"#f8d977\" /><path d=\"M532 425h120\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"600\" y=\"417\" fill=\"#ff927d\" font-size=\"12\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">A A A A A</text></svg>",
+      "targets": [
+        {
+          "id": "coding-strand",
+          "name": "Coding DNA strand",
+          "x": 73.75,
+          "y": 23.26923076923077,
+          "description": "Its sequence matches the RNA transcript except DNA uses T where RNA uses U. It is not the strand read as the template."
+        },
+        {
+          "id": "template-dna",
+          "name": "Template DNA strand",
+          "x": 73.75,
+          "y": 31.153846153846153,
+          "description": "RNA polymerase reads this strand to build complementary RNA."
+        },
+        {
+          "id": "rna-polymerase",
+          "name": "RNA polymerase",
+          "x": 43.125,
+          "y": 22.884615384615383,
+          "description": "Opens a local transcription bubble and joins RNA nucleotides to extend the transcript."
+        },
+        {
+          "id": "pre-mrna",
+          "name": "Growing pre-mRNA",
+          "x": 21.25,
+          "y": 40.96153846153846,
+          "description": "The initial RNA transcript is complementary to the DNA template strand. It is processed before translation."
+        },
+        {
+          "id": "exon",
+          "name": "Exon",
+          "x": 18.125,
+          "y": 63.84615384615385,
+          "description": "A transcript segment retained in the mature RNA after splicing."
+        },
+        {
+          "id": "intron",
+          "name": "Intron",
+          "x": 31.625,
+          "y": 64.03846153846153,
+          "description": "A transcript segment removed by the spliceosome during RNA processing."
+        },
+        {
+          "id": "mature-mrna",
+          "name": "Mature mRNA",
+          "x": 45.125,
+          "y": 81.73076923076923,
+          "description": "Spliced RNA with joined exons; a 5′ cap and poly-A tail help protect it and support later translation."
+        },
+        {
+          "id": "poly-a-tail",
+          "name": "Poly-A tail",
+          "x": 75.25,
+          "y": 83.46153846153845,
+          "description": "A chain of adenine nucleotides added to the 3′ end of most eukaryotic mRNA."
+        }
+      ]
+    },
+    "protein-translation": {
+      "id": "translation",
+      "title": "Read the message, build the chain",
+      "description": "The ribosome reads mRNA from 5′ to 3′. Complementary tRNA anticodons deliver amino acids in the encoded order.",
+      "source": "OpenStax §3.4, Figs. 3.28–3.29",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><path d=\"M72 367H731\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M241 347C229 270 254 203 316 200C349 164 402 174 426 209C486 207 521 274 500 347Z\" fill=\"#47365f\" stroke=\"#b89bff\" stroke-width=\"4\"/><path d=\"M249 381Q371 458 499 381Z\" fill=\"#47365f\" stroke=\"#b89bff\" stroke-width=\"4\"/><g fill=\"#d9e8ee\" font-size=\"18\" font-family=\"monospace\" text-anchor=\"middle\"><text x=\"128\" y=\"359\">AUG</text><text x=\"210\" y=\"359\">GCU</text><text x=\"292\" y=\"359\">GAA</text><text x=\"374\" y=\"359\">CCU</text><text x=\"456\" y=\"359\">UGG</text><text x=\"538\" y=\"359\">ACU</text><text x=\"620\" y=\"359\">UAA</text></g><path d=\"M365 334V298H340V279H358V252H387V279H406V298H382V334\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"374\" y=\"338\" fill=\"#6ee7e7\" font-size=\"17\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">GGA</text><path d=\"M543 257V220H518V201H536V174H565V201H584V220H560V257\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"6\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"552\" y=\"283\" fill=\"#6ee7e7\" font-size=\"17\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">ACC</text><circle cx=\"551\" cy=\"164\" r=\"15\" fill=\"#f8d977\" /><circle cx=\"372\" cy=\"242\" r=\"15\" fill=\"#f8d977\" /><circle cx=\"353\" cy=\"222\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"337\" cy=\"201\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"316\" cy=\"181\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"293\" cy=\"172\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"267\" cy=\"175\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"245\" cy=\"164\" r=\"12\" fill=\"#ff927d\" /><circle cx=\"230\" cy=\"142\" r=\"12\" fill=\"#ff927d\" /><path d=\"M83 446L692 446\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M683 453L692 446L683 439\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"105\" y=\"391\" fill=\"#ff927d\" font-size=\"16\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">5′</text><text x=\"703\" y=\"391\" fill=\"#ff927d\" font-size=\"16\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">3′</text></svg>",
+      "targets": [
+        {
+          "id": "mrna",
+          "name": "mRNA",
+          "x": 19.875,
+          "y": 70.76923076923077,
+          "description": "Carries the nucleotide message from DNA to a ribosome. The message is read in three-base codons."
+        },
+        {
+          "id": "ribosome",
+          "name": "Ribosome",
+          "x": 57.25,
+          "y": 51.730769230769226,
+          "description": "Its large and small subunits position mRNA and tRNAs and catalyze peptide-bond formation."
+        },
+        {
+          "id": "codon",
+          "name": "Codon",
+          "x": 36.25,
+          "y": 70.57692307692308,
+          "description": "A three-nucleotide unit in mRNA. For example, GAA specifies glutamate."
+        },
+        {
+          "id": "trna",
+          "name": "tRNA",
+          "x": 68.875,
+          "y": 41.34615384615385,
+          "description": "An adapter RNA carries a specific amino acid and pairs its anticodon with a complementary mRNA codon."
+        },
+        {
+          "id": "anticodon",
+          "name": "Anticodon",
+          "x": 46.75,
+          "y": 63.26923076923077,
+          "description": "A three-base sequence in tRNA; GGA pairs antiparallel with the illustrated CCU mRNA codon."
+        },
+        {
+          "id": "amino-acid",
+          "name": "Amino acid",
+          "x": 68.75,
+          "y": 31.346153846153847,
+          "description": "A building block of protein carried by a tRNA before being joined to the growing chain."
+        },
+        {
+          "id": "polypeptide",
+          "name": "Growing polypeptide",
+          "x": 36.75,
+          "y": 33.65384615384615,
+          "description": "Amino acids joined by peptide bonds; the completed chain will fold and may undergo further processing."
+        },
+        {
+          "id": "stop-codon",
+          "name": "Stop codon",
+          "x": 77.5,
+          "y": 70.76923076923077,
+          "description": "UAA, UAG, and UGA signal termination rather than specifying an amino acid."
+        }
+      ]
+    },
+    "division-cell-cycle": {
+      "id": "cell-cycle",
+      "title": "One cell cycle",
+      "description": "Move around the ring through growth, DNA synthesis, preparation, and division. The branch represents leaving the active division cycle. Durations are not to scale.",
+      "source": "OpenStax §3.5, Figs. 3.30–3.31",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><path d=\"M330.40094586814604 99.17320844294827A161 161 0 0 1 469.67914747243924 286.2383581997864\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"72\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M466.1671143149084 301.9437613069018A161 161 0 0 1 254.40385644750546 409.7245054229253\" fill=\"none\" stroke=\"#66adff\" stroke-width=\"72\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M239.63925907782087 403.3213243254012A161 161 0 0 1 152.8490920095447 228.8455591695926\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"72\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M156.64960866216936 213.20746028162952A161 161 0 0 1 312.2253623275978 98.00466315086607\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"72\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"311\" cy=\"259\" r=\"112\" fill=\"#122339\" /><circle cx=\"296\" cy=\"255\" r=\"50\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"3\"/><path d=\"M263 245q48 -40 37 9t23 29\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M516 167L596 123\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M591.4874880703152 133.47078010868594L596 123L584.7406255735051 121.20375738721287\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><ellipse cx=\"656\" cy=\"111\" rx=\"65\" ry=\"46\" fill=\"#16323d\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><circle cx=\"654\" cy=\"111\" r=\"21\" fill=\"#30264b\" /><rect x=\"569\" y=\"261\" width=\"170\" height=\"170\" rx=\"22\" fill=\"#112339\" stroke=\"#2b455d\" stroke-width=\"2\"/><g transform=\"translate(610 320) scale(0.53)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><g transform=\"translate(690 320) scale(0.53)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><path d=\"M602 377H700\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"601\" cy=\"377\" r=\"6\" fill=\"#f8d977\" /><circle cx=\"701\" cy=\"377\" r=\"6\" fill=\"#f8d977\" /><circle cx=\"295\" cy=\"60\" r=\"9\" fill=\"#f8d977\" /><circle cx=\"208\" cy=\"429\" r=\"9\" fill=\"#f8d977\" /><circle cx=\"166\" cy=\"182\" r=\"9\" fill=\"#f8d977\" /><path d=\"M494 253l-12 13l-12 -13M317 444l-13 -12l13 -12M127 265l12 -13l12 13M305 74l13 12l-13 12\" fill=\"none\" stroke=\"#0b1728\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /></svg>",
+      "targets": [
+        {
+          "id": "g1",
+          "name": "G1 phase",
+          "x": 56.375,
+          "y": 34.42307692307692,
+          "description": "The cell grows, carries out normal functions, and produces cellular components before DNA synthesis."
+        },
+        {
+          "id": "s-phase",
+          "name": "S phase",
+          "x": 48,
+          "y": 77.3076923076923,
+          "description": "DNA is replicated. Each chromosome acquires a sister chromatid; chromosome number does not double simply because DNA amount doubles."
+        },
+        {
+          "id": "g2",
+          "name": "G2 phase",
+          "x": 20.875,
+          "y": 65.1923076923077,
+          "description": "Further growth, checks, and preparation for mitosis follow DNA replication."
+        },
+        {
+          "id": "m-phase",
+          "name": "Mitotic phase",
+          "x": 26.75,
+          "y": 25.76923076923077,
+          "description": "Mitosis distributes duplicated chromosomes into two nuclei; cytokinesis divides the cytoplasm."
+        },
+        {
+          "id": "g0",
+          "name": "G0 phase",
+          "x": 81.625,
+          "y": 21.346153846153847,
+          "description": "A cell leaves the active division cycle. Some cells may re-enter; others remain outside the cycle while performing specialized functions."
+        },
+        {
+          "id": "sister-chromatids",
+          "name": "Sister chromatids",
+          "x": 76.375,
+          "y": 61.53846153846153,
+          "description": "Two copies of one replicated chromosome are joined at the centromere. A typical human cell has 46 chromosomes and 92 chromatids after S phase."
+        },
+        {
+          "id": "checkpoint",
+          "name": "Cell-cycle checkpoints",
+          "x": 26,
+          "y": 82.5,
+          "description": "Regulatory checks help prevent progression when conditions or DNA integrity are unsuitable; cyclins and cyclin-dependent kinases regulate progression."
+        }
+      ]
+    },
+    "division-mitosis": {
+      "id": "mitosis",
+      "title": "Distribute the copies",
+      "description": "Follow the arrows from chromosome condensation to two cells. Only four chromosomes are shown for clarity; this is mitosis, not meiosis.",
+      "source": "OpenStax §3.5, Fig. 3.32",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><ellipse cx=\"145\" cy=\"153\" rx=\"103\" ry=\"82\" fill=\"#122a3a\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><ellipse cx=\"145\" cy=\"153\" rx=\"59\" ry=\"49\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"2\" stroke-dasharray=\"7 6\"/><g transform=\"translate(119 137) scale(0.42)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><g transform=\"translate(170 170) scale(0.42)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><g transform=\"translate(126 177) scale(0.32)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><g transform=\"translate(170 130) scale(0.32)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><ellipse cx=\"400\" cy=\"153\" rx=\"103\" ry=\"82\" fill=\"#122a3a\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><circle cx=\"315\" cy=\"153\" r=\"6\" fill=\"#f8d977\" /><circle cx=\"485\" cy=\"153\" r=\"6\" fill=\"#f8d977\" /><path d=\"M318 153L400 116M482 153L400 116\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><g transform=\"translate(400 116) scale(0.28)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><path d=\"M318 153L400 141M482 153L400 141\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><g transform=\"translate(400 141) scale(0.28)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><path d=\"M318 153L400 167M482 153L400 167\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><g transform=\"translate(400 167) scale(0.28)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><path d=\"M318 153L400 190M482 153L400 190\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><g transform=\"translate(400 190) scale(0.28)\"><path d=\"M-17 -32Q-5 -8 0 0Q5 8 17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M17 -32Q5 -8 0 0Q-5 8 -17 32\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"12\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"0\" cy=\"0\" r=\"5\" fill=\"#f8d977\" /></g><ellipse cx=\"655\" cy=\"153\" rx=\"103\" ry=\"82\" fill=\"#122a3a\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><circle cx=\"570\" cy=\"153\" r=\"6\" fill=\"#f8d977\" /><circle cx=\"740\" cy=\"153\" r=\"6\" fill=\"#f8d977\" /><path d=\"M573 153L617 116M737 153L693 116\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M627 107L612 116L627 125\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M683 107L698 116L683 125\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M573 153L617 141M737 153L693 141\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M627 132L612 141L627 150\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M683 132L698 141L683 150\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M573 153L617 167M737 153L693 167\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M627 158L612 167L627 176\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M683 158L698 167L683 176\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M573 153L617 190M737 153L693 190\" fill=\"none\" stroke=\"#527188\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M627 181L612 190L627 199\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M683 181L698 190L683 199\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><ellipse cx=\"529\" cy=\"382\" rx=\"103\" ry=\"82\" fill=\"#122a3a\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><ellipse cx=\"481\" cy=\"382\" rx=\"35\" ry=\"38\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"2\"/><path d=\"M466 364q25 9 4 19t13 18\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M496 362q-27 14 -7 21t-9 17\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><ellipse cx=\"577\" cy=\"382\" rx=\"35\" ry=\"38\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"2\"/><path d=\"M562 364q25 9 4 19t13 18\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M592 362q-27 14 -7 21t-9 17\" fill=\"none\" stroke=\"#ff927d\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M529 301Q503 336 517 367M529 463Q503 428 517 397\" fill=\"none\" stroke=\"#6ee7e7\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><ellipse cx=\"219\" cy=\"382\" rx=\"48\" ry=\"67\" fill=\"#122a3a\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><ellipse cx=\"325\" cy=\"382\" rx=\"48\" ry=\"67\" fill=\"#122a3a\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><circle cx=\"219\" cy=\"382\" r=\"26\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"2\"/><path d=\"M205 374q20 -18 21 2t-17 18\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"325\" cy=\"382\" r=\"26\" fill=\"#30264b\" stroke=\"#b89bff\" stroke-width=\"2\"/><path d=\"M311 374q20 -18 21 2t-17 18\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M263 151L278 151\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M269 158L278 151L269 144\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M518 151L533 151\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M524 158L533 151L524 144\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M686 253Q687 297 641 326\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M413 380L390 380\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><path d=\"M399 373L390 380L399 387\" fill=\"none\" stroke=\"#527188\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"400\" y=\"37\" fill=\"#527188\" font-size=\"13\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">FOLLOW THE GENETIC MATERIAL</text></svg>",
+      "targets": [
+        {
+          "id": "prophase",
+          "name": "Prophase",
+          "x": 18.125,
+          "y": 29.423076923076923,
+          "description": "Chromatin condenses into visible chromosomes. The spindle forms; the nucleolus disappears and the nuclear envelope breaks down as division proceeds."
+        },
+        {
+          "id": "metaphase",
+          "name": "Metaphase",
+          "x": 50,
+          "y": 29.423076923076923,
+          "description": "Duplicated chromosomes align individually along the cell equator, attached to spindle fibers from opposite poles."
+        },
+        {
+          "id": "anaphase",
+          "name": "Anaphase",
+          "x": 81.875,
+          "y": 29.423076923076923,
+          "description": "Sister chromatids separate. Each is now a chromosome, moving toward an opposite pole."
+        },
+        {
+          "id": "telophase",
+          "name": "Telophase",
+          "x": 66.125,
+          "y": 73.46153846153845,
+          "description": "Chromosomes reach the poles; nuclear envelopes reform and chromosomes begin to decondense."
+        },
+        {
+          "id": "cytokinesis",
+          "name": "Cytokinesis",
+          "x": 34.125,
+          "y": 73.26923076923077,
+          "description": "An actin–myosin cleavage furrow divides the cytoplasm, producing two daughter cells. It overlaps late mitosis."
+        }
+      ]
+    },
+    "differentiation-blood-lineage": {
+      "id": "blood-lineage",
+      "title": "A branching set of possibilities",
+      "description": "A deliberately simplified blood-cell lineage. Branches represent restricted developmental potential, not a literal single-step conversion. Platelets are fragments of megakaryocytes.",
+      "source": "OpenStax §3.6, Figs. 3.34–3.35",
+      "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 520\" role=\"img\" aria-label=\"Interactive cellular schematic\"><rect width=\"800\" height=\"520\" fill=\"#0b1728\"/><path d=\"M403 116V151M403 151L245 211M403 151L595 211M245 282L104 347M245 282L261 347M245 282L446 355M595 282L687 347\" fill=\"none\" stroke=\"#527188\" stroke-width=\"4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"403\" cy=\"80\" r=\"36\" fill=\"#463562\" stroke=\"#b89bff\" stroke-width=\"3\"/><circle cx=\"403\" cy=\"80\" r=\"14\" fill=\"#b89bff\" /><circle cx=\"245\" cy=\"244\" r=\"38\" fill=\"#294748\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><circle cx=\"245\" cy=\"244\" r=\"17\" fill=\"#6ee7e7\" /><circle cx=\"595\" cy=\"244\" r=\"38\" fill=\"#294748\" stroke=\"#6ee7e7\" stroke-width=\"3\"/><circle cx=\"595\" cy=\"244\" r=\"17\" fill=\"#6ee7e7\" /><ellipse cx=\"103\" cy=\"380\" rx=\"46\" ry=\"31\" fill=\"#ff927d\" /><ellipse cx=\"103\" cy=\"380\" rx=\"25\" ry=\"14\" fill=\"#8a4d49\" /><circle cx=\"262\" cy=\"380\" r=\"38\" fill=\"#bfd3df\" /><path d=\"M249 361C273 349 286 378 269 384C284 404 260 415 246 397C223 397 228 372 249 361Z\" fill=\"none\" stroke=\"#675393\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><circle cx=\"687\" cy=\"380\" r=\"36\" fill=\"#b9d7d6\" /><circle cx=\"687\" cy=\"380\" r=\"26\" fill=\"#675393\" /><circle cx=\"433\" cy=\"370\" r=\"8\" fill=\"#f8d977\" /><circle cx=\"454\" cy=\"379\" r=\"8\" fill=\"#f8d977\" /><circle cx=\"442\" cy=\"396\" r=\"8\" fill=\"#f8d977\" /><circle cx=\"468\" cy=\"398\" r=\"8\" fill=\"#f8d977\" /><path d=\"M356 62C308 20 284 58 313 82L325 71M313 82L304 69\" fill=\"none\" stroke=\"#b89bff\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" /><text x=\"405\" y=\"486\" fill=\"#527188\" font-size=\"14\" text-anchor=\"middle\" font-family=\"system-ui,sans-serif\">SPECIALIZATION NARROWS THE POSSIBLE FATES</text></svg>",
+      "targets": [
+        {
+          "id": "hematopoietic-stem-cell",
+          "name": "Hematopoietic stem cell",
+          "x": 50.375,
+          "y": 15.384615384615383,
+          "description": "A multipotent adult stem cell can self-renew and produce the blood-cell lineages."
+        },
+        {
+          "id": "self-renewal",
+          "name": "Self-renewal",
+          "x": 38.375,
+          "y": 10.961538461538462,
+          "description": "Stem-cell division can maintain the stem-cell pool as well as provide descendants that differentiate."
+        },
+        {
+          "id": "myeloid-progenitor",
+          "name": "Myeloid progenitor",
+          "x": 30.625,
+          "y": 47.11538461538461,
+          "description": "The myeloid branch gives rise to red blood cells, granulocytes, monocytes, and megakaryocytes that shed platelets. Additional intermediate stages are omitted."
+        },
+        {
+          "id": "lymphoid-progenitor",
+          "name": "Lymphoid progenitor",
+          "x": 74.375,
+          "y": 47.11538461538461,
+          "description": "The lymphoid branch gives rise to B cells, T cells, and natural killer cells. The textbook figure shows additional stages and branches."
+        },
+        {
+          "id": "red-blood-cell",
+          "name": "Red blood cell",
+          "x": 13,
+          "y": 73.07692307692308,
+          "description": "A specialized biconcave cell carries oxygen. Mature human red blood cells have expelled their nucleus."
+        },
+        {
+          "id": "granulocyte",
+          "name": "Granulocyte",
+          "x": 32.625,
+          "y": 73.07692307692308,
+          "description": "A specialized white blood cell with cytoplasmic granules and a lobed nucleus; the sketch represents a neutrophil."
+        },
+        {
+          "id": "lymphocyte",
+          "name": "Lymphocyte",
+          "x": 85.875,
+          "y": 73.07692307692308,
+          "description": "A specialized white blood cell involved in immune defense; its large nucleus occupies much of the cell."
+        },
+        {
+          "id": "platelets",
+          "name": "Platelets",
+          "x": 56.125,
+          "y": 73.65384615384615,
+          "description": "Small cell fragments shed from megakaryocytes in the myeloid lineage participate in hemostasis. They are not whole nucleated cells."
+        }
+      ]
+    }
+  },
+  "references": [
+    {
+      "id": "fig-3-4",
+      "title": "Cell membrane",
+      "file": "assets/openstax-3-4.png",
+      "section": "membrane",
+      "page": 88,
+      "caption": "Figure 3.4. Original membrane structure and molecular components."
+    },
+    {
+      "id": "fig-3-9",
+      "title": "Sodium-potassium pump",
+      "file": "assets/openstax-3-9.png",
+      "section": "membrane",
+      "page": 92,
+      "caption": "Figure 3.9. The ATP-driven pump exports three Na+ and imports two K+ per cycle."
+    },
+    {
+      "id": "fig-3-13",
+      "title": "Prototypical human cell",
+      "file": "assets/openstax-3-13.png",
+      "section": "organelles",
+      "page": 96,
+      "caption": "Figure 3.13. A composite cell with its primary organelles and internal structures."
+    },
+    {
+      "id": "fig-3-19",
+      "title": "The nucleus",
+      "file": "assets/openstax-3-19.png",
+      "section": "nucleus",
+      "page": 102,
+      "caption": "Figure 3.19. Nuclear envelope, pores, nucleolus, and chromatin."
+    },
+    {
+      "id": "fig-3-24",
+      "title": "DNA replication",
+      "file": "assets/openstax-3-24.png",
+      "section": "nucleus",
+      "page": 106,
+      "caption": "Figure 3.24. Each daughter molecule retains one original DNA strand."
+    },
+    {
+      "id": "fig-3-26",
+      "title": "Transcription",
+      "file": "assets/openstax-3-26.png",
+      "section": "protein",
+      "page": 108,
+      "caption": "Figure 3.26. A gene is transcribed into a complementary RNA molecule."
+    },
+    {
+      "id": "fig-3-28",
+      "title": "Translation",
+      "file": "assets/openstax-3-28.png",
+      "section": "protein",
+      "page": 110,
+      "caption": "Figure 3.28. tRNA, mRNA, and a ribosome coordinate polypeptide synthesis."
+    },
+    {
+      "id": "fig-3-30",
+      "title": "Cell cycle",
+      "file": "assets/openstax-3-30.png",
+      "section": "division",
+      "page": 112,
+      "caption": "Figure 3.30. Interphase and mitotic phase, with the G0 branch."
+    },
+    {
+      "id": "fig-3-32",
+      "title": "Mitosis and cytokinesis",
+      "file": "assets/openstax-3-32.png",
+      "section": "division",
+      "page": 113,
+      "caption": "Figure 3.32. Chromosome separation and division of the cell."
+    },
+    {
+      "id": "fig-3-34",
+      "title": "Hematopoiesis",
+      "file": "assets/openstax-3-34.png",
+      "section": "differentiation",
+      "page": 117,
+      "caption": "Figure 3.34. Detailed blood-cell differentiation from hematopoietic stem cells."
+    }
+  ],
+  "specimens": [
+    {
+      "id": "s1",
+      "module": "muscle",
+      "lesson": "compare",
+      "figure": "4.18a",
+      "src": "assets/specimen-1.webp",
+      "name": "Skeletal muscle",
+      "evidence": "Long parallel fibers with repeated transverse striations and peripheral nuclei.",
+      "contrast": "Smooth muscle lacks visible striations; cardiac muscle has branching cells and central nuclei.",
+      "credit": "Regents of University of Michigan Medical School © 2012; reproduced within OpenStax A&P 2e Figure 4.18(a)."
+    },
+    {
+      "id": "s2",
+      "module": "muscle",
+      "lesson": "compare",
+      "figure": "4.18b",
+      "src": "assets/specimen-2.webp",
+      "name": "Smooth muscle",
+      "evidence": "Elongated central nuclei within tightly packed cells, without visible transverse striations.",
+      "contrast": "Both skeletal and cardiac muscle show striations; use the absence of those bands with nuclear and cell shape.",
+      "credit": "Regents of University of Michigan Medical School © 2012; reproduced within OpenStax A&P 2e Figure 4.18(b)."
+    },
+    {
+      "id": "s3",
+      "module": "muscle",
+      "lesson": "compare",
+      "figure": "4.18c",
+      "src": "assets/specimen-3.webp",
+      "name": "Cardiac muscle",
+      "evidence": "Striated fibers with central nuclei and a branching arrangement.",
+      "contrast": "Skeletal fibers are long unbranched cylinders with peripheral nuclei. Not every intercalated disc is clearly resolved in this crop.",
+      "credit": "Regents of University of Michigan Medical School © 2012; reproduced within OpenStax A&P 2e Figure 4.18(c)."
+    },
+    {
+      "id": "s4",
+      "module": "connective",
+      "lesson": "loose",
+      "figure": "4.13",
+      "src": "assets/specimen-4.webp",
+      "name": "Adipose tissue",
+      "evidence": "Large pale spaces outlined by thin cell rims, reflecting the large lipid droplets of adipocytes.",
+      "contrast": "These spaces are much larger than the small cells in reticular tissue. Lipid is often removed during preparation.",
+      "credit": "Regents of University of Michigan Medical School © 2012; reproduced within OpenStax A&P 2e Figure 4.13. Original micrograph LM × 800; on-screen enlargement varies."
+    },
+    {
+      "id": "s5",
+      "module": "connective",
+      "lesson": "loose",
+      "figure": "4.14",
+      "src": "assets/specimen-5.webp",
+      "name": "Reticular tissue",
+      "evidence": "A dark branching fiber network supports numerous small cells.",
+      "contrast": "The fine supporting network differs from large lipid-filled adipocytes and thick parallel collagen bundles.",
+      "credit": "Regents of University of Michigan Medical School © 2012; reproduced within OpenStax A&P 2e Figure 4.14. Original micrograph LM × 1600; on-screen enlargement varies."
+    }
+  ],
+  "written": {
+    "3.1": [
+      {
+        "id": "short-002",
+        "chapter": 3,
+        "topic": "transport",
+        "type": "short",
+        "stem": "Compare simple diffusion, facilitated diffusion, and primary active transport. Use movement direction, proteins, and ATP.",
+        "rubric": [
+          "Simple diffusion moves down a gradient through the lipid bilayer without a transporter or ATP.",
+          "Facilitated diffusion moves down a gradient through a carrier or channel without direct ATP use.",
+          "Primary active transport directly uses ATP to move material against its gradient, as in the Na/K pump."
+        ],
+        "explanation": "Simple diffusion moves down a gradient through the lipid bilayer without a transporter or ATP. Facilitated diffusion moves down a gradient through a carrier or channel without direct ATP use. Primary active transport directly uses ATP to move material against its gradient, as in the Na/K pump.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §3.1",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+        }
+      }
+    ],
+    "3.2": [],
+    "3.3": [],
+    "3.4": [
+      {
+        "id": "short-001",
+        "chapter": 3,
+        "topic": "synthesis",
+        "type": "short",
+        "stem": "Explain how a human cell makes a protein from a nuclear gene. Include locations, pre-mRNA processing, and all three RNA roles.",
+        "rubric": [
+          "RNA polymerase transcribes the DNA template to RNA in the nucleus.",
+          "A spliceosome removes introns and joins exons in pre-mRNA before mature mRNA exits.",
+          "At a cytoplasmic ribosome, mRNA supplies codons, tRNA brings amino acids using anticodons, and rRNA supplies structural/catalytic activity."
+        ],
+        "explanation": "RNA polymerase transcribes the DNA template to RNA in the nucleus. A spliceosome removes introns and joins exons in pre-mRNA before mature mRNA exits. At a cytoplasmic ribosome, mRNA supplies codons, tRNA brings amino acids using anticodons, and rRNA supplies structural/catalytic activity.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §3.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-4-protein-synthesis"
+        }
+      }
+    ],
+    "3.5": [
+      {
+        "id": "short-003",
+        "chapter": 3,
+        "topic": "division",
+        "type": "short",
+        "stem": "Explain the chromosome/chromatid count in a normal nucleated human somatic cell before S, after S, and in each daughter after mitosis.",
+        "rubric": [
+          "G1: 46 chromosomes and 46 chromatids.",
+          "After S and before sister separation: 46 chromosomes and 92 chromatids because sisters remain joined.",
+          "After completed mitosis/cytokinesis: each daughter has 46 chromosomes and 46 chromatids."
+        ],
+        "explanation": "G1: 46 chromosomes and 46 chromatids. After S and before sister separation: 46 chromosomes and 92 chromatids because sisters remain joined. After completed mitosis/cytokinesis: each daughter has 46 chromosomes and 46 chromatids.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §3.5",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-5-cell-growth-and-division"
+        }
+      }
+    ],
+    "3.6": [
+      {
+        "id": "short-004",
+        "chapter": 3,
+        "topic": "stem",
+        "type": "short",
+        "stem": "Compare totipotent, pluripotent, and multipotent stem cells. Give an example of a restricted lineage.",
+        "rubric": [
+          "Totipotent potential includes body and extraembryonic tissues.",
+          "Pluripotent potential includes the major body cell types but not complete extraembryonic support for an organism.",
+          "Multipotent cells make related lineages, such as hematopoietic stem cells producing blood lineages."
+        ],
+        "explanation": "Totipotent potential includes body and extraembryonic tissues. Pluripotent potential includes the major body cell types but not complete extraembryonic support for an organism. Multipotent cells make related lineages, such as hematopoietic stem cells producing blood lineages.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §3.6",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-6-cellular-differentiation"
+        }
+      }
+    ],
+    "4.1": [],
+    "4.2": [
+      {
+        "id": "short-006",
+        "chapter": 4,
+        "topic": "epithelium",
+        "type": "short",
+        "stem": "Compare epithelium with connective tissue using arrangement, matrix, vascularity, and function.",
+        "rubric": [
+          "Epithelium forms closely packed sheets with little matrix, apical-basal polarity, and a basement membrane.",
+          "Epithelium is avascular and relies on diffusion; its functions include covering, secretion, absorption, and exchange.",
+          "Connective tissue generally has more ECM and dispersed cells; its vascularity varies and its functions include support, binding, storage, and transport."
+        ],
+        "explanation": "Epithelium forms closely packed sheets with little matrix, apical-basal polarity, and a basement membrane. Epithelium is avascular and relies on diffusion; its functions include covering, secretion, absorption, and exchange. Connective tissue generally has more ECM and dispersed cells; its vascularity varies and its functions include support, binding, storage, and transport.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §4.2",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-2-epithelial-tissue"
+        }
+      }
+    ],
+    "4.3": [
+      {
+        "id": "short-005",
+        "chapter": 4,
+        "topic": "connective",
+        "type": "short",
+        "stem": "Compare mesenchymal cells, fibroblasts, and fibrocytes during connective-tissue repair. Include the matrix components.",
+        "rubric": [
+          "Mesenchymal cells are multipotent stem cells able to supply replacement connective-tissue lineages.",
+          "Fibroblasts actively build ECM, including ground substance and protein fibers such as collagen.",
+          "Fibrocytes are less active cells that maintain existing matrix; they are distinct from mesenchymal stem cells."
+        ],
+        "explanation": "Mesenchymal cells are multipotent stem cells able to supply replacement connective-tissue lineages. Fibroblasts actively build ECM, including ground substance and protein fibers such as collagen. Fibrocytes are less active cells that maintain existing matrix; they are distinct from mesenchymal stem cells.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §4.3",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-3-connective-tissue-supports-and-protects"
+        }
+      }
+    ],
+    "4.4": [
+      {
+        "id": "short-007",
+        "chapter": 4,
+        "topic": "muscle-nerve",
+        "type": "short",
+        "stem": "Distinguish skeletal, cardiac, and smooth muscle in a microscope image.",
+        "rubric": [
+          "Skeletal: long striated fibers with many peripheral nuclei.",
+          "Cardiac: striated branching cells with central nuclei and intercalated discs.",
+          "Smooth: spindle-shaped cells, one central nucleus, and no visible striations."
+        ],
+        "explanation": "Skeletal: long striated fibers with many peripheral nuclei. Cardiac: striated branching cells with central nuclei and intercalated discs. Smooth: spindle-shaped cells, one central nucleus, and no visible striations.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §4.4",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-4-muscle-tissue-and-motion"
+        }
+      }
+    ],
+    "4.5": [],
+    "4.6": [
+      {
+        "id": "short-008",
+        "chapter": 4,
+        "topic": "repair",
+        "type": "short",
+        "stem": "Compare inflammation, granulation, and scar remodeling in tissue repair.",
+        "rubric": [
+          "Inflammation includes increased blood flow and vascular permeability, immune-cell activity, and debris removal.",
+          "Granulation tissue has new vessels and fibroblasts producing collagen.",
+          "Remodeling reorganizes collagen; fibrosis leaves scar rather than restoring every original structure."
+        ],
+        "explanation": "Inflammation includes increased blood flow and vascular permeability, immune-cell activity, and debris removal. Granulation tissue has new vessels and fibroblasts producing collagen. Remodeling reorganizes collagen; fibrosis leaves scar rather than restoring every original structure.",
+        "source": {
+          "label": "OpenStax Anatomy & Physiology 2e · §4.6",
+          "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-6-tissue-injury-and-aging"
+        }
+      }
+    ]
+  }
+}

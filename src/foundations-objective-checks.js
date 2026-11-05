@@ -62,3 +62,288 @@ export const objectiveChecks={
  ['What are the building blocks of proteins?','Amino acids','What is loss of a protein’s functional folding called?','Denaturation'],
  ['What are the building blocks of DNA and RNA?','Nucleotides','Which nucleotide directly couples many energy-requiring cellular reactions to energy release?','ATP']
 ]};
+
+Object.assign(objectiveChecks, {
+ "3.1": [
+  [
+   "What membrane lipid has a polar head and two nonpolar tails?",
+   "Phospholipid",
+   "Which sterol helps regulate membrane fluidity?",
+   "Cholesterol"
+  ],
+  [
+   "What model describes mobile proteins embedded in a lipid bilayer?",
+   "Fluid mosaic model",
+   "What term describes a membrane that allows some substances through more readily than others?",
+   "Selective permeability"
+  ],
+  [
+   "Which gas required for aerobic respiration readily crosses the bilayer?",
+   "Oxygen",
+   "Does sodium normally need a membrane protein to cross the hydrophobic bilayer?",
+   "Yes"
+  ],
+  [
+   "What passive process moves water across a selectively permeable membrane?",
+   "Osmosis",
+   "What directly supplies energy to the sodium-potassium pump?",
+   "ATP"
+  ]
+ ],
+ "3.2": [
+  [
+   "Which ER has ribosomes on its cytosolic surface?",
+   "Rough endoplasmic reticulum",
+   "Which organelle sorts many proteins arriving from the ER?",
+   "Golgi apparatus"
+  ],
+  [
+   "Which organelle contains catalase to break down hydrogen peroxide?",
+   "Peroxisome",
+   "Which organelle uses an inner membrane proton gradient to support most aerobic ATP production?",
+   "Mitochondrion"
+  ],
+  [
+   "What protein makes up microfilaments?",
+   "Actin",
+   "Which cytoskeletal polymers are built from tubulin and form the mitotic spindle?",
+   "Microtubules"
+  ]
+ ],
+ "3.3": [
+  [
+   "What channels regulate traffic across the nuclear envelope?",
+   "Nuclear pores",
+   "How many membranes make up the nuclear envelope?",
+   "Two"
+  ],
+  [
+   "What nuclear region produces rRNA and assembles ribosomal subunits?",
+   "Nucleolus",
+   "What name covers nuclear DNA and its associated proteins?",
+   "Chromatin"
+  ],
+  [
+   "What proteins form the cores that DNA wraps around in nucleosomes?",
+   "Histones",
+   "What base pairs with adenine in DNA?",
+   "Thymine"
+  ],
+  [
+   "Which enzyme unwinds the parental DNA strands during replication?",
+   "Helicase",
+   "What term means each new DNA double helix contains one parental and one new strand?",
+   "Semiconservative replication"
+  ]
+ ],
+ "3.4": [
+  [
+   "What three-base sequence in mRNA specifies an amino acid or a stop signal?",
+   "Codon",
+   "What is the usual start codon?",
+   "AUG"
+  ],
+  [
+   "What enzyme makes RNA from a DNA template?",
+   "RNA polymerase",
+   "What are the intervening sequences removed during RNA splicing?",
+   "Introns"
+  ],
+  [
+   "Which RNA carries amino acids to the ribosome?",
+   "Transfer RNA",
+   "What complementary triplet on tRNA pairs with an mRNA codon?",
+   "Anticodon"
+  ],
+  [
+   "What structure reads mRNA and catalyzes formation of a polypeptide?",
+   "Ribosome",
+   "What bond joins adjacent amino acids in a growing chain?",
+   "Peptide bond"
+  ]
+ ],
+ "3.5": [
+  [
+   "During which phase is nuclear DNA replicated?",
+   "S phase",
+   "What collective name covers G1, S and G2?",
+   "Interphase"
+  ],
+  [
+   "What cell-cycle regulators bind and activate cyclin-dependent kinases?",
+   "Cyclins",
+   "What checkpoint checks attachment of chromosomes to the spindle before anaphase?",
+   "Spindle assembly checkpoint"
+  ],
+  [
+   "What term describes the spread of malignant cells to distant sites?",
+   "Metastasis",
+   "What disease can result when growth regulation fails and cells become malignant?",
+   "Cancer"
+  ],
+  [
+   "Which mitotic stage separates sister chromatids?",
+   "Anaphase",
+   "What name is given to physical division of the cytoplasm?",
+   "Cytokinesis"
+  ]
+ ],
+ "3.6": [
+  [
+   "What process gives an unspecialized cell a specialized identity?",
+   "Differentiation",
+   "What changes between most differentiated cell types while DNA sequence largely stays the same?",
+   "Gene expression"
+  ],
+  [
+   "What potency can generate both embryonic and extraembryonic cell lineages?",
+   "Totipotency",
+   "What potency generates multiple cell types within a restricted lineage?",
+   "Multipotency"
+  ]
+ ],
+ "4.1": [
+  [
+   "What tissue family covers exposed surfaces and lines cavities?",
+   "Epithelial tissue",
+   "What tissue family includes bone, cartilage and blood?",
+   "Connective tissue"
+  ],
+  [
+   "Which family specializes in rapid communication?",
+   "Nervous tissue",
+   "Which tissue family specializes in contraction?",
+   "Muscle tissue"
+  ],
+  [
+   "Which thin epithelial type shortens the diffusion distance across an alveolus?",
+   "Simple squamous epithelium",
+   "What noncellular material is generally abundant in connective tissue?",
+   "Extracellular matrix"
+  ],
+  [
+   "From which germ layer do most muscle and connective tissues arise?",
+   "Mesoderm",
+   "From which germ layer does most digestive tract epithelium arise?",
+   "Endoderm"
+  ],
+  [
+   "Name the outermost primary germ layer.",
+   "Ectoderm",
+   "Name the middle primary germ layer.",
+   "Mesoderm"
+  ],
+  [
+   "What type of membrane lines cavities that open to the exterior?",
+   "Mucous membrane",
+   "What type of connective-tissue membrane lines freely movable joint cavities?",
+   "Synovial membrane"
+  ]
+ ],
+ "4.2": [
+  [
+   "What is the epithelial surface facing the lumen called?",
+   "Apical surface",
+   "What thin extracellular layer anchors the basal face of epithelium?",
+   "Basal lamina"
+  ],
+  [
+   "What junction seals the space between adjacent epithelial cells?",
+   "Tight junction",
+   "What junction provides channels for ions to pass between adjacent cells?",
+   "Gap junction"
+  ],
+  [
+   "What term describes a one-cell-thick epithelium?",
+   "Simple epithelium",
+   "Which epithelial cell shape is wider than it is tall and flattened?",
+   "Squamous"
+  ],
+  [
+   "What glands release hormones without ducts?",
+   "Endocrine glands",
+   "What glands secrete onto surfaces or into lumens?",
+   "Exocrine glands"
+  ]
+ ],
+ "4.3": [
+  [
+   "What category includes blood and lymph?",
+   "Fluid connective tissue",
+   "What category includes bone and cartilage?",
+   "Supportive connective tissue"
+  ],
+  [
+   "Which fiber provides tensile strength in tendons?",
+   "Collagen",
+   "What connective tissue stores energy and insulates the body?",
+   "Adipose tissue"
+  ]
+ ],
+ "4.4": [
+  [
+   "What muscle tissue is found in the heart wall?",
+   "Cardiac muscle",
+   "What muscle tissue is common in hollow visceral organs?",
+   "Smooth muscle"
+  ],
+  [
+   "Which muscle type chiefly moves bones under voluntary control?",
+   "Skeletal muscle",
+   "Which muscle tissue is involuntary and has no striations?",
+   "Smooth muscle"
+  ],
+  [
+   "What connective structure commonly transmits skeletal muscle force to a bone?",
+   "Tendon",
+   "What mechanical action narrows the intestinal lumen in a ring of circular smooth muscle?",
+   "Contraction"
+  ]
+ ],
+ "4.5": [
+  [
+   "What cells carry signals through electrical and chemical mechanisms?",
+   "Neurons",
+   "What group of cells supports and protects neurons?",
+   "Neuroglia"
+  ],
+  [
+   "What neuronal process typically carries impulses away from the cell body?",
+   "Axon",
+   "What junction is the usual site of signaling between a neuron and another cell?",
+   "Synapse"
+  ]
+ ],
+ "4.6": [
+  [
+   "What inflammatory sign reflects an increase in tissue fluid?",
+   "Swelling",
+   "What visible inflammatory sign reflects greater superficial blood flow?",
+   "Redness"
+  ],
+  [
+   "What immediate response limits blood loss from a wound?",
+   "Hemostasis",
+   "What cells migrate to a wound and remove debris by phagocytosis?",
+   "Phagocytes"
+  ],
+  [
+   "What cells synthesize much of the collagen in a healing wound?",
+   "Fibroblasts",
+   "What is growth of new blood vessels in healing tissue called?",
+   "Angiogenesis"
+  ],
+  [
+   "What general repair process tends to slow as tissues age?",
+   "Regeneration",
+   "Which type of muscle forms a fibrous scar after a substantial injury to the heart?",
+   "Cardiac muscle"
+  ],
+  [
+   "What regulated cell-death process can be evaded by malignant cells?",
+   "Apoptosis",
+   "What process is migration and establishment of malignant cells at distant sites?",
+   "Metastasis"
+  ]
+ ]
+});

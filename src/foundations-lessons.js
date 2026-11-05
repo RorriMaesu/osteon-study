@@ -1,5 +1,6 @@
+import cellTissue from './foundations-celltissue-lessons.json' with {type:'json'};
 import {earlyLessons} from './foundations-early-lessons.js';
-export const foundationsLessons=[...earlyLessons,{
+export const foundationsLessons=[...earlyLessons,...cellTissue,{
  id:'1.6',title:'Anatomical Terminology',short:'Give anatomy a common reference',objective:'Use anatomical position, region names, directional terms, planes, cavities and serous layers to communicate location precisely.',
  sections:[
   ['Anchor directions to the body','Anatomical position faces forward with palms forward. The subject’s right and left stay fixed when a viewer changes position. Supine means face up and prone means face down.'],

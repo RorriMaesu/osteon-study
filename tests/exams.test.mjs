@@ -33,6 +33,15 @@ test('foundations exams sample both chapters, and select-all wording survives a 
  assert.ok(!gradeQuestion(question,draft.responses[question.id]));
  assert.ok(gradeQuestion(question,[...question.correctChoices].reverse()));
 });
+test('cell and tissue exams cover each objective and preserve the full-bank session',()=>{
+ for(const scope of ['3','4']){
+  const items=selectExam(scope,examBank,rng(180));
+  assert.equal(items.length,50);
+  for(const section of syllabus.sections.filter(s=>s.chapter===Number(scope)))for(const goal of section.objectives)assert.ok(items.some(q=>q.objectives.includes(goal.id)),goal.id);
+ }
+ const bankSession=createSession(examBank,{scope:'bank',mode:'practice'});
+ assert.ok(validSession(JSON.parse(JSON.stringify(bankSession))));
+});
 function key(q){return q.type==='multi'?[...q.correctChoices]:q.type==='match'?Object.fromEntries(q.pairs.map(p=>[p.left,p.right])):q.type==='order'?[...q.steps]:q.answer;}
 test('chapter and cumulative blueprints hold across different randomized forms and never truncate to 20',()=>{
  for(let seed=1;seed<=60;seed++)for(const scope of ['6','7','8','9','all']){
