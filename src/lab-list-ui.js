@@ -13,9 +13,9 @@ export function initLabList({viewer,setView,selectTerm,precision,toast,dialog,es
  const scopeName=s=>labScopes.find(([id])=>id===s)?.[1]||s;
  function save(){try{localStorage.setItem(LAB_TEST_KEY,JSON.stringify({current,history}));}catch{persistent=false;toast('This browser could not save the bone-list test. Keep this tab open and export your results when you finish.');}}
  function shell(title,sub,body){
-  document.body.dataset.precisionActive='true';document.body.dataset.labListActive=screen;setView('practice');
+  document.body.dataset.precisionActive='true';document.body.dataset.labListActive=screen;setView('practice',{route:'bone-list'});
   $('#practice-view').innerHTML=`<div class="section-intro"><div><div class="eyebrow">BI 231 / YOUR REQUIRED BONE LIST</div><h1>${title}</h1><p>${sub}</p></div><button id="lab-list-exit">Practice menu ↗</button></div>${body}`;
-  $('#lab-list-exit').onclick=()=>{precision.stop();screen=null;delete document.body.dataset.labListActive;document.dispatchEvent(new Event('practicehome'));};
+  $('#lab-list-exit').onclick=()=>{precision.stop();screen=null;delete document.body.dataset.labListActive;setView('practice');document.dispatchEvent(new Event('practicehome'));};
  }
  function home(){
   viewer.ensureBase().catch(()=>toast('The skeleton could not load. Reopen the bone-list test to retry.'));
@@ -75,7 +75,7 @@ export function initLabList({viewer,setView,selectTerm,precision,toast,dialog,es
  function download(text,name,type){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  document.addEventListener('lablist',()=>{page=0;home();});
  document.addEventListener('anatomyready',()=>{if(screen==='home'&&$('#practice-view').classList.contains('active')&&document.body.dataset.labListActive==='home')home();});
- document.addEventListener('viewchange',ev=>{if(ev.detail!=='practice'){screen=null;delete document.body.dataset.labListActive;}});
+ document.addEventListener('viewchange',ev=>{if(ev.detail!=='practice'||!location.hash.startsWith('#bone-list')){screen=null;delete document.body.dataset.labListActive;}});
  let resizeQueued=false;window.addEventListener('resize',()=>{if(resizeQueued)return;resizeQueued=true;requestAnimationFrame(()=>{resizeQueued=false;if(screen==='home')renderChecklist();else if(screen==='results')renderResults();});});
  return {home};
 }

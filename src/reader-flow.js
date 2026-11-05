@@ -7,7 +7,7 @@ export function matchingReaderPages({chapter='all',query=''}={}){const words=que
 export function initReader({setView,escape:e}){
  const $=s=>document.querySelector(s);let index=0,chapter='all',query='',textMode=false,origin=null;
  function rememberOrigin(){const context=getLearningContext();if(document.body.dataset.examActive)origin={exam:true};else if(context.type==='lesson'&&sectionPages[context.reference])origin={lesson:context.reference};else if(context.type!=='reading')origin=null;}
- function open(section,{remember=true}={}){if(remember)rememberOrigin();if(section&&sectionPages[section]){const next=pages.findIndex(p=>p.pdf===sectionPages[section]);if(next>=0){index=next;chapter=String(pages[next].chapter);query='';}}setView('study');render();}
+ function open(section,{remember=true}={}){if(remember)rememberOrigin();if(section&&sectionPages[section]){const next=pages.findIndex(p=>p.pdf===sectionPages[section]);if(next>=0){index=next;chapter=String(pages[next].chapter);query='';}}setView('study',{route:'reader-'+pages[index].pdf});render();}
  function render(){
   const list=matchingReaderPages({chapter,query});if(list.length&&!list.some(p=>p.pdf===pages[index].pdf))index=pages.findIndex(p=>p.pdf===list[0].pdf);
   const p=pages[index],empty=!list.length,at=list.findIndex(a=>a.pdf===p.pdf),back=origin?.exam?'Return to saved exam':origin?.lesson?'Return to section '+origin.lesson:'Learning path';

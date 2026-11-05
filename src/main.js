@@ -1,3 +1,4 @@
+import {isLessonId} from './chapters.js';
 import {atlasMatches,atlasSuggestions} from './atlas-search.js';
 import {initMuscleAtlas} from './muscle-atlas.js';
 import {attachDrawerMotion} from './drawer-motion.js';
@@ -34,20 +35,35 @@ export function dialog(html){$('#dialog-content').innerHTML=html;$('#info-dialog
 $('#close-dialog').onclick=()=>$('#info-dialog').close();
 $('#info-dialog').addEventListener('click',e=>{if(e.target===$('#info-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
 const appViews=['atlas','study','practice','progress'];
-let currentRoute;
-export function setView(view,{route,historyMode='push'}={}){if(!appViews.includes(view))view='atlas';route||=view;const from=currentRoute;currentRoute=route;$$('.view').forEach(e=>e.classList.toggle('active',e.id===view+'-view'));$$('[data-view]').forEach(e=>{e.classList.toggle('active',e.dataset.view===view);e.setAttribute('aria-current',e.dataset.view===view?'page':'false');});if(location.hash!=='#'+route){if(historyMode==='replace')history.replaceState(null,'','#'+route);else if(historyMode==='push')history.pushState({osteonFrom:from},'','#'+route);}if(view==='atlas'){
+let currentRoute,restoringRoute=false;
+export function setView(view,{route,historyMode='push'}={}){if(!appViews.includes(view))view='atlas';route||=view;const from=currentRoute;currentRoute=route;$$('.view').forEach(e=>e.classList.toggle('active',e.id===view+'-view'));$$('[data-view]').forEach(e=>{e.classList.toggle('active',e.dataset.view===view);e.setAttribute('aria-current',e.dataset.view===view?'page':'false');});if(location.hash!=='#'+route){if(historyMode==='replace')history.replaceState(null,'','#'+route);else if(historyMode==='push'){if(restoringRoute)history.replaceState(history.state,'','#'+route);else history.pushState({osteonFrom:from},'','#'+route);}}if(view==='atlas'){
  viewer?.resize();
  if(!viewer.quiz)viewer.ensureTissues().catch(()=>{if(viewer.loaded)toast('Extra tissues could not load. Reopen the atlas or use Tissues to retry.');});
 }document.dispatchEvent(new CustomEvent('viewchange',{detail:view}));window.scrollTo({top:0,behavior:'instant'});}
-function showHistoryRoute(){
+function showHistoryRoute(initial=false){
  const route=location.hash.slice(1)||'atlas';
- if(route===currentRoute)return;
- if(['quick-practice','practice-results'].includes(route)){setView('practice',{route,historyMode:'none'});return;}
- if(appViews.includes(route))setView(route,{historyMode:'none'});
+ if(route===currentRoute&&!initial)return;
+ const routeEvents={'exam-center':'openexams','exam-session':'resumeexam','bone-list':'lablist','bone-list-session':'lablist','study':'studyhome'};
+ const lesson=route.startsWith('lesson-')?route.slice(7):null,reader=route.match(/^reader-(\d+)$/);
+ restoringRoute=true;
+ try{
+  if(Object.hasOwn(routeEvents,route))document.dispatchEvent(new Event(routeEvents[route]));
+  else if(lesson&&isLessonId(lesson))document.dispatchEvent(new CustomEvent('openlesson',{detail:lesson}));
+  else if(reader)document.dispatchEvent(new CustomEvent('openreaderpage',{detail:Number(reader[1])}));
+  else if(['quick-practice','practice-results'].includes(route))setView('practice',{route,historyMode:'none'});
+  else if(route==='practice')openPracticeHome(initial?'replace':'none');
+  else if(appViews.includes(route))setView(route,{historyMode:initial?'replace':'none'});
+  else if(initial)setView('atlas',{historyMode:'replace'});
+ }finally{restoringRoute=false;}
 }
-window.addEventListener('popstate',showHistoryRoute);
-window.addEventListener('hashchange',showHistoryRoute);
-$$('[data-view]').forEach(b=>b.onclick=()=>{setView(b.dataset.view);const heading=$('#'+b.dataset.view+'-view h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}});$('.brand').onclick=e=>{e.preventDefault();setView('atlas');};
+window.addEventListener('popstate',()=>showHistoryRoute());
+window.addEventListener('hashchange',()=>showHistoryRoute());
+function openPracticeHome(historyMode='push'){
+ if(document.body.dataset.precisionActive)precision.stop();
+ setView('practice',{historyMode});
+ document.dispatchEvent(new Event('practicehome'));
+}
+$$('[data-view]').forEach(b=>b.onclick=()=>{const view=b.dataset.view;if(view==='study')document.dispatchEvent(new Event('studyhome'));else if(view==='practice')openPracticeHome();else setView(view);const heading=$('#'+b.dataset.view+'-view h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}});$('.brand').onclick=e=>{e.preventDefault();setView('atlas');};
 let selectionEpoch=0;
 export const viewer=new AnatomyViewer($('#viewer'),m=>{
  selectionEpoch++;
@@ -209,10 +225,8 @@ initAtlasLandmarks({viewer,selectTerm,escape,toast});
 document.addEventListener('landmarkpick',ev=>{if(!document.body.dataset.precisionActive)selectTerm(ev.detail);});
 document.addEventListener('viewchange',ev=>{if(ev.detail==='atlas'&&!document.body.classList.contains('quiz-active')){if(ready&&viewer.region!==region)viewer.setRegion(region);if(selected){if(viewer.selectedTerm?.id!==selected.id)selectTerm(selected);else detail(selected);}else resetDetail();syncFilters();}});
 
-const initialRoute=location.hash.slice(1);
-if(['quick-practice','practice-results'].includes(initialRoute))setView('practice',{route:initialRoute,historyMode:'replace'});
-else setView(initialRoute||'atlas',{historyMode:'replace'});
-if(new URLSearchParams(location.search).get('lablist')==='1')labList.home();
+showHistoryRoute(true);
+if(new URLSearchParams(location.search).get('lablist')==='1'&&['#atlas','#practice'].includes(location.hash))labList.home();
 initClarityPractical({viewer,setView});
 const requestedFeature=new URLSearchParams(location.search).get('feature');
 if(requestedFeature){const term=allTerms.find(t=>t.id===requestedFeature||t.feature?.id===requestedFeature);if(term)selectTerm(term);}
