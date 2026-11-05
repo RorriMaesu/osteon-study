@@ -1,0 +1,142 @@
+{
+  "capture_date": "2026-11-04",
+  "source_revision": "43c161f7902fc65adbab0c498dbea189390f2ed9",
+  "method": "Actual browser interactions from a separate example session; crops, holds, scene cuts, editorial click cues and shortened waits. No fabricated interface, quiz outcome or tutor answer. Phone is a viewport demonstration; AI ran on the recording PC.",
+  "voice": {
+    "model": "Qwen3-TTS-12Hz-1.7B-Base",
+    "reference": "Designed synthetic adult female voice, originally generated with Qwen3-TTS VoiceDesign. No real person cloned.",
+    "integration": "flybirdxx/ComfyUI-Qwen-TTS 1.0.7",
+    "precision": "bf16",
+    "attention": "sdpa",
+    "narration_rate": 0.92,
+    "words": 225,
+    "license": "Apache-2.0 model"
+  },
+  "music": {
+    "model": "ACE-Step 1.5 XL Turbo BF16 (4B)",
+    "integration": "Native ComfyUI ACE-Step 1.5 nodes",
+    "duration_generated": 118,
+    "steps": 8,
+    "sampler": "euler",
+    "scheduler": "simple",
+    "cfg": 1,
+    "shift": 3,
+    "bpm": 112,
+    "key": "D major",
+    "seed": 20261104,
+    "text_encoders": "Qwen ACE 0.6B + 1.7B",
+    "generation_seconds": 139.75,
+    "license": "Apache-2.0 model",
+    "prompt_graph": "promo-music-api.json"
+  },
+  "hardware": "NVIDIA RTX 5060 Ti 16 GB",
+  "quality": {
+    "tour": {
+      "duration": 111.0,
+      "width": 1920,
+      "height": 1080,
+      "fps": 30,
+      "video": "H.264",
+      "audio": "AAC stereo 48 kHz",
+      "integrated_lufs": -16.82,
+      "true_peak_dbtp": -3.98,
+      "full_decode": "passed",
+      "bytes": 9405588,
+      "sha256": "c4ea9bb5c3780f9dc6b9a7485ccb10afd975fe716f0720053dd050622af5e4c3"
+    },
+    "social": {
+      "duration": 35.0,
+      "width": 1080,
+      "height": 1920,
+      "fps": 30,
+      "video": "H.264",
+      "audio": "AAC stereo 48 kHz",
+      "integrated_lufs": -16.69,
+      "true_peak_dbtp": -4.07,
+      "full_decode": "passed",
+      "bytes": 4605281,
+      "sha256": "532022951f39716e2ea579077e2e71d3c6c525f8ae7c715a0db2aef8fe1301b6"
+    }
+  },
+  "chapters": [
+    {
+      "id": "hook",
+      "start": 0,
+      "duration": 9
+    },
+    {
+      "id": "atlas",
+      "start": 9,
+      "duration": 15
+    },
+    {
+      "id": "muscles",
+      "start": 24,
+      "duration": 12
+    },
+    {
+      "id": "landmarks",
+      "start": 36,
+      "duration": 10
+    },
+    {
+      "id": "practice",
+      "start": 46,
+      "duration": 12
+    },
+    {
+      "id": "study",
+      "start": 58,
+      "duration": 15
+    },
+    {
+      "id": "tutor",
+      "start": 73,
+      "duration": 14
+    },
+    {
+      "id": "progress",
+      "start": 87,
+      "duration": 10
+    },
+    {
+      "id": "close",
+      "start": 97,
+      "duration": 14
+    }
+  ],
+  "files": {
+    "osteon-promo.mp4": {
+      "bytes": 9405588,
+      "sha256": "c4ea9bb5c3780f9dc6b9a7485ccb10afd975fe716f0720053dd050622af5e4c3"
+    },
+    "osteon-promo-social.mp4": {
+      "bytes": 4605281,
+      "sha256": "532022951f39716e2ea579077e2e71d3c6c525f8ae7c715a0db2aef8fe1301b6"
+    },
+    "osteon-promo.vtt": {
+      "bytes": 2173,
+      "sha256": "1272891525f9cdeafd39a656ed2933260b5c659be3b1ffee478cc63d4e8ce1fc"
+    },
+    "osteon-promo-social.vtt": {
+      "bytes": 834,
+      "sha256": "059d1148d8c5d02e314e9a747ab0393c91a3c92d33291a5d4dd5925ef9376d5c"
+    },
+    "promo-poster.jpg": {
+      "bytes": 121671,
+      "sha256": "90a5bae36eae321e0bf16ab9bbbd49ddbe86b5968b606e3462ae14b7dd5680b2"
+    },
+    "promo-social-poster.jpg": {
+      "bytes": 146498,
+      "sha256": "391971ecd23a4e5800ce3763ecaedd46b5f6ff13733b49c68661e0b85ca30e61"
+    },
+    "promo-preview.gif": {
+      "bytes": 706532,
+      "sha256": "747f2db92f48025072474a6b045d7f1a0e7c12197b37181215bd4cf57fa2c6fa"
+    },
+    "osteon-promo-share-kit.zip": {
+      "bytes": 15616504,
+      "sha256": "16d99b38ab0845dbf574df39772f918233d7bb07081317a8cc08cba81638da0a"
+    }
+  }
+}

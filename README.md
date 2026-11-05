@@ -2,11 +2,13 @@
 
 **A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 6–10, alongside the dedicated BI 231 bone-list test.
 
-[![Watch the Osteon demo: See it. Name it. Recall it.](demo/poster.jpg)](https://rorrimaesu.github.io/osteon-study/demo/)
+[![Watch Osteon in action — free A&P study, with 3D anatomy, muscles, practice and a real local tutor](demo/promo-poster.jpg)](https://rorrimaesu.github.io/osteon-study/demo/#watch)
 
-**[Try the app ↗](https://rorrimaesu.github.io/osteon-study/)** · **[Watch the narrated 66-second tour ▶](https://rorrimaesu.github.io/osteon-study/demo/)** · [Download the vertical social video](https://rorrimaesu.github.io/osteon-study/demo/osteon-social.mp4) · [Get the complete share kit](https://rorrimaesu.github.io/osteon-study/demo/osteon-share-kit.zip)
+**[Try Osteon free ↗](https://rorrimaesu.github.io/osteon-study/)** · **[Watch the 1:51 feature tour ▶](https://rorrimaesu.github.io/osteon-study/demo/#watch)** · [Download the 35-second vertical teaser](https://rorrimaesu.github.io/osteon-study/demo/osteon-promo-social.mp4) · [Get the new share kit](https://rorrimaesu.github.io/osteon-study/demo/osteon-promo-share-kit.zip)
 
-- **Explore:** rotate the skeleton, double-click into a region, and compare bones with optional colors.
+**Built by an A&P student as he learns. Always growing with new content and improvements. Free to open in your browser; no account needed.**
+
+- **Explore:** rotate the skeleton, double-click into a region, toggle muscles in your current view, and peel away covering surfaces.
 - **Locate:** inspect labeled landmarks, openings, and teaching reconstructions.
 - **Recall:** name numbered targets, check your answer, and return to missed material.
 - **Connect:** study chapter notes, concept questions, glossary terms, and source readings on desktop or phone.
@@ -14,16 +16,16 @@
 
 | Locate a clear landmark | Think it through |
 | --- | --- |
-| [![The foramen magnum with one clear label](demo/screenshots/03-landmark.jpg)](https://rorrimaesu.github.io/osteon-study/#atlas) | [![An actual local tutor question, student answer and textbook-linked feedback](demo/screenshots/07-tutor.jpg)](https://rorrimaesu.github.io/osteon-study/demo/#watch) |
+| [![The foramen magnum with one clear label](demo/screenshots/promo-03-landmark.jpg)](https://rorrimaesu.github.io/osteon-study/#atlas) | [![An actual local tutor question, student answer and textbook-linked feedback](demo/screenshots/promo-06-tutor.jpg)](https://rorrimaesu.github.io/osteon-study/demo/#watch) |
 
 <details>
 <summary>See the nine-second animated preview</summary>
 
-[![Osteon rotating a skull and exploring a labeled landmark](demo/preview.gif)](https://rorrimaesu.github.io/osteon-study/demo/)
+[![Osteon: the 3D atlas, muscle layers and identification practice](demo/promo-preview.gif)](https://rorrimaesu.github.io/osteon-study/demo/#watch)
 
 </details>
 
-The narrated videos use actual app interactions: a clear foramen magnum example, identification practice, and a real local Socratic tutor exchange. A warm female voice was generated locally with Qwen3-TTS in ComfyUI; captions and an editable voice workflow are included. No music. [Screenshots, downloads, transcript, and class-group post copy](https://rorrimaesu.github.io/osteon-study/demo/) are ready to share. Free to open; no account needed.
+The new **111-second 1080p tour** shows 3D navigation, muscles and Peel, landmark controls, spelling-aware practice, OpenStax chapters 6–10, saved exams, a genuine local Socratic tutor exchange, progress and phone layouts. Both videos have warm female narration generated locally with **Qwen3-TTS**, an original **ACE-Step 1.5 XL Turbo** instrumental, and readable burned-in captions; separate caption files are included. [Watch, download, read the transcript, or copy a class-group post](https://rorrimaesu.github.io/osteon-study/demo/). [Production research, revisions and checks](demo/PROMO-PRODUCTION.md).
 
 ## Clearer practical targets
 

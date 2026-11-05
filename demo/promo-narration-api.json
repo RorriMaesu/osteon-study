@@ -1,0 +1,321 @@
+{
+  "1": {
+    "class_type": "LoadAudio",
+    "inputs": {
+      "audio": "voice-reference.wav"
+    }
+  },
+  "2": {
+    "class_type": "FB_Qwen3TTSVoiceClonePrompt",
+    "inputs": {
+      "ref_audio": [
+        "1",
+        0
+      ],
+      "ref_text": "Meet Osteon, your anatomy study space. Rotate a real three-dimensional skeleton, explore its landmarks, and turn a study break into practice.",
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "attention": "sdpa",
+      "x_vector_only": false,
+      "unload_model_after_generate": false
+    }
+  },
+  "10": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Your next anatomy exam deserves more than flat diagrams. Meet Oss-tee-on: a free study space that makes anatomy click.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261104,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "11": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "10",
+        0
+      ],
+      "filename_prefix": "voice/01-hook"
+    }
+  },
+  "12": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "In the three-D atlas, drag to rotate, and scroll or pinch to zoom. Double-click or double-tap to explore a region, then again to focus one bone. Back restores context.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261105,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "13": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "12",
+        0
+      ],
+      "filename_prefix": "voice/02-atlas"
+    }
+  },
+  "14": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Tap Muscles to add muscle layers without losing your view. Choose a region, select a muscle, and use Peel to look beneath covering surfaces.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261106,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "15": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "14",
+        0
+      ],
+      "filename_prefix": "voice/03-muscles"
+    }
+  },
+  "16": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Turn on Landmarks for clear markers. Select one to reveal its name, then choose Show best view to inspect the target.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261107,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "17": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "16",
+        0
+      ],
+      "filename_prefix": "voice/04-landmarks"
+    }
+  },
+  "18": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Open Practice Lab and name the highlighted structure. Clear spelling slips can keep credit, while feedback helps you separate terminology from concept gaps.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261108,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "19": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "18",
+        0
+      ],
+      "filename_prefix": "voice/05-practice"
+    }
+  },
+  "20": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Study Studio connects OpenStax chapters six through ten with guided lessons, source readings, and interactive activities. Choose a chapter exam or mixed review, then save and resume later.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261109,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "21": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "20",
+        0
+      ],
+      "filename_prefix": "voice/06-study"
+    }
+  },
+  "22": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Need a nudge? With Ollama running on your computer, choose an installed model in Socratic Tutor. Ask a question and work through the reasoning, one step at a time.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261110,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "23": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "22",
+        0
+      ],
+      "filename_prefix": "voice/07-tutor"
+    }
+  },
+  "24": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "My Progress turns practice history into focused review. Revisit weak spots, and take your studying from desktop to phone.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261111,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": false
+    }
+  },
+  "25": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "24",
+        0
+      ],
+      "filename_prefix": "voice/08-progress"
+    }
+  },
+  "26": {
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "inputs": {
+      "target_text": "Built by an anatomy and physiology student as he learns, Oss-tee-on keeps growing with new content and improvements. Free to open. No account needed. Try it today, and share it with your class.",
+      "voice_clone_prompt": [
+        "2",
+        0
+      ],
+      "model_choice": "1.7B",
+      "device": "cuda",
+      "precision": "bf16",
+      "language": "English",
+      "seed": 20261112,
+      "max_new_tokens": 1536,
+      "top_p": 0.95,
+      "top_k": 50,
+      "temperature": 0.75,
+      "repetition_penalty": 1.05,
+      "instruct": "Warm, lively, conversational female narration. Confident and inviting, with clear phrasing and natural emphasis. A brisk but comfortable tutorial pace. Clean studio voice.",
+      "attention": "sdpa",
+      "unload_model_after_generate": true
+    }
+  },
+  "27": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "26",
+        0
+      ],
+      "filename_prefix": "voice/09-close"
+    }
+  }
+}
