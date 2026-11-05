@@ -42,6 +42,13 @@
 /* Structural discs have their own layer and a visible specimen count. */
 #discs-btn small{display:inline-block;min-width:1.5em;font-size:10px;line-height:1.6;border-radius:4px;background:#48665d66;padding:0 3px}#discs-btn[hidden]{display:none!important}
 #discs-btn span{display:inline!important}#discs-btn{white-space:nowrap}
+.practice-starts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.practice-starts button{display:grid;gap:4px;text-align:left;min-height:62px}
+.practice-starts small{font-weight:400}
+.practice-continue{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.practice-more{margin-block:12px}
+#spatial-exit{min-height:44px}
+@media(max-width:599px){.practice-starts{grid-template-columns:1fr}.practice-starts button{min-height:48px;padding:8px 12px}#practice-view:has(.practice-starts)>.section-intro{padding-block:14px 12px}}
 .viewer-mobile-controls,.viewer-mobile-help{display:none}
 .viewer-actions :is(#undo-peel-btn,#restore-btn)>b{font-weight:400}
 .atlas-label-pages[hidden]{display:none}
