@@ -39,12 +39,13 @@ export function mountLessonVisual(flow,root,title){
   const modal=root.closest('.lesson-visual-content');
   const viewport=modal||(matchMedia('(min-width:1000px)').matches?root:null);
   const bottom=viewport?.getBoundingClientRect().bottom;
+  const minimum=viewport?Math.min(125,Math.max(82,Math.floor(viewport.clientHeight*.32))):125;
   for(const visual of root.querySelectorAll(fittedMedia)){
    if(!viewport){visual.style.removeProperty('--figure-space');continue;}
    const top=visual.getBoundingClientRect().top+viewport.scrollTop;
    const caption=visual.closest('figure')?.querySelector('figcaption');
    const remaining=bottom-top-(caption?.offsetHeight||0)-16;
-   visual.style.setProperty('--figure-space',Math.max(125,Math.floor(remaining))+'px');
+   visual.style.setProperty('--figure-space',Math.max(minimum,Math.floor(remaining))+'px');
   }
  }
  function refit(){
