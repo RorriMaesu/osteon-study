@@ -46,7 +46,9 @@ export class AnatomyViewer {
    this.down=null;
   });
   el.addEventListener('dblclick',e=>{e.preventDefault();if(performance.now()-(this.touchNavigationAt||-1000)<800||this.peel||e.shiftKey)return;const m=this.hit(e);if(m)this.navigateBone(m);});
-  el.addEventListener('keydown',e=>{if(this.quiz||e.target!==el)return;if(e.key==='Enter'){e.preventDefault();if(this.selected[0])this.navigateBone(this.selected[0]);}else if(e.key==='Escape'){e.preventDefault();this.back();}});
+  el.addEventListener('keydown',e=>{if(e.target!==el||!this.loaded||e.altKey||e.ctrlKey||e.metaKey)return;
+   if(this.keyboardCamera(e.key)){e.preventDefault();return;}
+   if(this.quiz)return;if(e.key==='Enter'){e.preventDefault();if(this.selected[0])this.navigateBone(this.selected[0]);}else if(e.key==='Escape'){e.preventDefault();this.back();}});
   el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.down||e.pointerType==='touch'){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.peel?'Hide this surface':this.displayName(m)+(boneFamily(m.userData.zname)?this.focus.level==='overview'?' · Double-click → region':this.focus.level==='region'?' · Double-click → one bone':'':'');const r=el.getBoundingClientRect();label.style.left=Math.max(4,Math.min(e.clientX-r.left+14,r.width-250))+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+this.el.offsetTop+'px';}el.style.cursor=m?'pointer':'grab';});
   el.addEventListener('pointerleave',()=>{document.querySelector('#hover-label').hidden=true;});
   this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(el);
@@ -264,6 +266,18 @@ export class AnatomyViewer {
  }
 
  moveFramedCamera(center,direction,distance,rect=null){const target=center.clone();if(rect){const right=new THREE.Vector3(0,1,0).cross(direction);if(right.lengthSq()<.001)right.set(1,0,0);right.normalize();const up=direction.clone().cross(right),nx=(rect.x+rect.width/2)/this.el.clientWidth*2-1,ny=1-(rect.y+rect.height/2)/this.el.clientHeight*2,scale=distance*Math.tan(THREE.MathUtils.degToRad(16));target.addScaledVector(right,-nx*scale*this.camera.aspect).addScaledVector(up,-ny*scale);}this.moveCamera(target.clone().addScaledVector(direction,distance),target);}
+ keyboardCamera(key){
+  const step={ArrowLeft:[.17,0,1],ArrowRight:[-.17,0,1],ArrowUp:[0,-.12,1],ArrowDown:[0,.12,1],'+':[0,0,.82],'=':[0,0,.82],'-':[0,0,1.22]}[key];
+  if(!Array.isArray(step))return false;
+  const [turn,tilt,zoom]=step,target=(this.tween?.targetTo||this.controls.target).clone();
+  const offset=(this.tween?.to||this.camera.position).clone().sub(target);
+  const orbit=new THREE.Spherical().setFromVector3(offset);
+  orbit.theta+=turn;orbit.phi+=tilt;orbit.makeSafe();
+  orbit.radius=THREE.MathUtils.clamp(orbit.radius*zoom,this.controls.minDistance,this.controls.maxDistance);
+  this.controls.autoRotate=false;this.syncLayerControls();
+  this.moveCamera(offset.setFromSpherical(orbit).add(target),target);
+  return true;
+ }
  moveCamera(pos,target){if(!pos.toArray().every(Number.isFinite)||!target.toArray().every(Number.isFinite))return;this.needsRender=true;if(!this.camera.position.toArray().every(Number.isFinite)||!this.controls.target.toArray().every(Number.isFinite)){this.camera.position.copy(pos);this.controls.target.copy(target);this.controls.update();this.tween=null;return;}if(this.reduced){this.camera.position.copy(pos);this.controls.target.copy(target);this.controls.update();return;}this.tween={start:performance.now(),from:this.camera.position.clone(),to:pos,targetFrom:this.controls.target.clone(),targetTo:target};}
  recenter(){
   this.controls.autoRotate=false;

@@ -42,6 +42,57 @@
 /* Structural discs have their own layer and a visible specimen count. */
 #discs-btn small{display:inline-block;min-width:1.5em;font-size:10px;line-height:1.6;border-radius:4px;background:#48665d66;padding:0 3px}#discs-btn[hidden]{display:none!important}
 #discs-btn span{display:inline!important}#discs-btn{white-space:nowrap}
+.atlas-search-empty{display:grid;gap:6px;padding:6px}
+.atlas-search-empty p{margin:0;font-size:12px}
+.atlas-search-empty button{min-height:44px;text-align:left}
+.flow-body .flow-topic-progress{font-size:12px;margin:0 0 6px;color:var(--mint)}
+#exam-toggle-questions{display:none}
+.viewer-keyboard-camera{font-size:12px}
+@media(min-width:1000px){
+ .exam-layout>.exam-sidebar{grid-column:1;grid-row:1}
+ .exam-layout>.exam-question{grid-column:2;grid-row:1}
+}
+@media(min-width:1000px) and (max-width:1299px){
+ .atlas-workspace>.specimen-stage .view-controls{display:none}
+ .atlas-workspace>.specimen-stage .viewer-mobile-controls{display:block;position:absolute;left:12px;bottom:12px;z-index:4}
+ .atlas-workspace>.specimen-stage .viewer-mobile-controls select{min-height:36px;padding:6px;font-size:12px}
+ .atlas-workspace>.specimen-stage .viewer-mobile-controls button{display:none}
+ .atlas-workspace>.specimen-stage .viewer-actions{left:auto;right:12px;bottom:12px;padding:0}
+ .atlas-workspace>.specimen-stage .viewer-actions :is(#peel-btn,#undo-peel-btn,#restore-btn) span{display:inline;font-size:9px}
+ .atlas-workspace>.specimen-stage[data-exploring=true] #viewer{bottom:78px}
+ .atlas-workspace>.specimen-stage .viewer-hint{bottom:56px}
+}
+@media(max-width:999px){
+ #practice-view:has(.exam-layout)>.section-intro{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0;padding:9px 0}
+ #practice-view:has(.exam-layout)>.section-intro h1{font-size:22px;margin:3px 0}
+ #practice-view:has(.exam-layout)>.section-intro .eyebrow{font-size:8px}
+ #exam-save-exit{min-height:44px;flex:none;padding:6px 9px;font-size:12px}
+ .exam-layout{flex-direction:column}
+ .exam-layout>.exam-sidebar{display:none;scroll-margin-top:calc(var(--nav-height,104px) + 8px)}
+ .exam-layout.questions-open>.exam-sidebar{display:block}
+ .exam-question{padding:12px}
+ .exam-question .quiz-top{margin:0}
+ .exam-question-content>#exam-prompt{margin:8px 0 12px}
+ .exam-question-footer{position:sticky;bottom:0;z-index:5;margin-inline:-12px;padding:6px 12px max(6px,env(safe-area-inset-bottom));background:var(--panel);gap:5px}
+ .exam-question-footer button{min-height:44px;padding:6px 9px;font-size:12px}
+ .exam-desktop-count{display:none}
+ #exam-toggle-questions{display:inline-flex}
+ .quiz-active .atlas-workspace:has(#identify-form)>#atlas-specimen,
+ .course-layout:has(#course-answer) .course-visual:has(#atlas-specimen){position:sticky;top:var(--nav-height,104px);z-index:5}
+ .quiz-active .detail-sidebar:has(#identify-form){padding:12px}
+ #detail-content:has(#identify-form) .quiz-top{margin:0}
+ #detail-content:has(#identify-form) .progress-bar{margin:5px 0}
+ #detail-content:has(#identify-form) h2{font-size:22px;line-height:1.15;margin:6px 0}
+ #detail-content:has(#identify-form) p{margin:5px 0;font-size:12px}
+ #identify-form{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+ #identify-form input{flex:1 1 120px;min-width:0;min-height:44px;font-size:16px}
+ #identify-form button{min-height:44px;margin-top:0!important}
+ .spatial-settings summary{min-height:32px}
+}
+@media(max-width:599px){
+ #atlas-view>.intro h1{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ #atlas-view>.intro{padding-block:4px 7px}
+}
 .practice-starts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
 .practice-starts button{display:grid;gap:4px;text-align:left;min-height:62px}
 .practice-starts small{font-weight:400}
@@ -140,4 +191,14 @@
  .viewer-room #atlas-specimen .exploration-bar{grid-area:1/1;align-self:center}
  .viewer-room #atlas-specimen .viewer-room-tools{grid-area:1/2;align-self:center}
  .viewer-room #atlas-specimen>:is(#viewer,#loading,#landmark-stage,.atlas-landmark-dock,.atlas-landmark-finder,.viewer-control-guide,.viewer-actions,.viewer-mobile-controls){grid-column:1/-1}
+}
+
+@media(max-width:999px){
+ .quiz-active #atlas-view[data-pane] .atlas-workspace>#atlas-specimen,
+ .course-visual:has(#atlas-specimen) #atlas-specimen{height:clamp(205px,37dvh,330px);min-height:0}
+ .quiz-active #atlas-specimen .viewer-hint,.course-visual #atlas-specimen .viewer-hint{display:none}
+}
+
+@media(max-width:999px){
+ .quiz-active .detail-sidebar:has(#identify-form),.course-layout:has(#course-answer) .course-prompt{position:relative;z-index:6}
 }
