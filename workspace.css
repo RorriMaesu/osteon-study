@@ -435,6 +435,14 @@ body.viewer-room-open{overflow:hidden!important}
 @media(min-width:1000px){.muscle-browser{gap:5px}.muscle-results{gap:3px;flex:0 0 auto}.muscle-results button{min-height:34px;padding:5px 7px;font-size:10px;line-height:1.25}.muscle-results button small{font-size:8px;line-height:1.2}.muscle-pages{margin-top:auto}.muscle-browser .check-line{font-size:9px}.muscle-browser .text-btn{font-size:9px}.muscle-browser select,.muscle-browser input[type=search]{background:#14282d;color:#e4eadd;border:1px solid #49615d;border-radius:7px}.muscle-attachment-notes p{font-size:11px!important}}
 
 .muscle-label-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:8;overflow:visible}
+.atlas-intro-actions{display:flex;align-items:center;gap:9px;flex:none}
+.atlas-muscle-toggle{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 14px;white-space:nowrap;background:#203934;border-color:#789f8c;color:#e4f0e7;font-size:12px;font-weight:600}
+.atlas-muscle-toggle[aria-pressed=true]{background:var(--mint);border-color:var(--mint);color:#142f2b}
+.atlas-muscle-toggle>[aria-hidden]{position:relative;display:inline-block;width:26px;height:16px;border-radius:12px;background:#14272b;border:1px solid #8aa997;font-size:0}
+.atlas-muscle-toggle>[aria-hidden]::after{content:'';position:absolute;left:3px;top:3px;width:8px;height:8px;border-radius:50%;background:#b9d2c0;transition:transform .18s}
+.atlas-muscle-toggle[aria-pressed=true]>[aria-hidden]::after{transform:translateX(10px);background:#dcecdf}
+@media(max-width:699px){#atlas-view>.intro{display:grid;grid-template-columns:1fr;gap:6px}#atlas-view>.intro h1{margin:0}.atlas-intro-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.atlas-intro-actions>button{min-height:44px;padding:8px 10px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.atlas-muscle-toggle>[aria-hidden]::after{transition:none}}
 @media(min-width:1000px){.exam-hub-grid{grid-template-rows:repeat(3,minmax(0,1fr))}}
 @media(min-width:1000px) and (max-height:740px){.exam-hub-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}.exam-hub-card h2{font-size:22px}}
 @media(min-width:1000px) and (max-height:680px){.exam-hub-card{padding:8px 10px;gap:4px}.exam-hub-card h2{font-size:20px}.exam-hub-card button{min-height:28px;padding:4px 8px}.exam-hub-card .control-row{gap:6px}.exam-hub-foot button{min-height:28px;padding:5px 8px;font-size:10px}.exam-hub-foot .tiny{font-size:8px;line-height:1.4}}

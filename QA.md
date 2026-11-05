@@ -1,3 +1,7 @@
+# 2026-11-04 — Main-view muscle toggle
+
+182 automated checks pass, including scope/side mapping, combined asset coverage, camera-preserving round trips and restoration after explicit muscle navigation. The large main toggle and existing viewer toggle share state. Browser checks exercise whole-body entry, the entire upper limb from a side view, an isolated left humerus, off/on restoration, and phone activation. The 1024 × 600 viewport has no document overflow; the phone toggle remains a 44-pixel target beside Practice Lab. Bone color controls are hidden while selecting muscles. Model geometry is unchanged.
+
 # 2026-11-04 — Original-source muscle repairs
 
 179 automated checks pass. Blender 4.5 recovered three individual palmar interossei and four individual foot lumbricals per side from original BodyParts3D 4.3 surfaces. Palmaris brevis comes from the revised LUMC Open3D hand, with an explicit mirrored left derivative. Four incomplete aggregate meshes are retired from rendering and selection. The atlas has 474 active muscle parts and 207 support components; these are not distinct-muscle counts. Source hashes, registration errors and segmentation are preserved in `model-sources/`.

@@ -318,3 +318,10 @@ Audited a finite 226-entry reference checklist and inspected the original muscle
 - Added palmaris brevis from the revised LUMC Open3D hand, with a documented mirrored left derivative, origin/insertion/action notes and source links.
 - Added Study all group members for recovered palmar interossei and foot lumbricals. Individual labels remain selective, and switching members retains the group view.
 - Preserved source OBJ bytes across Windows checkouts so provenance hashes remain reproducible.
+
+## Main-view muscle toggle
+
+- Added a large, synchronized Muscles On/Off control beside Practice Lab on desktop and phones.
+- Toggling preserves the current camera and selects the corresponding region/side, including whole-body, entire-upper-limb and focused-bone views. The general muscle link opens the whole body.
+- Returning to bones restores division, isolated selection, pins, peeling and navigation history. Explicit muscle navigation remains available and returns to the saved bone view on exit. Canceled loading cannot apply an old navigation request.
+- 182 automated checks pass; browser review includes desktop, 1024 × 600 without page overflow, and 390 × 844. No model files changed.
