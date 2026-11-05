@@ -18,7 +18,7 @@ test('custom blueprints honor chapter and section weights, capacities, exposure 
 test('daily study uses scored weaknesses and mixes all four chapters in the final week',()=>{
  const p=blankProgress(),weak=questions.find(q=>q.lesson==='9.6'),now=new Date('2026-11-04T12:00:00').getTime();p.attempts=[{id:weak.id,correct:false,at:now-1000},{id:questions.find(q=>q.lesson==='6.1').id,correct:false,selfRated:true,at:now}];
  const ordinary=dailyRoute(p,{minutes:20,now});assert.equal(ordinary.lesson.id,'9.6');assert.ok(ordinary.items.every(q=>q.lesson==='9.6'));
- const final=dailyRoute(p,{minutes:20,examDate:'2026-11-08',now});assert.equal(final.mixed,true);assert.equal(new Set(final.items.map(q=>q.lesson.split('.')[0])).size,5);assert.equal(new Set(final.items.map(q=>q.id)).size,final.items.length);assert.equal(dailyRoute(p,{examDate:'2026-10-01',now}).mixed,false);
+ const final=dailyRoute(p,{minutes:20,examDate:'2026-11-08',now});assert.equal(final.mixed,true);assert.equal(new Set(final.items.map(q=>q.lesson.split('.')[0])).size,new Set(questions.map(q=>q.lesson.split('.')[0])).size);assert.equal(new Set(final.items.map(q=>q.id)).size,final.items.length);assert.equal(dailyRoute(p,{examDate:'2026-10-01',now}).mixed,false);
 });
 test('repair sets spread objectives rather than filling with near-duplicate items',()=>{
  const l=lessons.find(l=>l.id==='6.3'),items=questions.filter(q=>q.lesson===l.id),set=variedQuestions(items,[],5);assert.equal(set.length,5);assert.equal(new Set(set.map(q=>q.objectives?.[0]||q.lesson)).size,5);

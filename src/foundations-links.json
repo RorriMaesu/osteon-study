@@ -1,0 +1,31 @@
+{
+  "1.6": {
+    "region": "All regions",
+    "figures": [
+      {
+        "number": "1.12",
+        "pdf": 40
+      },
+      {
+        "number": "1.13",
+        "pdf": 41
+      },
+      {
+        "number": "1.14",
+        "pdf": 42
+      },
+      {
+        "number": "1.15",
+        "pdf": 43
+      },
+      {
+        "number": "1.16",
+        "pdf": 44
+      },
+      {
+        "number": "1.17",
+        "pdf": 44
+      }
+    ]
+  }
+}

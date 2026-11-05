@@ -1,9 +1,10 @@
+import {renderFoundationAtlas} from './foundations-atlas.js';
 import {examBank} from './exam-bank.js';
 import {shuffled} from './exam-core.js';
 import {renderMuscleLab} from './muscle-labs.js';
 
 export function renderCurriculumActivity(root,section,e){
- if(renderMuscleLab(root,section))return;
+ if(renderFoundationAtlas(root,section,e)||renderMuscleLab(root,section))return;
  if(section==='9.5'){movementLab(root);return;}
  const q=examBank.find(q=>q.lesson===section&&q.type==='match');if(!q){root.innerHTML=`<h3>Reconstruct the sequence.</h3><p>Write the main stages from memory, then compare with the complete section reading. Explain what each stage contributes before continuing to Retrieve.</p>`;return;}
  let index=0,show=false,selected=null;const options=shuffled(q.pairs.map(p=>p.right));

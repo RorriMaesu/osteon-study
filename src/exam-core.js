@@ -1,5 +1,5 @@
 import {exposureCount} from './exam-exposure.js';
-import syllabus from './curriculum-syllabus.json' with {type:'json'};
+import {syllabus,legacyChapterGroups,publishedChapterIds} from './course-catalog.js';
 import {examBank,EXAM_VERSION,LEGACY_EXAM_VERSION} from './exam-bank.js';
 import {validAnswerReview,reviewedCorrect,reviewMatches} from './answer-review-data.js';
 import {assessTyped,outcomeCorrect,GRADING_VERSION} from './typed-answer.js';
@@ -36,8 +36,9 @@ function comprehensiveQuotas(chapter){
 }
 export function selectExam(scope,bank=examBank,rng=Math.random,{seen={}}={}){
  if(scope==='bank')return shuffled(bank,rng).sort((a,b)=>exposureCount(seen,a.id)-exposureCount(seen,b.id));
- const sections=syllabus.sections.filter(s=>scope==='all10'||(scope==='all'&&s.chapter<=9)||String(s.chapter)===String(scope)),selected=[];
- const expanded=scope==='all10'?Object.assign({},...syllabus.chapters.map(c=>comprehensiveQuotas(c.id))):null;
+ const chapters=Object.hasOwn(legacyChapterGroups,scope)?legacyChapterGroups[scope]:publishedChapterIds.filter(id=>String(id)===String(scope));
+ const sections=syllabus.sections.filter(s=>chapters.includes(s.chapter)),selected=[];
+ const expanded=scope==='all10'?Object.assign({},...chapters.map(comprehensiveQuotas)):null;
  if(!sections.length)throw new Error('Choose a chapter or cumulative exam.');
  for(const section of sections){
   const quota=expanded?expanded[section.id]:scope==='all'?cumulative[section.chapter][+section.id.split('.')[1]-1]:section.examWeight;

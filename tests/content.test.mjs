@@ -38,9 +38,9 @@ test('numbered and regional meshes do not accept neighboring bones',()=>{
  assert.ok(!matches('Middle phalanx of.*hand','Middle phalanx of second finger of foot.r'));
 });
 test('all thirty-three sections teach, apply and assess distinct concepts',()=>{
- assert.deepEqual(lessons.map(l=>l.id),['6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4','7.5','8.1','8.2','8.3','8.4','8.5','9.1','9.2','9.3','9.4','9.5','9.6','9.7','10.1','10.2','10.3','10.4','10.5','10.6','10.7','10.8','10.9']);
+ assert.deepEqual(lessons.filter(l=>Number(l.id.split('.')[0])>=6).map(l=>l.id),['6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4','7.5','8.1','8.2','8.3','8.4','8.5','9.1','9.2','9.3','9.4','9.5','9.6','9.7','10.1','10.2','10.3','10.4','10.5','10.6','10.7','10.8','10.9']);
  for(const l of lessons){assert.ok(l.objective.length>35);assert.ok(l.sections.length>=3);assert.ok(l.compare.length>=2);assert.equal(l.recall.length,2);assert.equal(l.application.length,2);assert.ok(l.questions.length>=4);}
- assert.equal(questions.length,624);assert.equal(new Set(questions.map(q=>q.id)).size,questions.length);
+ assert.equal(questions.filter(q=>Number(q.lesson.split('.')[0])>=6).length,624);assert.equal(new Set(questions.map(q=>q.id)).size,questions.length);
  for(const q of questions){if(q.type==='choice'){assert.equal(q.distractors.length,3);assert.equal(new Set([q.answer,...q.distractors]).size,4);}assert.ok(q.explanation.length>25);}
 });
 test('complete glossary extraction excludes page furniture and broken glyphs',()=>{
@@ -88,7 +88,7 @@ test('full chapter reading includes every source page and valid section destinat
  assert.equal(pages.length,220);assert.equal(new Set(pages.map(p=>p.pdf)).size,pages.length);
  for(let n=213;n<=384;n++)assert.ok(pages.some(p=>p.pdf===n),'Missing chapter page '+n);
  for(const p of pages){assert.equal(p.printed,p.pdf-16);assert.ok(p.text.length>50);assert.ok(!p.text.includes('\ufffd'));assert.ok(fs.existsSync(new URL('../assets/reader/p'+p.pdf+'.jpg',import.meta.url)));}
- for(const [section,pdf]of Object.entries(sectionPages))assert.ok(pages.find(p=>p.pdf===pdf).text.includes(section),section);
+ for(const [section,pdf]of Object.entries(sectionPages).filter(([id])=>Number(id.split('.')[0])>=6))assert.ok(pages.find(p=>p.pdf===pdf).text.includes(section),section);
 });
 test('typed landmark recall rejects parent bones and accepts the precise term',()=>{
  for(const name of ['Coracoid process','Head of femur','Cribriform plate','Dens','Iliac crest']){const t=terms.find(t=>t.name===name);assert.ok(acceptsAnswer(t,name));assert.ok(!acceptsAnswer(t,t.pattern),name);}

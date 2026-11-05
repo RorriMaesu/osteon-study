@@ -22,7 +22,7 @@ test('Chapter 10 and comprehensive forms cover every assigned objective; old sco
  for(let i=0;i<20;i++)for(const scope of ['10','all10','all']){
   const form=selectExam(scope);assert.equal(form.length,scope==='10'?50:scope==='all'?100:150);assert.equal(new Set(form.map(q=>q.id)).size,form.length);
   if(scope==='all'){assert.ok(form.every(q=>Number(chapterOf(q.lesson))<=9));continue;}
-  const relevant=syllabus.sections.filter(s=>scope==='all10'||s.chapter===10);
+  const relevant=syllabus.sections.filter(s=>scope==='all10'?[6,7,8,9,10].includes(s.chapter):s.chapter===10);
   for(const s of relevant)for(const o of s.objectives)assert.ok(form.some(q=>q.objectives.includes(o.id)),o.id);
   assert.ok(validSession(JSON.parse(JSON.stringify(createSession(form,{scope})))));
  }

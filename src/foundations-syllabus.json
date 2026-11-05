@@ -1,0 +1,42 @@
+{
+  "chapters": [
+    {
+      "id": 1,
+      "title": "An Introduction to the Human Body",
+      "status": "pilot",
+      "examLength": 50
+    }
+  ],
+  "sections": [
+    {
+      "id": "1.6",
+      "title": "Anatomical Terminology",
+      "chapter": 1,
+      "pdfStart": 39,
+      "pdfEnd": 45,
+      "examWeight": 10,
+      "objectives": [
+        {
+          "id": "1.6.1",
+          "text": "Demonstrate the anatomical position"
+        },
+        {
+          "id": "1.6.2",
+          "text": "Describe the human body using directional and regional terms"
+        },
+        {
+          "id": "1.6.3",
+          "text": "Identify three planes most commonly used in the study of anatomy"
+        },
+        {
+          "id": "1.6.4",
+          "text": "Distinguish between the posterior (dorsal) and the anterior (ventral) body cavities, identifying their subdivisions and representative organs found in each"
+        },
+        {
+          "id": "1.6.5",
+          "text": "Describe serous membrane and explain its function"
+        }
+      ]
+    }
+  ]
+}
