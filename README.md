@@ -84,6 +84,8 @@ Verified keys score objective answers. Written explanations use explicit half-po
 
 Turn corrections into source-linked study notes, try a related question or all seven Bone Questions, and build an editable **24-line front / 24-line back** notecard with copy-text export and a 3 × 5-inch print preview. Export mock backups or include the work in a complete Osteon backup. The nine packet diagrams are reproduced with the contributor's explicit permission and retain separate [source credits](CREDITS.md#exam-3-course-packet-diagrams).
 
+The reviewed release adds **12 wider-coverage questions**, a ranked study plan, clearer self-grading, saved notecard suggestions and measured print-fit checks. [Review findings and improvements](MOCK-EXAM-3-REVIEW.md).
+
 ## Spelling support and optional local AI
 
 New chapter/section exams and full-bank review accept clear spelling errors and appropriate equivalent wording **without Ollama**. Results separate spelling notes, equivalent wording, concept gaps and unresolved meaning. Pending answers show a possible score range and are not recorded as confirmed anatomy failures. Formal anatomical terms, sides, counts and different structures keep their distinctions.

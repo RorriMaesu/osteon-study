@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {WrittenAnswerJudge,interpretWrittenReview,validWrittenReview,scoreWrittenReview,writtenReviewSchema,questionIdentity,responseIdentity,rubricCriteria,compactWrittenQualification,isWrittenModelQualified,WRITTEN_PROMPT_VERSION,createLearnerWrittenReview} from '../src/written-answer-judge.js';
 import qualifiedModels from '../src/mock-exam3-qualified-models.json' with {type:'json'};
 import {mockExam3Calibration,mockExam3AllQuestions} from '../src/mock-exam3-bank.js';
+import {localAI} from '../src/local-ai.js';
 
 const question={id:'rubric-test',type:'written',chapter:6,points:3,prompt:'Describe the source, process, and example.',answer:'Mesenchyme; osteoblasts form bone; parietal.',rubric:{id:'rubric-test-v1',version:'1',modelAnswer:'Mesenchyme; osteoblasts form bone; parietal.',criteria:[
   {id:'source',label:'Source',points:1,description:'Names mesenchymal connective tissue.'},
@@ -114,9 +115,31 @@ test('compact qualification binds verified case scores to exact model, prompt, r
   assert.ok(!isWrittenModelQualified(qualification,settings,[{...question,prompt:'Changed'}],[fixture]));
   assert.ok(!isWrittenModelQualified(qualification,settings,[question],[{...fixture,response:'Changed'}]));
   assert.ok(!isWrittenModelQualified({...qualification,promptVersion:'old'},settings,[question],[fixture]));
-  assert.ok(isWrittenModelQualified(qualification,{...settings,questionId:question.id},[question],[fixture,{...fixture,id:'new-case'}]));
+  assert.ok(!isWrittenModelQualified(qualification,{...settings,questionId:question.id},[question],[fixture,{...fixture,id:'new-case'}]),'a new required case for the same rubric requires a fresh check');
+  assert.ok(isWrittenModelQualified(qualification,{...settings,questionId:question.id},[question],[fixture,{...fixture,id:'unrelated-case',questionId:'unrelated'}]),'cases for an unrelated rubric do not invalidate this check');
   assert.ok(!isWrittenModelQualified(qualification,{...settings,questionId:'untested'},[question],[fixture]));
   assert.ok(!JSON.stringify(qualification).includes(response));
+});
+
+test('a shared connection cannot grade replacement weights under its old qualification identity',async()=>{
+  const original={state:localAI.state,client:localAI.client};let generations=0;
+  try{
+    localAI.state={...localAI.state,connected:true,ready:true,model:'local:test',endpoint:'http://127.0.0.1:11434',models:[local]};
+    localAI.client={connect:async()=>({models:[{...local,digest:'replacement'}]}),show:async()=>info,request:async()=>{generations++;return {done:true,message:{content:JSON.stringify(parsed())}};}};
+    await assert.rejects(()=>new WrittenAnswerJudge().review({question,response,submissionId:'attempt-submitted'}),/installed model changed since connection setup/);
+    assert.equal(generations,0,'a stale qualification is rejected before sending the answer to generation');
+  }finally{localAI.state=original.state;localAI.client=original.client;}
+});
+
+test('model replacement during generation leaves the response pending instead of attaching stale evidence',async()=>{
+  let tags=0,generations=0;
+  const judge=new WrittenAnswerJudge(async url=>{
+    const path=new URL(url).pathname;
+    const value=path==='/api/version'?{version:'test'}:path==='/api/tags'?{models:[{...local,digest:++tags===1?'digest':'replacement'}]}:path==='/api/show'?info:(generations++,{done:true,done_reason:'stop',message:{content:JSON.stringify(parsed())}});
+    return new Response(JSON.stringify(value));
+  });
+  await assert.rejects(()=>judge.review({question,response,submissionId:'attempt-submitted'},{model:'local:test',endpoint:'http://127.0.0.1:11434'}),/installed model changed during review/);
+  assert.equal(generations,1);assert.equal(tags,2);
 });
 
 test('qualification rejects omitted, duplicate and mislabeled passing cases',()=>{

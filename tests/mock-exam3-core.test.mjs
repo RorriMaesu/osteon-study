@@ -27,6 +27,16 @@ test('the full form retains all 44 questions, 60 points and a stable option shuf
   assert.equal(mockResults(a).maxPoints,60);
 });
 
+test('automatic review preference belongs to the saved attempt and accepts legacy records',()=>{
+  const optedOut=createMockSession(mockExam3Questions,{now:100,autoGrade:false});
+  assert.equal(optedOut.autoGrade,false);assert.ok(validMockSession(clone(optedOut)));
+  const submitted=submitMockSession(optedOut,{now:200});assert.equal(submitted.autoGrade,false);
+  assert.ok(validMockSession(clone(submitted)));
+  const legacy=clone(submitted);delete legacy.autoGrade;assert.ok(validMockSession(legacy));
+  for(const value of ['false',0,null])assert.ok(!validMockSession({...submitted,autoGrade:value}));
+  assert.throws(()=>createMockSession(mockExam3Questions,{autoGrade:'false'}),/valid exam options/);
+});
+
 test('full blank submission is known zero; answer keys resolve 54 and leave six written points',()=>{
   const blank=submitMockSession(createMockSession(mockExam3Questions,{now:100}),{now:200});
   assert.equal(mockResults(blank).earnedPoints,0);assert.equal(mockResults(blank).pendingPoints,0);
@@ -62,6 +72,14 @@ test('weighted partial points, pending components and chapter summaries reconcil
   assert.equal(r.missedPoints,.5);assert.equal(r.maxPossiblePoints,5.5);
   assert.equal(r.chapters[6].earnedPoints,3);assert.equal(r.chapters[8].earnedPoints,2);
   assert.equal(r.sections.written.pendingPoints,.5);assert.ok(validMockSession(session,fixture));
+  assert.deepEqual(r.missed.map(row=>row.q.id),['written'],'known missing points remain eligible for targeted practice while other components are pending');
+});
+
+test('pending-only rows are not called missed, while assisted pending rows remain in practice',()=>{
+  const pending=submit(filled());
+  assert.deepEqual(mockResults(pending).missed,[]);
+  pending.assisted.written=true;
+  assert.deepEqual(mockResults(pending).missed.map(row=>row.q.id),['written']);
 });
 
 test('ambiguous diagrams contribute their own pending points; wrong neighbor loses two',()=>{

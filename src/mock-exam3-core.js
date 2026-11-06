@@ -1,9 +1,12 @@
 import {assessQuestion} from './exam-core.js';
-import {validAnswerReview, reviewMatches} from './answer-review-data.js';
+import {validAnswerReview, reviewMatches, reviewedCorrect} from './answer-review-data.js';
+import {assessMockTermContext} from './mock-exam3-context.js';
+export {mockTermReviewTarget} from './mock-exam3-context.js';
 import {mockExam3Form, mockExam3AllQuestions} from './mock-exam3-bank.js';
 import {responseIdentity, questionIdentity, rubricCriteria, validWrittenQuestion, validWrittenReview, scoreWrittenReview, WRITTEN_RESPONSE_LIMIT} from './written-answer-judge.js';
 
 export const MOCK_SESSION_VERSION=1;
+export const MOCK_SCORING_VERSION=2;
 export const MOCK_STORAGE_KEY='osteon-mock-exam3-v1';
 const object=value=>!!value&&typeof value==='object'&&!Array.isArray(value);
 const clone=value=>JSON.parse(JSON.stringify(value));
@@ -21,15 +24,15 @@ function validQuestion(q) {
     (q.type!=='written'||validWrittenQuestion(q));
 }
 
-export function createMockSession(items, {form=mockExam3Form, rng=Math.random, now=Date.now(), cardMode='closed', timeGoalMinutes=0, mode='exam'}={}) {
+export function createMockSession(items, {form=mockExam3Form, rng=Math.random, now=Date.now(), cardMode='closed', timeGoalMinutes=0, mode='exam',autoGrade=true}={}) {
   if (!Array.isArray(items)||!items.length||items.length>100||items.some(q=>!validQuestion(q))||new Set(items.map(q=>q.id)).size!==items.length) throw new Error('This exam contains an invalid or duplicate question.');
-  if (!['closed','notecard','card'].includes(cardMode)||!['exam','practice'].includes(mode)||!Number.isFinite(timeGoalMinutes)||timeGoalMinutes<0||timeGoalMinutes>240) throw new Error('Choose valid exam options.');
+  if (!['closed','notecard','card'].includes(cardMode)||!['exam','practice'].includes(mode)||!Number.isFinite(timeGoalMinutes)||timeGoalMinutes<0||timeGoalMinutes>240||typeof autoGrade!=='boolean') throw new Error('Choose valid exam options.');
   const questions=clone(items), id=nowId(now,rng);
-  return {schema:MOCK_SESSION_VERSION,id,formId:form.id||'exam3-form-a',formVersion:String(form.version||'1'),
+  return {schema:MOCK_SESSION_VERSION,scoringVersion:MOCK_SCORING_VERSION,id,formId:form.id||'exam3-form-a',formVersion:String(form.version||'1'),
     title:form.title||'Exam 3 mock',mode,status:'draft',gradingState:'not-submitted',started:now,submitted:null,
     ids:questions.map(q=>q.id),questions,options:Object.fromEntries(questions.map(q=>[q.id,shuffle(optionsFor(q),rng)])),
     responses:{},assisted:{},flags:{},reviews:{},reviewHistory:[],index:0,elapsedMs:0,elapsedSeconds:0,timeGoalMinutes,cardMode,
-    maxPoints:questions.reduce((sum,q)=>sum+q.points,0)};
+    autoGrade,maxPoints:questions.reduce((sum,q)=>sum+q.points,0)};
 }
 
 export function setMockResponse(session,id,value) {
@@ -51,12 +54,12 @@ export function submitMockSession(session,{now=Date.now(),bank=mockExam3AllQuest
   const result=clone(session), responses=clone(session.responses);
   result.status='submitted';result.submitted=now;
   result.submission={id:session.id+'-submitted',at:now,responses,identity:responseIdentity(responses)};
-  result.initialOutcomes=Object.fromEntries(result.questions.map(q=>[q.id,assessMockQuestion(q,responses[q.id],null,{submissionId:result.submission.id})]));
+  result.initialOutcomes=Object.fromEntries(result.questions.map(q=>[q.id,assessMockQuestion(q,responses[q.id],null,{submissionId:result.submission.id,scoringVersion:result.scoringVersion??1})]));
   result.gradingState=mockResults(result).pendingPoints?'pending':'resolved';
   return result;
 }
 
-export function assessMockQuestion(question,response,review,{submissionId}={}) {
+export function assessMockQuestion(question,response,review,{submissionId,scoringVersion=MOCK_SCORING_VERSION}={}) {
   const answered=typeof response==='string'&&!!response.trim();
   if (question.type==='written') {
     const base={maxPoints:question.points,correction:question.rubric.modelAnswer||question.answer,strictCorrect:false,source:'rubric'};
@@ -66,12 +69,20 @@ export function assessMockQuestion(question,response,review,{submissionId}={}) {
     const status=score.pendingPoints?'pending':score.earnedPoints===question.points?'correct':score.earnedPoints?'partial':'incorrect';
     return {...base,...score,status,correct:status==='correct',reason:review.feedback,source:review.source,studyNote:review.studyNote};
   }
-  const built=assessQuestion(question,response,review);
+  let built=assessQuestion(question,response,review);
+  const context=scoringVersion===2?assessMockTermContext(question,response):null;
+  if(context){
+    built={...built,...context,correct:context.status==='equivalent',strictCorrect:false,source:'builtin-context'};
+    if(context.status==='pending'&&reviewMatches(review,question,response)&&review.status==='reviewed'&&review.confidence==='high'){
+      if(reviewedCorrect(false,review,question,response))built={...built,status:'equivalent',correct:true,reason:review.explanation,source:'ai'};
+      else if(review.verdict==='incorrect')built={...built,status:'incorrect',correct:false,reason:review.explanation,source:'ai'};
+    }
+  }
   return {...built,maxPoints:question.points,earnedPoints:built.correct?question.points:0,pendingPoints:built.status==='pending'?question.points:0,components:[]};
 }
 
 export function mockOutcome(session,question) {
-  return assessMockQuestion(question,session.responses[question.id],session.reviews?.[question.id],{submissionId:session.submission?.id});
+  return assessMockQuestion(question,session.responses[question.id],session.reviews?.[question.id],{submissionId:session.submission?.id,scoringVersion:session.scoringVersion??1});
 }
 
 function summarize(rows) {
@@ -90,7 +101,7 @@ export function mockResults(session) {
   rows.forEach(r=>{r.correct=r.outcome.correct;r.pending=r.outcome.pendingPoints>0;r.earnedPoints=r.outcome.earnedPoints;r.maxPoints=r.outcome.maxPoints;});
   const grouped=field=>Object.fromEntries([...new Set(rows.map(r=>String(r.q[field]||'')))].map(key=>[key,summarize(rows.filter(r=>String(r.q[field]||'')===key))]));
   return {...summarize(rows),rows,chapters:grouped('chapter'),sections:grouped('section'),
-    missed:rows.filter(r=>!r.pending&&(!r.correct||r.assisted))};
+    missed:rows.filter(r=>r.outcome.maxPoints-r.outcome.earnedPoints-r.outcome.pendingPoints>0||r.assisted)};
 }
 
 function validReview(review,question,session) {
@@ -126,7 +137,9 @@ export function validMockSession(session,bank=mockExam3AllQuestions) {
     !Number.isInteger(session.index)||session.index<0||session.index>=session.ids.length||
     !Number.isFinite(session.started)||session.started<0||!Number.isFinite(session.elapsedMs)||session.elapsedMs<0||
     !Number.isFinite(session.timeGoalMinutes)||session.timeGoalMinutes<0||session.timeGoalMinutes>240||
-    (session.elapsedSeconds!==undefined&&(!Number.isFinite(session.elapsedSeconds)||session.elapsedSeconds<0))) return false;
+    (session.elapsedSeconds!==undefined&&(!Number.isFinite(session.elapsedSeconds)||session.elapsedSeconds<0))||
+    (session.autoGrade!==undefined&&typeof session.autoGrade!=='boolean')||
+    (session.scoringVersion!==undefined&&![1,2].includes(session.scoringVersion))) return false;
   for (const key of ['options','responses','assisted','flags','reviews']) if (!object(session[key])) return false;
   if (!Array.isArray(session.reviewHistory)||session.reviewHistory.length>500) return false;
   const known=new Map(bank.map(q=>[q.id,q]));
@@ -151,7 +164,7 @@ export function validMockSession(session,bank=mockExam3AllQuestions) {
     for (const entry of session.reviewHistory) if (!object(entry)||!session.ids.includes(entry.questionId)||!Number.isFinite(entry.at)||entry.at<session.started||!validReview(entry.review,known.get(entry.questionId),session)) return false;
     const initial=session.initialOutcomes;
     if (!object(initial)||Object.keys(initial).length!==session.ids.length) return false;
-    for (const q of session.questions) if (JSON.stringify(initial[q.id])!==JSON.stringify(assessMockQuestion(q,session.responses[q.id],null,{submissionId:sub.id}))) return false;
+    for (const q of session.questions) if (JSON.stringify(initial[q.id])!==JSON.stringify(assessMockQuestion(q,session.responses[q.id],null,{submissionId:sub.id,scoringVersion:session.scoringVersion??1}))) return false;
     if (session.gradingState==='resolved'&&mockResults(session).pendingPoints>0) return false;
   }
   return true;
