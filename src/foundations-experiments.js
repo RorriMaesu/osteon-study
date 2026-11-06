@@ -1,19 +1,29 @@
 import {foundationTraces} from './foundations-traces.js';
 import {burnSectionArt} from './visual-foundations.js';
+import {textbookArt} from './textbook-figures.js';
 
 const svg=(content,description,viewBox='0 0 480 240')=>`<svg viewBox="${viewBox}" role="img" aria-label="${description}" xmlns="http://www.w3.org/2000/svg">${content}</svg>`;
 const option=(label,i)=>`<option value="${i}">${label}</option>`;
+const escapeArtCredit=value=>String(value).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 
-function mountTrace(root,{title,prompt,scenarios,art,atlasRegions}){
+function mountTrace(root,{title,prompt,scenarios,art,atlasRegions,sourceFigures}){
  let step=0;
- root.innerHTML=`<div class="eyebrow">TRACE THE MECHANISM</div><h3>${title}</h3><p>${prompt}</p><label>Scenario <select>${scenarios.map(([name],i)=>option(name,i)).join('')}</select></label><div data-trace-art></div><ol class="foundation-trace" aria-label="Mechanism steps"></ol><p role="status" data-trace-note></p><div class="control-row"><button type="button" data-trace-next>Reveal next step</button><button type="button" data-trace-reset>Restart</button>${atlasRegions?'<button type="button" data-trace-atlas></button>':''}</div>`;
+ let useBook=!art;
+ root.innerHTML=`<div class="eyebrow">TRACE THE MECHANISM</div><h3>${title}</h3><p>${prompt}</p><div class="control-row"><label>Scenario <select>${scenarios.map(([name],i)=>option(name,i)).join('')}</select></label>${sourceFigures?'<button type="button" data-trace-source></button>':''}</div><div data-trace-art></div><ol class="foundation-trace" aria-label="Mechanism steps"></ol><p role="status" data-trace-note></p><div class="control-row"><button type="button" data-trace-next>Reveal next step</button><button type="button" data-trace-reset>Restart</button>${atlasRegions?'<button type="button" data-trace-atlas></button>':''}</div>`;
  const select=root.querySelector('select'),list=root.querySelector('ol'),note=root.querySelector('[data-trace-note]');
  const next=root.querySelector('[data-trace-next]'),reset=root.querySelector('[data-trace-reset]');
  const atlas=root.querySelector('[data-trace-atlas]');
+ const sourceButton=root.querySelector('[data-trace-source]');
  function update(){
   const scenario=Number(select.value),[,steps]=scenarios[scenario];
   list.innerHTML=steps.map(([name],i)=>`<li ${i===step-1?'aria-current="step"':''}>${i<step?name:'Step '+(i+1)}</li>`).join('');
-  if(art)root.querySelector('[data-trace-art]').innerHTML=art(scenario,step);
+  const book=textbookArt(sourceFigures?.[scenario],escapeArtCredit);
+  const artPanel=root.querySelector('[data-trace-art]');
+  if(book&&useBook){
+   artPanel.innerHTML=`<figure class="section-diagram-media section-diagram-source">${svg(book.art,'OpenStax textbook figure',book.viewBox)}<figcaption>${book.caption}</figcaption></figure>`;
+   artPanel.querySelector('svg').setAttribute('aria-label',book.title);
+  }else artPanel.innerHTML=art?.(scenario,step)||'';
+  if(sourceButton){sourceButton.hidden=!book;sourceButton.textContent=useBook?(art?'Show schematic':'Hide OpenStax figure'):'Show OpenStax figure';}
   note.textContent=step?steps[step-1][1]:'Predict the first change, then reveal the steps one at a time.';
   next.disabled=step===steps.length;
   reset.disabled=step===0;
@@ -22,6 +32,7 @@ function mountTrace(root,{title,prompt,scenarios,art,atlasRegions}){
  select.onchange=()=>{step=0;update();};
  next.onclick=()=>{step++;update();if(next.disabled)reset.focus({preventScroll:true});};
  reset.onclick=()=>{step=0;update();next.focus({preventScroll:true});};
+ if(sourceButton)sourceButton.onclick=()=>{useBook=!useBook;update();};
  if(atlas)atlas.onclick=()=>document.dispatchEvent(new CustomEvent('studyregion',{detail:atlasRegions[Number(select.value)]}));
  update();
 }

@@ -54,8 +54,9 @@ function openFigureView(root,trigger,title,refit){
   listeners.abort();
   inspectionObserver.disconnect();
   fitInspection();
-  if(marker.isConnected&&root.parentElement===modal.lastElementChild)marker.replaceWith(root);
+  if(marker.isConnected&&modal.contains(root))marker.replaceWith(root);
   modal.remove();
+  document.dispatchEvent(new Event('lessonvisualchange'));
   refit();
   if(trigger.isConnected)trigger.focus({preventScroll:true});
  },{once:true});
@@ -64,6 +65,7 @@ function openFigureView(root,trigger,title,refit){
  document.body.append(modal);
  modal.lastElementChild.append(root);
  modal.showModal();
+ document.dispatchEvent(new Event('lessonvisualchange'));
  refit();
  syncInspection();
  inspectionObserver.observe(root,{childList:true,subtree:true});
@@ -79,16 +81,18 @@ export function mountLessonVisual(flow,root,title){
  function fit(){
   if(!flow.isConnected){observer.disconnect();size.disconnect();return;}
   expand.hidden=!canExpand(root);
-  const modal=root.closest('.lesson-visual-content');
-  const viewport=modal||(matchMedia('(min-width:1000px)').matches?root:null);
-  const bottom=viewport?.getBoundingClientRect().bottom;
-  const minimum=viewport?Math.min(125,Math.max(82,Math.floor(viewport.clientHeight*.32))):125;
+  const viewport=root.closest('.page-window')||root.closest('.lesson-visual-content');
+  const height=viewport?.clientHeight||0;
   for(const visual of root.querySelectorAll(fittedMedia)){
-   if(!viewport){visual.style.removeProperty('--figure-space');continue;}
-   const top=visual.getBoundingClientRect().top+viewport.scrollTop;
-   const caption=visual.closest('figure')?.querySelector('figcaption');
-   const remaining=bottom-top-(caption?.offsetHeight||0)-16;
-   visual.style.setProperty('--figure-space',Math.max(minimum,Math.floor(remaining))+'px');
+   if(!height){visual.style.removeProperty('--figure-space');continue;}
+   const allowance=root.classList.contains('lesson-source-preview')?.76:.72;
+   const figure=visual.closest('figure');
+   const anchor=figure?.closest('.section-diagram-layout')?.previousElementSibling||figure?.previousElementSibling;
+   const prefix=anchor?.getClientRects()[0];
+   const caption=figure?.querySelector('figcaption');
+   const spare=prefix?height-(prefix.bottom-viewport.getBoundingClientRect().top)-(caption?.offsetHeight||0)-12:0;
+   const cap=spare>=88?Math.min(height*allowance,spare):height*allowance;
+   visual.style.setProperty('--figure-space',Math.max(36,Math.floor(cap))+'px');
   }
  }
  function refit(){
@@ -100,7 +104,7 @@ export function mountLessonVisual(flow,root,title){
  // Studio tabs replace their visual when changing diagrams or activities.
  const observer=new MutationObserver(fit),size=new ResizeObserver(refit);
  observer.observe(root,{childList:true,subtree:true});
- size.observe(flow);
+ size.observe(flow);size.observe(root);
  root.addEventListener('load',refit,true);
  fit();
 }

@@ -25,8 +25,9 @@ export function mountFoundationChallenges(root,section,e,renderStudy){
  const cases=foundationCases[section],experiment=foundationExperiments[section];
  if(!cases&&!experiment)return false;
  const modes=[['study','Study views',renderStudy],...(experiment?[['experiment',experiment.label,experiment.mount]]:[]),...(cases?[['cases','Apply it',panel=>renderCases(panel,cases,e)]]:[])];
- root.innerHTML=`<nav class="control-row foundation-challenge-tabs" aria-label="Ways to explore this lesson">${modes.map(([key,name])=>`<button type="button" data-foundation-challenge="${key}" aria-pressed="false">${name}</button>`).join('')}</nav><div class="foundation-challenge-panel"></div>`;
+ root.innerHTML=`<div class="foundation-challenge-toolbar"><nav class="control-row foundation-challenge-tabs" aria-label="Ways to explore this lesson">${modes.map(([key,name])=>`<button type="button" data-foundation-challenge="${key}" aria-pressed="false">${name}</button>`).join('')}</nav><div class="foundation-study-subnav" hidden></div></div><div class="foundation-challenge-panel"></div>`;
  const container=root.lastElementChild;
+ const studySubnav=root.querySelector('.foundation-study-subnav');
  const buttons=[...root.querySelectorAll('[data-foundation-challenge]')];
  const panels=new Map();
  function open(key){
@@ -37,7 +38,10 @@ export function mountFoundationChallenges(root,section,e,renderStudy){
    panels.set(key,panel);
    container.replaceChildren(panel);
    modes.find(mode=>mode[0]===key)[2](panel);
+   const subnav=key==='study'&&panel.querySelector('.section-diagram-nav');
+   if(subnav)studySubnav.append(subnav);
   }else if(container.firstElementChild!==panels.get(key))container.replaceChildren(panels.get(key));
+  studySubnav.hidden=key!=='study'||!studySubnav.firstElementChild;
  }
  buttons.forEach(button=>button.onclick=()=>open(button.dataset.foundationChallenge));
  open('study');

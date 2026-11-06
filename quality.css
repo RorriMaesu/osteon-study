@@ -371,6 +371,10 @@
 .reaction-legend span{display:inline-block;width:22px;margin-right:8px;vertical-align:middle;border-top:3px solid #ffbf91}
 .reaction-legend .reaction-dashed{border-top:3px dashed #9ed9ef}
 .foundation-challenge-tabs{padding-bottom:.55rem;border-bottom:1px solid var(--line)}
+.foundation-challenge-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 4px;border-bottom:1px solid var(--line);break-inside:avoid}
+.foundation-challenge-toolbar :is(.foundation-challenge-tabs,.section-diagram-nav){border:0;margin:0;padding:0}
+.foundation-study-subnav[hidden]{display:none}
+.foundation-study-subnav .section-diagram-nav button{min-height:34px}
 .foundation-challenge-tabs button{min-height:40px}
 .foundation-challenge-panel,.foundation-case,.foundation-experiment{min-width:0}
 .foundation-case,.foundation-experiment{padding:.6rem .2rem}
@@ -396,6 +400,135 @@
 .foundation-experiment .buffer-solid{border-color:#a9dcc2}
 .foundation-experiment .buffer-dashed{border-top-style:dashed;border-color:#ffbf91}
 @media(max-width:700px){.foundation-challenge-tabs button,.foundation-experiment .control-row button{min-height:44px}.foundation-trace{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* The Study Studio fits the viewport. Long content advances through pages. */
+body:has(#study-view.active){height:100dvh;min-height:0;overflow:hidden;display:grid;grid-template-rows:auto minmax(0,1fr) auto}
+body:has(#study-view.active)>main{min-height:0;overflow:hidden}
+#study-view.active{height:100%;min-height:0;min-width:0;display:flex;flex-direction:column;overflow:hidden;margin:0 auto;padding:0;animation:none}
+#study-view.active>.section-intro{flex:none}
+#study-view.active>#study-body,#study-view.active>.lesson-flow-layout,#study-view.active>.reader-layout{flex:1;min-height:0;min-width:0}
+#study-view.active>.reader-layout{height:auto}
+#study-view .lesson-flow-content{min-height:0;overflow:hidden}
+#study-view .flow-body{min-height:0}
+#study-view .lesson-flow-layout{align-items:stretch}
+.lesson-compact-control,.study-mobile-menu{display:none}
+.study-page-root{display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden}
+.study-page-root>.page-tools{margin:4px 0 0;height:35px;padding:3px 0 0}
+.study-page-root>.page-tools[data-page-count="1"]{display:none}
+.study-page-root>.page-window{overflow:hidden;min-height:0;min-width:0}
+.study-page-root .page-flow{box-sizing:border-box;overflow:visible}
+.study-page-root .page-flow :is(figure,svg,canvas,video,img,textarea,.lesson-inspect-window){break-inside:avoid}
+.study-page-root .page-flow :is(.foundation-figure img,.case-crop svg,.section-diagram-media svg,.foundation-tissue-layout svg,.foundation-atlas-layout svg,.fracture-figure svg,.foundation-experiment svg,video,.lab-division svg,.lab-osmosis svg){max-height:min(var(--figure-space,100dvh),calc(var(--study-page-space,100dvh) * .75));width:100%;object-fit:contain}
+.study-page-root .page-flow .lesson-inspect-window{max-height:min(58dvh,calc(var(--study-page-space,100dvh) - 22px))}
+.study-page-root .page-flow .lesson-inspect-window>.lesson-inspect-media{max-height:none!important}
+.study-page-root .page-flow :is(.foundation-studio,#lesson-activity,.lesson-source-preview){overflow:visible;min-height:0}
+.study-page-root .page-flow :is(#lesson-activity,.lesson-source-preview){display:block;padding:0;margin:0;border:0;background:none}
+.study-page-root .page-flow .foundation-studio{padding-bottom:0}
+.study-page-root .page-flow .reader-text{max-height:none;overflow:visible;padding:0}
+.study-page-root .page-flow .reader-text p{break-inside:auto}
+.study-page-root .page-flow :is(.lesson-source-preview,.lesson-source-preview .section-diagram-media){margin:0}
+.study-page-root .page-flow .lesson-source-preview select{min-width:0;max-width:100%;flex:1}
+.study-page-root .page-flow :is(.control-row,.section-diagram-tabs){row-gap:4px}
+.study-page-root .page-flow .section-diagram-content>div>h3{margin:5px 0 7px;font-size:18px}
+.study-page-root .page-flow .foundation-challenge-tabs button{min-height:34px;padding:4px 8px}
+.study-page-root .page-flow :is(.lab-root,.foundation-case,.foundation-experiment){min-height:0;height:auto}
+.lesson-visual-content.study-page-root{overflow:hidden}
+#study-view :is(.reader-page,.reader-paper){min-height:0}
+
+@media(max-width:999px),(max-height:500px){
+ body:has(#study-view.active) .topbar{height:auto;padding:3px 7px;position:static;flex-wrap:nowrap;gap:4px}
+ body:has(#study-view.active) .topbar>:is(.brand,#tutor-launch,#help-btn){display:none}
+ body:has(#study-view.active) .topbar .main-nav{order:0;flex:1;justify-content:space-between;gap:0}
+ body:has(#study-view.active) .topbar .main-nav button{min-height:38px;font-size:11px;padding:4px 7px}
+ body:has(#study-view.active) .study-mobile-menu{display:block;min-height:35px;max-width:57px;padding:2px;font-size:10px}
+ @media(max-width:360px){body:has(#study-view.active) .topbar .main-nav button{font-size:10px;padding-inline:3px}}
+ body:has(#study-view.active)>main{padding:0 6px}
+ body:has(#study-view.active)>footer{display:none}
+ #study-view.active>.section-intro{margin:0;padding:4px 3px;gap:8px;display:flex;align-items:center}
+ #study-view.active>.section-intro h1{font-size:clamp(22px,4vw,30px);line-height:1.05;margin:3px 0}
+ #study-view.active>.section-intro p{display:none}
+ #study-view.active>.section-intro button{min-height:36px;padding:4px 7px;min-width:0;font-size:11px;line-height:1.2}
+ #study-view .lesson-flow-layout{display:flex;flex-direction:column;gap:0}
+ #study-view .lesson-flow-layout>.lesson-nav{display:none!important}
+ #study-view .lesson-flow-content{flex:1;gap:4px;padding:5px 6px}
+ #study-view .lesson-steps{display:flex;flex-wrap:nowrap;gap:5px;padding:0 0 4px}
+ #study-view .lesson-steps>button{display:none}
+ #study-view .lesson-compact-control{display:block;min-height:35px;padding:2px 5px;font-size:12px;min-width:0}
+ #study-view #lesson-short-actions{display:none}
+ #lesson-quick-jump{flex:1}
+ #lesson-step-jump{max-width:37%}
+ #study-view .lesson-explore-tools{margin:0 0 4px;display:flex;flex-wrap:nowrap;gap:4px}
+ #study-view .lesson-explore-tools button{min-width:0;min-height:36px;padding:3px 6px;font-size:11px;line-height:1.15}
+ #study-view .lesson-explore-tools #lesson-atlas{display:none}
+ #study-view .flow-footer{flex-wrap:nowrap;padding:4px 0 0;gap:4px}
+ #study-view .flow-footer button{min-height:36px;padding:3px 6px;font-size:11px;line-height:1.15}
+ #study-view .flow-footer :is(#lesson-quiz,#mark-read,[data-flow-source],[data-flow-objectives]),#study-view .flow-credit{display:none}
+ #study-view .flow-body h2{font-size:23px;line-height:1.15;margin:6px 0}
+ #study-view .flow-body p{font-size:13px;line-height:1.45;margin:5px 0}
+ #study-view .flow-body .flow-question{font-size:16px!important}
+ #study-view .flow-body :is(.flow-goal,.flow-distinction){margin:5px 0;padding:5px 8px}
+ #study-view .flow-body textarea{height:clamp(46px,12dvh,110px);max-height:calc(var(--study-page-space,100dvh) * .6);padding:5px 7px;resize:none}
+ #study-view .reader-layout{display:flex;flex-direction:column;gap:4px}
+ #study-view .reader-sidebar{position:static;display:flex;align-items:center;flex-direction:row;gap:4px;padding:4px}
+ #study-view .reader-sidebar :is(label,#reader-results,#reader-count){display:none}
+ #study-view .reader-sidebar :is(select,input){width:0;flex:1;min-width:0;min-height:34px;margin:0;padding:3px 5px;font-size:12px}
+ #study-view .reader-page{flex:1;min-height:0;padding:4px;display:flex;flex-direction:column;gap:3px}
+ #study-view .reader-toolbar{display:flex;flex-wrap:wrap;gap:4px;margin:0;flex:none}
+ #study-view .reader-toolbar :is(button,select,a){min-height:31px;padding:3px 5px;font-size:11px;margin:0}
+ #study-view .reader-toolbar a{display:flex;align-items:center}
+ #study-view .reader-paper{flex:1;min-height:0;margin:0}
+ #study-view .reader-paper>img{display:block;height:100%;width:100%;max-height:none;object-fit:contain}
+ #study-view .reader-page>p{font-size:9px;margin:0}
+ #study-view.active>.tab-row,#study-view.active>.control-row{margin:2px 0;gap:3px;flex:none}
+ #study-view.active>.tab-row button{font-size:11px;min-height:32px;padding:2px 5px}
+ #study-view .reader-paper.study-page-root{display:flex}
+}
+
+@media(max-height:465px){
+ body:has(#study-view.active)>main{padding:0 4px}
+ body:has(#study-view.active) .topbar{padding-block:1px}
+ body:has(#study-view.active) .topbar .main-nav button{min-height:31px}
+ body:has(#study-view.active) .study-mobile-menu{min-height:29px}
+ #study-view.active>.section-intro:has(#lesson-back),#study-view .lesson-flow-content>.flow-footer{display:none}
+ #study-view .lesson-flow-content{padding:3px 5px;gap:3px}
+ #study-view .lesson-steps{padding-bottom:2px}
+ #study-view .lesson-compact-control,#study-view .lesson-explore-tools button{min-height:31px}
+ #study-view #lesson-short-actions{display:block;max-width:20%}
+ #study-view .flow-body .lesson-explore-tools{margin-bottom:2px}
+ .study-page-root .page-flow :is(.lab-protein-workbench,.muscle-workbench,.lab-osmosis,.lab-division){min-height:0;height:auto}
+ .study-page-root .page-flow .lab-protein-workbench{display:block}
+ .study-page-root .page-flow .lab-process-arrow{margin:3px 0}
+ #study-body .page-flow :is(.chapter-route-grid>button,.lesson-grid>button,.glossary-entry){min-height:0;padding:6px 9px}
+ #study-body .page-flow .glossary-entry{break-inside:auto}
+ #study-body .page-flow .chapter-route-grid>button :is(strong,span,small){margin:0;line-height:1.25}
+}
+
+@media(max-width:999px),(max-height:560px){
+ .study-page-root .page-flow :is(.section-diagram-layout,.foundation-tissue-layout,.foundation-atlas-layout,.motion-lab,.osteon-layout,.muscle-lab,.lab-root,.lab-heading,.chapter-route-grid,.lesson-grid,.glossary-grid,.daily-plan-grid,.foundation-scan-grid){display:block;min-height:0;height:auto;overflow:visible}
+ .study-page-root .page-flow :is(.foundation-scan-grid figure,.chapter-route-grid>button,.lesson-grid>button,.glossary-entry){display:block;width:100%;margin:0 0 5px;break-inside:avoid}
+ .study-page-root .page-flow :is(.lab-options,.foundation-case-choices,.foundation-trace,.flow-topics){display:block}
+ .study-page-root .page-flow :is(.lab-options,.flow-topics)>button{display:inline-block;min-height:32px;margin:2px;break-inside:avoid}
+ .study-page-root .page-flow .foundation-case-choices button{display:block;width:100%;min-height:36px;margin:3px 0;break-inside:avoid}
+ .study-page-root .page-flow .foundation-trace li{break-inside:avoid}
+ .study-page-root .page-flow :is(.lab-root,.foundation-experiment,.foundation-case){padding:4px;margin:0;box-decoration-break:clone}
+ .study-page-root .page-flow :is(.foundation-experiment,.foundation-case,.section-diagram-content)>h3{margin:4px 0}
+ .study-page-root .page-flow :is(.lab-feedback,.foundation-case-feedback,.foundation-experiment [role=status]){font-size:12px;line-height:1.4;min-height:0;margin:4px 0;padding:5px 7px}
+ .study-page-root .page-flow :is(.section-diagram-tabs,.control-row){display:block;margin-block:2px}
+ .study-page-root .page-flow :is(.section-diagram-tabs,.control-row)>:is(button,label,select){min-height:32px;margin:2px 3px 2px 0;break-inside:avoid}
+ .study-page-root .page-flow .control-row>button{width:auto;display:inline-flex;align-items:center}
+ .study-page-root .page-flow .foundation-challenge-tabs{display:flex;flex-wrap:nowrap;gap:4px;padding-bottom:4px}
+ .study-page-root .page-flow .foundation-challenge-tabs>button{flex:0 1 auto;min-width:0;margin:0;padding:3px 7px;font-size:11px;line-height:1.15}
+ .study-page-root .page-flow .section-diagram-tabs label{display:inline-flex}
+ .study-page-root .page-flow .section-diagram-body>.section-diagram-tabs{display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+ .study-page-root .page-flow .section-diagram-body>.section-diagram-tabs .section-diagram-state-picker{font-size:0;margin:0}
+ .study-page-root .page-flow .section-diagram-state-picker select{max-width:min(49vw,240px);font-size:12px}
+ .study-page-root .page-flow .lab-shipping-map{min-height:0}
+ .study-page-root .page-flow .lab-division,.study-page-root .page-flow .lab-osmosis{display:block;min-height:0}
+ .study-page-root .page-flow .lab-division svg,.study-page-root .page-flow .lab-osmosis svg{min-height:0}
+ .study-page-root .page-flow .foundation-trace{margin:3px 0}
+ .study-page-root>.page-tools{height:32px}
+ .study-page-root>.page-tools button{min-width:36px;min-height:28px}
+}
 .section-diagram-state-picker{display:none!important}
 @media(max-width:700px){
  .section-diagram-layout{grid-template-columns:1fr;gap:7px}

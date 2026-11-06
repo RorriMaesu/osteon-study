@@ -17,6 +17,12 @@ export function initWorkspace() {
   setPane(pane);
   const launcher=document.querySelector('#tutor-launch');
   if(launcher)document.querySelector('.topbar').insertBefore(launcher,document.querySelector('#help-btn'));
+  const studyMenu=document.createElement('select');
+  studyMenu.className='study-mobile-menu';
+  studyMenu.setAttribute('aria-label','More Osteon tools');
+  studyMenu.innerHTML='<option value="">More</option><option value="tutor-launch">Socratic tutor</option><option value="help-btn">Help and credits</option>';
+  studyMenu.onchange=()=>{const id=studyMenu.value;studyMenu.value='';if(id)document.getElementById(id)?.click();};
+  document.querySelector('.topbar').append(studyMenu);
   document.querySelectorAll('.viewer-actions button').forEach(button=>{const label=button.getAttribute('aria-label')||button.querySelector('span')?.textContent.trim()||button.textContent.trim();button.setAttribute('aria-label',label);button.title=label;});
   const filters=document.createElement('div');filters.className='desktop-filters';
   filters.innerHTML='<label for="desktop-division">Division</label><select id="desktop-division" aria-label="Skeleton division"></select><label for="desktop-region">Region</label><select id="desktop-region" aria-label="Anatomical region"></select>';
@@ -36,33 +42,31 @@ export function initWorkspace() {
     if(changes.every(c=>c.target.closest?.('.page-tools')))return;
     request();
   });
-  function observe(){observer.observe(main,{childList:true,subtree:true});for(const selector of ['#info-dialog','#tutor-panel'])observer.observe(document.querySelector(selector),{childList:true,subtree:true,attributes:true,attributeFilter:['open']});}
+  function observe(){observer.observe(main,{childList:true,subtree:true});for(const selector of ['#info-dialog','#tutor-panel','.lesson-visual-dialog[open]']){const target=document.querySelector(selector);if(target)observer.observe(target,{childList:true,subtree:true,attributes:true,attributeFilter:['open']});}}
   function dismantle(root,record){
     if(record.window.parentNode===root){while(record.flow.firstChild)root.insertBefore(record.flow.firstChild,record.window);record.window.remove();record.tools.remove();}
-    root.classList.remove('paged-root');records.delete(root);
+    root.classList.remove('paged-root','study-page-root');records.delete(root);
   }
-  function mount(root,label,pinned=[]){
+  function mount(root,label,pinned=[],study=false){
     if(!root||root.getClientRects().length===0)return;
-    // A lab is a coordinated control surface: CSS columns would separate its
-    // diagram from its controls, sometimes leaving a nearly empty first page.
-    if(root.classList.contains('lesson-explore-step')){const old=records.get(root);if(old)dismantle(root,old);return;}
     let record=records.get(root);
     if(record&&record.window.parentNode!==root){records.delete(root);record=null;}
     if(!record){
       const win=document.createElement('div'),flow=document.createElement('div'),tools=document.createElement('nav');
       win.className='page-window';flow.className='page-flow';tools.className='page-tools';tools.setAttribute('aria-label',label+' pages');
       for(const child of [...root.childNodes])if(!pinned.includes(child))flow.append(child);
-      win.append(flow);root.append(win,tools);root.classList.add('paged-root');
+      win.append(flow);root.append(win,tools);root.classList.add('paged-root');root.classList.toggle('study-page-root',study);
       tools.innerHTML=`<button type="button" class="page-prev" aria-label="Previous ${label.toLowerCase()} page">←</button><label class="sr-only">${label} page</label><select aria-label="${label} page"></select><span class="page-status" role="status"></span><button type="button" class="page-next" aria-label="Next ${label.toLowerCase()} page">→</button>`;
       const prior=cache.get(root),signature=flow.textContent;
-      record={window:win,flow,tools,index:prior?.signature===signature?prior.index:0,count:1,width:0,signature,initial:true};records.set(root,record);
+      record={window:win,flow,tools,index:prior?.signature===signature?prior.index:0,count:1,width:0,signature,initial:true,study};records.set(root,record);
       const go=index=>{
         record.index=Math.max(0,Math.min(record.count-1,index));
         win.scrollLeft=record.index*(record.width+24);
+        win.scrollTop=0;
         tools.querySelector('.page-prev').disabled=record.index===0;
         tools.querySelector('.page-next').disabled=record.index===record.count-1;
         tools.querySelector('select').value=String(record.index);
-        tools.querySelector('.page-status').textContent=record.count===1?'All in view':record.count+' pages';
+        tools.querySelector('.page-status').textContent=record.count===1?'All in view':study?`Page ${record.index+1} of ${record.count}`:record.count+' pages';
       };
       record.go=go;
       tools.querySelector('.page-prev').onclick=()=>go(record.index-1);
@@ -72,12 +76,13 @@ export function initWorkspace() {
       // between pointerdown and click (which would cancel the first activation).
       flow.addEventListener('focusin',ev=>{
         if(pointerFocus)return;
-        const rect=ev.target.getBoundingClientRect(),base=win.getBoundingClientRect();
+        const rect=ev.target.getClientRects()[0],base=win.getBoundingClientRect();if(!rect)return;
         go(Math.floor((rect.left-base.left+win.scrollLeft+2)/(record.width+24)));
       });
       win.addEventListener('keydown',ev=>{if(['INPUT','TEXTAREA','SELECT'].includes(ev.target.tagName))return;if(ev.key==='PageDown'||ev.key==='PageUp'){ev.preventDefault();go(record.index+(ev.key==='PageDown'?1:-1));}});
     }
     record.width=record.window.clientWidth;
+    if(study)record.window.style.setProperty('--study-page-space',record.window.clientHeight+'px');
     record.flow.style.columnWidth=record.width+'px';
     const following=record.index===record.count-1;
     const count=Math.max(1,Math.ceil((record.window.scrollWidth+24-2)/(record.width+24)));
@@ -88,9 +93,10 @@ export function initWorkspace() {
     if(root.id==='tutor-messages'&&(record.initial||(following&&stop&&!stop.hidden)))record.index=count-1;
     record.initial=false;
     // Newly generated feedback should be immediately visible after an answer.
-    const feedback=record.flow.querySelector('#concept-feedback:not(:empty),#course-feedback:not(:empty),#spatial-feedback:not(:empty),#exam-feedback:not(:empty),[data-result-focus],#relationship-feedback:not(:empty)');
+    const feedback=record.flow.querySelector('#concept-feedback:not(:empty),#course-feedback:not(:empty),#spatial-feedback:not(:empty),#exam-feedback:not(:empty),[data-result-focus],#relationship-feedback:not(:empty),.foundation-case-feedback[data-result]');
     const signature=feedback?.textContent||'';
-    if(signature&&signature!==record.feedback){const x=feedback.getBoundingClientRect().left-record.window.getBoundingClientRect().left+record.window.scrollLeft;record.index=Math.floor((x+2)/(record.width+24));}
+    if(signature&&signature!==record.feedback){const x=feedback.getClientRects()[0]?.left-record.window.getBoundingClientRect().left+record.window.scrollLeft;if(Number.isFinite(x))record.index=Math.floor((x+2)/(record.width+24));}
+    if(study&&(record.tools.dataset.pageCount==='1')!==(record.count===1))request();
     record.tools.dataset.pageCount=String(record.count);record.feedback=signature;record.signature=record.flow.textContent;record.go(record.index);
   }
   function refresh(){
@@ -98,7 +104,15 @@ export function initWorkspace() {
     document.documentElement.style.setProperty('--nav-height',document.querySelector('.topbar').getBoundingClientRect().height+'px');
     document.documentElement.style.setProperty('--atlas-tools-height',(document.querySelector('#atlas-view>.intro').offsetHeight+tabs.offsetHeight+24)+'px');
     document.querySelector('#specimen-name').title=document.querySelector('#specimen-name').textContent;
-    for(const [root,record]of records){if(!root.isConnected||record.window.parentNode!==root){cache.set(root,record);root.classList.remove('paged-root');records.delete(root);}else if(!desktop.matches)dismantle(root,record);}
+    for(const [root,record]of records){if(!root.isConnected||record.window.parentNode!==root){cache.set(root,record);root.classList.remove('paged-root','study-page-root');records.delete(root);}else if(!desktop.matches&&!record.study)dismantle(root,record);}
+    const study=document.querySelector('#study-view.active');
+    if(study){
+      const flow=study.querySelector('.lesson-content .flow-body'),library=study.querySelector('#study-body'),readerText=study.querySelector('.reader-paper:has(.reader-text)');
+      if(flow)mount(flow,'Lesson',[flow.querySelector('.lesson-explore-tools')],true);
+      else if(library)mount(library,'Study library',[],true);
+      else if(readerText)mount(readerText,'Textbook text',[],true);
+      mount(document.querySelector('.lesson-visual-dialog[open] .lesson-visual-content'),'Full view',[],true);
+    }
     if(desktop.matches){
       syncSelect('[data-division]','#desktop-division');syncSelect('[data-region]','#desktop-region');
       mount(document.querySelector('#structure-list'),'Structure list');
@@ -112,9 +126,7 @@ export function initWorkspace() {
           else if(specialized.classList.contains('exam-layout')){const content=root.querySelector('.exam-question-content');mount(content,'Exam question',[...content.children].filter(n=>n.matches('.quiz-top,.exam-evidence-line,#exam-prompt')));}
           else if(specialized.classList.contains('landmark-bank-layout')||specialized.classList.contains('lab-list-layout')){}else if(specialized.classList.contains('reader-layout')){
             mount(root.querySelector('#reader-results'),'Reading results');
-            if(root.querySelector('.reader-text'))mount(root.querySelector('.reader-paper'),'Textbook text');
-          }else if(specialized.id==='study-body')mount(specialized,'Study content',[...specialized.children].filter(n=>n.classList.contains('control-row')));
-          else if(specialized.classList.contains('lesson-layout'))mount(root.querySelector('.lesson-content .flow-body')||root.querySelector('.lesson-content'),'Lesson step');
+          }else if(specialized.id==='study-body'||specialized.classList.contains('lesson-layout')){}
           else mount(root.querySelector('#course-prompt'),'Course question');
         }else{
           root.classList.remove('workspace-special');
@@ -135,6 +147,7 @@ export function initWorkspace() {
   main.addEventListener('click',ev=>{if(!desktop.matches&&ev.target.closest('#detail-focus'))setPane('specimen');});
   for(const event of ['landmarksource','landmarkcontext','showspecimen'])document.addEventListener(event,()=>{if(!desktop.matches)setPane('specimen');request();});
   document.addEventListener('anatomyready',request);
+  document.addEventListener('lessonvisualchange',request);
   window.addEventListener('resize',request);desktop.addEventListener('change',request);
   main.addEventListener('toggle',request,true);main.addEventListener('load',request,true);
   document.fonts?.ready.then(request);observe();request();

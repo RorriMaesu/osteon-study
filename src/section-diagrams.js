@@ -2,6 +2,7 @@ import {plates} from './representations.js';
 import {sectionPlates} from './section-plates.js';
 import {foundationsVisuals} from './visual-foundations.js';
 import {systemsVisuals} from './visual-systems.js';
+import {lessonTextbookArt} from './textbook-figures.js';
 
 const diagrams={...foundationsVisuals,...systemsVisuals};
 export const newVisualSections=[...new Set([...Object.keys(diagrams),...Object.keys(sectionPlates)])].sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
@@ -14,6 +15,8 @@ export const interactiveSections=new Set([...existingVisualSections,...newVisual
 let serial=0;
 const palette={paper:'#10252c',ink:'#dfefe3',mint:'#a9dcc2',blue:'#9ed9ef',gold:'#ffbf91',rose:'#f08c94',muted:'#79948e'};
 const colors=[palette.mint,palette.gold,palette.blue,palette.rose];
+// Points on the original OpenStax hair, nail and eccrine illustrations.
+const textbookSkinPins=[[[334,126],[408,298],[434,396],[448,275],[350,310]],[[631,505],[582,511],[544,503]],[[452,301],[449,229],[450,170]]];
 
 function flowArt(labels,active,e,sequence){
  const count=labels.length,dx=432/count,w=Math.min(95,dx-13);
@@ -40,19 +43,32 @@ function sceneArt(topic,index,e){
 }
 
 function renderSchematic(root,topic,section,e){
- let index=0;
+ let index=0,preferTextbook=true;
  root.innerHTML=`<div class="section-diagram-tabs" role="group" aria-label="${e(topic.title)} views"><label class="section-diagram-state-picker">Diagram view <select data-diagram-state-select>${topic.states.map(([name],i)=>`<option value="${i}">${e(name)}</option>`).join('')}</select></label>${topic.states.map(([name],i)=>`<button type="button" data-diagram-state="${i}" aria-pressed="false">${e(name)}</button>`).join('')}</div><div class="section-diagram-layout"><figure class="section-diagram-media"><svg viewBox="0 0 480 250" role="img" xmlns="http://www.w3.org/2000/svg"></svg><figcaption>Osteon teaching schematic · OpenStax §${section}${topic.art==='bars'?' · qualitative comparison':''}.</figcaption></figure><div><div class="section-diagram-note" role="status" aria-live="polite"></div>${topic.points?'<div data-diagram-points class="section-diagram-tabs diagram-point-picker" role="group" aria-label="Select a structure"></div>':''}</div></div>`;
  const svg=root.querySelector('svg'),note=root.querySelector('.section-diagram-note'),picker=root.querySelector('[data-diagram-state-select]'),buttons=[...root.querySelectorAll('[data-diagram-state]')];
+ const artToggle=document.createElement('button');
+ artToggle.type='button';
+ root.firstElementChild.append(artToggle);
+ const media=svg.closest('figure'),caption=media.querySelector('figcaption'),schematicCredit=caption.textContent;
  function select(i){
   index=i;const [name,explanation]=topic.states[index];
-  svg.setAttribute('aria-label',topic.title+': '+name);
-  svg.innerHTML=`<rect width="480" height="250" rx="13" fill="${palette.paper}"/>${sceneArt(topic,index,e)}`;
+  const book=lessonTextbookArt(section,i,e),source=preferTextbook&&book;
+  artToggle.hidden=!book;
+  artToggle.textContent=source?'Show schematic':'Show OpenStax art';
+  svg.setAttribute('aria-label',source?source.title:topic.title+': '+name);
+  svg.setAttribute('viewBox',source?source.viewBox:'0 0 480 250');
+  svg.innerHTML=source?source.art:`<rect width="480" height="250" rx="13" fill="${palette.paper}"/>${sceneArt(topic,index,e)}`;
+  media.classList.toggle('section-diagram-source',!!source);
+  caption.innerHTML=source?source.caption:e(schematicCredit);
   const legend=section==='2.3'&&index===3?'<ul class="reaction-legend"><li><span aria-hidden="true" class="reaction-solid"></span>Without enzyme</li><li><span aria-hidden="true" class="reaction-dashed"></span>With enzyme</li><li>Eₐ is the activation barrier. ΔG is the free-energy change.</li></ul>':'';
   note.innerHTML=`<h4>${e(name)}</h4><p>${e(explanation)}</p>${legend}`;
-  const points=topic.points?.[index];
+  const originalPins=topic.points?.[index];
+  const sourcePins=section==='5.2'?textbookSkinPins[i]:null;
+  const points=source?sourcePins?.map(([x,y],n)=>[originalPins[n][0],x,y,originalPins[n][3]]):originalPins;
+  const pointPicker=root.querySelector('[data-diagram-points]');
+  if(pointPicker)pointPicker.hidden=!points;
   if(points){
    svg.insertAdjacentHTML('beforeend',points.map(([,x,y],n)=>`<g data-schematic-pin="${n}" class="schematic-pin"><circle cx="${x}" cy="${y}" r="9"/><text x="${x}" y="${y+4}" text-anchor="middle">${n+1}</text></g>`).join(''));
-   const pointPicker=root.querySelector('[data-diagram-points]');
    pointPicker.innerHTML=points.map(([name],n)=>`<button type="button" aria-pressed="false">${n+1}. ${e(name)}</button>`).join('');
    const pins=[...svg.querySelectorAll('[data-schematic-pin]')],pointButtons=[...pointPicker.querySelectorAll('button')];
    function pick(n){
@@ -67,6 +83,7 @@ function renderSchematic(root,topic,section,e){
   picker.value=String(index);
   buttons.forEach((b,n)=>b.setAttribute('aria-pressed',String(n===index)));
  }
+ artToggle.onclick=()=>{preferTextbook=!preferTextbook;select(index);};
  buttons.forEach((b,i)=>b.onclick=()=>select(i));
  picker.onchange=()=>select(+picker.value);
  select(0);
