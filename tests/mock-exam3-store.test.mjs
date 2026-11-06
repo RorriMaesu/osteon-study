@@ -40,6 +40,20 @@ test('mock state round-trips frozen answers, pending review, personal notes and 
  assert.equal(validMockState(restored),false,'Editing frozen submitted answers invalidates restored state');
 });
 
+test('editable card suggestions and destination survive backups while older notes remain valid',()=>{
+ const state=exampleState(),storage=memoryStorage(),key=Object.keys(state.notes)[0];
+ assert.ok(validMockState(state),'legacy notes do not require new fields');
+ state.notes[key].cardDraft='My wording: cartilage model is replaced by bone.';
+ state.notes[key].cardSide='back';
+ writeMockState(storage,state);
+ assert.equal(readMockState(storage).notes[key].cardDraft,state.notes[key].cardDraft);
+ assert.equal(parseMockBackup(mockBackup(state)).notes[key].cardSide,'back');
+ for(const patch of [{cardDraft:'x'.repeat(181)},{cardDraft:4},{cardSide:'left'},{cardSide:null}]){
+  const bad=structuredClone(state);Object.assign(bad.notes[key],patch);assert.equal(validMockState(bad),false);
+ }
+ state.notes[key].cardDraft='';assert.ok(validMockState(state),'an intentionally cleared suggestion is preserved');
+});
+
 test('malformed saved data is rejected without overwriting its raw recovery copy',()=>{
  const storage=memoryStorage();
  for(const raw of ['{broken','null','{}','{"schema":2}','{"schema":1,"history":[]}']){

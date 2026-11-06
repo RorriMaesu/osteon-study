@@ -153,6 +153,10 @@ export function isWrittenModelQualified(record,{model,endpoint,models=[],modelEn
   const selected=Array.isArray(record?.fixtureIds)?record.fixtureIds.map(id=>fixtures.find(f=>f.id===id)):[];
   if(!selected.length||selected.some(f=>!f)||new Set(record.fixtureIds).size!==selected.length)return false;
   const covered=[...new Set(selected.map(f=>f.questionId))].sort();
+  // A rubric must pass every currently required case. New cases for an already
+  // covered question invalidate its earlier check; unrelated rubrics do not.
+  const required=fixtures.filter(f=>covered.includes(f.questionId));
+  if(required.length!==selected.length||required.some(f=>!record.fixtureIds.includes(f.id)))return false;
   return object(record)&&record.schema===1&&record.passed===true&&!!identity&&record.model===model&&
     record.modelIdentity===identity&&record.promptVersion===WRITTEN_PROMPT_VERSION&&
     record.fixtureIdentity===fixtureIdentity(selected)&&JSON.stringify(record.rubricIdentities)===JSON.stringify(rubricIdentities(questions))&&
@@ -172,6 +176,8 @@ export class WrittenAnswerJudge {
     if (!endpoints.includes(endpoint)) throw new Error('Written grading only connects to Ollama on this computer.');
     const shared = !this.fetcher;
     if (shared && (endpoint!==localAI.state.endpoint || model!==localAI.state.model)) throw new Error('The selected local model changed. Reopen grading and try again.');
+    const connectedIdentity=shared?localModelIdentity(localAI.state.models.find(m=>m.name===model),endpoint):'';
+    if(shared&&!connectedIdentity)throw new Error('Refresh Local AI setup before reviewing this answer.');
     const client = shared ? localAI.client : new OllamaClient(endpoint,this.fetcher);
     const current = await client.connect(signal);
     const entry = current.models.find(m=>m.name===model);
@@ -179,6 +185,7 @@ export class WrittenAnswerJudge {
     const info = await client.show(model,signal), problem = localModelProblem(entry,info);
     if (problem) throw new Error(problem);
     const identity=localModelIdentity(entry,endpoint);
+    if(shared&&identity!==connectedIdentity)throw new Error('The installed model changed since connection setup. Recheck Local AI setup and the grading model before reviewing this answer.');
     const schema=writtenReviewSchema(question);
     const payload={question:question.prompt, studentResponse:response,
       rubric:{id:question.rubric.id,version:question.rubric.version,criteria:rubricCriteria(question)},
@@ -199,7 +206,8 @@ export class WrittenAnswerJudge {
     if (info.capabilities?.includes('thinking')) body.think=false;
     const result=await client.request('chat',{body,signal,timeout});
     signal?.throwIfAborted();
-    if (shared && (client!==localAI.client || model!==localAI.state.model || endpoint!==localAI.state.endpoint)) {
+    if (shared && (client!==localAI.client || model!==localAI.state.model || endpoint!==localAI.state.endpoint ||
+      connectedIdentity!==localModelIdentity(localAI.state.models.find(m=>m.name===model),endpoint))) {
       throw new Error('The selected local model changed during review. This reply was not applied.');
     }
     if (result?.done!==true || result.done_reason==='length' || !text(result.message?.content,18000)) {
@@ -207,6 +215,11 @@ export class WrittenAnswerJudge {
     }
     let parsed;
     try { parsed=JSON.parse(result.message.content); } catch { throw new Error('Ollama returned unreadable rubric feedback. The written answer remains pending.'); }
+    // Model tags can be replaced while a generation is running. Do not attach a
+    // verified old model identity to a reply after its installed weights change.
+    const after=await client.connect(signal);
+    if(localModelIdentity(after.models.find(m=>m.name===model),endpoint)!==identity)throw new Error('The installed model changed during review. Recheck Local AI setup; this reply was not applied.');
+    signal?.throwIfAborted();
     const review=interpretWrittenReview(parsed,{question,response,submissionId,model,modelIdentity:identity,endpoint});
     if (shared) localAI.markResponded(model);
     return review;

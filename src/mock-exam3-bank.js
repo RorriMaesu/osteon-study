@@ -1,5 +1,8 @@
 // Authored from the verified Exam 3 blueprint. No live model generates scored content.
 // Course citations identify evidence; they do not imply access to the instructor's Exam 3.
+import {mockExam3WiderQuestions} from './mock-exam3-wider-bank.js';
+export {mockExam3WiderQuestions,mockExam3WiderForm,MOCK_EXAM3_WIDER_VERSION,
+ mockExam3WiderQuestions as mockExam3CoverageQuestions,mockExam3WiderForm as mockExam3CoverageForm} from './mock-exam3-wider-bank.js';
 const deepFreeze = value => { if (value && typeof value === 'object' && !Object.isFrozen(value)) { Object.freeze(value); for (const child of Object.values(value)) deepFreeze(child); } return value; };
 
 export const MOCK_EXAM3_VERSION = "2026-11-06.1";
@@ -5185,7 +5188,7 @@ export const mockExam3Calibration = deepFreeze([
 ]);
 
 export const mockExam3Variants = mockExam3Rotations;
-export const mockExam3AllQuestions = Object.freeze([...mockExam3Questions, ...mockExam3Rotations]);
+export const mockExam3AllQuestions = Object.freeze([...mockExam3Questions, ...mockExam3Rotations, ...mockExam3WiderQuestions]);
 export const mockExam3Lookup = new Map(mockExam3AllQuestions.map(question => [question.id, question]));
 export function mockExam3Related(questionId) {
  const original = mockExam3Lookup.get(questionId);

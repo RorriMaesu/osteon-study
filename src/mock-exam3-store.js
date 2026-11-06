@@ -10,7 +10,9 @@ export function validMockState(x){
  if(x.active!==null&&(!validMockSession(x.active)||x.active.status!=='draft'))return false;
  if(!record(x.notes)||Object.keys(x.notes).length>1200||!record(x.card))return false;
  if(!['front','back'].every(side=>Array.isArray(x.card[side])&&x.card[side].length===24&&x.card[side].every(t=>typeof t==='string'&&t.length<=180)))return false;
- return Object.entries(x.notes).every(([key,n])=>safeKey(key)&&record(n)&&['confusion','rule','retrieval'].every(k=>typeof n[k]==='string'&&n[k].length<=2000)&&Number.isFinite(n.updatedAt)&&n.updatedAt>=0);
+ return Object.entries(x.notes).every(([key,n])=>safeKey(key)&&record(n)&&['confusion','rule','retrieval'].every(k=>typeof n[k]==='string'&&n[k].length<=2000)&&Number.isFinite(n.updatedAt)&&n.updatedAt>=0&&
+  (n.cardDraft===undefined||typeof n.cardDraft==='string'&&n.cardDraft.length<=180)&&
+  (n.cardSide===undefined||['front','back'].includes(n.cardSide)));
 }
 export function readMockState(storage){
  const raw=storage.getItem(MOCK_EXAM3_STORAGE_KEY);
