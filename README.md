@@ -31,7 +31,7 @@ The new **111-second 1080p tour** shows 3D navigation, muscles and Peel, landmar
 
 ## Nervous system in the 3D Atlas
 
-Turn on **Nerves** in the atlas header to add the nervous system to your current view. **Browse → Nerves** searches by name, cranial nerve number, or common aliases. Select a result to see its modeled anatomy and use **Follow nerve** for named stops along selected routes. **Fade anatomy** exposes structures beneath bone or muscle. [Nervous system coverage](https://rorrimaesu.github.io/osteon-study/nerve-coverage.html)
+Turn on **Nerves** in the atlas header to add the nervous system to your current view. **Browse → Nerves** searches by name, cranial nerve number, or common aliases. Select a result to see its modeled anatomy and use **Follow nerve** for named stops along selected routes. **Fade anatomy** exposes structures beneath bone or muscle. [Nervous system coverage](https://rorrimaesu.github.io/osteon-study/nerve-coverage.html) · [Three-question identification drill](https://rorrimaesu.github.io/osteon-study/nerve-recall.html)
 
 ## Ligaments in the 3D Atlas
 

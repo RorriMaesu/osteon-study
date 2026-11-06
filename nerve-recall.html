@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Osteon · Nerve identification</title>
+<style>
+ :root{color-scheme:dark;background:#101b21;color:#e6efea;font:16px/1.45 system-ui;--line:#395457;--mint:#bce3d0;--quiet:#b1c8c9}
+ *{box-sizing:border-box}
+ body{margin:auto;min-height:100dvh;max-width:1170px;padding:clamp(10px,3vw,28px);display:grid;grid-template-rows:auto minmax(0,1fr);gap:12px}
+ a{color:var(--mint)}
+ header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+ h1{font:clamp(24px,5vw,42px)/1 Georgia;margin:4px 0}
+ header p,.position{color:var(--quiet);margin:0;font-size:.82rem}
+ main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(290px,1fr);gap:14px;align-items:center}
+ main:has(figure[hidden]){grid-template-columns:minmax(0,520px);justify-content:center;align-content:center}
+ figure{margin:0;min-width:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:6px;align-items:center}
+ figure img{width:100%;height:min(62dvh,530px);object-fit:contain;background:#14252b;border:1px solid var(--line);border-radius:12px}
+ figcaption{color:var(--quiet);text-align:center;font-size:.85rem}
+ .card{padding:clamp(12px,2vw,22px);border:1px solid var(--line);border-radius:12px;background:#17282d}
+ .card p{margin:8px 0}
+ fieldset{border:0;margin:0;padding:0;display:grid;gap:6px}
+ legend{font-weight:700;margin-bottom:8px}
+ #choices{display:grid;gap:5px}
+ label{display:flex;align-items:center;gap:8px;padding:7px 9px;min-height:38px;background:#1d3539;border:1px solid #486360;border-radius:7px;font-size:.91rem}
+ label:has(input:checked){border-color:var(--mint);background:#2c4a43}
+ input{accent-color:var(--mint)}
+ button{font:inherit;color:#122822;background:var(--mint);border:1px solid var(--mint);border-radius:7px;cursor:pointer;padding:7px 12px;min-height:40px}
+ button:disabled{opacity:.55;cursor:default}
+ :focus-visible{outline:2px solid #defef2;outline-offset:3px}
+ .actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:9px}
+ .feedback{color:#d9e8df;font-size:.9rem}
+ [hidden]{display:none!important}
+ @media(max-width:680px){
+  main{grid-template-columns:1fr;gap:8px;align-content:start}
+  figure img{height:min(39dvh,390px);min-height:140px}
+  label{min-height:34px;padding-block:4px}
+  header p{display:none}
+ }
+ @media(max-width:680px) and (max-height:650px){figure img{height:30dvh;min-height:115px}}
+</style>
+<header>
+ <div><h1>Nerve identification</h1><p>Three views rendered from the Osteon atlas</p></div>
+ <a href="./#practice">← Practice lab</a>
+</header>
+<main>
+ <figure><img id="specimen" width="494" height="465" alt=""><figcaption id="orientation"></figcaption></figure>
+ <section class="card" aria-label="Nerve practice">
+  <p id="position" class="position"></p>
+  <form id="question">
+   <fieldset><legend>Which nerve is highlighted?</legend><div id="choices"></div></fieldset>
+   <div class="actions"><button id="check" type="submit" disabled>Check answer</button></div>
+  </form>
+  <p id="feedback" class="feedback" role="status"></p>
+  <div class="actions" id="continue" hidden><button type="button" id="next">Next nerve</button><a id="explore" href="./#atlas">Explore this nerve ↗</a></div>
+ </section>
+</main>
+<script>
+const examples=[
+ {image:'radial',key:'Radial nerve.r',view:'Posterior view of the right upper arm',choices:['Median nerve','Ulnar nerve','Radial nerve'],answer:2,explanation:'The radial nerve winds around the posterior humerus in the radial groove before continuing toward the lateral elbow.'},
+ {image:'sciatic',key:'Sciatic nerve.r',view:'Posterior view of the pelvis and thighs',choices:['Femoral nerve','Sciatic nerve','Obturator nerve'],answer:1,explanation:'The sciatic nerve leaves the pelvis and descends in the posterior thigh. The femoral nerve follows an anterior route.'},
+ {image:'median',key:'Median nerve.r',view:'Palmar view of the right wrist',choices:['Median nerve','Superficial radial nerve','Ulnar nerve'],answer:0,explanation:'The median nerve passes through the carpal tunnel. The ulnar nerve enters the hand through a separate passage on the little-finger side.'}
+];
+const get=id=>document.getElementById(id),form=get('question'),choices=get('choices'),check=get('check'),feedback=get('feedback'),next=get('next'),continuation=get('continue'),figure=document.querySelector('figure');
+let index=0,correct=0;
+function show(){
+ const item=examples[index];
+ figure.hidden=false;form.hidden=false;continuation.hidden=true;check.disabled=true;feedback.textContent='';
+ get('position').textContent='Question '+(index+1)+' of '+examples.length;
+ get('orientation').textContent=item.view;
+ const specimen=get('specimen');
+ specimen.alt=item.view+' with one nerve highlighted';
+ specimen.src='assets/nerve-practice/'+item.image+'.png';
+ choices.replaceChildren();
+ item.choices.forEach((name,i)=>{
+  const label=document.createElement('label'),radio=document.createElement('input');
+  radio.type='radio';radio.name='answer';radio.value=String(i);radio.onchange=()=>{check.disabled=false;};
+  label.append(radio,document.createTextNode(name));choices.append(label);
+ });
+}
+form.onsubmit=event=>{
+ event.preventDefault();
+ const choice=new FormData(form).get('answer');
+ if(choice===null||check.disabled)return;
+ const item=examples[index],passed=Number(choice)===item.answer;
+ if(passed)correct++;
+ check.disabled=true;form.hidden=true;
+ feedback.textContent=(passed?'Correct. ':'You chose '+item.choices[Number(choice)].toLowerCase()+'. The answer is the '+item.choices[item.answer].toLowerCase()+'. ')+item.explanation;
+ next.textContent=index+1===examples.length?'See results':'Next nerve';
+ get('explore').href='./?nerve='+encodeURIComponent(item.key)+'#atlas';
+ get('explore').hidden=false;continuation.hidden=false;next.focus({preventScroll:true});
+};
+next.onclick=()=>{
+ if(index===examples.length){index=0;correct=0;show();choices.querySelector('input').focus({preventScroll:true});return;}
+ index++;
+ if(index<examples.length){show();choices.querySelector('input').focus({preventScroll:true});return;}
+ form.hidden=true;figure.hidden=true;get('position').textContent='Practice complete';
+ feedback.textContent=correct+' of '+examples.length+' correct.';
+ next.textContent='Try again';get('explore').hidden=true;
+};
+show();
+</script>
+</html>
