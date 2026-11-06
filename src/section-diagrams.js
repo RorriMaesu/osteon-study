@@ -41,7 +41,7 @@ function sceneArt(topic,index,e){
 
 function renderSchematic(root,topic,section,e){
  let index=0;
- root.innerHTML=`<div class="section-diagram-tabs" role="group" aria-label="${e(topic.title)} views"><label class="section-diagram-state-picker">Diagram view <select data-diagram-state-select>${topic.states.map(([name],i)=>`<option value="${i}">${e(name)}</option>`).join('')}</select></label>${topic.states.map(([name],i)=>`<button type="button" data-diagram-state="${i}" aria-pressed="false">${e(name)}</button>`).join('')}</div><div class="section-diagram-layout"><figure class="section-diagram-media"><svg viewBox="0 0 480 250" role="img" xmlns="http://www.w3.org/2000/svg"></svg><figcaption>Osteon teaching schematic · OpenStax §${section}${topic.art==='bars'?' · qualitative comparison':''}.</figcaption></figure><div class="section-diagram-note" role="status" aria-live="polite"></div></div>`;
+ root.innerHTML=`<div class="section-diagram-tabs" role="group" aria-label="${e(topic.title)} views"><label class="section-diagram-state-picker">Diagram view <select data-diagram-state-select>${topic.states.map(([name],i)=>`<option value="${i}">${e(name)}</option>`).join('')}</select></label>${topic.states.map(([name],i)=>`<button type="button" data-diagram-state="${i}" aria-pressed="false">${e(name)}</button>`).join('')}</div><div class="section-diagram-layout"><figure class="section-diagram-media"><svg viewBox="0 0 480 250" role="img" xmlns="http://www.w3.org/2000/svg"></svg><figcaption>Osteon teaching schematic · OpenStax §${section}${topic.art==='bars'?' · qualitative comparison':''}.</figcaption></figure><div><div class="section-diagram-note" role="status" aria-live="polite"></div>${topic.points?'<div data-diagram-points class="section-diagram-tabs diagram-point-picker" role="group" aria-label="Select a structure"></div>':''}</div></div>`;
  const svg=root.querySelector('svg'),note=root.querySelector('.section-diagram-note'),picker=root.querySelector('[data-diagram-state-select]'),buttons=[...root.querySelectorAll('[data-diagram-state]')];
  function select(i){
   index=i;const [name,explanation]=topic.states[index];
@@ -49,6 +49,21 @@ function renderSchematic(root,topic,section,e){
   svg.innerHTML=`<rect width="480" height="250" rx="13" fill="${palette.paper}"/>${sceneArt(topic,index,e)}`;
   const legend=section==='2.3'&&index===3?'<ul class="reaction-legend"><li><span aria-hidden="true" class="reaction-solid"></span>Without enzyme</li><li><span aria-hidden="true" class="reaction-dashed"></span>With enzyme</li><li>Eₐ is the activation barrier. ΔG is the free-energy change.</li></ul>':'';
   note.innerHTML=`<h4>${e(name)}</h4><p>${e(explanation)}</p>${legend}`;
+  const points=topic.points?.[index];
+  if(points){
+   svg.insertAdjacentHTML('beforeend',points.map(([,x,y],n)=>`<g data-schematic-pin="${n}" class="schematic-pin"><circle cx="${x}" cy="${y}" r="9"/><text x="${x}" y="${y+4}" text-anchor="middle">${n+1}</text></g>`).join(''));
+   const pointPicker=root.querySelector('[data-diagram-points]');
+   pointPicker.innerHTML=points.map(([name],n)=>`<button type="button" aria-pressed="false">${n+1}. ${e(name)}</button>`).join('');
+   const pins=[...svg.querySelectorAll('[data-schematic-pin]')],pointButtons=[...pointPicker.querySelectorAll('button')];
+   function pick(n){
+    const [name,,,detail]=points[n];
+    note.innerHTML=`<h4>${e(name)}</h4><p>${e(detail)}</p>`;
+    pins.forEach((pin,i)=>pin.classList.toggle('active',i===n));
+    pointButtons.forEach((button,i)=>button.setAttribute('aria-pressed',String(i===n)));
+   }
+   pins.forEach((pin,n)=>pin.onclick=()=>pick(n));
+   pointButtons.forEach((button,n)=>button.onclick=()=>pick(n));
+  }
   picker.value=String(index);
   buttons.forEach((b,n)=>b.setAttribute('aria-pressed',String(n===index)));
  }

@@ -5,11 +5,14 @@ export function fractureSVG(type='spiral',{id='diagram',label=false,hero=false,s
 const uid=id+'-'+(++serial),status=['open','closed'].includes(type)?type:skinStatus;
 const open=status==='open',skin=status!=='hidden';
 const tissue='M60 32Q48 210 65 397H172Q190 240 172 32Z';
-const skinEdge=open?'M178 202Q176 116 172 32H60Q48 210 65 397H172Q181 308 179 235':'M60 32Q48 210 65 397H172Q190 240 172 32Z';
+const leftOpening=type==='greenstick';
+const skinEdge=!open?tissue:leftOpening?'M56 200Q54 110 60 32H172Q190 240 172 397H65Q57 310 55 232':'M178 202Q176 116 172 32H60Q48 210 65 397H172Q181 308 179 235';
+const fractureEdgeY={oblique:199,spiral:239,comminuted:223,impacted:211,transverse:213,open:210,closed:210}[type]??213;
+const wound=leftOpening?'M56 200L79 205 110 205V218L79 222 55 232':`M178 202L160 210 124 ${fractureEdgeY-6}V${fractureEdgeY+7}L159 227 179 235`;
 return `<svg class="bone-svg ${hero?'hero-bone':''}" viewBox="0 0 240 440" role="img" aria-labelledby="${uid}-title"><title id="${uid}-title">${label?type+' fracture':'Schematic long bone showing the fracture to classify'}</title><defs><linearGradient id="${uid}-bone" x1="0" x2="1"><stop stop-color="#ede9db"/><stop offset=".45" stop-color="#fffcf1"/><stop offset="1" stop-color="#d4d4c5"/></linearGradient><clipPath id="${uid}-clip"><path d="${outline}"/></clipPath></defs>
 <g transform="${hero?'rotate(17 120 220)':''}">
 ${skin?`<path d="${tissue}" fill="#edc9b2" opacity=".72"/><path d="${skinEdge}" stroke="#9c5a4e" stroke-width="4" fill="none" data-skin-edge="${status}"/>`:''}
-${open?'<path d="M178 202L160 210 125 212V226L159 227 179 235" fill="#723d47" stroke="#f0a694" stroke-width="2" data-wound-channel="true"/>':''}
+${open?`<path d="${wound}" fill="#723d47" stroke="#f0a694" stroke-width="2" data-wound-channel="true"/>`:''}
 <path d="${outline}" fill="url(#${uid}-bone)" stroke="#748077" stroke-width="2"/><path d="M115 114 Q112 218 119 320" fill="none" stroke="#c4bd9e" stroke-width="10" opacity=".22"/>
 <g clip-path="url(#${uid}-clip)" stroke="#c6bb9b" stroke-width="1" opacity=".58">${Array.from({length:9},(_,i)=>`<path d="M${69+i*10} 29 l35 40 m-31 -8 l40 -32 M${75+i*10} 358 l30 37 m-34 -8 l40 -28"/>`).join('')}</g>
 <path class="fracture-line" d="${fractureLines[type]||''}" fill="none" stroke="#b64c3c" stroke-width="3.5" stroke-linecap="round"/>

@@ -358,6 +358,12 @@
 .section-diagram-note h4,.section-diagram-note p{margin:0}
 .section-diagram-note h4{margin-bottom:4px;color:var(--mint);font-size:15px}
 .section-diagram-note p{font-size:13px;line-height:1.45}
+.diagram-point-picker{margin-top:.55rem}
+.schematic-pin{cursor:pointer}
+.schematic-pin circle{fill:#16353a;stroke:#fff0b5;stroke-width:2}
+.schematic-pin text{font:700 11px var(--sans);fill:#fff2dc;pointer-events:none}
+.schematic-pin:is(:hover,.active) circle{fill:#fff0b5;stroke:#16353a}
+.schematic-pin:is(:hover,.active) text{fill:#16353a}
 .valve-leaflet{fill:none;stroke:#f6c5c9;stroke-width:7;stroke-linecap:round;transform:rotate(var(--valve-angle));animation:valve-position .42s ease-out}
 @keyframes valve-position{from{transform:rotate(var(--valve-start))}}
 @media(prefers-reduced-motion:reduce){.valve-leaflet{animation:none}}
@@ -371,6 +377,7 @@
 .foundation-case h3,.foundation-experiment h3{font-size:clamp(1rem,2vw,1.3rem);margin:.4rem 0;line-height:1.35}
 .foundation-case-choices{display:grid;gap:.5rem;margin:.75rem 0}
 .foundation-case-choices button{min-height:44px;text-align:left;white-space:normal}
+.case-crop svg{display:block;width:100%;height:auto;max-height:min(var(--figure-space,300px),300px);background:#f1eee4;border-radius:8px}
 .foundation-case-feedback,.foundation-experiment [role=status]{background:#172f36;border:1px solid #45655f;border-radius:8px;padding:.65rem .8rem;line-height:1.5}
 .foundation-case-feedback[data-result=correct]{border-color:#7fa784}
 .foundation-case-feedback[data-result=retry]{border-color:#bc967c}

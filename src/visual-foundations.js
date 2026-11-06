@@ -42,13 +42,6 @@ function reactions(i){
  return left.map((g,n)=>beads(90,95+n*54,g)).join('')+arrow(205,121,68)+right.map((g,n)=>beads(345,95+n*54,g)).join('')+label(240,216,['Synthesis','Decomposition','Exchange'][i]);
 }
 function skin(i,kind){
- if(kind==='depth'){
-  const layers=[['Epidermis','#d7a395',32,30],['Dermis','#b77180',62,52],['Hypodermis','#bf9a74',114,37],['Deep fascia','#9eacb7',151,21],['Muscle','#c8877c',172,34],['Bone','#ded4b8',206,27]];
-  const tissue=layers.map(([name,color,y,h])=>box(74,y,332,h-1,color)+label(320,y+h/2+5,name).replace('#e1efe5','#14282e')).join('');
-  if(i===4)return tissue+`<path d="M104 33Q144 68 182 33" stroke="#f1bcc3" stroke-width="8" fill="none"/>`+label(144,94,'Scar');
-  const bottom=[49,88,114,221][i];
-  return tissue+`<path d="M102 32H189L181 ${bottom-4}Q145 ${bottom+4} 110 ${bottom-4}Z" fill="#572d40" stroke="#ffe0a6" stroke-width="2"/>`;
- }
  if(kind==='layers'&&i===4){
   const names=['Corneum','Lucidum','Granulosum','Spinosum','Basale'],colors=['#e5b5a0','#d7d6b0','#ac8f99','#996d86','#705f85'];
   return names.map((n,j)=>box(76,29+j*36,328,34,colors[j])+label(241,51+j*36,n).replace('#e1efe5',j<3?'#16262f':'#f6f0ee')).join('')+label(240,230,'Lucidum is present in thick skin');
@@ -62,10 +55,17 @@ function skin(i,kind){
  return artwork+`<path d="M94 123q23-20 46 0t46 0 46 0" fill="none" stroke="${i===0?'#ffada5':'#9ed9ef'}" stroke-width="${i===0?13:5}"/>`+
  (i===0?dot(128,23,7)+dot(165,18,5)+line(128,32,0,-12,'#9ed9ef')+line(165,30,0,-12,'#9ed9ef'):'')+label(166,160,i===0?'Vessels dilate':'Vessels constrict');
 }
+export function burnSectionArt(depth,width=87){
+ const layers=[['Epidermis','#d7a395',32,30],['Dermis','#b77180',62,52],['Hypodermis','#bf9a74',114,37],['Deep fascia','#9eacb7',151,21],['Muscle','#c8877c',172,34],['Bone','#ded4b8',206,27]];
+ const tissue=layers.map(([name,color,y,h])=>box(74,y,332,h-1,color)+label(347,y+h/2+5,name).replace('#e1efe5','#14282e')).join('');
+ if(depth===4)return tissue+'<path d="M104 33Q144 68 182 33" stroke="#f1bcc3" stroke-width="8" fill="none"/>'+label(144,94,'Scar');
+ const left=75,right=left+width,bottom=[49,88,114,221][depth];
+ return tissue+`<path d="M${left} 32H${right}L${right-4} ${bottom-3}Q${left+width/2} ${bottom+3} ${left+4} ${bottom-3}Z" fill="#572d40" stroke="#ffe0a6" stroke-width="2"/>`;
+}
 function accessory(i){
- if(i===0)return box(85,59,312,119,'#a96576')+
-  `<path d="M148 37L193 152Q206 187 227 164L191 59" fill="#694956" stroke="#ffd0a7" stroke-width="5"/><path d="M181 94L121 119" stroke="#ffbf91" stroke-width="7"/><path d="M188 84Q230 72 239 102Q214 127 192 107" fill="#dba78b"/>`+label(240,225,'Hair follicle with associated structures');
- if(i===1)return `<path d="M88 123Q125 80 193 86H365Q398 96 399 123L366 169H109Z" fill="#a96576"/><path d="M146 95Q228 73 367 87L377 103H157Z" fill="#e5c2b0"/>`+dot(164,111,10,'#ffbf91')+arrow(202,63,99)+label(240,220,'Nail matrix supplies cells to the plate');
+ if(i===0)return box(85,68,312,136,'#a96576')+
+  `<path d="M167 68L226 166" fill="none" stroke="#f1bd99" stroke-width="30" stroke-linecap="round"/><path d="M183 102L121 76" stroke="#ffd082" stroke-width="9" stroke-linecap="round"/><path d="M194 103L227 100" stroke="#e5ba85" stroke-width="9"/><path d="M147 31Q180 87 222 164" stroke="#4d3334" stroke-width="9" stroke-linecap="round" fill="none"/>`+dot(226,166,10,'#d48187')+dot(228,100,13,'#e8ba82')+dot(245,91,12,'#e8ba82')+dot(250,107,13,'#e8ba82');
+ if(i===1)return `<path d="M88 123Q125 80 193 86H365Q398 96 399 123L366 169H109Z" fill="#a96576"/><path d="M146 95Q228 73 367 87L377 103H157Z" fill="#e5c2b0"/><path d="M172 108Q269 103 368 106" fill="none" stroke="#f0a594" stroke-width="6"/>`+dot(164,113,10,'#ffbf91')+arrow(202,63,99);
  const gland=`<path d="M209 159q-30-18 5-32q30 11-5 31q-27 25 11 28q21-7 6-24q-12-10-4-25" fill="none" stroke="#9ed9ef" stroke-width="6"/>`;
  return box(75,65,326,132,'#a96576')+(i===3?`<path d="M264 32l54 152" stroke="#382f42" stroke-width="16"/>`:'')+gland+
  (i===2?line(213,127,0,-62,'#9ed9ef'):strokeGland())+label(240,229,i===2?'Eccrine duct opens on the skin surface':'Apocrine duct opens into a hair follicle');
@@ -108,8 +108,7 @@ export const foundationsVisuals={
  '1.3':{title:'How the body turns a meal into usable materials',art:'sequence',states:[
   ['Break down','Catabolism splits molecules. Digestion makes smaller building blocks available, and cellular catabolism can yield energy.','Break|down'],
   ['Transfer energy','Cells capture part of the energy released by catabolism in ATP.','Transfer|energy'],
-  ['Build','Anabolism uses energy and building blocks to make larger molecules. Growth and tissue repair depend on synthesis.','Build'],
-  ['Respond','Cells detect signals and change activity. Coordinated muscle activity can produce a movement.','Respond']
+  ['Build','Anabolism uses energy and building blocks to make larger molecules. Growth and tissue repair depend on synthesis.','Build']
  ]},
  '1.4':{title:'Follow the resources that keep cells functioning',art:'sequence',states:[
   ['Exchange','Oxygen diffuses at the lung surface. Food yields nutrients that are absorbed in the digestive tract.','Exchange'],
@@ -166,7 +165,12 @@ export const foundationsVisuals={
   ['Deep fascia','Dense connective tissue lies deeper and helps organize or wrap muscles and other structures.'],
   ['Epidermal strata','The basal layer supplies keratinocytes. As they move outward, they pass through the spinosum and granulosum toward the corneum. The lucidum is distinct in thick skin such as the palms and soles.']
  ]},
- '5.2':{title:'Compare hair, nails and sweat gland ducts',art:accessory,states:[
+ '5.2':{title:'Compare hair, nails and sweat gland ducts',art:accessory,points:[
+  [['Hair shaft',157,48,'The part of the hair projecting above the skin.'],['Hair root',202,127,'The portion of the hair within the follicle.'],['Hair matrix',226,166,'Dividing cells in the bulb contribute to the hair.'],['Sebaceous gland',245,99,'This gland releases oily sebum into the follicle.'],['Arrector pili',138,83,'This smooth muscle pulls on the follicle.']],
+  [['Nail plate',284,90,'The rigid plate moves distally as cells are added proximally.'],['Nail bed',270,108,'The epithelium beneath the plate supports it.'],['Nail matrix',164,113,'Matrix cells generate most of the nail plate.']],
+  [['Secretory coil',213,165,'The coiled portion produces sweat.'],['Duct',213,95,'The duct connects the coil to the surface.'],['Surface pore',213,65,'The duct opens directly onto the skin.']],
+  [['Secretory coil',213,165,'The gland produces fluid in this deeper region.'],['Duct',254,114,'The duct passes from the coil toward the hair follicle.'],['Follicle outlet',292,111,'The apocrine duct opens into the hair follicle.']]
+ ],states:[
   ['Hair follicle','A hair grows from matrix cells in the bulb. The sebaceous gland releases sebum into the follicle and the arrector pili muscle attaches to it.'],
   ['Nail','The nail matrix near the root supplies cells to the keratinized nail plate. The plate lies over the nail bed.'],
   ['Eccrine gland','Most eccrine ducts open directly onto the surface. Sweating can help cool the body when the fluid evaporates.'],
@@ -176,7 +180,7 @@ export const foundationsVisuals={
   ['Heat loss','Superficial vessels dilate and eccrine glands produce sweat. Evaporation removes heat. The skin also protects, senses and initiates vitamin D synthesis.'],
   ['Heat conservation','Superficial vessels constrict, reducing heat transfer from the body core to the surface. Sweat output decreases.']
  ]},
- '5.4':{title:'Compare injury depth with the skin layers affected',art:i=>skin(i,'depth'),states:[
+ '5.4':{title:'Compare injury depth with the skin layers affected',art:i=>burnSectionArt(i),states:[
   ['Superficial','Only the epidermis is involved. Surviving basal cells can support surface renewal.'],
   ['Partial thickness','Damage extends into the dermis. Surviving skin appendages can help re-epithelialize the surface.'],
   ['Full thickness','The epidermis and dermis are destroyed. The deeper injury removes many local sources of repair and commonly scars.'],
