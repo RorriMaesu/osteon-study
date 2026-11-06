@@ -1,0 +1,195 @@
+{
+  "sources": [
+    {
+      "id": "leiden-plexus",
+      "file": "brachial-plexus-and-branches.glb",
+      "url": "https://caskanatomy.info/open3dviewer/?model=brachial-plexus-and-branches",
+      "download": "https://caskanatomy.info/open3dviewer/3dmodels/brachial-plexus-and-branches/brachial-plexus-and-branches.glb",
+      "sha256": "01c2a90ccab538253c1e75efdc361b2a335b98513806289568287a9b75c1afdd",
+      "license": "CC BY-SA 4.0",
+      "credit": "Open3D project, Leiden University Medical Center and collaborators, Open3DModel Brachial plexus",
+      "objects": [
+        {
+          "source": "Lateral cord of brachial plexus.r",
+          "key": "Lateral cord of brachial plexus.r",
+          "path": [
+            "Brachial plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Medial cord of brachial plexus.r",
+          "key": "Medial cord of brachial plexus.r",
+          "path": [
+            "Brachial plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Lateral root of median nerve.r",
+          "key": "Lateral root of median nerve.r",
+          "path": [
+            "Brachial plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Medial root of median nerve.r",
+          "key": "Medial root of median nerve.r",
+          "path": [
+            "Brachial plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Phrenic nerve.r",
+          "key": "Phrenic nerve.r",
+          "path": [
+            "Cervical plexus.g",
+            "Peripheral nervous system.g"
+          ],
+          "partial": "Right cervical segment down to the thoracic inlet. The continuation to the diaphragm requires additional geometry."
+        },
+        {
+          "source": "Radial nerve (posterior brachial cutaneous n).r",
+          "key": "Posterior brachial cutaneous nerve.r",
+          "path": [
+            "Brachial plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "leiden-lower",
+      "file": "lower-limb.glb",
+      "url": "https://caskanatomy.info/open3dviewer/?model=lower-limb",
+      "download": "https://caskanatomy.info/open3dviewer/3dmodels/lower-limb/lower-limb.glb",
+      "sha256": "5ecb1ef4c07a2f6aa17021ee6f6d0bb0587595821467ec8c6a14f24ee1091173",
+      "license": "CC BY-SA 4.0",
+      "credit": "Open3D project, Jan Kooloos (RadboudUMC), Eungyeol Lee (LUMC) and collaborators, Open3DModel Lower limb",
+      "objects": [
+        {
+          "source": "Lumbar plexus.r",
+          "key": "Lumbar plexus.r",
+          "path": [
+            "Lumbar plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Sacral plexus.r",
+          "key": "Sacral plexus.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Inferior gluteal nerve.r",
+          "key": "Inferior gluteal nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Nerve to Levator ani and coccygeus.r",
+          "key": "Nerve to levator ani and coccygeus.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Nerve to obturator internus (and superior gemellus).r",
+          "key": "Nerve to obturator internus and superior gemellus.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Nerve to psoas major and iliacus.r",
+          "key": "Nerve to psoas major and iliacus.r",
+          "path": [
+            "Lumbar plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Femoral nerve, muscular branches.r",
+          "key": "Muscular branches of femoral nerve.r",
+          "path": [
+            "Lumbar plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Superior clunial nerve (posterior rami).r",
+          "key": "Superior cluneal nerves.r",
+          "path": [
+            "Lower limb nerves.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Inferior clunial br. of Post. cutaneous nerve of the thigh.",
+          "key": "Inferior cluneal branches of posterior femoral cutaneous nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Lateral sural cutaneous nerve.r",
+          "key": "Lateral sural cutaneous nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Medial calcaneal branches of Tibial nerve.r",
+          "key": "Medial calcaneal branches of tibial nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Lateral calcaneal nerves.r",
+          "key": "Lateral calcaneal branches of sural nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Deep branch of Lateral plantar nerve.r",
+          "key": "Deep branch of lateral plantar nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Superficial branch of Lateral plantar nerve.r",
+          "key": "Superficial branch of lateral plantar nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        },
+        {
+          "source": "Coccygeal nerve.r",
+          "key": "Coccygeal nerve.r",
+          "path": [
+            "Sacral plexus.g",
+            "Peripheral nervous system.g"
+          ]
+        }
+      ]
+    }
+  ]
+}

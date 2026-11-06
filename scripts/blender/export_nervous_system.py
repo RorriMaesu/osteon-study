@@ -1,12 +1,12 @@
 """Export a separate, registered nervous-system project and regional web layers."""
 import hashlib
 import json
-import math
 import re
 import shutil
 import struct
 import subprocess
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -32,7 +32,7 @@ if sha(source) != source_sha:
 snapshot = Path((work/'baseline-backup.txt').read_text())
 baseline = json.loads((snapshot/'manifest.json').read_text())
 for rec in baseline['files']:
-    if not (snapshot/rec['file']).is_file() or sha(Path(rec['original'])) != rec['sha256']:
+    if sha(snapshot/rec['file']) != rec['sha256'] or sha(Path(rec['original'])) != rec['sha256']:
         raise RuntimeError(f'Baseline missing or original changed: {rec["original"]}')
 
 old_outputs = [path for path in [project, manifest, *outputs.values()] if path.exists()]
@@ -69,7 +69,7 @@ def web(co):
     return [round(co[0],7),round(co[2],7),round(-co[1],7)]
 
 cranial = re.compile(r'\(([IVX]+)\)$')
-major_pns = re.compile(r'^(Median|Ulnar|Radial|Musculocutaneous|Axillary|Femoral|Sciatic|Obturator|Tibial|Common fibular|Superficial fibular|Deep fibular|Sural|Saphenous|Pudendal|Intercostal|Phrenic) nerves?$|^Cauda equina$|^Sympathetic trunk$|^Roots of brachial plexus$')
+major_pns = re.compile(r'^(Median|Ulnar|Radial|Musculocutaneous|Axillary|Femoral|Sciatic|Obturator|Tibial|Common fibular|Superficial fibular|Deep fibular|Sural|Saphenous|Pudendal|Phrenic) nerve$|^Intercostal nerve T\d+$|^Cauda equina$|^Sympathetic trunk$|^Roots of brachial plexus$')
 outer_brain = {'Frontal lobe','Parietal lobe','Occipital lobe','Temporal lobe','Limbic lobe'}
 
 def classification(name, path, bounds):
@@ -85,10 +85,12 @@ def classification(name, path, bounds):
     if cranial.search(title) or 'Cranial nerves.g' in path:
         areas=['skull']
         if lo[2]<1.52:areas.append('neck')
-        if lo[2]<1.34:areas.append('thorax')
+        if lo[2]<1.39:areas.append('thorax')
         if lo[2]<1.17:areas.extend(['thoracic-spine','lower-back'])
         return 'cranial','head',areas
-    if 'brachial plexus' in ' '.join(path).lower() or re.search(r'upper subscapular|superior subscapular|phrenic|cord of brachial|root of median|posterior brachial cutaneous',name,re.I):
+    if title=='Phrenic nerve':
+        return 'peripheral','trunk',['neck','thorax']
+    if 'brachial plexus' in ' '.join(path).lower() or re.search(r'upper subscapular|superior subscapular|cord of brachial|root of median|posterior brachial cutaneous',name,re.I):
         areas=[]
         if lo[2]<1.47 and hi[2]>1.37:areas.append('shoulder')
         if lo[2]<1.40 and hi[2]>1.08:areas.append('arm')
@@ -119,6 +121,9 @@ def classification(name, path, bounds):
 def include(obj,path):
     if obj.type not in ('MESH','CURVE') or obj.name.endswith(('.g','.i','.j','.s','.t')):
         return False
+    # The unsided ear-derived surface has unresolved individual provenance.
+    if obj.name=='Cochlear nerve':
+        return False
     if 'Peripheral nervous system.g' in path:
         return True
     return 'Central nervous system.g' in path and 'Meninges.g' not in path and 'Choroid plexus' not in obj.name
@@ -130,7 +135,7 @@ stations={
  'Ulnar nerve':[('Upper arm',1.28),('Behind the elbow',1.10),('Forearm',.96),('Distal modeled segment',.881)],
  'Radial nerve':[('Axilla',1.37),('Posterior humerus',1.258),('Elbow region',1.099)],
  'Sciatic nerve':[('Pelvic origin region',.949),('Greater sciatic foramen region',.898),('Posterior thigh',.73),('Distal modeled segment',.55)],
- 'Vagus nerve (X)':[('Skull base region',1.56),('Neck',1.48),('Upper chest',1.365),('Distal modeled thoracic segment',1.15)],
+ 'Vagus nerve (X)':[('Neck',1.48),('Upper chest',1.365),('Distal modeled thoracic segment',1.15)],
  'Tibial nerve':[('Posterior knee',.47),('Calf',.27),('Medial ankle',.075)],
  'Cauda equina':[('Upper lumbar canal',1.125),('Lower lumbar canal',1.015),('Sacral canal',.923)]
 }
@@ -180,10 +185,8 @@ def add_mesh(name,mesh,path,stops,provider='z-anatomy',partial=None,origin=None)
     if not areas:raise RuntimeError(f'No study area for {name}')
     short=bare(name).strip()
     side=name[-1] if name.endswith(('.l','.r')) else None
-    if name=='Cochlear nerve':side='r'
     if name=='Common plantar digital branches of medial plantar nerve':side='r'
     if short=='White matter of spinal cord':short='Spinal cord · white matter surface'
-    if short=='Cochlear nerve' and name.endswith('.l'):short='Cochlear nerve'
     if short.startswith('Spinal ganglion'):short='Dorsal root ganglia'
     if short.endswith('root of spinal nerve'):
         short=short.replace('root of spinal nerve','roots of spinal nerves')
@@ -206,9 +209,42 @@ def add_mesh(name,mesh,path,stops,provider='z-anatomy',partial=None,origin=None)
                     'provider':provider,'sourceObject':origin or name,'faces':len(mesh.polygons),'bounds':bounds,'stops':stops,
                     'partial':partial,'group':path[0].removesuffix('.g') if path else ''})
 
+def separate_intercostal_levels(obj,path):
+    # Each native spline represents one thoracic ventral ramus. Number the
+    # source splines by their proximal point near the vertebral column.
+    ordered=[]
+    for i,spline in enumerate(obj.data.splines):
+        controls=spline.bezier_points if spline.type=='BEZIER' else spline.points
+        points=[obj.matrix_world@Vector(p.co[:3]) for p in controls]
+        proximal=[p.z for p in points if abs(p.x)<.021 and p.y>.015]
+        if not proximal:raise RuntimeError('Missing proximal intercostal point')
+        ordered.append((max(proximal),i))
+    ordered.sort(reverse=True)
+    if len(ordered)!=11 or any(not .014<a[0]-b[0]<.038 for a,b in zip(ordered,ordered[1:])):
+        raise RuntimeError(f'Unexpected thoracic nerve level order for {obj.name}')
+    for level,(_,index) in enumerate(ordered,1):
+        part=obj.copy()
+        part.data=obj.data.copy()
+        for spline in list(part.data.splines)[index+1:]+list(part.data.splines)[:index]:
+            part.data.splines.remove(spline)
+        bpy.context.scene.collection.objects.link(part)
+        bpy.context.view_layer.update()
+        graph=bpy.context.evaluated_depsgraph_get()
+        evaluated=part.evaluated_get(graph)
+        mesh=bpy.data.meshes.new_from_object(evaluated,depsgraph=graph)
+        mesh.transform(evaluated.matrix_world)
+        name=f'Intercostal nerve T{level}.{obj.name[-1]}'
+        add_mesh(name,mesh,path,[],partial='Thoracic ventral ramus. Source geometry from the proximal thoracic region into the intercostal space.',origin=obj.name)
+        curve=part.data
+        bpy.data.objects.remove(part,do_unlink=True)
+        bpy.data.curves.remove(curve)
+
 for obj in source_objects:
     path=ancestry(obj)
     if not include(obj,path):continue
+    if bare(obj.name)=='Intercostal nerves':
+        separate_intercostal_levels(obj,path)
+        continue
     ev=obj.evaluated_get(deps)
     em=ev.to_mesh()
     has_faces=em and len(em.polygons)>=4
@@ -217,7 +253,7 @@ for obj in source_objects:
     mesh=bpy.data.meshes.new_from_object(ev,depsgraph=deps)
     mesh.transform(ev.matrix_world)
     partial=None
-    if bare(obj.name)=='Vagus nerve (X)':partial='Modeled cranial, cervical and thoracic portions. Distal organ pathways are a separate coverage item.'
+    if bare(obj.name)=='Vagus nerve (X)':partial='Source course with cervical and thoracic segments. Skull-base passage and distal organ connections still need a fitted model review.'
     if bare(obj.name) in ('Anterior root of spinal nerve','Posterior root of spinal nerve','Spinal ganglion','Intercostal nerves'):
         partial='Several levels share one selectable source object.'
     if bare(obj.name)=='Sympathetic trunk':partial='Cervical and thoracic source extent. Lower sympathetic pathways need additional geometry.'
@@ -248,16 +284,60 @@ if (repo/'model-sources/nervous-donors.json').exists():
             add_mesh(spec['key'],mesh,spec['path'],[],donor['id'],spec.get('partial'),origin=key)
         for obj in imported:bpy.data.objects.remove(obj,do_unlink=True)
 
-# Link the exact exported Osteon skeleton as editable inspection context.
-known=set(derived.objects)
-bpy.ops.import_scene.gltf(filepath=str(repo/'assets/skeleton.glb'))
-skeleton=set(derived.objects)-known
+# Use the same adult skeleton and bone replacements as the web viewer.
 context=bpy.data.collections.new('Osteon | Skeleton context')
 derived.collection.children.link(context)
-for obj in skeleton:
-    for collection in list(obj.users_collection):collection.objects.unlink(obj)
-    context.objects.link(obj)
+known=set(derived.objects)
+bpy.ops.import_scene.gltf(filepath=str(repo/'assets/skeleton.glb'))
+skeleton={obj.get('zname'):obj for obj in set(derived.objects)-known if obj.type=='MESH'}
+
+raw=(repo/'assets/landmark-details.glb').read_bytes()
+length=struct.unpack_from('<I',raw,12)[0]
+glb=json.loads(raw[20:20+length])
+for scene in glb['scenes']:
+    if scene.get('nodes') is None:scene['nodes']=[]
+chunk=json.dumps(glb,separators=(',',':')).encode()
+chunk+=b' '*(-len(chunk)%4)
+body=struct.pack('<II',len(chunk),0x4e4f534a)+chunk+raw[20+length:]
+known=set(derived.objects)
+with tempfile.TemporaryDirectory() as directory:
+    compatible=Path(directory)/'landmark-details.glb'
+    compatible.write_bytes(struct.pack('<III',0x46546c67,2,len(body)+12)+body)
+    bpy.ops.import_scene.gltf(filepath=str(compatible))
+bpy.context.view_layer.update()
+new_context=set(derived.objects)-known
+for obj in new_context:
+    if obj.type!='MESH' or not obj.get('replacementAnatomy'):continue
+    name=obj.get('zname')
+    if name in skeleton:bpy.data.objects.remove(skeleton[name],do_unlink=True)
+    replacement=obj.copy()
+    replacement.parent=None
+    replacement.matrix_world=obj.matrix_world.copy()
+    context.objects.link(replacement)
+    skeleton[name]=replacement
+for obj in new_context:bpy.data.objects.remove(obj,do_unlink=True)
+for obj in skeleton.values():
+    for collection in list(obj.users_collection):
+        if collection!=context:collection.objects.unlink(obj)
+    if context not in obj.users_collection:context.objects.link(obj)
+
+# Separate, optional linked references remain editable in their own projects.
+muscles=bpy.data.collections.new('Osteon | Linked muscle reference')
+derived.collection.children.link(muscles)
+with bpy.data.libraries.load(str(project.parent/'muscles.blend'),link=True) as (available,linked):
+    linked.scenes=['Osteon muscle anatomy']
+for obj in linked.scenes[0].collection.all_objects:muscles.objects.link(obj)
+muscles.hide_viewport=muscles.hide_render=True
+ligaments=bpy.data.collections.new('Osteon | Linked ligament reference')
+derived.collection.children.link(ligaments)
+with bpy.data.libraries.load(str(project.parent/'ligament-atlas.blend'),link=True) as (available,linked):
+    linked.collections=[name for name in available.collections if name.startswith('Ligaments | ')]
+for collection in linked.collections:ligaments.children.link(collection)
+ligaments.hide_viewport=ligaments.hide_render=True
+
 for scene in original_scenes:bpy.data.scenes.remove(scene)
+for source_text in list(bpy.data.texts):
+    if not source_text.library:bpy.data.texts.remove(source_text,do_unlink=True)
 bpy.data.orphans_purge(do_recursive=True)
 derived.unit_settings.system='METRIC'
 for screen in bpy.data.screens:
@@ -274,11 +354,20 @@ if len(records)<450 or sum(r['category']=='cranial' and bool(cranial.search(bare
 digests={}
 for key,path in outputs.items():
     bpy.ops.object.select_all(action='DESELECT')
+    simplified=[]
     for record in records:
         if (record['overview'] if key=='overview' else record['bucket']==key):
-            parts[record['key']].select_set(True)
-    bpy.ops.export_scene.gltf(filepath=str(path),use_selection=True,export_extras=True,export_materials='NONE',
+            obj=parts[record['key']]
+            if key=='overview' and record['category']=='central' and record['faces']>1600:
+                obj=obj.copy()
+                derived.collection.objects.link(obj)
+                modifier=obj.modifiers.new('Overview surface reduction','DECIMATE')
+                modifier.ratio=.29
+                simplified.append(obj)
+            obj.select_set(True)
+    bpy.ops.export_scene.gltf(filepath=str(path),use_selection=True,export_extras=True,export_materials='NONE',export_normals=key!='overview',
                               export_draco_mesh_compression_enable=True,export_draco_position_quantization=16)
+    for obj in simplified:bpy.data.objects.remove(obj,do_unlink=True)
     digests[key]={'sha256':sha(path),'bytes':path.stat().st_size}
 bpy.ops.object.select_all(action='DESELECT')
 bpy.context.preferences.filepaths.save_version=0

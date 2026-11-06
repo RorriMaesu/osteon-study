@@ -565,4 +565,5 @@ body:has(#study-view.active)>main{min-height:0;overflow:hidden}
 .nerve-route[hidden]{display:none}
 .nerve-route button{padding:6px 9px;min-height:34px;font-size:11px}
 .nerve-route button:first-child,.nerve-route button:last-child{min-width:38px}
+.nerve-load-status{position:absolute;z-index:5;top:8px;left:50%;transform:translateX(-50%);border:1px solid #5d8488;border-radius:10px;padding:8px 11px;background:#14272b;color:#d8f2ee;font-size:12px;white-space:nowrap;pointer-events:none}
 @media(max-width:999px){.nerve-route button{min-height:44px}.nerve-route button:first-child,.nerve-route button:last-child{min-width:44px}}

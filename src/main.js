@@ -299,6 +299,12 @@ if(new URLSearchParams(location.search).get('lablist')==='1'&&['#atlas','#practi
 initClarityPractical({viewer,setView});
 const requestedFeature=new URLSearchParams(location.search).get('feature');
 if(requestedFeature){const term=allTerms.find(t=>t.id===requestedFeature||t.feature?.id===requestedFeature);if(term)selectTerm(term);}
+const requestedNerve=new URLSearchParams(location.search).get('nerve');
+const linkedNerve=nerveTerms.find(t=>t.representation.nerveKey===requestedNerve);
+if(linkedNerve&&$('#atlas-view').classList.contains('active')){
+ if(ready)selectTerm(linkedNerve);
+ else document.addEventListener('anatomyready',()=>selectTerm(linkedNerve),{once:true});
+}
 document.addEventListener('click',event=>{const id=event.target.closest('[data-member-term]')?.dataset.memberTerm;if(id){const term=allTerms.find(t=>t.id===id);if(term)selectTerm(term);}});
 
 export const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region=viewer.region;selected=viewer.selectedTerm;$$('[data-browse-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.browseMode===browseMode)));syncFilters();if(selected)detail(selected);else resetDetail();renderList();updateButtons();}});

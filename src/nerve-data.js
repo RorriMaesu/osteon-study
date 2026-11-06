@@ -22,6 +22,14 @@ const aliases={
  'Ophthalmic nerve':['V1','CN V1'],'Maxillary nerve':['V2','CN V2'],'Mandibular nerve':['V3','CN V3']
 };
 const roman=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+const routeNotes={
+ 'Facial nerve (VII)':'The facial nerve passes through the internal acoustic meatus and facial canal, then exits at the stylomastoid foramen. The source route near the internal acoustic meatus needs further alignment review.',
+ 'Vestibulocochlear nerve (VIII)':'The cochlear and vestibular divisions convey hearing and balance information. The source route near the internal acoustic meatus needs further alignment review.',
+ 'Median nerve':'Trace the main nerve from the upper arm to the wrist. The palmar cutaneous branch and digital branches have separate entries.',
+ 'Radial nerve':'Follow its modeled course across the posterior humerus and toward the elbow. The superficial and deep branches have separate entries.',
+ 'Sciatic nerve':'Follow its modeled course from the pelvis to the posterior thigh. The tibial and common fibular nerves have separate entries.',
+ 'Hypoglossal nerve (XII)':'The hypoglossal nerve supplies most tongue muscles. The exact path through the hypoglossal canal remains under review.'
+};
 export const nerveTerms=nerveRecords.map(record=>{
  const cranial=/\(([IVX]+)\)$/.exec(record.name)?.[1],standard=record.name.replace(/ \([IVX]+\)$/,'');
  const category=nerveCategories[record.category];
@@ -29,7 +37,7 @@ export const nerveTerms=nerveRecords.map(record=>{
   id:'nerve:'+record.key,name:standard+(cranial?' · CN '+cranial:'')+(record.side?' ('+sides[record.side]+')':''),
   aliases:[record.name,standard,...(aliases[record.name]||[]),...(cranial?['CN '+cranial,'CN '+(roman.indexOf(cranial)+1),'cranial nerve '+cranial]:[])],
   type:category,source:record.provider,region:regions[record.bucket],exact:true,
-  cue:record.partial||'Source anatomy aligned to the adult skeleton. Use the related structures and source reference to study its course.',
+  cue:record.partial||routeNotes[record.name]||'Source anatomy aligned to the adult skeleton. Use the related structures and source reference to study its course.',
   representation:{kind:'mesh',nerveKey:record.key,assessment:'learn-only',reference:record.category==='autonomic'?'15.1':record.category==='central'?'13.2':'13.4'}
  };
 });
@@ -43,7 +51,7 @@ export function nerveInScope(record,view){
  if(division==='Appendicular')return ['upper-limb','lower-limb'].includes(record.bucket);
  return true;
 }
-export function nerveScopeFiles({focus,region,division}){
+export function nerveScopeFiles({focus,region}){
  if(focus.areaId)return assetScopes[focus.areaId]||[];
  if(region==='All regions')return [];
  if(region==='Joints')return ['upper-limb','lower-limb'];

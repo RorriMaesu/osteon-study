@@ -10,7 +10,13 @@ export function attachNervousLayer(viewer,{toast}){
  const group=new THREE.Group();
  viewer.scene?.add(group);
  const requests=new Map(),loaded=new Map(),failed=new Set();
- let enabled=false,fade=null,filter='all',sequence=0,loading=false,visible=[],stop=-1,lastRouteKey=null;
+ let enabled=false,fade=null,filter='all',sequence=0,selectionLoad=0,loading=false,visible=[],stop=-1,lastRouteKey=null;
+ const status=document.createElement('div');
+ status.className='nerve-load-status';
+ status.setAttribute('role','status');
+ status.hidden=true;
+ status.textContent='Loading regional nerve detail…';
+ viewer.el.append(status);
  const route=document.createElement('div');
  route.className='nerve-route';
  route.hidden=true;
@@ -21,7 +27,7 @@ export function attachNervousLayer(viewer,{toast}){
  const previous=route.querySelector('[data-nerve-prev]'),follow=route.querySelector('[data-nerve-follow]'),next=route.querySelector('[data-nerve-next]');
  const active=()=>enabled&&!viewer.quiz&&!viewer.activeDetail&&$('#atlas-view').classList.contains('active');
  const current=()=>nerveByKey.get(viewer.selectedTerm?.representation?.nerveKey);
- const fades=()=>active()&&(fade??!!current());
+ const fades=()=>active()&&(fade??(!!current()||viewer.focus.level==='overview'));
 
  function sync(){
   for(const id of ['main-nerves-toggle','nerves-btn']){
@@ -56,6 +62,7 @@ export function attachNervousLayer(viewer,{toast}){
     mesh.userData.zname=record.key;
     mesh.userData.nonbone=true;
     mesh.userData.region=nerveTermByKey.get(record.key).region;
+    if(!mesh.geometry.hasAttribute('normal'))mesh.geometry.computeVertexNormals();
     mesh.material=new THREE.MeshStandardMaterial({color:colors[record.category],roughness:.55,side:THREE.DoubleSide});
     mesh.visible=false;
     entries.push(mesh);
@@ -203,13 +210,16 @@ export function attachNervousLayer(viewer,{toast}){
   toggleContext(){fade=!fades();viewer.applyVisibility();},
   fadesContext:fades,
   contextContains(mesh){const record=current();return !!record&&active()&&record.areas.some(area=>inArea(mesh.userData.zname,area,record.side));},
-  setFilterAndFocus(term){if(filter!=='all'&&filter!==nerveByKey.get(term.representation.nerveKey)?.category)filter='all';},
   async select(term,{frame:focus=true,valid=()=>true}={}){
    if(!enabled&&!await toggle(true))return false;
    const record=nerveByKey.get(term.representation.nerveKey);
-   try{await load(record.bucket);}catch(error){console.error(error);toast('The selected nerve model could not load. Select it to retry.');return false;}
+   const revision=++selectionLoad;
+   status.hidden=loaded.has(record.bucket)&&(record.bucket!=='head'||viewer.detailsLoaded);
+   try{await Promise.all([load(record.bucket),record.bucket==='head'?viewer.ensureDetails():null]);}
+   catch(error){console.error(error);toast('The selected nerve model could not load. Select it to retry.');return false;}
+   finally{if(revision===selectionLoad)status.hidden=true;}
    if(!valid()||!active())return false;
-   api.setFilterAndFocus(term);
+   if(filter!=='all'&&filter!==record.category)filter='all';
    applySelection(term,find(term),focus);
    return true;
   },

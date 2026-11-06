@@ -49,3 +49,17 @@ test('local files follow the current region and long nerves remain discoverable 
  assert.ok(median.stops.some(s=>s.name==='Wrist'));
 });
 
+test('the eleven bilateral intercostal levels stay distinct from the spinal nerves and donor segments identify their extent',()=>{
+ const intercostals=nerveRecords.filter(r=>/^Intercostal nerve T\d+$/.test(r.name));
+ assert.equal(intercostals.length,22);
+ for(const side of ['l','r'])for(let level=1;level<=11;level++){
+  const r=nerveByKey.get('Intercostal nerve T'+level+'.'+side);
+  assert.equal(r.bucket,'trunk');
+  assert.equal(r.sourceObject,'Intercostal nerves.'+side);
+ }
+ const phrenic=nerveByKey.get('Phrenic nerve.r');
+ assert.equal(phrenic.provider,'leiden-plexus');
+ assert.ok(phrenic.partial.includes('thoracic inlet'));
+ assert.ok(nerveByKey.has('Lumbar plexus.r')&&nerveByKey.has('Sacral plexus.r'));
+});
+
