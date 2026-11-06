@@ -364,6 +364,31 @@
 .reaction-legend{padding:0;list-style:none;margin:9px 0 0;font-size:.875rem;display:grid;gap:6px}
 .reaction-legend span{display:inline-block;width:22px;margin-right:8px;vertical-align:middle;border-top:3px solid #ffbf91}
 .reaction-legend .reaction-dashed{border-top:3px dashed #9ed9ef}
+.foundation-challenge-tabs{padding-bottom:.55rem;border-bottom:1px solid var(--line)}
+.foundation-challenge-tabs button{min-height:40px}
+.foundation-challenge-panel,.foundation-case,.foundation-experiment{min-width:0}
+.foundation-case,.foundation-experiment{padding:.6rem .2rem}
+.foundation-case h3,.foundation-experiment h3{font-size:clamp(1rem,2vw,1.3rem);margin:.4rem 0;line-height:1.35}
+.foundation-case-choices{display:grid;gap:.5rem;margin:.75rem 0}
+.foundation-case-choices button{min-height:44px;text-align:left;white-space:normal}
+.foundation-case-feedback,.foundation-experiment [role=status]{background:#172f36;border:1px solid #45655f;border-radius:8px;padding:.65rem .8rem;line-height:1.5}
+.foundation-case-feedback[data-result=correct]{border-color:#7fa784}
+.foundation-case-feedback[data-result=retry]{border-color:#bc967c}
+.foundation-trace{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(120px,100%),1fr));gap:.45rem;list-style-position:inside;padding:0}
+.foundation-trace li{padding:.55rem;background:#18343b;border:1px solid #426761;border-radius:8px;overflow-wrap:anywhere}
+.foundation-trace li[aria-current=step]{border-color:#ffbf91;color:#ffe1c8}
+.foundation-experiment svg{display:block;width:100%;height:auto;max-height:min(var(--lesson-figure-max,340px),var(--figure-space,340px));background:#10252c;border-radius:8px;margin:.55rem 0}
+.foundation-experiment svg text:not([fill]){font-size:15px;fill:#e1efe5}
+.foundation-scan-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;max-width:740px;margin:auto}
+.foundation-scan-grid.single{grid-template-columns:minmax(0,410px);justify-content:center}
+.foundation-scan-grid figure{min-width:0}
+.foundation-scan-grid figure :is(img,svg){display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:contain;background:#050505}
+.foundation-inputs{display:flex;gap:.7rem;flex-wrap:wrap}
+.foundation-inputs label,.foundation-experiment>label{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}
+.foundation-experiment select,.foundation-experiment input[type=range]{max-width:100%;min-height:40px}
+.foundation-experiment .buffer-solid{border-color:#a9dcc2}
+.foundation-experiment .buffer-dashed{border-top-style:dashed;border-color:#ffbf91}
+@media(max-width:700px){.foundation-challenge-tabs button,.foundation-experiment .control-row button{min-height:44px}.foundation-trace{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .section-diagram-state-picker{display:none!important}
 @media(max-width:700px){
  .section-diagram-layout{grid-template-columns:1fr;gap:7px}

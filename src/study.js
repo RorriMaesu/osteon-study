@@ -8,6 +8,7 @@ import foundationLinks from './foundations-links.json' with {type:'json'};
 const lessonLinks={...legacyLessonLinks,...foundationLinks};
 import {renderSectionDiagrams} from './section-diagrams.js';
 import {mountLessonVisual} from './lesson-visual.js';
+import {mountFoundationChallenges} from './foundations-challenges.js';
 import {renderCurriculumActivity} from './curriculum-activities.js';
 import {setLearningContext} from './learning-context.js';
 import {retrievalPlan} from './review-plan.js';
@@ -46,7 +47,8 @@ export function initStudy({viewer,setView,selectTerm,dialog,toast,escape:e}){
     else{
      activityContent=activity;
      const practice=root=>{if(l.activity)renderActivity(l.activity,root);else renderCurriculumActivity(root,id,e);};
-     if(!renderSectionDiagrams(activity,id,e,practice))practice(activity);
+     const renderStudy=root=>{if(!renderSectionDiagrams(root,id,e,practice))practice(root);};
+     if(!mountFoundationChallenges(activity,id,e,renderStudy))renderStudy(activity);
     }
     mountLessonVisual(activityContent.closest('.flow-body'),activityContent,l.title);
    }

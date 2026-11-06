@@ -2,8 +2,8 @@
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dnaPairs = {A:'T', T:'A', C:'G', G:'C'};
 const rnaPairs = {A:'U', T:'A', C:'G', G:'C'};
-const codonTable = {AUG:'Met', CCU:'Pro', GAA:'Glu', UAA:'Stop'};
-const template = 'TACGGACTTATT';
+const codonTable = {AUG:'Met', CCU:'Pro', GAA:'Glu', UAA:'Stop', GGC:'Gly', UUU:'Phe', UGA:'Stop'};
+const proteinTemplates = ['TACGGACTTATT','TACCCGAAAACT'];
 const replicationTemplate = 'ATGCCA';
 export function complementaryDNA(strand) {
   if (!/^[ATCG]*$/i.test(strand)) throw new Error('DNA uses A, T, C and G only.');
@@ -19,7 +19,7 @@ export function translateExample(rna) {
   const peptide = [];
   for (let index = 0; index < rna.length; index += 3) {
     const amino = codonTable[rna.slice(index,index+3)];
-    if (!amino) throw new Error('This short example supports AUG, CCU, GAA and UAA.');
+    if (!amino) throw new Error('This lab supports only its displayed example codons.');
     if (amino === 'Stop') break;
     peptide.push(amino);
   }
@@ -73,7 +73,7 @@ function freshState(id) {
   if (id === 'membrane') return {outside:300,prediction:'',applied:false};
   if (id === 'organelles') return {route:[],checked:false};
   if (id === 'nucleus') return {bases:[],message:''};
-  if (id === 'protein') return {rna:[],peptide:[],phase:'transcription',message:''};
+  if (id === 'protein') return {sample:0,rna:[],peptide:[],phase:'transcription',message:''};
   if (id === 'division') return {step:0};
   if (id === 'differentiation') return {potency:'multipotent',selected:[],checked:false};
   return {};
@@ -95,10 +95,12 @@ function nucleus(s) {
   return `${header('DNA REPLICATION BENCH','Be the DNA polymerase','Read the parental template 3′ → 5′ and build a new strand 5′ → 3′.')}<div class="lab-dna"><p>Parental template <span>retained strand</span></p>${baseRow(replicationTemplate,true)}<div class="lab-bonds" aria-hidden="true">${[...replicationTemplate].map((b,i)=>`<span>${i<s.bases.length?(b==='A'||b==='T'?'Ⅱ':'Ⅲ'):'·'}</span>`).join('')}</div><div class="lab-strand"><b>5′</b>${[...replicationTemplate].map((_,i)=>`<span class="lab-base lab-base-${s.bases[i]||'blank'} ${i===s.bases.length?'lab-current':''}">${s.bases[i]||'?'}</span>`).join('')}<b>3′</b></div><p>New complementary strand <span>${s.bases.length} / 6 nucleotides added</span></p></div><div class="lab-options lab-base-choices">${['A','T','C','G'].map(b=>button(b,'dna-add',b,false,complete?'disabled':'')).join('')}${button('Start again','reset','')}</div>${feedback(s.message||(complete?'<b>One daughter DNA molecule is complete.</b> It contains one old strand and one new strand: semiconservative replication. The other original strand serves as a template for a second daughter molecule.':`Next template base: <b>${replicationTemplate[s.bases.length]}</b>. A pairs with T; C pairs with G. DNA polymerase adds to the new strand’s 3′ end.`),complete?'good':'info')}<p class="lab-note">Helicase separates the original strands first. A–T has two hydrogen bonds; C–G has three. This short model omits primers and leading/lagging strand details.</p>`;
 }
 function protein(s) {
+  const template=proteinTemplates[s.sample];
   const transcript = transcribeTemplate(template).match(/.{3}/g), dnaCodons=template.match(/.{3}/g), translation=s.phase!=='transcription', done=s.phase==='done';
   const index=translation?s.peptide.length:s.rna.length;
-  const choices=translation?['Met','Pro','Glu','Stop']:['AUG','CCU','GAA','UAA'];
-  return `${header('FROM GENE TO PROTEIN','Write the message. Build the chain.',translation?'Translation · A ribosome reads mRNA codons 5′ → 3′.':'Transcription · RNA polymerase reads this DNA template 3′ → 5′.')}<div class="lab-protein-workbench"><div class="lab-molecule"><span>DNA template</span><b>3′</b>${dnaCodons.map((v,i)=>`<em class="${!translation&&i===index?'lab-current':''}">${v}</em>`).join('')}<b>5′</b></div><div class="lab-process-arrow">${translation?'Processed mRNA moves into the cytoplasm ↓':'RNA polymerase builds complementary RNA ↓'}</div><div class="lab-molecule lab-rna"><span>mRNA</span><b>5′</b>${transcript.map((v,i)=>`<em class="${translation&&i===index&&!done?'lab-current':''}">${s.rna[i]||'???'}</em>`).join('')}<b>3′</b></div><div class="lab-peptide" aria-label="Amino acid chain">${s.peptide.length?s.peptide.map((v,i)=>`<span>${v}</span>${i<s.peptide.length-1?'<i>—</i>':''}`).join(''):'<span class="lab-peptide-empty">Amino acid chain will appear here</span>'}${done?'<b>✓ Released</b>':''}</div></div><div class="lab-options">${choices.map(v=>button(v,translation?'translate':'transcribe',v,false,done?'disabled':'')).join('')}${button('Restart','reset','')}</div>${feedback(s.message||(done?'<b>Protein released: Met–Pro–Glu.</b> UAA is a stop signal, not an amino acid. A release factor ends translation.':translation?`Read <b>${transcript[index]}</b>. ${index===0?'AUG begins translation and codes for methionine (Met).':'Use the mini codon key below; add the next amino acid or release the chain.'}`:`Copy <b>${dnaCodons[index]}</b> into mRNA. DNA A pairs with RNA U; T with A; C with G; G with C.`),done?'good':'info')}<p class="lab-note">Mini codon key: AUG → Met/start · CCU → Pro · GAA → Glu · UAA → stop.<br>This short coding-region model omits RNA processing, untranslated regions, and most codons. tRNAs deliver amino acids; a stop codon has no matching amino-acid-bearing tRNA.</p>`;
+  const choices=translation?transcript.map(codon=>codonTable[codon]):transcript;
+  const key=transcript.map(codon=>codon+' → '+codonTable[codon]).join(' · ');
+  return `${header('FROM GENE TO PROTEIN','Write the message. Build the chain.',translation?'Translation · A ribosome reads mRNA codons 5′ → 3′.':'Transcription · RNA polymerase reads this DNA template 3′ → 5′.')}<div class="lab-options" aria-label="Choose a DNA sequence">${proteinTemplates.map((_,i)=>button('Sequence '+(i+1),'protein-sample',i,s.sample===i)).join('')}</div><div class="lab-protein-workbench"><div class="lab-molecule"><span>DNA template</span><b>3′</b>${dnaCodons.map((v,i)=>`<em class="${!translation&&i===index?'lab-current':''}">${v}</em>`).join('')}<b>5′</b></div><div class="lab-process-arrow">${translation?'Processed mRNA moves into the cytoplasm ↓':'RNA polymerase builds complementary RNA ↓'}</div><div class="lab-molecule lab-rna"><span>mRNA</span><b>5′</b>${transcript.map((v,i)=>`<em class="${translation&&i===index&&!done?'lab-current':''}">${s.rna[i]||'???'}</em>`).join('')}<b>3′</b></div><div class="lab-peptide" aria-label="Amino acid chain">${s.peptide.length?s.peptide.map((v,i)=>`<span>${v}</span>${i<s.peptide.length-1?'<i>—</i>':''}`).join(''):'<span class="lab-peptide-empty">Amino acid chain will appear here</span>'}${done?'<b>✓ Released</b>':''}</div></div><div class="lab-options">${choices.map(v=>button(v,translation?'translate':'transcribe',v,false,done?'disabled':'')).join('')}${button('Restart','reset','')}</div>${feedback(s.message||(done?`<b>Peptide released: ${s.peptide.join('–')}.</b> ${transcript.at(-1)} recruits a release factor.`:translation?`Read <b>${transcript[index]}</b>. ${index===0?'AUG begins translation and codes for methionine (Met).':'Use the mini codon key below; add the next amino acid or release the chain.'}`:`Copy <b>${dnaCodons[index]}</b> into mRNA. DNA A pairs with RNA U; T with A; C with G; G with C.`),done?'good':'info')}<p class="lab-note">Mini codon key: ${key}.<br>This short coding-region model omits RNA processing, untranslated regions, and most codons. tRNAs deliver amino acids; a stop codon has no matching amino-acid-bearing tRNA.</p>`;
 }
 const chromosomeColors=['#78e4ed','#ca9ffd','#78e4ed','#ca9ffd'];
 function chromosome(x,y,index,copied=false,loose=false,flip=false) {
@@ -145,7 +147,8 @@ export function bindLab(container,moduleId) {
     const control=event.target.closest('[data-lab-action]');
     if(!control||!root.contains(control)||control.disabled)return;
     const {labAction:action,labValue:value}=control.dataset;
-    if(action==='reset')state=freshState(moduleId);
+    if(action==='reset')state=moduleId==='protein'?{...freshState(moduleId),sample:state.sample}:freshState(moduleId);
+    if(action==='protein-sample'&&Number(value)!==state.sample)state={...freshState(moduleId),sample:Number(value)};
     if(action==='solution'){state.outside=Number(value);state.applied=false;state.prediction='';}
     if(action==='predict'){state.prediction=value;state.applied=false;}
     if(action==='apply'&&state.prediction)state.applied=true;
@@ -158,14 +161,15 @@ export function bindLab(container,moduleId) {
       else state.message=`<b>Try another base.</b> The template is ${replicationTemplate[state.bases.length]}. DNA pairs are A–T and C–G.`;
     }
     if(action==='transcribe'){
+      const template=proteinTemplates[state.sample];
       const expected=transcribeTemplate(template).match(/.{3}/g)[state.rna.length];
-      if(value===expected){state.rna.push(value);state.message='';if(state.rna.length===4)state.phase='translation';}
+      if(value===expected){state.rna.push(value);state.message='';if(state.rna.length*3===template.length)state.phase='translation';}
       else state.message='<b>Check the base pairs.</b> Read the template 3′ → 5′. Use U instead of T when building RNA.';
     }
     if(action==='translate'){
-      const expected=['Met','Pro','Glu','Stop'][state.peptide.length];
+      const codon=state.rna[state.peptide.length],expected=codonTable[codon];
       if(value===expected){state.message='';if(value==='Stop')state.phase='done';else state.peptide.push(value);}
-      else state.message='<b>Use the current mRNA codon.</b> AUG → Met, CCU → Pro, GAA → Glu, UAA → stop. Stop is a release signal, not an amino acid.';
+      else state.message='<b>Use the current mRNA codon.</b> Compare '+codon+' with the key below. A stop codon signals release.';
     }
     if(action==='cycle')state.step=Math.max(0,Math.min(7,Number(value)));
     if(action==='potency'){state.potency=value;state.selected=[];state.checked=false;}
