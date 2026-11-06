@@ -501,6 +501,11 @@ body:has(#study-view.active)>main{min-height:0;overflow:hidden}
  #study-body .page-flow :is(.chapter-route-grid>button,.lesson-grid>button,.glossary-entry){min-height:0;padding:6px 9px}
  #study-body .page-flow .glossary-entry{break-inside:auto}
  #study-body .page-flow .chapter-route-grid>button :is(strong,span,small){margin:0;line-height:1.25}
+ #study-body .page-flow .lesson-card{display:grid;grid-template-columns:40px minmax(0,1fr);gap:2px 8px;align-content:start;text-align:left}
+ #study-body .page-flow .lesson-card :is(h3,p,.lesson-status,.lesson-evidence){grid-column:2;margin:0;line-height:1.25}
+ #study-body .page-flow .lesson-card h3{padding-right:16px;font-size:15px}
+ #study-body .page-flow .lesson-card p{font-size:12px}
+ #study-body .page-flow .lesson-card .lesson-index{grid-column:1;grid-row:1/5;font-size:20px;line-height:1.2}
 }
 
 @media(max-width:999px),(max-height:560px){
