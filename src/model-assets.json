@@ -10,8 +10,12 @@
   "nerves-trunk": "e4704fb5f266",
   "nerves-upper-limb": "8f35ccbfe0dc",
   "nerves-lower-limb": "dfc76a7af74d",
-  "lymph-nodes-overview": "1163a0aa85df",
-  "lymph-nodes-lower-limb": "8d7edd3d1122",
-  "lymph-nodes-neck": "f3d15e1a2c65",
-  "lymph-nodes-upper-limb": "a3b2599daf8d"
+  "lymph-nodes-overview": "06dd594bde0e",
+  "lymph-nodes-abdomen": "8e3653fcb76d",
+  "lymph-nodes-head": "a6a847fd821e",
+  "lymph-nodes-lower-limb": "d46f38e14635",
+  "lymph-nodes-neck": "1c10d9d94178",
+  "lymph-nodes-pelvis": "ff58cfd3841a",
+  "lymph-nodes-thorax": "7f99f173dbf8",
+  "lymph-nodes-upper-limb": "ee39d9c0d127"
 }

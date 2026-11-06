@@ -22,10 +22,10 @@ function render(){
   row.insertCell().textContent=lymphRegions[r.bucket];
   const review=row.insertCell();
   review.textContent=lymphNodeStatus[r.status]+(r.reason?' · '+r.reason:'');
-  if(r.fit||r.references.length){
+  if(r.references.length){
    const details=document.createElement('details'),summary=document.createElement('summary'),note=document.createElement('p');
    summary.textContent='Blender check';
-   note.textContent=[r.fit,...r.references.map(ref=>ref.name+' · '+ref.centerToSurfaceMm+' mm from mesh center to surface')].filter(Boolean).join(' / ');
+   note.textContent=r.references.map(ref=>ref.name+' · '+ref.centerToSurfaceMm+' mm from mesh center to surface').join(' / ');
    details.append(summary,note);
    review.append(details);
   }

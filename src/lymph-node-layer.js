@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {areas,inArea} from './exploration.js';
 import {lymphNodeFiles,lymphNodeByKey,lymphNodeTermByKey,lymphNodeInScope,lymphNodeScopeFiles} from './lymph-node-data.js';
 
-const nodeColor=0x35c9a1,selectedColor=0xa8ffe0;
+const nodeColor=0x81dc40,selectedColor=0xd6fb74;
 const $=selector=>document.querySelector(selector);
 
 export function attachLymphNodeLayer(viewer,{toast}){
@@ -10,11 +10,12 @@ export function attachLymphNodeLayer(viewer,{toast}){
  group.name='Osteon lymph nodes';
  viewer.scene?.add(group);
  const requests=new Map(),loaded=new Map(),failed=new Set();
- const materials=[new THREE.MeshStandardMaterial({color:nodeColor,roughness:.48}),new THREE.MeshStandardMaterial({color:selectedColor,emissive:0x184f39,roughness:.48})];
- let enabled=false,loading=false,fade=false,revision=0,visible=[];
+ const materials=[new THREE.MeshStandardMaterial({color:nodeColor,emissive:0x152a08,roughness:.48}),new THREE.MeshStandardMaterial({color:selectedColor,emissive:0x52651a,roughness:.48})];
+ let enabled=false,loading=false,fade=null,revision=0,visible=[];
  const available=()=>viewer.loaded&&!viewer.quiz&&!viewer.activeDetail&&$('#atlas-view').classList.contains('active');
  const active=()=>enabled&&available();
  const current=()=>lymphNodeByKey.get(viewer.selectedTerm?.representation?.lymphNodeKey);
+ const fades=()=>active()&&(fade??(viewer.focus.level==='overview'||!!current()));
 
  function sync(){
   for(const button of [$('#main-lymph-nodes-toggle'),$('#lymph-nodes-btn')]){
@@ -25,8 +26,8 @@ export function attachLymphNodeLayer(viewer,{toast}){
   }
   const context=$('#lymph-node-context');
   context.hidden=!active();
-  context.setAttribute('aria-pressed',String(fade));
-  context.textContent=fade?'Restore bones':'Fade bones';
+  context.setAttribute('aria-pressed',String(fades()));
+  context.textContent=fades()?'Restore bones':'Fade bones';
  }
 
  function load(bucket){
@@ -87,7 +88,7 @@ export function attachLymphNodeLayer(viewer,{toast}){
  async function toggle(on){
   const attempt=++revision;
   if(!on){
-   enabled=loading=fade=false;
+   enabled=loading=false;fade=null;
    if(current()){viewer.selected=[];viewer.selectedTerm=null;viewer.isolated=viewer.focus.level==='bone';}
    viewer.applyVisibility();
    return false;
@@ -121,7 +122,7 @@ export function attachLymphNodeLayer(viewer,{toast}){
   if(!record||!mesh)return;
   const lateral=record.side==='l'?.35:record.side==='r'?-.35:0;
   const posterior=record.areas.includes('knee')||/Occipital|Mastoid|gluteal/i.test(record.name);
-  viewer.frameBox(mesh.userData.bounds.clone().expandByScalar(.065),side||[lateral,.15,posterior?-1:1]);
+  viewer.frameBox(mesh.userData.bounds.clone().expandByScalar(.052),side||[lateral,.15,posterior?-1:1]);
  }
 
  function applySelection(term,meshes,focus){
@@ -151,8 +152,8 @@ export function attachLymphNodeLayer(viewer,{toast}){
   get loading(){return loading;},
   get active(){return active();},
   get visible(){return visible;},
-  fadesContext:()=>active()&&fade,
-  toggleContext(){fade=!fade;viewer.applyVisibility();},
+  fadesContext:fades,
+  toggleContext(){fade=!fades();viewer.applyVisibility();},
   contextContains(mesh){
    const record=current();
    return !!record&&active()&&record.areas.some(area=>inArea(mesh.userData.zname,area,record.side));

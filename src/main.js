@@ -208,11 +208,11 @@ function syncFocusControls(){
   trail.classList.toggle('focus-intro',!location);trail.title=location;
  }
  const hint=$('.viewer-hint');
- hint.textContent=viewer.activeDetail==='fetal-skull'?'Rotate the scan · switch site views · compare the newborn illustration':selectedLayer&&!viewer.peel?selectedLayer:guidance.hint;
+ hint.textContent=viewer.activeDetail==='fetal-skull'?'Rotate the scan · switch site views · compare the newborn illustration':selectedLayer&&!viewer.peel?selectedLayer:lymphNodes.active&&!viewer.peel?'Select a green group · or use Browse → Lymph nodes':guidance.hint;
  $$('#desktop-region,#desktop-division,#structure-search').forEach(e=>e.disabled=blocked);
  $('#exact-only').disabled=blocked||['landmarks','ligaments','nerves','lymph-nodes'].includes(browseMode);
  const isBone=!!viewer.selected[0]&&!!boneFamily(viewer.selected[0].userData.zname);
- const next=$('#focus-next');next.hidden=blocked||viewer.referenceOpen||!guidance.action;next.disabled=!isBone||!ready;next.textContent=guidance.action;next.onclick=()=>viewer.navigateBone(viewer.selected[0]);
+ const next=$('#focus-next');next.hidden=blocked||viewer.referenceOpen||!!selectedLayer||!guidance.action;next.disabled=!isBone||!ready;next.textContent=guidance.action;next.onclick=()=>viewer.navigateBone(viewer.selected[0]);
  $('#focus-btn').setAttribute('aria-label',blocked?'Focus selected target':isBone?'Explore selected bone’s region':'Focus selected structure');
  $('#focus-btn').title=$('#focus-btn').getAttribute('aria-label');
  $('#focus-btn').querySelector('span').textContent=blocked?'Focus':'Region';
@@ -322,6 +322,7 @@ document.addEventListener('landmarkcontext',ev=>{if(ready)selectTerm(ev.detail);
 initWorkspace();
 initViewerRoom({viewer,toast});
 initAtlasLandmarks({viewer,selectTerm,escape,toast});
+document.addEventListener('lymphnodefocus',ev=>selectTerm(ev.detail));
 document.addEventListener('landmarkpick',ev=>{if(!document.body.dataset.precisionActive)selectTerm(ev.detail);});
 document.addEventListener('viewchange',ev=>{if(ev.detail==='atlas'&&!document.body.classList.contains('quiz-active')){if(ready&&viewer.region!==region)viewer.setRegion(region);if(selected){if(viewer.selectedTerm?.id!==selected.id)selectTerm(selected);else detail(selected);}else resetDetail();syncFilters();}});
 

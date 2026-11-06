@@ -201,8 +201,9 @@ export class AnatomyViewer {
    const blockers=[boneHit,this.nervousLayer?.intersection(this.ray),this.muscleLayer?.intersection(this.ray)];
    return blockers.some(hit=>hit&&hit.object.material.opacity>=.45&&hit.distance+.0005<node.distance)?null:node.object;
   };
-  const hit=boneAt(0,0),node=nodeAt(hit),nerve=this.nervousLayer?.pick(this.ray,hit);
+  const hit=boneAt(0,0),node=nodeAt(hit);
   if(node)return node;
+  const nerve=this.nervousLayer?.pick(this.ray,hit);
   if(nerve)return nerve;
   const musclesOwnFocus=this.muscleLayer?.ownsFocus(),muscle=musclesOwnFocus&&this.muscleLayer.pick(this.ray,hit);
   if(muscle)return muscle;
@@ -226,7 +227,7 @@ export class AnatomyViewer {
   return inArea(n,this.focus.areaId,this.focus.side)||(this.focus.areaId==='skull'&&m.userData.region==='Skull')||(this.focus.areaId==='thorax'&&/^Costal cartilage/.test(n))||(this.focus.areaId==='neck'&&/Thyroid cartilage|Cricoid cartilage|Arytenoid cartilage|Corniculate cartilage/.test(n));
  }
  boneMeshes(m){const id=boneId(m.userData.zname);return this.meshes.filter(x=>boneId(x.userData.zname)===id);}
- navigateBone(m){if(m.userData.lymphNodeKey){this.lymphNodeLayer?.select(this.termFor(m));return;}if(m.userData.nerveKey){this.nervousLayer?.select(this.termFor(m));return;}if(m.userData.muscleId){this.muscleLayer?.navigate(m);return;}const term=this.termFor(m);if(term?.representation?.ligamentKey){this.selectLigament(term);return;}const action=navigationAction(this.focus,m.userData.zname,this.quiz||this.peel);if(action==='region')this.exploreBoneRegion(m);else if(action==='bone')this.focusBone(m);}
+ navigateBone(m){if(m.userData.lymphNodeKey){document.dispatchEvent(new CustomEvent('lymphnodefocus',{detail:this.termFor(m)}));return;}if(m.userData.nerveKey){this.nervousLayer?.select(this.termFor(m));return;}if(m.userData.muscleId){this.muscleLayer?.navigate(m);return;}const term=this.termFor(m);if(term?.representation?.ligamentKey){this.selectLigament(term);return;}const action=navigationAction(this.focus,m.userData.zname,this.quiz||this.peel);if(action==='region')this.exploreBoneRegion(m);else if(action==='bone')this.focusBone(m);}
  exploreBoneRegion(m=this.selected[0]){
   if(!m||this.quiz)return;
   this.peel=false;document.dispatchEvent(new Event('layerschanged'));
@@ -309,7 +310,7 @@ export class AnatomyViewer {
   // Peeling one vertebra exposes its neighbors; it must not remove their discs.
   const adultStates=new Map(),levels=new Set(),innerDiscTarget=this.selected.some(m=>isNucleus(m.userData.zname));
   for(const m of this.meshes.filter(m=>!m.userData.detailGroup)){
-   const state={ligaments:this.quiz?undefined:this.ligaments,boneView:this.focus.level==='bone',activeDetail:this.activeDetail,division:this.division,hidden:this.peeledSurfaces.has(m),selected:selected.has(m),focusedBone:this.focus.level==='bone'&&!this.quiz&&boneId(m.userData.zname)===this.focus.boneId,inScope:this.scopeContains(m),context:(r?.contextPatterns||[]).some(p=>matches(p,m.userData.zname)),isolateContext:!!r?.isolateContext,isolated:this.isolated,tissues:!!this.tissues,discs:this.discs,sinuses:!!this.sinuses,ghost:this.ghost||this.nervousLayer?.fadesContext()||this.lymphNodeLayer?.fadesContext(),ghostContext:!!r?.ghostContext,innerDiscTarget};
+   const state={ligaments:this.quiz?undefined:this.ligaments,boneView:this.focus.level==='bone',activeDetail:this.activeDetail,division:this.division,hidden:this.peeledSurfaces.has(m),selected:selected.has(m),focusedBone:this.focus.level==='bone'&&!this.quiz&&boneId(m.userData.zname)===this.focus.boneId,inScope:this.scopeContains(m),context:(r?.contextPatterns||[]).some(p=>matches(p,m.userData.zname)),isolateContext:!!r?.isolateContext,isolated:this.isolated,tissues:!!this.tissues,discs:this.discs,sinuses:!!this.sinuses,ghost:this.ghost||this.nervousLayer?.fadesContext()||(!m.userData.nonbone&&this.lymphNodeLayer?.fadesContext()),ghostContext:!!r?.ghostContext,innerDiscTarget};
    adultStates.set(m,state);const level=vertebralLevel(m.userData.zname);if(level&&adultVisibility({name:m.userData.zname,tissue:m.userData.tissue,sinus:m.userData.sinus,ligament:ligamentByMesh.get(m.userData.zname)},{...state,hidden:false}).visible)levels.add(level);
   }
   const adultDisplay=new Map(),visibleParents=new Set();

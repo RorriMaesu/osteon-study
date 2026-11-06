@@ -113,7 +113,7 @@
 @media(max-width:999px){
  .main-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
  .main-nav button,.atlas-pane-tabs button{min-width:0;padding-inline:4px;line-height:1.25}
- .atlas-intro-actions{grid-template-columns:repeat(3,minmax(0,1fr))}
+
  .atlas-intro-actions>button{min-width:0;justify-content:center}
 
  /* The specimen, its hint, and touch controls have separate rows. */
@@ -545,11 +545,6 @@ body:has(#study-view.active)>main{min-height:0;overflow:hidden}
  .section-diagram-content>div>h3{margin:3px 0 5px;font-size:16px}
  .section-diagram-tabs{margin-bottom:5px;gap:4px}
  .section-diagram-tabs button,.section-diagram-tabs select{min-height:32px;padding:5px 8px;font-size:12px}
-}
-/* Keep the four anatomy switches in one phone row. Practice stays in the main navigation. */
-@media(max-width:699px){
- #atlas-view .atlas-intro-actions{grid-template-columns:repeat(4,minmax(0,1fr))}
- #atlas-view .atlas-intro-actions #start-practice{display:none}
 }
 @media(min-width:700px) and (max-width:1199px){
  .atlas-intro-actions{gap:5px}

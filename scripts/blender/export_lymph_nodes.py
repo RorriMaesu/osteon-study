@@ -69,6 +69,10 @@ checks = {
     'Lateral aortic nodes': (('Abdominal aorta',), 20, 'Lumbar group lateral to the abdominal aorta. Receives lymph from nearby deep structures and ascending iliac pathways.'),
     'Intermediate external iliac nodes': (('External iliac vein.*', 'External iliac artery.*'), 18, 'Part of the chain along the external iliac vessels. Receives deep inguinal and pelvic drainage.'),
     'Medial external iliac nodes': (('External iliac vein.*',), 18, 'Medial part of the chain along the external iliac vessels. Receives deep inguinal and pelvic drainage.'),
+    'Pre-auricular nodes': (('Superficial temporal artery.*',), 18, 'In front of the ear near the superficial temporal vessels. Receives lymph from parts of the temporal scalp, lateral eyelids, and external ear.'),
+    'Superficial parotid nodes': (('Parotid gland.*',), 16, 'Superficial to the parotid gland near the ear. Receives lymph from nearby superficial areas of the face and scalp.'),
+    'Occipital nodes': (('Occipital artery.*',), 20, 'At the back of the head near the occipital vessels. Receives lymph from the posterior scalp.'),
+    'Submandibular nodes': (('Submandibular gland.*',), 16, 'In the submandibular region below the jaw. Receives lymph from parts of the face and anterior oral cavity.'),
 }
 pilot_names = set(list(checks)[:8])
 hold = {
@@ -89,6 +93,7 @@ reference_names = {
     'Internal iliac vein', 'Abdominal aorta', 'Inferior vena cava (abdominal part)',
     'Superior mesenteric artery', 'Superior mesenteric vein', 'Inferior mesenteric artery',
     'Trachea', 'Left main bronchus', 'Right main bronchus', 'Coeliac trunk', 'Spleen',
+    'Occipital artery', 'Superficial temporal artery', 'Parotid gland', 'Submandibular gland',
     'Urinary bladder', 'Rectum',
 }
 
@@ -208,14 +213,14 @@ def inside(point, bvh):
             return False
     return True
 
-def penetration(mesh, bounds, candidates, threshold=.24):
+def penetration(mesh, bounds, candidates):
     sample = list(mesh.vertices)[::max(1, len(mesh.vertices) // 360)]
     hits = []
     for name, (other, bvh) in candidates.items():
         if not overlaps(bounds, other):
             continue
         share = sum(inside(v.co, bvh) for v in sample) / len(sample)
-        if share >= threshold:
+        if share >= .24:
             hits.append((name, round(share, 2)))
     return sorted(hits, key=lambda hit: -hit[1])
 
@@ -292,25 +297,6 @@ with tempfile.TemporaryDirectory(dir=project.parent) as directory:
     for key, name, ancestry, mesh in surfaces:
         bucket, areas, division = scope(name, ancestry)
         side = key[-1] if re.search(r'\.[lr]$', key) else None
-        fit = None
-        if key == 'Anterior axillary nodes.r':
-            # Retain the original cluster shape. Seat it just inferior to the
-            # pectoralis minor border if the native right mesh enters the muscle.
-            pectoral = 'Pectoralis minor muscle.r'
-            target = {pectoral: refs[pectoral]}
-            points = [v.co.copy() for v in mesh.vertices]
-            if penetration(mesh, mesh_bounds(mesh), target, threshold=.08):
-                for mm in range(1, 9):
-                    for vertex, original in zip(mesh.vertices, points):
-                        vertex.co.z = original.z - mm / 1000
-                    trial = mesh_bounds(mesh)
-                    center = (trial[0] + trial[1]) / 2
-                    if not penetration(mesh, trial, target, threshold=.08) and refs[pectoral][1].find_nearest(center)[3] <= .012:
-                        fit = f'Original mesh translated {mm} mm inferiorly to clear the pectoralis minor border.'
-                        break
-                if fit is None:
-                    for vertex, original in zip(mesh.vertices, points):
-                        vertex.co = original
         bounds = mesh_bounds(mesh)
         center = (bounds[0] + bounds[1]) / 2
         if side and center.x * (1 if side == 'l' else -1) <= 0:
@@ -350,7 +336,7 @@ with tempfile.TemporaryDirectory(dir=project.parent) as directory:
         overview = not note and (status == 'landmark-checked' or bool(re.match(
             r'Mastoid|Occipital|Submandibular|Supraclavicular|Parasternal|Coeliac|Obturator|Cubital', name)))
         records.append(dict(key=key, name=alias.get(name, name), side=side, bucket=bucket, areas=areas,
-                            division=division, status=status, reason=note, cue=cue, references=used, fit=fit,
+                            division=division, status=status, reason=note, cue=cue, references=used,
                             faces=len(mesh.polygons), bounds=[web(Vector((bounds[0].x, bounds[1].y, bounds[0].z))), web(Vector((bounds[1].x, bounds[0].y, bounds[1].z)))],
                             overview=overview))
 
