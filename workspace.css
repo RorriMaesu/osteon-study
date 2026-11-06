@@ -441,6 +441,15 @@ body.viewer-room-open{overflow:hidden!important}
 .atlas-muscle-toggle[aria-pressed=true]>[aria-hidden]::after{transform:translateX(10px);background:#dcecdf}
 @media(max-width:699px){#atlas-view>.intro{display:grid;grid-template-columns:1fr;gap:6px}#atlas-view>.intro h1{margin:0}.atlas-intro-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.atlas-intro-actions>button{min-height:44px;padding:8px 10px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){.atlas-muscle-toggle>[aria-hidden]::after{transition:none}}
+.structure-sidebar .browse-modes{flex-wrap:wrap}
+.structure-sidebar .browse-modes button{flex:1 0 calc(33% - 5px)}
+.quiz-active #ligaments-btn{display:none}
+#ligaments-btn[aria-pressed=true]{background:var(--mint);border-color:var(--mint);color:#142f2b}
+@media(max-width:420px){
+ .atlas-intro-actions>.atlas-muscle-toggle{gap:0;padding-inline:4px}
+ .atlas-intro-actions>.atlas-muscle-toggle>[aria-hidden],
+ .atlas-intro-actions>#start-practice>span{display:none}
+}
 @media(min-width:1000px){.exam-hub-grid{grid-template-rows:repeat(3,minmax(0,1fr))}}
 @media(min-width:1000px) and (max-height:740px){.exam-hub-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}.exam-hub-card h2{font-size:22px}}
 @media(min-width:1000px) and (max-height:680px){.exam-hub-card{padding:8px 10px;gap:4px}.exam-hub-card h2{font-size:20px}.exam-hub-card button{min-height:28px;padding:4px 8px}.exam-hub-card .control-row{gap:6px}.exam-hub-foot button{min-height:28px;padding:5px 8px;font-size:10px}.exam-hub-foot .tiny{font-size:8px;line-height:1.4}}

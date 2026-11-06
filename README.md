@@ -10,7 +10,7 @@
 
 **Built by an A&P student as he learns. Always growing with new content and improvements. Free to open in your browser; no account needed.**
 
-- **Explore:** rotate the skeleton, double-click into a region, toggle muscles in your current view, and peel away covering surfaces.
+- **Explore:** rotate the skeleton, double-click into a region, toggle muscles or ligaments in your current view, and peel away covering surfaces.
 - **Locate:** inspect labeled landmarks, openings, and teaching reconstructions.
 - **Recall:** name numbered targets, check your answer, and return to missed material.
 - **Connect:** study chapter notes, concept questions, glossary terms, and source readings on desktop or phone.
@@ -28,6 +28,10 @@
 </details>
 
 The new **111-second 1080p tour** shows 3D navigation, muscles and Peel, landmark controls, spelling-aware practice, OpenStax chapters 6–10, saved exams, a genuine local Socratic tutor exchange, progress and phone layouts. Both videos have warm female narration generated locally with **Qwen3-TTS**, an original **ACE-Step 1.5 XL Turbo** instrumental, and readable burned-in captions; separate caption files are included. [Watch, download, read the transcript, or copy a class-group post](https://rorrimaesu.github.io/osteon-study/demo/). [Production research, revisions and checks](demo/PROMO-PRODUCTION.md).
+
+## Ligaments in the 3D Atlas
+
+Use **Ligaments** in the atlas header to overlay 323 named ligament and fibrous-support surfaces without changing your angle or zoom. The **Ligaments** tab in Browse lets you find structures by name or abbreviations such as ACL and ATFL. Select a result for a close-up with X-ray context. The layer was assembled in Blender 4.5.1 from the registered Z-Anatomy source and includes a source-referenced reconstruction of the transverse ligament of C1. [Coverage and missing structures](https://rorrimaesu.github.io/osteon-study/ligament-coverage.html)
 
 ## Clearer practical targets
 
