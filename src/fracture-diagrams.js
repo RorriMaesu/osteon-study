@@ -1,12 +1,16 @@
 let serial=0;
 const outline='M97 69 C79 75 60 61 64 42 C67 22 89 16 103 30 C111 20 132 18 140 30 C156 26 176 39 172 58 C171 75 155 87 140 92 C125 133 125 162 125 199 L130 282 C132 318 145 335 156 351 C170 349 183 368 175 385 C169 400 150 403 137 392 C126 406 102 406 96 391 C79 399 63 392 63 376 C63 360 79 349 91 350 C105 314 105 289 108 250 L110 172 C111 128 112 99 97 69 Z';
 const fractureLines={transverse:'M103 213 L128 213',oblique:'M105 227 L126 199',spiral:'M107 195 C129 207 100 218 125 239',greenstick:'M106 207 L116 211 L108 217',comminuted:'M106 194 L122 203 L110 214 L126 223 M108 215 L117 228 L126 214 M114 200 L118 211',impacted:'M106 211 L112 203 L117 216 L124 205 L129 211',closed:'M105 208 L128 210',open:'M105 208 L128 210'};
-export function fractureSVG(type='spiral',{id='diagram',label=false,hero=false}={}){
-const uid=id+'-'+(++serial),open=type==='open',split=type==='closed'||open;
+export function fractureSVG(type='spiral',{id='diagram',label=false,hero=false,skinStatus='hidden'}={}){
+const uid=id+'-'+(++serial),status=['open','closed'].includes(type)?type:skinStatus;
+const open=status==='open',skin=status!=='hidden';
+const tissue='M60 32Q48 210 65 397H172Q190 240 172 32Z';
+const skinEdge=open?'M178 202Q176 116 172 32H60Q48 210 65 397H172Q181 308 179 235':'M60 32Q48 210 65 397H172Q190 240 172 32Z';
 return `<svg class="bone-svg ${hero?'hero-bone':''}" viewBox="0 0 240 440" role="img" aria-labelledby="${uid}-title"><title id="${uid}-title">${label?type+' fracture':'Schematic long bone showing the fracture to classify'}</title><defs><linearGradient id="${uid}-bone" x1="0" x2="1"><stop stop-color="#ede9db"/><stop offset=".45" stop-color="#fffcf1"/><stop offset="1" stop-color="#d4d4c5"/></linearGradient><clipPath id="${uid}-clip"><path d="${outline}"/></clipPath></defs>
-${(open||type==='closed')?`<path d="M60 32 Q48 210 65 397 L172 397 Q190 240 172 32Z" fill="#edc9b2" opacity=".65"/>`:''}
 <g transform="${hero?'rotate(17 120 220)':''}">
-${split?`<g><path d="${outline}" fill="url(#${uid}-bone)" stroke="#748077" stroke-width="2" style="clip-path:inset(0 0 53% 0)"/><g transform="${open?'translate(45 -1) rotate(-22 120 216)':'translate(0 14)'}"><path d="${outline}" fill="url(#${uid}-bone)" stroke="#748077" stroke-width="2" style="clip-path:inset(49% 0 0 0)"/></g></g>`:`<path d="${outline}" fill="url(#${uid}-bone)" stroke="#748077" stroke-width="2"/><path d="M115 114 Q112 218 119 320" fill="none" stroke="#c4bd9e" stroke-width="10" opacity=".22"/>`}
+${skin?`<path d="${tissue}" fill="#edc9b2" opacity=".72"/><path d="${skinEdge}" stroke="#9c5a4e" stroke-width="4" fill="none" data-skin-edge="${status}"/>`:''}
+${open?'<path d="M178 202L160 210 125 212V226L159 227 179 235" fill="#723d47" stroke="#f0a694" stroke-width="2" data-wound-channel="true"/>':''}
+<path d="${outline}" fill="url(#${uid}-bone)" stroke="#748077" stroke-width="2"/><path d="M115 114 Q112 218 119 320" fill="none" stroke="#c4bd9e" stroke-width="10" opacity=".22"/>
 <g clip-path="url(#${uid}-clip)" stroke="#c6bb9b" stroke-width="1" opacity=".58">${Array.from({length:9},(_,i)=>`<path d="M${69+i*10} 29 l35 40 m-31 -8 l40 -32 M${75+i*10} 358 l30 37 m-34 -8 l40 -28"/>`).join('')}</g>
 <path class="fracture-line" d="${fractureLines[type]||''}" fill="none" stroke="#b64c3c" stroke-width="3.5" stroke-linecap="round"/>
 ${type==='comminuted'?'<path d="M110 213 l8 -6 5 11 -10 8Z" fill="#f4e7cd" stroke="#b64c3c" stroke-width="2"/>':''}
@@ -16,8 +20,8 @@ export const stageNames=['Fracture hematoma','Internal & external calli','Bony c
 export function repairSVG(stage='hematoma',{id='repair',label=false,targets=false}={}){
 const uid=id+'-'+(++serial),n=['hematoma','callus','bony','remodeled'].indexOf(stage),isFinal=n===3;
 return `<svg class="repair-svg" viewBox="0 0 360 320" role="img" aria-labelledby="${uid}-title"><title id="${uid}-title">${label?(stageNames[n]||'Bone repair'):'Schematic cross-section of a fracture repair stage'}</title>
-<path d="M107 25 Q98 86 106 135 L102 166 Q97 236 107 294 L146 294 L146 25Z M214 25 L214 294 L253 294 Q262 237 254 166 L258 135 Q267 85 253 25Z" fill="#e6e1cf" stroke="#6d7d70" stroke-width="2"/>
-<path d="M148 25H212V294H148Z" fill="#f5e8c5"/>
+<path d="${n>=2?'M107 25Q98 86 106 135L102 166Q97 236 107 294H146V25ZM214 25V294H253Q262 237 254 166L258 135Q267 85 253 25Z':'M107 25Q98 86 106 135L146 147V25ZM102 168Q97 236 107 294H146V178ZM214 25V141L258 135Q267 85 253 25ZM214 176V294H253Q262 237 254 168Z'}" fill="#e6e1cf" stroke="#6d7d70" stroke-width="2"/>
+<path d="${n>=2?'M148 25H212V294H148Z':'M148 25H212V141L184 131 148 147ZM148 178L177 160 212 176V294H148Z'}" fill="#f5e8c5"/>
 ${n<1?'<path d="M101 139 152 149 184 134 213 155 257 142 L259 163 214 175 177 156 147 171 100 160Z" fill="#a3483e" opacity=".85"/><ellipse cx="180" cy="157" rx="96" ry="45" fill="#b96352" opacity=".25"/>':''}
 ${n===1?'<ellipse cx="180" cy="156" rx="105" ry="59" fill="#a7c4b3" opacity=".72"/><path d="M145 134Q180 116 215 134L215 183Q180 197 145 183Z" fill="#d4bc8b"/><path d="M104 143 147 154 184 140 213 163 255 151" fill="none" stroke="#818965" stroke-width="3"/>':''}
 ${n>=2?`<path d="M${n===2?'96':'103'} 105 Q79 161 101 213 L146 211 L214 210 L258 211 Q280 161 261 109Z" fill="#e4dcc0" stroke="#86927c" stroke-width="1.5"/>`:''}

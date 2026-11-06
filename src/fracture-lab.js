@@ -34,7 +34,7 @@ const domainOptions=[...new Set(fracture.bank.map(q=>q.domain))];
 export function renderFractureLab(root,section,e){
  if(section!=='6.5')return false;
  root.classList.add('foundation-studio');
- let view='repair',index=0,pattern='transverse',domain='all',playing=false,timer;
+ let view='repair',index=0,pattern='transverse',skinStatus='closed',domain='all',playing=false,timer;
  const stop=()=>{clearTimeout(timer);playing=false;};
  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const setView=id=>{stop();view=id;draw();};
@@ -50,8 +50,9 @@ export function renderFractureLab(root,section,e){
    if(playing)timer=setTimeout(()=>{if(!root.isConnected)return;if(index===stages.length-1)stop();else index++;const hadFocus=document.activeElement?.id==='fracture-play';draw();if(hadFocus)root.querySelector('#fracture-play')?.focus({preventScroll:true});},4200);
   }
   if(view==='patterns'){
-   panel.innerHTML=`<label>Fracture pattern or skin status <select id="fracture-pattern">${Object.keys(patterns).map(id=>`<option value="${id}" ${pattern===id?'selected':''}>${id[0].toUpperCase()+id.slice(1)}</option>`).join('')}</select></label><div class="foundation-tissue-layout"><figure class="fracture-figure">${fractureSVG(pattern,{label:true})}</figure><div aria-live="polite"><h3>${pattern[0].toUpperCase()+pattern.slice(1)}</h3><p>${patterns[pattern]}</p><p>A fracture can have a geometric pattern and a skin-status classification at the same time.</p></div></div>`;
-   panel.querySelector('select').onchange=ev=>{pattern=ev.target.value;draw();root.querySelector('#fracture-pattern').focus({preventScroll:true});};
+   panel.innerHTML=`<div class="control-row"><label>Fracture pattern <select id="fracture-pattern">${Object.keys(patterns).filter(id=>id!=='open'&&id!=='closed').map(id=>`<option value="${id}" ${pattern===id?'selected':''}>${id[0].toUpperCase()+id.slice(1)}</option>`).join('')}</select></label><label>Skin status <select id="fracture-skin"><option value="closed" ${skinStatus==='closed'?'selected':''}>Closed</option><option value="open" ${skinStatus==='open'?'selected':''}>Open</option></select></label></div><div class="foundation-tissue-layout"><figure class="fracture-figure">${fractureSVG(pattern,{label:true,skinStatus})}<figcaption>${skinStatus==='open'?'The dark wound channel extends from the skin opening to the fracture.':'The skin edge remains continuous.'}</figcaption></figure><div aria-live="polite"><h3>${skinStatus==='open'?'Open':'Closed'} ${pattern} fracture</h3><p>${patterns[pattern]}</p><p>${patterns[skinStatus]}</p><p>Change one control at a time to see which feature changes.</p></div></div>`;
+   panel.querySelector('#fracture-pattern').onchange=ev=>{pattern=ev.target.value;draw();root.querySelector('#fracture-pattern').focus({preventScroll:true});};
+   panel.querySelector('#fracture-skin').onchange=ev=>{skinStatus=ev.target.value;draw();root.querySelector('#fracture-skin').focus({preventScroll:true});};
   }
   if(view==='practice'||view==='written'){
    panel.innerHTML=`<label>Topic <select id="fracture-topic">${['all',...domainOptions].map(id=>`<option value="${id}" ${domain===id?'selected':''}>${e(domains[id]||id[0].toUpperCase()+id.slice(1))}</option>`).join('')}</select></label><p>${view==='practice'?'Use the normal Practice Lab with hints, grading and progress. Each set draws up to 12 different question families.':'Explain each correction aloud or in writing before opening its scoring rubric.'}</p>`;

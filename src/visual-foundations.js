@@ -7,9 +7,11 @@ const loop=(warm)=>`<path d="M116 68Q230 7 357 70M357 179Q235 242 116 181" strok
  box(31,80,134,85)+box(315,80,134,85)+label(98,115,'Stimulus')+label(98,140,warm?'Contractions':'Temperature ↑')+
  label(382,115,'Response')+label(382,140,warm?'Oxytocin ↑':'Heat loss ↑')+label(240,128,warm?'Amplifies':'Opposes');
 function anatomy(i){
- const open=i===2;
- return `<path d="M180 115C180 74 222 66 240 98C260 66 303 75 303 115C303 151 243 191 240 194C232 190 180 151 180 115Z" fill="#8a535e" stroke="#f08c94" stroke-width="4"/><path d="M240 109v62M214 100l26 27 28-27" fill="none" stroke="#f6c5c9" stroke-width="5"/>`+
- (i===0?line(274,102,55,-32)+label(360,60,'Valve leaflets'):i===1?arrow(92,130,74)+arrow(317,130,62)+label(240,221,'Pressure drives flow'):line(246,129,87,0)+label(382,134,open?'One-way seal':'Valve'));
+ const closed=i===2;
+ return `<path d="M122 107C88 16 392 16 358 107L344 195Q240 252 136 195Z" fill="#573747" stroke="#e799a4" stroke-width="3"/><path d="M122 107H155M325 107H358" stroke="#e799a4" stroke-width="5"/>
+ <path class="valve-leaflet" style="--valve-start:${i===1?-53:0}deg;--valve-angle:${closed?-53:0}deg;transform-origin:155px 107px" d="M155 107Q183 139 183 193"/><path class="valve-leaflet" style="--valve-start:${i===1?53:0}deg;--valve-angle:${closed?53:0}deg;transform-origin:325px 107px" d="M325 107Q297 139 297 193"/>`+
+ (i===1?'<path d="M240 76v92m-10-11 10 11 10-11" stroke="#9ed9ef" stroke-width="4" fill="none"/>':i===2?'<path d="M240 181v-38m-9 9 9-9 9 9" stroke="#ffbf91" stroke-width="4" fill="none"/>':line(183,149,38,25)+label(255,183,'Leaflets'))+
+ label(240,52,'Left atrium')+label(240,214,'Left ventricle');
 }
 function imaging(i){
  const frames=['X-ray projection','CT cross-section','MRI soft tissue','Ultrasound echo','PET tracer uptake'];
@@ -35,11 +37,18 @@ function reactions(i){
   return `<path d="M55 178H429M55 178V35" fill="none" stroke="#76938c" stroke-width="2"/><path d="M70 126H115C155 126 155 58 225 58S287 ${end} 342 ${end}H408" fill="none" stroke="#ffbf91" stroke-width="4"/>`+label(238,215,'Reaction progress')+label(119,113,'Reactants')+label(375,end-12,'Products');
  }
  const beads=(x,y,cs)=>cs.map((c,j)=>dot(x+j*31,y,17,c)).join('');
- if(i===3)return `<path d="M60 174H430M60 174V34M65 159C130 154 136 63 220 58S276 152 411 112" stroke="#ffbf91" stroke-width="4" fill="none"/><path d="M65 159C142 159 154 100 220 99S286 141 411 112" stroke="#9ed9ef" stroke-width="4" fill="none"/>`+label(240,211,'Reaction progress');
+ if(i===3)return `<path d="M64 197H438M64 197V31" stroke="#aac9c0" stroke-width="2" fill="none"/><path d="M74 160H121C156 160 173 49 222 49S271 119 343 119H419" stroke="#ffbf91" stroke-width="4" fill="none"/><path d="M74 160H121C157 160 174 96 222 96S275 119 343 119H419" stroke="#9ed9ef" stroke-width="4" fill="none" stroke-dasharray="7 5"/><path d="M222 53V155m-5-97 5-5 5 5m-10 92 5 5 5-5M411 123v33m-5-28 5-5 5 5m-10 23 5 5 5-5M121 160H422" stroke="#c7dbd2" stroke-width="1.5" fill="none"/>`+label(246,228,'Reaction progress')+label(104,184,'Reactants')+label(363,105,'Products')+label(250,79,'Eₐ')+label(381,145,'ΔG')+`<g transform="rotate(-90 32 113)">${label(32,113,'Free energy')}</g>`;
  const [left,right]=[[[['#9ed9ef'],['#ffbf91']],[['#9ed9ef','#ffbf91']]],[[['#9ed9ef','#ffbf91']],[['#9ed9ef'],['#ffbf91']]],[[['#9ed9ef','#ffbf91'],['#a9dcc2','#f08c94']],[['#9ed9ef','#a9dcc2'],['#ffbf91','#f08c94']]]][i];
  return left.map((g,n)=>beads(90,95+n*54,g)).join('')+arrow(205,121,68)+right.map((g,n)=>beads(345,95+n*54,g)).join('')+label(240,216,['Synthesis','Decomposition','Exchange'][i]);
 }
 function skin(i,kind){
+ if(kind==='depth'){
+  const layers=[['Epidermis','#d7a395',32,30],['Dermis','#b77180',62,52],['Hypodermis','#bf9a74',114,37],['Deep fascia','#9eacb7',151,21],['Muscle','#c8877c',172,34],['Bone','#ded4b8',206,27]];
+  const tissue=layers.map(([name,color,y,h])=>box(74,y,332,h-1,color)+label(320,y+h/2+5,name).replace('#e1efe5','#14282e')).join('');
+  if(i===4)return tissue+`<path d="M104 33Q144 68 182 33" stroke="#f1bcc3" stroke-width="8" fill="none"/>`+label(144,94,'Scar');
+  const bottom=[49,88,114,221][i];
+  return tissue+`<path d="M102 32H189L181 ${bottom-4}Q145 ${bottom+4} 110 ${bottom-4}Z" fill="#572d40" stroke="#ffe0a6" stroke-width="2"/>`;
+ }
  if(kind==='layers'&&i===4){
   const names=['Corneum','Lucidum','Granulosum','Spinosum','Basale'],colors=['#e5b5a0','#d7d6b0','#ac8f99','#996d86','#705f85'];
   return names.map((n,j)=>box(76,29+j*36,328,34,colors[j])+label(241,51+j*36,n).replace('#e1efe5',j<3?'#16262f':'#f6f0ee')).join('')+label(240,230,'Lucidum is present in thick skin');
@@ -50,7 +59,6 @@ function skin(i,kind){
   const out=box(62,y,352,h-2,c)+label(321,y+h*.63,name).replace('#e1efe5','#14282e')+(kind==='layers'&&j===i?`<rect x="61" y="${y-1}" width="354" height="${h}" rx="9" fill="none" stroke="#ffdc9c" stroke-width="4"/>`:'');y+=h;return out;
  }).join('');
  if(kind==='layers')return artwork;
- if(kind==='depth')return i===4?artwork+box(103,41,100,65,'#cb7381')+line(105,44,98,0,'#f0b5a1')+label(155,142,'Repair and scar'):artwork+box(96,32,77,[43,81,132,181][i],'#572d40')+line(99,36,70,0,'#ffbf91');
  return artwork+`<path d="M94 123q23-20 46 0t46 0 46 0" fill="none" stroke="${i===0?'#ffada5':'#9ed9ef'}" stroke-width="${i===0?13:5}"/>`+
  (i===0?dot(128,23,7)+dot(165,18,5)+line(128,32,0,-12,'#9ed9ef')+line(165,30,0,-12,'#9ed9ef'):'')+label(166,160,i===0?'Vessels dilate':'Vessels constrict');
 }

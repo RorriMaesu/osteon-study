@@ -47,7 +47,8 @@ function renderSchematic(root,topic,section,e){
   index=i;const [name,explanation]=topic.states[index];
   svg.setAttribute('aria-label',topic.title+': '+name);
   svg.innerHTML=`<rect width="480" height="250" rx="13" fill="${palette.paper}"/>${sceneArt(topic,index,e)}`;
-  note.innerHTML=`<h4>${e(name)}</h4><p>${e(explanation)}</p>`;
+  const legend=section==='2.3'&&index===3?'<ul class="reaction-legend"><li><span aria-hidden="true" class="reaction-solid"></span>Without enzyme</li><li><span aria-hidden="true" class="reaction-dashed"></span>With enzyme</li><li>Eₐ is the activation barrier. ΔG is the free-energy change.</li></ul>':'';
+  note.innerHTML=`<h4>${e(name)}</h4><p>${e(explanation)}</p>${legend}`;
   picker.value=String(index);
   buttons.forEach((b,n)=>b.setAttribute('aria-pressed',String(n===index)));
  }

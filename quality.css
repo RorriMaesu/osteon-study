@@ -353,6 +353,12 @@
 .section-diagram-note h4,.section-diagram-note p{margin:0}
 .section-diagram-note h4{margin-bottom:4px;color:var(--mint);font-size:15px}
 .section-diagram-note p{font-size:13px;line-height:1.45}
+.valve-leaflet{fill:none;stroke:#f6c5c9;stroke-width:7;stroke-linecap:round;transform:rotate(var(--valve-angle));animation:valve-position .42s ease-out}
+@keyframes valve-position{from{transform:rotate(var(--valve-start))}}
+@media(prefers-reduced-motion:reduce){.valve-leaflet{animation:none}}
+.reaction-legend{padding:0;list-style:none;margin:9px 0 0;font-size:.875rem;display:grid;gap:6px}
+.reaction-legend span{display:inline-block;width:22px;margin-right:8px;vertical-align:middle;border-top:3px solid #ffbf91}
+.reaction-legend .reaction-dashed{border-top:3px dashed #9ed9ef}
 .section-diagram-state-picker{display:none!important}
 @media(max-width:700px){
  .section-diagram-layout{grid-template-columns:1fr;gap:7px}
