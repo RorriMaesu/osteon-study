@@ -546,3 +546,23 @@ body:has(#study-view.active)>main{min-height:0;overflow:hidden}
  .section-diagram-tabs{margin-bottom:5px;gap:4px}
  .section-diagram-tabs button,.section-diagram-tabs select{min-height:32px;padding:5px 8px;font-size:12px}
 }
+/* Keep the three anatomy switches in one phone row. Practice stays in the main navigation. */
+@media(max-width:699px){
+ #atlas-view .atlas-intro-actions{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #atlas-view .atlas-intro-actions #start-practice{display:none}
+}
+@media(min-width:700px) and (max-width:1199px){
+ .atlas-intro-actions{gap:5px}
+ .atlas-intro-actions>button{padding-inline:8px}
+ .atlas-intro-actions>.atlas-muscle-toggle>[aria-hidden]{display:none}
+}
+@media(min-width:1000px){
+ body:not(.viewer-room-open) #nerves-btn{display:none}
+}
+.quiz-active #nerves-btn,.quiz-active #nerve-context-btn{display:none}
+:is(#nerves-btn,#nerve-context-btn)[aria-pressed=true]{background:var(--mint);border-color:var(--mint);color:#142f2b}
+.nerve-route{position:absolute;z-index:4;left:50%;top:8px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;width:max-content;max-width:95%;padding:3px;border:1px solid #5d8488;border-radius:10px;background:#14272bed}
+.nerve-route[hidden]{display:none}
+.nerve-route button{padding:6px 9px;min-height:34px;font-size:11px}
+.nerve-route button:first-child,.nerve-route button:last-child{min-width:38px}
+@media(max-width:999px){.nerve-route button{min-height:44px}.nerve-route button:first-child,.nerve-route button:last-child{min-width:44px}}

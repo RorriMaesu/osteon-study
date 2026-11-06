@@ -29,6 +29,10 @@
 
 The new **111-second 1080p tour** shows 3D navigation, muscles and Peel, landmark controls, spelling-aware practice, OpenStax chapters 6–10, saved exams, a genuine local Socratic tutor exchange, progress and phone layouts. Both videos have warm female narration generated locally with **Qwen3-TTS**, an original **ACE-Step 1.5 XL Turbo** instrumental, and readable burned-in captions; separate caption files are included. [Watch, download, read the transcript, or copy a class-group post](https://rorrimaesu.github.io/osteon-study/demo/). [Production research, revisions and checks](demo/PROMO-PRODUCTION.md).
 
+## Nervous system in the 3D Atlas
+
+Turn on **Nerves** in the atlas header to add the nervous system to your current view. **Browse → Nerves** searches by name, cranial nerve number, or common aliases. Select a result to see its modeled anatomy and use **Follow nerve** for named stops along selected routes. **Fade anatomy** exposes structures beneath bone or muscle. [Nervous system coverage](https://rorrimaesu.github.io/osteon-study/nerve-coverage.html)
+
 ## Ligaments in the 3D Atlas
 
 Use **Ligaments** in the atlas header to overlay 323 named ligament and fibrous-support surfaces without changing your angle or zoom. The **Ligaments** tab in Browse lets you find structures by name or abbreviations such as ACL and ATFL. Select a result for a close-up with X-ray context. The layer was assembled in Blender 4.5.1 from the registered Z-Anatomy source and includes a source-referenced reconstruction of the transverse ligament of C1. [Coverage and missing structures](https://rorrimaesu.github.io/osteon-study/ligament-coverage.html)

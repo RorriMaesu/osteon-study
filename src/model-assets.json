@@ -3,5 +3,11 @@
   "course-tissues": "1c21915e1045",
   "landmark-details": "3792ff38588d",
   "fetal-skull": "86f683cc3fc7",
-  "ligaments": "efa016f4da29"
+  "ligaments": "efa016f4da29",
+  "nerves-overview": "bbe263e1fe08",
+  "nerves-head": "272c0717f48b",
+  "nerves-spine": "fc3096c12ab0",
+  "nerves-trunk": "dd4c35fc9291",
+  "nerves-upper-limb": "54676cda4acd",
+  "nerves-lower-limb": "5b95d1737ae7"
 }

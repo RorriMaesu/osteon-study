@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Osteon · Nervous system coverage</title>
+<style>
+ :root{color-scheme:dark;background:#101b21;color:#e6efea;font:16px/1.55 system-ui}
+ body{box-sizing:border-box;max-width:920px;margin:auto;padding:clamp(18px,5vw,40px)}
+ h1{font:clamp(32px,7vw,52px)/1.1 Georgia;margin:18px 0 10px}
+ h2{font-size:1.15rem;margin:0 0 .35em}p,ul{margin:.4em 0}
+ a{color:#bcdfcb}a:focus-visible{outline:2px solid #bcdfcb;outline-offset:4px}
+ section{margin-top:14px;padding:14px 18px;border:1px solid #3e5757;border-radius:12px;background:#17282d}
+ ul{padding-inline-start:20px}strong{color:#93def0}
+</style>
+<header>
+ <a href="./#atlas">← Return to the 3D Atlas</a>
+ <h1>Nervous system coverage</h1>
+ <p>Switch on <strong>Nerves</strong> to see the current view with nervous anatomy. Choose <strong>Browse → Nerves</strong> to find a named structure. Use <strong>Fade anatomy</strong> in the viewer tools to expose deeper structures.</p>
+</header>
+<main>
+ <section>
+  <h2>What is modeled</h2>
+  <p id="coverage-count" aria-live="polite">Loading the model inventory…</p>
+  <p>Counts are selectable atlas entries. Some represent groups of branches, and left and right have separate entries where available. Regional files include more detail than the whole-body view.</p>
+  <p>Open a named nerve to read the available extent. Follow nerve steps through selected source routes, including the median, ulnar, radial, sciatic, tibial and vagus nerves.</p>
+ </section>
+ <section>
+  <h2>How to interpret the surfaces</h2>
+  <p><strong>Source surface</strong> means an attributed adult reference geometry. It can represent a branch group, a modeled route or an individually named structure. Available path stops describe study regions along the modeled portion. The extent and branch patterns can vary between people.</p>
+  <p>The original nerve data and the position references come from <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy">Z-Anatomy</a> and <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html">BodyParts3D</a>. Z-Anatomy credits the <a href="https://sketchfab.com/3d-models/cranial-nerves-and-foramina-a9358ee7a6dd4ea18a3622114405a4c7">University of Dundee cranial nerve model</a> among its sources.</p>
+  <p id="supplement" hidden>Selected additional right-sided surfaces come from the <a href="https://caskanatomy.info/open3dviewer/?model=brachial-plexus-and-branches">Leiden UMC brachial plexus</a> and <a href="https://caskanatomy.info/open3dviewer/?model=lower-limb">lower-limb Open3DModel</a>. Their detail panels identify the source and any modeled segment limits.</p>
+ </section>
+ <section>
+  <h2>Coverage still in progress</h2>
+  <ul>
+   <li><strong>Spinal levels.</strong> Some roots, dorsal root ganglia, and intercostal nerves are grouped. Individual continuous models for all 31 spinal pairs still require level-by-level review and separation.</li>
+   <li><strong>Cranial branches.</strong> Both sides of cranial nerves I–XII are modeled. Individual skull-base passages and smaller extracranial branches need further verification. The modeled vagus extent differs by side.</li>
+   <li><strong>Autonomic and organ nerves.</strong> The layer includes portions of the sympathetic trunks and vagus. Coverage of the recurrent laryngeal and splanchnic nerves, pelvic autonomic pathways, and intramural networks is still incomplete.</li>
+   <li><strong>Peripheral detail.</strong> Some distal branches and the opposite side of selected right-sided additions still need independent sources.</li>
+  </ul>
+  <p><a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system">OpenStax peripheral nervous system</a> · <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/15-1-divisions-of-the-autonomic-nervous-system">OpenStax autonomic pathways</a> · <a href="https://ifaa.net/committees/anatomical-terminology-fipat/fipat-ifaa-terminologies/">FIPAT nomenclature</a></p>
+ </section>
+</main>
+<script type="module">
+const count=document.getElementById('coverage-count');
+try{
+ const response=await fetch('src/nerve-models.json');
+ if(!response.ok)throw Error(response.status);
+ const {structures,donors}=await response.json();
+ const labels={central:'brain and cord',cranial:'cranial',peripheral:'spinal and peripheral',autonomic:'autonomic'};
+ const totals=Object.keys(labels).map(key=>structures.filter(entry=>entry.category===key).length+' '+labels[key]);
+ count.textContent=structures.length+' selectable 3D entries across the body ('+totals.join(', ')+').';
+ document.getElementById('supplement').hidden=!Object.keys(donors).length;
+}catch{count.textContent='The inventory is temporarily unavailable.';}
+</script>
+</html>
