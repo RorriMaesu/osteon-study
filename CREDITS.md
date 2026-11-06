@@ -133,3 +133,23 @@ Fracture schematics and practice families are adapted from [Fracture Lab](https:
 ## Lymph-node layer
 
 The lymph-node surfaces in `assets/lymph-nodes-*.glb` derive from the pinned Z-Anatomy project (CC BY-SA 4.0), with attribution to Z-Anatomy and [the contributors listed in its original license](https://github.com/Z-Anatomy/Models-of-human-anatomy/blob/master/License.txt), including BodyParts3D © Database Center for Life Science (source contribution under CC BY-SA 2.1 Japan). Osteon evaluated and registered the meshes in Blender 4.5, screened the pectoral groups for intersections, organized named regional surfaces, documented held geometry, and exported compressed web assets under CC BY-SA 4.0. [Build script](scripts/blender/export_lymph_nodes.py) · [Coverage and anatomy references](lymph-node-coverage.html)
+
+## Exam 3 course-packet diagrams
+
+The study-material contributor explicitly confirmed permission to use and publish all supplied diagrams on November 6, 2026. The nine images in `assets/mock-exam3/` are crops of the supplied BI 231 Week 6 and Week 7 laboratory packet photographs. They retain the original anatomical pixels. SVG masks and margin clipping conceal answer labels; numbered leaders identify independently checked targets. Display contrast is adjusted for legibility. No generated anatomical artwork is included.
+
+The bone microanatomy panel, `plate-01.jpg`, carries **© 2006 Pearson Education, Inc., publishing as Benjamin Cummings**. It is reproduced with permission. The other panels are credited as **BI 231 supplied laboratory illustrations, reproduced with permission**; the supplied crops do not establish more specific original publishers. These packet images are not represented as OpenStax artwork and do not acquire the software's MIT license or the OpenStax material's Creative Commons license.
+
+| Asset | Supplied source | Assessed target |
+| --- | --- | --- |
+| `plate-01.jpg` | Week 6 lab packet, page 1 | Osteon |
+| `plate-02.jpg` | Week 6 lab packet, page 2 | Parietal bone |
+| `plate-03.jpg` | Week 6 lab packet, page 2 | Sphenoid bone |
+| `plate-04.jpg` | Week 6 lab packet, page 2 | Pedicle |
+| `plate-05.jpg` | Week 7 lab packet, page 7 | Glenoid cavity |
+| `plate-06.jpg` | Week 7 lab packet, page 8 | Deltoid tuberosity |
+| `plate-07.jpg` | Week 7 lab packet, page 4 | Acetabulum |
+| `plate-08.jpg` | Week 7 lab packet, page 5 | Medial malleolus |
+| `plate-09.jpg` | Week 7 lab packet, page 7 | Synovial membrane |
+
+The [asset manifest](assets/mock-exam3/manifest.json) records source and derivative hashes, crop coordinates, displayed orientation, masks, target positions and inspection notes. Source credits also accompany each displayed figure. Full annotated packet pages, personal filesystem paths and identifying student annotations are not part of this package. The [mock-exam documentation](MOCK-EXAM-3.md) distinguishes the course evidence from the independently authored practice questions and grading rubrics.
