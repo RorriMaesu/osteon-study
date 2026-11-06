@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lymph-node coverage | Osteon</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body{overflow:auto}main{max-width:68rem;margin:0 auto;padding:1.25rem}.coverage-table{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{padding:.65rem;text-align:left;vertical-align:top;border-bottom:1px solid #385052}nav{display:flex;flex-wrap:wrap;gap:1rem}select{max-width:100%}.coverage-intro{max-width:70ch}summary{cursor:pointer}h1{font-size:clamp(2rem,6vw,3.5rem)}
+</style>
+</head>
+<body>
+<main>
+<nav aria-label="Site links"><a href="./#atlas">← 3D atlas</a><a href="CREDITS.md">Credits and licenses ↗</a></nav>
+<p class="eyebrow">OSTEON / 3D ATLAS</p>
+<h1>Lymph-node coverage</h1>
+<div class="coverage-intro">
+<p>This atlas shows representative adult lymph-node groups. Some source meshes contain several nodes, and the arrangement of individual nodes varies. Several left and right meshes are mirrored in the source.</p>
+<p><strong>Position checked</strong> means the mesh passed a placement check against nearby modeled structures. <strong>Source position</strong> means the original mesh is available for exploration and its individual anatomical review is pending. <strong>Withheld</strong> means the mesh stays out of the viewer while its placement is reviewed.</p>
+<p>Use the <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/21-1-anatomy-of-the-lymphatic-and-immune-systems">OpenStax chapter section</a> to learn the big picture and the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11436473/">HuBMAP anatomy map</a> to study drainage relationships. Cross-checks used the <a href="https://doi.org/10.1002/ar.b.20102">Visible Human node atlas</a>, the <a href="https://pubmed.ncbi.nlm.nih.gov/24183870/">cervical level consensus</a>, the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5829725/">axillary cadaver study</a>, the <a href="https://doi.org/10.1089/lrb.2013.0046">popliteal dissection study</a> and the <a href="https://pubmed.ncbi.nlm.nih.gov/19357537/">IASLC thoracic map</a>.</p>
+</div>
+<label for="node-region">Body region</label>
+<select id="node-region"><option value="all">All regions</option></select>
+<p id="node-totals" role="status"></p>
+<div class="coverage-table">
+<table><thead><tr><th scope="col">Node group</th><th scope="col">Region</th><th scope="col">Review</th></tr></thead><tbody id="node-rows"></tbody></table>
+</div>
+<noscript>Enable JavaScript to view the mesh-by-mesh coverage table.</noscript>
+</main>
+<script type="module" src="src/lymph-node-coverage.js"></script>
+</body>
+</html>

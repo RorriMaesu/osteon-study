@@ -223,9 +223,10 @@ export function attachNervousLayer(viewer,{toast}){
    applySelection(term,find(term),focus);
    return true;
   },
+  intersection(ray){return active()?ray.intersectObjects(visible,false)[0]:null;},
   pick(ray,boneHit){
-   if(!active())return null;
-   const hit=ray.intersectObjects(visible,false)[0];
+
+   const hit=api.intersection(ray);
    return hit&&(!boneHit||boneHit.object.material.opacity<.45||hit.distance<=boneHit.distance+.0005)?hit.object:null;
   },
   selectMesh(mesh){applySelection(nerveTermByKey.get(mesh.userData.nerveKey),[mesh],false);},

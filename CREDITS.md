@@ -129,3 +129,7 @@ The original cell laboratories, diagrams, lessons and captioned protein-synthesi
 ### Fracture Lab
 
 Fracture schematics and practice families are adapted from [Fracture Lab](https://github.com/RorriMaesu/fracture-lab/tree/495995e82265444e17b714305bd9aece9d33334f). The artwork illustrates the textbook concepts qualitatively. Osteon provides guided views in §6.5, a scored bank, and separate written-response rubrics.
+
+## Lymph-node layer
+
+The lymph-node surfaces in `assets/lymph-nodes-*.glb` derive from the pinned Z-Anatomy project (CC BY-SA 4.0), with attribution to Z-Anatomy and [the contributors listed in its original license](https://github.com/Z-Anatomy/Models-of-human-anatomy/blob/master/License.txt), including BodyParts3D © Database Center for Life Science (source contribution under CC BY-SA 2.1 Japan). Osteon evaluated and registered the meshes in Blender 4.5, screened the pectoral groups for intersections, organized named regional surfaces, documented held geometry, and exported compressed web assets under CC BY-SA 4.0. [Build script](scripts/blender/export_lymph_nodes.py) · [Coverage and anatomy references](lymph-node-coverage.html)

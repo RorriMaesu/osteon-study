@@ -33,6 +33,10 @@ The new **111-second 1080p tour** shows 3D navigation, muscles and Peel, landmar
 
 Turn on **Nerves** in the atlas header to add the nervous system to your current view. **Browse → Nerves** searches by name, cranial nerve number, or common aliases. Select a result to see its modeled anatomy and use **Follow nerve** for named stops along selected routes. **Fade anatomy** exposes structures beneath bone or muscle. [Nervous system coverage](https://rorrimaesu.github.io/osteon-study/nerve-coverage.html) · [Three-question identification drill](https://rorrimaesu.github.io/osteon-study/nerve-recall.html)
 
+## Lymph nodes in the 3D Atlas
+
+Choose **Lymph nodes** (**Nodes** on phones) to add the layer without changing the current camera. In **Browse → Lymph nodes**, search by group or filter by body region. Select a group to see its location and review status. **Fade bones** helps expose deeper groups. [Lymph-node coverage and references](https://rorrimaesu.github.io/osteon-study/lymph-node-coverage.html)
+
 ## Ligaments in the 3D Atlas
 
 Use **Ligaments** in the atlas header to overlay 323 named ligament and fibrous-support surfaces without changing your angle or zoom. The **Ligaments** tab in Browse lets you find structures by name or abbreviations such as ACL and ATFL. Select a result for a close-up with X-ray context. The layer was assembled in Blender 4.5.1 from the registered Z-Anatomy source and includes a source-referenced reconstruction of the transverse ligament of C1. [Coverage and missing structures](https://rorrimaesu.github.io/osteon-study/ligament-coverage.html)

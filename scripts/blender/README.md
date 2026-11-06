@@ -36,3 +36,7 @@ uncertainty. A ray intersection establishes a surface coordinate, not an open
 fontanelle or an anatomically certified point. Do not remove spatial-scoring
 holds without appropriate anatomical evidence. No new holes are cut by this
 script. Rebuild the app and run the coverage/model tests after changing assets.
+
+## Lymph nodes
+
+Open the pinned Z-Anatomy `Startup.blend` in Blender 4.5 with `--background --disable-autoexec --python-exit-code 1 --python scripts/blender/export_lymph_nodes.py -- <task-root>`. Add `--pilot` on a fresh checkout to build the four-basin pilot. The full run creates `outputs/osteon-models/lymph-node-atlas.blend` and versioned regional assets. The project contains the imported adult skeleton and a separately hidden collection of same-source alignment references. Withheld surfaces are kept in their own hidden collection for future fitting. Reruns back up existing lymph-node outputs and verify the copies before replacing them.

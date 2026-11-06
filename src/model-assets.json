@@ -9,5 +9,9 @@
   "nerves-spine": "9db69104973e",
   "nerves-trunk": "e4704fb5f266",
   "nerves-upper-limb": "8f35ccbfe0dc",
-  "nerves-lower-limb": "dfc76a7af74d"
+  "nerves-lower-limb": "dfc76a7af74d",
+  "lymph-nodes-overview": "1163a0aa85df",
+  "lymph-nodes-lower-limb": "8d7edd3d1122",
+  "lymph-nodes-neck": "f3d15e1a2c65",
+  "lymph-nodes-upper-limb": "a3b2599daf8d"
 }
