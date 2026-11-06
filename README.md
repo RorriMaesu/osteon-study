@@ -74,6 +74,16 @@ Study all **24 sections** with complete source readings and figures, guided note
 
 Multiple choice, typed recall, anatomical schematic identification, matching and ordering use explicit answer keys and source-linked explanations. Full exams delay feedback until submission. Save a draft, flag questions, edit answers and review section/objective results. Source or tutor assistance stays attached after reload and is separated from independently correct answers. One point per question; all matching/ordering parts must be correct. Export completed reports; up to 20 sessions remain in this browser. Earlier question versions are retained for export rather than silently regraded. These are original study questions, not the instructor’s exam.
 
+## Exam 3 mock
+
+[Open Exam 3 mock ↗](https://rorrimaesu.github.io/osteon-study/#exam3) · [Format, grading and verification](MOCK-EXAM-3.md)
+
+**Practice lab → Exam center → Exam 3 mock** opens a course-grounded, **44-question / 60-point** form: 30 multiple choice, nine actual lab-packet targets, three true/false items and two written explanations. Save and resume, flag questions, choose closed notes or your permitted card, then submit to lock answers and review the points you missed. The format borrows from the complete Exam 2; it does not claim to predict the instructor's exact Exam 3.
+
+Verified keys score objective answers. Written explanations use explicit half-point rubric components and the same local Ollama connection as the Socratic tutor. A model must pass checks for the specific rubric before automatic written grading; otherwise points remain pending and **Compare & confirm rubric myself** offers a separately labeled learner score. The bundled `gemma4:12b` qualification passed all 20 Form A cases; the BQ2 comparison rubric remains unqualified. These checks are bounded evidence, not a guarantee of teacher-equivalent judgment.
+
+Turn corrections into source-linked study notes, try a related question or all seven Bone Questions, and build an editable **24-line front / 24-line back** notecard with copy-text export and a 3 × 5-inch print preview. Export mock backups or include the work in a complete Osteon backup. The nine packet diagrams are reproduced with the contributor's explicit permission and retain separate [source credits](CREDITS.md#exam-3-course-packet-diagrams).
+
 ## Spelling support and optional local AI
 
 New chapter/section exams and full-bank review accept clear spelling errors and appropriate equivalent wording **without Ollama**. Results separate spelling notes, equivalent wording, concept gaps and unresolved meaning. Pending answers show a possible score range and are not recorded as confirmed anatomy failures. Formal anatomical terms, sides, counts and different structures keep their distinctions.

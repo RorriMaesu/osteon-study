@@ -28,6 +28,7 @@ await esbuild.build({absWorkingDir:root,tsconfigRaw:{},entryPoints:['./src/main.
 const hash=file=>createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex').slice(0,12);
 const file=path.join(root,'index.html');
 let html=fs.readFileSync(file,'utf8');
+html=html.replace(/href="mock-exam3\.css(?:\?v=[a-z0-9]+)?"/,`href="mock-exam3.css?v=${hash('mock-exam3.css')}"`);
 html=html.replace(/href="cell-labs\.css(?:\?v=[a-z0-9]+)?"/,`href="cell-labs.css?v=${hash('cell-labs.css')}"`);
 html=html.replace(/href="quality\.css(?:\?v=[a-z0-9]+)?"/,`href="quality.css?v=${hash('quality.css')}"`);
 html=html.replace(/href="workspace\.css(?:\?v=[a-z0-9]+)?"/,`href="workspace.css?v=${hash('workspace.css')}"`);

@@ -1,0 +1,259 @@
+[
+  {
+    "schema": 1,
+    "passed": true,
+    "at": 1793995966571,
+    "model": "gemma4:12b",
+    "modelIdentity": "http://127.0.0.1:11434|gemma4:12b|4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+    "promptVersion": "exam3-rubric-2026-11-06.1",
+    "fixtureIdentity": "6623-dde2d3b3",
+    "rubricIdentities": {
+      "exam3-a-43": "3536-4ebbef06",
+      "exam3-a-44": "3190-b58fd0dc",
+      "exam3-bq1": "1534-84437aba",
+      "exam3-bq2": "1901-bfcf0324",
+      "exam3-bq3": "1685-394bc336",
+      "exam3-bq4": "1766-d2be98d8",
+      "exam3-bq5": "3190-173d49a",
+      "exam3-bq6": "3536-3aa245e2",
+      "exam3-bq7": "2421-55719992"
+    },
+    "testedQuestionIds": [
+      "exam3-a-43",
+      "exam3-a-44"
+    ],
+    "coveredQuestionIds": [
+      "exam3-a-43",
+      "exam3-a-44"
+    ],
+    "fixtureIds": [
+      "im-complete",
+      "im-missing-processes",
+      "im-missing-deposition",
+      "im-negation",
+      "im-minor-spelling",
+      "im-swapped",
+      "im-ambiguous-skull",
+      "im-prompt-injection",
+      "im-heldout-bullets",
+      "im-heldout-contradiction",
+      "knee-complete",
+      "knee-names",
+      "knee-wrong-link",
+      "knee-wrong-meniscus",
+      "knee-named-mcl-only",
+      "knee-clinical-caveat",
+      "knee-minor-spelling",
+      "knee-injection",
+      "knee-heldout-paraphrase",
+      "knee-heldout-pcl"
+    ],
+    "total": 20,
+    "matched": 20,
+    "failedCases": []
+  },
+  {
+    "schema": 1,
+    "passed": true,
+    "at": 1793995966682,
+    "model": "gemma4:12b",
+    "modelIdentity": "http://127.0.0.1:11434|gemma4:12b|4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+    "promptVersion": "exam3-rubric-2026-11-06.1",
+    "fixtureIdentity": "796-617ab4e5",
+    "rubricIdentities": {
+      "exam3-a-43": "3536-4ebbef06",
+      "exam3-a-44": "3190-b58fd0dc",
+      "exam3-bq1": "1534-84437aba",
+      "exam3-bq2": "1901-bfcf0324",
+      "exam3-bq3": "1685-394bc336",
+      "exam3-bq4": "1766-d2be98d8",
+      "exam3-bq5": "3190-173d49a",
+      "exam3-bq6": "3536-3aa245e2",
+      "exam3-bq7": "2421-55719992"
+    },
+    "testedQuestionIds": [
+      "exam3-bq1"
+    ],
+    "coveredQuestionIds": [
+      "exam3-bq1"
+    ],
+    "fixtureIds": [
+      "bq1-complete",
+      "bq1-partial",
+      "bq1-contradicted"
+    ],
+    "total": 3,
+    "matched": 3,
+    "failedCases": []
+  },
+  {
+    "schema": 1,
+    "passed": true,
+    "at": 1793995966683,
+    "model": "gemma4:12b",
+    "modelIdentity": "http://127.0.0.1:11434|gemma4:12b|4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+    "promptVersion": "exam3-rubric-2026-11-06.1",
+    "fixtureIdentity": "888-6ebab4a0",
+    "rubricIdentities": {
+      "exam3-a-43": "3536-4ebbef06",
+      "exam3-a-44": "3190-b58fd0dc",
+      "exam3-bq1": "1534-84437aba",
+      "exam3-bq2": "1901-bfcf0324",
+      "exam3-bq3": "1685-394bc336",
+      "exam3-bq4": "1766-d2be98d8",
+      "exam3-bq5": "3190-173d49a",
+      "exam3-bq6": "3536-3aa245e2",
+      "exam3-bq7": "2421-55719992"
+    },
+    "testedQuestionIds": [
+      "exam3-bq3"
+    ],
+    "coveredQuestionIds": [
+      "exam3-bq3"
+    ],
+    "fixtureIds": [
+      "bq3-complete",
+      "bq3-partial",
+      "bq3-contradicted"
+    ],
+    "total": 3,
+    "matched": 3,
+    "failedCases": []
+  },
+  {
+    "schema": 1,
+    "passed": true,
+    "at": 1793995966683,
+    "model": "gemma4:12b",
+    "modelIdentity": "http://127.0.0.1:11434|gemma4:12b|4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+    "promptVersion": "exam3-rubric-2026-11-06.1",
+    "fixtureIdentity": "776-4e6632a1",
+    "rubricIdentities": {
+      "exam3-a-43": "3536-4ebbef06",
+      "exam3-a-44": "3190-b58fd0dc",
+      "exam3-bq1": "1534-84437aba",
+      "exam3-bq2": "1901-bfcf0324",
+      "exam3-bq3": "1685-394bc336",
+      "exam3-bq4": "1766-d2be98d8",
+      "exam3-bq5": "3190-173d49a",
+      "exam3-bq6": "3536-3aa245e2",
+      "exam3-bq7": "2421-55719992"
+    },
+    "testedQuestionIds": [
+      "exam3-bq4"
+    ],
+    "coveredQuestionIds": [
+      "exam3-bq4"
+    ],
+    "fixtureIds": [
+      "bq4-complete",
+      "bq4-partial",
+      "bq4-contradicted"
+    ],
+    "total": 3,
+    "matched": 3,
+    "failedCases": []
+  },
+  {
+    "schema": 1,
+    "passed": true,
+    "at": 1793995966683,
+    "model": "gemma4:12b",
+    "modelIdentity": "http://127.0.0.1:11434|gemma4:12b|4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+    "promptVersion": "exam3-rubric-2026-11-06.1",
+    "fixtureIdentity": "876-96aaf44e",
+    "rubricIdentities": {
+      "exam3-a-43": "3536-4ebbef06",
+      "exam3-a-44": "3190-b58fd0dc",
+      "exam3-bq1": "1534-84437aba",
+      "exam3-bq2": "1901-bfcf0324",
+      "exam3-bq3": "1685-394bc336",
+      "exam3-bq4": "1766-d2be98d8",
+      "exam3-bq5": "3190-173d49a",
+      "exam3-bq6": "3536-3aa245e2",
+      "exam3-bq7": "2421-55719992"
+    },
+    "testedQuestionIds": [
+      "exam3-bq5"
+    ],
+    "coveredQuestionIds": [
+      "exam3-bq5"
+    ],
+    "fixtureIds": [
+      "bq5-complete",
+      "bq5-partial",
+      "bq5-contradicted"
+    ],
+    "total": 3,
+    "matched": 3,
+    "failedCases": []
+  },
+  {
+    "schema": 1,
+    "passed": true,
+    "at": 1793995966683,
+    "model": "gemma4:12b",
+    "modelIdentity": "http://127.0.0.1:11434|gemma4:12b|4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+    "promptVersion": "exam3-rubric-2026-11-06.1",
+    "fixtureIdentity": "1057-c60b992",
+    "rubricIdentities": {
+      "exam3-a-43": "3536-4ebbef06",
+      "exam3-a-44": "3190-b58fd0dc",
+      "exam3-bq1": "1534-84437aba",
+      "exam3-bq2": "1901-bfcf0324",
+      "exam3-bq3": "1685-394bc336",
+      "exam3-bq4": "1766-d2be98d8",
+      "exam3-bq5": "3190-173d49a",
+      "exam3-bq6": "3536-3aa245e2",
+      "exam3-bq7": "2421-55719992"
+    },
+    "testedQuestionIds": [
+      "exam3-bq6"
+    ],
+    "coveredQuestionIds": [
+      "exam3-bq6"
+    ],
+    "fixtureIds": [
+      "bq6-complete",
+      "bq6-partial",
+      "bq6-contradicted"
+    ],
+    "total": 3,
+    "matched": 3,
+    "failedCases": []
+  },
+  {
+    "schema": 1,
+    "passed": true,
+    "at": 1793995966684,
+    "model": "gemma4:12b",
+    "modelIdentity": "http://127.0.0.1:11434|gemma4:12b|4eb23ef187e2c5462566d6a1d3bbbc2f1346d0b4327cbb66d58fffbcc9b2b05c",
+    "promptVersion": "exam3-rubric-2026-11-06.1",
+    "fixtureIdentity": "1267-e0374f5f",
+    "rubricIdentities": {
+      "exam3-a-43": "3536-4ebbef06",
+      "exam3-a-44": "3190-b58fd0dc",
+      "exam3-bq1": "1534-84437aba",
+      "exam3-bq2": "1901-bfcf0324",
+      "exam3-bq3": "1685-394bc336",
+      "exam3-bq4": "1766-d2be98d8",
+      "exam3-bq5": "3190-173d49a",
+      "exam3-bq6": "3536-3aa245e2",
+      "exam3-bq7": "2421-55719992"
+    },
+    "testedQuestionIds": [
+      "exam3-bq7"
+    ],
+    "coveredQuestionIds": [
+      "exam3-bq7"
+    ],
+    "fixtureIds": [
+      "bq7-complete",
+      "bq7-partial",
+      "bq7-contradicted"
+    ],
+    "total": 3,
+    "matched": 3,
+    "failedCases": []
+  }
+]

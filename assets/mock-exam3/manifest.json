@@ -1,0 +1,532 @@
+{
+  "version": "2026-11-06.1",
+  "permission": "User explicitly authorized use and publication of all supplied diagrams on 2026-11-06.",
+  "preparation": "Crops of original supplied photographs; labels hidden with SVG masks or margin clipping. A generative edit was evaluated and rejected because it changed anatomical linework. No generated anatomy is shipped.",
+  "sourceCredit": "Publisher credits are preserved per asset. No OpenStax license is asserted for course-packet artwork.",
+  "assets": [
+    {
+      "source": "Week 6 lab packet, page 1",
+      "sourceSha256": "89c3980fd767637c6d065181132092c8e8804283b0c3cb70964885baa3cb058a",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        698,
+        335,
+        1362,
+        983
+      ],
+      "displaySize": [
+        464,
+        453
+      ],
+      "cropBase": [
+        488,
+        234,
+        952,
+        687
+      ],
+      "asset": "plate-01.jpg",
+      "sha256": "5bae0fb19eeb2799c0afdffacf22b4978387848cd2703e4795f9357c9b468519",
+      "assetId": "exam3-q31",
+      "week": 6,
+      "page": 1,
+      "credit": "Pearson Education, Inc., publishing as Benjamin Cummings. Reproduced with permission.",
+      "view": "Bone microanatomy. The marker follows the original bracket for the complete structural unit.",
+      "point": [
+        205,
+        133
+      ],
+      "bubble": [
+        99,
+        73
+      ],
+      "masks": [],
+      "polygons": [],
+      "clip": null,
+      "canonicalAnswer": "Osteon",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 6 lab packet, page 2",
+      "sourceSha256": "b9ca65c4e85202802c38ee077553bfcac083482a086c603648c11860629d0266",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        618,
+        488,
+        987,
+        851
+      ],
+      "displaySize": [
+        258,
+        254
+      ],
+      "cropBase": [
+        432,
+        341,
+        690,
+        595
+      ],
+      "asset": "plate-02.jpg",
+      "sha256": "76cf157fb1e1d2437e588d70e7a72b70fdf34065d3f35bdcdd8b939577433994",
+      "assetId": "exam3-q32",
+      "week": 6,
+      "page": 2,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Lateral skull view.",
+      "point": [
+        91,
+        56
+      ],
+      "bubble": [
+        205,
+        22
+      ],
+      "masks": [
+        [
+          0,
+          221,
+          30,
+          30
+        ]
+      ],
+      "polygons": [],
+      "clip": null,
+      "canonicalAnswer": "Parietal bone",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 6 lab packet, page 2",
+      "sourceSha256": "b9ca65c4e85202802c38ee077553bfcac083482a086c603648c11860629d0266",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        202,
+        635,
+        655,
+        1117
+      ],
+      "displaySize": [
+        317,
+        337
+      ],
+      "cropBase": [
+        141,
+        444,
+        458,
+        781
+      ],
+      "asset": "plate-03.jpg",
+      "sha256": "cf1e6ff629a368224ee52a2dff09603fd02ddc86992f0e27847c307118d92c55",
+      "assetId": "exam3-q33",
+      "week": 6,
+      "page": 2,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Inferior skull view. Identify the bone containing the marked region.",
+      "point": [
+        213,
+        124
+      ],
+      "bubble": [
+        285,
+        89
+      ],
+      "masks": [
+        [
+          273,
+          164,
+          38,
+          22
+        ]
+      ],
+      "polygons": [
+        "195,25 217,12 225,21 199,37"
+      ],
+      "clip": null,
+      "canonicalAnswer": "Sphenoid bone",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 6 lab packet, page 2",
+      "sourceSha256": "b9ca65c4e85202802c38ee077553bfcac083482a086c603648c11860629d0266",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        240,
+        1157,
+        749,
+        1752
+      ],
+      "displaySize": [
+        356,
+        416
+      ],
+      "cropBase": [
+        168,
+        809,
+        524,
+        1225
+      ],
+      "asset": "plate-04.jpg",
+      "sha256": "65e4822d23b2a2560ca1c38315b43a001d4168d91b87747c9c68edd8ef02fe8c",
+      "assetId": "exam3-q34",
+      "week": 6,
+      "page": 2,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Thoracic vertebra, superior view. The body is at the bottom of this source drawing.",
+      "point": [
+        106,
+        231
+      ],
+      "bubble": [
+        28,
+        246
+      ],
+      "masks": [],
+      "polygons": [],
+      "clip": "160,19 205,19 206,97 223,127 249,146 300,110 335,103 353,135 352,163 319,178 277,209 281,246 299,271 298,329 275,366 236,395 194,411 138,396 111,377 92,345 79,305 82,267 100,241 101,215 80,190 40,168 18,137 18,112 40,101 68,110 101,133 124,145 149,135 164,111",
+      "canonicalAnswer": "Pedicle",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 7 lab packet, page 7",
+      "sourceSha256": "d35d39feea6aad477e473bd8a498543625228cffd5070f598728b70cb1e84723",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        143,
+        823,
+        822,
+        1147
+      ],
+      "displaySize": [
+        475,
+        227
+      ],
+      "cropBase": [
+        100,
+        575,
+        575,
+        802
+      ],
+      "asset": "plate-05.jpg",
+      "sha256": "3aa2977669053164d22b0239efb2adab72ed8bb82232c6d136d6f086387f9253",
+      "assetId": "exam3-q35",
+      "week": 7,
+      "page": 7,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Superior region of the scapula, posterior view. The original spine, acromion and coracoid remain visible.",
+      "point": [
+        137,
+        190
+      ],
+      "bubble": [
+        57,
+        192
+      ],
+      "masks": [
+        [
+          0,
+          0,
+          390,
+          52
+        ],
+        [
+          260,
+          43,
+          215,
+          89
+        ],
+        [
+          0,
+          110,
+          118,
+          55
+        ],
+        [
+          64,
+          155,
+          51,
+          31
+        ],
+        [
+          403,
+          120,
+          72,
+          34
+        ]
+      ],
+      "polygons": [],
+      "clip": null,
+      "canonicalAnswer": "Glenoid cavity",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 7 lab packet, page 8",
+      "sourceSha256": "61a39331c2139b2f723a902ee0e43b64db8ff6c5aab3e87e3d758ad8843eed74",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        193,
+        196,
+        522,
+        1419
+      ],
+      "displaySize": [
+        230,
+        855
+      ],
+      "cropBase": [
+        135,
+        137,
+        365,
+        992
+      ],
+      "asset": "plate-06.jpg",
+      "sha256": "923adf9a2701dba350ff17b97b13d37689eaee1a46a5ffaa5a777ee3f5e21ceb",
+      "assetId": "exam3-q36",
+      "week": 7,
+      "page": 8,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Humerus, posterior view; proximal and distal ends are retained.",
+      "point": [
+        139,
+        441
+      ],
+      "bubble": [
+        -54,
+        458
+      ],
+      "masks": [
+        [
+          0,
+          145,
+          36,
+          35
+        ],
+        [
+          205,
+          0,
+          25,
+          90
+        ],
+        [
+          0,
+          555,
+          70,
+          65
+        ],
+        [
+          0,
+          735,
+          19,
+          45
+        ],
+        [
+          0,
+          250,
+          15,
+          28
+        ]
+      ],
+      "polygons": [],
+      "clip": null,
+      "canonicalAnswer": "Deltoid tuberosity",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 7 lab packet, page 4",
+      "sourceSha256": "a9f224d88b29ea32791efe99f9508c76d23fcd5d16b3c86d3ff78bfad8ca3907",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        150,
+        904,
+        684,
+        1655
+      ],
+      "displaySize": [
+        373,
+        525
+      ],
+      "cropBase": [
+        105,
+        632,
+        478,
+        1157
+      ],
+      "asset": "plate-07.jpg",
+      "sha256": "95617b01dcd860faf7cb621bfa1414501ba46209a04b2261e12d108dd8b6087e",
+      "assetId": "exam3-q37",
+      "week": 7,
+      "page": 4,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Anterior pelvic view, focused on one hip bone and adjacent sacrum.",
+      "point": [
+        180,
+        341
+      ],
+      "bubble": [
+        69,
+        363
+      ],
+      "masks": [
+        [
+          0,
+          255,
+          123,
+          65
+        ],
+        [
+          0,
+          334,
+          108,
+          43
+        ],
+        [
+          104,
+          349,
+          69,
+          28
+        ],
+        [
+          88,
+          391,
+          100,
+          59
+        ]
+      ],
+      "polygons": [],
+      "clip": null,
+      "canonicalAnswer": "Acetabulum",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 7 lab packet, page 5",
+      "sourceSha256": "c150f95a4faff5cd9479014aa42433fa2297a4a6bf8f72fbc65f1538df9bb09c",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        798,
+        300,
+        1106,
+        1545
+      ],
+      "displaySize": [
+        215,
+        870
+      ],
+      "cropBase": [
+        558,
+        210,
+        773,
+        1080
+      ],
+      "asset": "plate-08.jpg",
+      "sha256": "431d79aba5210d1dfe2a59c2b2cb4ac0c80632623998d32ff3469138ce070076",
+      "assetId": "exam3-q38",
+      "week": 7,
+      "page": 5,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Tibia and fibula, anterior view. Both ankle projections remain visible.",
+      "point": [
+        166,
+        812
+      ],
+      "bubble": [
+        273,
+        778
+      ],
+      "masks": [
+        [
+          0,
+          218,
+          30,
+          35
+        ],
+        [
+          164,
+          414,
+          51,
+          40
+        ],
+        [
+          200,
+          166,
+          15,
+          37
+        ],
+        [
+          0,
+          788,
+          24,
+          24
+        ]
+      ],
+      "polygons": [],
+      "clip": null,
+      "canonicalAnswer": "Medial malleolus",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    },
+    {
+      "source": "Week 7 lab packet, page 7",
+      "sourceSha256": "d35d39feea6aad477e473bd8a498543625228cffd5070f598728b70cb1e84723",
+      "sourceSize": [
+        1536,
+        2040
+      ],
+      "crop": [
+        200,
+        157,
+        701,
+        784
+      ],
+      "displaySize": [
+        350,
+        438
+      ],
+      "cropBase": [
+        140,
+        110,
+        490,
+        548
+      ],
+      "asset": "plate-09.jpg",
+      "sha256": "7887f7d2800e8bd16c98c1bd423d772a2c79d0e1554c6479a170c00db8a743b7",
+      "assetId": "exam3-q39",
+      "week": 7,
+      "page": 7,
+      "credit": "BI 231 supplied laboratory illustration. Reproduced with permission.",
+      "view": "Section through a synovial joint. Follow the numbered leader to its endpoint.",
+      "point": [
+        285,
+        210
+      ],
+      "bubble": [
+        331,
+        256
+      ],
+      "masks": [],
+      "polygons": [],
+      "clip": null,
+      "canonicalAnswer": "Synovial membrane",
+      "qa": "Verified original source crop and rendered numbered marker; no anatomy generated. Exam-view labels masked; final image sheet visually inspected 2026-11-06."
+    }
+  ]
+}

@@ -27,6 +27,7 @@ import {AnatomyViewer} from './viewer.js';
 import {initPractice} from './practice.js';
 import {initStudy} from './study.js';
 import {initExams} from './exam-ui.js';
+import {initMockExam3} from './mock-exam3-ui.js';
 import {initPrecision,plateHTML} from './precision.js';
 import {initReader} from './reader.js';
 import {labels,coverage,pointKinds} from './representations.js';
@@ -48,7 +49,7 @@ export function setView(view,{route,historyMode='push'}={}){if(!appViews.include
 function showHistoryRoute(initial=false){
  const route=location.hash.slice(1)||'atlas';
  if(route===currentRoute&&!initial)return;
- const routeEvents={'exam-center':'openexams','exam-session':'resumeexam','bone-list':'lablist','bone-list-session':'lablist','study':'studyhome'};
+ const routeEvents={'exam3':'openexam3','exam3-exam':'resumeexam3','exam3-results':'exam3results','exam3-card':'exam3card','exam-center':'openexams','exam-session':'resumeexam','bone-list':'lablist','bone-list-session':'lablist','study':'studyhome'};
  const lesson=route.startsWith('lesson-')?route.slice(7):null,reader=route.match(/^reader-(\d+)$/);
  restoringRoute=true;
  try{
@@ -310,6 +311,7 @@ initStudy({viewer,setView,selectTerm,dialog,toast,escape});
 const precision=initPrecision({viewer,setDivision:changeDivision,setView,dialog,toast,escape});
 const labList=initLabList({viewer,setView,selectTerm,precision,toast,dialog,escape});
 initExams({setView,dialog,toast,viewer,escape});
+initMockExam3({setView,dialog,toast,escape});
 initReader({setView,escape});
 initIssueReporter({dialog,escape});
 initTutor({escape,toast});
