@@ -42,3 +42,14 @@ test('node search retains side and source selection while regional loads follow 
  assert.equal(lymphNodeInScope(lymphNodeByKey.get('Deep popliteal nodes.l'),knee),false);
  assert.equal(lymphNodeInScope(lymphNodeByKey.get('Deep popliteal nodes.r'),{...knee,division:'Axial'}),false);
 });
+
+test('aortic coverage withholds misplaced groups and retains the checked posterior group',{skip:!lymphNodeFiles.abdomen},()=>{
+ for(const name of ['Lateral aortic nodes','Pre-aortic nodes']){
+  assert.equal(lymphNodeByKey.get(name).status,'withheld',name);
+  assert.ok(!lymphNodeTerms.some(t=>t.representation.lymphNodeKey===name),name);
+ }
+ const posterior=lymphNodeByKey.get('Retro-aortic nodes');
+ assert.equal(posterior.status,'landmark-checked');
+ assert.equal(posterior.references[0].name,'Abdominal aorta');
+ assert.ok(posterior.overview);
+});

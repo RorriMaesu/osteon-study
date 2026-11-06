@@ -66,7 +66,7 @@ checks = {
     'Inferior tracheobronchial nodes': (('Trachea', 'Left main bronchus', 'Right main bronchus'), 18, 'Subcarinal group near the tracheal bifurcation and between the main bronchi. Receives lymph from the bronchopulmonary pathways.'),
     'Paratracheal thoracic nodes': (('Trachea',), 14, 'Thoracic chain along the trachea. Receives lymph from bronchopulmonary and mediastinal pathways.'),
     'Central superior mesenteric nodes': (('Superior mesenteric artery', 'Superior mesenteric vein'), 15, 'Along the proximal superior mesenteric vessels. Receives lymph from more peripheral mesenteric groups that drain the midgut.'),
-    'Lateral aortic nodes': (('Abdominal aorta',), 20, 'Lumbar group lateral to the abdominal aorta. Receives lymph from nearby deep structures and ascending iliac pathways.'),
+    'Retro-aortic nodes': (('Abdominal aorta',), 20, 'Lumbar nodes posterior to the abdominal aorta. The lumbar chains receive deep abdominal and ascending iliac drainage.'),
     'Intermediate external iliac nodes': (('External iliac vein.*', 'External iliac artery.*'), 18, 'Part of the chain along the external iliac vessels. Receives deep inguinal and pelvic drainage.'),
     'Medial external iliac nodes': (('External iliac vein.*',), 18, 'Medial part of the chain along the external iliac vessels. Receives deep inguinal and pelvic drainage.'),
     'Pre-auricular nodes': (('Superficial temporal artery.*',), 18, 'In front of the ear near the superficial temporal vessels. Receives lymph from parts of the temporal scalp, lateral eyelids, and external ear.'),
@@ -81,6 +81,8 @@ hold = {
     'Lateral axillary nodes': 'The source group lies posterior to the axillary vein and needs a refit along the humeral drainage corridor.',
     'Proximal deep inguinal node': 'The source mesh meets the great saphenous vein. The femoral-canal placement needs a separate refit.',
     'Inferior superficial inguinal nodes': 'The source group approaches the deep femoral vessel compartment. The superficial fascial location needs review.',
+    'Lateral aortic nodes': 'The modeled cluster is closer to the inferior vena cava than to the aorta and does not match the expected left para-aortic corridor.',
+    'Pre-aortic nodes': 'The modeled cluster lies in the right-sided aortocaval corridor. Its relation to the anterior surface of the aorta needs review.',
     'Intrapulmonary nodes': 'Distal airway branches are needed to distinguish the modeled group from hilar and interlobar nodes.',
 }
 alias = {'Bucinator node': 'Buccinator node', 'Juxta-oesophageal nodes': 'Paraesophageal nodes',
@@ -292,6 +294,12 @@ with tempfile.TemporaryDirectory(dir=project.parent) as directory:
         bone_meshes[name] = (mesh_bounds(mesh), tree(mesh))
         bpy.data.meshes.remove(mesh)
 
+    # Test the few large lumina available as registered references even when
+    # individual landmark review is pending.
+    major_lumina = {
+        'abdomen': ('Abdominal aorta', 'Inferior vena cava (abdominal part)'),
+        'thorax': ('Trachea', 'Left main bronchus', 'Right main bronchus'),
+    }
     records, objects = [], {}
     region_collections = {}
     for key, name, ancestry, mesh in surfaces:
@@ -311,6 +319,8 @@ with tempfile.TemporaryDirectory(dir=project.parent) as directory:
                 _, _, _, distance = refs[ref][1].find_nearest(center)
                 if distance is not None:
                     used.append(dict(name=ref, centerToSurfaceMm=round(distance * 1000, 1)))
+            if name == 'Retro-aortic nodes' and center.y <= refs['Abdominal aorta'][1].find_nearest(center)[0].y:
+                note = 'The mesh center is outside the expected posterior aortic corridor.'
             if not used or min(ref['centerToSurfaceMm'] for ref in used) > maximum:
                 note = 'The source position did not pass the adjacent-structure check.'
         else:
@@ -318,8 +328,9 @@ with tempfile.TemporaryDirectory(dir=project.parent) as directory:
         bone_hits = penetration(mesh, bounds, bone_meshes)
         if bone_hits:
             note = 'The mesh substantially intersects the modeled ' + bone_hits[0][0] + '.'
-        if not note and used:
-            hits = penetration(mesh, bounds, {ref['name']: refs[ref['name']] for ref in used})
+        if not note:
+            blockers = {ref['name'] for ref in used}.union(major_lumina.get(bucket, ()))
+            hits = penetration(mesh, bounds, {name: refs[name] for name in sorted(blockers)})
             if hits:
                 note = 'The mesh substantially intersects the modeled ' + hits[0][0] + '.'
         status = 'withheld' if note else 'landmark-checked' if used else 'source-aligned'
