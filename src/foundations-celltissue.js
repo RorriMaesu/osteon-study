@@ -46,11 +46,18 @@ export function renderCellTissueActivity(root,section){
  const views={lab:'Activity',...(diagrams.length?{schematic:'Cell diagrams'}:{}),...(refs.length?{figures:'Textbook figures'}:{}),...(specimens.length?{specimens:'Microscope'}:{}),...(section==='3.4'?{video:'Watch animation'}:{}),...(written.length?{written:'Written practice'}:{})};
  let view='lab',diagram=diagrams[0]?.[0],point=0,ref=0,specimen=0,reveal=false;
  const state=tissue?{mode:labOptions[tissue][0][0],step:0,labels:true,detail:false}:{};
+ let cellActivity;
  function drawBody(){
   root.innerHTML=`<div class="control-row" aria-label="Studio activities">${Object.entries(views).map(([id,label])=>`<button type="button" data-foundation-view="${id}" aria-pressed="${id===view}">${label}</button>`).join('')}</div><div class="foundation-studio-content"></div>`;
   const panel=root.querySelector('.foundation-studio-content');
   const on=(id,fn)=>panel.querySelector(id)?.addEventListener('change',fn);
-  if(view==='lab'&&cell){panel.innerHTML=renderLab(cell);bindLab(panel,cell);}
+  if(view==='lab'&&cell){
+   if(!cellActivity){
+    panel.innerHTML=renderLab(cell);
+    cellActivity=panel.firstElementChild;
+    bindLab(cellActivity,cell);
+   }else panel.append(cellActivity);
+  }
   if(view==='lab'&&tissue){
    const item=lab(tissue,state);
    panel.innerHTML=`<div class="control-row"><label>Topic <select data-studio-mode>${options(labOptions[tissue],state.mode)}</select></label><label><input type="checkbox" data-studio-labels ${state.labels?'checked':''}> Focus overlay</label><label><input type="checkbox" data-studio-detail ${state.detail?'checked':''}> Detail crop</label></div><div class="control-row">${item.controls}</div><div class="foundation-tissue-layout"><figure>${item.svg}<figcaption>${escape(item.figure.credit)}</figcaption></figure><div aria-live="polite"><h3>${escape(item.title)}</h3><p>${escape(item.caption)}</p><p><b>Predict:</b> ${escape(item.question)}</p>${section==='4.1'?'<p><a href="#lesson-1.6">Compare cavities and membranes in §1.6</a></p>':''}</div></div>`;

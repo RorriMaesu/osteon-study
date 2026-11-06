@@ -25,6 +25,7 @@ export function initStudy({viewer,setView,selectTerm,dialog,toast,escape:e}){
  function openLesson(id){
   const l=lessons.find(x=>x.id===id);if(!l)return;activeLesson=id;setView('study',{route:'lesson-'+id});
   const work=readLessonWork(localStorage,id),links=lessonLinks[id];
+  let activityContent;
   const saveWork=()=>{try{saveLessonWork(localStorage,id,work);}catch{toast('This lesson draft could not be saved. Keep it open or copy your reasoning.');}};
   function paint(focus=false){
    const previous=lessonDirection(l,work,-1),next=lessonDirection(l,work,1);
@@ -41,9 +42,13 @@ export function initStudy({viewer,setView,selectTerm,dialog,toast,escape:e}){
    if($('#lesson-atlas'))$('#lesson-atlas').onclick=()=>{if(chapterOf(id)==='10'){setView('atlas');document.dispatchEvent(new CustomEvent('openmuscles',{detail:'shoulder-arm'}));}else document.dispatchEvent(new CustomEvent('studyregion',{detail:links.region}));};$$('[data-lesson-figure]').forEach(b=>b.onclick=()=>document.dispatchEvent(new CustomEvent('openreaderpage',{detail:+b.dataset.lessonFigure})));
    const activity=$('#lesson-activity');
    if(activity){
-    const practice=root=>{if(l.activity)renderActivity(l.activity,root);else renderCurriculumActivity(root,id,e);};
-    if(!renderSectionDiagrams(activity,id,e,practice))practice(activity);
-    mountLessonVisual(activity.closest('.flow-body'),activity,l.title);
+    if(activityContent)activity.replaceWith(activityContent);
+    else{
+     activityContent=activity;
+     const practice=root=>{if(l.activity)renderActivity(l.activity,root);else renderCurriculumActivity(root,id,e);};
+     if(!renderSectionDiagrams(activity,id,e,practice))practice(activity);
+    }
+    mountLessonVisual(activityContent.closest('.flow-body'),activityContent,l.title);
    }
    if(focus){const heading=$('.flow-body h2')||$('.flow-body h3');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}}
    window.scrollTo({top:0,behavior:'instant'});

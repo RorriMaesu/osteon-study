@@ -78,13 +78,21 @@ export function renderSectionDiagrams(root,section,e,practice){
  const tabs=[...(schematic?[['diagram','Interactive diagram']]:[]),...(source?[['plates','Locate structures']]:[]),['practice','Guided practice']];
  root.innerHTML=`<nav class="section-diagram-tabs section-diagram-nav" aria-label="Lesson activities">${tabs.map(([id,name])=>`<button type="button" data-diagram-tab="${id}" aria-pressed="false">${name}</button>`).join('')}</nav><div class="section-diagram-content"></div>`;
  const content=root.querySelector('.section-diagram-content'),buttons=[...root.querySelectorAll('[data-diagram-tab]')];
+ const panels=new Map();
  function show(id){
   buttons.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.diagramTab===id)));
-  if(id==='practice'){practice(content);return;}
-  const current=id==='plates'?source:schematic;
-  content.innerHTML=`<h3>${e(current.title)}</h3><div class="section-diagram-body"></div>`;
-  const body=content.lastElementChild;
-  if(id==='plates')renderPlate(body,current,e);else renderSchematic(body,current,section,e);
+  let panel=panels.get(id);
+  if(panel===content.firstElementChild&&panel)return;
+  if(!panel){
+   panel=document.createElement('div');
+   panels.set(id,panel);
+   content.replaceChildren(panel);
+   if(id==='practice'){practice(panel);return;}
+   const current=id==='plates'?source:schematic;
+   panel.innerHTML=`<h3>${e(current.title)}</h3><div class="section-diagram-body"></div>`;
+   const body=panel.lastElementChild;
+   if(id==='plates')renderPlate(body,current,e);else renderSchematic(body,current,section,e);
+  }else content.replaceChildren(panel);
  }
  buttons.forEach(b=>b.onclick=()=>show(b.dataset.diagramTab));
  show(tabs[0][0]);
