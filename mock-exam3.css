@@ -1,5 +1,7 @@
 /* Exam 3: an integrated, source-grounded course mock. */
-body[data-mock-exam-active=true] #practice-view{display:block!important;overflow-y:auto;scrollbar-gutter:stable;padding-right:6px}
+@media(min-width:1000px){
+ body:is([data-mock-exam-active=exam3],[data-mock-exam-active=exam4]) #practice-view.active{display:block;overflow-y:auto;scrollbar-gutter:stable}
+}
 .exam-hub-grid:has(.mock-form-feature){overflow-y:auto;grid-template-rows:none;grid-auto-rows:minmax(190px,auto);padding-right:5px}
 .exam-hub-grid>.mock-form-feature{min-height:240px}
 .mock-packet-answer{display:flex;gap:12px;padding:12px 15px;background:#e3eedb;color:#263e2d;align-items:center}.mock-packet-answer span{font-size:9px;text-transform:uppercase;letter-spacing:.1em}.mock-packet-answer strong{font-size:15px}
@@ -36,13 +38,54 @@ body[data-mock-exam-active=true] #practice-view{display:block!important;overflow
 .mock4-claim label:has(:checked){border-color:var(--mx-mint);background:#29433c}
 .mock4-claim input{accent-color:var(--mx-mint)}
 .mock-exam4 .mock-question textarea#mock-claim-reason{min-height:90px}
+.mock4-question-body:focus-visible{outline-offset:-3px}
+@media(min-width:1000px) and (min-height:500px){
+ body[data-mock-exam-active=exam4] #practice-view.active:has(>.mock-exam4[data-mock-screen=exam]){overflow:hidden;scrollbar-gutter:auto}
+ .mock-exam4[data-mock-screen=exam]{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  min-height:0;
+  padding:8px 0 10px;
+ }
+ .mock-exam4[data-mock-screen=exam]>.mock-topline,
+ .mock-exam4[data-mock-screen=exam]>.mock-exam-head{flex:none}
+ .mock-exam4[data-mock-screen=exam]>.mock-topline{margin-bottom:6px}
+ .mock-exam4[data-mock-screen=exam]>.mock-exam-head{margin:4px 0 10px}
+ .mock-exam4[data-mock-screen=exam] .mock-exam-head h1{font-size:clamp(26px,3vw,38px);margin:2px 0}
+ .mock-exam4[data-mock-screen=exam] .mock-exam-head p{margin:3px 0}
+ .mock-exam4 .mock-exam-layout{flex:1;min-height:0;align-items:stretch}
+ .mock-exam4 .mock-navigator{position:static;min-height:0;overflow:auto;scrollbar-width:thin}
+ .mock-exam4 .mock-navigator .mock-panel{padding:14px}
+ .mock4-navigator .mock-nav-section{margin:10px 0}
+ .mock4-navigator .mock-nav-section p{margin:0 0 4px}
+ .mock4-navigator .mock-numbers button{min-height:32px}
+ .mock-exam4 .mock-question{
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+  min-width:0;
+  padding:clamp(14px,2vw,26px);
+ }
+ .mock-exam4 .mock4-question-body{flex:1;min-height:0;overflow:auto;scrollbar-width:thin;scroll-padding:6px}
+ .mock-exam4 .mock-question-meta{margin-bottom:8px}
+ .mock-exam4 .mock-question h2{font-size:clamp(22px,2.2vw,30px);line-height:1.25}
+ .mock-exam4 .mock-option-list{gap:8px;margin:8px 0}
+ .mock-exam4 .mock-option{padding:8px 12px;grid-template-columns:30px minmax(0,1fr);gap:10px}
+ .mock-exam4 .mock-question-bottom{flex:none;padding-top:10px;margin-top:8px}
+}
+@media(min-width:1200px) and (min-height:500px){
+ .mock4-navigator .mock-numbers{grid-template-columns:repeat(6,minmax(0,1fr))}
+}
+@media(min-width:1000px) and (min-height:500px) and (max-height:740px){
+ .mock-exam4 .mock-option-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mock-exam4 .mock-option{height:100%}
+}
 @media(min-width:761px){
  .mock4-visual-question{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(190px,1fr);gap:14px;align-items:start}
  .mock4-visual-controls{min-width:0}
  .mock4-visual-controls .mock-figure-controls{margin:0 0 8px}
  .mock4-visual-controls .mock-answer-label{margin-top:8px}
- .mock4-visual-controls .mock-question-bottom{flex-wrap:wrap;gap:7px}
- .mock4-visual-controls .mock-question-bottom button{padding:9px 11px}
 }
 @media(min-width:761px) and (max-height:820px){
  .mock-exam4 .mock-topline{margin-bottom:10px}
