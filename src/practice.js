@@ -34,6 +34,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  function practiceHome(){delete document.body.dataset.examActive;if($('#practice-view').classList.contains('active'))setLearningContext({type:'practice',label:'Anatomy practice · '+viewer.division,text:'Choose retrieval practice for the lab checklist and published chapters.'});const queues=reviewQueues(terms,reviewCards,getProgress(),{division:viewer.division,region:ui.region});$('#practice-view').innerHTML=intro('PRACTICE LAB','Choose how to <em>practice.</em>','Name a structure, prepare for a chapter exam, or review missed material.')+`
  ${savedQuick?`<div class="practice-continue"><button class="primary" id="resume-spatial">Continue quick 3D practice</button><span>${savedQuick.mode==='identify'?'Identify':'Locate'} · question ${savedQuick.index+1} of ${savedQuick.items.length}</span></div>`:''}
  <div class="practice-starts" aria-label="Start a study session">
+  <button class="mock-shortcut" data-exam4-open><strong>Exam 4 mock</strong><small>Chapters 10–11 · 44 questions · 60 points</small></button>
   <button class="mock-shortcut" data-mock-open><strong>Exam 3 mock</strong><small>44 questions · 60 points · course-grounded</small></button>
   <button class="primary" id="bone-list-test"><strong>Required bone-list test</strong><small>BI 231 checklist · saved progress</small></button>
   <button id="practice-muscle-checklist"><strong>Muscle checklist practice</strong><small>BI 231 · identification and explanations</small></button>

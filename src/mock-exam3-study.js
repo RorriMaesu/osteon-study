@@ -29,9 +29,11 @@ export function mockStudyPriorities(result) {
   return [...groups.values()].sort((a,b)=>b.missedPoints-a.missedPoints||b.assisted-a.assisted||a.lesson.localeCompare(b.lesson,undefined,{numeric:true}));
 }
 
-export function mockReportRoute(id) {return `exam3-results/${encodeURIComponent(id)}`;}
-export function parseMockReportRoute(route) {
-  const match=/^exam3-results\/([^/]+)$/.exec(route);
-  if(!match)return null;
-  try {const id=decodeURIComponent(match[1]);return id&&id.length<=160?id:null;}catch{return null;}
+export function mockReportRoute(id,slug='exam3') {return `${slug}-results/${encodeURIComponent(id)}`;}
+export function parseMockReportRoute(route,slug='exam3') {
+  const prefix=slug+'-results/';
+  if(!route.startsWith(prefix))return null;
+  const encoded=route.slice(prefix.length);
+  if(encoded.includes('/'))return null;
+  try {const id=decodeURIComponent(encoded);return id&&id.length<=160?id:null;}catch{return null;}
 }

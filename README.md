@@ -74,6 +74,7 @@ My Progress can preview and merge matching earlier Cell Studio, Tissue Studio, L
 - [Exam Center](https://rorrimaesu.github.io/osteon-study/#exam-center) offers two 60-question forms worth 100 points each, evenly divided by chapter. Reports show the aligned objectives sampled by the actual questions and offer follow-up practice. Written responses have learner rubrics and optional local AI estimates.
 - [Muscle labeling](https://rorrimaesu.github.io/osteon-study/#muscle-labeling) combines source figures, an on-device import for the BI 231 worksheet, and interactive 3D identification. My Progress tracks missed targets and checklist practice by format.
 - [Professor’s 21-question review](https://rorrimaesu.github.io/osteon-study/#professor-muscle-review) offers Study, Rehearse, and Exam modes. Each written prompt has a rubric, source reference, and a way to revise the original answer in a separate attempt.
+- [Exam 4 mock](https://rorrimaesu.github.io/osteon-study/#exam4) offers two 44-question forms worth 60 points each. Use Mock exam for a closed session or Coached practice for feedback during an attempt. Reports connect missed topics to the readings, the tutor, the muscle practical, and alternate questions.
 
 ## Chapters 6–9 exam preparation
 

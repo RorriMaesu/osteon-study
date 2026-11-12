@@ -15,13 +15,25 @@ const nowId=(now,rng)=>`${now}-${Math.floor(rng()*1e12).toString(36)}`;
 const shuffle=(values,rng)=>{const result=[...values];for(let i=result.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[result[i],result[j]]=[result[j],result[i]];}return result;};
 const optionsFor=q=>q.type==='choice'?[q.answer,...(q.distractors||[])]:[];
 
+export function claimResponseParts(response=''){
+ const newline=response.indexOf('\n');
+ return newline===-1?[response,'']:[response.slice(0,newline),response.slice(newline+1)];
+}
+export function mockRubricQuestion(q){
+ if(!q.claim)return q;
+ const {claim,...written}=q;
+ return {...written,points:1,rubric:{...q.rubric,criteria:q.rubric.criteria.slice(1)}};
+}
+export const mockRubricResponse=(q,response)=>q.claim?claimResponseParts(response)[1]:response;
+
 function validQuestion(q) {
   return object(q)&&bounded(q.id,160)&&bounded(q.prompt,5000)&&bounded(q.answer,8000)&&
     ['choice','identify','written'].includes(q.type)&&Number.isFinite(q.points)&&q.points>0&&q.points<=3&&Number.isInteger(q.points*2)&&
-    Number.isInteger(q.chapter)&&q.chapter>=6&&q.chapter<=9&&
+    Number.isInteger(q.chapter)&&(q.id.startsWith('exam4-')?[10,11].includes(q.chapter):q.chapter>=6&&q.chapter<=9)&&
     (q.type!=='choice'||(Array.isArray(q.distractors)&&q.distractors.length>=1&&q.distractors.length<=5&&
       optionsFor(q).every(o=>bounded(o,2000))&&new Set(optionsFor(q)).size===optionsFor(q).length))&&
-    (q.type!=='written'||validWrittenQuestion(q));
+    (q.type!=='written'||validWrittenQuestion(q))&&
+    (q.claim===undefined||(['True','False'].includes(q.claim)&&q.type==='written'&&q.points===2&&validWrittenQuestion(mockRubricQuestion(q))));
 }
 
 export function createMockSession(items, {form=mockExam3Form, rng=Math.random, now=Date.now(), cardMode='closed', timeGoalMinutes=0, mode='exam',autoGrade=true}={}) {
@@ -43,6 +55,11 @@ export function setMockResponse(session,id,value) {
 }
 
 function validResponse(q,response,options,allowEmpty=true) {
+  if(q.claim){
+    if(typeof response!=='string')return false;
+    const [judgment,reason]=claimResponseParts(response);
+    return ['', 'True','False'].includes(judgment)&&reason.length<=WRITTEN_RESPONSE_LIMIT;
+  }
   return typeof response==='string'&&response.length<=(q.type==='written'?WRITTEN_RESPONSE_LIMIT:500)&&
     (q.type!=='choice'||(allowEmpty&&response==='')||options.includes(response));
 }
@@ -60,6 +77,15 @@ export function submitMockSession(session,{now=Date.now(),bank=mockExam3AllQuest
 }
 
 export function assessMockQuestion(question,response,review,{submissionId,scoringVersion=MOCK_SCORING_VERSION}={}) {
+  if(question.claim){
+    const [judgment,reason]=claimResponseParts(response),right=judgment===question.claim;
+    const explanation=assessMockQuestion(mockRubricQuestion(question),reason,review,{submissionId,scoringVersion});
+    const earnedPoints=Number(right)+explanation.earnedPoints,pendingPoints=explanation.pendingPoints;
+    const status=pendingPoints?'pending':earnedPoints===2?'correct':earnedPoints?'partial':judgment||reason.trim()?'incorrect':'unanswered';
+    const criterion={...rubricCriteria(question)[0],maxPoints:1,earnedPoints:Number(right),pendingPoints:0,decision:right?'met':'missing',
+      reason:judgment?'The correct judgment is '+question.claim.toLowerCase()+'.':'No judgment was selected.',evidence:[]};
+    return {...explanation,maxPoints:2,earnedPoints,pendingPoints,status,correct:status==='correct',components:[criterion,...explanation.components]};
+  }
   const answered=typeof response==='string'&&!!response.trim();
   if (question.type==='written') {
     const base={maxPoints:question.points,correction:question.rubric.modelAnswer||question.answer,strictCorrect:false,source:'rubric'};
@@ -106,7 +132,7 @@ export function mockResults(session) {
 
 function validReview(review,question,session) {
   const response=session.responses[question.id];
-  if (question.type==='written') return validWrittenReview(review,{question,response,submissionId:session.submission?.id});
+  if (question.type==='written') return validWrittenReview(review,{question:mockRubricQuestion(question),response:mockRubricResponse(question,response),submissionId:session.submission?.id});
   return question.type==='identify'&&validAnswerReview(review)&&reviewMatches(review,question,response);
 }
 
@@ -171,9 +197,9 @@ export function validMockSession(session,bank=mockExam3AllQuestions) {
 }
 export const validateMockSession=validMockSession;
 
-export function mockReportExport(session,{notes={},card=[]}={}) {
+export function mockReportExport(session,{notes={},card=[],kind='osteon-exam3-report'}={}) {
   const result=mockResults(session);
-  return {schema:1,kind:'osteon-exam3-report',exportedAt:Date.now(),session:clone(session),
+  return {schema:1,kind,exportedAt:Date.now(),session:clone(session),
     summary:Object.fromEntries(Object.entries(result).filter(([key])=>!['rows','missed'].includes(key))),
     questions:result.rows.map(r=>({id:r.q.id,prompt:r.q.prompt,response:r.response,answer:r.q.answer,
       points:r.q.points,outcome:r.outcome,assisted:r.assisted,sources:r.q.sources||r.q.evidence||[],

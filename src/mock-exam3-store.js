@@ -4,33 +4,33 @@ export const MOCK_EXAM3_STORAGE_KEY='osteon-mock-exam3-v1';
 export const blankMockState=()=>({schema:1,active:null,history:[],notes:{},card:{front:Array(24).fill(''),back:Array(24).fill('')}});
 const record=x=>!!x&&typeof x==='object'&&!Array.isArray(x)&&Object.getPrototypeOf(x)!==Array.prototype;
 const safeKey=k=>/^[a-zA-Z0-9:_-]{1,220}$/.test(k)&&!['__proto__','constructor','prototype'].includes(k);
-export function validMockState(x){
- if(!record(x)||x.schema!==1||!Array.isArray(x.history)||x.history.length>20||!x.history.every(s=>validMockSession(s)&&s.status==='submitted'))return false;
+export function validMockState(x,bank){
+ if(!record(x)||x.schema!==1||!Array.isArray(x.history)||x.history.length>20||!x.history.every(s=>validMockSession(s,bank)&&s.status==='submitted'))return false;
  if(new Set(x.history.map(s=>s.id)).size!==x.history.length)return false;
- if(x.active!==null&&(!validMockSession(x.active)||x.active.status!=='draft'))return false;
+ if(x.active!==null&&(!validMockSession(x.active,bank)||x.active.status!=='draft'))return false;
  if(!record(x.notes)||Object.keys(x.notes).length>1200||!record(x.card))return false;
  if(!['front','back'].every(side=>Array.isArray(x.card[side])&&x.card[side].length===24&&x.card[side].every(t=>typeof t==='string'&&t.length<=180)))return false;
  return Object.entries(x.notes).every(([key,n])=>safeKey(key)&&record(n)&&['confusion','rule','retrieval'].every(k=>typeof n[k]==='string'&&n[k].length<=2000)&&Number.isFinite(n.updatedAt)&&n.updatedAt>=0&&
   (n.cardDraft===undefined||typeof n.cardDraft==='string'&&n.cardDraft.length<=180)&&
   (n.cardSide===undefined||['front','back'].includes(n.cardSide)));
 }
-export function readMockState(storage){
- const raw=storage.getItem(MOCK_EXAM3_STORAGE_KEY);
+export function readMockState(storage,{key=MOCK_EXAM3_STORAGE_KEY,bank}={}){
+ const raw=storage.getItem(key);
  if(raw===null)return blankMockState();
  const value=JSON.parse(raw);
- if(!validMockState(value))throw new Error('The saved mock-exam record could not be read. Export your browser data before starting again.');
+ if(!validMockState(value,bank))throw new Error('The saved mock-exam record could not be read. Export your browser data before starting again.');
  return value;
 }
-export function writeMockState(storage,state){
- if(!validMockState(state))throw new Error('This mock-exam record is not valid. Your previous saved work has been kept.');
- storage.setItem(MOCK_EXAM3_STORAGE_KEY,JSON.stringify(state));
+export function writeMockState(storage,state,{key=MOCK_EXAM3_STORAGE_KEY,bank}={}){
+ if(!validMockState(state,bank))throw new Error('This mock-exam record is not valid. Your previous saved work has been kept.');
+ storage.setItem(key,JSON.stringify(state));
 }
-export function mockBackup(state,now=Date.now()){
- if(!validMockState(state))throw new Error('Cannot export an invalid mock exam.');
- return {kind:'osteon-exam3-backup',schema:1,createdAt:now,state:structuredClone(state)};
+export function mockBackup(state,now=Date.now(),{bank,kind='osteon-exam3-backup'}={}){
+ if(!validMockState(state,bank))throw new Error('Cannot export an invalid mock exam.');
+ return {kind,schema:1,createdAt:now,state:structuredClone(state)};
 }
-export function parseMockBackup(value){
- if(!value||value.kind!=='osteon-exam3-backup'||value.schema!==1||!Number.isFinite(value.createdAt)||value.createdAt<0||!validMockState(value.state))throw new Error('Choose a valid Osteon Exam 3 backup. Nothing has been changed.');
+export function parseMockBackup(value,{bank,kind='osteon-exam3-backup'}={}){
+ if(!value||value.kind!==kind||value.schema!==1||!Number.isFinite(value.createdAt)||value.createdAt<0||!validMockState(value.state,bank))throw new Error('Choose a valid backup for this mock exam.');
  return structuredClone(value.state);
 }
 export function addCardCandidate(card,text,side='front'){
@@ -43,4 +43,4 @@ export function addCardCandidate(card,text,side='front'){
  const next=structuredClone(card);next[side][index]=clean;
  return {card:next,side,index,duplicate:false};
 }
-export function cardText(card){return ['EXAM 3 - FRONT',...card.front.map((s,i)=>`${String(i+1).padStart(2,'0')} ${s}`),'','EXAM 3 - BACK',...card.back.map((s,i)=>`${String(i+1).padStart(2,'0')} ${s}`)].join('\n');}
+export function cardText(card,title='Exam 3'){return [title.toUpperCase()+' - FRONT',...card.front.map((s,i)=>`${String(i+1).padStart(2,'0')} ${s}`),'',title.toUpperCase()+' - BACK',...card.back.map((s,i)=>`${String(i+1).padStart(2,'0')} ${s}`)].join('\n');}
