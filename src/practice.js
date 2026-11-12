@@ -1,4 +1,5 @@
 import {activeChapters} from './chapters.js';
+import {chapter11Muscles} from './chapter11-muscles.js';
 import {readQuickPractice,writeQuickPractice} from './quick-practice.js';
 import {openWordingPractice} from './wording-practice.js';
 import {anatomyQuestion} from './anatomy-answer.js';
@@ -10,6 +11,7 @@ import {divisions,inDivision,regionAvailable} from './anatomy.js';
 import {terms,allTerms,textbookTerms,regions,matches} from './data.js';
 import {reviewCards,questions,lessons} from './learning-data.js';
 import {automaticPracticeQuestions,rubricStudyEvidence} from './study-evidence.js';
+import {dueMuscleFigureReviews} from './muscle-study-state.js';
 import {reviewQueues,retrievalPlan} from './review-plan.js';
 import {getProgress,recordAttempt,scheduleCard,objectiveStats,acceptsAnswer,shuffle,hasStorage,importProgress,resetProgress} from './storage.js';
 
@@ -29,6 +31,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  <div class="practice-starts" aria-label="Start a study session">
   <button class="mock-shortcut" data-mock-open><strong>Exam 3 mock</strong><small>44 questions · 60 points · course-grounded</small></button>
   <button class="primary" id="bone-list-test"><strong>Required bone-list test</strong><small>BI 231 checklist · saved progress</small></button>
+  <button id="practice-muscle-checklist"><strong>Muscle checklist practice</strong><small>BI 231 · identification and explanations</small></button>
   <button id="practice-exams"><strong>Chapter exams</strong><small>50 per chapter · feedback at submission</small></button>
   <button id="practice-quick" aria-controls="practice-quick-setup" aria-expanded="${quickSetupOpen}"><strong>Quick 3D practice</strong><small>5–20 questions · feedback after each</small></button>
  </div>
@@ -38,6 +41,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  $('#practice-quick').onclick=()=>{quickSetupOpen=!quickSetupOpen;$('#practice-quick-setup').hidden=!quickSetupOpen;$('#practice-quick').setAttribute('aria-expanded',String(quickSetupOpen));if(quickSetupOpen)loadQuickModel();};
  if($('#resume-spatial'))$('#resume-spatial').onclick=async()=>{const draft=savedQuick,entry=$('#resume-spatial');entry.disabled=true;try{await viewer.ensureBase();if($('#practice-view').classList.contains('active')&&draft===savedQuick)startSpatial(draft.mode,draft.items,draft);}catch{toast('The skeleton could not load. Select Continue to retry.');}finally{if(entry.isConnected)entry.disabled=false;}};
  $('#nerve-recall').onclick=()=>location.assign('nerve-recall.html');
+ $('#practice-muscle-checklist').onclick=openMuscleChecklist;
  $('#practice-exams').onclick=()=>document.dispatchEvent(new Event('openexams'));$('#bone-list-test').onclick=()=>document.dispatchEvent(new Event('lablist'));$('#textbook-landmarks').onclick=()=>document.dispatchEvent(new Event('landmarkbank'));$('#complete-course').onclick=()=>document.dispatchEvent(new Event('completecourse'));$('#practice-division').onchange=ev=>{setDivision(ev.target.value);if(!regionAvailable(ui.region,viewer.division,allTerms))ui.region='All regions';practiceHome();};$('#practice-region').onchange=ev=>{ui.region=ev.target.value;practiceHome();};$('#session-length').onchange=ev=>ui.count=+ev.target.value;$('#locate-start').onclick=()=>launchSpatial('locate');$('#identify-start').onclick=()=>launchSpatial('identify');$('#flash-start').onclick=()=>startFlash();$('#due-start').onclick=()=>startFlash(queues.anatomy,true);$('#chapter-due-start').onclick=()=>startFlash(queues.chapters,true);$('#mixed-concepts').onclick=()=>document.dispatchEvent(new Event('mixedconcepts'));
  }
  function loadQuickModel(){
@@ -84,12 +88,46 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  const t=f.items[f.index];setLearningContext({type:'flashcard',label:f.revealed?t.name:'Current recall card',termId:t.id,text:t.type==='textbook term'?'Textbook glossary card. Use Osteon lesson notes.':t.cue});$('#practice-view').innerHTML=intro((t.representation?'LAB RECALL / ':'CHAPTER RECALL / ')+e(t.region.toUpperCase()),'Retrieve. <em>Then reveal.</em>','Read the cue and retrieve your answer before turning the card over.')+`<div class="quiz-area"><div class="quiz-top"><span class="eyebrow">CARD ${f.index+1} / ${f.items.length}</span><button class="text-btn" id="flash-exit">End session</button></div><button class="flashcard" id="flip-card" aria-label="${f.revealed?'Answer revealed':'Reveal answer'}"><small>${f.revealed?'THE ANSWER':t.front?'RETRIEVE THE ANSWER':'WHICH STRUCTURE?'}</small>${f.revealed?`<strong>${e(t.name)}</strong><p>${e(t.cue)}</p>`:`<p>${e(t.front||t.cue)}</p><small>TAP TO REVEAL ↗</small>`}</button><div class="rating-row" ${f.revealed?'':'hidden'}><button data-rating="1">Again · 10 min</button><button data-rating="2">Hard · 1 day</button><button data-rating="3">Good · scheduled</button><button data-rating="4">Easy · scheduled</button></div><p class="tiny" style="margin-top:15px">${e(t.source)} · ${t.representation?.kind||'Concept recall'} · Use the answer to correct your mental image.</p></div>`;$('#flash-exit').onclick=()=>{flash=null;practiceHome();};$('#flip-card').onclick=()=>{if(!f.revealed){f.revealed=true;renderFlash();}};$$('[data-rating]').forEach(b=>b.onclick=()=>{const rating=+b.dataset.rating;recordAttempt({id:t.id,topic:t.region,correct:rating>=3,mode:'flashcard',selfRated:true});scheduleCard(t.id,rating);f.rated++;f.index++;f.revealed=false;renderFlash();});
  }
  document.addEventListener('studyterm',ev=>startFlash([ev.detail]));
+ function openMuscleChecklist(){
+  const cards=chapter11Muscles.filter(card=>card.courseChecklist);
+  const sections=[...new Set(cards.map(card=>card.section))];
+  const checklist=questions.filter(question=>question.checklistTargetId);
+  dialog(`<h2>BI 231 muscle checklist</h2><p>Practice all ${cards.length} course entries by region. Marked figures are available for selected structures.</p>
+   <div class="control-row"><label for="muscle-checklist-section">Section</label><select id="muscle-checklist-section"><option value="">All regions</option>${sections.map(id=>`<option value="${id}">${e(id+' · '+lessons.find(lesson=>lesson.id===id).short)}</option>`).join('')}</select></div>
+   <div class="control-row"><label for="muscle-checklist-type">Practice</label><select id="muscle-checklist-type"><option value="">Mixed</option><option value="identify">Figure identification</option><option value="written">Location, action and attachments</option></select></div>
+   <div class="control-row"><label for="muscle-checklist-count">Length</label><select id="muscle-checklist-count"><option value="5">5 prompts</option><option value="10" selected>10 prompts</option><option value="20">20 prompts</option><option value="all">Full selection</option></select></div>
+   <p id="muscle-checklist-count-note" role="status"></p><button class="primary" id="muscle-checklist-start">Start practice</button>`);
+  const section=$('#muscle-checklist-section'),type=$('#muscle-checklist-type'),count=$('#muscle-checklist-count'),start=$('#muscle-checklist-start');
+  function pool(){
+   const ids=new Set(cards.filter(card=>!section.value||card.section===section.value).map(card=>card.id));
+   return checklist.filter(question=>ids.has(question.checklistTargetId)&&(!type.value||question.type===type.value));
+  }
+  function showCount(){
+   const available=pool().length;
+   $('#muscle-checklist-count-note').textContent=quantity(available,'matching prompt');
+   start.disabled=!available;
+  }
+  section.onchange=type.onchange=showCount;
+  showCount();
+  start.onclick=()=>{
+   const items=shuffle(pool()),selected=count.value==='all'?items:items.slice(0,Number(count.value));
+   if(!selected.length)return;
+   if(!type.value&&selected.every(question=>question.type===selected[0].type)){
+    const other=items.find(question=>question.type!==selected[0].type);
+    if(other)selected[selected.length-1]=other;
+   }
+   $('#info-dialog').close();
+   document.dispatchEvent(new CustomEvent('exampractice',{detail:selected.map(question=>question.id)}));
+  };
+ }
+ document.addEventListener('openmusclechecklist',openMuscleChecklist);
  document.addEventListener('studydeck',ev=>startFlash(ev.detail));
  document.addEventListener('practicehome',()=>{flash=null;practiceHome();});
  function progressPage(){
  if($('#progress-view').classList.contains('active'))setLearningContext({type:'study',label:'Study planning · chapters 1–11'});
  let examHistory=[];try{const saved=JSON.parse(localStorage.getItem('osteon-exams-v1'));if(Array.isArray(saved?.history))examHistory=saved.history;}catch{}
  const automatic=automaticPracticeQuestions(questions),rubric=rubricStudyEvidence(questions,examHistory),p=getProgress(),s=objectiveStats(),queues=reviewQueues(terms,reviewCards,p),lab=retrievalPlan(terms,p.attempts),concepts=retrievalPlan(automatic,p.attempts),seen=new Set(p.attempts.map(a=>a.id));
+ const dueFigures=dueMuscleFigureReviews(p);
  const labNext=lab.next.slice(0,10),conceptNext=concepts.next.slice(0,10);
  const segment=(n,kind)=>n?`<span class="${kind}" style="width:${n/terms.length*100}%"></span>`:'';
  $('#progress-view').innerHTML=intro('YOUR LEARNING RECORD','Small sessions.<br><em>Lasting knowledge.</em>','Accuracy reflects scored, unassisted retrieval. Reading and self-rated cards are recorded separately.')+`
@@ -97,7 +135,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  <div class="learning-panel landmark-progress"><div class="eyebrow">TEXTBOOK FEATURE RECORD</div><h2>${textbookTerms.filter(t=>seen.has(t.id)).length} / ${textbookTerms.length}</h2><p>Textbook features encountered. These include named landmarks beyond the course list; the original lab checklist below retains its 177 targets.</p><button id="progress-landmarks">Continue landmark practice ↗</button></div>
  <div class="learning-panel retrieval-panel"><div class="eyebrow">LAB RETRIEVAL / ENTIRE COURSE</div><h2>A clear path through <em>every target.</em></h2><div class="retrieval-bar" role="img" aria-label="${lab.unpracticed.length} need a first scored attempt, ${lab.revisit.length} need another try, ${quantity(lab.retrieved.length,'latest attempt')} independently correct">${segment(lab.retrieved.length,'retrieved')}${segment(lab.revisit.length,'revisit')}${segment(lab.unpracticed.length,'unpracticed')}</div><div class="retrieval-key"><span><i class="unpracticed"></i><b>${lab.unpracticed.length}</b> need a first scored attempt</span><span><i class="revisit"></i><b>${lab.revisit.length}</b> need another try</span><span><i class="retrieved"></i><b>${lab.retrieved.length}</b> latest attempt independently correct</span></div><p class="tiny">Based on the latest scored attempt for each of the ${terms.length} lab targets. A missed or assisted answer needs another try. Reading and card ratings do not fill these gaps. ${lab.spaced.length} targets have an independently correct answer repeated at least 24 hours later. These counts describe practice evidence, not mastery.</p></div>
  <div class="split-layout progress-actions" style="margin-top:24px"><div class="learning-panel"><div class="eyebrow">NEXT PRACTICE STEP</div><h2>${lab.revisit.length?'Retest the gaps.':lab.unpracticed.length?'Meet the next targets.':'Test what lasts.'}</h2><p>${lab.revisit.length?`${quantity(lab.revisit.length,'lab target')} ${lab.revisit.length===1?'needs':'need'} another try after feedback or assistance.`:lab.unpracticed.length?`${quantity(lab.unpracticed.length,'lab target')} still ${lab.unpracticed.length===1?'needs':'need'} a scored attempt.`:'Every lab target has a correct independent latest attempt. Return to the least recently tested targets and vary your view.'} ${lab.revisit.length||lab.unpracticed.length?'The next session prioritizes targets needing another try, then untried ones.':'The next session starts with the least recently tested targets.'}</p><button class="primary" id="progress-practice" ${viewer.loaded?'':'disabled'}>Test ${labNext.length} lab targets ↗</button><p class="tiny" style="margin-top:14px">Uses the entire lab list and clears atlas filters. Names are hidden for identification; hints still count as assistance.</p><div class="next-concepts"><h3>Connect structure with function.</h3><p>${concepts.unpracticed.length} of ${automatic.length} objective and short-answer questions need a first scored attempt; ${concepts.revisit.length} need another try.</p><button id="progress-concepts">Test ${conceptNext.length} chapter questions ↗</button></div></div>
- <div class="learning-panel"><div class="eyebrow">SPACED RECALL</div><h2>Return when <em>it is due.</em></h2><p>Due now: ${quantity(queues.allAnatomy.length,'lab card')} and ${quantity(queues.chapters.length,'chapter card')}. Review queues here include all regions and both skeleton divisions.</p><div class="control-row"><button id="progress-lab-due" ${queues.allAnatomy.length?'':'disabled'}>Review ${quantity(queues.allAnatomy.length,'lab card')} ↗</button><button id="progress-chapter-due" ${queues.chapters.length?'':'disabled'}>Review ${quantity(queues.chapters.length,'chapter card')} ↗</button></div><p class="tiny" style="margin-top:20px">${s.assisted} assisted scored attempts · ${quantity(p.attempts.filter(a=>a.selfRated).length,'self-rated card review')}. Card ratings update the review schedule separately from scored retrieval.</p></div></div>
+ <div class="learning-panel"><div class="eyebrow">SPACED RECALL</div><h2>Return when <em>it is due.</em></h2><p>Due now: ${quantity(queues.allAnatomy.length,'lab card')} and ${quantity(queues.chapters.length,'chapter card')}. Review queues here include all regions and both skeleton divisions.</p><div class="control-row"><button id="progress-lab-due" ${queues.allAnatomy.length?'':'disabled'}>Review ${quantity(queues.allAnatomy.length,'lab card')} ↗</button><button id="progress-chapter-due" ${queues.chapters.length?'':'disabled'}>Review ${quantity(queues.chapters.length,'chapter card')} ↗</button><button id="progress-figure-due" ${dueFigures.length?'':'disabled'}>Review ${quantity(dueFigures.length,'due figure')} ↗</button></div><p class="tiny" style="margin-top:20px">${s.assisted} assisted scored attempts · ${quantity(p.attempts.filter(a=>a.selfRated).length,'self-rated card review')}. Card ratings update the review schedule separately from scored retrieval.</p></div></div>
  <div class="learning-panel" style="margin-top:24px"><h3>Unassisted accuracy by topic</h3><p class="tiny">Written rubric scores are shown separately; they do not enter these automatic retrieval totals.</p><p class="tiny">${p.attempts.filter(a=>a.review&&a.review.status!=='unavailable').length} attempts have a local AI review. AI spelling/meaning decisions are retained with the original answer-key result in exported progress.</p>${[...regions.slice(1),...activeChapters.map(c=>'Chapter '+c.id)].map(r=>{const st=objectiveStats(p.attempts.filter(a=>a.topic===r));return`<div class="topic-row"><span>${r} <small class="tiny">(${st.unassisted})</small></span><div class="progress-bar"><span style="width:${st.accuracy||0}%"></span></div><span>${st.accuracy===null?'—':st.accuracy+'%'}</span></div>`;}).join('')}</div>
  <div class="learning-panel" style="margin-top:24px"><h3>Your data, in your hands.</h3><p>Saved in this browser${hasStorage()?'':' · browser storage is unavailable; export before leaving'}. Back up your study work before changing devices. Preview the contents before restoring.</p><div class="control-row"><button id="export-data">Export progress ↓</button><label for="import-data">Import backup</label><input type="file" id="import-data" accept="application/json,.json"><button id="reset-data">Reset history</button></div><p id="import-status" role="status"></p></div>`;
  $('#progress-view .section-intro').insertAdjacentHTML('afterend',`<div class="learning-panel"><span class="eyebrow">WRITTEN EXPLANATIONS / SEPARATE RUBRIC RECORD</span><h2>Explain the connection.</h2><p>${rubric.submitted}/${rubric.total} explanations submitted · ${rubric.reviewed} locally reviewed · ${rubric.selfReviewed} learner-reviewed · ${rubric.pending} awaiting a complete review.</p><p class="tiny">This record uses the latest submitted response for each written prompt. Self-review and AI rubric decisions remain distinct from automatically scored retrieval. Unresolved points are not counted as mistakes.</p><div class="control-row"><button id="progress-rubric">Practice two explanations</button><button id="progress-exam-reports">Exam results & rubric reviews ↗</button></div></div>`+dailyPlanHTML(localStorage,e));bindDailyPlan($('#progress-view'),{dialog,toast,escape:e,onChange:progressPage});
@@ -105,6 +143,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  $('#progress-landmarks').onclick=()=>document.dispatchEvent(new Event('landmarkbank'));$('#progress-practice').onclick=()=>document.dispatchEvent(new CustomEvent('coursequeue',{detail:labNext.map(t=>t.id)}));
  $('#progress-concepts').onclick=()=>document.dispatchEvent(new CustomEvent('conceptqueue',{detail:conceptNext.map(t=>t.id)}));
  $('#progress-lab-due').onclick=()=>startFlash(queues.allAnatomy,true);
+ $('#progress-figure-due').onclick=()=>document.dispatchEvent(new CustomEvent('duefigures',{detail:{chapters:[10,11],back:'progress'}}));
  $('#progress-chapter-due').onclick=()=>startFlash(queues.chapters,true);
  bindStudyBackups($('#progress-view'),{dialog,toast,escape:e});$('#reset-data').onclick=()=>{dialog('<h2>Reset your history?</h2><p>This clears attempts, card schedules and lesson read status on this device. Export a backup first if you want to keep them.</p><button id="confirm-reset">Reset local history</button>');$('#confirm-reset').onclick=()=>{resetProgress();$('#info-dialog').close();progressPage();toast('Local study history reset.');};};
  }

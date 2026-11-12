@@ -1,6 +1,7 @@
 import {renderCurlActivity,renderSmoothStructure,renderRepairActivity} from './muscle-mechanics.js';
 import {replaceMuscleActivity} from './muscle-activity-ui.js';
 import {setDiagramLearningContext} from './learning-context.js';
+import {renderMuscleReasoning} from './muscle-reasoning.js';
 
 const e=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const bone='#e5e8d7',mint='#b1dac5',peach='#eaa17b',dim='#76948e';
@@ -11,11 +12,11 @@ const arrow=(x1,y1,x2,y2)=>`<path d="M${x1} ${y1}L${x2} ${y2}" stroke="${mint}" 
 
 export const couplingEvents=[
  ['Nerve signal','An action potential reaches the motor neuron terminal. Calcium entry into that terminal supports acetylcholine release.'],
- ['ACh at the end-plate','Acetylcholine binds receptors on the muscle motor end-plate. The resulting depolarization can trigger a muscle action potential.'],
+ ['ACh at the end-plate','Acetylcholine binds receptor channels on the muscle motor end-plate. Net inward positive current makes the inside less negative. Sufficient local depolarization activates nearby voltage-gated sodium channels to initiate a muscle action potential.'],
  ['Signal travels inward','The muscle action potential travels along the sarcolemma and T-tubules. A T-tubule carries electrical change; it does not carry acetylcholine into the fiber.'],
  ['Calcium is released','Excitation–contraction coupling causes calcium release from the sarcoplasmic reticulum into the sarcoplasm.'],
  ['Thin filament activation','Calcium binds troponin. Tropomyosin shifts so myosin can interact with actin while ATP supports cycling.'],
- ['Signal ends and calcium returns','ACh is removed from the cleft. ATP-dependent pumps return calcium to the SR; thin-filament regulation restricts new crossbridges.']
+ ['Signal ends and calcium returns','Acetylcholinesterase (AChE) breaks down ACh in the cleft. Potassium exit helps repolarize the muscle membrane. ATP-dependent pumps return calcium to the SR; thin-filament regulation restricts new crossbridges.']
 ];
 export const fiberProfiles=[
  {id:'SO',name:'Slow oxidative',speed:1,oxidative:3,fatigue:3,force:1,description:'Slow contraction, substantial mitochondrial and oxygen-delivery support, and relatively high fatigue resistance. Useful for sustained lower-force activity.'},
@@ -72,10 +73,11 @@ function askTutor(root){
  root.append(row);row.querySelector('button').onclick=()=>document.querySelector('#tutor-launch')?.click();
 }
 function sequence(root,{id,title,reference,steps,question,hint,answer,parallel=false}){
- let stage=0,revealed=false;
+ let stage=0,revealed=false,prediction='';
  function render(){
-  publish(id,title,reference,{stage:stage+1,step:steps[stage][0]},question,hint,answer,[...steps.map(([,fact])=>fact)]);
-  replaceMuscleActivity(root,`<h3>${e(title)}</h3><div class="muscle-lab"><div class="muscle-lab-visual">${parallel?parallelATP(steps,stage):id==='skeletal-muscle-development'?developmentDrawing(stage):routeDrawing(steps,stage)}</div><div><label for="muscle-route-stage">${parallel?'ATP source':'Step'}</label><select id="muscle-route-stage">${steps.map(([name],i)=>`<option value="${i}" ${stage===i?'selected':''}>${parallel?'':i+1+'. '}${e(name)}</option>`).join('')}</select><p>${e(steps[stage][1])}</p><div class="control-row"><button data-route-back ${stage===0?'disabled':''}>← Previous</button><button data-route-next ${stage===steps.length-1?'disabled':''}>Next →</button></div><p class="flow-question">${e(question)}</p><button data-route-reveal aria-expanded="${revealed}">${revealed?'Hide explanation':'Check my reasoning'}</button>${revealed?`<p class="muscle-lab-feedback" role="status">${e(answer)}</p>`:''}</div></div>${credit}`);
+  publish(id,title,reference,{stage:stage+1,step:steps[stage][0]},question,hint,answer,[...steps.map(([,fact])=>fact)],prediction);
+  replaceMuscleActivity(root,`<h3>${e(title)}</h3><div class="muscle-lab"><div class="muscle-lab-visual">${parallel?parallelATP(steps,stage):id==='skeletal-muscle-development'?developmentDrawing(stage):routeDrawing(steps,stage)}</div><div><label for="muscle-route-stage">${parallel?'ATP source':'Step'}</label><select id="muscle-route-stage">${steps.map(([name],i)=>`<option value="${i}" ${stage===i?'selected':''}>${parallel?'':i+1+'. '}${e(name)}</option>`).join('')}</select><p>${e(steps[stage][1])}</p><div class="control-row"><button data-route-back ${stage===0?'disabled':''}>← Previous</button><button data-route-next ${stage===steps.length-1?'disabled':''}>Next →</button></div><p class="flow-question">${e(question)}</p><label for="muscle-route-prediction">Your reasoning</label><textarea id="muscle-route-prediction" rows="2" maxlength="1200" placeholder="Explain the link in your own words…">${e(prediction)}</textarea><button data-route-reveal aria-expanded="${revealed}" ${!prediction.trim()?'disabled':''}>${revealed?'Hide explanation':'Compare with explanation'}</button>${revealed?`<p class="muscle-lab-feedback" role="status">${e(answer)} This is a model explanation to compare with your reasoning, not an automatic grade.</p>`:''}</div></div>${credit}`);
+  root.querySelector('#muscle-route-prediction').oninput=ev=>{prediction=ev.target.value;root.querySelector('[data-route-reveal]').disabled=!prediction.trim();publish(id,title,reference,{stage:stage+1,step:steps[stage][0]},question,hint,answer,steps.map(([,fact])=>fact),prediction);};
   root.querySelector('#muscle-route-stage').onchange=ev=>{stage=+ev.target.value;render();};root.querySelector('[data-route-back]').onclick=()=>{stage--;render();};root.querySelector('[data-route-next]').onclick=()=>{stage++;render();};root.querySelector('[data-route-reveal]').onclick=()=>{revealed=!revealed;render();};askTutor(root);
  }render();
 }
@@ -126,6 +128,7 @@ function smoothCoupling(root){let coupled=true;
 const development=[['Myoblasts','Embryonic muscle-forming cells each contain a nucleus.'],['Cells fuse','Multiple myoblasts fuse, creating a developing skeletal myotube.'],['A multinucleated fiber','The contributing nuclei remain within one continuous muscle-cell cytoplasm.'],['Limited repair support','Satellite cells can support later skeletal-fiber repair. Developmental fusion is distinct from ordinary hypertrophy.']];
 const metabolism=[['Stored ATP','A small local ATP supply supports immediate activity but must be replenished.'],['Creatine phosphate','Creatine phosphate can transfer phosphate to ADP rapidly to regenerate ATP.'],['Glycolysis','Glycolysis regenerates ATP quickly but with a smaller yield per glucose than aerobic metabolism.'],['Aerobic pathways','Mitochondria use oxygen-dependent pathways to sustain ATP supply, with substrate and oxygen availability affecting capacity.']];
 export function renderAdditionalMuscleActivity(root,id){
+ if(renderMuscleReasoning(root,id))return true;
  if(id==='lift-hold-lower')renderCurlActivity(root);
  else if(id==='smooth-structure')renderSmoothStructure(root);
  else if(id==='coupling')sequence(root,{id:'excitation-contraction-route',title:'Follow the signal, then return calcium.',reference:'10.2',steps:couplingEvents,question:'Does acetylcholine travel through the T-tubules to bind troponin?',hint:'Distinguish the neurotransmitter, electrical signal and calcium ion.',answer:'No. Acetylcholine acts at the motor end-plate. A muscle action potential travels through T-tubules; calcium released from the SR binds troponin.'});

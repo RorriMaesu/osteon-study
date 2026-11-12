@@ -29,12 +29,14 @@ function drawTrace(mode,units){
  return `<svg viewBox="0 0 800 355" role="img" aria-label="Illustrative muscle tension over time. Stimulus ticks appear on a separate lower line. The vertical scale is relative force, not a clinical measurement."><path d="M60 40V250H740M60 294H740" fill="none" stroke="#849c91" stroke-width="2"/><path d="${path}" fill="none" stroke="#eaa17b" stroke-width="4"/>${pulses.map(t=>`<path d="M${60+t*220} 294v-19" stroke="#b1dac5" stroke-width="3"/>`).join('')}<g fill="#dbe6d7" font-size="17"><text x="60" y="30">Relative tension</text><text x="510" y="275">Time → (illustrative)</text><text x="60" y="328">Stimuli · ticks indicate events, not force</text></g></svg>`;
 }
 export const muscleActivityChoices={
- '10.2':[['base','Organization explorer'],['coupling','Nerve signal to contraction']],
- '10.3':[['base','Sliding filaments and ATP'],['metabolism','How ATP is replenished']],
- '10.4':[['base','Frequency and force traces'],['lift-hold-lower','Lift, hold and lower'],['recruitment','Motor-unit recruitment'],['length-tension','Length and active tension']],
- '10.5':[['fibers','Compare fiber types'],['base','Apply the comparison']],
- '10.8':[['smooth-structure','Dense bodies and a passageway'],['smooth-regulation','Calcium and myosin regulation'],['smooth-coupling','Single-unit and multiunit'],['base','Apply the distinctions']],
- '10.9':[['development','How a skeletal fiber develops'],['repair','Compare repair capacity'],['base','Apply the distinctions']]
+ '10.2':[['base','Organization explorer'],['coupling','Nerve signal to contraction'],['membrane-signals','Predict where the signal stops']],
+ '10.3':[['base','Sliding filaments and ATP'],['metabolism','How ATP is replenished'],['energy-recovery','Effort, recovery and fatigue']],
+ '10.4':[['base','Frequency and force traces'],['lift-hold-lower','Lift, hold and lower'],['recruitment','Motor-unit recruitment'],['recruitment-order','Recruitment order and tone'],['length-tension','Length and active tension']],
+ '10.5':[['fibers','Compare fiber types'],['fiber-mechanisms','Explain speed and fuel'],['base','Apply the comparison']],
+ '10.6':[['training-mechanisms','Demand, adaptation and substances'],['base','Apply the distinctions']],
+ '10.7':[['cardiac-timing','Electrical timing and energy'],['base','Cell connections']],
+ '10.8':[['smooth-structure','Dense bodies and a passageway'],['smooth-regulation','Calcium and myosin regulation'],['smooth-coupling','Single-unit and multiunit'],['smooth-organs','Signals and organ behavior'],['base','Apply the distinctions']],
+ '10.9':[['development','How a skeletal fiber develops'],['repair','Compare repair capacity'],['repair-location','Locate and explain repair'],['base','Apply the distinctions']]
 };
 export function renderMuscleLab(root,section){
  if(!/^10\.[1-9]$/.test(section))return false;

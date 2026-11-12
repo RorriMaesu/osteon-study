@@ -4445,7 +4445,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "action potential",
-    "cue": "change in voltage of a cell membrane in response to a stimulus that results in transmission of an electrical signal; unique to neurons and muscle fibers",
+    "cue": "brief propagated change in membrane voltage produced by voltage-dependent ion-channel activity in an excitable cell",
     "topic": "Chapter 10"
   },
   {
@@ -4481,7 +4481,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "ATPase",
-    "cue": "enzyme that hydrolyzes ATP to ADP",
+    "cue": "enzyme that catalyzes ATP hydrolysis; myosin ATPase activity helps determine cross-bridge cycling speed",
     "topic": "Chapter 10"
   },
   {
@@ -4499,7 +4499,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "autorhythmicity",
-    "cue": "heart’s ability to control its own contractions",
+    "cue": "ability of specialized cells to initiate rhythmic electrical activity without a separate nerve impulse for each event",
     "topic": "Chapter 10"
   },
   {
@@ -4535,7 +4535,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "contractility",
-    "cue": "ability to shorten (contract) forcibly",
+    "cue": "ability to develop active force; an active muscle may shorten, hold its overall length, or lengthen under load",
     "topic": "Chapter 10"
   },
   {
@@ -4562,7 +4562,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "dense body",
-    "cue": "sarcoplasmic structure that attaches to the sarcolemma and shortens the muscle as thin filaments slide past thick filaments",
+    "cue": "smooth-muscle attachment structure for thin filaments and the intermediate-filament network that transmits force through the cell",
     "topic": "Chapter 10"
   },
   {
@@ -4589,7 +4589,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "eccentric contraction",
-    "cue": "muscle contraction that lengthens the muscle as the tension is diminished",
+    "cue": "active muscle force production while the muscle lengthens, as when elbow flexors control a descending load",
     "topic": "Chapter 10"
   },
   {
@@ -4598,7 +4598,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "elasticity",
-    "cue": "ability to stretch and rebound",
+    "cue": "ability to return toward the original shape or length after deformation; distinct from extensibility, which permits stretching",
     "topic": "Chapter 10"
   },
   {
@@ -4625,7 +4625,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "excitability",
-    "cue": "ability to undergo neural stimulation",
+    "cue": "ability to respond to stimulation with a change in electrical state; the stimulus need not always be a nerve signal",
     "topic": "Chapter 10"
   },
   {
@@ -4661,7 +4661,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "fast glycolytic (FG)",
-    "cue": "muscle fiber that primarily uses anaerobic glycolysis",
+    "cue": "fast-contracting skeletal fiber with strong glycolytic capacity, substantial glycogen reserves and relatively low fatigue resistance",
     "topic": "Chapter 10"
   },
   {
@@ -4670,7 +4670,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "fast oxidative (FO)",
-    "cue": "intermediate muscle fiber that is between slow oxidative and fast glycolytic fibers",
+    "cue": "fast-contracting skeletal fiber with substantial oxidative capacity; contraction speed and ATP-supply pathway are separate properties",
     "topic": "Chapter 10"
   },
   {
@@ -4706,7 +4706,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "hyperplasia",
-    "cue": "process in which one cell splits to produce new cells",
+    "cue": "increase in cell number, distinct from hypertrophy, which increases cell size",
     "topic": "Chapter 10"
   },
   {
@@ -4724,7 +4724,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "hypertrophy",
-    "cue": "addition of structural proteins to muscle fibers",
+    "cue": "increase in existing cell size; skeletal-fiber hypertrophy includes addition of structural proteins",
     "topic": "Chapter 10"
   },
   {
@@ -4733,7 +4733,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "hypotonia",
-    "cue": "abnormally low muscle tone caused by the absence of low-level contractions",
+    "cue": "abnormally low muscle tone; distinct from muscle size and from the cause of the change",
     "topic": "Chapter 10"
   },
   {
@@ -4751,7 +4751,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "isometric contraction",
-    "cue": "muscle contraction that occurs with no change in muscle length",
+    "cue": "active force production with approximately constant overall muscle–tendon length and joint position; internal elastic components may change",
     "topic": "Chapter 10"
   },
   {
@@ -4760,7 +4760,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "isotonic contraction",
-    "cue": "muscle contraction that involves changes in muscle length",
+    "cue": "idealized contraction at approximately constant tension with changing muscle length; real length-changing tasks may have variable tension",
     "topic": "Chapter 10"
   },
   {
@@ -4769,7 +4769,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "lactic acid",
-    "cue": "product of anaerobic glycolysis",
+    "cue": "textbook term commonly used for lactate formation from pyruvate; the reaction regenerates NAD+ and supports continued glycolysis, and lactate is not the sole cause of fatigue",
     "topic": "Chapter 10"
   },
   {
@@ -4778,7 +4778,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "latch-bridges",
-    "cue": "subset of a cross-bridge in which actin and myosin remain locked together",
+    "cue": "slowly cycling or persistently attached smooth-muscle cross-bridges that help maintain force with low ATP turnover, not zero cellular energy demand",
     "topic": "Chapter 10"
   },
   {
@@ -4787,7 +4787,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "latent period",
-    "cue": "the time when a twitch does not produce contraction",
+    "cue": "interval after a stimulus before measurable twitch tension rises; electrical excitation and calcium-handling events occur during this interval",
     "topic": "Chapter 10"
   },
   {
@@ -4814,7 +4814,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "muscle tension",
-    "cue": "force generated by the contraction of the muscle; tension generated during isotonic contractions and isometric contractions",
+    "cue": "force developed by muscle; force can be present during shortening, an isometric hold, or active lengthening",
     "topic": "Chapter 10"
   },
   {
@@ -4850,7 +4850,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "myogram",
-    "cue": "instrument used to measure twitch tension",
+    "cue": "recording of muscle mechanical activity, such as a trace of tension over time; a myograph is the recording instrument",
     "topic": "Chapter 10"
   },
   {
@@ -4868,7 +4868,7 @@
     "pdf": 416,
     "printed": 400,
     "name": "myotube",
-    "cue": "fusion of many myoblast cells",
+    "cue": "developing multinucleated skeletal-muscle structure formed by fusion of myoblasts",
     "topic": "Chapter 10"
   },
   {
@@ -4886,7 +4886,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "neurotransmitter",
-    "cue": "signaling chemical released by nerve terminals that bind to and activate receptors on target cells",
+    "cue": "chemical released by a neuron that binds receptors on a target cell and alters its activity",
     "topic": "Chapter 10"
   },
   {
@@ -4895,7 +4895,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "oxygen debt",
-    "cue": "amount of oxygen needed to compensate for ATP produced without oxygen during muscle contraction",
+    "cue": "textbook term for extra oxygen consumption associated with recovery after exercise, including restoration of energy and oxygen stores; not solely lactate removal",
     "topic": "Chapter 10"
   },
   {
@@ -4913,7 +4913,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "pericyte",
-    "cue": "stem cell that regenerates smooth muscle cells",
+    "cue": "cell associated with the outside of small blood vessels; the textbook discusses its potential contribution to tissue repair, not unlimited smooth-muscle regeneration",
     "topic": "Chapter 10"
   },
   {
@@ -4940,7 +4940,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "pyruvic acid",
-    "cue": "product of glycolysis that can be used in aerobic respiration or converted to lactic acid",
+    "cue": "pyruvate, a product of glycolysis that can enter aerobic metabolism or be converted to lactate while NAD+ is regenerated",
     "topic": "Chapter 10"
   },
   {
@@ -4985,7 +4985,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "sarcopenia",
-    "cue": "age-related muscle atrophy",
+    "cue": "age-associated decline in muscle mass and function; activity can help preserve capacity without guaranteeing reversal of every tissue change",
     "topic": "Chapter 10"
   },
   {
@@ -5012,7 +5012,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "satellite cell",
-    "cue": "stem cell that helps to repair muscle cells",
+    "cue": "resident skeletal-muscle precursor outside the sarcolemma within the basal lamina; its descendants can support limited repair and growth",
     "topic": "Chapter 10"
   },
   {
@@ -5030,7 +5030,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "slow oxidative (SO)",
-    "cue": "muscle fiber that primarily uses aerobic respiration",
+    "cue": "slow-contracting skeletal fiber with substantial oxidative support and relatively high fatigue resistance",
     "topic": "Chapter 10"
   },
   {
@@ -5057,7 +5057,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "stress-relaxation response",
-    "cue": "relaxation of smooth muscle tissue after being stretched",
+    "cue": "accommodation of smooth muscle after sustained stretch, helping hollow organs fill without maintaining the initial rise in tension",
     "topic": "Chapter 10"
   },
   {
@@ -5084,7 +5084,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "tetanus",
-    "cue": "a continuous fused contraction",
+    "cue": "sustained skeletal-muscle contraction from repeated stimulation; unfused tetanus retains partial relaxation and fused tetanus lacks visible intervening relaxation",
     "topic": "Chapter 10"
   },
   {
@@ -5111,7 +5111,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "treppe",
-    "cue": "stepwise increase in contraction tension",
+    "cue": "progressive increase in successive twitch tensions when the muscle relaxes between stimuli; distinct from overlapping-twitch summation",
     "topic": "Chapter 10"
   },
   {
@@ -5156,7 +5156,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "varicosity",
-    "cue": "enlargement of neurons that release neurotransmitters into synaptic clefts",
+    "cue": "swelling along an autonomic axon that can release transmitter near smooth muscle cells",
     "topic": "Chapter 10"
   },
   {
@@ -5183,7 +5183,7 @@
     "pdf": 417,
     "printed": 401,
     "name": "wave summation",
-    "cue": "addition of successive neural stimuli to produce greater contraction",
+    "cue": "addition of mechanical twitch responses when a new stimulus arrives before complete relaxation; the action potentials themselves do not add in size",
     "topic": "Chapter 10"
   }
 ]

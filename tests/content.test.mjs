@@ -43,7 +43,7 @@ test('numbered and regional meshes do not accept neighboring bones',()=>{
 test('chapters six through eleven teach, apply and assess every section',()=>{
  assert.deepEqual(lessons.filter(l=>Number(l.id.split('.')[0])>=6).map(l=>l.id),['6.1','6.2','6.3','6.4','6.5','6.6','6.7','7.1','7.2','7.3','7.4','7.5','8.1','8.2','8.3','8.4','8.5','9.1','9.2','9.3','9.4','9.5','9.6','9.7','10.1','10.2','10.3','10.4','10.5','10.6','10.7','10.8','10.9','11.1','11.2','11.3','11.4','11.5','11.6']);
  for(const l of lessons){assert.ok(l.objective.length>35);assert.ok(l.sections.length>=3);assert.ok(l.compare.length>=2);assert.equal(l.recall.length,2);assert.equal(l.application.length,2);assert.ok(l.questions.length>=4);}
- const legacy=questions.filter(q=>{const chapter=Number(q.lesson.split('.')[0]);return chapter>=6&&chapter<=10&&!q.id.startsWith('fracture-')&&!q.id.startsWith('mx-');});
+ const legacy=questions.filter(q=>{const chapter=Number(q.lesson.split('.')[0]);return chapter>=6&&chapter<=10&&!q.id.startsWith('fracture-')&&!q.id.startsWith('mx-')&&!q.id.startsWith('ma-');});
  assert.equal(legacy.length,624);assert.equal(new Set(questions.map(q=>q.id)).size,questions.length);
  for(const section of chapter11Source.sections){const lesson=lessons.find(l=>l.id===section.id);assert.equal(lesson.syllabus,section);assert.ok(lesson.guidePrompt.length>30);for(const objective of section.objectives)assert.ok(lesson.questions.filter(q=>q.objectives?.includes(objective.id)).length>=2,objective.id);}
  for(const q of questions){if(q.type==='choice'){assert.ok(q.distractors.length>=1&&q.distractors.length<=3,q.id);assert.equal(new Set([q.answer,...q.distractors]).size,q.distractors.length+1,q.id);}assert.ok(q.explanation.length>25);}

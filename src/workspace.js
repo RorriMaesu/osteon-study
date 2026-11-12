@@ -104,14 +104,15 @@ export function initWorkspace() {
     document.documentElement.style.setProperty('--nav-height',document.querySelector('.topbar').getBoundingClientRect().height+'px');
     document.documentElement.style.setProperty('--atlas-tools-height',(document.querySelector('#atlas-view>.intro').offsetHeight+tabs.offsetHeight+24)+'px');
     document.querySelector('#specimen-name').title=document.querySelector('#specimen-name').textContent;
-    for(const [root,record]of records){if(!root.isConnected||record.window.parentNode!==root){cache.set(root,record);root.classList.remove('paged-root','study-page-root');records.delete(root);}else if(!desktop.matches&&!record.study)dismantle(root,record);}
+    for(const [root,record]of records){if(!root.isConnected||record.window.parentNode!==root){cache.set(root,record);root.classList.remove('paged-root','study-page-root');records.delete(root);}else if(!desktop.matches&&(!record.study||root.classList.contains('lesson-visual-layout')))dismantle(root,record);}
     const study=document.querySelector('#study-view.active');
     if(study){
       const flow=study.querySelector('.lesson-content .flow-body'),library=study.querySelector('#study-body'),readerText=study.querySelector('.reader-paper:has(.reader-text)');
-      if(flow)mount(flow,'Lesson',[flow.querySelector('.lesson-explore-tools')],true);
+      if(flow&&(desktop.matches||!flow.classList.contains('lesson-visual-layout')))mount(flow,'Lesson',[flow.querySelector('.lesson-explore-tools')],true);
       else if(library)mount(library,'Study library',[],true);
       else if(readerText)mount(readerText,'Textbook text',[],true);
-      mount(document.querySelector('.lesson-visual-dialog[open] .lesson-visual-content'),'Full view',[],true);
+      const fullView=document.querySelector('.lesson-visual-dialog[open] .lesson-visual-content');
+      if(fullView&&(desktop.matches||!fullView.classList.contains('lesson-visual-layout')))mount(fullView,'Full view',[],true);
     }
     if(desktop.matches){
       syncSelect('[data-division]','#desktop-division');syncSelect('[data-region]','#desktop-region');

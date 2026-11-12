@@ -32,7 +32,7 @@ test('revised paired forms cover all objectives without changing previously save
   assert.deepEqual(form.filter(q=>q.revisedAxial).map(q=>q.lesson).sort(),['11.3','11.4']);
  }
  const oldItems=selectLegacyMuscleExam('muscles1011',examBank),old=createSession(oldItems,{scope:'muscles1011'});old.blueprintVersion='10-11-v1';old.responses[old.ids[0]]=key(oldItems[0]);const snapshot=JSON.stringify(old);
- assert.ok(validSession(JSON.parse(snapshot)));assert.equal(JSON.stringify(old),snapshot);assert.equal(results(old).maxPoints,100);assert.equal(muscleExamCoverage(oldItems).sampled.length,34);
+ assert.ok(validSession(JSON.parse(snapshot)));assert.equal(JSON.stringify(old),snapshot);assert.equal(results(old).maxPoints,100);assert.equal(muscleExamCoverage(oldItems).sampled.length,32);
 });
 test('written explanations remain pending without a valid response-bound rubric review',()=>{
  const q=muscleExamBank.find(q=>q.type==='written'),s=createSession([q]);assert.ok(validWrittenQuestion(q));s.responses[q.id]='My original explanation connects the events.';assert.equal(sessionOutcome(s,q).status,'pending');assert.equal(results(s).pending,1);

@@ -7,8 +7,12 @@ export function sectionCheckpoint(items,attempts=[],count=5){
  const latest=new Map();for(const a of attempts)if(!a.selfRated&&(!latest.has(a.id)||latest.get(a.id).at<a.at))latest.set(a.id,a);
  const rank=q=>!latest.has(q.id)?1:latest.get(q.id).correct&&!latest.get(q.id).assisted?2:0;
  const pool=[...new Map(automaticPracticeQuestions(items).map(q=>[q.id,q])).values()].sort((a,b)=>rank(a)-rank(b)||(latest.get(a.id)?.at||0)-(latest.get(b.id)?.at||0)),out=[],used=new Set();
- for(const q of pool){const concept=q.objectives?.[0]||q.lesson;if(!used.has(concept)){used.add(concept);out.push(q);if(out.length===limit)return out;}}
- for(const q of pool)if(out.length<limit&&!out.includes(q))out.push(q);return out;
+ const take=predicate=>{if(out.length>=limit)return;const candidates=pool.filter(q=>!out.includes(q)&&predicate(q)),next=candidates.find(q=>(q.objectives||[]).some(id=>!used.has(id)))||candidates[0];if(next){out.push(next);(next.objectives||[]).forEach(id=>used.add(id));}};
+ // Repair one demonstrated gap first. In a fresh five-item muscle checkpoint,
+ // reserve different evidence: a view, a prediction, a name, and relationships.
+ const muscle=pool.length&&pool.every(q=>/^1[01]\./.test(q.lesson));
+ if(muscle&&limit>=4){take(q=>rank(q)===0);take(q=>!!q.figure&&q.objectives?.length);take(q=>q.assessmentFacets?.includes('application'));take(q=>q.type==='text');take(q=>['match','order'].includes(q.type));}
+ while(out.length<limit){const before=out.length;take(()=>true);if(out.length===before)break;}return out;
 }
 export function rubricStudyEvidence(items,sessions=[]){
  const targets=rubricPracticeQuestions(items),latest=new Map();

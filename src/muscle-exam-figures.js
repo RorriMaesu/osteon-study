@@ -1,6 +1,11 @@
 import {muscleTextbookExamFigure,muscleFigureTargets} from './muscle-figure-targets.js';
 import {tensionTrace} from './muscle-labs.js';
 export function muscleAssessmentFigure(name){
+ if(name.startsWith('muscle-task:')){
+  const length=name.endsWith('length');
+  const content=length?'<path d="M70 260 C190 260 210 70 350 70 L460 70 C570 70 600 250 740 260"/><g><text x="65" y="295">Very short</text><text x="340" y="295">Intermediate</text><text x="655" y="295">Very long</text><text x="250" y="330">Starting sarcomere length →</text></g>':'<path d="M70 260 H190 C225 260 245 80 365 70 C445 70 490 260 650 260 H740"/><g><text x="120" y="220">1</text><text x="260" y="145">2</text><text x="490" y="170">3</text><text x="600" y="295">Time →</text><text x="70" y="330">Stimulus at time zero; one twitch</text></g>';
+  return `<figure class="exam-figure muscle-exam-figure"><svg viewBox="0 0 800 350" role="img" aria-label="${length?'Active force rises from low values at very short lengths, plateaus at intermediate lengths, and falls at very long lengths. Passive force is not plotted.':'Single twitch: interval 1 follows the stimulus before tension rises, interval 2 covers rising tension, interval 3 covers falling tension.'}"><path d="M65 40V265H745" fill="none" stroke="#a9bfb4" stroke-width="2"/><g fill="none" stroke="#efb58f" stroke-width="4">${content.replace('<g>','<g fill="#e2eadf" stroke="none" font-size="20">')}</g><text x="65" y="28" fill="#e2eadf" font-size="20">${length?'Relative active force':'Relative tension'}</text></svg><figcaption>Original qualitative teaching diagram; no calibrated measurements. OpenStax §10.4.</figcaption></figure>`;
+ }
  if(name.startsWith('muscle-target:')){const id=name.slice(14),target=muscleFigureTargets[id],svg=muscleTextbookExamFigure(id);return svg?`<figure class="exam-figure muscle-exam-figure">${svg}<figcaption>${target.orientation}. Identify the ringed target; its source label is masked. OpenStax A&amp;P 2e Figure ${target.figure}. Cropped teaching source; access for free at openstax.org.</figcaption></figure>`:null;}
  if(!name.startsWith('muscle-force:'))return null;
  const mode=name.slice(13),recruit=mode==='recruitment',trace=tensionTrace(recruit?'twitch':mode,5);

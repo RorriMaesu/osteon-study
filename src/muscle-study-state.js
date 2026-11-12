@@ -1,5 +1,7 @@
 import {getProgress,recordAttempt,scheduleCard,addSpellingNote} from './storage.js';
 import {outcomeCorrect} from './typed-answer.js';
+import {muscleFigureTargets} from './muscle-figure-targets.js';
+import lessonLinks from './lesson-links.json' with {type:'json'};
 
 const text=(value,max)=>typeof value==='string'&&value.length<=max;
 const id=value=>text(value,100)&&/^[a-z0-9-]*$/.test(value);
@@ -24,6 +26,14 @@ export function dueFigureTargets(targets, figures, progress=getProgress(), now=D
  return Object.entries(targets).filter(([id,target])=>available.has(target.figure)&&
   Number.isFinite(progress.cards[figurePracticeId(id)]?.due)&&progress.cards[figurePracticeId(id)].due<=now)
   .sort(([a],[b])=>progress.cards[figurePracticeId(a)].due-progress.cards[figurePracticeId(b)].due);
+}
+const figureSections=new Map(Object.entries(lessonLinks).flatMap(([section,link])=>
+ link.figures.map(figure=>[figure.number,section])));
+export function dueMuscleFigureReviews(progress=getProgress(),now=Date.now(),chapters=[10,11]){
+ const figures=[...figureSections].filter(([,section])=>chapters.includes(Number(section.split('.')[0])))
+  .map(([number])=>({number}));
+ return dueFigureTargets(muscleFigureTargets,figures,progress,now)
+  .map(([target,item])=>({id:figureSections.get(item.figure),figure:item.figure,target}));
 }
 export function recordFigureRecall(targetId,lessonId,result,assisted){
  saveNamedRecall(figurePracticeId(targetId),lessonId,result,assisted,'muscle-figure');

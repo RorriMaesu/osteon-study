@@ -1,13 +1,27 @@
 import assets from './muscle-textbook-assets.json' with {type:'json'};
 import {axialMuscleFigureTargets} from './axial-muscle-targets.js';
 
-const target = (figure, name, orientation, panel, point, cover, description, aliases = []) =>
- ({figure, name, orientation, panel, point, cover, description, aliases});
+const target = (figure, name, orientation, panel, point, cover, description, aliases = [], extra = {}) =>
+ ({figure, name, orientation, panel, point, cover, description, aliases, ...extra});
 
 // Coordinates refer to the embedded artwork's native pixels. The white rectangles
 // cover only the selected label, leaving the muscle and the leader line intact.
 export const muscleFigureTargets = {
  ...axialMuscleFigureTargets,
+ 'subclavius': target('11.22', 'Subclavius', 'Left scapular region, anterior lateral dissection', [0,0,1180,920], [437,186], [160,98,200,48], 'The marker is on the short muscle immediately beneath the clavicle.'),
+ 'pectoralis-minor': target('11.22', 'Pectoralis minor', 'Left scapular region, anterior lateral dissection', [0,0,1180,920], [530,310], [890,337,280,48], 'The marker is on the exposed fan from upper ribs toward the coracoid process; the larger superficial pectoral muscle has been cut.'),
+ 'serratus-anterior': target('11.22', 'Serratus anterior', 'Left thorax, anterior lateral dissection', [0,0,1180,920], [595,505], [890,430,210,92], 'The marker is on one of the slips along the lateral ribs, passing toward the medial scapular border.'),
+ 'trapezius': target('11.22', 'Trapezius', 'Back, posterior with opposite superficial muscle removed', [975,0,1217,920], [1608,510], [982,824,180,55], 'The marker is on the broad superficial sheet from the midline toward the shoulder, on the intact side.'),
+ 'rhomboid-minor': target('11.22', 'Rhomboid minor', 'Deep scapular muscles, posterior', [975,0,1217,920], [1807,505], [1990,230,202,90], 'The marker is on the narrow upper band between the vertebral column and medial scapula, above the larger rhomboid.'),
+ 'rhomboid-major': target('11.22', 'Rhomboid major', 'Deep scapular muscles, posterior', [975,0,1217,920], [1824,664], [1990,357,202,90], 'The marker is on the broad lower band between the thoracic spine and medial scapular border.'),
+ 'pectoralis-major': target('11.23', 'Pectoralis major', 'Left shoulder, superficial anterior lateral', [0,80,930,860], [510,210], [10,133,190,89], 'The marker is on the broad superficial anterior chest muscle approaching the proximal humerus.'),
+ 'deltoid': target('11.23', 'Deltoid', 'Left shoulder, superficial posterior', [943,0,1286,950], [1290,290], [950,265,135,50], 'The marker is on the muscular shoulder cap, lateral to the exposed scapular region.'),
+ 'latissimus-dorsi': target('11.23', 'Latissimus dorsi', 'Left shoulder and back, superficial posterior', [943,0,1286,950], [1480,583], [950,497,286,48], 'The marker is on the broad lower-back muscle ascending toward the proximal humerus.'),
+ 'biceps-brachii': target('11.25', 'Biceps brachii', 'Left upper arm, anterior lateral', [114,0,985,938], [644,495], [805,185,265,205], 'The marker is on a belly of the two-headed anterior upper-arm muscle. Identify the whole muscle, not one head.'),
+ 'triceps-brachii': target('11.25', 'Triceps brachii', 'Left upper arm, posterior', [1450,0,931,938], [1900,480], [1510,230,255,85], 'The marker is on the large posterior upper-arm muscle. Identify the whole muscle, not one head.', [], {extraCovers:[[2090,559,275,95]]}),
+ 'flexor-carpi-radialis': target('11.25', 'Flexor carpi radialis', 'Left forearm, superficial palmar', [105,963,1148,942], [523,1368], [126,1342,220,90], 'The marker is on the superficial forearm muscle whose tendon approaches the radial side of the anterior wrist.'),
+ 'vastus-medialis': target('11.29', 'Vastus medialis', 'Right thigh, superficial anterior', [0,0,925,950], [388,694], [525,670,285,48], 'The marker is on the medial quadriceps belly above the knee.'),
+ 'psoas-major': target('11.29', 'Psoas major', 'Right hip, anterior with abdominal wall removed', [0,0,925,950], [342,293], [525,29,247,54], 'The marker is on the hip-flexor muscle descending beside the lumbar spine toward the proximal femur.'),
  'infraspinatus': target('11.23', 'Infraspinatus', 'Deep left shoulder, posterior', [1150,1150,1079,1020], [1820,1417], [1930,1442,290,61], 'The marker is on the broad muscle below the spine of the scapula.'),
  'supraspinatus': target('11.23', 'Supraspinatus', 'Deep left shoulder, posterior', [1150,1150,1079,1020], [1705,1254], [1928,1175,299,56], 'The marker is on the narrow muscle above the spine of the scapula.'),
  'teres-minor': target('11.23', 'Teres minor', 'Deep left shoulder, posterior', [1150,1150,1079,1020], [1671,1431], [1356,1175,227,54], 'The marker is on the narrow band along the lateral scapula between the broad infraspinous muscle and the thicker inferior band.'),

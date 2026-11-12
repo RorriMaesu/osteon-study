@@ -8,6 +8,7 @@ function openFigureView(root,trigger,title,refit){
  const modal=document.createElement('dialog'),listeners=new AbortController();
  const origin=location.hash;
  modal.className='lesson-visual-dialog';
+ const singlePane=root.closest('.lesson-visual-layout');
  modal.setAttribute('aria-labelledby','lesson-visual-title');
  modal.innerHTML='<header><h2 id="lesson-visual-title"></h2><div class="lesson-visual-actions"><button type="button" data-inspect aria-pressed="false">Inspect</button><button type="button" data-close autofocus>Close full view</button></div></header><div class="lesson-visual-content"></div>';
  modal.querySelector('h2').textContent=title;
@@ -63,6 +64,7 @@ function openFigureView(root,trigger,title,refit){
  document.addEventListener('viewchange',()=>{if(location.hash!==origin)modal.close();},{signal:listeners.signal});
  root.before(marker);
  document.body.append(modal);
+ if(singlePane)modal.lastElementChild.classList.add('lesson-visual-layout');
  modal.lastElementChild.append(root);
  modal.showModal();
  document.dispatchEvent(new Event('lessonvisualchange'));
@@ -81,7 +83,7 @@ export function mountLessonVisual(flow,root,title){
  function fit(){
   if(!flow.isConnected){observer.disconnect();size.disconnect();return;}
   expand.hidden=!canExpand(root);
-  const viewport=root.closest('.page-window')||root.closest('.lesson-visual-content');
+  const viewport=root.closest('.page-window,.lesson-visual-content,.lesson-visual-layout');
   const height=viewport?.clientHeight||0;
   for(const visual of root.querySelectorAll(fittedMedia)){
    if(!height){visual.style.removeProperty('--figure-space');continue;}
@@ -91,7 +93,7 @@ export function mountLessonVisual(flow,root,title){
    const prefix=anchor?.getClientRects()[0];
    const caption=figure?.querySelector('figcaption');
    const spare=prefix?height-(prefix.bottom-viewport.getBoundingClientRect().top)-(caption?.offsetHeight||0)-12:0;
-   const cap=spare>=88?Math.min(height*allowance,spare):height*allowance;
+   const cap=viewport.classList.contains('lesson-visual-layout')?Math.max(140,height*.7):spare>=88?Math.min(height*allowance,spare):height*allowance;
    visual.style.setProperty('--figure-space',Math.max(36,Math.floor(cap))+'px');
   }
  }

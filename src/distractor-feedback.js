@@ -19,4 +19,4 @@ const reasons={
  'ex-9.6-12':['A shallower, less enclosed socket would reduce bony stability.','A looser capsule with less coverage favors mobility over stability.','Hip stability depends on substantial supporting ligaments and enclosure.'],
  'ex-9.7-6':['Fontanelles close as bone grows; they do not become synovial cavities.','Closure does not eliminate every adult suture or all subsequent skull growth.','A fontanelle is a fibrous developmental gap, not an air-filled paranasal sinus.']
 };
-export function selectedDistractorFeedback(q,response){const i=distractorRevisions[q.id]?.indexOf(response);return i>=0?reasons[q.id]?.[i]||'':'';}
+export function selectedDistractorFeedback(q,response){if(response!==q.answer&&q.distractorFeedback?.[response])return q.distractorFeedback[response];const i=distractorRevisions[q.id]?.indexOf(response);return i>=0?reasons[q.id]?.[i]||'':'';}

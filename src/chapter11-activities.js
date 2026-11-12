@@ -4,6 +4,7 @@ import {setDiagramLearningContext,setLearningContext} from './learning-context.j
 import {newMuscleCardView,saveCardReview,saveNamedRecall} from './muscle-study-state.js';
 import {getProgress} from './storage.js';
 import {assessTyped,outcomeCorrect} from './typed-answer.js';
+import {renderChapter11Practice,muscleCardMatches,muscleNameClue,figureTargetForCard} from './chapter11-practice.js';
 
 export function renderChapter11Activity(root,lesson,e,{openFigure,openAtlas,saved,onSave}){
  root.closest('.flow-body')?.classList.add('muscle-interactive-step');
@@ -11,17 +12,23 @@ export function renderChapter11Activity(root,lesson,e,{openFigure,openAtlas,save
  const state={...newMuscleCardView(lesson.id==='11.1'?'activity':'cards'),...saved};
  const save=()=>onSave?.({...state});
  if(lesson.id==='11.1'){
-  root.innerHTML='<div class="control-row" aria-label="Section activities"><button type="button" data-muscle-tab="activity">Lever lab</button><button type="button" data-muscle-tab="cards">Muscle and tissue cards</button></div><div data-muscle-tab-content></div>';
+  root.innerHTML='<label class="sr-only" for="ch11-foundations-activity">Practice focus</label><select id="ch11-foundations-activity"><option value="lever">Lever lab</option><option value="architecture">Fascicle architecture</option><option value="roles">Muscle roles and force</option><option value="cards">Muscle and tissue cards</option></select><div data-muscle-tab-content></div>';
   const body=root.querySelector('[data-muscle-tab-content]');
+  const picker=root.querySelector('#ch11-foundations-activity');
+  picker.value=state.tab==='cards'?'cards':'lever';
   function show(){
-   root.querySelectorAll('[data-muscle-tab]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.muscleTab===state.tab)));
-   if(state.tab==='activity')renderLever(body,lesson);
-   else renderCards(body,lesson,e,{openFigure,openAtlas,state,save});
+   const mode=picker.value;
+   if(mode==='cards')renderCards(body,lesson,e,{openFigure,openAtlas,state,save});
+   else if(mode==='lever')renderLever(body,lesson);
+   else renderChapter11Practice(body,lesson.id,{architecture:mode==='architecture'});
   }
-  root.querySelectorAll('[data-muscle-tab]').forEach(button=>button.onclick=()=>{state.tab=button.dataset.muscleTab;save();show();});
+  picker.onchange=()=>{state.tab=picker.value==='cards'?'cards':'activity';save();show();};
   show();return;
  }
- renderCards(root,lesson,e,{openFigure,openAtlas,state,save});
+ root.innerHTML='<div class="control-row" aria-label="Section activities"><button type="button" data-region-tab="cards">Muscle cards</button><button type="button" data-region-tab="activity">Predict relationships</button></div><div data-region-content></div>';
+ const host=root.querySelector('[data-region-content]');
+ const showRegion=()=>{root.querySelectorAll('[data-region-tab]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.regionTab===state.tab)));if(state.tab==='activity')renderChapter11Practice(host,lesson.id);else renderCards(host,lesson,e,{openFigure,openAtlas,state,save});};
+ root.querySelectorAll('[data-region-tab]').forEach(button=>button.onclick=()=>{state.tab=button.dataset.regionTab;save();showRegion();});showRegion();
 }
 
 function renderCards(root,lesson,e,{openFigure,openAtlas,state,save}){
@@ -38,7 +45,7 @@ function renderCards(root,lesson,e,{openFigure,openAtlas,state,save}){
  function render(){
   const due=getProgress().cards;
   const items=available.filter(card=>(state.scope==='all'||state.scope==='course'&&card.courseChecklist||state.scope==='revisit'&&due[card.id]?.due<=Date.now())&&
-    [card.name,card.action,card.location,...card.aliases].join(' ').toLowerCase().includes(state.query.trim().toLowerCase()));
+    muscleCardMatches(card,state.query));
   const active=Math.max(0,items.findIndex(card=>card.id===state.id));
   const card=items[active];
   if(!card){
@@ -52,14 +59,11 @@ function renderCards(root,lesson,e,{openFigure,openAtlas,state,save}){
    [tissue?'Proximal relationship':'General origin',card.origin],[tissue?'Distal relationship':'General insertion',card.insertion]];
   if(card.members?.length)facts.push(['Members',Array.isArray(card.members)?card.members.join(', '):card.members]);
   const figures=card.figures||[];
-  const marked=Object.entries(muscleFigureTargets).find(([,target])=>figures.includes(target.figure)&&
-   [card.name,...card.aliases].some(name=>[target.name,...target.aliases].some(value=>name.toLowerCase()===value.toLowerCase())));
+  const marked=figureTargetForCard(card,muscleFigureTargets);
   const figure=marked?.[1].figure||figures[0];
   const naming=state.recall&&state.naming;
   const show=!state.recall||state.revealed;
-  const answerNames=[card.name,...card.aliases].map(name=>name.toLowerCase());
-  const clue=[card.location,card.action,card.origin,card.insertion].find(value=>
-   answerNames.every(name=>!value.toLowerCase().includes(name)))||'Identify the structure from its region and attachments. '+card.origin;
+  const clue=muscleNameClue(card);
   body.innerHTML=`<div class="control-row muscle-card-navigation">
    <button type="button" data-card-prev aria-label="Previous muscle" ${active===0?'disabled':''}>←</button>
    <label class="sr-only" for="muscle-card-select">Choose a muscle card</label><select id="muscle-card-select">${items.map((item,i)=>`<option value="${i}" ${i===active?'selected':''}>${naming?'Card '+(i+1):e(item.name)}</option>`).join('')}</select>
@@ -139,10 +143,11 @@ const levers=[
 function renderLever(root,lesson) {
  let index=2;
  let effort=levers[index].effort;
- root.innerHTML=`<h3>Where is the force applied?</h3><div class="control-row"><label for="lever-type">Lever example</label><select id="lever-type">${levers.map((lever,i)=>`<option value="${i}" ${i===index?'selected':''}>${lever.name}</option>`).join('')}</select></div>
- <div class="muscle-lab"><div class="muscle-lab-visual" data-lever-picture></div><div>
+ let prediction=null;
+ root.innerHTML=`<div class="muscle-lab"><div class="muscle-lab-visual" data-lever-picture></div><div>
+ <label class="sr-only" for="lever-type">Lever example</label><select id="lever-type">${levers.map((lever,i)=>`<option value="${i}" ${i===index?'selected':''}>${lever.name}</option>`).join('')}</select>
  <p>Predict what happens to the effort needed when the muscle pulls farther from the joint.</p>
- <label for="lever-effort">Move the effort farther from the fulcrum</label><input type="range" id="lever-effort"><p data-lever-result aria-live="polite"></p>
+ <label for="lever-effort">Compare effort-arm lengths</label><input type="range" id="lever-effort"><div class="control-row"><button type="button" data-lever-prediction="less">Less force</button><button type="button" data-lever-prediction="same">Same force</button><button type="button" data-lever-prediction="more">More force</button></div><p data-lever-result aria-live="polite"></p>
  <p class="tiny">This schematic assumes perpendicular forces and a fixed load. Distances and forces use relative units.</p></div></div>`;
  const slider=root.querySelector('#lever-effort');
  function paint(){
@@ -155,39 +160,47 @@ function renderLever(root,lesson) {
    <path d="M${fulcrum-12} 108 L${fulcrum} 87 L${fulcrum+12} 108Z" fill="#f3ae87"/><text x="${fulcrum}" y="135" text-anchor="middle" fill="#e9f2ea">Fulcrum</text>
    <path d="M${ex} ${loadUp?121:36}V${loadUp?89:75}" stroke="#8eddbb" stroke-width="5"/><circle cx="${ex}" cy="82" r="6" fill="#8eddbb"/><text x="${ex}" y="${loadUp?145:25}" text-anchor="middle" fill="#8eddbb">Effort</text>
    <path d="M${lx} 38V74" stroke="#f3ae87" stroke-width="5"/><circle cx="${lx}" cy="82" r="6" fill="#f3ae87"/><text x="${lx}" y="25" text-anchor="middle" fill="#f3ae87">Load</text></svg>`;
-  root.querySelector('[data-lever-result]').textContent=item.fact+' Balancing effort is '+ratio.toFixed(2)+' times the load.';
+  root.querySelector('[data-lever-result]').textContent=prediction===null?'Predict the effect of increasing effort-arm length while load torque stays fixed.':(prediction==='less'?'That fits. ':'Compare the moment arms. ')+item.fact+' At this setting, balancing effort is '+ratio.toFixed(2)+' times the load. A longer effort arm requires less force for the same load torque.';
+  root.querySelectorAll('[data-lever-prediction]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.leverPrediction===prediction)));
   setDiagramLearningContext({id:'muscle-levers',title:item.name,reference:lesson.id,state:{effortArm:effort,loadArm:Math.abs(item.load)},
    question:'How does increasing the effort arm change the force required to balance the load?',
    hint:'Compare the same load torque with the two effort distances.',
-   answer:'A longer effort arm needs less force to supply the same torque.',facts:[item.fact,'Torque equals force times its perpendicular moment arm.']});
+   answer:'A longer effort arm needs less force to supply the same torque.',prediction:prediction||'',facts:[item.fact,'Torque equals force times its perpendicular moment arm.']});
  }
  function configure(){const item=levers[index];[slider.min,slider.max]=item.limits;slider.value=effort;paint();}
- root.querySelector('#lever-type').onchange=ev=>{index=+ev.target.value;effort=levers[index].effort;configure();};
- slider.oninput=()=>{effort=+slider.value;paint();};
+ root.querySelector('#lever-type').onchange=ev=>{index=+ev.target.value;effort=levers[index].effort;prediction=null;configure();};
+ root.querySelectorAll('[data-lever-prediction]').forEach(button=>button.onclick=()=>{prediction=button.dataset.leverPrediction;paint();});
+ slider.oninput=()=>{effort=+slider.value;prediction=null;paint();};
  configure();
 }
 
-const names=[
- ['Flexor digitorum profundus',[['Flexor','bends a joint'],['Digitorum','of the digits'],['Profundus','deep']],'Deep finger flexor. Compare its position with flexor digitorum superficialis.'],
- ['Sternocleidomastoid',[['Sterno','sternum'],['Cleido','clavicle'],['Mastoid','mastoid process']],'The name lists attachments at the sternum, clavicle and mastoid process.'],
- ['Extensor hallucis longus',[['Extensor','straightens a joint'],['Hallucis','of the great toe'],['Longus','long']],'Long extensor of the great toe. Pollicis would refer to the thumb.'],
- ['Tibialis anterior',[['Tibialis','near the tibia'],['Anterior','toward the front']],'A muscle along the front of the leg, next to the tibia.'],
+export const muscleNameExamples=[
+ ['Flexor digitorum profundus',[['Flexor','bends a joint','Action'],['Digitorum','of the digits','Location'],['Profundus','deep','Relative position']],'Deep finger flexor. Compare its position with superficialis.'],
+ ['Sternocleidomastoid',[['Sterno','sternum','Attachments'],['Cleido','clavicle','Attachments'],['Mastoid','mastoid process','Attachments']],'The name lists sternum, clavicle and mastoid attachments.'],
+ ['Extensor hallucis longus',[['Extensor','straightens a joint','Action'],['Hallucis','of the great toe','Location'],['Longus','long','Relative size']],'Long extensor of the great toe; pollicis refers to the thumb.'],
+ ['Tibialis anterior',[['Tibialis','near the tibia','Location'],['Anterior','toward the front','Relative position']],'A muscle along the anterior leg beside the tibia.'],
+ ['Deltoid',[['Deltoid','triangular, like the letter delta','Shape']],'Shape is a clue; individual fiber regions can have different actions.'],
+ ['Orbicularis oculi',[['Orbicularis','circular','Shape'],['Oculi','of the eye','Location']],'A circular eyelid muscle. Oculi and oris refer to different openings.'],
+ ['Rectus abdominis',[['Rectus','straight','Fiber direction'],['Abdominis','of the abdomen','Location']],'Direction is relative to the muscle’s region; rectus does not mean flexor.'],
+ ['Transversus abdominis',[['Transversus','crosswise','Fiber direction'],['Abdominis','of the abdomen','Location']],'The flat abdominal layer has predominantly transverse fibers.'],
+ ['Biceps brachii',[['Biceps','two heads','Heads'],['Brachii','of the arm','Location']],'Two heads do not mean two joints. Biceps femoris is a different muscle.'],
+ ['Gluteus maximus',[['Gluteus','of the buttock region','Location'],['Maximus','largest in the local comparison','Relative size']],'Compare maximus, medius and minimus within the gluteal group.'],
+ ['Extensor carpi radialis brevis',[['Extensor','extends','Action'],['Carpi','of the wrist','Location'],['Radialis','on the radial side','Location'],['Brevis','shorter member','Relative size']],'Brevis and longus distinguish separate wrist extensors, not spelling variants.'],
 ];
 function renderNames(root,lesson,e) {
- let current=0;
- root.innerHTML=`<h3>Decode the name</h3><div class="control-row"><label for="muscle-name-example">Example</label><select id="muscle-name-example">${names.map(([name],i)=>`<option value="${i}">${e(name)}</option>`).join('')}</select></div><div data-word-parts></div>`;
+ let current=0,part=0,choice=null;
+ const criteria=['Location','Shape','Fiber direction','Relative size','Relative position','Heads','Attachments','Action'];
+ root.innerHTML=`<h3>Decode the name</h3><div class="control-row"><label for="muscle-name-example">Example</label><select id="muscle-name-example">${muscleNameExamples.map(([name],i)=>`<option value="${i}">${e(name)}</option>`).join('')}</select></div><div data-word-parts></div>`;
  function render(){
-  const [name,parts,explanation]=names[current];
+  const [name,parts,explanation]=muscleNameExamples[current], [word,meaning,category]=parts[part];
   const region=root.querySelector('[data-word-parts]');
-  region.innerHTML=`<p>Predict what each part describes. Choose a word to check.</p><div class="control-row">${parts.map(([word],i)=>`<button data-name-part="${i}" type="button" aria-pressed="false">${e(word)}</button>`).join('')}</div><p data-name-meaning aria-live="polite"></p><details><summary>Read the complete interpretation</summary><p>${e(explanation)}</p></details>`;
+  region.innerHTML=`<div class="control-row">${parts.map(([term],i)=>`<button data-name-part="${i}" type="button" aria-pressed="${part===i}">${e(term)}</button>`).join('')}</div><p>What type of clue does <strong>${e(word)}</strong> give?</p><div class="control-row">${criteria.map(criterion=>`<button type="button" data-name-criterion="${e(criterion)}" aria-pressed="${choice===criterion}">${e(criterion)}</button>`).join('')}</div><p data-name-meaning aria-live="polite">${choice===null?'Predict before revealing the meaning.':(choice===category?'That fits. ':'Compare the naming criterion. ')+e(word+' means '+meaning+'. '+explanation)}</p>`;
   region.querySelectorAll('[data-name-part]').forEach(button=>button.onclick=()=>{
-   const [word,meaning]=parts[Number(button.dataset.namePart)];
-   region.querySelectorAll('[data-name-part]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
-   region.querySelector('[data-name-meaning]').textContent=word+' means '+meaning+'.';
-   setDiagramLearningContext({id:'muscle-name',title:name,reference:lesson.id,state:{selected:word},question:'What does '+word+' tell you about this muscle?',answer:meaning,facts:[explanation]});
+   part=+button.dataset.namePart;choice=null;render();region.querySelector('[data-name-part="'+part+'"]')?.focus();
   });
-  setDiagramLearningContext({id:'muscle-name',title:name,reference:lesson.id,state:{example:name},question:'What can you infer from the parts of '+name+'?',answer:explanation,facts:parts.map(([word,meaning])=>word+' means '+meaning+'.')});
+  region.querySelectorAll('[data-name-criterion]').forEach(button=>button.onclick=()=>{choice=button.dataset.nameCriterion;render();region.querySelector('[data-name-criterion="'+choice+'"]')?.focus();});
+  setDiagramLearningContext({id:'muscle-name',title:name,reference:lesson.id,state:{example:name,selected:word},question:'What does '+word+' tell you?',answer:category+': '+meaning+'. '+explanation,prediction:choice||'',facts:parts.map(([term,definition])=>term+' means '+definition+'.')});
  }
- root.querySelector('#muscle-name-example').onchange=ev=>{current=+ev.target.value;render();};
+ root.querySelector('#muscle-name-example').onchange=ev=>{current=+ev.target.value;part=0;choice=null;render();};
  render();
 }

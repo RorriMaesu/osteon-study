@@ -509,3 +509,48 @@ body.viewer-room-open{overflow:hidden!important}
  font: inherit;
 }
 .exam-question textarea#exam-text:focus { outline: 2px solid #b7d6bf; outline-offset: 2px; }
+
+.lesson-content .flow-body.lesson-visual-layout:not(.paged-root),
+.lesson-visual-dialog .lesson-visual-content.lesson-visual-layout:not(.paged-root) {
+ display: block;
+ min-height: 0;
+ overflow-y: auto;
+ overflow-x: hidden;
+ overscroll-behavior: contain;
+}
+.lesson-visual-layout .lesson-explore-tools {
+ position: sticky;
+ top: 0;
+ z-index: 2;
+ padding-block: 4px;
+ background: var(--panel, #142226);
+}
+.lesson-content .lesson-visual-layout #lesson-activity { overflow: visible; }
+.muscle-source-preview > .control-row:first-child select { flex: 1; }
+.muscle-source-preview [data-plate-media] > svg {
+ height: clamp(140px, var(--figure-space, 42dvh), 590px);
+}
+.muscle-reader-note {
+ padding: 8px 12px;
+ margin: 0 0 10px;
+ border-inline-start: 3px solid #d79865;
+ background: #342c25;
+ color: #f4e3d4;
+ font-size: .84rem;
+}
+.muscle-reader-note summary { color: #f3c69c; cursor: pointer; font-weight: 700; }
+.muscle-reader-note ul { margin: 5px 0 0; padding-inline-start: 18px; }
+.muscle-reader-note li + li { margin-top: 4px; }
+@media (max-width: 700px) {
+ .lesson-visual-layout .lesson-explore-tools { gap: 4px; }
+ .lesson-visual-layout .lesson-explore-tools button { padding-inline: 7px; min-height: 36px; }
+ .lesson-visual-layout #lesson-activity { padding: 8px; }
+ .lesson-visual-layout #lesson-activity h3 { margin: 4px 0; line-height: 1.2; font-size: 1rem; }
+ .lesson-visual-layout .muscle-lab-visual { margin-block: 4px; }
+ .lesson-visual-layout .muscle-lab-visual svg { max-height: 28dvh; }
+ .muscle-source-preview .section-diagram-source { margin-block: 4px; }
+ .muscle-source-preview [data-plate-media] > svg { height: clamp(125px, min(var(--figure-space, 38dvh), 30dvh), 310px); }
+ .lesson-visual-content .muscle-source-preview [data-plate-media] > svg { height: clamp(145px, min(var(--figure-space, 52dvh), 49dvh), 450px); }
+ .muscle-source-preview .section-diagram-source figcaption { font-size: .72rem; line-height: 1.35; }
+ .muscle-source-preview .muscle-source-actions { gap: 6px; }
+}

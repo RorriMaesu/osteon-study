@@ -4,6 +4,7 @@ const target=(figure,name,orientation,panel,point,cover,description,aliases=[],e
  ({figure,name,orientation,panel,point,cover,description,aliases,...extra});
 
 export const axialMusclePanels={
+ '11.22':[{name:'Scapular positioners, anterior lateral dissection',bounds:[0,0,1180,920]},{name:'Scapular positioners, posterior with one side exposed',bounds:[975,0,1217,920]}],
  '11.7':[{name:'Face, anterior',bounds:[0,100,1320,1360]}],
  '11.9':[{name:'Right eye, lateral anatomical view',bounds:[0,0,1145,1100]}],
  '11.10':[{name:'Left jaw, superficial lateral',bounds:[0,0,1000,1067]},{name:'Left jaw, deep lateral dissection',bounds:[1210,0,965,1067]}],

@@ -68,10 +68,10 @@ My Progress can preview and merge matching earlier Cell Studio, Tissue Studio, L
 
 ## Chapters 10–11 muscle study and exams
 
-- [Muscle tissue](https://rorrimaesu.github.io/osteon-study/#lesson-10.2) covers muscle organization, contraction, recruitment, force, fiber types and tissue repair.
-- [Muscular system](https://rorrimaesu.github.io/osteon-study/#lesson-11.1) covers all six sections. Explore muscle actions and general attachments with 177 study cards, including the 67 entries from the BI 231 course checklist. Cards include muscles, groups and connective structures.
-- The two chapters use 60 original OpenStax figures. Recall mode includes 42 marked targets on cropped panels, covering selected axial and limb structures. Missed figures and muscle cards can be revisited.
-- [Exam Center](https://rorrimaesu.github.io/osteon-study/#exam-center) offers Forms A and B. Each includes 60 questions for 100 points, with 50 points from each chapter. Each form samples 44 of the 47 source objectives, and together they cover all 47. Reports link to unsampled-objective practice, selected identification figures and written rubrics.
+- [Muscle tissue](https://rorrimaesu.github.io/osteon-study/#lesson-10.2) includes guided predictions about neuromuscular signaling, energy supply and recovery, recruitment, exercise, cardiac timing, smooth muscle and repair. Reviewed glossary definitions and page-specific reader notes explain corrections.
+- [Muscular system](https://rorrimaesu.github.io/osteon-study/#lesson-11.1) covers all six sections with regional cards, fascicle patterns, muscle naming, levers and anatomy relationships. Use Explore to study a marked OpenStax figure and My Progress to retry due figure targets.
+- [Practice Lab](https://rorrimaesu.github.io/osteon-study/#practice) offers a separate BI 231 muscle checklist practice set. All 67 course entries have a location, action or function, and general-attachment prompt. Selected entries also have scored figure identification.
+- [Exam Center](https://rorrimaesu.github.io/osteon-study/#exam-center) offers two 60-question forms worth 100 points each, evenly divided by chapter. Reports show the aligned objectives sampled by the actual questions and offer follow-up practice. Written responses have learner rubrics and optional local AI estimates.
 
 ## Chapters 6–9 exam preparation
 
@@ -174,7 +174,7 @@ Lessons now use **Orient, Understand, Explore, Retrieve and Apply**, with saved 
 
 ### Muscle tissue: Chapter 10
 
-The study studio now includes all nine Chapter 10 sections, complete source reading, 85 key terms, 120 mixed-format questions and a 50-question chapter exam. A separate 150-question comprehensive exam spans Chapters 6–10 and all 101 source objectives; the original Chapters 6–9 exam remains available. Spelling support preserves intended answers while protecting distinct anatomical terms. Whole-body muscle anatomy is being released separately with explicit model review status.
+The study studio now includes all nine Chapter 10 sections, complete source reading, 85 key terms, mixed-format questions and a 50-question chapter exam. A separate 150-question comprehensive exam spans Chapters 6–10 and all 101 source objectives; the original Chapters 6–9 exam remains available. Spelling support preserves intended answers while protecting distinct anatomical terms. Whole-body muscle anatomy is being released separately with explicit model review status.
 
 ### Optional 3D muscle layer
 
