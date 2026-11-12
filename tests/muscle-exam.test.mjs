@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {examBank} from '../src/exam-bank.js';
 import {selectExam,createSession,validSession,results,sessionOutcome,syllabus} from '../src/exam-core.js';
-import {muscleExamKind,muscleExamBlueprint,muscleExamSectionCounts} from '../src/muscle-exam-blueprint.js';
+import {muscleExamKind,muscleExamBlueprint,muscleExamSectionCounts,muscleExamCoverage,selectLegacyMuscleExam} from '../src/muscle-exam-blueprint.js';
 import {muscleExamBank} from '../src/muscle-exam-bank.js';
 import {examFigure} from '../src/exam-figures.js';
 import {assessTyped} from '../src/typed-answer.js';
@@ -23,6 +23,16 @@ test('both combined forms preserve exact format, section, chapter and point dist
 });
 test('Chapter 11 standalone samples every objective at its 50-question section weights',()=>{
  for(let run=0;run<20;run++){const items=selectExam('11');assert.equal(items.length,50);for(const section of syllabus.sections.filter(s=>s.chapter===11)){assert.equal(items.filter(q=>q.lesson===section.id).length,section.examWeight);for(const o of section.objectives)assert.ok(items.some(q=>q.objectives.includes(o.id)),o.id);}}
+});
+test('revised paired forms cover all objectives without changing previously saved forms',()=>{
+ const forms=['muscles1011','muscles1011-b'].map(scope=>selectExam(scope));
+ assert.equal(muscleExamCoverage(forms.flat()).sampled.length,47);assert.equal(muscleExamCoverage(forms.flat()).notSampled.length,0);
+ for(const form of forms){
+  assert.ok(muscleExamCoverage(form).sampled.length>=40);
+  assert.deepEqual(form.filter(q=>q.revisedAxial).map(q=>q.lesson).sort(),['11.3','11.4']);
+ }
+ const oldItems=selectLegacyMuscleExam('muscles1011',examBank),old=createSession(oldItems,{scope:'muscles1011'});old.blueprintVersion='10-11-v1';old.responses[old.ids[0]]=key(oldItems[0]);const snapshot=JSON.stringify(old);
+ assert.ok(validSession(JSON.parse(snapshot)));assert.equal(JSON.stringify(old),snapshot);assert.equal(results(old).maxPoints,100);assert.equal(muscleExamCoverage(oldItems).sampled.length,34);
 });
 test('written explanations remain pending without a valid response-bound rubric review',()=>{
  const q=muscleExamBank.find(q=>q.type==='written'),s=createSession([q]);assert.ok(validWrittenQuestion(q));s.responses[q.id]='My original explanation connects the events.';assert.equal(sessionOutcome(s,q).status,'pending');assert.equal(results(s).pending,1);
@@ -48,7 +58,7 @@ test('all new visual items render and all written rubrics are valid',()=>{
 });
 test('weighted reports and exports retain point intervals, original answers and chapter scores',()=>{
  const items=selectExam('muscles1011'),s=createSession(items,{scope:'muscles1011'});items.forEach(q=>s.responses[q.id]=key(q));s.status='submitted';s.submitted=Date.now();
- const root={innerHTML:'',querySelector:()=>({}),querySelectorAll:()=>[]};renderExamReport({root,session:s,bank:examBank,title:'Test',escape:String});assert.match(root.innerHTML,/88\/100/);assert.match(root.innerHTML,/Three-part explanation rubric/);assert.match(root.innerHTML,/data-written-self/);assert.ok(!root.innerHTML.includes('undefined'));
+ const root={innerHTML:'',querySelector:()=>({addEventListener(){}}),querySelectorAll:()=>[]};renderExamReport({root,session:s,bank:examBank,title:'Test',escape:String});assert.match(root.innerHTML,/88\/100/);assert.match(root.innerHTML,/Three-part explanation rubric/);assert.match(root.innerHTML,/data-written-self/);assert.match(root.innerHTML,/Not sampled in this form/);assert.match(root.innerHTML,/Written rubrics/);assert.ok(!root.innerHTML.includes('undefined'));
  const exported=resultExport(s,'Test',examBank);assert.equal(exported.summary.maxPoints,100);assert.equal(exported.summary.pendingPoints,12);assert.equal(exported.summary.chapters['11'].maxPoints,50);assert.equal(exported.answers.filter(q=>q.correct===null).length,4);
 });
 test('combined simulation locks tutor in question and submission views and submits before AI review',()=>{

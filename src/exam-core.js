@@ -3,7 +3,7 @@ import {syllabus,legacyChapterGroups,publishedChapterIds} from './course-catalog
 import {examBank,EXAM_VERSION,LEGACY_EXAM_VERSION} from './exam-bank.js';
 import {validAnswerReview,reviewedCorrect,reviewMatches} from './answer-review-data.js';
 import {assessTyped,outcomeCorrect,GRADING_VERSION} from './typed-answer.js';
-import {isMuscleCombinedScope,selectMuscleExam,muscleQuestionPoints,validMuscleBlueprint,MUSCLE_EXAM_BLUEPRINT_VERSION} from './muscle-exam-blueprint.js';
+import {isMuscleCombinedScope,selectMuscleExam,muscleQuestionPoints,validMuscleBlueprint,MUSCLE_EXAM_BLUEPRINT_VERSION,muscleExamBlueprintVersions} from './muscle-exam-blueprint.js';
 import {assessWritten} from './exam-written.js';
 import {validWrittenReview,WRITTEN_RESPONSE_LIMIT} from './written-answer-judge.js';
 export {GRADING_VERSION};
@@ -79,7 +79,7 @@ export function validSession(s,bank=examBank){
  if(s.timeGoalMinutes!==undefined&&(!Number.isFinite(s.timeGoalMinutes)||s.timeGoalMinutes<0||s.timeGoalMinutes>240))return false;
  if(s.confidenceEnabled!==undefined&&typeof s.confidenceEnabled!=='boolean')return false;
  const byId=new Map(bank.map(q=>[q.id,q]));
- if(isMuscleCombinedScope(s.scope)&&(!validMuscleBlueprint(s.ids.map(id=>byId.get(id)).filter(Boolean))||s.blueprintVersion!==MUSCLE_EXAM_BLUEPRINT_VERSION||s.mode!=='exam'||!s.pointValues||typeof s.pointValues!=='object'||Array.isArray(s.pointValues)||Object.keys(s.pointValues).length!==s.ids.length||s.ids.some(id=>s.pointValues[id]!==muscleQuestionPoints(byId.get(id)))||(s.status==='active'&&Object.values(s.checked||{}).some(Boolean))))return false;
+ if(isMuscleCombinedScope(s.scope)&&(!validMuscleBlueprint(s.ids.map(id=>byId.get(id)).filter(Boolean))||!muscleExamBlueprintVersions.includes(s.blueprintVersion)||s.mode!=='exam'||!s.pointValues||typeof s.pointValues!=='object'||Array.isArray(s.pointValues)||Object.keys(s.pointValues).length!==s.ids.length||s.ids.some(id=>s.pointValues[id]!==muscleQuestionPoints(byId.get(id)))||(s.status==='active'&&Object.values(s.checked||{}).some(Boolean))))return false;
  if(!isMuscleCombinedScope(s.scope)&&s.pointValues!==undefined)return false;
  if(s.writtenReviews!==undefined&&(!s.writtenReviews||typeof s.writtenReviews!=='object'||Array.isArray(s.writtenReviews)||Object.entries(s.writtenReviews).some(([id,review])=>!s.ids.includes(id)||!validWrittenReview(review,{question:byId.get(id),response:s.responses?.[id],submissionId:s.id}))))return false;
  if(s.wording!==undefined&&(!s.wording||Array.isArray(s.wording)||Object.entries(s.wording).some(([id,n])=>!s.ids.includes(id)||!Number.isInteger(n)||n<0||n>(byId.get(id)?.wordings?.length||0))))return false;

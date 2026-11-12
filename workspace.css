@@ -465,6 +465,10 @@ body.viewer-room-open{overflow:hidden!important}
 .muscle-source-preview .lesson-inspect-window svg { min-width: var(--inspect-width); height: auto; }
 .muscle-source-note { margin-top: 8px; font-size: .83rem; }
 .muscle-source-note summary { cursor: pointer; }
+.muscle-source-correction { background: #3a3028; border-inline-start: 3px solid #d79865; padding: 7px 10px; break-inside: avoid; }
+.muscle-source-correction strong { color: #f3c69c; }
+.muscle-source-correction p { margin: 2px 0 0; }
+.muscle-study-card [role="status"]:empty { display: none; }
 .muscle-figure-answer input { min-width: 8ch; flex: 1; }
 .muscle-figure-answer label { margin: 0; }
 .muscle-source-preview [data-plate-feedback]:empty { display: none; }

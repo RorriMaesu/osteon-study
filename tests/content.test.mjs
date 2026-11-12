@@ -7,6 +7,7 @@ import {sectionPages,matchingReaderPages} from '../src/reader.js';
 import pages from '../src/reader-pages.json' with {type:'json'};
 import chapter11Source from '../src/chapter11-source.json' with {type:'json'};
 import {chapter11Muscles} from '../src/chapter11-muscles.js';
+import {chapter11Glossary} from '../src/chapter11-glossary.js';
 import {lessons,glossary,questions} from '../src/learning-data.js';
 
 const glb=fs.readFileSync(new URL('../assets/skeleton.glb',import.meta.url));
@@ -49,7 +50,8 @@ test('chapters six through eleven teach, apply and assess every section',()=>{
 });
 test('complete glossary extraction excludes page furniture and broken glyphs',()=>{
  assert.equal(glossary.filter(g=>g.chapter>=6&&g.chapter<=10).length,629);assert.equal(new Set(glossary.map(g=>g.id)).size,glossary.length);
- const muscleGlossary=glossary.filter(g=>g.chapter===11);assert.equal(muscleGlossary.length,113);assert.deepEqual(muscleGlossary.map(g=>g.id),chapter11Muscles.map(card=>card.id));
+ const muscleGlossary=glossary.filter(g=>g.chapter===11);assert.ok(chapter11Glossary.length>=75);assert.deepEqual(muscleGlossary.map(g=>g.id),[...chapter11Glossary,...chapter11Muscles].map(card=>card.id));
+ for(const name of ['Agonist','Fixator','Fascicle','Aponeurosis','Lever'])assert.ok(muscleGlossary.some(entry=>entry.name===name),name);
  for(const card of chapter11Muscles){const entry=muscleGlossary.find(g=>g.id===card.id);assert.ok(entry.cue.includes(card.action),card.id);assert.deepEqual(entry.aliases,card.aliases);assert.ok(entry.source.includes(card.section),card.id);}
  for(const chapter of [1,2,3,4,5])assert.ok(glossary.filter(g=>g.chapter===chapter).length>50);
  for(const g of glossary){assert.ok(g.name.length>=2);assert.ok(g.cue.length>3);assert.ok(!/PDF PAGE|Access for free|Key Terms|\uFFFD/.test(g.cue+g.name),g.name);}

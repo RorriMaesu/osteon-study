@@ -95,7 +95,7 @@ test('legacy question and glossary identifiers stay usable, and new glossary has
 test('every lesson anatomy route exists and every direct figure link resolves its actual source caption',()=>{
  assert.deepEqual(Object.keys(links),lessons.filter(l=>Number(l.id.split('.')[0])>=6).map(l=>l.id));let figures=0;
  const sourcePages=[...pages,...chapter11Pages];
- for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region),id);for(const f of l.figures){figures++;const page=sourcePages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
+ for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region)||(['10.7','10.8','10.9'].includes(id)&&l.region===null),id);for(const f of l.figures){figures++;const page=sourcePages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
  assert.ok(figures>=159);const all=new Set(sourcePages.filter(p=>[6,7,8,9,10,11].includes(p.chapter)).flatMap(p=>[...p.text.matchAll(/FIGURE\s+(\d+\.\d+)\s/g)].map(m=>m[1])));assert.deepEqual(new Set(Object.values(links).flatMap(l=>l.figures.map(f=>f.number))),all);
 });
 test('the local tutor retrieves original notes for the development sections and expanded course',()=>{

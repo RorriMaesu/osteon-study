@@ -69,9 +69,9 @@ My Progress can preview and merge matching earlier Cell Studio, Tissue Studio, L
 ## Chapters 10–11 muscle study and exams
 
 - [Muscle tissue](https://rorrimaesu.github.io/osteon-study/#lesson-10.2) covers muscle organization, contraction, recruitment, force, fiber types and tissue repair.
-- [Muscular system](https://rorrimaesu.github.io/osteon-study/#lesson-11.1) covers all six sections. Explore muscle actions and general attachments with 113 study cards, including the 67 entries from the BI 231 course checklist.
-- The two chapters use 60 original OpenStax figures. Selected shoulder, forearm, hand, thigh, leg and foot views have marked targets and a recall mode.
-- [Exam Center](https://rorrimaesu.github.io/osteon-study/#exam-center) offers Forms A and B. Each includes 60 questions for 100 points, with 50 points from each chapter. Written responses can be reviewed against the rubric after submission.
+- [Muscular system](https://rorrimaesu.github.io/osteon-study/#lesson-11.1) covers all six sections. Explore muscle actions and general attachments with 177 study cards, including the 67 entries from the BI 231 course checklist. Cards include muscles, groups and connective structures.
+- The two chapters use 60 original OpenStax figures. Recall mode includes 42 marked targets on cropped panels, covering selected axial and limb structures. Missed figures and muscle cards can be revisited.
+- [Exam Center](https://rorrimaesu.github.io/osteon-study/#exam-center) offers Forms A and B. Each includes 60 questions for 100 points, with 50 points from each chapter. Each form samples 44 of the 47 source objectives, and together they cover all 47. Reports link to unsampled-objective practice, selected identification figures and written rubrics.
 
 ## Chapters 6–9 exam preparation
 

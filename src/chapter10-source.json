@@ -114,10 +114,6 @@
       ],
       "figures": [
         {
-          "number": "10.7",
-          "pdf": 392
-        },
-        {
           "number": "10.8",
           "pdf": 393
         },
@@ -210,12 +206,7 @@
           "text": "Explain fast and slow muscle fibers"
         }
       ],
-      "figures": [
-        {
-          "number": "10.17",
-          "pdf": 405
-        }
-      ],
+      "figures": [],
       "prerequisites": [
         "10.4"
       ]
@@ -277,10 +268,6 @@
         }
       ],
       "figures": [
-        {
-          "number": "10.20",
-          "pdf": 409
-        },
         {
           "number": "10.21",
           "pdf": 410
@@ -358,12 +345,7 @@
           "text": "Explain which muscle has the greatest regeneration ability"
         }
       ],
-      "figures": [
-        {
-          "number": "10.25",
-          "pdf": 414
-        }
-      ],
+      "figures": [],
       "prerequisites": [
         "10.8"
       ]

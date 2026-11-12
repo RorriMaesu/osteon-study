@@ -17,10 +17,10 @@ test('custom blueprints honor chapter and section weights, capacities, exposure 
 });
 test('daily study uses scored weaknesses and bounds mixed review to the available study time',()=>{
  const p=blankProgress(),weak=questions.find(q=>q.lesson==='9.6'),now=new Date('2026-11-04T12:00:00').getTime();p.attempts=[{id:weak.id,correct:false,at:now-1000},{id:questions.find(q=>q.lesson==='6.1').id,correct:false,selfRated:true,at:now}];
- const ordinary=dailyRoute(p,{minutes:20,now});assert.equal(ordinary.lesson.id,'9.6');assert.ok(ordinary.items.every(q=>q.lesson==='9.6'));
- const final=dailyRoute(p,{minutes:20,examDate:'2026-11-08',now});assert.equal(final.mixed,true);assert.equal(final.items.length,10);assert.equal(new Set(final.items.map(q=>q.lesson.split('.')[0])).size,Math.min(final.items.length,new Set(questions.map(q=>q.lesson.split('.')[0])).size));assert.equal(final.items[0].id,weak.id);assert.equal(new Set(final.items.map(q=>q.id)).size,final.items.length);assert.equal(dailyRoute(p,{examDate:'2026-10-01',now}).mixed,false);
+ const ordinary=dailyRoute(p,{minutes:20,chapters:[9],now});assert.equal(ordinary.lesson.id,'9.6');assert.ok(ordinary.items.every(q=>q.lesson==='9.6'));
+ const final=dailyRoute(p,{minutes:20,chapters:'all',examDate:'2026-11-08',now});assert.equal(final.mixed,true);assert.equal(final.finalWeek,true);assert.equal(final.items.length,10);assert.equal(new Set(final.items.map(q=>q.lesson.split('.')[0])).size,Math.min(final.items.length,new Set(questions.map(q=>q.lesson.split('.')[0])).size));assert.equal(final.items[0].id,weak.id);assert.equal(new Set(final.items.map(q=>q.id)).size,final.items.length);assert.equal(dailyRoute(p,{examDate:'2026-10-01',now}).finalWeek,false);
  const muscleWeak=questions.find(q=>q.lesson==='11.6'),muscleProgress=blankProgress();muscleProgress.attempts=[{id:muscleWeak.id,correct:false,at:now-1000}];
- const brief=dailyRoute(muscleProgress,{minutes:10,examDate:'2026-11-08',now});assert.equal(brief.lesson.id,'11.6');assert.equal(brief.items.length,5);assert.equal(brief.items[0].id,muscleWeak.id);assert.equal(new Set(brief.items.map(q=>q.lesson.split('.')[0])).size,5);
+ const brief=dailyRoute(muscleProgress,{minutes:10,examDate:'2026-11-08',now});assert.equal(brief.lesson.id,'11.6');assert.equal(brief.items.length,5);assert.equal(brief.items[0].id,muscleWeak.id);assert.deepEqual(new Set(brief.items.map(q=>q.lesson.split('.')[0])),new Set(['10','11']));
 });
 test('repair sets spread objectives rather than filling with near-duplicate items',()=>{
  const l=lessons.find(l=>l.id==='6.3'),items=questions.filter(q=>q.lesson===l.id),set=variedQuestions(items,[],5);assert.equal(set.length,5);assert.equal(new Set(set.map(q=>q.objectives?.[0]||q.lesson)).size,5);

@@ -1,4 +1,5 @@
 import assets from './muscle-textbook-assets.json' with {type:'json'};
+import {axialMuscleFigureTargets} from './axial-muscle-targets.js';
 
 const target = (figure, name, orientation, panel, point, cover, description, aliases = []) =>
  ({figure, name, orientation, panel, point, cover, description, aliases});
@@ -6,6 +7,7 @@ const target = (figure, name, orientation, panel, point, cover, description, ali
 // Coordinates refer to the embedded artwork's native pixels. The white rectangles
 // cover only the selected label, leaving the muscle and the leader line intact.
 export const muscleFigureTargets = {
+ ...axialMuscleFigureTargets,
  'infraspinatus': target('11.23', 'Infraspinatus', 'Deep left shoulder, posterior', [1150,1150,1079,1020], [1820,1417], [1930,1442,290,61], 'The marker is on the broad muscle below the spine of the scapula.'),
  'supraspinatus': target('11.23', 'Supraspinatus', 'Deep left shoulder, posterior', [1150,1150,1079,1020], [1705,1254], [1928,1175,299,56], 'The marker is on the narrow muscle above the spine of the scapula.'),
  'teres-minor': target('11.23', 'Teres minor', 'Deep left shoulder, posterior', [1150,1150,1079,1020], [1671,1431], [1356,1175,227,54], 'The marker is on the narrow band along the lateral scapula between the broad infraspinous muscle and the thicker inferior band.'),
@@ -35,10 +37,11 @@ export function musclePlateSVG(number, {panel, targetId, hideLabel = false, alt}
  const bounds = panel || item?.panel || [0,0,asset.width,asset.height];
  const scale = Math.min(bounds[2],bounds[3]);
  const mark = item ? `<circle cx="${item.point[0]}" cy="${item.point[1]}" r="${Math.max(11,scale*.018)}" fill="none" stroke="#fff" stroke-width="8"/><circle cx="${item.point[0]}" cy="${item.point[1]}" r="${Math.max(11,scale*.018)}" fill="#c5252e55" stroke="#6b0f19" stroke-width="4"/>` : '';
- const mask = item && hideLabel ? `<rect x="${item.cover[0]}" y="${item.cover[1]}" width="${item.cover[2]}" height="${item.cover[3]}" fill="#fff"/>` : '';
- const description = alt || (item ? item.orientation + '. ' + item.description : 'OpenStax Figure ' + number);
+ const masks = item && hideLabel ? [item.cover,...(item.extraCovers||[])].map(([x,y,width,height])=>
+  `<rect x="${x}" y="${y}" width="${width}" height="${height}" fill="#fff"/>`).join('') : '';
+ const description = alt || (item ? item.orientation+(hideLabel?'. One anatomical target is marked.':'. '+item.description) : 'OpenStax Figure '+number);
  const [x,y,width,height]=bounds;
- const artwork=`<image href="assets/muscle-textbook/${asset.file}" width="${asset.width}" height="${asset.height}"/>${mask}${mark}`;
+ const artwork=`<image href="assets/muscle-textbook/${asset.file}" width="${asset.width}" height="${asset.height}"/>${masks}${mark}`;
  // Clip the source to the panel even when the outer viewer letterboxes it.
  return `<svg viewBox="${bounds.join(' ')}" role="img" aria-label="${escape(description)}"><svg x="${x}" y="${y}" width="${width}" height="${height}" viewBox="${bounds.join(' ')}" overflow="hidden">${artwork}</svg></svg>`;
 }

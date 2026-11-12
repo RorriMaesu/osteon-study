@@ -21,6 +21,18 @@ const visual=(id,lesson,objective,figure,target,prompt,answer,aliases,explanatio
 const targetPairs=[['infraspinatus','subscapularis','11.5',2,'shoulder'],['brachialis','pronator-teres','11.5',3,'forearm'],['palmar-interossei','dorsal-interossei','11.5',4,'hand'],['rectus-femoris','biceps-femoris','11.6',2,'thigh'],['tibialis-anterior','soleus','11.6',3,'leg'],['flexor-digitorum-brevis','quadratus-plantae','11.6',4,'foot']];
 targetPairs.forEach(([a,b,lesson,objective,group])=>[a,b].forEach((id,index)=>{const t=muscleFigureTargets[id];visual('plate-'+id,lesson,objective,'muscle-target:'+id,'','Name the muscle marked by the neutral ring in this '+t.orientation.toLowerCase()+' view.',t.name,t.aliases||[],t.description+' Compare the complete source figure after submission.',index?'B':'A',group);}));
 
+// Revised forms reserve one head/neck target and one trunk/pelvic target.
+for(const [id,lesson,objective,form] of [
+ ['masseter','11.3',1,'A'],
+ ['superior-rectus','11.3',2,'B'],
+ ['internal-oblique','11.4',1,'A'],
+ ['pubococcygeus','11.4',3,'B'],
+]){
+ const t=muscleFigureTargets[id];
+ visual('axial-'+id,lesson,objective,'muscle-target:'+id,'','Name the muscle marked by the ring.',t.name,t.aliases,t.description+' Compare the complete source figure after submission.',form,'axial-'+lesson);
+ items.at(-1).revisedAxial=true;
+}
+
 function written(id,lesson,objectives,prompt,answer,criteria,form,secondary){
  items.push({id:'mx-written-'+id,lesson,topic:'Chapter '+lesson.split('.')[0],objectives:objectives.map(o=>lesson+'.'+o),secondaryObjectives:secondary,type:'written',points:3,prompt,answer,explanation:answer,source:'OpenStax A&P 2e §'+lesson,examForm:form,rubric:{id:'rubric-'+id,version:'1',criteria:criteria.map(([label,description],i)=>({id:'c'+(i+1),label,description,points:1}))}});
 }

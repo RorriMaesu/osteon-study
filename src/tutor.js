@@ -45,7 +45,7 @@ function initTutor({escape:e,toast}) {
     if(!busy){
      tab=setup?'setup':localAI.state.ready?'chat':'guide';
      if(setup)setupPage='auto';
-     else if(tab==='guide'){guideSection=lessons.some(l=>l.id===context.reference)?context.reference:guideSection;guideReveal='';}
+     else if(tab==='guide'){if(context.diagram?.question)useDiagramGuide=true;guideSection=lessons.some(l=>l.id===context.reference)?context.reference:guideSection;guideReveal='';}
     }
     render();$('#tutor-close').focus();
     if(context.assessmentMode==='exam')return;

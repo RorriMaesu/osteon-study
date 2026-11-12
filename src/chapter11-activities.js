@@ -1,55 +1,133 @@
 import {chapter11Muscles} from './chapter11-muscles.js';
-import {muscleFigureTitle} from './muscle-textbook.js';
-import {setDiagramLearningContext} from './learning-context.js';
+import {muscleFigureTargets} from './muscle-figure-targets.js';
+import {setDiagramLearningContext,setLearningContext} from './learning-context.js';
+import {newMuscleCardView,saveCardReview,saveNamedRecall} from './muscle-study-state.js';
+import {getProgress} from './storage.js';
+import {assessTyped,outcomeCorrect} from './typed-answer.js';
 
-export function renderChapter11Activity(root, lesson, e, {openFigure,openAtlas}) {
+export function renderChapter11Activity(root,lesson,e,{openFigure,openAtlas,saved,onSave}){
  root.closest('.flow-body')?.classList.add('muscle-interactive-step');
- if (lesson.id==='11.1') { renderLever(root,lesson); return; }
- if (lesson.id==='11.2') { renderNames(root,lesson,e); return; }
+ if(lesson.id==='11.2'){renderNames(root,lesson,e);return;}
+ const state={...newMuscleCardView(lesson.id==='11.1'?'activity':'cards'),...saved};
+ const save=()=>onSave?.({...state});
+ if(lesson.id==='11.1'){
+  root.innerHTML='<div class="control-row" aria-label="Section activities"><button type="button" data-muscle-tab="activity">Lever lab</button><button type="button" data-muscle-tab="cards">Muscle and tissue cards</button></div><div data-muscle-tab-content></div>';
+  const body=root.querySelector('[data-muscle-tab-content]');
+  function show(){
+   root.querySelectorAll('[data-muscle-tab]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.muscleTab===state.tab)));
+   if(state.tab==='activity')renderLever(body,lesson);
+   else renderCards(body,lesson,e,{openFigure,openAtlas,state,save});
+  }
+  root.querySelectorAll('[data-muscle-tab]').forEach(button=>button.onclick=()=>{state.tab=button.dataset.muscleTab;save();show();});
+  show();return;
+ }
+ renderCards(root,lesson,e,{openFigure,openAtlas,state,save});
+}
+
+function renderCards(root,lesson,e,{openFigure,openAtlas,state,save}){
  const available=chapter11Muscles.filter(card=>card.section===lesson.id);
- let scope='course', active=0, query='', recall=false, revealed=false;
  root.innerHTML=`<h3>Muscle cards</h3><div class="control-row muscle-card-filters">
-  <label for="muscle-card-scope">Study set</label><select id="muscle-card-scope"><option value="course">Course checklist</option><option value="all">All cards in this section</option></select>
-  <label class="sr-only" for="muscle-card-search">Find a muscle card</label><input type="search" id="muscle-card-search" placeholder="Find a muscle or action"></div>
+  <label for="muscle-card-scope">Study set</label><select id="muscle-card-scope"><option value="course">Course checklist</option><option value="all">All cards in this section</option><option value="revisit">Due for review</option></select>
+  <label class="sr-only" for="muscle-card-search">Find a muscle card</label><input type="search" id="muscle-card-search" maxlength="120" placeholder="Find a muscle or action" value="${e(state.query)}"></div>
   <div data-muscle-card-body></div>`;
+ root.querySelector('#muscle-card-scope').value=state.scope;
  const body=root.querySelector('[data-muscle-card-body]');
- function render() {
-  const items=available.filter(card=>(scope==='all'||card.courseChecklist)&&
-   [card.name,card.action,card.location,...(card.aliases||[])].join(' ').toLowerCase().includes(query));
-  active=Math.min(active,Math.max(0,items.length-1));
+ let notice='';
+ const clearName=()=>{state.nameResponse='';state.nameFeedback='';state.nameAssisted=false;};
+ const markHelp=()=>{if(state.naming&&!state.revealed){state.nameAssisted=true;save();}};
+ function render(){
+  const due=getProgress().cards;
+  const items=available.filter(card=>(state.scope==='all'||state.scope==='course'&&card.courseChecklist||state.scope==='revisit'&&due[card.id]?.due<=Date.now())&&
+    [card.name,card.action,card.location,...card.aliases].join(' ').toLowerCase().includes(state.query.trim().toLowerCase()));
+  const active=Math.max(0,items.findIndex(card=>card.id===state.id));
   const card=items[active];
-  if(!card){body.innerHTML='<p>No matching cards. Try another search or study set.</p>';return;}
-  const facts=[['Location',card.location],['Main action',card.action],['General origin',card.origin],['General insertion',card.insertion]];
-  const figure=card.figures?.find(number=>lesson.syllabus.figures.some(f=>f.number===number));
-  const show=!recall||revealed;
+  if(!card){
+   body.innerHTML='<p role="status">'+(state.scope==='revisit'?'No matching cards are due. Choose another study set to keep practicing.':'No matching cards. Try another search or study set.')+'</p>';
+   setLearningContext({type:'lesson',label:lesson.title,reference:lesson.id,text:lesson.objective});
+   return;
+  }
+  state.id=card.id;save();
+  const tissue=card.kind==='connective tissue';
+  const facts=[['Location',card.location],[tissue?'Function':'Main action',card.action],
+   [tissue?'Proximal relationship':'General origin',card.origin],[tissue?'Distal relationship':'General insertion',card.insertion]];
+  if(card.members?.length)facts.push(['Members',Array.isArray(card.members)?card.members.join(', '):card.members]);
+  const figures=card.figures||[];
+  const marked=Object.entries(muscleFigureTargets).find(([,target])=>figures.includes(target.figure)&&
+   [card.name,...card.aliases].some(name=>[target.name,...target.aliases].some(value=>name.toLowerCase()===value.toLowerCase())));
+  const figure=marked?.[1].figure||figures[0];
+  const naming=state.recall&&state.naming;
+  const show=!state.recall||state.revealed;
+  const answerNames=[card.name,...card.aliases].map(name=>name.toLowerCase());
+  const clue=[card.location,card.action,card.origin,card.insertion].find(value=>
+   answerNames.every(name=>!value.toLowerCase().includes(name)))||'Identify the structure from its region and attachments. '+card.origin;
   body.innerHTML=`<div class="control-row muscle-card-navigation">
    <button type="button" data-card-prev aria-label="Previous muscle" ${active===0?'disabled':''}>←</button>
-   <label class="sr-only" for="muscle-card-select">Choose a muscle card</label><select id="muscle-card-select">${items.map((item,i)=>`<option value="${i}" ${i===active?'selected':''}>${e(item.name)}</option>`).join('')}</select>
+   <label class="sr-only" for="muscle-card-select">Choose a muscle card</label><select id="muscle-card-select">${items.map((item,i)=>`<option value="${i}" ${i===active?'selected':''}>${naming?'Card '+(i+1):e(item.name)}</option>`).join('')}</select>
    <button type="button" data-card-next aria-label="Next muscle" ${active===items.length-1?'disabled':''}>→</button><span class="tiny">${active+1} / ${items.length}</span>
-   <button type="button" data-card-recall aria-pressed="${recall}">${recall?'End recall':'Recall action and attachments'}</button></div>
-   <article class="muscle-study-card"><h4>${e(card.name)}</h4>
-   ${show?`<dl>${facts.map(([label,text])=>`<div><dt>${label}</dt><dd>${e(text)}</dd></div>`).join('')}</dl>`:
-    '<p>Say where it lies, its main action, and both general attachment sites. Then check your answer.</p><button type="button" data-card-reveal>Reveal card</button>'}
-   <div class="control-row">${figure?`<button type="button" data-card-figure>Figure ${figure} · ${e(muscleFigureTitle(figure))} ↗</button>`:''}
-   ${card.region?`<button type="button" data-card-atlas>Open 3D region ↗</button>`:''}<button type="button" data-card-tutor>Ask the tutor</button></div></article>`;
-  function advance(to,selector){active=to;revealed=false;render();(body.querySelector(selector)?.disabled?body.querySelector('#muscle-card-select'):body.querySelector(selector))?.focus();}
+   <button type="button" data-card-recall aria-pressed="${state.recall}">${state.recall&&!naming?'End recall':tissue?'Recall location and function':'Recall action and attachments'}</button><button type="button" data-card-name-mode aria-pressed="${naming}">${naming?'End name recall':'Recall name'}</button></div>
+   <article class="muscle-study-card"><h4>${naming&&!state.revealed?'Identify the structure':e(card.name)}</h4>
+   ${card.kind!=='muscle'?'<p class="tiny">'+e(card.kind)+(card.courseLabel&&!naming?' · '+e(card.courseLabel):'')+'</p>':''}
+   ${naming&&!state.revealed?`<p>${e(clue)}</p><form class="control-row muscle-figure-answer" data-card-name-form><label for="muscle-name-response">Anatomical name</label><input id="muscle-name-response" maxlength="120" autocomplete="off" value="${e(state.nameResponse)}" required><button type="submit">Check</button><button type="button" data-card-reveal-name>Reveal name</button></form><p role="status">${e(state.nameFeedback)}</p>`:show?`<dl>${facts.map(([label,text])=>`<div><dt>${label}</dt><dd>${e(text)}</dd></div>`).join('')}</dl>${card.sourceNotes&&!card.sourceNotes.startsWith('General attachment regions for study')?'<p class="tiny">'+e(card.sourceNotes)+'</p>':''}`:
+    '<p>'+ (tissue?'Say where it lies and how it transmits force or supports adjacent structures.':'Say where it lies, its main action, and both general attachment sites.') +'</p><button type="button" data-card-reveal>Reveal card</button>'}
+   ${state.recall&&state.revealed&&!naming?'<div class="control-row"><button type="button" data-card-rate="1">Practice again</button><button type="button" data-card-rate="3">I recalled it</button></div>':''}
+   <p class="tiny" role="status" data-card-status>${e(notice)}</p>
+   <div class="control-row">${figure&&(!naming||state.revealed)?`<button type="button" data-card-figure>${marked?'Locate on figure':'Open figure'} ${figure} ↗</button>`:''}
+   ${card.region&&(!naming||state.revealed)?`<button type="button" data-card-atlas>Open 3D region ↗</button>`:''}<button type="button" data-card-tutor>Ask the tutor</button></div></article>`;
+  function advance(to,selector){
+   state.id=items[to].id;state.revealed=false;clearName();notice='';render();
+   const control=body.querySelector(selector);(control?.disabled?body.querySelector('#muscle-card-select'):control)?.focus();
+  }
   body.querySelector('[data-card-prev]').onclick=()=>advance(active-1,'[data-card-prev]');
   body.querySelector('[data-card-next]').onclick=()=>advance(active+1,'[data-card-next]');
   body.querySelector('#muscle-card-select').onchange=ev=>advance(+ev.target.value,'#muscle-card-select');
-  body.querySelector('[data-card-recall]').onclick=()=>{recall=!recall;revealed=false;render();body.querySelector('[data-card-recall]').focus();};
+  body.querySelector('[data-card-recall]').onclick=()=>{state.recall=!(state.recall&&!state.naming);state.naming=false;state.revealed=false;clearName();notice='';render();body.querySelector('[data-card-recall]')?.focus();};
+  body.querySelector('[data-card-name-mode]').onclick=()=>{
+   state.naming=!naming;state.recall=state.naming;state.revealed=false;clearName();notice='';render();
+   (body.querySelector('#muscle-name-response')||body.querySelector('[data-card-name-mode]'))?.focus();
+  };
+  const form=body.querySelector('[data-card-name-form]');
+  if(form){
+   const input=form.querySelector('input');
+   input.oninput=()=>{state.nameResponse=input.value;state.nameFeedback='';save();updateContext();};
+   form.onsubmit=ev=>{
+    ev.preventDefault();
+    if(!state.nameResponse.trim()||state.nameFeedback)return;
+    const result=assessTyped({id:card.id,answer:card.name,aliases:card.aliases},state.nameResponse);
+    const correct=outcomeCorrect(result);
+    saveNamedRecall(card.id,lesson.id,result,state.nameAssisted);
+    if(!correct&&result.status!=='pending')state.nameAssisted=true;
+    state.revealed=correct;
+    state.nameFeedback=correct?(result.status==='spelling'?'Correct. Standard spelling: ':'Correct. ')+card.name+'.':'Try a more specific name, or reveal the card.';
+    notice=correct?state.nameFeedback:'';render();
+    (body.querySelector('#muscle-name-response')||body.querySelector('[data-card-next]:enabled')||body.querySelector('[data-card-name-mode]'))?.focus();
+   };
+   form.querySelector('[data-card-reveal-name]').onclick=()=>{
+    if(!state.nameAssisted||!getProgress().cards[card.id])saveNamedRecall(card.id,lesson.id,{status:'incorrect'},true);
+    state.revealed=true;notice='Saved for another review.';render();body.querySelector('[data-card-name-mode]').focus();
+   };
+  }
   const reveal=body.querySelector('[data-card-reveal]');
-  if(reveal)reveal.onclick=()=>{revealed=true;render();body.querySelector('[data-card-recall]').focus();};
-  if(figure)body.querySelector('[data-card-figure]').onclick=()=>openFigure(figure);
-  if(card.region)body.querySelector('[data-card-atlas]').onclick=()=>openAtlas(card.region);
-  body.querySelector('[data-card-tutor]').onclick=()=>document.getElementById('tutor-launch')?.click();
-  setDiagramLearningContext({id:card.id,title:card.name,reference:lesson.id,
-   state:{card:card.name,mode:recall?'recall':'study'},question:card.guidePrompt||'What does this structure do, and which regions does it connect?',
-   hint:'Think about the joint it crosses and the direction of its pull.',
-   answer:facts.map(([label,text])=>label+' — '+text).join(' '),
-   facts:facts.map(([label,text])=>label+' — '+text)});
+  if(reveal)reveal.onclick=()=>{state.revealed=true;render();body.querySelector('[data-card-rate]')?.focus();};
+  body.querySelectorAll('[data-card-rate]').forEach(button=>button.onclick=()=>{
+   const rating=+button.dataset.cardRate;saveCardReview(card,rating);
+   notice=rating===1?'Scheduled for another review.':'Self-check saved.';
+   body.querySelector('[data-card-status]').textContent=notice;
+   body.querySelectorAll('[data-card-rate]').forEach(b=>b.disabled=true);
+   body.querySelector('[data-card-next]:enabled, [data-card-recall]')?.focus();
+  });
+  const figureButton=body.querySelector('[data-card-figure]');if(figureButton)figureButton.onclick=()=>openFigure(figure,marked?.[0]);
+  const atlasButton=body.querySelector('[data-card-atlas]');if(atlasButton)atlasButton.onclick=()=>openAtlas(card.region);
+  body.querySelector('[data-card-tutor]').onclick=()=>{updateContext();document.getElementById('tutor-launch')?.click();};
+  function updateContext(){setDiagramLearningContext({id:card.id,title:naming&&!state.revealed?'Identify the structure':card.name,reference:lesson.id,state:{mode:naming?'name recall':state.recall?'recall':'study'},
+   question:naming?'Which structure fits this description? '+clue:tissue?'Where does '+card.name+' lie, and what does it help support or connect?':'Where is '+card.name+', and how do its general attachments support its main action?',
+   hint:naming?'Compare the anatomical region with the function given in the clue.':tissue?'Think about the structures on either side of the tissue.':'Use one nearby landmark to orient yourself, then follow the direction of pull.',
+   answer:naming?card.name:facts.map(([label,text])=>label+' · '+text).join(' '),prediction:naming?state.nameResponse:'',
+   facts:[...facts.map(([label,text])=>label+' · '+text),card.sourceNotes||'']});}
+  updateContext();
  }
- root.querySelector('#muscle-card-scope').onchange=ev=>{scope=ev.target.value;active=0;revealed=false;render();};
- root.querySelector('#muscle-card-search').oninput=ev=>{query=ev.target.value.trim().toLowerCase();active=0;revealed=false;render();};
+ body.addEventListener('musclestudyhelp',markHelp);
+ root.querySelector('#muscle-card-scope').onchange=ev=>{state.scope=ev.target.value;state.id='';state.revealed=false;clearName();notice='';save();render();};
+ root.querySelector('#muscle-card-search').oninput=ev=>{state.query=ev.target.value;state.id='';state.revealed=false;clearName();notice='';save();render();};
  render();
 }
 
