@@ -1,0 +1,37 @@
+import {professorMuscleQuestions,professorMuscleQuestionById,PROFESSOR_MUSCLE_BANK_VERSION} from './professor-muscle-bank.js';
+import {WRITTEN_RESPONSE_LIMIT,validWrittenReview,scoreWrittenReview} from './written-answer-judge.js';
+export const PROFESSOR_MUSCLE_KEY='osteon-professor-muscles-v1';
+const object=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
+const text=(x,n)=>typeof x==='string'&&x.length<=n;
+export const blankProfessorState=()=>({schema:1,active:null,drafts:[],history:[],studySeen:{}});
+export function createProfessorSession({mode='rehearse',ids=professorMuscleQuestions.map(q=>q.id),revisionOf=null,now=Date.now()}={}){
+ if(!['rehearse','exam'].includes(mode)||!Array.isArray(ids)||!ids.length||new Set(ids).size!==ids.length||ids.some(id=>!professorMuscleQuestionById.has(id)))throw Error('Choose valid professor questions and a practice mode.');
+ return {id:'pm-'+now+'-'+Math.random().toString(36).slice(2,9),version:PROFESSOR_MUSCLE_BANK_VERSION,mode,status:'active',ids:[...ids],responses:{},checked:{},assisted:{},reviews:{},reviewHistory:[],started:now,submitted:null,index:0,revisionOf};
+}
+export function validProfessorSession(s){
+ if(!object(s)||s.version!==PROFESSOR_MUSCLE_BANK_VERSION||!text(s.id,160)||!s.id||!['rehearse','exam'].includes(s.mode)||!['active','submitted'].includes(s.status)||!Array.isArray(s.ids)||!s.ids.length||s.ids.length>21||new Set(s.ids).size!==s.ids.length||s.ids.some(id=>!professorMuscleQuestionById.has(id))||!Number.isFinite(s.started)||!Number.isInteger(s.index)||s.index<0||s.index>=s.ids.length||!(s.revisionOf===null||text(s.revisionOf,160)))return false;
+ if(s.status==='submitted'?!Number.isFinite(s.submitted):s.submitted!==null)return false;
+ if(!object(s.responses)||!object(s.checked)||!object(s.assisted)||!object(s.reviews)||!Array.isArray(s.reviewHistory)||s.reviewHistory.length>500)return false;
+ if(Object.entries(s.responses).some(([id,v])=>!s.ids.includes(id)||!text(v,WRITTEN_RESPONSE_LIMIT)))return false;
+ if(['checked','assisted'].some(k=>Object.entries(s[k]).some(([id,v])=>!s.ids.includes(id)||typeof v!=='boolean')))return false;
+ if(s.mode==='exam'&&s.status==='active'&&(Object.values(s.checked).some(Boolean)||Object.keys(s.reviews).length||Object.values(s.assisted).some(Boolean)))return false;
+ return [...Object.entries(s.reviews),...s.reviewHistory.map(r=>[r.questionId,r])].every(([id,review])=>s.ids.includes(id)&&validWrittenReview(review,{question:professorMuscleQuestionById.get(id),response:s.responses[id],submissionId:s.id}));
+}
+export function validProfessorState(s){return object(s)&&s.schema===1&&(s.active===null||validProfessorSession(s.active)&&s.active.status==='active')&&Array.isArray(s.drafts)&&s.drafts.length<=500&&s.drafts.every(x=>validProfessorSession(x)&&x.status==='active')&&Array.isArray(s.history)&&s.history.length<=500&&s.history.every(x=>validProfessorSession(x)&&x.status==='submitted')&&new Set([s.active,...s.drafts,...s.history].filter(Boolean).map(x=>x.id)).size===[s.active,...s.drafts,...s.history].filter(Boolean).length&&object(s.studySeen)&&Object.entries(s.studySeen).every(([id,at])=>professorMuscleQuestionById.has(id)&&Number.isFinite(at));}
+export function readProfessorState(storage){const raw=storage.getItem(PROFESSOR_MUSCLE_KEY);if(!raw)return blankProfessorState();let parsed;try{parsed=JSON.parse(raw);}catch{throw Error('The saved professor review could not be read. Its original record has been preserved.');}if(!validProfessorState(parsed))throw Error('The saved professor review uses an unsupported or damaged record. Export it before starting a new record.');return parsed;}
+export function writeProfessorState(storage,state){if(!validProfessorState(state))throw Error('This review could not be safely saved. Export your work before leaving.');storage.setItem(PROFESSOR_MUSCLE_KEY,JSON.stringify(state));return state;}
+export function setProfessorResponse(s,id,response){if(s.status!=='active'||!s.ids.includes(id)||s.checked[id])throw Error('This original response is locked. Start a revision to write again.');if(!text(response,WRITTEN_RESPONSE_LIMIT))throw Error('Keep the response within '+WRITTEN_RESPONSE_LIMIT+' characters.');s.responses[id]=response;return s;}
+export function checkProfessorResponse(s,id){if(s.mode!=='rehearse'||s.status!=='active'||!s.ids.includes(id)||!s.responses[id]?.trim())throw Error('Write an answer before opening feedback.');s.checked[id]=true;return s;}
+export function submitProfessorSession(s,now=Date.now()){if(s.status!=='active')return s;s.status='submitted';s.submitted=now;for(const id of s.ids)if(s.responses[id]?.trim())s.checked[id]=true;return s;}
+export function applyProfessorReview(s,id,review){if(s.status!=='submitted'&&!s.checked[id])throw Error('Save your answer before reviewing it.');if(!s.ids.includes(id)||!validWrittenReview(review,{question:professorMuscleQuestionById.get(id),response:s.responses[id],submissionId:s.id}))throw Error('This estimate does not match the saved response.');if(s.reviews[id])s.reviewHistory.push(s.reviews[id]);s.reviews[id]=review;return s;}
+export function professorResults(s){
+ const rows=s.ids.map(id=>{const q=professorMuscleQuestionById.get(id),response=s.responses[id]||'',review=s.reviews[id],score=scoreWrittenReview(q,review,{response,submissionId:s.id}),answered=!!response.trim();return {q,response,review,score,answered,assisted:!!s.assisted[id],pending:answered&&(!score||score.pendingPoints>0),needsWork:!answered||!score||score.earnedPoints<score.maxPoints};});
+ return {rows,total:rows.length,answered:rows.filter(r=>r.answered).length,reviewed:rows.filter(r=>r.score&&!r.score.pendingPoints).length,pending:rows.filter(r=>r.pending).length,needsWork:rows.filter(r=>r.needsWork).length,maxPoints:rows.reduce((n,r)=>n+r.q.points,0),earnedPoints:rows.reduce((n,r)=>n+(r.score?.earnedPoints||0),0),aiEstimatedPoints:rows.filter(r=>r.review?.source==='local-ai').reduce((n,r)=>n+(r.score?.earnedPoints||0),0),learnerReviewedPoints:rows.filter(r=>r.review?.source==='learner').reduce((n,r)=>n+(r.score?.earnedPoints||0),0)};
+}
+export function professorMuscleProgress(storage=globalThis.localStorage){
+ let state;try{state=readProfessorState(storage);}catch{return {total:21,attempted:0,reviewed:0,needsReview:0,revised:0,error:true};}
+ const sessions=[...state.history,...state.drafts,...(state.active?[state.active]:[])].sort((a,b)=>a.started-b.started),latest=new Map(),revised=new Set();
+ for(const s of sessions)for(const row of professorResults(s).rows)if(row.answered){latest.set(row.q.id,row);if(s.revisionOf)revised.add(row.q.id);}
+ return {total:professorMuscleQuestions.length,attempted:latest.size,reviewed:[...latest.values()].filter(r=>r.score&&!r.score.pendingPoints).length,needsReview:[...latest.values()].filter(r=>r.pending).length,needsWork:[...latest.values()].filter(r=>r.needsWork).length,revised:revised.size,studied:Object.keys(state.studySeen).length};
+}
+export function professorReportExport(s){return {kind:'Osteon professor muscle review',version:PROFESSOR_MUSCLE_BANK_VERSION,note:'Practice criteria authored by Osteon. AI estimates and learner review are not instructor grades or independently established mastery.',session:s,summary:{...professorResults(s),rows:undefined},answers:professorResults(s).rows.map(r=>({id:r.q.id,number:r.q.number,prompt:r.q.prompt,response:r.response,criteria:r.score?.components||r.q.rubric.criteria,review:r.review||null,source:r.q.sourceUrl}))};}

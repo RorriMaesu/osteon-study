@@ -121,10 +121,10 @@ export function initWorkspace() {
       for(const id of ['study-view','practice-view','progress-view']){
         const root=document.getElementById(id);if(!root.classList.contains('active'))continue;
         if(root.querySelector('.mock-shell')){root.classList.add('workspace-special');continue;}
-        const specialized=root.querySelector('.reader-layout,.lesson-layout,.course-layout,#study-body,.landmark-bank-layout,.lab-list-layout,.exam-layout,.exam-hub-layout');
+        const specialized=root.querySelector('.reader-layout,.lesson-layout,.course-layout,#study-body,.landmark-bank-layout,.lab-list-layout,.exam-layout,.exam-hub-layout,.muscle-labeling-layout,.muscle-worksheet-shell,.professor-muscle-layout');
         if(specialized){
           root.classList.add('workspace-special');
-          if(specialized.classList.contains('exam-hub-layout')){}
+          if(specialized.matches('.exam-hub-layout,.muscle-labeling-layout,.muscle-worksheet-shell,.professor-muscle-layout')){}
           else if(specialized.classList.contains('exam-layout')){const content=root.querySelector('.exam-question-content');mount(content,'Exam question',[...content.children].filter(n=>n.matches('.quiz-top,.exam-evidence-line,#exam-prompt')));}
           else if(specialized.classList.contains('landmark-bank-layout')||specialized.classList.contains('lab-list-layout')){}else if(specialized.classList.contains('reader-layout')){
             mount(root.querySelector('#reader-results'),'Reading results');

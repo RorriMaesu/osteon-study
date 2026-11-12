@@ -1,6 +1,7 @@
 import {isLessonId} from './chapters.js';
 import {atlasMatches,atlasSuggestions} from './atlas-search.js';
 import {initMuscleAtlas} from './muscle-atlas.js';
+import {initMuscleLabeling} from './muscle-label-ui.js';
 import {attachLymphNodeLayer} from './lymph-node-layer.js';
 import {lymphNodeTerms,lymphNodeByKey,lymphNodeInScope,lymphRegions,lymphNodeTextbook,lymphNodeStatus} from './lymph-node-data.js';
 import {attachNervousLayer} from './nervous-layer.js';
@@ -50,7 +51,7 @@ export function setView(view,{route,historyMode='push'}={}){if(!appViews.include
 function showHistoryRoute(initial=false){
  const route=location.hash.slice(1)||'atlas';
  if(route===currentRoute&&!initial)return;
- const routeEvents={'exam3':'openexam3','exam3-exam':'resumeexam3','exam3-results':'exam3results','exam3-card':'exam3card','exam-center':'openexams','exam-session':'resumeexam','bone-list':'lablist','bone-list-session':'lablist','study':'studyhome'};
+ const routeEvents={'exam3':'openexam3','exam3-exam':'resumeexam3','exam3-results':'exam3results','exam3-card':'exam3card','exam-center':'openexams','exam-session':'resumeexam','bone-list':'lablist','bone-list-session':'lablist','study':'studyhome','muscle-labeling':'openmusclelabeling','muscle-worksheet':'openmuscleworksheet','muscle-label-3d':'openmusclespatial','professor-muscle-review':'openprofessormusclereview','professor-muscle-session':'resumeprofessormusclereview','professor-muscle-results':'professormuscleresults'};
  const mockReportId=parseMockReportRoute(route);
  const lesson=route.startsWith('lesson-')?route.slice(7):null,reader=route.match(/^reader-(\d+)$/);
  restoringRoute=true;
@@ -331,6 +332,8 @@ document.addEventListener('lymphnodefocus',ev=>selectTerm(ev.detail));
 document.addEventListener('landmarkpick',ev=>{if(!document.body.dataset.precisionActive)selectTerm(ev.detail);});
 document.addEventListener('viewchange',ev=>{if(ev.detail==='atlas'&&!document.body.classList.contains('quiz-active')){if(ready&&viewer.region!==region)viewer.setRegion(region);if(selected){if(viewer.selectedTerm?.id!==selected.id)selectTerm(selected);else detail(selected);}else resetDetail();syncFilters();}});
 
+const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region=viewer.region;selected=viewer.selectedTerm;$$('[data-browse-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.browseMode===browseMode)));syncFilters();if(selected)detail(selected);else resetDetail();renderList();updateButtons();}});
+initMuscleLabeling({viewer,setView,dialog,toast,escape});
 showHistoryRoute(true);
 if(new URLSearchParams(location.search).get('lablist')==='1'&&['#atlas','#practice'].includes(location.hash))labList.home();
 initClarityPractical({viewer,setView});
@@ -350,6 +353,6 @@ if(linkedNode&&$('#atlas-view').classList.contains('active')){
 }
 document.addEventListener('click',event=>{const id=event.target.closest('[data-member-term]')?.dataset.memberTerm;if(id){const term=allTerms.find(t=>t.id===id);if(term)selectTerm(term);}});
 
-export const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region=viewer.region;selected=viewer.selectedTerm;$$('[data-browse-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.browseMode===browseMode)));syncFilters();if(selected)detail(selected);else resetDetail();renderList();updateButtons();}});
+export {muscleAtlas};
 
 if(new URLSearchParams(location.search).get('muscles')==='1')document.addEventListener('anatomyready',()=>muscleAtlas.openRegion(new URLSearchParams(location.search).get('muscleRegion')||null),{once:true});

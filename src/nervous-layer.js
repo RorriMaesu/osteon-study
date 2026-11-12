@@ -25,7 +25,7 @@ export function attachNervousLayer(viewer,{toast}){
  for(const event of ['pointerdown','pointerup','pointermove','dblclick'])route.addEventListener(event,e=>e.stopPropagation());
  route.addEventListener('pointerenter',()=>{$('#hover-label').hidden=true;});
  const previous=route.querySelector('[data-nerve-prev]'),follow=route.querySelector('[data-nerve-follow]'),next=route.querySelector('[data-nerve-next]');
- const active=()=>enabled&&!viewer.quiz&&!viewer.activeDetail&&$('#atlas-view').classList.contains('active');
+ const active=()=>enabled&&!viewer.quiz&&!viewer.activeDetail&&!viewer.muscleLayer?.coursePracticeActive&&$('#atlas-view').classList.contains('active');
  const current=()=>nerveByKey.get(viewer.selectedTerm?.representation?.nerveKey);
  const fades=()=>active()&&(fade??(!!current()||viewer.focus.level==='overview'));
 

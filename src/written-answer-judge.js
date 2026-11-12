@@ -30,6 +30,7 @@ export function rubricCriteria(question) {
 export function validWrittenQuestion(question) {
   const criteria = rubricCriteria(question), rubric = question?.rubric;
   return question?.type === 'written' && text(question.id,160) && text(question.prompt,5000) &&
+    (question.judgePrompt===undefined||text(question.judgePrompt,5000)) &&
     object(rubric) && text(rubric.id,160) && typeof rubric.version==='string' && text(rubric.version,160) &&
     criteria.length > 0 && criteria.length <= 20 && new Set(criteria.map(c => c.id)).size === criteria.length &&
     criteria.every(c => text(c.id,160) && text(c.label,300) && text(c.description,4000) &&
@@ -39,7 +40,8 @@ export function validWrittenQuestion(question) {
 
 export function questionIdentity(question) {
   return responseIdentity({id:question.id, version:question.version || question.contentVersion || '',
-    prompt:question.prompt, answer:question.answer, points:question.points, rubric:question.rubric});
+    prompt:question.prompt, answer:question.answer, points:question.points, rubric:question.rubric,
+    ...(question.judgePrompt===undefined?{}:{judgePrompt:question.judgePrompt})});
 }
 
 export function writtenReviewSchema(question) {
@@ -187,7 +189,7 @@ export class WrittenAnswerJudge {
     const identity=localModelIdentity(entry,endpoint);
     if(shared&&identity!==connectedIdentity)throw new Error('The installed model changed since connection setup. Recheck Local AI setup and the grading model before reviewing this answer.');
     const schema=writtenReviewSchema(question);
-    const payload={question:question.prompt, studentResponse:response,
+    const payload={question:question.judgePrompt??question.prompt, studentResponse:response,
       rubric:{id:question.rubric.id,version:question.rubric.version,criteria:rubricCriteria(question)},
       modelAnswer:question.rubric.modelAnswer || question.answer, explanation:question.explanation || '',
       sourceContext:question.sourceContext || question.sources || question.evidence || []};

@@ -38,9 +38,9 @@ export class AnatomyViewer {
   el.addEventListener('pointerup',e=>{
    const tapped=this.down&&!this.multiTouch&&Math.hypot(e.clientX-this.down[0],e.clientY-this.down[1])<6;
    this.activePointers.delete(e.pointerId);if(!this.activePointers.size)this.multiTouch=false;
-   if(tapped&&e.button===0){const m=this.hit(e);if(m){if(this.peel||e.shiftKey){this.lastTap=null;document.querySelector('#hover-label').hidden=true;this.peelSurface(m);}else{
+   if(tapped&&e.button===0){const m=this.hit(e),musclePractice=this.muscleLayer?.coursePracticeActive;if(m){if(!musclePractice&&(this.peel||e.shiftKey)){this.lastTap=null;document.querySelector('#hover-label').hidden=true;this.peelSurface(m);}else{
     this.onPick(m);
-    if(e.pointerType==='touch'){
+    if(e.pointerType==='touch'&&!musclePractice){
      const now=performance.now(),next={bone:m.userData.muscleId?(m.userData.component.muscleName+'|'+m.userData.component.side):boneId(m.userData.zname),time:now,x:e.clientX,y:e.clientY};
      if(doubleTap(this.lastTap,next)){this.lastTap=null;this.touchNavigationAt=now;this.navigateBone(m);e.preventDefault();}
      else this.lastTap=next;
@@ -48,11 +48,11 @@ export class AnatomyViewer {
    }}else this.lastTap=null;}else this.lastTap=null;
    this.down=null;
   });
-  el.addEventListener('dblclick',e=>{e.preventDefault();if(performance.now()-(this.touchNavigationAt||-1000)<800||this.peel||e.shiftKey)return;const m=this.hit(e);if(m)this.navigateBone(m);});
+  el.addEventListener('dblclick',e=>{e.preventDefault();if(this.muscleLayer?.coursePracticeActive||performance.now()-(this.touchNavigationAt||-1000)<800||this.peel||e.shiftKey)return;const m=this.hit(e);if(m)this.navigateBone(m);});
   el.addEventListener('keydown',e=>{if(e.target!==el||!this.loaded||e.altKey||e.ctrlKey||e.metaKey)return;
    if(this.keyboardCamera(e.key)){e.preventDefault();return;}
    if(this.quiz)return;if(e.key==='Enter'){e.preventDefault();if(this.selected[0])this.navigateBone(this.selected[0]);}else if(e.key==='Escape'){e.preventDefault();this.back();}});
-  el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.down||e.pointerType==='touch'){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.peel?'Hide this surface':this.displayName(m)+(boneFamily(m.userData.zname)?this.focus.level==='overview'?' · Double-click → region':this.focus.level==='region'?' · Double-click → one bone':'':'');const r=el.getBoundingClientRect();label.style.left=Math.max(4,Math.min(e.clientX-r.left+14,r.width-250))+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+this.el.offsetTop+'px';}el.style.cursor=m?'pointer':'grab';});
+  el.addEventListener('pointermove',e=>{const label=document.querySelector('#hover-label');if(this.quiz||this.muscleLayer?.coursePracticeActive||this.down||e.pointerType==='touch'){label.hidden=true;return;}const m=this.hit(e);label.hidden=!m;if(m){label.textContent=this.peel?'Hide this surface':this.displayName(m)+(boneFamily(m.userData.zname)?this.focus.level==='overview'?' · Double-click → region':this.focus.level==='region'?' · Double-click → one bone':'':'');const r=el.getBoundingClientRect();label.style.left=Math.max(4,Math.min(e.clientX-r.left+14,r.width-250))+'px';label.style.top=Math.max(42,e.clientY-r.top-30)+this.el.offsetTop+'px';}el.style.cursor=m?'pointer':'grab';});
   el.addEventListener('pointerleave',()=>{document.querySelector('#hover-label').hidden=true;});
   this.resizeObserver=new ResizeObserver(()=>this.resize());this.resizeObserver.observe(el);
   this.controls.addEventListener('start',()=>{this.tween=null;document.querySelectorAll('[data-camera]').forEach(b=>b.classList.remove('active'));});
@@ -201,7 +201,9 @@ export class AnatomyViewer {
    const blockers=[boneHit,this.nervousLayer?.intersection(this.ray),this.muscleLayer?.intersection(this.ray)];
    return blockers.some(hit=>hit&&hit.object.material.opacity>=.45&&hit.distance+.0005<node.distance)?null:node.object;
   };
-  const hit=boneAt(0,0),node=nodeAt(hit);
+  const hit=boneAt(0,0);
+  if(this.muscleLayer?.coursePracticeActive)return this.graphicsLost?null:this.muscleLayer.pick(this.ray,hit)||null;
+  const node=nodeAt(hit);
   if(node)return node;
   const nerve=this.nervousLayer?.pick(this.ray,hit);
   if(nerve)return nerve;

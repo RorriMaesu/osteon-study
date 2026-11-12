@@ -1,5 +1,9 @@
 import {activeChapters} from './chapters.js';
 import {chapter11Muscles} from './chapter11-muscles.js';
+import {worksheetTermIds,worksheetSourcesByTerm} from './muscle-label-ui.js';
+import {courseMuscleTargetById} from './muscle-spatial-data.js';
+import {dueMuscleLabels,muscleLabelCoverage} from './muscle-label-progress.js';
+import {professorMuscleProgress,PROFESSOR_MUSCLE_KEY} from './professor-muscle-store.js';
 import {readQuickPractice,writeQuickPractice} from './quick-practice.js';
 import {openWordingPractice} from './wording-practice.js';
 import {anatomyQuestion} from './anatomy-answer.js';
@@ -20,6 +24,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  const quantity=(n,label)=>`${n} ${label}${n===1?'':'s'}`;
  let session=null,flash=null,savedQuick=readQuickPractice(localStorage,allTerms),draftWarning=false,quickSetupOpen=false;
  const ui={region:'All regions',count:10};
+ const hasMuscleExercise=()=>/^#(?:muscle-labeling|muscle-worksheet|professor-muscle-(?:review|session|results))$/.test(location.hash);
  function checkpoint(run=session){
   savedQuick=run;
   try{writeQuickPractice(localStorage,run);}catch{if(!draftWarning){draftWarning=true;toast('Quick practice could not be saved on this device. Keep this tab open.');}}
@@ -32,6 +37,8 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
   <button class="mock-shortcut" data-mock-open><strong>Exam 3 mock</strong><small>44 questions · 60 points · course-grounded</small></button>
   <button class="primary" id="bone-list-test"><strong>Required bone-list test</strong><small>BI 231 checklist · saved progress</small></button>
   <button id="practice-muscle-checklist"><strong>Muscle checklist practice</strong><small>BI 231 · identification and explanations</small></button>
+  <button id="practice-muscle-labeling"><strong>Muscle labeling</strong><small>Worksheet, source figures and 3D</small></button>
+  <button id="practice-professor-muscles"><strong>Professor’s 21-question review</strong><small>Chapters 10–11 · written practice</small></button>
   <button id="practice-exams"><strong>Chapter exams</strong><small>50 per chapter · feedback at submission</small></button>
   <button id="practice-quick" aria-controls="practice-quick-setup" aria-expanded="${quickSetupOpen}"><strong>Quick 3D practice</strong><small>5–20 questions · feedback after each</small></button>
  </div>
@@ -42,6 +49,8 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  if($('#resume-spatial'))$('#resume-spatial').onclick=async()=>{const draft=savedQuick,entry=$('#resume-spatial');entry.disabled=true;try{await viewer.ensureBase();if($('#practice-view').classList.contains('active')&&draft===savedQuick)startSpatial(draft.mode,draft.items,draft);}catch{toast('The skeleton could not load. Select Continue to retry.');}finally{if(entry.isConnected)entry.disabled=false;}};
  $('#nerve-recall').onclick=()=>location.assign('nerve-recall.html');
  $('#practice-muscle-checklist').onclick=openMuscleChecklist;
+ $('#practice-muscle-labeling').onclick=()=>document.dispatchEvent(new Event('openmusclelabeling'));
+ $('#practice-professor-muscles').onclick=()=>document.dispatchEvent(new Event('openprofessormusclereview'));
  $('#practice-exams').onclick=()=>document.dispatchEvent(new Event('openexams'));$('#bone-list-test').onclick=()=>document.dispatchEvent(new Event('lablist'));$('#textbook-landmarks').onclick=()=>document.dispatchEvent(new Event('landmarkbank'));$('#complete-course').onclick=()=>document.dispatchEvent(new Event('completecourse'));$('#practice-division').onchange=ev=>{setDivision(ev.target.value);if(!regionAvailable(ui.region,viewer.division,allTerms))ui.region='All regions';practiceHome();};$('#practice-region').onchange=ev=>{ui.region=ev.target.value;practiceHome();};$('#session-length').onchange=ev=>ui.count=+ev.target.value;$('#locate-start').onclick=()=>launchSpatial('locate');$('#identify-start').onclick=()=>launchSpatial('identify');$('#flash-start').onclick=()=>startFlash();$('#due-start').onclick=()=>startFlash(queues.anatomy,true);$('#chapter-due-start').onclick=()=>startFlash(queues.chapters,true);$('#mixed-concepts').onclick=()=>document.dispatchEvent(new Event('mixedconcepts'));
  }
  function loadQuickModel(){
@@ -128,6 +137,9 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  let examHistory=[];try{const saved=JSON.parse(localStorage.getItem('osteon-exams-v1'));if(Array.isArray(saved?.history))examHistory=saved.history;}catch{}
  const automatic=automaticPracticeQuestions(questions),rubric=rubricStudyEvidence(questions,examHistory),p=getProgress(),s=objectiveStats(),queues=reviewQueues(terms,reviewCards,p),lab=retrievalPlan(terms,p.attempts),concepts=retrievalPlan(automatic,p.attempts),seen=new Set(p.attempts.map(a=>a.id));
  const dueFigures=dueMuscleFigureReviews(p);
+ const muscleCoverage=muscleLabelCoverage(chapter11Muscles.filter(card=>card.courseChecklist),worksheetTermIds,p);
+ const worksheetDue=dueMuscleLabels('worksheet',p).length,spatialDue=dueMuscleLabels('spatial',p).length;
+ const professor=professorMuscleProgress(localStorage);
  const labNext=lab.next.slice(0,10),conceptNext=concepts.next.slice(0,10);
  const segment=(n,kind)=>n?`<span class="${kind}" style="width:${n/terms.length*100}%"></span>`:'';
  $('#progress-view').innerHTML=intro('YOUR LEARNING RECORD','Small sessions.<br><em>Lasting knowledge.</em>','Accuracy reflects scored, unassisted retrieval. Reading and self-rated cards are recorded separately.')+`
@@ -138,16 +150,36 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  <div class="learning-panel"><div class="eyebrow">SPACED RECALL</div><h2>Return when <em>it is due.</em></h2><p>Due now: ${quantity(queues.allAnatomy.length,'lab card')} and ${quantity(queues.chapters.length,'chapter card')}. Review queues here include all regions and both skeleton divisions.</p><div class="control-row"><button id="progress-lab-due" ${queues.allAnatomy.length?'':'disabled'}>Review ${quantity(queues.allAnatomy.length,'lab card')} ↗</button><button id="progress-chapter-due" ${queues.chapters.length?'':'disabled'}>Review ${quantity(queues.chapters.length,'chapter card')} ↗</button><button id="progress-figure-due" ${dueFigures.length?'':'disabled'}>Review ${quantity(dueFigures.length,'due figure')} ↗</button></div><p class="tiny" style="margin-top:20px">${s.assisted} assisted scored attempts · ${quantity(p.attempts.filter(a=>a.selfRated).length,'self-rated card review')}. Card ratings update the review schedule separately from scored retrieval.</p></div></div>
  <div class="learning-panel" style="margin-top:24px"><h3>Unassisted accuracy by topic</h3><p class="tiny">Written rubric scores are shown separately; they do not enter these automatic retrieval totals.</p><p class="tiny">${p.attempts.filter(a=>a.review&&a.review.status!=='unavailable').length} attempts have a local AI review. AI spelling/meaning decisions are retained with the original answer-key result in exported progress.</p>${[...regions.slice(1),...activeChapters.map(c=>'Chapter '+c.id)].map(r=>{const st=objectiveStats(p.attempts.filter(a=>a.topic===r));return`<div class="topic-row"><span>${r} <small class="tiny">(${st.unassisted})</small></span><div class="progress-bar"><span style="width:${st.accuracy||0}%"></span></div><span>${st.accuracy===null?'—':st.accuracy+'%'}</span></div>`;}).join('')}</div>
  <div class="learning-panel" style="margin-top:24px"><h3>Your data, in your hands.</h3><p>Saved in this browser${hasStorage()?'':' · browser storage is unavailable; export before leaving'}. Back up your study work before changing devices. Preview the contents before restoring.</p><div class="control-row"><button id="export-data">Export progress ↓</button><label for="import-data">Import backup</label><input type="file" id="import-data" accept="application/json,.json"><button id="reset-data">Reset history</button></div><p id="import-status" role="status"></p></div>`;
- $('#progress-view .section-intro').insertAdjacentHTML('afterend',`<div class="learning-panel"><span class="eyebrow">WRITTEN EXPLANATIONS / SEPARATE RUBRIC RECORD</span><h2>Explain the connection.</h2><p>${rubric.submitted}/${rubric.total} explanations submitted · ${rubric.reviewed} locally reviewed · ${rubric.selfReviewed} learner-reviewed · ${rubric.pending} awaiting a complete review.</p><p class="tiny">This record uses the latest submitted response for each written prompt. Self-review and AI rubric decisions remain distinct from automatically scored retrieval. Unresolved points are not counted as mistakes.</p><div class="control-row"><button id="progress-rubric">Practice two explanations</button><button id="progress-exam-reports">Exam results & rubric reviews ↗</button></div></div>`+dailyPlanHTML(localStorage,e));bindDailyPlan($('#progress-view'),{dialog,toast,escape:e,onChange:progressPage});
+ $('#progress-view .section-intro').insertAdjacentHTML('afterend',`<div class="learning-panel"><span class="eyebrow">WRITTEN EXPLANATIONS / SEPARATE RUBRIC RECORD</span><h2>Explain the connection.</h2><p>${rubric.submitted}/${rubric.total} explanations submitted · ${rubric.reviewed} locally reviewed · ${rubric.selfReviewed} learner-reviewed · ${rubric.pending} awaiting a complete review.</p><p class="tiny">This record uses the latest submitted response for each written prompt. Self-review and AI rubric decisions remain distinct from automatically scored retrieval. Unresolved points are not counted as mistakes.</p><div class="control-row"><button id="progress-rubric">Practice two explanations</button><button id="progress-exam-reports">Exam results & rubric reviews ↗</button></div></div>`+`<section class="learning-panel muscle-progress-panel"><h2>BI 231 muscle practice</h2>
+  <p>${muscleCoverage.filter(row=>row.worksheet).length}/${muscleCoverage.length} checklist entries practiced on diagrams · ${muscleCoverage.filter(row=>row.spatial).length}/${muscleCoverage.length} on the 3D model.</p>
+  <p>${professor.attempted}/${professor.total} professor questions attempted · ${professor.reviewed} reviewed · ${professor.revised} revised.</p>
+  <div class="control-row"><button id="progress-muscle-diagrams">${worksheetDue?'Review '+quantity(worksheetDue,'diagram target'):'Open diagram practice'}</button><button id="progress-muscle-spatial">${spatialDue?'Review '+quantity(spatialDue,'3D target'):'Open muscle labeling'}</button><button id="progress-professor-muscles">Professor’s review ↗</button><button id="progress-muscle-checklist">View practice checklist</button></div></section>`+dailyPlanHTML(localStorage,e));bindDailyPlan($('#progress-view'),{dialog,toast,escape:e,onChange:progressPage});
  $('#progress-rubric').onclick=()=>{const rows=rubric.rows.filter(r=>r.state==='unattempted');const pool=rows.length?rows:rubric.rows,chosen=[];for(const row of pool)if(!chosen.some(q=>q.lesson.split('.')[0]===row.q.lesson.split('.')[0]))chosen.push(row.q);for(const row of pool)if(chosen.length<2&&!chosen.includes(row.q))chosen.push(row.q);document.dispatchEvent(new CustomEvent('exampractice',{detail:chosen.slice(0,2).map(q=>q.id)}));};$('#progress-exam-reports').onclick=()=>{const row=rubric.rows.find(r=>r.state==='pending')||rubric.rows.find(r=>r.session);document.dispatchEvent(row?new CustomEvent('openexamreport',{detail:{id:row.session.id,written:true}}):new Event('openexams'));};
+ $('#progress-muscle-diagrams').onclick=()=>document.dispatchEvent(new CustomEvent('openmuscleworksheet',{detail:{due:!!worksheetDue,from:'progress'}}));
+ $('#progress-muscle-spatial').onclick=()=>document.dispatchEvent(spatialDue?new CustomEvent('openmusclespatial',{detail:{due:true,from:'progress'}}):new Event('openmusclelabeling'));
+ $('#progress-professor-muscles').onclick=()=>document.dispatchEvent(new Event('openprofessormusclereview'));
+ $('#progress-muscle-checklist').onclick=()=>{
+  const rows=muscleCoverage.map(row=>{
+   const source=worksheetSourcesByTerm.get(row.id),model=courseMuscleTargetById.get(row.id);
+   const diagram=source?`<button data-checklist-diagram="${row.id}">${row.worksheet?'Practiced':source==='local'?'Import worksheet':'Practice'}</button>`:'—';
+   const spatial=model?.componentIds.length?`<button data-checklist-spatial="${row.id}">${model.spatialEligible?(row.spatial?'Practiced':'Practice'):'Study view'}</button>`:'—';
+   return `<tr><th scope="row">${e(row.name)}</th><td>${diagram}</td><td>${spatial}</td></tr>`;
+  });
+  dialog(`<h2>Muscle practice checklist</h2><p>All ${rows.length} course entries. Choose a practice button to open a target. A dash means that format has no reviewed target for this entry.</p><table class="review-table"><thead><tr><th scope="col">Course entry</th><th scope="col">Diagram</th><th scope="col">3D</th></tr></thead><tbody>${rows.join('')}</tbody></table>`);
+  $('#dialog-content').querySelectorAll('[data-checklist-diagram],[data-checklist-spatial]').forEach(button=>button.onclick=()=>{
+   const {checklistDiagram,checklistSpatial}=button.dataset;
+   $('#info-dialog').close();
+   document.dispatchEvent(new CustomEvent(checklistDiagram?'openmuscleworksheet':'openmusclespatial',{detail:{termId:checklistDiagram||checklistSpatial,initialMode:'label',from:'progress'}}));
+  });
+ };
  $('#progress-landmarks').onclick=()=>document.dispatchEvent(new Event('landmarkbank'));$('#progress-practice').onclick=()=>document.dispatchEvent(new CustomEvent('coursequeue',{detail:labNext.map(t=>t.id)}));
  $('#progress-concepts').onclick=()=>document.dispatchEvent(new CustomEvent('conceptqueue',{detail:conceptNext.map(t=>t.id)}));
  $('#progress-lab-due').onclick=()=>startFlash(queues.allAnatomy,true);
  $('#progress-figure-due').onclick=()=>document.dispatchEvent(new CustomEvent('duefigures',{detail:{chapters:[10,11],back:'progress'}}));
  $('#progress-chapter-due').onclick=()=>startFlash(queues.chapters,true);
- bindStudyBackups($('#progress-view'),{dialog,toast,escape:e});$('#reset-data').onclick=()=>{dialog('<h2>Reset your history?</h2><p>This clears attempts, card schedules and lesson read status on this device. Export a backup first if you want to keep them.</p><button id="confirm-reset">Reset local history</button>');$('#confirm-reset').onclick=()=>{resetProgress();$('#info-dialog').close();progressPage();toast('Local study history reset.');};};
+ bindStudyBackups($('#progress-view'),{dialog,toast,escape:e});$('#reset-data').onclick=()=>{dialog('<h2>Reset your history?</h2><p>This clears attempts, card schedules and lesson read status on this device. Export a backup first if you want to keep them.</p><button id="confirm-reset">Reset local history</button>');$('#confirm-reset').onclick=()=>{resetProgress();localStorage.removeItem(PROFESSOR_MUSCLE_KEY);$('#info-dialog').close();progressPage();toast('Local study history reset.');};};
  }
- document.addEventListener('viewchange',ev=>{if(ev.detail!=='practice')flash=null;if(session&&(ev.detail!=='atlas'||location.hash!=='#quick-practice'))endSpatial(false);if(ev.detail==='practice'&&!flash&&!document.body.dataset.conceptActive&&!document.body.dataset.precisionActive)practiceHome();if(ev.detail==='progress')progressPage();});document.addEventListener('anatomyready',()=>{if(!$('#practice-view .landmark-bank-layout')&&!flash&&!session&&!document.body.dataset.conceptActive&&!document.body.dataset.precisionActive)practiceHome();if($('#progress-view').classList.contains('active'))progressPage();});document.addEventListener('storagefailed',()=>toast('Browser storage is full or unavailable. Export progress before leaving.'));
+ document.addEventListener('viewchange',ev=>{if(ev.detail!=='practice')flash=null;if(session&&(ev.detail!=='atlas'||location.hash!=='#quick-practice'))endSpatial(false);if(ev.detail==='practice'&&!hasMuscleExercise()&&!flash&&!document.body.dataset.conceptActive&&!document.body.dataset.precisionActive)practiceHome();if(ev.detail==='progress')progressPage();});document.addEventListener('anatomyready',()=>{if(!hasMuscleExercise()&&!$('#practice-view .landmark-bank-layout')&&!flash&&!session&&!document.body.dataset.conceptActive&&!document.body.dataset.precisionActive)practiceHome();if($('#progress-view').classList.contains('active'))progressPage();});document.addEventListener('storagefailed',()=>toast('Browser storage is full or unavailable. Export progress before leaving.'));
  $('#start-practice').disabled=false;$('#start-practice').onclick=()=>{flash=null;practiceHome();setView('practice');};$$('[data-view="practice"],[data-view="progress"]').forEach(b=>b.disabled=false);
  practiceHome();progressPage();
 }

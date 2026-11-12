@@ -72,6 +72,8 @@ My Progress can preview and merge matching earlier Cell Studio, Tissue Studio, L
 - [Muscular system](https://rorrimaesu.github.io/osteon-study/#lesson-11.1) covers all six sections with regional cards, fascicle patterns, muscle naming, levers and anatomy relationships. Use Explore to study a marked OpenStax figure and My Progress to retry due figure targets.
 - [Practice Lab](https://rorrimaesu.github.io/osteon-study/#practice) offers a separate BI 231 muscle checklist practice set. All 67 course entries have a location, action or function, and general-attachment prompt. Selected entries also have scored figure identification.
 - [Exam Center](https://rorrimaesu.github.io/osteon-study/#exam-center) offers two 60-question forms worth 100 points each, evenly divided by chapter. Reports show the aligned objectives sampled by the actual questions and offer follow-up practice. Written responses have learner rubrics and optional local AI estimates.
+- [Muscle labeling](https://rorrimaesu.github.io/osteon-study/#muscle-labeling) combines source figures, an on-device import for the BI 231 worksheet, and interactive 3D identification. My Progress tracks missed targets and checklist practice by format.
+- [Professor’s 21-question review](https://rorrimaesu.github.io/osteon-study/#professor-muscle-review) offers Study, Rehearse, and Exam modes. Each written prompt has a rubric, source reference, and a way to revise the original answer in a separate attempt.
 
 ## Chapters 6–9 exam preparation
 

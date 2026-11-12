@@ -12,7 +12,7 @@ export function attachLymphNodeLayer(viewer,{toast}){
  const requests=new Map(),loaded=new Map(),failed=new Set();
  const materials=[new THREE.MeshStandardMaterial({color:nodeColor,emissive:0x152a08,roughness:.48}),new THREE.MeshStandardMaterial({color:selectedColor,emissive:0x52651a,roughness:.48})];
  let enabled=false,loading=false,fade=null,revision=0,visible=[];
- const available=()=>viewer.loaded&&!viewer.quiz&&!viewer.activeDetail&&$('#atlas-view').classList.contains('active');
+ const available=()=>viewer.loaded&&!viewer.quiz&&!viewer.activeDetail&&!viewer.muscleLayer?.coursePracticeActive&&$('#atlas-view').classList.contains('active');
  const active=()=>enabled&&available();
  const current=()=>lymphNodeByKey.get(viewer.selectedTerm?.representation?.lymphNodeKey);
  const fades=()=>active()&&(fade??(viewer.focus.level==='overview'||!!current()));

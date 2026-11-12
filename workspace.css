@@ -554,3 +554,60 @@ body.viewer-room-open{overflow:hidden!important}
  .muscle-source-preview .section-diagram-source figcaption { font-size: .72rem; line-height: 1.35; }
  .muscle-source-preview .muscle-source-actions { gap: 6px; }
 }
+
+.muscle-labeling-layout {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(0, 1fr));
+ gap: 14px;
+ align-content: start;
+}
+.muscle-labeling-layout article { min-width: 0; }
+.muscle-labeling-layout h2, .muscle-progress-panel h2 { margin-block: 0 8px; }
+.muscle-labeling-layout p, .muscle-progress-panel p { margin-block: 0 12px; }
+.muscle-worksheet-shell, .professor-muscle-layout { min-height: 0; min-width: 0; }
+.specimen-stage .muscle-spatial-answer input, .mw-practice #mw-response {
+ background: #0e1e21;
+ border: 1px solid #516c63;
+ border-radius: 8px;
+ color: inherit;
+ padding-inline: 10px;
+}
+.specimen-stage .muscle-spatial-answer input:focus-visible {
+ outline: 2px solid var(--mint, #b7d6bf);
+ outline-offset: 2px;
+}
+.professor-muscle-layout { display: grid; align-content: start; gap: 12px; }
+.professor-muscle-layout > .learning-panel { min-width: 0; max-width: 960px; width: 100%; margin-inline: auto; }
+.professor-muscle-layout h2 { margin-block: 8px; line-height: 1.18; }
+.professor-muscle-layout select { max-width: 100%; min-width: 0; text-overflow: ellipsis; }
+.professor-muscle-layout label { display: block; margin-block: 8px 4px; }
+#prof-response {
+ display: block;
+ box-sizing: border-box;
+ width: 100%;
+ min-height: 7rem;
+ padding: 12px;
+ border: 1px solid #516c63;
+ border-radius: 8px;
+ background: #0e1e21;
+ color: inherit;
+ font: inherit;
+ line-height: 1.45;
+ resize: vertical;
+}
+#prof-response:focus { outline: 2px solid var(--mint, #b7d6bf); outline-offset: 2px; }
+.professor-muscle-layout p:empty { display: none; }
+@media (min-width: 1000px) {
+ .muscle-worksheet-shell, .professor-muscle-layout { flex: 1; overflow-y: auto; }
+}
+@media (max-width: 640px) {
+ .muscle-labeling-layout { grid-template-columns: minmax(0,1fr); }
+ body[data-professor-muscle-active] #practice-view > .section-intro { margin-block: 0 10px; }
+ body[data-professor-muscle-active] #practice-view > .section-intro h1 { font-size: clamp(26px, 8vw, 35px); }
+ .professor-muscle-layout > .learning-panel { padding: 12px; }
+ .professor-muscle-layout h2 { font-size: clamp(21px, 6vw, 27px); }
+ .professor-muscle-layout .control-row { gap: 6px; }
+ .professor-muscle-layout button, .professor-muscle-layout select { min-height: 44px; }
+ .professor-muscle-layout .score-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ #prof-response { font-size: max(16px, 1em); }
+}

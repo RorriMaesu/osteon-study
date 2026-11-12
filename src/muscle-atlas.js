@@ -4,11 +4,17 @@ import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import manifest from './muscle-models.json' with {type:'json'};
 import {setLearningContext} from './learning-context.js';
 import {muscleCoverage} from './muscle-coverage.js';
+import {createMuscleSpatialPractice} from './muscle-spatial.js';
 
 import {captureBoneView,restoreBoneView,prepareMuscleNavigation,muscleContextForView,boneViewKey} from './muscle-view.js';
 import {muscleScopeRegions,muscleScopeNames,muscleRegions,componentVisible,componentColor,muscleBoneContext,muscleFacts,muscleLabelPosition} from './muscle-data.js';
 export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
- if(!viewer.scene||!viewer.renderer)return {unavailable:true,openRegion:async()=>toast('3D anatomy is unavailable here. The complete readings and exams remain available.')};
+ if(!viewer.scene||!viewer.renderer){
+  const spatial=createMuscleSpatialPractice({viewer,escape:e,unavailable:true});
+  const unavailable={unavailable:true,state:{enabled:false},get coursePracticeActive(){return spatial.active;},ownsFocus:()=>false,release(){},syncControls(){},
+   openCoursePractice:spatial.open,closeCoursePractice:spatial.close,openRegion:async()=>toast('3D anatomy is unavailable here. The complete readings and exams remain available.')};
+  viewer.muscleLayer=unavailable;return unavailable;
+ }
  const $=s=>document.querySelector(s),sidebar=$('.structure-sidebar'),oldPick=viewer.onPick,initialGhostTitle=$('#ghost-btn').title;
  const state={enabled:false,region:'all',side:'both',depth:'all',support:false,focused:false,groupOnly:false,selected:null,colors:false,labels:true,pick:'muscles',query:'',page:0};
  const loaded=new Map(),loading=new Map(),meshes=[];let actionVersion=0,busy=false,level='region',before=null,overlayWasOn=false,loadStatus='',lastBoneView='';const initialTotal=$('#structure-total').textContent;
@@ -29,7 +35,7 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
  async function ensureRegion(){busy=true;renderBrowser();try{const regions=muscleScopeRegions(state.region);for(const [i,r]of regions.entries()){loadStatus='Loading '+(i+1)+'/'+regions.length+' · '+muscleRegions[r];renderBrowser();await load(r);}}catch(err){toast('Muscle loading did not finish. Your skeleton and saved study work remain available. Use Retry.');console.error(err);}finally{busy=loading.size>0;loadStatus='';viewer.applyVisibility();renderBrowser();}}
  function bounds(targets){const box=new THREE.Box3();targets.forEach(m=>box.union(m.userData.bounds));return box;}
  function visibleTargets(){return meshes.filter(m=>m.visible);}
- function frame(side='front'){if(state.enabled&&state.preserveBoneContext){state.preserveBoneContext=false;prepareMuscleNavigation(viewer);}const ids=new Set(focusComponents().map(c=>c.id)),target=state.focused?meshes.filter(m=>ids.has(m.userData.muscleId)&&m.visible):visibleTargets();if(target.length){const box=bounds(target);box.expandByScalar(state.focused?.025:.045);viewer.frameBox(box,side);}}
+ function frame(side='front'){if(spatial.active){spatial.frame(side);return;}if(state.enabled&&state.preserveBoneContext){state.preserveBoneContext=false;prepareMuscleNavigation(viewer);}const ids=new Set(focusComponents().map(c=>c.id)),target=state.focused?meshes.filter(m=>ids.has(m.userData.muscleId)&&m.visible):visibleTargets();if(target.length){const box=bounds(target);box.expandByScalar(state.focused?.025:.045);viewer.frameBox(box,side);}}
  function selectedRecord(){return byId.get(state.selected);}
  function selectedComponents(){const c=selectedRecord();return c?manifest.components.filter(x=>!x.retired&&(x.id===c.id||(!state.partOnly&&x.muscleName===c.muscleName&&x.side===c.side))):[];}
  function groupMembers(){const c=selectedRecord();return c?.memberOf?manifest.components.filter(x=>!x.retired&&x.memberOf===c.memberOf&&x.side===c.side):[];}
@@ -79,10 +85,40 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
   $('.viewer-hint').textContent=viewer.peel?'Peel is on. Turn it off to select a muscle.':state.groupOnly?'Group view · '+groupMembers().length+' muscles · Select a member to compare':'Double-click or double-tap a muscle to focus · Drag to rotate';
  }
  const ray=new THREE.Raycaster();
+ let courseBefore=null;
+ function enterCourseRegion(region){
+  if(!courseBefore){
+   const stage=viewer.el.closest('.specimen-stage'),plate=stage.querySelector('#landmark-stage');
+   courseBefore={state:{...state},level,bone:captureBoneView(viewer),peeled:[...viewer.peeledSurfaces],landmarks:!!viewer.landmarksVisible,reference:viewer.referenceOpen,plate,plateHidden:plate?.hidden};
+   viewer.drawerMotion?.stop();viewer.landmarkOverlay?.setEnabled(false);
+   viewer.activeDetail=null;viewer.referenceOpen=false;stage.classList.remove('reference-open');if(plate)plate.hidden=true;
+   viewer.peeledSurfaces.clear();viewer.controls.autoRotate=false;viewer.lastTap=null;
+   prepareMuscleNavigation(viewer);
+  }
+  ++actionVersion;
+  Object.assign(state,{enabled:true,region,side:'both',depth:'all',support:true,preserveBoneContext:false,selected:null,focused:false,groupOnly:false,partOnly:false,pick:'muscles',query:'',page:0});
+  level='region';viewer.applyVisibility();
+ }
+ function exitCourse(){
+  if(!courseBefore)return;
+  const saved=courseBefore;courseBefore=null;++actionVersion;Object.assign(state,saved.state);level=saved.level;
+  viewer.peeledSurfaces.clear();for(const surface of saved.peeled)viewer.peeledSurfaces.add(surface);
+  viewer.lastTap=null;viewer.referenceOpen=saved.reference;
+  viewer.el.closest('.specimen-stage').classList.toggle('reference-open',!!saved.reference);
+  if(saved.plate)saved.plate.hidden=saved.plateHidden;
+  restoreBoneView(viewer,saved.bone,{restoreCamera:true});
+  if(saved.landmarks)viewer.landmarkOverlay?.setEnabled(true);
+  renderBrowser();if(state.enabled){if(state.selected)showDetail();else showOverview();}else onExit?.();
+  document.dispatchEvent(new Event('layerschanged'));
+ }
+ const spatial=createMuscleSpatialPractice({viewer,escape:e,enter:enterCourseRegion,loadRegion:load,exit:exitCourse,visibleMeshes:visibleTargets,
+  refresh:()=>{if(viewer.loaded)viewer.applyVisibility();},frameMeshes:(targets,side)=>{if(targets.length)viewer.frameBox(bounds(targets).expandByScalar(.014),side);}});
  const api={
   state,manifest,meshes,
+  get coursePracticeActive(){return spatial.active;},openCoursePractice:spatial.open,closeCoursePractice:spatial.close,
   syncControls(){
    syncToggle();
+   if(spatial.active)return;
    if(!api.ownsFocus()){$('#ghost-btn').title=initialGhostTitle;return;}
    viewer.el.setAttribute('aria-label','3D muscle atlas. Drag to rotate. Double-click or double-tap a muscle to focus. Back goes one step. Full skeleton returns to the bone atlas.');
    $('#skull-controls').hidden=true;$('#skull-key').hidden=true;
@@ -94,6 +130,22 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
    next.hidden=viewer.referenceOpen||viewer.peel||state.focused;next.disabled=!state.selected;next.textContent='Focus muscle';next.onclick=()=>api.toggleIsolation();
   },
   updateVisibility(){
+   const practice=spatial.presentation;
+   if(practice){
+    group.visible=state.enabled&&!viewer.quiz&&!viewer.activeDetail;
+    for(const o of viewer.scene.children)if(o.userData.ground)o.visible=false;
+    for(const m of meshes){
+     const c=m.userData.component;m.visible=group.visible&&c.region===state.region&&practice.ids.has(c.id)&&!c.retired;
+     const highlighted=practice.emphasized.has(c.id);
+     m.material.color.set(highlighted?'#e4b473':'#ad6554');m.material.emissive.setHex(highlighted?0x382312:0);m.material.opacity=1;m.material.transparent=false;m.material.depthWrite=true;
+    }
+    const local=visibleTargets(),box=local.length?bounds(local).expandByScalar(.05):null;
+    for(const m of viewer.meshes){
+     m.visible=!!(box&&m.visible&&!m.userData.detailGroup&&!m.userData.nonbone&&!m.userData.tissue&&!m.userData.guideOnly&&muscleBoneContext(m.userData.zname,state.region,state.side)&&box.intersectsBox(m.userData.bounds));
+     if(m.visible){m.material.opacity=.24;m.material.transparent=true;m.material.depthWrite=false;}
+    }
+    label.hidden=true;labelLine.style.display='none';viewer.needsRender=true;return;
+   }
    group.visible=!viewer.quiz&&!viewer.activeDetail;if(state.enabled&&!viewer.quiz&&!viewer.activeDetail)for(const o of viewer.scene.children)if(o.userData.ground)o.visible=state.region==='all'&&!state.focused;
    const selected=selectedRecord(),selectedIds=new Set(selectedComponents().map(c=>c.id)),focusIds=new Set(focusComponents().map(c=>c.id));if(api.ownsFocus())syncNavigation();for(const m of meshes){const c=m.userData.component;m.visible=componentVisible(c,{...state,quiz:viewer.quiz,activeDetail:viewer.activeDetail,hidden:viewer.peeledSurfaces,selectedIds:focusIds});m.material.color.set(state.colors&&state.region!=='all'?componentColor(c.muscleName):c.kind==='support'?'#cfc1a3':'#ad6554');m.material.emissive.setHex(selectedIds.has(c.id)?0x342019:0);m.material.opacity=state.pick==='bones'||viewer.nervousLayer?.fadesContext() ? .13 : 1;m.material.transparent=m.material.opacity<1;m.material.depthWrite=!m.material.transparent;}
    if(state.enabled&&!viewer.quiz&&!viewer.activeDetail&&state.pick==='muscles'){
@@ -104,15 +156,16 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
   },
   intersection(ray){return state.enabled&&!viewer.quiz&&!viewer.activeDetail&&group.visible?ray.intersectObjects(visibleTargets(),false)[0]:null;},
   pick(pointerRay,boneHit){if(!state.enabled||state.pick!=='muscles'||viewer.quiz||viewer.activeDetail)return null;const hit=pointerRay.intersectObjects(visibleTargets(),false)[0];return hit&&(!boneHit||boneHit.object.material.opacity<.45||hit.distance<=boneHit.distance+.0005)?hit.object:null;},
-  updateLabel(){if(!state.enabled||!state.labels||!state.selected||viewer.quiz||viewer.activeDetail){label.hidden=true;labelLine.style.display='none';return;}const ids=new Set(selectedComponents().map(c=>c.id)),selectedMeshes=meshes.filter(m=>m.visible&&ids.has(m.userData.muscleId));if(!selectedMeshes.length){label.hidden=true;labelLine.style.display='none';return;}const center=bounds(selectedMeshes).getCenter(new THREE.Vector3()),delta=center.clone().sub(viewer.camera.position);ray.set(viewer.camera.position,delta.normalize());const hit=ray.intersectObjects(selectedMeshes,false)[0];const point=(hit?.point||center).clone().project(viewer.camera),occluders=[...meshes.filter(m=>m.visible&&!selectedMeshes.includes(m)),...viewer.meshes.filter(m=>m.visible&&!m.userData.guideOnly&&m.material.opacity>.45)],covered=hit&&ray.intersectObjects(occluders,false).some(h=>h.distance<hit.distance-.001);label.hidden=covered||Math.abs(point.x)>.95||Math.abs(point.y)>.95||point.z< -1||point.z>1;labelLine.style.display=label.hidden?'none':'';if(label.hidden)return;const c=selectedRecord(),ax=(point.x+1)*.5*viewer.el.clientWidth,ay=(1-point.y)*.5*viewer.el.clientHeight;const labelText=selectedName()+' · '+c.side+(c.geometryReview?.status==='incomplete-group'?' · partial group':'');if(label.textContent!==labelText)label.textContent=labelText;const base=viewer.el.getBoundingClientRect(),detail=$('#atlas-details').getBoundingClientRect(),rightEdge=$('#viewer-details')?.getAttribute('aria-expanded')==='true'&&detail.left>base.left&&detail.left<base.right?detail.left-base.left-12:viewer.el.clientWidth,pos=muscleLabelPosition({width:viewer.el.clientWidth,height:viewer.el.clientHeight,ax,ay,rightEdge,labelWidth:label.offsetWidth});if(!pos){label.hidden=true;labelLine.style.display='none';return;}const {x,y}=pos;label.style.left=x+'px';label.style.top=y+'px';const line=labelLine.querySelector('line'),dot=labelLine.querySelector('circle');line.setAttribute('x1',ax);line.setAttribute('y1',ay);line.setAttribute('x2',x);line.setAttribute('y2',y);dot.setAttribute('cx',ax);dot.setAttribute('cy',ay);},
-  navigate(m){if(!m.userData.muscleId)return false;select(m.userData.muscleId);if(level==='overview'){level='region';state.region=m.userData.component.region;if(['left','right'].includes(m.userData.component.side))state.side=m.userData.component.side;state.focused=false;viewer.applyVisibility();frame();renderBrowser();}else{state.groupOnly=false;state.focused=true;level='muscle';viewer.applyVisibility();frame();showDetail();}return true;},
-  ownsFocus:()=>state.enabled&&state.pick==='muscles'&&!viewer.selectedTerm?.representation?.nerveKey&&!viewer.selectedTerm?.representation?.lymphNodeKey&&!viewer.quiz&&!viewer.activeDetail&&group.visible,frame,
+  updateLabel(){if(spatial.active){spatial.updateSurfaces();return;}if(!state.enabled||!state.labels||!state.selected||viewer.quiz||viewer.activeDetail){label.hidden=true;labelLine.style.display='none';return;}const ids=new Set(selectedComponents().map(c=>c.id)),selectedMeshes=meshes.filter(m=>m.visible&&ids.has(m.userData.muscleId));if(!selectedMeshes.length){label.hidden=true;labelLine.style.display='none';return;}const center=bounds(selectedMeshes).getCenter(new THREE.Vector3()),delta=center.clone().sub(viewer.camera.position);ray.set(viewer.camera.position,delta.normalize());const hit=ray.intersectObjects(selectedMeshes,false)[0];if(!hit){label.hidden=true;labelLine.style.display='none';return;}const point=hit.point.clone().project(viewer.camera),occluders=[...meshes.filter(m=>m.visible&&!selectedMeshes.includes(m)),...viewer.meshes.filter(m=>m.visible&&!m.userData.guideOnly&&m.material.opacity>.45)],covered=ray.intersectObjects(occluders,false).some(h=>h.distance<hit.distance-.001);label.hidden=covered||Math.abs(point.x)>.95||Math.abs(point.y)>.95||point.z< -1||point.z>1;labelLine.style.display=label.hidden?'none':'';if(label.hidden)return;const c=selectedRecord(),ax=(point.x+1)*.5*viewer.el.clientWidth,ay=(1-point.y)*.5*viewer.el.clientHeight;const labelText=selectedName()+' · '+c.side+(c.geometryReview?.status==='incomplete-group'?' · partial group':'');if(label.textContent!==labelText)label.textContent=labelText;const base=viewer.el.getBoundingClientRect(),detail=$('#atlas-details').getBoundingClientRect(),rightEdge=$('#viewer-details')?.getAttribute('aria-expanded')==='true'&&detail.left>base.left&&detail.left<base.right?detail.left-base.left-12:viewer.el.clientWidth,pos=muscleLabelPosition({width:viewer.el.clientWidth,height:viewer.el.clientHeight,ax,ay,rightEdge,labelWidth:label.offsetWidth});if(!pos){label.hidden=true;labelLine.style.display='none';return;}const {x,y}=pos;label.style.left=x+'px';label.style.top=y+'px';const line=labelLine.querySelector('line'),dot=labelLine.querySelector('circle');line.setAttribute('x1',ax);line.setAttribute('y1',ay);line.setAttribute('x2',x);line.setAttribute('y2',y);dot.setAttribute('cx',ax);dot.setAttribute('cy',ay);},
+  navigate(m){if(spatial.active||!m.userData.muscleId)return false;select(m.userData.muscleId);if(level==='overview'){level='region';state.region=m.userData.component.region;if(['left','right'].includes(m.userData.component.side))state.side=m.userData.component.side;state.focused=false;viewer.applyVisibility();frame();renderBrowser();}else{state.groupOnly=false;state.focused=true;level='muscle';viewer.applyVisibility();frame();showDetail();}return true;},
+  ownsFocus:()=>spatial.active||state.enabled&&state.pick==='muscles'&&!viewer.selectedTerm?.representation?.nerveKey&&!viewer.selectedTerm?.representation?.lymphNodeKey&&!viewer.quiz&&!viewer.activeDetail&&group.visible,frame,
   toggleIsolation(){if(!state.selected)return;state.groupOnly=false;state.focused=!state.focused;level=state.focused?'muscle':'region';viewer.applyVisibility();frame();renderBrowser();showDetail();},
   showRegion(){state.groupOnly=false;state.focused=false;level=state.region==='all'?'overview':'region';viewer.applyVisibility();frame();renderBrowser();if(state.selected)showDetail();else showOverview();},
   exitToSkeleton(){if(state.enabled)enable(false,{restoreView:false});},
   release(){state.groupOnly=false;state.focused=false;state.selected=null;label.hidden=true;labelLine.style.display='none';},
-  canGoBack:()=>state.focused||state.region!=='all'||state.side!=='both',
+  canGoBack:()=>spatial.active||state.focused||state.region!=='all'||state.side!=='both',
   async back(){
+   if(spatial.active){spatial.closeAndReturn();return;}
    if(state.focused){api.showRegion();return;}
    const revision=++actionVersion;
    Object.assign(state,{region:'all',side:'both',selected:null,partOnly:false,page:0});
@@ -121,9 +174,9 @@ export function initMuscleAtlas({viewer,escape:e,toast,dialog,onExit}){
    if(api.ownsFocus()&&revision===actionVersion)frame();
   },
   restore(){state.groupOnly=false;state.focused=false;viewer.applyVisibility();if(state.enabled){renderBrowser();frame();}},
-  async openRegion(region=null){await enable(true,{requestedRegion:muscleScopeNames[region]?region:null,frameView:!!muscleScopeNames[region]});}
+  async openRegion(region=null){spatial.close();await enable(true,{requestedRegion:muscleScopeNames[region]?region:null,frameView:!!muscleScopeNames[region]});}
  };
- viewer.muscleLayer=api;viewer.onPick=m=>{if(m.userData.muscleId){select(m.userData.muscleId);return;}api.release();oldPick(m);if(state.enabled&&state.pick==='bones'&&state.preserveBoneContext)before=captureBoneView(viewer);};
+ viewer.muscleLayer=api;viewer.onPick=m=>{if(spatial.onPick(m))return;if(m.userData.muscleId){select(m.userData.muscleId);return;}api.release();oldPick(m);if(state.enabled&&state.pick==='bones'&&state.preserveBoneContext)before=captureBoneView(viewer);};
  document.addEventListener('atlasfocuschange',async()=>{
   if(!state.enabled||state.pick!=='bones'||viewer.quiz||viewer.activeDetail)return;
   const key=boneViewKey(viewer);if(key===lastBoneView)return;lastBoneView=key;++actionVersion;
