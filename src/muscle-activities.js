@@ -52,6 +52,16 @@ function parallelATP(steps,index){
   const y=35+i*67;return `<rect x="20" y="${y}" width="272" height="45" rx="9" fill="${i===index?'#805344':'#193237'}" stroke="${i===index?peach:dim}"/>${text(156,y+29,name,{size:22,anchor:'middle'})}${arrow(296,y+22,390,167)}`;
  }).join('')+`<circle cx="458" cy="167" r="57" fill="#244c44" stroke="${mint}" stroke-width="3"/>${text(458,177,'ATP',{size:30,anchor:'middle'})}${text(300,338,'Contributions overlap; selection highlights one route',{size:19,anchor:'middle'})}`);
 }
+function developmentDrawing(stage){
+ const cell=(x,width=120)=>`<rect x="${x}" y="130" width="${width}" height="80" rx="40" fill="#805344" stroke="${bone}" stroke-width="2"/>`;
+ const nucleus=x=>`<ellipse cx="${x}" cy="170" rx="13" ry="19" fill="${mint}"/>`;
+ let body;
+ if(stage===0)body=[45,240,435].map(x=>cell(x)+nucleus(x+60)).join('')+text(300,262,'Separate myoblasts · each has a nucleus',{anchor:'middle'});
+ else if(stage===1)body=cell(65,470)+[125,300,475].map(nucleus).join('')+`<path d="M222 132V208M378 132V208" stroke="${peach}" stroke-dasharray="5 6" stroke-width="2"/>`+text(300,262,'Fusion creates continuous cytoplasm',{anchor:'middle'});
+ else body=cell(65,470)+[125,300,475].map(nucleus).join('')+text(300,262,'One developing fiber · nuclei are retained',{anchor:'middle'});
+ if(stage===3)body+=`<ellipse cx="420" cy="103" rx="35" ry="17" fill="#805344" stroke="${peach}" stroke-width="2"/><ellipse cx="420" cy="103" rx="11" ry="10" fill="${mint}"/>${text(420,68,'Satellite cell',{size:21,anchor:'middle'})}`;
+ return svg('Skeletal muscle development. '+(stage===0?'Separate mononucleated myoblasts.':stage===1?'Myoblast fusion into a shared cytoplasm.':'A multinucleated developing fiber.')+(stage===3?' A satellite cell is shown nearby as a simplified repair reference.':''),body+text(300,322,'Cell schematic · not a histology image',{size:19,anchor:'middle'}));
+}
 function publish(id,title,reference,state,question,hint,answer,facts,prediction=''){
  setDiagramLearningContext({id,title,reference,state,question,hint,answer,facts,prediction});
 }
@@ -63,7 +73,7 @@ function sequence(root,{id,title,reference,steps,question,hint,answer,parallel=f
  let stage=0,revealed=false;
  function render(){
   publish(id,title,reference,{stage:stage+1,step:steps[stage][0]},question,hint,answer,[...steps.map(([,fact])=>fact)]);
-  root.innerHTML=`<h3>${e(title)}</h3><div class="muscle-lab"><div class="muscle-lab-visual">${parallel?parallelATP(steps,stage):routeDrawing(steps,stage)}</div><div><label for="muscle-route-stage">${parallel?'ATP source':'Step'}</label><select id="muscle-route-stage">${steps.map(([name],i)=>`<option value="${i}" ${stage===i?'selected':''}>${parallel?'':i+1+'. '}${e(name)}</option>`).join('')}</select><p>${e(steps[stage][1])}</p><div class="control-row"><button data-route-back ${stage===0?'disabled':''}>← Previous</button><button data-route-next ${stage===steps.length-1?'disabled':''}>Next →</button></div><p class="flow-question">${e(question)}</p><button data-route-reveal aria-expanded="${revealed}">${revealed?'Hide explanation':'Check my reasoning'}</button>${revealed?`<p class="muscle-lab-feedback" role="status">${e(answer)}</p>`:''}</div></div>${credit}`;
+  root.innerHTML=`<h3>${e(title)}</h3><div class="muscle-lab"><div class="muscle-lab-visual">${parallel?parallelATP(steps,stage):id==='skeletal-muscle-development'?developmentDrawing(stage):routeDrawing(steps,stage)}</div><div><label for="muscle-route-stage">${parallel?'ATP source':'Step'}</label><select id="muscle-route-stage">${steps.map(([name],i)=>`<option value="${i}" ${stage===i?'selected':''}>${parallel?'':i+1+'. '}${e(name)}</option>`).join('')}</select><p>${e(steps[stage][1])}</p><div class="control-row"><button data-route-back ${stage===0?'disabled':''}>← Previous</button><button data-route-next ${stage===steps.length-1?'disabled':''}>Next →</button></div><p class="flow-question">${e(question)}</p><button data-route-reveal aria-expanded="${revealed}">${revealed?'Hide explanation':'Check my reasoning'}</button>${revealed?`<p class="muscle-lab-feedback" role="status">${e(answer)}</p>`:''}</div></div>${credit}`;
   root.querySelector('#muscle-route-stage').onchange=ev=>{stage=+ev.target.value;render();};root.querySelector('[data-route-back]').onclick=()=>{stage--;render();};root.querySelector('[data-route-next]').onclick=()=>{stage++;render();};root.querySelector('[data-route-reveal]').onclick=()=>{revealed=!revealed;render();};askTutor(root);
  }render();
 }

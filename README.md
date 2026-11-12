@@ -1,6 +1,6 @@
 # Osteon
 
-**A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 1–10, alongside the dedicated BI 231 bone-list test.
+**A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 1–11, alongside the dedicated BI 231 bone-list test.
 
 **Muscle review in progress:** the humerus/forearm layer now includes the forearm muscles correctly. The atlas still has missing and unresolved anatomy; [read the current review and individual component checks](MUSCLE-VIEW-REVIEW.md). Further promotional-video work is on hold for the muscle review.
 
@@ -62,9 +62,16 @@ Fontanelles open a **locally bundled, rotatable UCSF fetal-skull scan**, with su
 - Chapters 3–4 include hands-on cell activities, a captioned protein-synthesis animation, tissue figure tours and textbook micrograph identification.
 - Chapter 5 uses the original Lamina skin diagram with direct visual targets, skin lessons and written-response rubrics.
 - [Fracture Lab in §6.5](https://rorrimaesu.github.io/osteon-study/#lesson-6.5) compares eight fracture patterns and skin-status categories, walks through four repair stages, and offers 252 scored prompts plus 84 written rubrics.
-- [Practice Lab](https://rorrimaesu.github.io/osteon-study/#exam-center) offers individual 50-question exams, mixed exams for Chapters 1–2 and 3–5, and a 300-question comprehensive exam across Chapters 1–10. The existing skeletal exam options are also available.
+- [Practice Lab](https://rorrimaesu.github.io/osteon-study/#exam-center) offers individual 50-question exams, mixed exams for Chapters 1–2 and 3–5, and a 330-question comprehensive exam across Chapters 1–11. The existing skeletal exam options are also available.
 
-My Progress can preview and merge matching earlier Cell Studio, Tissue Studio, Lamina and Fracture Lab scores. It can also recover missed trainer cards and read Lamina or Fracture Lab JSON exports. Drafts and notes from the original apps can still be opened there. The local tutor uses Osteon’s lesson notes for Chapters 1–10 and links to the relevant textbook pages.
+My Progress can preview and merge matching earlier Cell Studio, Tissue Studio, Lamina and Fracture Lab scores. It can also recover missed trainer cards and read Lamina or Fracture Lab JSON exports. Drafts and notes from the original apps can still be opened there. The tutor uses Osteon’s lesson notes for Chapters 1–11 and links to the relevant textbook pages. Guided prompts work without AI. Optional Socratic chat uses a local Ollama model.
+
+## Chapters 10–11 muscle study and exams
+
+- [Muscle tissue](https://rorrimaesu.github.io/osteon-study/#lesson-10.2) covers muscle organization, contraction, recruitment, force, fiber types and tissue repair.
+- [Muscular system](https://rorrimaesu.github.io/osteon-study/#lesson-11.1) covers all six sections. Explore muscle actions and general attachments with 113 study cards, including the 67 entries from the BI 231 course checklist.
+- The two chapters use 60 original OpenStax figures. Selected shoulder, forearm, hand, thigh, leg and foot views have marked targets and a recall mode.
+- [Exam Center](https://rorrimaesu.github.io/osteon-study/#exam-center) offers Forms A and B. Each includes 60 questions for 100 points, with 50 points from each chapter. Written responses can be reviewed against the rubric after submission.
 
 ## Chapters 6–9 exam preparation
 

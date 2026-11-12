@@ -492,3 +492,16 @@ body.viewer-room-open{overflow:hidden!important}
  .muscle-study-card dl { grid-template-columns: 1fr; gap: 6px; }
  .muscle-card-navigation select { flex: 1; }
 }
+
+.exam-question textarea#exam-text {
+ width: 100%;
+ min-height: 8rem;
+ padding: 10px 12px;
+ color: inherit;
+ background: #0e1e21;
+ border: 1px solid #516c63;
+ border-radius: 8px;
+ resize: vertical;
+ font: inherit;
+}
+.exam-question textarea#exam-text:focus { outline: 2px solid #b7d6bf; outline-offset: 2px; }

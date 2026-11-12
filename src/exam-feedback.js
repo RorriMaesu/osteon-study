@@ -9,7 +9,7 @@ export function componentFeedback(q,response){
  return null;
 }
 export function duplicateMatches(q,response){if(q.type!=='match')return [];const choices=Object.values(response||{}).filter(Boolean);return [...new Set(choices.filter((v,i)=>choices.indexOf(v)!==i))];}
-export function componentHTML(q,response,e){const p=componentFeedback(q,response);return p?`<details class="component-feedback"><summary>${p.correct}/${p.total} ${p.label.toLowerCase()} correct · diagnostic only</summary><p class="tiny">The question is still worth one point and requires all parts. This breakdown identifies what to practice.</p>${p.rows.map(row=>`<p><b>${row.correct?'✓':'↻'} ${e(row.prompt)}</b> · Your answer: ${e(row.response)}${row.correct?'':` · Expected: ${e(row.key)}`}</p>`).join('')}</details>`:'';}
+export function componentHTML(q,response,e,points=1){const p=componentFeedback(q,response);return p?`<details class="component-feedback"><summary>${p.correct}/${p.total} ${p.label.toLowerCase()} correct · diagnostic only</summary><p class="tiny">The question is worth ${points} point${points===1?'':'s'} and requires all parts. This breakdown identifies what to practice.</p>${p.rows.map(row=>`<p><b>${row.correct?'✓':'↻'} ${e(row.prompt)}</b> · Your answer: ${e(row.response)}${row.correct?'':` · Expected: ${e(row.key)}`}</p>`).join('')}</details>`:'';}
 export function remediationHTML(q,response,e){
  const note=q.remediation;if(!note)return '';
  const selected=Array.isArray(response)?response:response?[response]:[];

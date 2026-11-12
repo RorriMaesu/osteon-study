@@ -6,9 +6,16 @@ import other from '../src/lesson-links.json' with {type:'json'};
 import {textbookFigure,preferredLessonArt,textbookGallery} from '../src/textbook-figures.js';
 import {foundationsVisuals} from '../src/visual-foundations.js';
 import {systemsVisuals} from '../src/visual-systems.js';
+import muscleAssets from '../src/muscle-textbook-assets.json' with {type:'json'};
 
 test('every linked numbered figure has a crop on its original page',()=>{
  for(const {figures} of Object.values({...foundations,...other}))for(const {number,pdf} of figures){
+  const asset=muscleAssets[number];
+  if(asset){
+   assert.equal(asset.pdf,pdf,number);
+   assert.ok(asset.width>0&&asset.height>0&&existsSync(new URL('../assets/muscle-textbook/'+asset.file,import.meta.url)),number);
+   continue;
+  }
   const [page,w,h,[x,y,width,height],title]=textbookFigure(number);
   assert.equal(page,pdf,number);
   assert.ok(x>=0&&y>=0&&width>0&&height>0&&x+width<=w&&y+height<=h,number);

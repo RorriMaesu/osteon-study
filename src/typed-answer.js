@@ -1,4 +1,5 @@
 import {objectiveChecks} from './foundations-objective-checks.js';
+import {chapter11Muscles} from './chapter11-muscles.js';
 import cellTissue from './foundations-cell-bank.json' with {type:'json'};
 import {allTerms} from './data.js';
 import glossary from './glossary.json' with {type:'json'};
@@ -12,9 +13,10 @@ const lexicon=[...allTerms,...glossary].flatMap(t=>[t.name,...(t.aliases||[])]).
 const extra=['ileum','ilium','ischium','pubis','osteoblast','osteoclast','osteocyte','calcitonin','calcitriol','abduction','adduction','inversion','eversion','supination','pronation','flexion','extension','condyle','epicondyle','head','neck','foramen','fossa','canal'];
 const foundationKeys=Object.values(objectiveChecks).flatMap(rows=>rows.flatMap(([,a,,b])=>[a,b]));
 const cellTissueKeys=cellTissue.filter(q=>q.type==='text'||q.type==='identify').flatMap(q=>[q.answer,...q.aliases||[]]);
-const known=new Set([...lexicon,...extra,...foundationKeys,...cellTissueKeys].flatMap(pluralForms));
+const muscleKeys=chapter11Muscles.flatMap(m=>[m.name,...m.aliases||[]]);
+const known=new Set([...lexicon,...extra,...foundationKeys,...cellTissueKeys,...muscleKeys].flatMap(pluralForms));
 const words=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
-const opposed=[['left','right'],['anterior','posterior'],['superior','inferior'],['medial','lateral'],['proximal','distal'],['head','neck'],['condyle','epicondyle'],['foramen','fossa','canal'],['abduction','adduction'],['inversion','eversion'],['osteoblast','osteoclast','osteocyte'],['ilium','ileum','ischium'],['calcitonin','calcitriol']];
+const opposed=[['left','right'],['anterior','posterior'],['superior','inferior'],['medial','lateral'],['proximal','distal'],['head','neck'],['condyle','epicondyle'],['foramen','fossa','canal'],['abduction','adduction'],['inversion','eversion'],['osteoblast','osteoclast','osteocyte'],['ilium','ileum','ischium'],['calcitonin','calcitriol'],['superficialis','profundus'],['major','minor'],['longus','brevis'],['medialis','lateralis','intermedius'],['brachii','femoris'],['flexor','extensor'],['abductor','adductor'],['supination','pronation'],['palmar','dorsal'],['hallucis','pollicis'],['unfused','fused']];
 export function answerPolicy(q){return q.answerPolicy||answerPolicies[q.id]||{kind:'structure',bone:q.type==='bone'};}
 export function acceptedForms(q){const p=answerPolicy(q);return [...new Set([q.answer,...(q.aliases||[]),...(p.equivalents||[])].filter(Boolean))];}
 export function editDistance(a,b){

@@ -8,16 +8,17 @@ import {questions,lessons,glossary} from '../src/learning-data.js';
 import {selectExam,createSession,validSession,gradeQuestion,answered,results,syllabus} from '../src/exam-core.js';
 import links from '../src/lesson-links.json' with {type:'json'};
 import pages from '../src/reader-pages.json' with {type:'json'};
+import chapter11Pages from '../src/chapter11-reader.json' with {type:'json'};
 import {regions} from '../src/data.js';
 import {retrieveSources,buildTutorMessages} from '../src/tutor-context.js';
 const rng=seed=>()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296;};
 test('every source objective has multiple explicit questions, with complete modules and source destinations',()=>{
- const original=syllabus.sections.filter(s=>s.chapter>=6);assert.equal(original.length,33);assert.equal(original.flatMap(s=>s.objectives).length,101);
+ const original=syllabus.sections.filter(s=>s.chapter>=6);assert.equal(original.length,39);assert.equal(original.flatMap(s=>s.objectives).length,121);
  for(const s of syllabus.sections){assert.ok(lessons.find(l=>l.id===s.id)?.syllabus);for(const o of s.objectives)assert.ok(examBank.filter(q=>q.objectives.includes(o.id)).length>=2,o.id);}
  const objectives=new Set(syllabus.sections.flatMap(s=>s.objectives.map(o=>o.id)));
  for(const q of examBank){assert.ok(q.objectives.every(id=>objectives.has(id)&&id.startsWith(q.lesson+'.')),q.id);assert.ok(q.source.includes(q.lesson));assert.ok(q.explanation.length>25);assert.ok(gradeQuestion(q,key(q)),q.id);assert.ok(validSession(createSession([q])),q.id);if(q.type==='match')assert.equal(new Set(q.pairs.map(p=>p.right)).size,q.pairs.length);}
- assert.equal(examBank.filter(q=>Number(q.lesson.split('.')[0])>=6&&!q.id.startsWith('fracture-')).length,520);assert.equal(new Set(examBank.map(q=>q.id)).size,examBank.length);
- assert.deepEqual(new Set(examBank.map(q=>q.type)),new Set(['choice','text','identify','match','order','multi']));
+ assert.equal(examBank.filter(q=>Number(q.lesson.split('.')[0])>=6&&Number(q.lesson.split('.')[0])<=10&&!q.id.startsWith('fracture-')&&!q.id.startsWith('mx-')).length,520);assert.equal(new Set(examBank.map(q=>q.id)).size,examBank.length);
+ assert.deepEqual(new Set(examBank.map(q=>q.type)),new Set(['choice','text','identify','match','order','multi','written']));
 });
 test('foundations exams sample both chapters, and select-all wording survives a saved draft',()=>{
  for(const scope of ['1','2','foundations12']){
@@ -93,8 +94,9 @@ test('legacy question and glossary identifiers stay usable, and new glossary has
 });
 test('every lesson anatomy route exists and every direct figure link resolves its actual source caption',()=>{
  assert.deepEqual(Object.keys(links),lessons.filter(l=>Number(l.id.split('.')[0])>=6).map(l=>l.id));let figures=0;
- for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region),id);for(const f of l.figures){figures++;const page=pages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
- assert.ok(figures>=124);const all=new Set(pages.filter(p=>[6,7,8,9,10].includes(p.chapter)).flatMap(p=>[...p.text.matchAll(/FIGURE\s+(\d+\.\d+)\s/g)].map(m=>m[1])));assert.deepEqual(new Set(Object.values(links).flatMap(l=>l.figures.map(f=>f.number))),all);
+ const sourcePages=[...pages,...chapter11Pages];
+ for(const [id,l] of Object.entries(links)){assert.ok(regions.includes(l.region),id);for(const f of l.figures){figures++;const page=sourcePages.find(p=>p.pdf===f.pdf);assert.ok(page);assert.ok(new RegExp('FIGURE\\s+'+f.number.replace('.','\\.')+'\\s').test(page.text),id+' figure '+f.number);}}
+ assert.ok(figures>=159);const all=new Set(sourcePages.filter(p=>[6,7,8,9,10,11].includes(p.chapter)).flatMap(p=>[...p.text.matchAll(/FIGURE\s+(\d+\.\d+)\s/g)].map(m=>m[1])));assert.deepEqual(new Set(Object.values(links).flatMap(l=>l.figures.map(f=>f.number))),all);
 });
 test('the local tutor retrieves original notes for the development sections and expanded course',()=>{
  assert.ok(retrieveSources('apical ectodermal ridge limb buds',{reference:'8.5'}).some(s=>s.reference==='8.5'&&/apical/i.test(s.text)));
@@ -102,7 +104,7 @@ test('the local tutor retrieves original notes for the development sections and 
  const early=buildTutorMessages('Explain membrane diffusion',[],{type:'reading',pdf:104,text:'RAW_TEXTBOOK_TEST_SENTINEL'});
  assert.ok(early.sources.some(s=>s.reference==='3.1'));
  assert.ok(!early.messages[0].content.includes('RAW_TEXTBOOK_TEST_SENTINEL'));
- assert.ok(buildTutorMessages('Explain a joint interzone',[],{reference:'9.7'}).messages[0].content.includes('chapters 1–10'));
+ assert.ok(buildTutorMessages('Explain a joint interzone',[],{reference:'9.7'}).messages[0].content.includes('chapters 1–11'));
 });
 test('recording a resumed exam does not duplicate existing attempts, and new lesson marks survive backup',async()=>{
  globalThis.localStorage={getItem:()=>null,setItem:()=>{}};globalThis.document=new EventTarget();
