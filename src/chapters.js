@@ -14,7 +14,8 @@ export const chapterDetails={
   7:{short:'Axial skeleton',route:'Axial skeleton',description:'Skull, vertebral column and thoracic cage'},
   8:{short:'Appendicular skeleton',route:'Appendicular skeleton',description:'Girdles, limbs, hands and feet'},
   9:{short:'Joints',route:'Joints & movement',description:'Classification, motion and supporting tissues'},
-  10:{short:'Muscle tissue',route:'Muscle tissue',description:'Organization, contraction, control, energy and repair'}
+  10:{short:'Muscle tissue',route:'Muscle tissue',description:'Organization, contraction, control, energy and repair'},
+  11:{short:'Muscular system',route:'Muscular system',description:'Muscle roles, regional anatomy, actions and general attachments'}
 };
 export const activeChapters=syllabus.chapters.map(c=>({...c,...chapterDetails[c.id]}));
 export const objectiveCount=syllabus.sections.reduce((n,s)=>n+s.objectives.length,0);

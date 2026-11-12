@@ -89,7 +89,7 @@ test('legacy scores and review cards merge idempotently without rewriting the ex
  store.setItem(STORAGE_KEY,'invalid');assert.throws(()=>mergeLegacyStudy(store),/read safely/);assert.equal(store.getItem(STORAGE_KEY),'invalid');
 });
 test('reader searches all supplied words within the selected collection and exposes zero matches honestly',()=>{
- assert.equal(matchingReaderPages({query:'zygomatticc'}).length,0);const results=matchingReaderPages({chapter:'6',query:'osteocyte canaliculi'});assert.ok(results.length);assert.ok(results.every(p=>p.chapter===6&&/osteocyte/i.test(p.text)&&/canaliculi/i.test(p.text)));assert.equal(matchingReaderPages({query:'  '}).filter(p=>p.chapter>=6).length,220);
+ assert.equal(matchingReaderPages({query:'zygomatticc'}).length,0);const results=matchingReaderPages({chapter:'6',query:'osteocyte canaliculi'});assert.ok(results.length);assert.ok(results.every(p=>p.chapter===6&&/osteocyte/i.test(p.text)&&/canaliculi/i.test(p.text)));assert.equal(matchingReaderPages({query:'  '}).filter(p=>p.chapter>=6).length,274);assert.equal(matchingReaderPages({chapter:'11'}).length,58);assert.equal(matchingReaderPages({chapter:'11'})[0].printed,409);
 });
 test('compound feedback diagnoses partial knowledge without changing whole-question scoring',()=>{
  const q=examBank.find(q=>q.type==='match'),response=Object.fromEntries(q.pairs.map(p=>[p.left,p.right]));response[q.pairs[0].left]=q.pairs[1].right;const feedback=componentFeedback(q,response);assert.equal(feedback.correct,q.pairs.length-1);assert.equal(gradeQuestion(q,response),false);assert.deepEqual(duplicateMatches(q,response),[q.pairs[1].right]);

@@ -1,7 +1,7 @@
 import assets from './muscle-textbook-assets.json' with {type:'json'};
 import {muscleFigureTargets, musclePlateSVG} from './muscle-figure-targets.js';
 import {assessTyped, outcomeCorrect} from './typed-answer.js';
-import {setLearningContext} from './learning-context.js';
+import {setDiagramLearningContext} from './learning-context.js';
 
 const titles = {
  10: ['Tennis player','Three types of muscle tissue','Connective tissue layers','Muscle fiber','Sarcomere','Motor end-plate and innervation','T-tubule and sarcoplasmic reticulum','Muscle fiber contraction','Muscle fiber relaxation','Sliding filament model','Cross-bridge cycle','Muscle metabolism','Types of muscle contraction','Sarcomere length and tension','Myogram of a twitch','Wave summation and tetanus','Treppe','Marathoners','Hypertrophy','Atrophy','Cardiac micrograph','Intercalated discs','Smooth muscle tissue','Dense bodies and contraction','Autonomic varicosities'],
@@ -52,7 +52,7 @@ export function muscleTextbookGallery(figures, selected, e) {
  const item = figures[selected];
  if (!assets[item?.number]) return null;
  return `<div class="lesson-source-preview muscle-source-preview" data-muscle-figure="${item.number}">
- <div class="control-row"><label class="sr-only" for="lesson-figure-select">Source figure</label><select id="lesson-figure-select">${figures.map((f,i)=>`<option value="${i}" ${i===selected?'selected':''}>${e(f.number+' · '+(muscleFigureTitle(f.number)||'Textbook figure'))}</option>`).join('')}</select><button type="button" data-lesson-figure="${item.pdf}">Read source page ↗</button></div>
+ <div class="control-row"><label class="sr-only" for="lesson-figure-select">Source figure</label><select id="lesson-figure-select">${figures.map((f,i)=>`<option value="${i}" ${i===selected?'selected':''}>${e(f.number+' · '+(muscleFigureTitle(f.number)||'Textbook figure'))}</option>`).join('')}</select><button type="button" data-lesson-figure="${item.pdf}">Read source page ↗</button><button type="button" data-plate-tutor>Ask the tutor</button></div>
  <div data-plate-controls class="control-row"></div><figure class="section-diagram-media section-diagram-source"><div data-plate-media></div><figcaption>OpenStax Anatomy and Physiology 2e · Fig. ${item.number} · Rice University · CC BY-NC-SA 4.0${imageCredits[item.number]?' · '+e(imageCredits[item.number]):''}. <a href="https://openstax.org/details/books/anatomy-and-physiology-2e" target="_blank" rel="noreferrer">Access for free at openstax.org</a>.</figcaption></figure>
  <div data-plate-recall></div>${notes[item.number]?`<details class="muscle-source-note"><summary>Figure study note</summary><p>${e(notes[item.number])}</p></details>`:''}</div>`;
 }
@@ -70,21 +70,22 @@ export function mountMuscleTextbook(root, lesson, e) {
  let response = '';
  let feedback = '';
  const figureTitle = muscleFigureTitle(number);
+ root.querySelector('[data-plate-tutor]').onclick=()=>{updateContext();document.getElementById('tutor-launch')?.click();};
  function updateContext() {
   const item = targets[selected]?.[1];
-  setLearningContext({
-   type:'diagram', reference:lesson.id, label:figureTitle, text:lesson.objective,
-   diagram:{id:'openstax-'+number,title:figureTitle,reference:lesson.id,
-    state:{figure:number,view:item?.orientation||views[view]?.name||'Whole figure',mode:recalling?'recall':'study'},
-    question:recalling?'Help me reason about the marked structure without naming it.':'Explain the anatomy visible in this panel.',
-    facts:notes[number]?[notes[number]]:[],prediction:recalling?response:''}
-  });
+  setDiagramLearningContext({id:'openstax-'+number,title:figureTitle,reference:lesson.id,
+   state:{figure:number,view:item?.orientation||views[view]?.name||'Whole figure',mode:recalling?'recall':'study'},
+   question:recalling?'How can you identify the marked structure from the structures around it?':lesson.recall[0],
+   hint:recalling?item?.description:lesson.objective,answer:recalling?item?.name:lesson.recall[1],
+   facts:!recalling&&notes[number]?[notes[number]]:[],prediction:recalling?response:''});
  }
  function show() {
   const entry = targets[selected];
   controls.innerHTML = `${views.length?`<label>View <select data-plate-view><option value="-1">Whole figure</option>${views.map((v,i)=>`<option value="${i}" ${i===view?'selected':''}>${e(v.name)}</option>`).join('')}</select></label>`:''}
    ${targets.length?`<label>Target <select data-plate-target><option value="-1">Choose a target</option>${targets.map(([,item],i)=>`<option value="${i}" ${i===selected?'selected':''}>${recalling?'Target '+(i+1)+' · '+e(item.orientation):e(item.name)}</option>`).join('')}</select></label><button type="button" data-plate-mode aria-pressed="${recalling}">${recalling?'End recall':'Start recall'}</button>`:''}
    ${view!==-1||entry?`<button type="button" data-plate-whole>Whole figure</button>`:''}`;
+  const note=root.querySelector('.muscle-source-note');
+  if(note)note.hidden=recalling;
   media.innerHTML = musclePlateSVG(number, entry ? {targetId:entry[0], hideLabel:recalling} : {panel:views[view]?.bounds, alt:figureTitle+(views[view]?' · '+views[view].name:'')});
   activity.innerHTML = recalling&&entry ? `<form class="control-row muscle-figure-answer"><label for="muscle-figure-response">Name the marked structure</label><input id="muscle-figure-response" name="answer" autocomplete="off" maxlength="120" value="${e(response)}" required><button type="submit">Check</button><button type="button" data-plate-reveal>Reveal name</button></form><p data-plate-feedback role="status">${e(feedback)}</p>` : entry ? `<p class="muscle-target-note"><strong>${e(entry[1].name)}</strong> · ${e(entry[1].orientation)}</p>` : '';
   controls.querySelector('[data-plate-view]')?.addEventListener('change',ev=>{view=+ev.target.value;selected=-1;recalling=false;show();controls.querySelector('[data-plate-view]')?.focus();});

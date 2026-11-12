@@ -11,7 +11,7 @@ const existingVisualSections=[
  '1.2','1.6','2.1','3.1','3.2','3.3','3.4','3.5','3.6',
  '4.1','4.2','4.3','4.4','4.5','4.6','5.2','6.3','6.5','6.7','9.5','10.1','10.2','10.3','10.4','10.7'
 ];
-export const interactiveSections=new Set([...existingVisualSections,...newVisualSections]);
+export const interactiveSections=new Set([...existingVisualSections,...newVisualSections,'11.1','11.2','11.3','11.4','11.5','11.6']);
 let serial=0;
 const palette={paper:'#10252c',ink:'#dfefe3',mint:'#a9dcc2',blue:'#9ed9ef',gold:'#ffbf91',rose:'#f08c94',muted:'#79948e'};
 const colors=[palette.mint,palette.gold,palette.blue,palette.rose];

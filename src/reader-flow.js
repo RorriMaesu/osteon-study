@@ -5,7 +5,7 @@ import foundationPages from './foundations-reader.json' with {type:'json'};
 import musclePages from './chapter11-reader.json' with {type:'json'};
 import {syllabus} from './course-catalog.js';
 const pages=[...foundationPages,...olderPages.filter(p=>Number(p.chapter)!==11),...musclePages].sort((a,b)=>a.pdf-b.pdf);
-export const sectionPages={...Object.fromEntries([...syllabus.sections,...chapter10Source.sections].map(s=>[s.id,s.pdfStart])),'11.3':433,'11.4':444,'14.1':572};
+export const sectionPages={...Object.fromEntries([...syllabus.sections,...chapter10Source.sections].map(s=>[s.id,s.pdfStart])),'14.1':572};
 export function matchingReaderPages({chapter='all',query=''}={}){const words=query.toLowerCase().trim().split(/\s+/).filter(Boolean);return pages.filter(p=>(chapter==='all'||String(p.chapter)===chapter)&&words.every(w=>p.text.toLowerCase().includes(w)));}
 export function initReader({setView,escape:e}){
  const $=s=>document.querySelector(s);let index=0,chapter='all',query='',textMode=false,origin=null;

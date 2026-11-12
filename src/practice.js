@@ -86,7 +86,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  document.addEventListener('studydeck',ev=>startFlash(ev.detail));
  document.addEventListener('practicehome',()=>{flash=null;practiceHome();});
  function progressPage(){
- if($('#progress-view').classList.contains('active'))setLearningContext({type:'study',label:'Study planning · chapters 1–10'});
+ if($('#progress-view').classList.contains('active'))setLearningContext({type:'study',label:'Study planning · chapters 1–11'});
  const p=getProgress(),s=objectiveStats(),queues=reviewQueues(terms,reviewCards,p),lab=retrievalPlan(terms,p.attempts),concepts=retrievalPlan(questions,p.attempts),seen=new Set(p.attempts.map(a=>a.id));
  const labNext=lab.next.slice(0,10),conceptNext=concepts.next.slice(0,10);
  const segment=(n,kind)=>n?`<span class="${kind}" style="width:${n/terms.length*100}%"></span>`:'';
@@ -109,4 +109,3 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  $('#start-practice').disabled=false;$('#start-practice').onclick=()=>{flash=null;practiceHome();setView('practice');};$$('[data-view="practice"],[data-view="progress"]').forEach(b=>b.disabled=false);
  practiceHome();progressPage();
 }
-

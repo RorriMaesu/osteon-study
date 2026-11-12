@@ -1,0 +1,360 @@
+{
+  "chapter": 11,
+  "title": "The Muscular System",
+  "pdfStart": 425,
+  "pdfEnd": 482,
+  "printedStart": 409,
+  "printedEnd": 466,
+  "sourceURL": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-introduction",
+  "license": "CC BY-NC-SA 4.0",
+  "status": "source-ready",
+  "objectiveBasis": "Original course objectives aligned to OpenStax sections and the BI 231 muscle checklist. Exam weights are a study blueprint, not instructor-supplied weights.",
+  "sections": [
+    {
+      "id": "11.1",
+      "chapter": 11,
+      "title": "Interactions of Skeletal Muscles, Their Fascicle Arrangement, and Their Lever Systems",
+      "pdfStart": 425,
+      "pdfEnd": 430,
+      "examWeight": 8,
+      "objectives": [
+        {
+          "id": "11.1.1",
+          "text": "Relate attachments to muscle roles in a specified movement, including agonists, antagonists, synergists and fixators."
+        },
+        {
+          "id": "11.1.2",
+          "text": "Compare fascicle arrangements and their effects on force capacity and excursion."
+        },
+        {
+          "id": "11.1.3",
+          "text": "Identify effort, load and fulcrum, classify levers, and explain moment-arm trade-offs."
+        }
+      ],
+      "figures": [
+        {
+          "number": "11.1",
+          "pdf": 425
+        },
+        {
+          "number": "11.2",
+          "pdf": 426
+        },
+        {
+          "number": "11.3",
+          "pdf": 428
+        },
+        {
+          "number": "11.4",
+          "pdf": 429
+        }
+      ],
+      "prerequisites": [
+        "10.2",
+        "10.4",
+        "9.5"
+      ]
+    },
+    {
+      "id": "11.2",
+      "chapter": 11,
+      "title": "Naming Skeletal Muscles",
+      "pdfStart": 430,
+      "pdfEnd": 433,
+      "examWeight": 4,
+      "objectives": [
+        {
+          "id": "11.2.1",
+          "text": "Recognize location, shape, size, fiber direction, attachment, head-count and action clues in muscle names."
+        },
+        {
+          "id": "11.2.2",
+          "text": "Decode names while distinguishing similarly named muscles, groups and accepted synonyms."
+        }
+      ],
+      "figures": [
+        {
+          "number": "11.5",
+          "pdf": 431
+        },
+        {
+          "number": "11.6",
+          "pdf": 432
+        }
+      ],
+      "prerequisites": [
+        "11.1"
+      ]
+    },
+    {
+      "id": "11.3",
+      "chapter": 11,
+      "title": "Axial Muscles of the Head, Neck, and Back",
+      "pdfStart": 433,
+      "pdfEnd": 444,
+      "examWeight": 10,
+      "objectives": [
+        {
+          "id": "11.3.1",
+          "text": "Locate facial-expression and mastication muscles and explain their main actions and general attachments."
+        },
+        {
+          "id": "11.3.2",
+          "text": "Distinguish extraocular and eyelid muscles and interpret eye actions in a specified gaze position."
+        },
+        {
+          "id": "11.3.3",
+          "text": "Relate tongue and hyoid muscles to shape, position and swallowing using general attachment relationships."
+        },
+        {
+          "id": "11.3.4",
+          "text": "Identify neck and back groups and predict unilateral versus bilateral actions."
+        }
+      ],
+      "figures": [
+        {
+          "number": "11.7",
+          "pdf": 434
+        },
+        {
+          "number": "11.8",
+          "pdf": 435
+        },
+        {
+          "number": "11.9",
+          "pdf": 436
+        },
+        {
+          "number": "11.10",
+          "pdf": 437
+        },
+        {
+          "number": "11.11",
+          "pdf": 438
+        },
+        {
+          "number": "11.12",
+          "pdf": 439
+        },
+        {
+          "number": "11.13",
+          "pdf": 440
+        },
+        {
+          "number": "11.14",
+          "pdf": 441
+        },
+        {
+          "number": "11.15",
+          "pdf": 443
+        }
+      ],
+      "prerequisites": [
+        "11.1",
+        "11.2"
+      ]
+    },
+    {
+      "id": "11.4",
+      "chapter": 11,
+      "title": "Axial Muscles of the Abdominal Wall, and Thorax",
+      "pdfStart": 444,
+      "pdfEnd": 451,
+      "examWeight": 8,
+      "objectives": [
+        {
+          "id": "11.4.1",
+          "text": "Identify abdominal-wall layers and relate general attachments to trunk movement and compression."
+        },
+        {
+          "id": "11.4.2",
+          "text": "Explain diaphragm and intercostal contributions to quiet inspiration, quiet expiration and forced breathing."
+        },
+        {
+          "id": "11.4.3",
+          "text": "Distinguish pelvic-diaphragm support, perineal structures and external sphincter functions."
+        }
+      ],
+      "figures": [
+        {
+          "number": "11.16",
+          "pdf": 445
+        },
+        {
+          "number": "11.17",
+          "pdf": 448
+        },
+        {
+          "number": "11.18",
+          "pdf": 449
+        },
+        {
+          "number": "11.19",
+          "pdf": 450
+        },
+        {
+          "number": "11.20",
+          "pdf": 450
+        },
+        {
+          "number": "11.21",
+          "pdf": 451
+        }
+      ],
+      "prerequisites": [
+        "11.3"
+      ]
+    },
+    {
+      "id": "11.5",
+      "chapter": 11,
+      "title": "Muscles of the Pectoral Girdle and Upper Limbs",
+      "pdfStart": 451,
+      "pdfEnd": 462,
+      "examWeight": 10,
+      "objectives": [
+        {
+          "id": "11.5.1",
+          "text": "Identify scapular positioners and explain their actions and general attachments."
+        },
+        {
+          "id": "11.5.2",
+          "text": "Identify muscles moving the humerus, including rotator-cuff membership, actions and general attachments."
+        },
+        {
+          "id": "11.5.3",
+          "text": "Distinguish elbow flexion/extension from radioulnar pronation/supination using muscle attachments."
+        },
+        {
+          "id": "11.5.4",
+          "text": "Identify wrist and hand muscles, distinguish intrinsic from extrinsic muscles, and relate tendon paths to action."
+        }
+      ],
+      "figures": [
+        {
+          "number": "11.22",
+          "pdf": 452
+        },
+        {
+          "number": "11.23",
+          "pdf": 454
+        },
+        {
+          "number": "11.24",
+          "pdf": 455
+        },
+        {
+          "number": "11.25",
+          "pdf": 457
+        },
+        {
+          "number": "11.26",
+          "pdf": 458
+        },
+        {
+          "number": "11.27",
+          "pdf": 459
+        },
+        {
+          "number": "11.28",
+          "pdf": 460
+        }
+      ],
+      "prerequisites": [
+        "11.1",
+        "11.2"
+      ]
+    },
+    {
+      "id": "11.6",
+      "chapter": 11,
+      "title": "Appendicular Muscles of the Pelvic Girdle and Lower Limbs",
+      "pdfStart": 462,
+      "pdfEnd": 470,
+      "examWeight": 10,
+      "objectives": [
+        {
+          "id": "11.6.1",
+          "text": "Identify hip muscles, general attachments and contributions to movement and pelvic stability."
+        },
+        {
+          "id": "11.6.2",
+          "text": "Compare quadriceps, hamstrings and other thigh muscles at the hip and knee, including head-specific exceptions."
+        },
+        {
+          "id": "11.6.3",
+          "text": "Identify leg compartments and relate attachments to ankle, foot and toe actions."
+        },
+        {
+          "id": "11.6.4",
+          "text": "Identify intrinsic foot groups/layers and distinguish toe actions and the second-toe reference axis."
+        }
+      ],
+      "figures": [
+        {
+          "number": "11.29",
+          "pdf": 463
+        },
+        {
+          "number": "11.30",
+          "pdf": 464
+        },
+        {
+          "number": "11.31",
+          "pdf": 466
+        },
+        {
+          "number": "11.32",
+          "pdf": 467
+        },
+        {
+          "number": "11.33",
+          "pdf": 468
+        },
+        {
+          "number": "11.34",
+          "pdf": 469
+        },
+        {
+          "number": "11.35",
+          "pdf": 470
+        }
+      ],
+      "prerequisites": [
+        "11.1",
+        "11.2",
+        "11.5"
+      ]
+    }
+  ],
+  "sourceCorrections": [
+    {
+      "figure": "11.16",
+      "note": "The abdominal wall muscle is rectus abdominis, not rectus femoris. Preserve the lateral wall layers and rectus sheath distinction."
+    },
+    {
+      "figure": "11.23",
+      "note": "Infraspinatus attaches from scapula to the greater tubercle of the humerus; do not copy the caption that suggests a scapular insertion."
+    },
+    {
+      "figure": "11.24",
+      "note": "Deltoid arises from clavicle, acromion and scapular spine; trapezius is not a deltoid origin. Infraspinatus and teres minor laterally rotate the humerus."
+    },
+    {
+      "figure": "11.26",
+      "note": "Supinator and biceps brachii both contribute to supination. The illustrated palm-up entry is correct; conflicting surrounding prose is not used."
+    },
+    {
+      "figure": "11.30",
+      "note": "Gluteus minimus abducts the hip; pectineus adducts and flexes it. Resolve conflicting movement descriptions before grading."
+    },
+    {
+      "figure": "11.34",
+      "note": "Only three plantar layers are illustrated, although four layers are described. The dorsal and plantar views represent different sides."
+    },
+    {
+      "figure": "11.35",
+      "note": "Plantar interossei adduct; dorsal interossei abduct. Abductor hallucis abducts the great toe. Flexor digitorum brevis acts on toes 2–5."
+    }
+  ]
+}

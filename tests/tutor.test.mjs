@@ -4,6 +4,7 @@ import {OllamaClient,localModelProblem,readNDJSON} from '../src/ollama-client.js
 import {detectOS,validateHardware,modelFit} from '../src/hardware.js';
 import {retrieveSources,buildTutorMessages} from '../src/tutor-context.js';
 import {checkTutorReply} from '../src/tutor-checks.js';
+import {syllabus} from '../src/course-catalog.js';
 const local={name:'example:4b',size:3e9},info={details:{format:'gguf'},capabilities:['completion']};
 test('model verification rejects remote aliases, embeddings and unverifiable entries',()=>{
  assert.equal(localModelProblem(local,info),null);
@@ -59,7 +60,7 @@ test('known misleading model statements fall back to course notes without claimi
 });
 test('retrieval returns original course notes for core confusions and development',()=>{
  for(const query of ['radius ulna','atlas axis dens','condyle epicondyle','osteoblast osteoclast osteocyte','PTH calcium','fontanelles infant skull']){
-  const sources=retrieveSources(query);assert.ok(sources.length>0,query);assert.equal(new Set(sources.map(s=>s.pdf)).size,sources.length);assert.ok(sources.every(s=>s.text.length>0&&/^\d+\.\d+$/.test(s.reference)&&s.pdf>=24&&s.pdf<=424));
+  const sources=retrieveSources(query);assert.ok(sources.length>0,query);assert.equal(new Set(sources.map(s=>s.pdf)).size,sources.length);assert.ok(sources.every(s=>s.text.length>0&&syllabus.sections.some(section=>section.id===s.reference&&s.pdf>=section.pdfStart&&s.pdf<=section.pdfEnd)));
  }
  const sources=retrieveSources('radius ulna');assert.ok(sources.some(s=>/radius/i.test(s.text)&&/ulna/i.test(s.text)));
  const {messages}=buildTutorMessages('Explain fontanelles',[],{label:'Fontanelles'},'explain');assert.equal(messages[0].role,'system');assert.ok(messages[0].content.includes('infant fontanelles'));assert.equal(messages.length,2);

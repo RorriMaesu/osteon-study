@@ -13,7 +13,7 @@ function initTutor({escape:e,toast}) {
   const $=s=>document.querySelector(s);
   let client=localAI.client, connected=false, choice=localAI.state.model, models=[], tab='guide', busy=false, controller=null, job=null;
   let context=getLearningContext(), hardware={}, os=detectOS(), chat=[], draft='', lastFocus=null;
-  let guided=null,guideSection='',guidePrompt='recall',guideReveal='';
+  let guided=null,guideSection='',guidePrompt='recall',guideReveal='',useDiagramGuide=true;
   let setupPage='auto', sample='', returnToReview=false, assistantFinished=false, opening=false, pollTimer=null, pollRun=0;
   let benchmarkText='', generationText='', downloadState={model:downloadModels[0].name,text:'',progress:null};
   try {
@@ -48,6 +48,7 @@ function initTutor({escape:e,toast}) {
      else if(tab==='guide'){guideSection=lessons.some(l=>l.id===context.reference)?context.reference:guideSection;guideReveal='';}
     }
     render();$('#tutor-close').focus();
+    if(context.assessmentMode==='exam')return;
     if((setup||tab==='chat')&&autoCheck&&!busy&&os!=='other'&&(!connected||Date.now()-localAI.state.checkedAt>60000)) {tab='setup';setupPage='auto';connect(true);}
   }
   launcher.onclick=()=>openPanel(); $('#tutor-close').onclick=closePanel;
@@ -88,9 +89,15 @@ function initTutor({escape:e,toast}) {
     panel.dataset.aiView=tab;
     panel.querySelectorAll('[data-tutor-tab]').forEach(b=>{
      const mode=b.dataset.tutorTab;b.classList.toggle('active',mode===tab);b.setAttribute('aria-pressed',String(mode===tab));
+     b.disabled=context.assessmentMode==='exam';
      if(mode==='chat')b.hidden=!localAI.state.ready&&tab!=='chat';
      if(mode==='setup')b.textContent=localAI.state.ready?'AI setup':os==='other'?'Local AI on a computer':'Enable local AI';
     });
+    if(context.assessmentMode==='exam'){
+      body.classList.remove('tutor-chat-layout');
+      body.innerHTML='<div class="tutor-textbook-guide"><h3>Finish your independent attempt.</h3><p>Your tutor and source-based hints become available after submission. Your answers stay saved while you return to the exam.</p><button class="primary" id="tutor-return-exam">Return to exam</button></div>';
+      $('#tutor-return-exam').onclick=closePanel;status('Independent exam · coaching paused');return;
+    }
     if(tab==='setup')renderSetup();else if(tab==='guide')renderTextbookGuide();else renderChat();
     if(tab==='guide')status('Textbook guide · ready',true);
     else if(tab==='setup'&&!busy&&!localAI.state.ready)status(connected?'Ollama connected · choose or test a model':os==='other'?'Desktop Ollama setup':localAI.state.phase==='unreachable'?'Connection needs attention':'Set up local AI');
@@ -108,6 +115,7 @@ function initTutor({escape:e,toast}) {
   function go(page){setupPage=page;render();$('#tutor-body .ai-setup-content')?.focus({preventScroll:true});}
   function finish(){if(returnToReview||os==='other'){closePanel();if(localAI.state.ready)toast('Local AI is ready for optional answer review.');}else{tab='chat';render();$('#tutor-input')?.focus();}}
   function renderTextbookGuide(){
+    if(useDiagramGuide&&context.diagram?.question){renderDiagramGuide();return;}
     const lesson=lessons.find(l=>l.id===guideSection)||lessons[0],prompt=lesson[guidePrompt];
     guideSection=lesson.id;
     $('#tutor-body').innerHTML=`<div class="tutor-textbook-guide"><h3>Practice from the textbook</h3><p>Pick a section, try an answer aloud or on paper, then check your reasoning.</p>
@@ -116,13 +124,21 @@ function initTutor({escape:e,toast}) {
       <div class="objective tutor-guide-prompt"><strong>${e(prompt[0])}</strong></div>
       ${context.type==='assessment'?'<p class="tiny warning-text">Hints, model answers, and source reading count as assistance for the current question.</p>':''}
       <div class="control-row"><button id="tutor-guide-hint" aria-expanded="${guideReveal==='hint'}">Show a hint</button><button id="tutor-guide-answer" aria-expanded="${guideReveal==='answer'}">Show model answer</button><button id="tutor-guide-source">Read §${e(lesson.id)} ↗</button></div>
-      <div id="tutor-guide-reveal" role="status">${guideReveal?`<p><strong>${guideReveal==='hint'?'What to focus on':'Model answer'}</strong></p><p>${e(guideReveal==='hint'?lesson.objective:prompt[1])}</p>`:''}</div></div>`;
+      <div id="tutor-guide-reveal" role="status">${guideReveal?`<p><strong>${guideReveal==='hint'?'What to focus on':'Model answer'}</strong></p><p>${e(guideReveal==='hint'?lesson.objective:prompt[1])}</p>`:''}</div>${context.diagram?.question?'<button id="tutor-guide-activity">Practice my current activity</button>':''}</div>`;
     $('#tutor-guide-section').onchange=ev=>{guideSection=ev.target.value;guideReveal='';render();};
     panel.querySelectorAll('[data-guide-prompt]').forEach(button=>button.onclick=()=>{guidePrompt=button.dataset.guidePrompt;guideReveal='';render();panel.querySelector('[data-guide-prompt="'+guidePrompt+'"]').focus({preventScroll:true});});
     const reveal=kind=>{if(guideReveal!==kind)document.dispatchEvent(new Event('studyassistance'));guideReveal=guideReveal===kind?'':kind;render();};
     $('#tutor-guide-hint').onclick=()=>reveal('hint');
     $('#tutor-guide-answer').onclick=()=>reveal('answer');
     $('#tutor-guide-source').onclick=()=>{document.dispatchEvent(new Event('studyassistance'));closePanel();document.dispatchEvent(new CustomEvent('openreader',{detail:lesson.id}));};
+    if($('#tutor-guide-activity'))$('#tutor-guide-activity').onclick=()=>{useDiagramGuide=true;guideReveal='';render();};
+  }
+  function renderDiagramGuide(){
+    const d=context.diagram;
+    $('#tutor-body').innerHTML=`<div class="tutor-textbook-guide"><span class="eyebrow">GUIDED DIAGRAM PRACTICE · NO AI REQUIRED</span><h3>${e(context.label)}</h3><p>Try an answer aloud or in your notes, then compare your reasoning. These prompts follow the activity you are viewing.</p><div class="objective tutor-guide-prompt"><strong>${e(d.question)}</strong></div>${d.prediction?`<p>Your activity response: ${e(d.prediction)}</p>`:''}<div class="control-row"><button id="tutor-diagram-hint" aria-expanded="${guideReveal==='hint'}">Small hint</button><button id="tutor-diagram-answer" aria-expanded="${guideReveal==='answer'}">Explain clearly</button></div><div role="status">${guideReveal?`<p>${e(guideReveal==='hint'?d.hint||'Identify which control changed and what stayed the same.':d.answer||d.facts.join(' '))}</p>`:''}</div><div class="control-row"><button id="tutor-diagram-return" class="primary">Return to activity</button><button id="tutor-diagram-other">Choose a course section</button></div><p class="tiny">Self-check practice is separate from scored exam results. Optional local AI can discuss your explanation.</p></div>`;
+    const reveal=kind=>{document.dispatchEvent(new Event('studyassistance'));guideReveal=guideReveal===kind?'':kind;render();};
+    $('#tutor-diagram-hint').onclick=()=>reveal('hint');$('#tutor-diagram-answer').onclick=()=>reveal('answer');
+    $('#tutor-diagram-return').onclick=closePanel;$('#tutor-diagram-other').onclick=()=>{useDiagramGuide=false;guideReveal='';render();};
   }
   function renderSetup(){
     $('#tutor-body').innerHTML=setupScreen({state:localAI.snapshot(),page:setupPage,busy,job:job?.kind,os,hardware,download:downloadState,sample,testText:benchmarkText,returnToReview,assistantFinished,opening});
@@ -247,7 +263,7 @@ function initTutor({escape:e,toast}) {
     panel.querySelectorAll("[data-tutor-page]").forEach((b) => b.onclick = () => read("openreaderpage",+b.dataset.tutorPage));
   }
   async function send(mode, allowPrompt = false) {
-    if (busy || !connected || !choice) return;
+    if (busy || !connected || !choice || context.assessmentMode==='exam') return;
     captureDraft();
     if (!draft.trim() && !allowPrompt) return;
     const query = draft.trim() || (guided&&guided.completed<guided.total?`Ask me one focused question about ${guided.topic}.`:mode === "explain" ? `Explain ${context.label} clearly.` : mode === "hint" ? `Give me a small hint about ${context.label}.` : `Ask me one question about ${context.label}.`), model = choice;
@@ -302,9 +318,13 @@ function initTutor({escape:e,toast}) {
     }
   }
   document.addEventListener("tutorcontext", (ev) => {
+    const wasLocked=context.assessmentMode==='exam',oldDiagram=context.diagram?.id,oldQuestion=context.diagram?.question,oldState=JSON.stringify(context.diagram?.state);
     context = { ...ev.detail };
+    if(oldDiagram!==context.diagram?.id)useDiagramGuide=true;
+    if(oldDiagram!==context.diagram?.id||oldQuestion!==context.diagram?.question||oldState!==JSON.stringify(context.diagram?.state))guideReveal='';
+    if(context.assessmentMode==='exam'&&job?.kind==='chat')controller?.abort();
     if ($("#tutor-assessment-note")) $("#tutor-assessment-note").hidden = context.type !== "assessment";
-    if(panel.open&&tab==='guide')render();
+    if(panel.open&&(tab==='guide'||wasLocked!==Boolean(context.assessmentMode==='exam')))render();
     if ($("#tutor-context")) $("#tutor-context").innerHTML = "<span>LEARNING CONTEXT</span><strong>" + e(context.label) + "</strong>";
   });
   window.addEventListener("pagehide", () => controller?.abort());

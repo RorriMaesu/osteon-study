@@ -37,7 +37,10 @@ export function musclePlateSVG(number, {panel, targetId, hideLabel = false, alt}
  const mark = item ? `<circle cx="${item.point[0]}" cy="${item.point[1]}" r="${Math.max(11,scale*.018)}" fill="none" stroke="#fff" stroke-width="8"/><circle cx="${item.point[0]}" cy="${item.point[1]}" r="${Math.max(11,scale*.018)}" fill="#c5252e55" stroke="#6b0f19" stroke-width="4"/>` : '';
  const mask = item && hideLabel ? `<rect x="${item.cover[0]}" y="${item.cover[1]}" width="${item.cover[2]}" height="${item.cover[3]}" fill="#fff"/>` : '';
  const description = alt || (item ? item.orientation + '. ' + item.description : 'OpenStax Figure ' + number);
- return `<svg viewBox="${bounds.join(' ')}" role="img" aria-label="${escape(description)}"><image href="assets/muscle-textbook/${asset.file}" width="${asset.width}" height="${asset.height}"/>${mask}${mark}</svg>`;
+ const [x,y,width,height]=bounds;
+ const artwork=`<image href="assets/muscle-textbook/${asset.file}" width="${asset.width}" height="${asset.height}"/>${mask}${mark}`;
+ // Clip the source to the panel even when the outer viewer letterboxes it.
+ return `<svg viewBox="${bounds.join(' ')}" role="img" aria-label="${escape(description)}"><svg x="${x}" y="${y}" width="${width}" height="${height}" viewBox="${bounds.join(' ')}" overflow="hidden">${artwork}</svg></svg>`;
 }
 
 export function muscleTextbookExamFigure(targetId) {

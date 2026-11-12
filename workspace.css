@@ -474,3 +474,21 @@ body.viewer-room-open{overflow:hidden!important}
  .muscle-source-preview [data-plate-media] svg { height: min(var(--figure-space, 42dvh), 44dvh); }
  .muscle-figure-answer label { flex-basis: 100%; }
 }
+
+.muscle-card-filters input { flex: 1; min-width: 10ch; }
+.muscle-card-filters label { margin: 0; }
+.muscle-card-navigation { margin-block: 10px; }
+.muscle-card-navigation select { min-width: 0; max-width: 100%; }
+.muscle-study-card { background: #142621; border: 1px solid #39564c; border-radius: 10px; padding: 14px; }
+.muscle-study-card h4 { margin: 0 0 8px; font-size: 1.15rem; }
+.muscle-study-card dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0 0 10px; gap: 8px 18px; }
+.muscle-study-card dt { font-weight: 700; color: #b3d6c0; }
+.muscle-study-card dd { margin: 2px 0 0; }
+.muscle-activity-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.muscle-activity-picker label { margin: 0; }
+.muscle-activity-picker select { min-width: 0; max-width: 100%; }
+@media (max-width: 520px) {
+ .muscle-study-card { padding: 10px; }
+ .muscle-study-card dl { grid-template-columns: 1fr; gap: 6px; }
+ .muscle-card-navigation select { flex: 1; }
+}
