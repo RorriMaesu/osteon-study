@@ -1,4 +1,5 @@
 import crops from './textbook-figure-crops.json' with {type:'json'};
+import {muscleTextbookGallery} from './muscle-textbook.js';
 
 // Source artwork for states that benefit from the book's labels, proportions or comparisons.
 // Process models and assessment targets retain their own drawings.
@@ -46,6 +47,8 @@ export function textbookArt(number,e,detail){
 export const lessonTextbookArt=(section,state,e)=>textbookArt(preferredLessonArt[section]?.[state],e,lessonDetail[section]?.[state]);
 
 export function textbookGallery(figures,selected,e){
+ const muscleGallery=muscleTextbookGallery(figures,selected,e);
+ if(muscleGallery)return muscleGallery;
  const options=figures.map((f,i)=>`<option value="${i}" ${i===selected?'selected':''}>${e(f.number+' · '+(textbookFigure(f.number)?.[4]||'Textbook figure'))}</option>`).join('');
  const item=figures[selected],crop=textbookArt(item.number,e);
  return `<div class="lesson-source-preview"><div class="control-row"><label for="lesson-figure-select" class="sr-only">Source figure</label><select id="lesson-figure-select">${options}</select><button type="button" class="lesson-source-open" data-lesson-figure="${item.pdf}">Read source page ↗</button></div><figure class="section-diagram-media section-diagram-source">${crop?`<svg viewBox="${crop.viewBox}" role="img" aria-label="${e(crop.title)}">${crop.art}</svg>`:`<img src="assets/reader/p${item.pdf}.jpg" alt="${e('Source page with figure '+item.number)}">`}<figcaption>${crop?.caption||'OpenStax A&amp;P 2e · Source page.'}</figcaption></figure></div>`;

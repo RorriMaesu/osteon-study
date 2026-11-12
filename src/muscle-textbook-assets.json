@@ -1,0 +1,362 @@
+{
+  "10.1": {
+    "file": "figure-10-1.jpg",
+    "pdf": 385,
+    "width": 1144,
+    "height": 525
+  },
+  "10.2": {
+    "file": "figure-10-2.jpg",
+    "pdf": 386,
+    "width": 635,
+    "height": 1068
+  },
+  "10.3": {
+    "file": "figure-10-3.jpg",
+    "pdf": 388,
+    "width": 1435,
+    "height": 1482
+  },
+  "10.4": {
+    "file": "figure-10-4.jpg",
+    "pdf": 389,
+    "width": 801,
+    "height": 642
+  },
+  "10.5": {
+    "file": "figure-10-5.jpg",
+    "pdf": 390,
+    "width": 830,
+    "height": 765
+  },
+  "10.6": {
+    "file": "figure-10-6.jpg",
+    "pdf": 391,
+    "width": 1462,
+    "height": 2548
+  },
+  "10.7": {
+    "file": "figure-10-7.jpg",
+    "pdf": 392,
+    "width": 577,
+    "height": 368
+  },
+  "10.8": {
+    "file": "figure-10-8.jpg",
+    "pdf": 393,
+    "width": 838,
+    "height": 1105
+  },
+  "10.9": {
+    "file": "figure-10-9.jpg",
+    "pdf": 394,
+    "width": 750,
+    "height": 914
+  },
+  "10.10": {
+    "file": "figure-10-10.jpg",
+    "pdf": 395,
+    "width": 1650,
+    "height": 1510
+  },
+  "10.11": {
+    "file": "figure-10-11.jpg",
+    "pdf": 396,
+    "width": 811,
+    "height": 1259
+  },
+  "10.12": {
+    "file": "figure-10-12.jpg",
+    "pdf": 398,
+    "width": 902,
+    "height": 1014
+  },
+  "10.13": {
+    "file": "figure-10-13.jpg",
+    "pdf": 401,
+    "width": 741,
+    "height": 1083
+  },
+  "10.14": {
+    "file": "figure-10-14.jpg",
+    "pdf": 403,
+    "width": 634,
+    "height": 479
+  },
+  "10.15": {
+    "file": "figure-10-15.jpg",
+    "pdf": 403,
+    "width": 789,
+    "height": 506
+  },
+  "10.16": {
+    "file": "figure-10-16.jpg",
+    "pdf": 404,
+    "width": 763,
+    "height": 314
+  },
+  "10.17": {
+    "file": "figure-10-17.jpg",
+    "pdf": 405,
+    "width": 371,
+    "height": 314
+  },
+  "10.18": {
+    "file": "figure-10-18.jpg",
+    "pdf": 407,
+    "width": 750,
+    "height": 515
+  },
+  "10.19": {
+    "file": "figure-10-19.jpg",
+    "pdf": 408,
+    "width": 750,
+    "height": 500
+  },
+  "10.20": {
+    "file": "figure-10-20.png",
+    "pdf": 409,
+    "width": 1135,
+    "height": 672
+  },
+  "10.21": {
+    "file": "figure-10-21.jpg",
+    "pdf": 410,
+    "width": 591,
+    "height": 403
+  },
+  "10.22": {
+    "file": "figure-10-22.jpg",
+    "pdf": 410,
+    "width": 1018,
+    "height": 476
+  },
+  "10.23": {
+    "file": "figure-10-23.jpg",
+    "pdf": 412,
+    "width": 1087,
+    "height": 923
+  },
+  "10.24": {
+    "file": "figure-10-24.jpg",
+    "pdf": 413,
+    "width": 1126,
+    "height": 233
+  },
+  "10.25": {
+    "file": "figure-10-25.jpg",
+    "pdf": 414,
+    "width": 1012,
+    "height": 434
+  },
+  "11.1": {
+    "file": "figure-11-1.jpg",
+    "pdf": 425,
+    "width": 2288,
+    "height": 1049
+  },
+  "11.2": {
+    "file": "figure-11-2.jpg",
+    "pdf": 426,
+    "width": 1584,
+    "height": 1249
+  },
+  "11.3": {
+    "file": "figure-11-3.jpg",
+    "pdf": 428,
+    "width": 2186,
+    "height": 2150
+  },
+  "11.4": {
+    "file": "figure-11-4.jpg",
+    "pdf": 429,
+    "width": 1642,
+    "height": 1463
+  },
+  "11.5": {
+    "file": "figure-11-5.jpg",
+    "pdf": 431,
+    "width": 1264,
+    "height": 2845
+  },
+  "11.6": {
+    "file": "figure-11-6.jpg",
+    "pdf": 432,
+    "width": 1933,
+    "height": 758
+  },
+  "11.7": {
+    "file": "figure-11-7.jpg",
+    "pdf": 434,
+    "width": 2407,
+    "height": 1460
+  },
+  "11.8": {
+    "file": "figure-11-8.jpg",
+    "pdf": 435,
+    "width": 2021,
+    "height": 2658
+  },
+  "11.9": {
+    "file": "figure-11-9.jpg",
+    "pdf": 436,
+    "width": 2296,
+    "height": 1100
+  },
+  "11.10": {
+    "file": "figure-11-10.jpg",
+    "pdf": 437,
+    "width": 2175,
+    "height": 1067
+  },
+  "11.11": {
+    "file": "figure-11-11.jpg",
+    "pdf": 438,
+    "width": 2292,
+    "height": 1213
+  },
+  "11.12": {
+    "file": "figure-11-12.jpg",
+    "pdf": 439,
+    "width": 2088,
+    "height": 2717
+  },
+  "11.13": {
+    "file": "figure-11-13.jpg",
+    "pdf": 440,
+    "width": 1683,
+    "height": 1406
+  },
+  "11.14": {
+    "file": "figure-11-14.jpg",
+    "pdf": 441,
+    "width": 2475,
+    "height": 850
+  },
+  "11.15": {
+    "file": "figure-11-15.jpg",
+    "pdf": 443,
+    "width": 2252,
+    "height": 2617
+  },
+  "11.16": {
+    "file": "figure-11-16.jpg",
+    "pdf": 445,
+    "width": 1046,
+    "height": 1351
+  },
+  "11.17": {
+    "file": "figure-11-17.jpg",
+    "pdf": 448,
+    "width": 1863,
+    "height": 1363
+  },
+  "11.18": {
+    "file": "figure-11-18.jpg",
+    "pdf": 449,
+    "width": 2275,
+    "height": 1273
+  },
+  "11.19": {
+    "file": "figure-11-19.jpg",
+    "pdf": 450,
+    "width": 1917,
+    "height": 1396
+  },
+  "11.20": {
+    "file": "figure-11-20.jpg",
+    "pdf": 450,
+    "width": 2118,
+    "height": 1305
+  },
+  "11.21": {
+    "file": "figure-11-21.jpg",
+    "pdf": 451,
+    "width": 1944,
+    "height": 1905
+  },
+  "11.22": {
+    "file": "figure-11-22.jpg",
+    "pdf": 452,
+    "width": 2192,
+    "height": 1004
+  },
+  "11.23": {
+    "file": "figure-11-23.jpg",
+    "pdf": 454,
+    "width": 2229,
+    "height": 2371
+  },
+  "11.24": {
+    "file": "figure-11-24.jpg",
+    "pdf": 455,
+    "width": 1940,
+    "height": 2181
+  },
+  "11.25": {
+    "file": "figure-11-25.jpg",
+    "pdf": 457,
+    "width": 2381,
+    "height": 2938
+  },
+  "11.26": {
+    "file": "figure-11-26.jpg",
+    "pdf": 458,
+    "width": 1971,
+    "height": 1983
+  },
+  "11.27": {
+    "file": "figure-11-27.jpg",
+    "pdf": 459,
+    "width": 2250,
+    "height": 3048
+  },
+  "11.28": {
+    "file": "figure-11-28.jpg",
+    "pdf": 460,
+    "width": 2083,
+    "height": 2033
+  },
+  "11.29": {
+    "file": "figure-11-29.jpg",
+    "pdf": 463,
+    "width": 1713,
+    "height": 2175
+  },
+  "11.30": {
+    "file": "figure-11-30.jpg",
+    "pdf": 464,
+    "width": 2275,
+    "height": 3425
+  },
+  "11.31": {
+    "file": "figure-11-31.jpg",
+    "pdf": 466,
+    "width": 1971,
+    "height": 2746
+  },
+  "11.32": {
+    "file": "figure-11-32.jpg",
+    "pdf": 467,
+    "width": 2279,
+    "height": 1358
+  },
+  "11.33": {
+    "file": "figure-11-33.jpg",
+    "pdf": 468,
+    "width": 2239,
+    "height": 3075
+  },
+  "11.34": {
+    "file": "figure-11-34.jpg",
+    "pdf": 469,
+    "width": 2083,
+    "height": 1592
+  },
+  "11.35": {
+    "file": "figure-11-35.jpg",
+    "pdf": 470,
+    "width": 1958,
+    "height": 2753
+  }
+}

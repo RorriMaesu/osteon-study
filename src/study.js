@@ -8,6 +8,7 @@ import foundationLinks from './foundations-links.json' with {type:'json'};
 const lessonLinks={...legacyLessonLinks,...foundationLinks};
 import {renderSectionDiagrams} from './section-diagrams.js';
 import {mountLessonVisual} from './lesson-visual.js';
+import {mountMuscleTextbook} from './muscle-textbook.js';
 import {mountFoundationChallenges} from './foundations-challenges.js';
 import {renderCurriculumActivity} from './curriculum-activities.js';
 import {setLearningContext} from './learning-context.js';
@@ -51,7 +52,11 @@ export function initStudy({viewer,setView,selectTerm,dialog,toast,escape:e}){
      if(!mountFoundationChallenges(activity,id,e,renderStudy))renderStudy(activity);
     }
     mountLessonVisual(activityContent.closest('.flow-body'),activityContent,l.title);
-   }else if($('.lesson-source-preview'))mountLessonVisual($('.flow-body'),$('.lesson-source-preview'),l.title);
+   }else if($('.lesson-source-preview')){
+    const gallery=$('.lesson-source-preview');
+    if(gallery.dataset.muscleFigure)mountMuscleTextbook(gallery,l,e);
+    mountLessonVisual($('.flow-body'),gallery,l.title);
+   }
    if(focus){const heading=$('.flow-body h2')||$('.flow-body h3');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}}
    window.scrollTo({top:0,behavior:'instant'});
   }
