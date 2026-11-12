@@ -135,7 +135,7 @@ export function initWorkspace() {
           mount(root,id==='study-view'?'Study studio':id==='practice-view'?'Practice':'Progress',[...root.children].filter(n=>n.classList.contains('section-intro')));
         }
       }
-      if(document.querySelector('#info-dialog').open&&!document.querySelector('#dialog-content>.figure-zoom'))mount(document.querySelector('#dialog-content'),'Reference');
+      if(document.querySelector('#info-dialog').open&&!document.querySelector('#dialog-content.mock4-dialog-content,#dialog-content>.figure-zoom'))mount(document.querySelector('#dialog-content'),'Reference');
       if(document.querySelector('#tutor-panel').open){
         const body=document.querySelector('#tutor-body'),chat=!!body.querySelector('#tutor-form');
         body.classList.toggle('tutor-chat-layout',chat);
