@@ -12,6 +12,7 @@ export const armRoles = {
  brachialis:{name:'Brachialis',role:'Elbow flexor across forearm positions.'},
  brachioradialis:{name:'Brachioradialis',role:'Assists elbow flexion, especially with the forearm near neutral rotation.'},
  'triceps-brachii':{name:'Triceps brachii',role:'Extends the elbow. The long head also crosses the shoulder.'},
+ anconeus:{name:'Anconeus',role:'Assists elbow extension and helps stabilize the elbow.'},
 };
 
 export function curlFrame(seconds){
@@ -19,6 +20,18 @@ export function curlFrame(seconds){
  const phase=time<1.6?0:time<2.4?1:2;
  const angle=phase===0?115*smooth(time/1.6):phase===1?115:115-115*smooth((time-2.4)/1.6);
  return {angle,phase,name:curlPhases[phase].name,contraction:curlPhases[phase].type,detail:curlPhases[phase].detail};
+}
+
+export function pressFrame(seconds){
+ const frame=curlFrame(seconds), time=clamp(seconds,0,curlDuration);
+ const {phase,contraction}=frame;
+ return {phase,contraction,angle:elbowLimits[1]-frame.angle,clipTime:[2.4+time,4,time-2.4][phase],
+  name:['Press down','Hold the extension','Return under control'][phase],
+  detail:[
+   'The elbow extensors shorten as the hand moves down against the cable’s pull.',
+   'The elbow extensors maintain tension while the hand stays in place.',
+   'As the cable pulls the hand upward, the elbow flexes and the elbow extensors lengthen under tension to control the return.',
+  ][phase]};
 }
 
 export function heelFrame(seconds){

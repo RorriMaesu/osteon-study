@@ -33,11 +33,12 @@ async function readRig(name){
 }
 
 export class MotionViewer {
- constructor(stage,{onFrame,onTarget,onMuscle}){
+ constructor(stage,{onFrame,onTarget,onMuscle,onLimb}){
   this.stage=stage;
   this.onFrame=onFrame;
   this.onTarget=onTarget;
   this.onMuscle=onMuscle;
+  this.onLimb=onLimb;
   this.handle=stage.querySelector('.motion-handle');
   this.loadTag=stage.querySelector('.motion-load-tag');
   this.cache=new Map();
@@ -96,19 +97,22 @@ export class MotionViewer {
  }
  async load(kind){
   if(this.cache.has(kind))return this.cache.get(kind);
-  const name=kind==='arm'?'motion-arm':'motion-legs';
+  const arm=kind!=='legs';
+  const name=arm?(kind==='arm-left'?'motion-arm-left':'motion-arm'):'motion-legs';
   const loading=(async()=>{
     const [modelFile,meta]=await readRig(name);
     const model=modelFile.scene;
     const attach=name=>jointState(model.getObjectByName(name));
-    const joints=kind==='arm'?Object.fromEntries(Object.entries(meta.joints).map(([key,name])=>[key,attach(name)])):{
+    const joints=arm?Object.fromEntries(Object.entries(meta.joints).map(([key,name])=>[key,attach(name)])):{
      pelvis:attach(meta.joints.pelvis),
      ...Object.fromEntries(['right','left'].map(side=>[side,Object.fromEntries(Object.entries(meta.joints[side]).map(([key,name])=>[key,attach(name)]))])),
     };
-    const parts=[];
+    const parts=[],legBones=[];
     model.traverse(mesh=>{
      if(!mesh.isMesh)return;
      if(mesh.isSkinnedMesh)mesh.frustumCulled=false;
+     const side=!arm&&mesh.userData.motionKind==='bone'&&mesh.userData.zname?.match(/\.(r|l)$/i);
+     if(side)legBones.push({mesh,side:side[1].toLowerCase()==='r'?'right':'left'});
      if(!mesh.userData.motionMuscle)return;
      parts.push(musclePart(mesh));
     });
@@ -116,8 +120,8 @@ export class MotionViewer {
     const mixer=clip?new THREE.AnimationMixer(model):null;
     const action=clip?mixer.clipAction(clip).setLoop(THREE.LoopOnce,1):null;
     if(action)action.clampWhenFinished=true;
-    const contacts=kind==='legs'?Object.fromEntries(Object.entries(meta.contact).map(([side,points])=>[side,Object.values(points).map(point=>({node:model.getObjectByName(point.node),offset:new THREE.Vector3(...point.local)}))])):null;
-    return {model,meta,joints,parts,kind,mixer,action,contacts};
+    const contacts=!arm?Object.fromEntries(Object.entries(meta.contact).map(([side,points])=>[side,Object.values(points).map(point=>({node:model.getObjectByName(point.node),offset:new THREE.Vector3(...point.local)}))])):null;
+    return {model,meta,joints,parts,kind:arm?'arm':'legs',side:meta.side||'right',mixer,action,contacts,legBones};
   })();
   this.cache.set(kind,loading);
   loading.catch(()=>this.cache.delete(kind));
@@ -283,18 +287,19 @@ export class MotionViewer {
   const bounds=new THREE.Box3().setFromObject(this.current.model,true);
   if(bounds.isEmpty())return;
   const size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
+  const left=this.current.side==='left';
   if(this.current.kind==='arm'){
    const {joints}=this.current;
    const elbow=joints.elbow.node.getWorldPosition(new THREE.Vector3());
-   center.set(elbow.x-.018,elbow.y-.020,elbow.z+.164);
+   center.set(elbow.x+(left ? .018 : -.018),elbow.y-.020,elbow.z+.164);
   }
   if(this.current.kind==='legs'&&!this.current.upper?.root.visible){
    size.y=.94;center.y=.46;
   }
   const diagonal=this.current.kind==='arm'?.91:Math.max(size.y,size.x)*1.15;
   const direction=({
-   lesson:this.current.kind==='arm'?[-1,.11,.24]:[1,.13,1.25],
-   front:[0,.08,1],side:this.current.kind==='arm'?[-1,.05,0]:[1,.05,0],
+   lesson:this.current.kind==='arm'?[left?1:-1,.11,.24]:[1,.13,1.25],
+   front:[0,.08,1],side:this.current.kind==='arm'?[left?1:-1,.05,0]:[1,.05,0],
   }[view]||[1,.1,1]);
   const limiting=Math.min(1,Math.max(.20,this.camera.aspect));
   const distance=diagonal/(2*Math.tan(this.camera.fov*radians/2)*limiting);
@@ -384,10 +389,12 @@ export class MotionViewer {
   if(!this.current||!this.pickStart||Math.hypot(event.clientX-this.pickStart.x,event.clientY-this.pickStart.y)>6)return;
   this.rayAt(event);
   this.scene.updateMatrixWorld(true);
-  const byMesh=new Map(this.current.parts.filter(part=>part.mesh.visible).map(part=>[part.mesh,part]));
+  const candidates=this.current.parts.filter(part=>part.mesh.visible);
+  if(this.target&&this.current.kind==='legs')candidates.push(...this.current.legBones);
+  const byMesh=new Map(candidates.map(part=>[part.mesh,part]));
   for(const mesh of byMesh.keys())if(mesh.isSkinnedMesh)mesh.computeBoundingSphere();
   const hit=this.ray.intersectObjects([...byMesh.keys()],false)[0];
-  if(hit){const p=byMesh.get(hit.object);this.onMuscle(p.side+':'+p.id);}
+  if(hit){const p=byMesh.get(hit.object);if(p.id)this.onMuscle(p.side+':'+p.id);else this.onLimb(p.side);}
  }
  tick(now){
   if(!this.renderer)return;

@@ -1,8 +1,8 @@
-"""Build the right-arm Motion Lab pilot with Blender 4.5 and existing Osteon anatomy.
+"""Build a Motion Lab arm with Blender 4.5 and existing Osteon anatomy.
 
 Run from any directory:
   blender -b --factory-startup --disable-autoexec --python-exit-code 1 \
-    --python scripts/blender/build_motion_arm.py -- REPO OUTPUT_DIRECTORY
+    --python scripts/blender/build_motion_arm.py -- REPO OUTPUT_DIRECTORY [right|left]
 
 The output directory must be outside the repository. It contains the editable
 .blend and a dated, SHA-256-verified backup from before every run. The small GLB
@@ -23,18 +23,23 @@ import bpy
 from mathutils import Quaternion, Vector
 
 
-REPO, WORK = (Path(argument).resolve() for argument in sys.argv[sys.argv.index('--') + 1:])
+arguments = sys.argv[sys.argv.index('--') + 1:]
+REPO, WORK = (Path(argument).resolve() for argument in arguments[:2])
+SIDE = arguments[2] if len(arguments) > 2 else 'right'
+if SIDE not in {'right', 'left'}:
+    raise ValueError('Choose right or left as the arm profile.')
 if WORK.is_relative_to(REPO):
     raise ValueError('Keep the editable .blend and backups outside the repository.')
 ASSETS = REPO / 'assets'
-PROJECT = WORK / 'motion-arm.blend'
-MODEL = ASSETS / 'motion-arm.glb'
-META = ASSETS / 'motion-arm.json'
+STEM = 'motion-arm' if SIDE == 'right' else 'motion-arm-left'
+PROJECT = WORK / (STEM + '.blend')
+MODEL = ASSETS / (STEM + '.glb')
+META = ASSETS / (STEM + '.json')
 SKELETON = ASSETS / 'skeleton.glb'
 ARM = ASSETS / 'muscles-shoulder-arm.glb'
 FOREARM = ASSETS / 'muscles-forearm-hand.glb'
 LANDMARKS = REPO / 'src' / 'landmarks.json'
-FLEXORS = {
+MUSCLE_PARTS_RIGHT = {
     'muscle-long-head-of-biceps-brachii-r': ('biceps-brachii', 'Biceps brachii', 'Long head of biceps brachii'),
     'muscle-short-head-of-biceps-brachii-r': ('biceps-brachii', 'Biceps brachii', 'Short head of biceps brachii'),
     'muscle-brachialis-muscle-r': ('brachialis', 'Brachialis', 'Brachialis'),
@@ -44,12 +49,23 @@ FLEXORS = {
     'muscle-long-head-of-triceps-brachii-r': ('triceps-brachii', 'Triceps brachii', 'Long head of triceps brachii'),
 }
 
+MUSCLE_PARTS = {identity[:-1] + SIDE[0]: part for identity, part in MUSCLE_PARTS_RIGHT.items()}
+if SIDE == 'left':
+    MUSCLE_PARTS['muscle-anconeus-muscle-l'] = ('anconeus', 'Anconeus', 'Anconeus')
+
+
+def side_point(point):
+    x, y, z = point
+    return ((-x if SIDE == 'left' else x), y, z)
+
+
+# The atlas records bilaterally mirrored meshes from the same neutral alignment.
 # All coordinates below are written in the source glTF's y-up frame. The shoulder
 # is inside the humeral head. The elbow center and line were chosen from the
 # source distal humerus and compared with the epicondyle and joint surface pins.
-SHOULDER = (-0.167, 1.381, -0.030)
-ELBOW = (-0.219, 1.099, -0.034)
-WRIST = (-0.260, 0.857, 0.017)
+SHOULDER = side_point((-0.167, 1.381, -0.030))
+ELBOW = side_point((-0.219, 1.099, -0.034))
+WRIST = side_point((-0.260, 0.857, 0.017))
 ELBOW_LIMIT = 115
 FPS = 30
 
@@ -61,7 +77,7 @@ def digest(path):
 
 def backup():
     stamp = datetime.now(timezone.utc).strftime('%Y%m%d-%H%M%S-%f')
-    archive = WORK.parent / 'model-backups' / ('motion-arm-' + stamp)
+    archive = WORK.parent / 'model-backups' / (STEM + '-' + stamp)
     archive.mkdir(parents=True)
     paths = [
         SKELETON, ARM, FOREARM, LANDMARKS,
@@ -83,7 +99,7 @@ def backup():
         items.append({'original': str(path), 'file': destination.name,
                       'sha256': checksum, 'bytes': destination.stat().st_size})
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=REPO, text=True).strip()
-    manifest = {'reason': 'Before building the Osteon Motion Lab right arm',
+    manifest = {'reason': f'Before building the Osteon Motion Lab {SIDE} arm',
                 'revision': revision, 'files': items}
     (archive / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     print('VERIFIED_BACKUP', archive, flush=True)
@@ -113,13 +129,14 @@ def import_meshes(path, select):
 
 def bone_segment(obj):
     label = obj.get('zname', '')
-    if not label.endswith('.r'):
+    if not label.endswith('.' + SIDE[0]):
         return None
-    if label in ('Clavicle.r', 'Scapula.r'):
+    label = label[:-2]
+    if label in ('Clavicle', 'Scapula'):
         return 'fixed-girdle'
-    if label == 'Humerus.r':
+    if label == 'Humerus':
         return 'MotionShoulder'
-    if label in ('Radius.r', 'Ulna.r'):
+    if label in ('Radius', 'Ulna'):
         return 'MotionElbow'
     if re.search(r'finger of hand|metacarpal|capitate|hamate|lunate|pisiform|scaphoid|trapezi|trapezoid|triquetr', label, flags=re.I):
         return 'MotionWrist'
@@ -127,7 +144,7 @@ def bone_segment(obj):
 
 
 def new_rig():
-    armature = bpy.data.armatures.new('Motion Lab right arm armature')
+    armature = bpy.data.armatures.new(f'Motion Lab {SIDE} arm armature')
     rig = bpy.data.objects.new('MotionArmRig', armature)
     bpy.context.collection.objects.link(rig)
     bpy.context.view_layer.objects.active = rig
@@ -135,7 +152,7 @@ def new_rig():
     ends = [
         ('MotionShoulder', SHOULDER, ELBOW),
         ('MotionElbow', ELBOW, WRIST),
-        ('MotionWrist', WRIST, (-0.269, 0.793, 0.022)),
+        ('MotionWrist', WRIST, side_point((-0.269, 0.793, 0.022))),
     ]
     previous = None
     for name, head, tail in ends:
@@ -204,8 +221,9 @@ def apply_muscle_weights(obj, rig, identity):
         'muscle-medial-head-of-triceps-brachii-r': (1.103, 1.216),
         'muscle-lateral-head-of-triceps-brachii-r': (1.103, 1.216),
         'muscle-long-head-of-triceps-brachii-r': (1.103, 1.216),
+        'muscle-anconeus-muscle-r': (1.060, 1.111),
     }
-    distal, proximal = intervals[identity]
+    distal, proximal = intervals[identity[:-1] + 'r']
     skin(obj, rig, weight_at=lambda height: smooth_transition(height, distal, proximal))
 
 
@@ -214,6 +232,9 @@ def elbow_axes(rig):
     lateral = Vector(landmarks['Lateral epicondyle of humerus']['points'][0]['point'])
     medial = Vector(landmarks['Medial epicondyle of humerus']['points'][0]['point'])
     world = (lateral - medial).normalized()
+    if SIDE == 'left':
+        # The reflected anatomical rotation keeps its X component and flips Y/Z.
+        world = Vector((world.x, -world.y, -world.z))
     local = rig.data.bones['MotionElbow'].matrix_local.to_quaternion().inverted() @ to_blender(world)
     return world, local.normalized()
 
@@ -264,12 +285,14 @@ def export_metadata(world_axis, bones, muscles):
         'elbowWorldAxis': [round(value, 8) for value in world_axis],
         'elbowLimit': [0, ELBOW_LIMIT],
         'muscles': [dict(id=identity, name=name) for identity, name in sorted(
-            {(identity, name) for identity, name, part in FLEXORS.values()})],
+            {(identity, name) for identity, name, part in MUSCLE_PARTS.values()})],
         'animation': {'name': data['animations'][0]['name'], 'duration': 4, 'liftEnd': 1.6, 'holdEnd': 2.4},
         'source': 'Osteon atlas anatomy from Z-Anatomy and BodyParts3D',
-        'status': 'Right arm teaching rig; elbow motion and approximated muscle deformation.',
+        'status': f'{SIDE.capitalize()} arm teaching rig; elbow motion and approximated muscle deformation.',
         'counts': {'bones': len(bones), 'muscleMeshes': len(muscles)},
     }
+    if SIDE == 'left':
+        meta['side'] = SIDE
     META.write_text(json.dumps(meta, indent=2) + '\n', encoding='utf-8')
 
 
@@ -278,25 +301,27 @@ def main():
     original_hashes = {source: digest(source) for source in [SKELETON, ARM, FOREARM]}
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bones = import_meshes(SKELETON, bone_segment)
-    muscles = [*import_meshes(ARM, lambda obj: obj.get('muscleId') in FLEXORS),
-               *import_meshes(FOREARM, lambda obj: obj.get('muscleId') in FLEXORS)]
-    if len(bones) != 32 or {obj['muscleId'] for obj in muscles} != FLEXORS.keys():
-        raise RuntimeError(f'Unexpected right arm source inventory: {len(bones)} bones, {len(muscles)} muscles')
+    muscles = [*import_meshes(ARM, lambda obj: obj.get('muscleId') in MUSCLE_PARTS),
+               *import_meshes(FOREARM, lambda obj: obj.get('muscleId') in MUSCLE_PARTS)]
+    if len(bones) != 32 or {obj['muscleId'] for obj in muscles} != MUSCLE_PARTS.keys():
+        raise RuntimeError(f'Unexpected {SIDE} arm source inventory: {len(bones)} bones, {len(muscles)} muscles')
     rig = new_rig()
     bone_mat = material('Ivory bone', (.78, .73, .57))
     muscle_mat = material('Muscle', (.45, .095, .083))
     for obj in bones:
         label, segment = obj['zname'], bone_segment(obj)
-        obj.name = label.removesuffix('.r')
+        obj.name = label[:-2]
         obj['motionBone'] = obj.name
         style(obj, bone_mat)
         if segment != 'fixed-girdle':
             skin(obj, rig, segment=segment)
     for obj in muscles:
         identity = obj['muscleId']
-        group, _, part = FLEXORS[identity]
+        group, _, part = MUSCLE_PARTS[identity]
         obj.name = part
         obj['motionMuscle'], obj['motionPart'] = group, part
+        if SIDE == 'left':
+            obj['motionSide'] = SIDE
         style(obj, muscle_mat)
         apply_muscle_weights(obj, rig, identity)
     world_axis, local_axis = elbow_axes(rig)
