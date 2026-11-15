@@ -16,6 +16,7 @@ import shutil
 import statistics
 import sys
 
+import bmesh
 import bpy
 from mathutils import Matrix, Quaternion, Vector
 from mathutils.kdtree import KDTree
@@ -221,6 +222,23 @@ def decimate(obj, minimum):
     obj["motionSourceVertices"] = before
 
 
+def check_oblique_surface(obj, *, join_seams=False):
+    # The atlas GLB can split vertices at shading seams. Weld those coincident
+    # vertices before simplification so it collapses edges instead of islands.
+    mesh = bmesh.new()
+    try:
+        mesh.from_mesh(obj.data)
+        bmesh.ops.remove_doubles(mesh, verts=list(mesh.verts), dist=.000012)
+        if not mesh.faces or any(not edge.is_manifold for edge in mesh.edges):
+            raise ValueError(f"Expected a closed external oblique surface: {obj.name}")
+        if join_seams:
+            mesh.to_mesh(obj.data)
+    finally:
+        mesh.free()
+    if join_seams:
+        obj.data.update()
+
+
 def build_blink(bones_path, muscles_path):
     context = {
         "Frontal bone", "Maxilla.r", "Maxilla.l", "Zygomatic bone.r", "Zygomatic bone.l",
@@ -350,6 +368,8 @@ def build_breath(bones_path, muscles_path):
     for label, obj in muscles.items():
         name, _, side = split_side(label)
         role = BREATH[name][0]
+        if role == "external-abdominal-oblique":
+            check_oblique_surface(obj, join_seams=True)
         decimate(obj, 6300 if role == "diaphragm" else 4500)
         entries.append(tag_muscle(obj, label, BREATH, "authored-deformation"))
         for shape, amount in poses.items():
@@ -619,6 +639,8 @@ def check_export(path, entries, region):
         obj = lookup[entry["id"]]
         if obj.get("motionSide") != entry["side"] or obj.get("motionMuscle") != entry["role"]:
             raise ValueError(f"Re-import label changed for {entry['id']}")
+        if entry["role"] == "external-abdominal-oblique":
+            check_oblique_surface(obj)
         keys = obj.data.shape_keys.key_blocks if obj.data.shape_keys else None
         expected = {"blink": {"Blink"}, "jaw": {"JawOpen"}, "smile": {"Smile"}, "breath": {"Inhale", "ForcedExhale"}}[region]
         found = set(keys.keys()) - {"Basis"} if keys else set()

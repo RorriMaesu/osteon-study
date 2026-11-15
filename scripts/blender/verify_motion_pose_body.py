@@ -37,7 +37,10 @@ for part in paired_surfaces:
         mesh = bmesh.new()
         try:
             mesh.from_mesh(obj.data)
-            # Center the test for partially open shells such as the oblique.
+            if part == 'external-abdominal-oblique-muscle':
+                bmesh.ops.remove_doubles(mesh, verts=list(mesh.verts), dist=.000012)
+                assert all(edge.is_manifold for edge in mesh.edges), (obj.name, 'open oblique surface')
+            # Center the volume calculation for any small boundary seams.
             centroid = sum((vertex.co for vertex in mesh.verts), Vector()) / len(mesh.verts)
             for vertex in mesh.verts:
                 vertex.co -= centroid

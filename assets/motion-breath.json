@@ -2,8 +2,8 @@
   "schema": 1,
   "region": "breath",
   "asset": "motion-breath.glb",
-  "sha256": "dd3fff03e50f7b3ff9328bf626adeb8c576e8b522fd1454e7a6c696f151ddf86",
-  "bytes": 5854372,
+  "sha256": "42a3b7090caaa11b816260159bcde0f0bd7f71b29db2470289805922f2cc97ed",
+  "bytes": 5273112,
   "camera": {
     "target": [
       0,
@@ -344,16 +344,16 @@
     "muscle-external-intercostal-muscles-l": {
       "ForcedExhale": {
         "maxDisplacementMm": 6.522,
-        "medianDisplacementMm": 2.262,
+        "medianDisplacementMm": 2.261,
         "minVerticalMm": -5.088,
         "maxVerticalMm": 0.232,
         "edgeLengthRatio95": 1.026
       },
       "Inhale": {
         "maxDisplacementMm": 10.868,
-        "medianDisplacementMm": 3.77,
+        "medianDisplacementMm": 3.768,
         "minVerticalMm": -0.351,
-        "maxVerticalMm": 8.684,
+        "maxVerticalMm": 8.683,
         "edgeLengthRatio95": 1.019
       }
     },
@@ -375,7 +375,7 @@
     },
     "muscle-innermost-intercostal-muscles-l": {
       "ForcedExhale": {
-        "maxDisplacementMm": 6.563,
+        "maxDisplacementMm": 6.562,
         "medianDisplacementMm": 3.368,
         "minVerticalMm": -4.964,
         "maxVerticalMm": -0.204,
@@ -383,7 +383,7 @@
       },
       "Inhale": {
         "maxDisplacementMm": 10.937,
-        "medianDisplacementMm": 5.614,
+        "medianDisplacementMm": 5.613,
         "minVerticalMm": 0.39,
         "maxVerticalMm": 8.482,
         "edgeLengthRatio95": 1.063
@@ -440,33 +440,33 @@
     "muscle-external-abdominal-oblique-muscle-r": {
       "ForcedExhale": {
         "maxDisplacementMm": 9.503,
-        "medianDisplacementMm": 6.561,
-        "minVerticalMm": -4.729,
+        "medianDisplacementMm": 6.467,
+        "minVerticalMm": -4.714,
         "maxVerticalMm": 2.5,
         "edgeLengthRatio95": 1.005
       },
       "Inhale": {
-        "maxDisplacementMm": 9.047,
-        "medianDisplacementMm": 5.903,
+        "maxDisplacementMm": 9.036,
+        "medianDisplacementMm": 5.92,
         "minVerticalMm": -1.9,
-        "maxVerticalMm": 8.034,
-        "edgeLengthRatio95": 1.087
+        "maxVerticalMm": 8.012,
+        "edgeLengthRatio95": 1.088
       }
     },
     "muscle-external-abdominal-oblique-muscle-l": {
       "ForcedExhale": {
         "maxDisplacementMm": 9.503,
-        "medianDisplacementMm": 6.562,
-        "minVerticalMm": -4.728,
+        "medianDisplacementMm": 6.47,
+        "minVerticalMm": -4.713,
         "maxVerticalMm": 2.5,
         "edgeLengthRatio95": 1.005
       },
       "Inhale": {
-        "maxDisplacementMm": 9.045,
-        "medianDisplacementMm": 5.903,
+        "maxDisplacementMm": 9.034,
+        "medianDisplacementMm": 5.92,
         "minVerticalMm": -1.9,
-        "maxVerticalMm": 8.032,
-        "edgeLengthRatio95": 1.087
+        "maxVerticalMm": 8.011,
+        "edgeLengthRatio95": 1.088
       }
     },
     "muscle-internal-abdominal-oblique-muscle-r": {
@@ -541,15 +541,15 @@
     },
     {
       "file": "muscles-trunk-back.glb",
-      "sha256": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b"
+      "sha256": "23bce6f4875bd97fa1fbf3efdbee0750ca178995190bb66483135078d47d2dc7"
     },
     {
       "file": "MODEL-LICENSE.md",
-      "sha256": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+      "sha256": "5b492502cbd78fb08fb056ddb92818bddc773a29e513ae970cd422b570bbef57"
     },
     {
       "file": "muscle-models.json",
-      "sha256": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7"
+      "sha256": "a346ef510a0b6ae105c606c9e6fa4a2c8ad0e715325dcb1b25945b27f645cb0b"
     }
   ]
 }
