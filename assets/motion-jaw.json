@@ -2,8 +2,8 @@
   "schema": 1,
   "region": "jaw",
   "asset": "motion-jaw.glb",
-  "sha256": "8763ce67092eb61b1b2c1a041ce2c0c7b476302ec7ee68b8827e4b911ff666d1",
-  "bytes": 858880,
+  "sha256": "86d5c9c1eef64489dc5b3841f9c30c26e46819b8f304377f5074c2b765fa2f1d",
+  "bytes": 978796,
   "camera": {
     "target": [
       0,

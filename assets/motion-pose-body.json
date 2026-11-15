@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "e43a9443b0e4798b04b6fb0df4a846ba2555a5f0109132471a20713b3ae9e7f7",
-  "bytes": 17488412,
+  "sha256": "39cd878aba0fdd0802a6c68a197795ff5e32362eda69d136ee82c1ad360065d8",
+  "bytes": 21982968,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
   "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.",
@@ -3334,7 +3334,7 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "lower-muscle-winding-20261115-215422-9085",
+  "backup": "body-muscle-winding-20261115-220811-3063",
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
     "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
@@ -3354,19 +3354,19 @@
     "assets\\motion-legs.glb": "1dda42c027b33de5264cb0cca4b8608a38a132d90a56b91b3d612fad2a0910ea",
     "assets\\motion-legs.json": "b4699b5ec2be5733f07635185d7fbfcb48eb17826966cfbbe6fa3b3995d42740",
     "assets\\motion-walk-context.json": "20b6df6905b8a46dbc7c585170bdc62fc812bb14cf5ab49fc93636c9aeaa6131",
-    "assets\\motion-walk-muscles.json": "ba770ab8749705b34b9fcdf5580068730576fb98fe7fa1a2e84398f22b42a590",
-    "assets\\motion-forearm.json": "ed1222aca9036f5a9f8906f425ba5d89e4cd700cabc7b0b5233889456f3ee711",
-    "src\\muscle-models.json": "2bd20e4ac4f3e07043601193e0ae166ad919b09b463178e9af3d9ab1aa93e39c",
+    "assets\\motion-walk-muscles.json": "777fad619c95c257d1bb7e02aa91819bda2be738be601fb956d04b6f9104cdb3",
+    "assets\\motion-forearm.json": "64327c648a3bf438a5f4b0aecee3b7e89522819841e1ebc7b6888c35ce0d8834",
+    "src\\muscle-models.json": "a346ef510a0b6ae105c606c9e6fa4a2c8ad0e715325dcb1b25945b27f645cb0b",
     "src\\three-d-landmarks.json": "aa336cfbaa55cb3ef0a2ac4fc9f1914c5998abf1f69a3856a3ac8c8ecb177bd5",
     "assets\\MODEL-LICENSE.md": "5b492502cbd78fb08fb056ddb92818bddc773a29e513ae970cd422b570bbef57",
-    "assets\\motion-walk-muscles-forearm-hand.glb": "e5f1d17baaeb4d6afc6b70591f6d7296f9a4d3545be56c2c667c663097e15b79",
-    "assets\\motion-walk-muscles-head-neck.glb": "1d9199c10a9dd43d1b45374da7d0d50f1ec595991557472b12212042ebce429d",
+    "assets\\motion-walk-muscles-forearm-hand.glb": "d7d1b2b0200597b839bf79141ba9bc89a267422bfa325de2352a67c902509bee",
+    "assets\\motion-walk-muscles-head-neck.glb": "a3e37364e7401c50ba9785818727f9844d810696ab5c948441ba91eb5fd60363",
     "assets\\motion-walk-muscles-pelvis-leg-foot.glb": "6bf336945ea3b50f348210c07f0d7c21a1bd34e70d5b9503bcdc0bcf5cc3be42",
-    "assets\\motion-walk-muscles-shoulder-arm.glb": "f207aeef484ab013f5d2a216d337495b9605d6656949d4aa1b88948427e44f89",
-    "assets\\motion-walk-muscles-trunk-back.glb": "7d5b1de338a7cff0401fda83f5e178379bca2ccab6b02cc72398fc9f40801a9c",
-    "assets\\motion-blink.glb": "d6bac359fe643c9c21419125ef7886b4daf9be2506e2c5b76e942d8e762d69b0",
-    "assets\\motion-smile.glb": "a4cdb127c2087301dc232e93289f2464c41844875a8d6857d8fa2ea9e9698002",
-    "assets\\motion-jaw.glb": "8763ce67092eb61b1b2c1a041ce2c0c7b476302ec7ee68b8827e4b911ff666d1",
-    "assets\\motion-breath.glb": "4eb5571bb28c0abbc76f60a470a2390ef9bc28c01a1045c052b05794c5e7cd83"
+    "assets\\motion-walk-muscles-shoulder-arm.glb": "c30eaa806c20ca3eb15b8ffc47b0ca6af57f1bb0883da896ec3b4172a505af51",
+    "assets\\motion-walk-muscles-trunk-back.glb": "e3528ed1b4e18f28778dabed0be9c0ee1618b058cf8c0fc33ca32c38fd000c16",
+    "assets\\motion-blink.glb": "8306831f75b838a6c609e3ca9450f0003663e64a4365ae22d33aabbb4c0af459",
+    "assets\\motion-smile.glb": "d73ca1c3ef342a307f8046400bdcd0a647e6236a22f8cff6bbefbb1f5394174a",
+    "assets\\motion-jaw.glb": "86d5c9c1eef64489dc5b3841f9c30c26e46819b8f304377f5074c2b765fa2f1d",
+    "assets\\motion-breath.glb": "dd3fff03e50f7b3ff9328bf626adeb8c576e8b522fd1454e7a6c696f151ddf86"
   }
 }

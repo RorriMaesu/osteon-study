@@ -128,8 +128,8 @@
   "regions": {
     "forearm-hand": {
       "file": "motion-walk-muscles-forearm-hand.glb",
-      "sha256": "e5f1d17baaeb4d6afc6b70591f6d7296f9a4d3545be56c2c667c663097e15b79",
-      "bytes": 623704,
+      "sha256": "d7d1b2b0200597b839bf79141ba9bc89a267422bfa325de2352a67c902509bee",
+      "bytes": 1209148,
       "parts": 78,
       "deformation": {
         "guided-blend": 24,
@@ -141,8 +141,8 @@
     },
     "head-neck": {
       "file": "motion-walk-muscles-head-neck.glb",
-      "sha256": "1d9199c10a9dd43d1b45374da7d0d50f1ec595991557472b12212042ebce429d",
-      "bytes": 1003620,
+      "sha256": "a3e37364e7401c50ba9785818727f9844d810696ab5c948441ba91eb5fd60363",
+      "bytes": 2007816,
       "parts": 133,
       "deformation": {
         "segment-follow": 117,
@@ -167,8 +167,8 @@
     },
     "shoulder-arm": {
       "file": "motion-walk-muscles-shoulder-arm.glb",
-      "sha256": "f207aeef484ab013f5d2a216d337495b9605d6656949d4aa1b88948427e44f89",
-      "bytes": 456156,
+      "sha256": "c30eaa806c20ca3eb15b8ffc47b0ca6af57f1bb0883da896ec3b4172a505af51",
+      "bytes": 812036,
       "parts": 30,
       "deformation": {
         "guided-blend": 30
@@ -179,8 +179,8 @@
     },
     "trunk-back": {
       "file": "motion-walk-muscles-trunk-back.glb",
-      "sha256": "7d5b1de338a7cff0401fda83f5e178379bca2ccab6b02cc72398fc9f40801a9c",
-      "bytes": 2811800,
+      "sha256": "e3528ed1b4e18f28778dabed0be9c0ee1618b058cf8c0fc33ca32c38fd000c16",
+      "bytes": 5459836,
       "parts": 107,
       "deformation": {
         "guided-blend": 38,
@@ -192,16 +192,16 @@
     }
   },
   "inputs": {
-    "muscle-models.json": "2bd20e4ac4f3e07043601193e0ae166ad919b09b463178e9af3d9ab1aa93e39c",
+    "muscle-models.json": "a346ef510a0b6ae105c606c9e6fa4a2c8ad0e715325dcb1b25945b27f645cb0b",
     "motion-legs.glb": "4481cd449ffbc0de3a8acc53417dad5ca0bf40ac136b175f06868654e91c869c",
     "motion-walk-context.glb": "2f84deacfe276add2369b16a95f7514027e919a6b7ec7c3a7b61463044b55b18",
     "motion-legs.json": "b4699b5ec2be5733f07635185d7fbfcb48eb17826966cfbbe6fa3b3995d42740",
     "motion-walk-context.json": "20b6df6905b8a46dbc7c585170bdc62fc812bb14cf5ab49fc93636c9aeaa6131",
     "MODEL-LICENSE.md": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624",
-    "muscles-forearm-hand.glb": "23fd9639d6c3da947ff4fe8e850c5ae4b85cb08b5cbbd3f1995de93cbf0c96c1",
-    "muscles-head-neck.glb": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2",
-    "muscles-pelvis-leg-foot.glb": "a598631c16290e7454f0f5de4070883a06f874541450c806734b4de3bcc563e1",
-    "muscles-shoulder-arm.glb": "dbac493d9c9d0882cafa516c835ac9ad9c47e0a324488b4de5e883d496f757e3",
-    "muscles-trunk-back.glb": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b"
+    "muscles-forearm-hand.glb": "a99070d8d05b71ef475bd8f42908ce8c1b25a60b7b77d18d6e9cd2f06d37f95b",
+    "muscles-head-neck.glb": "7e72ba170d439a46a6fcd31cabfbaa35dbe45e1d6f22c86a34be01ee2bd0e211",
+    "muscles-pelvis-leg-foot.glb": "a51b93e07f80ffb07ac7ef3db4240630c8bdc8b38b04464799e9e815cadf7028",
+    "muscles-shoulder-arm.glb": "76978173f54187a89ab40f840e4cd258cc18a52f469d362b3c8358dacc4ab39f",
+    "muscles-trunk-back.glb": "23bce6f4875bd97fa1fbf3efdbee0750ca178995190bb66483135078d47d2dc7"
   }
 }

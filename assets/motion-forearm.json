@@ -1,8 +1,8 @@
 {
   "region": "forearm",
   "asset": "motion-forearm.glb",
-  "sha256": "5d44261cf07c13ebef40eaf16eb1cf90c615a85c2449335be61757444f896727",
-  "bytes": 2862436,
+  "sha256": "545118e01a01a7d47e4addbfbf7d0c6430c60923b170e90ce23b599686bb5080",
+  "bytes": 2959804,
   "camera": {
     "target": [
       0.0,
@@ -579,8 +579,8 @@
   },
   "inputs": {
     "skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",
-    "muscles-forearm-hand.glb": "23fd9639d6c3da947ff4fe8e850c5ae4b85cb08b5cbbd3f1995de93cbf0c96c1",
-    "muscles-shoulder-arm.glb": "dbac493d9c9d0882cafa516c835ac9ad9c47e0a324488b4de5e883d496f757e3",
+    "muscles-forearm-hand.glb": "a99070d8d05b71ef475bd8f42908ce8c1b25a60b7b77d18d6e9cd2f06d37f95b",
+    "muscles-shoulder-arm.glb": "76978173f54187a89ab40f840e4cd258cc18a52f469d362b3c8358dacc4ab39f",
     "muscle-models.json": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7",
     "MODEL-LICENSE.md": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
   }

@@ -2,8 +2,8 @@
   "schema": 1,
   "region": "pectoral",
   "asset": "motion-pectoral.glb",
-  "sha256": "b611f7c52b2d0eec619ac699a05a68d1f668b7a5bf2eb346c08f34874d9c3562",
-  "bytes": 2239108,
+  "sha256": "f72ef012661be50085ac7bd179585750b295ef73ae6b61126daa7f4db8b81527",
+  "bytes": 2658964,
   "camera": {
     "target": [
       0,

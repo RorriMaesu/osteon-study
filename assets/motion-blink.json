@@ -2,8 +2,8 @@
   "schema": 1,
   "region": "blink",
   "asset": "motion-blink.glb",
-  "sha256": "d6bac359fe643c9c21419125ef7886b4daf9be2506e2c5b76e942d8e762d69b0",
-  "bytes": 171804,
+  "sha256": "8306831f75b838a6c609e3ca9450f0003663e64a4365ae22d33aabbb4c0af459",
+  "bytes": 200692,
   "camera": {
     "target": [
       0,

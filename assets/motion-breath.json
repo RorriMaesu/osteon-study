@@ -2,8 +2,8 @@
   "schema": 1,
   "region": "breath",
   "asset": "motion-breath.glb",
-  "sha256": "4eb5571bb28c0abbc76f60a470a2390ef9bc28c01a1045c052b05794c5e7cd83",
-  "bytes": 5172168,
+  "sha256": "dd3fff03e50f7b3ff9328bf626adeb8c576e8b522fd1454e7a6c696f151ddf86",
+  "bytes": 5854372,
   "camera": {
     "target": [
       0,

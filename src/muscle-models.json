@@ -10,38 +10,38 @@
   "assets": {
     "forearm-hand": {
       "file": "muscles-forearm-hand.glb",
-      "bytes": 1073236,
-      "sha256": "23fd9639d6c3da947ff4fe8e850c5ae4b85cb08b5cbbd3f1995de93cbf0c96c1",
+      "bytes": 1811972,
+      "sha256": "a99070d8d05b71ef475bd8f42908ce8c1b25a60b7b77d18d6e9cd2f06d37f95b",
       "components": 120,
-      "backup": "muscles-20261105-013916-454049"
+      "backup": "body-muscle-winding-20261115-220811-3063"
     },
     "head-neck": {
       "file": "muscles-head-neck.glb",
-      "bytes": 1348428,
-      "sha256": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2",
+      "bytes": 1653044,
+      "sha256": "7e72ba170d439a46a6fcd31cabfbaa35dbe45e1d6f22c86a34be01ee2bd0e211",
       "components": 151,
-      "backup": "vocalis-20261115-091936-611751/before_blender_edit"
+      "backup": "body-muscle-winding-20261115-220811-3063"
     },
     "pelvis-leg-foot": {
       "file": "muscles-pelvis-leg-foot.glb",
-      "bytes": 2789644,
-      "sha256": "a598631c16290e7454f0f5de4070883a06f874541450c806734b4de3bcc563e1",
+      "bytes": 4489936,
+      "sha256": "a51b93e07f80ffb07ac7ef3db4240630c8bdc8b38b04464799e9e815cadf7028",
       "components": 250,
-      "backup": "lower-muscle-winding-20261115-215422-9085"
+      "backup": "body-muscle-winding-20261115-220811-3063"
     },
     "shoulder-arm": {
       "file": "muscles-shoulder-arm.glb",
-      "bytes": 440252,
-      "sha256": "dbac493d9c9d0882cafa516c835ac9ad9c47e0a324488b4de5e883d496f757e3",
+      "bytes": 695948,
+      "sha256": "76978173f54187a89ab40f840e4cd258cc18a52f469d362b3c8358dacc4ab39f",
       "components": 40,
-      "backup": "muscles-20261104-213140-854336"
+      "backup": "body-muscle-winding-20261115-220811-3063"
     },
     "trunk-back": {
       "file": "muscles-trunk-back.glb",
-      "bytes": 3318740,
-      "sha256": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b",
+      "bytes": 3621556,
+      "sha256": "23bce6f4875bd97fa1fbf3efdbee0750ca178995190bb66483135078d47d2dc7",
       "components": 126,
-      "backup": "muscles-20261104-213141-043875"
+      "backup": "body-muscle-winding-20261115-220811-3063"
     }
   },
   "components": [

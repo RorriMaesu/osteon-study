@@ -1,8 +1,8 @@
 {
-  "sha256": "fa82ced19575b7e92cf52ee2d3ae74369831e0e0124a9298672778de8b0396a3",
+  "sha256": "39cd878aba0fdd0802a6c68a197795ff5e32362eda69d136ee82c1ad360065d8",
   "reimportedMuscles": 476,
   "reimportedBoneSurfaces": 296,
-  "maximumNeutralBoundsErrorMillimeters": 0.009041,
+  "maximumNeutralBoundsErrorMillimeters": 0.00931,
   "maximumSkinWeightSumError": 0.00017538666725158691,
   "jointControls": 69,
   "rigNodes": 98,
@@ -69,7 +69,7 @@
         },
         {
           "muscle": "muscle-extensor-digitorum-l",
-          "maxDisplacementMm": 658.593,
+          "maxDisplacementMm": 658.592,
           "edgeLengthRatio95": 1.185,
           "edgeLengthRatio99": 1.881
         },
@@ -390,7 +390,7 @@
         },
         {
           "muscle": "muscle-piriformis-muscle-l",
-          "maxDisplacementMm": 36.958,
+          "maxDisplacementMm": 36.957,
           "edgeLengthRatio95": 1.82,
           "edgeLengthRatio99": 1.97
         },
@@ -663,7 +663,7 @@
         },
         {
           "muscle": "muscle-dorsal-interossei-muscles-of-hand-l",
-          "maxDisplacementMm": 2.921,
+          "maxDisplacementMm": 2.92,
           "edgeLengthRatio95": 1.006,
           "edgeLengthRatio99": 1.142
         },
@@ -985,8 +985,8 @@
         },
         {
           "muscle": "muscle-ascending-part-of-trapezius-muscle-l",
-          "maxDisplacementMm": 45.648,
-          "edgeLengthRatio95": 1.186,
+          "maxDisplacementMm": 45.649,
+          "edgeLengthRatio95": 1.185,
           "edgeLengthRatio99": 1.507
         },
         {
@@ -1201,7 +1201,7 @@
       "largestSkinStretch": [
         {
           "muscle": "muscle-quadratus-femoris-muscle-l",
-          "maxDisplacementMm": 32.053,
+          "maxDisplacementMm": 32.052,
           "edgeLengthRatio95": 1.826,
           "edgeLengthRatio99": 1.971
         },
@@ -1621,7 +1621,7 @@
       "largestSkinStretch": [
         {
           "muscle": "muscle-latissimus-dorsi-muscle-l",
-          "maxDisplacementMm": 133.983,
+          "maxDisplacementMm": 133.984,
           "edgeLengthRatio95": 1.983,
           "edgeLengthRatio99": 2.143
         },
@@ -1687,7 +1687,7 @@
         },
         {
           "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
-          "maxDisplacementMm": 145.45,
+          "maxDisplacementMm": 145.449,
           "edgeLengthRatio95": 1.298,
           "edgeLengthRatio99": 1.37
         }
@@ -1817,7 +1817,7 @@
           "muscle": "muscle-vastus-lateralis-muscle-l",
           "maxDisplacementMm": 106.827,
           "edgeLengthRatio95": 1.109,
-          "edgeLengthRatio99": 1.185
+          "edgeLengthRatio99": 1.184
         },
         {
           "muscle": "muscle-semitendinosus-muscle-l",
@@ -2043,7 +2043,7 @@
       "largestSkinStretch": [
         {
           "muscle": "muscle-vastus-lateralis-muscle-l",
-          "maxDisplacementMm": 29.671,
+          "maxDisplacementMm": 29.672,
           "edgeLengthRatio95": 1.121,
           "edgeLengthRatio99": 1.204
         },
@@ -2067,7 +2067,7 @@
         },
         {
           "muscle": "muscle-vastus-medialis-muscle-l",
-          "maxDisplacementMm": 29.407,
+          "maxDisplacementMm": 29.406,
           "edgeLengthRatio95": 1.123,
           "edgeLengthRatio99": 1.151
         },
@@ -2238,7 +2238,7 @@
         },
         {
           "muscle": "muscle-flexor-digitorum-longus-l",
-          "maxDisplacementMm": 8.438,
+          "maxDisplacementMm": 8.439,
           "edgeLengthRatio95": 1.0,
           "edgeLengthRatio99": 1.16
         },
