@@ -75,6 +75,29 @@ test('cancel rolls back the entire drag without losing the preexisting redo bran
  assert.equal(history.values['right-elbow'].flexion,40);
 });
 
+test('pausing a returning motion keeps its final direction while undo restores the entire preview',()=>{
+ const history=new PoseHistory(descriptors,{initial:{'right-elbow':{flexion:20}}});
+ history.begin();history.set('right-elbow','flexion',60);history.set('right-elbow','flexion',50);
+ assert.equal(history.commit({preserveDirection:true}),true);
+ assert.deepEqual(history.changes,[{joint:'right-elbow',axis:'flexion',before:60,after:50,delta:-10}]);
+ const role=combinedPoseRoles(descriptors,history.changes,parts);
+ assert.equal(role.label,'Elbow extension');
+ assert.ok(named(role.contributors).includes('Long head of triceps brachii'));
+ assert.equal(history.undo(),true);
+ assert.equal(history.values['right-elbow'].flexion,20);
+ assert.equal(history.canUndo,false);
+ assert.equal(history.redo(),true);
+ assert.equal(history.values['right-elbow'].flexion,50);
+});
+
+test('direction preservation does not create an undo entry for a completed return to the start',()=>{
+ const history=new PoseHistory(descriptors,{initial:{'right-elbow':{flexion:20}}});
+ history.begin();history.set('right-elbow','flexion',60);history.set('right-elbow','flexion',20);
+ assert.equal(history.commit({preserveDirection:true}),false);
+ assert.deepEqual(history.changes,[]);
+ assert.equal(history.canUndo,false);
+});
+
 test('returning to the start during a drag creates no empty undo entry',()=>{
  const history=new PoseHistory(descriptors);
  history.begin();history.set('right-elbow','flexion',40);history.set('right-elbow','flexion',0);
@@ -229,6 +252,40 @@ test('DIP flexion excludes superficialis and MCP/IP intrinsic actions reverse',(
  assert.ok(named(pip.opposing).includes('Lumbrical muscles of hand'));
  assert.ok(named(pip.opposing).includes('Extensor indicis'));
  assert.ok(!named(roles('right-middle-pip','flexion').opposing).includes('Extensor indicis'));
+});
+
+test('finger spreading selects the right digit and does not invent a middle-finger palmar interosseous',()=>{
+ const index=roles('right-index-mcp','abduction');
+ assert.ok(named(index.contributors).includes('Dorsal interossei muscles of hand'));
+ assert.ok(named(index.opposing).includes('Palmar interosseous muscle of index finger'));
+ assert.ok(!named(index.opposing).includes('Palmar interosseous muscle of ring finger'));
+ const little=roles('left-little-mcp','abduction');
+ assert.deepEqual(named(little.contributors),['Abductor digiti minimi of hand']);
+ assert.ok(named(little.opposing).includes('Palmar interosseous muscle of little finger'));
+ const exact=Array.from({length:4},(_,i)=>({key:'dorsal-'+i,name:['First','Second','Third','Fourth'][i]+' dorsal interosseous muscle of hand',side:'right'}));
+ exact.push({key:'palmar',name:'Palmar interossei muscles',side:'right'});
+ const middle=poseRoles(descriptor('right-middle-mcp'),'abduction',1,exact);
+ assert.deepEqual(middle.contributors,['dorsal-1']);
+ assert.deepEqual(middle.opposing,['dorsal-2']);
+ assert.match(roles('right-middle-mcp','abduction').note,/groups the dorsal interossei/);
+ assert.ok(!named(roles('right-middle-mcp','abduction').contributors).some(name=>/palmar/i.test(name)));
+});
+
+test('hindfoot inversion and eversion use tibial and fibular muscles on the selected side',()=>{
+ const candidates=[
+  {key:'ta-r',name:'Tibialis anterior muscle',side:'right'},
+  {key:'tp-r',name:'Tibialis posterior muscle',side:'right'},
+  {key:'fl-r',name:'Fibularis longus muscle',side:'right'},
+  {key:'fb-r',name:'Fibularis brevis muscle',side:'right'},
+  {key:'ft-r',name:'Fibularis tertius muscle',side:'right'},
+  {key:'ta-l',name:'Tibialis anterior muscle',side:'left'},
+  {key:'bad',name:'Tendon sheath of tibialis posterior muscle',side:'right'},
+ ];
+ const inversion=poseRoles(descriptor('right-subtalar'),'inversion',1,candidates);
+ assert.deepEqual(inversion.contributors,['ta-r','tp-r']);
+ assert.deepEqual(inversion.opposing,['fl-r','fb-r','ft-r']);
+ assert.deepEqual(poseRoles(descriptor('right-subtalar'),'inversion',-1,candidates).contributors,inversion.opposing);
+ assert.match(inversion.note,/coupled hindfoot and midfoot/);
 });
 
 test('thumb IP action excludes the brevis muscles that do not reach the distal phalanx',()=>{

@@ -6,6 +6,7 @@
 .motion-pose-workspace button:focus-visible,.motion-pose-workspace select:focus-visible,.motion-pose-workspace input:focus-visible,.pose-details-panel:focus-visible{outline:2px solid #f4bc8a;outline-offset:2px}
 .motion-pose-workspace button:disabled,.motion-pose-workspace select:disabled{opacity:.43;cursor:default}
 .motion-pose-workspace button[aria-pressed=true]{background:#bcdcc9;color:#142921;border-color:#c6e4d2}
+.motion-pose-workspace button[aria-pressed=true]:hover:not(:disabled){background:#bcdcc9;color:#142921;border-color:#c6e4d2}
 .pose-model{min-width:0;min-height:0;display:flex;flex-direction:column;border:1px solid #3a5652;border-radius:12px;overflow:hidden;background:#13262c}
 .motion-pose-workspace .pose-stage{min-height:0;flex:1;overflow:hidden;border-radius:0}
 .pose-stage-hint{position:absolute;z-index:1;top:9px;left:10px;right:10px;pointer-events:none;display:grid;gap:2px;width:max-content;max-width:calc(100% - 20px);font-size:11px;padding:5px 8px;color:#cce1d4;background:#132b2bda;border:1px solid #3f5a54;border-radius:6px;line-height:1.35}
@@ -27,14 +28,24 @@
 .pose-choose-row label{display:grid;gap:3px;min-width:0;font-size:10px;color:#b7cec3}
 .pose-choose-row select{width:100%;font-size:12px;min-height:36px;padding-block:4px}
 .pose-choose-row:has([data-pose-endpoint][hidden]){grid-template-columns:minmax(115px,1fr) minmax(115px,1fr)}
-.pose-angle-row{display:grid;grid-template-columns:40px minmax(45px,1fr) 48px 40px;align-items:center;gap:6px}
-.pose-angle-row button{font-size:20px;padding:0;min-height:36px;line-height:1}
+.pose-angle-row{display:grid;grid-template-columns:64px minmax(45px,1fr) 48px 64px;align-items:center;gap:6px}
+.pose-angle-row button{font-size:11px;padding:3px 4px;min-height:36px;line-height:1.15;overflow-wrap:normal;word-break:normal}
 .pose-angle-row input{accent-color:#e9b082;width:100%;min-width:0;min-height:34px;margin:0;cursor:pointer}
 .pose-angle-row output{font-size:13px;text-align:center;font-variant-numeric:tabular-nums;color:#f0dfbd}
+.pose-angle-row [data-pose-neutral]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.pose-angle-row [data-pose-neutral] small{font-size:8px;color:#bdd3c5;line-height:1}
 .pose-action-row{display:flex;gap:5px;min-width:0}
 .pose-action-row button{font-size:11px;min-height:36px;padding:4px 9px;white-space:nowrap}
+.pose-action-row [data-pose-play]{color:#f7dfc5;border-color:#a67d5d;background:#433a2d;min-width:72px}
+.pose-action-row [data-pose-play][aria-pressed=true]{color:#182a22;background:#c5ddbb}
+.pose-action-row i{display:none;font-style:normal}
 .pose-action-row [data-pose-muscles]{margin-left:auto}
 .pose-action-row [data-pose-notes]{display:none}
+.pose-controls .pose-muscle-summary{display:grid;grid-template-columns:minmax(80px,.8fr) minmax(0,1.3fr) auto;align-items:center;gap:7px;text-align:left;min-height:32px;padding:3px 6px;background:#142c2d;font-size:10px;line-height:1.15;border-color:#45645b}
+.pose-muscle-summary>[data-pose-movement-name]{font-weight:650;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:#e6edda}
+.pose-summary-roles{min-width:0;display:grid;gap:2px}
+.pose-summary-roles>span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.pose-summary-open{font-size:9px;color:#c4d8c8;white-space:nowrap}
 .pose-feedback{margin:0;color:#b8cfc5;font-size:10px;line-height:1.25;min-height:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pose-details{display:flex;flex-direction:column;min-width:0;min-height:0;background:#14282d;border:1px solid #3a5652;border-radius:12px;padding:10px;overflow:hidden}
 .pose-details-heading{display:flex;align-items:center;justify-content:space-between;gap:7px;flex:none;min-height:28px}
@@ -73,11 +84,12 @@
 .pose-lesson-links button{min-height:32px;padding:3px 6px;font-size:10px}
 .motion-pose-workspace .pose-error{border-color:#e7a47e;color:#ffdfcd}
 @media(min-width:1000px) and (min-height:481px){
- .pose-controls{grid-template-columns:minmax(325px,1.2fr) minmax(190px,.8fr);column-gap:12px}
+ .pose-controls{grid-template-columns:minmax(325px,1.2fr) minmax(250px,.8fr);column-gap:12px}
  .pose-controls>.pose-choose-row{grid-column:1;grid-row:1}
  .pose-controls>.pose-angle-row{grid-column:2;grid-row:1;align-self:end}
  .pose-controls>.pose-action-row{grid-column:1/-1;grid-row:2}
- .pose-controls>.pose-feedback{grid-column:1/-1;grid-row:3}
+ .pose-controls>.pose-muscle-summary{grid-column:1/-1;grid-row:3}
+ .pose-controls>.pose-feedback{grid-column:1/-1;grid-row:4}
 }
 @media(min-width:761px){
  #motion-view.active:has(.motion-pose-workspace:not([hidden])) .motion-heading{align-items:center}
@@ -105,10 +117,17 @@
  .pose-choose-row select{font-size:11px;min-height:35px}
  .pose-choose-row [data-pose-endpoint]{font-size:10px;padding:3px 5px;min-height:35px}
  .pose-action-row{gap:3px}
- .pose-action-row button{flex:1;font-size:10px;min-height:36px;padding:3px 5px}
+ .pose-action-row button{flex:1;font-size:10px;min-height:36px;padding:3px 4px}
+ .pose-action-row [data-pose-play]{min-width:45px;width:49px;flex:none;white-space:normal;font-size:10px}
+ .pose-action-row [data-pose-undo],.pose-action-row [data-pose-redo]{width:27px;flex:none;padding:2px}
+ .pose-action-row [data-pose-undo] span,.pose-action-row [data-pose-redo] span{display:none}
+ .pose-action-row i{display:block;font-size:21px;line-height:1}
  .pose-action-row [data-pose-muscles]{margin-left:0}
- .pose-action-row [data-pose-lock]{min-width:62px}
- .pose-angle-row{grid-template-columns:38px minmax(25px,1fr) 40px 38px;gap:4px}
+ .pose-action-row [data-pose-lock]{min-width:54px}
+ .pose-angle-row{grid-template-columns:62px minmax(25px,1fr) 42px 62px;gap:4px}
+ .pose-angle-row button{font-size:10px}
+ .pose-controls .pose-muscle-summary{grid-template-columns:minmax(65px,.8fr) minmax(0,1fr) auto;gap:5px;font-size:9px;min-height:31px}
+ .pose-summary-open{font-size:8px}
  .pose-feedback{font-size:9px}
  .pose-stage-hint{font-size:10px;top:6px;left:6px;max-width:calc(100% - 12px);padding:4px 6px}
  .pose-view-actions{gap:4px;bottom:5px}
@@ -118,6 +137,7 @@
  .motion-pose-workspace[data-pose-notes-open] .pose-model{display:contents}
  .motion-pose-workspace[data-pose-notes-open] .pose-stage{grid-row:1;grid-column:1;border:1px solid #3a5652;border-radius:9px}
  .motion-pose-workspace[data-pose-notes-open] .pose-controls{grid-row:3;grid-column:1;border:1px solid #3a5652;border-radius:9px;background:#13262c}
+ .motion-pose-workspace[data-pose-notes-open] .pose-muscle-summary{display:none}
  .motion-pose-workspace[data-pose-notes-open] .pose-details{position:relative;inset:auto;grid-row:2;grid-column:1;height:auto;width:auto;padding:6px;box-shadow:none;border-radius:9px}
  .motion-pose-workspace[data-pose-notes-open] .pose-details-heading{display:contents}
  .motion-pose-workspace[data-pose-notes-open] .pose-details-heading strong{display:none}
@@ -150,9 +170,15 @@
  .pose-choose-row{gap:5px}
  .pose-choose-row label{font-size:9px;gap:1px}
  .pose-choose-row select,.pose-choose-row [data-pose-endpoint]{min-height:30px;font-size:10px;padding:2px 4px}
- .pose-angle-row{grid-template-columns:31px minmax(24px,1fr) 37px 31px;gap:4px}
+ .pose-angle-row{grid-template-columns:55px minmax(24px,1fr) 39px 55px;gap:4px}
  .pose-angle-row button,.pose-angle-row input{min-height:27px}
+ .pose-angle-row button{font-size:9px}
+ .pose-angle-row [data-pose-neutral]{gap:1px}
+ .pose-angle-row [data-pose-neutral] output{font-size:11px}
+ .pose-angle-row [data-pose-neutral] small{font-size:7px}
  .pose-action-row button{min-height:29px;font-size:9px;padding:2px 6px}
+ .pose-action-row [data-pose-play]{min-width:58px}
+ .pose-controls .pose-muscle-summary{display:none}
  .pose-feedback{font-size:9px;min-height:11px}
  .pose-view-actions button{min-height:29px;font-size:9px;padding:3px 6px}
  .pose-stage-hint{font-size:9px;top:4px;left:5px;padding:3px 5px;max-width:calc(100% - 10px)}
@@ -169,7 +195,18 @@
  .pose-list-pager button{min-height:27px;width:32px}
 }
 @media(max-width:600px) and (max-height:650px) and (orientation:portrait){
+ body:has(.motion-pose-workspace:not([hidden])) #motion-view.active .motion-heading h1{display:none}
+ body:has(.motion-pose-workspace:not([hidden])) #motion-view.active .motion-heading{gap:3px}
+ .pose-stage-hint{font-size:9px;line-height:1.2;padding:3px 5px}
+ .pose-stage-hint small{font-size:8.5px;line-height:1.15}
  body:has(#motion-view.active .motion-pose-workspace[data-pose-notes-open])>.topbar{display:none}
  #motion-view.active:has(.motion-pose-workspace[data-pose-notes-open]) .motion-heading>div:first-child{display:none}
  .motion-pose-workspace[data-pose-notes-open] .pose-stage-hint{display:none}
+}
+@media(max-width:360px) and (orientation:portrait){
+ .pose-action-row button{font-size:9px;padding:3px}
+ .pose-action-row [data-pose-play]{width:44px;min-width:44px;font-size:9px}
+ .pose-action-row [data-pose-undo],.pose-action-row [data-pose-redo]{width:25px}
+ .pose-action-row [data-pose-lock]{min-width:50px}
+ .pose-action-row [data-pose-muscles],.pose-action-row [data-pose-notes]{min-width:42px}
 }

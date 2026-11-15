@@ -1,11 +1,11 @@
 {
-  "sha256": "2a5af901f7bcd416c16a13a371cc22a76ef73a2348e5f357c30b44589c447cd8",
+  "sha256": "e1f91ccf26be585f95f1c821918210c00eac1fc5469cecac8f108a75f670b908",
   "reimportedMuscles": 476,
   "reimportedBoneSurfaces": 296,
   "maximumNeutralBoundsErrorMillimeters": 0.009041,
   "maximumSkinWeightSumError": 0.00017197523266077042,
-  "jointControls": 54,
-  "rigNodes": 71,
+  "jointControls": 56,
+  "rigNodes": 73,
   "exactNeutralReset": true,
   "sampledPoses": {
     "elbow-flexion": {
@@ -167,7 +167,7 @@
       "largestSkinStretch": [
         {
           "muscle": "muscle-extensor-digiti-minimi-r",
-          "maxDisplacementMm": 80.147,
+          "maxDisplacementMm": 81.255,
           "edgeLengthRatio95": 1.869,
           "edgeLengthRatio99": 2.939
         },
@@ -179,9 +179,9 @@
         },
         {
           "muscle": "muscle-extensor-digitorum-r",
-          "maxDisplacementMm": 188.312,
-          "edgeLengthRatio95": 1.572,
-          "edgeLengthRatio99": 2.452
+          "maxDisplacementMm": 186.116,
+          "edgeLengthRatio95": 1.563,
+          "edgeLengthRatio99": 2.445
         },
         {
           "muscle": "muscle-flexor-carpi-radialis-r",
@@ -221,9 +221,9 @@
         },
         {
           "muscle": "muscle-extensor-indicis-r",
-          "maxDisplacementMm": 196.045,
+          "maxDisplacementMm": 194.296,
           "edgeLengthRatio95": 1.53,
-          "edgeLengthRatio99": 1.954
+          "edgeLengthRatio99": 1.988
         },
         {
           "muscle": "muscle-superficial-head-of-flexor-pollicis-brevis-r",
@@ -467,6 +467,237 @@
           "maxDisplacementMm": 7.278,
           "edgeLengthRatio95": 1.07,
           "edgeLengthRatio99": 1.084
+        }
+      ]
+    },
+    "finger-spread": {
+      "movedSurfaces": 26,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-bp43-palmar-interosseous-fourth-left",
+          "maxDisplacementMm": 1.447,
+          "edgeLengthRatio95": 1.181,
+          "edgeLengthRatio99": 1.371
+        },
+        {
+          "muscle": "muscle-bp43-palmar-interosseous-fourth-right",
+          "maxDisplacementMm": 1.447,
+          "edgeLengthRatio95": 1.181,
+          "edgeLengthRatio99": 1.371
+        },
+        {
+          "muscle": "muscle-bp43-palmar-interosseous-second-left",
+          "maxDisplacementMm": 1.982,
+          "edgeLengthRatio95": 1.111,
+          "edgeLengthRatio99": 1.358
+        },
+        {
+          "muscle": "muscle-bp43-palmar-interosseous-second-right",
+          "maxDisplacementMm": 1.982,
+          "edgeLengthRatio95": 1.111,
+          "edgeLengthRatio99": 1.358
+        },
+        {
+          "muscle": "muscle-bp43-palmar-interosseous-fifth-left",
+          "maxDisplacementMm": 1.358,
+          "edgeLengthRatio95": 1.099,
+          "edgeLengthRatio99": 1.304
+        },
+        {
+          "muscle": "muscle-bp43-palmar-interosseous-fifth-right",
+          "maxDisplacementMm": 1.358,
+          "edgeLengthRatio95": 1.099,
+          "edgeLengthRatio99": 1.303
+        },
+        {
+          "muscle": "muscle-lumbrical-muscles-of-hand-l",
+          "maxDisplacementMm": 8.274,
+          "edgeLengthRatio95": 1.044,
+          "edgeLengthRatio99": 1.181
+        },
+        {
+          "muscle": "muscle-lumbrical-muscles-of-hand-r",
+          "maxDisplacementMm": 8.274,
+          "edgeLengthRatio95": 1.044,
+          "edgeLengthRatio99": 1.181
+        },
+        {
+          "muscle": "muscle-dorsal-interossei-muscles-of-hand-l",
+          "maxDisplacementMm": 2.921,
+          "edgeLengthRatio95": 1.006,
+          "edgeLengthRatio99": 1.142
+        },
+        {
+          "muscle": "muscle-dorsal-interossei-muscles-of-hand-r",
+          "maxDisplacementMm": 2.92,
+          "edgeLengthRatio95": 1.006,
+          "edgeLengthRatio99": 1.142
+        },
+        {
+          "muscle": "muscle-extensor-indicis-l",
+          "maxDisplacementMm": 15.173,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.042
+        },
+        {
+          "muscle": "muscle-extensor-indicis-r",
+          "maxDisplacementMm": 15.173,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.042
+        }
+      ]
+    },
+    "hindfoot-inversion": {
+      "movedSurfaces": 56,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-fibularis-brevis-muscle-r",
+          "maxDisplacementMm": 14.716,
+          "edgeLengthRatio95": 1.064,
+          "edgeLengthRatio99": 1.139
+        },
+        {
+          "muscle": "muscle-fibularis-brevis-muscle-l",
+          "maxDisplacementMm": 14.716,
+          "edgeLengthRatio95": 1.064,
+          "edgeLengthRatio99": 1.138
+        },
+        {
+          "muscle": "muscle-fibularis-tertius-muscle-l",
+          "maxDisplacementMm": 17.547,
+          "edgeLengthRatio95": 1.107,
+          "edgeLengthRatio99": 1.125
+        },
+        {
+          "muscle": "muscle-fibularis-tertius-muscle-r",
+          "maxDisplacementMm": 17.547,
+          "edgeLengthRatio95": 1.107,
+          "edgeLengthRatio99": 1.125
+        },
+        {
+          "muscle": "muscle-extensor-digitorum-longus-l",
+          "maxDisplacementMm": 4.109,
+          "edgeLengthRatio95": 1.058,
+          "edgeLengthRatio99": 1.1
+        },
+        {
+          "muscle": "muscle-extensor-digitorum-longus-r",
+          "maxDisplacementMm": 4.11,
+          "edgeLengthRatio95": 1.058,
+          "edgeLengthRatio99": 1.1
+        },
+        {
+          "muscle": "muscle-fibularis-longus-muscle-l",
+          "maxDisplacementMm": 15.136,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.07
+        },
+        {
+          "muscle": "muscle-fibularis-longus-muscle-r",
+          "maxDisplacementMm": 15.135,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.07
+        },
+        {
+          "muscle": "muscle-flexor-hallucis-longus-l",
+          "maxDisplacementMm": 36.931,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.057
+        },
+        {
+          "muscle": "muscle-flexor-hallucis-longus-r",
+          "maxDisplacementMm": 36.931,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.057
+        },
+        {
+          "muscle": "muscle-extensor-hallucis-longus-l",
+          "maxDisplacementMm": 31.252,
+          "edgeLengthRatio95": 1.018,
+          "edgeLengthRatio99": 1.043
+        },
+        {
+          "muscle": "muscle-extensor-hallucis-longus-r",
+          "maxDisplacementMm": 31.252,
+          "edgeLengthRatio95": 1.018,
+          "edgeLengthRatio99": 1.043
+        }
+      ]
+    },
+    "hindfoot-eversion": {
+      "movedSurfaces": 56,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-flexor-digitorum-longus-r",
+          "maxDisplacementMm": 21.321,
+          "edgeLengthRatio95": 1.047,
+          "edgeLengthRatio99": 1.088
+        },
+        {
+          "muscle": "muscle-flexor-digitorum-longus-l",
+          "maxDisplacementMm": 21.327,
+          "edgeLengthRatio95": 1.048,
+          "edgeLengthRatio99": 1.087
+        },
+        {
+          "muscle": "muscle-plantaris-muscle-l",
+          "maxDisplacementMm": 6.104,
+          "edgeLengthRatio95": 1.027,
+          "edgeLengthRatio99": 1.078
+        },
+        {
+          "muscle": "muscle-plantaris-muscle-r",
+          "maxDisplacementMm": 6.104,
+          "edgeLengthRatio95": 1.026,
+          "edgeLengthRatio99": 1.077
+        },
+        {
+          "muscle": "muscle-tibialis-posterior-muscle-l",
+          "maxDisplacementMm": 7.445,
+          "edgeLengthRatio95": 1.023,
+          "edgeLengthRatio99": 1.073
+        },
+        {
+          "muscle": "muscle-tibialis-posterior-muscle-r",
+          "maxDisplacementMm": 7.447,
+          "edgeLengthRatio95": 1.023,
+          "edgeLengthRatio99": 1.073
+        },
+        {
+          "muscle": "muscle-flexor-hallucis-longus-l",
+          "maxDisplacementMm": 19.737,
+          "edgeLengthRatio95": 1.041,
+          "edgeLengthRatio99": 1.064
+        },
+        {
+          "muscle": "muscle-flexor-hallucis-longus-r",
+          "maxDisplacementMm": 19.737,
+          "edgeLengthRatio95": 1.042,
+          "edgeLengthRatio99": 1.064
+        },
+        {
+          "muscle": "muscle-fibularis-brevis-muscle-l",
+          "maxDisplacementMm": 7.865,
+          "edgeLengthRatio95": 1.01,
+          "edgeLengthRatio99": 1.038
+        },
+        {
+          "muscle": "muscle-fibularis-brevis-muscle-r",
+          "maxDisplacementMm": 7.864,
+          "edgeLengthRatio95": 1.01,
+          "edgeLengthRatio99": 1.038
+        },
+        {
+          "muscle": "muscle-tibialis-anterior-muscle-l",
+          "maxDisplacementMm": 8.393,
+          "edgeLengthRatio95": 1.006,
+          "edgeLengthRatio99": 1.02
+        },
+        {
+          "muscle": "muscle-tibialis-anterior-muscle-r",
+          "maxDisplacementMm": 8.393,
+          "edgeLengthRatio95": 1.006,
+          "edgeLengthRatio99": 1.02
         }
       ]
     }

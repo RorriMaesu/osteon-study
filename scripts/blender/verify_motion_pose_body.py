@@ -101,6 +101,9 @@ scenarios={
  'seated-bend':{'right-hip':{'flexion':85},'left-hip':{'flexion':85},'right-knee':{'flexion':85},'left-knee':{'flexion':85},'trunk':{'flexion':25},'neck':{'flexion':25}},
  'facial-shapes':{'jaw':{'opening':15},'face-blink':{'closure':100},'face-smile':{'smile':100}},
  'inspiration':{'breathing':{'inhale':100}},
+ 'finger-spread':{j['id']:{'abduction':next(a['max'] for a in j['axes'] if a['id']=='abduction')} for j in META['joints'] if j['id'].endswith('-mcp') and any(a['id']=='abduction' for a in j['axes'])},
+ 'hindfoot-inversion':{'right-subtalar':{'inversion':15},'left-subtalar':{'inversion':15}},
+ 'hindfoot-eversion':{'right-subtalar':{'inversion':-8},'left-subtalar':{'inversion':-8}},
 }
 results={}
 for name,values in scenarios.items():

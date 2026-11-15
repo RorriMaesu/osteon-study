@@ -71,6 +71,53 @@ test('bilateral positive elbow, hip and ankle controls move in anatomical direct
  }
 });
 
+test('finger MCP spread moves each ray away from its hand midline without moving the wrist',()=>{
+ const rig=specimen();
+ for(const side of ['left','right'])for(const digit of ['index','middle','ring','little']){
+  applyPose(rig,{});
+  const id=side+'-'+digit+'-mcp';
+  const joint=rig.descriptors.find(item=>item.id===id);
+  const axis=joint.axes.find(item=>item.id==='abduction');
+  assert.ok(axis&&axis.min===0&&axis.max<=15,'Spread uses a conservative independent channel');
+  const tip=poseJointWorld(rig,side+'-'+digit+'-dip');
+  const wrist=poseJointWorld(rig,side+'-wrist');
+  applyPose(rig,{[id]:{abduction:axis.max}});
+  const offset=poseJointWorld(rig,side+'-'+digit+'-dip').x-tip.x;
+  const radial=digit==='index'||digit==='middle';
+  const sign=(side==='right'?-1:1)*(radial?1:-1);
+  assert.ok(offset*sign>.002,side+' '+digit+' spread went toward the wrong side');
+  close(poseJointWorld(rig,side+'-wrist').distanceTo(wrist),0);
+ }
+});
+
+test('hindfoot inversion turns each sole inward below a stationary ankle and reverses for eversion',()=>{
+ const rig=specimen();
+ for(const side of ['left','right'])for(const angle of [15,-8]){
+  applyPose(rig,{});
+  const ankle=rig.nodes.get(side+'-ankle').node.matrixWorld.clone();
+  applyPose(rig,{[side+'-subtalar']:{inversion:angle}});
+  const orientation=rig.nodes.get(side+'-subtalar').node.getWorldQuaternion(new THREE.Quaternion());
+  const sole=new THREE.Vector3(0,-1,0).applyQuaternion(orientation);
+  assert.ok(sole.x*(side==='right'?1:-1)*Math.sign(angle)>.05,side+' sole direction');
+  assert.ok(rig.nodes.get(side+'-ankle').node.matrixWorld.equals(ankle),'Subtalar movement must not tilt the ankle or tibia');
+  assert.equal(meta.nodes.find(row=>row.id===side+'-toes').parent,side+'-subtalar');
+ }
+});
+
+test('hindfoot skin binds the calcaneus and Achilles insertion below the talus',()=>{
+ const buffer=fs.readFileSync(new URL('../assets/motion-pose-body.glb',import.meta.url));
+ const gltf=JSON.parse(buffer.subarray(20,20+buffer.readUInt32LE(12)).toString());
+ for(const [side,suffix] of [['right','r'],['left','l']]){
+  const talus=gltf.nodes.find(node=>node.extras?.poseBone==='Talus.'+suffix);
+  const heel=gltf.nodes.find(node=>node.extras?.poseBone==='Calcaneus.'+suffix);
+  assert.deepEqual(talus.extras.poseDrivers,[side+'-ankle']);
+  assert.deepEqual(heel.extras.poseDrivers,[side+'-subtalar']);
+  const tendon=gltf.nodes.find(node=>node.extras?.poseSupport==='tendon'&&node.extras.motionSide===side);
+  assert.ok(tendon.extras.poseDrivers.includes(side+'-subtalar'),'Achilles insertion must follow the heel');
+  assert.ok(!tendon.extras.poseDrivers.includes(side+'-ankle'),'Do not leave an Achilles insertion floating on the old foot driver');
+ }
+});
+
 test('shoulder elevation raises both shoulders and scapular coupling keeps the arm attached',()=>{
  const rig=specimen();
  for(const side of ['left','right']){

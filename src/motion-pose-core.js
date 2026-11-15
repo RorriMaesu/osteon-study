@@ -7,6 +7,8 @@ export const poseSources=Object.freeze({
  trunk:'https://openstax.org/books/anatomy-and-physiology-2e/pages/11-4-axial-muscles-of-the-abdominal-wall-and-thorax',
  recruitment:'https://openstax.org/books/anatomy-and-physiology-2e/pages/10-4-nervous-system-control-of-muscle-tension',
  thumb:'https://pubmed.ncbi.nlm.nih.gov/9755041/',
+ hand:'https://pmc.ncbi.nlm.nih.gov/articles/PMC10508329/',
+ foot:'https://medicine.uams.edu/neuroscience/education/medical-school-courses/human-structure-module/anatomy-tables/muscle-tables/muscles-of-the-lower-limb/',
 });
 
 const epsilon=1e-7;
@@ -77,12 +79,15 @@ export class PoseHistory{
   this.future=[];
   return true;
  }
- commit(){
+ commit({preserveDirection=false}={}){
   if(!this.transaction)return false;
   const {before,changes}=this.transaction;
   this.transaction=null;
   const changed=this.record(before);
-  this.changes=changed?poseChanges(before.values,this.values):changes;
+  // A back-and-forth preview or drag can finish above its starting angle while
+  // the final movement was extension. Preserve that actual last direction for
+  // action cues when requested; the undo record still covers the whole gesture.
+  this.changes=changed?(preserveDirection?this.changes:poseChanges(before.values,this.values)):changes;
   return changed;
  }
  cancel(){
@@ -198,6 +203,7 @@ const directions={
  'hip:rotation':pair('Hip internal rotation','Hip external rotation',hipInternal,hipExternal,poseSources.lower,'Anterior fibers of gluteus medius and minimus also assist internal rotation; their whole-muscle meshes are left neutral because fiber regions have different actions. Rotation roles change with hip flexion.'),
  'knee:flexion':pair('Knee flexion','Knee extension',kneeFlex,kneeExt,poseSources.lower),
  'ankle:dorsiflexion':pair('Ankle dorsiflexion','Ankle plantarflexion',ankleDorsi,anklePlantar,poseSources.lower),
+ 'subtalar:inversion':pair('Foot inversion','Foot eversion',names('tibialis anterior','tibialis posterior'),names('fibularis longus','fibularis brevis','fibularis tertius'),poseSources.foot,'The hindfoot turns around an oblique teaching axis. Real inversion and eversion involve coupled hindfoot and midfoot movement; the model does not resolve every foot articulation. These are selected contributors, not an exhaustive recruitment list.'),
  'toes:extension':pair('Toe extension','Toe flexion',names('extensor digitorum (?:longus|brevis)','extensor hallucis (?:longus|brevis)'),names('flexor digitorum (?:longus|brevis)','flexor hallucis (?:longus|brevis)','flexor digiti minimi of foot'),poseSources.lower,'This grouped toe control combines separate muscles acting on different digits.'),
  'trunk:flexion':pair('Trunk flexion','Trunk extension',trunkFlex,trunkExt,poseSources.trunk),
  'neck:flexion':pair('Neck flexion','Neck extension',neckFlex,neckExt,poseSources.axial,'This combined neck action does not resolve individual cervical joints. Sternocleidomastoid can extend the head at the upper cervical joints while flexing the lower neck.'),
@@ -211,10 +217,20 @@ const directions={
 };
 
 function fingerDirection(joint,axis){
- if(axis!=='flexion')return null;
  const digit=joint.match(/^(thumb|index|middle|ring|little)-(mcp|pip|dip|ip)$/);
  if(!digit)return null;
  const [name,level]=digit.slice(1);
+ if(axis==='abduction'&&level==='mcp'&&name!=='thumb'){
+  if(name==='middle')return pair('Middle finger radial abduction','Middle finger return toward rest',
+   names('(?:second|2nd) dorsal interosseous','dorsal interossei muscles? of hand'),
+   names('(?:third|3rd) dorsal interosseous','dorsal interossei muscles? of hand'),poseSources.hand,
+   'The second dorsal interosseous moves the middle finger toward the index side; the third can move it back. There is no middle-finger palmar interosseous. The atlas groups the dorsal interossei into one surface, so its highlight includes muscles that are not responsible for this direction.');
+  return pair(name[0].toUpperCase()+name.slice(1)+' MCP abduction',name[0].toUpperCase()+name.slice(1)+' MCP adduction',
+   name==='little'?names('abductor digiti minimi of hand'):names('dorsal interosse(?:i|ous)'),
+   names('palmar interosse(?:i|ous)'),poseSources.hand,
+   'Abduction spreads this finger from the hand’s middle-finger axis; adduction brings it back. Grouped muscle surfaces include portions serving other fingers. Finger spreading is more limited when the MCP joint is deeply flexed.');
+ }
+ if(axis!=='flexion')return null;
  let flex,extend;
  if(name==='thumb'){
   flex=level==='ip'?names('flexor pollicis longus'):names('flexor pollicis longus','flexor pollicis brevis');

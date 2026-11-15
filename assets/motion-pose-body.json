@@ -1,11 +1,15 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "2a5af901f7bcd416c16a13a371cc22a76ef73a2348e5f357c30b44589c447cd8",
-  "bytes": 15978216,
+  "sha256": "e1f91ccf26be585f95f1c821918210c00eac1fc5469cecac8f108a75f670b908",
+  "bytes": 15979016,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
-  "scope": "Conservative joint ranges, distributed lumbar and cervical motion, coupled shoulder girdle, radius-led forearm turn, wrists and finger hinges. Toes move together. Existing reviewed blink, smile, jaw and breathing shapes are retained. Ligaments, tissue contact, independent carpal glides, individual toe joints, eye rotations and tongue control are not simulated.",
+  "scope": "Conservative joint ranges, distributed lumbar and cervical motion, coupled shoulder girdle, radius-led forearm turn, wrists, finger hinges and MCP finger spread, plus separate oblique hindfoot inversion/eversion. Toes move together. Existing reviewed blink, smile, jaw and breathing shapes are retained. Ligaments, tissue contact, independent carpal and midfoot glides, individual toe joints, eye rotations and tongue control are not simulated.",
+  "knownLimitations": [
+    "Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.",
+    "Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary."
+  ],
   "joints": [
     {
       "id": "trunk",
@@ -378,7 +382,7 @@
       "axes": [
         {
           "id": "pronation",
-          "label": "Pronate / supinate",
+          "label": "Pronation / return to supination",
           "min": 0,
           "max": 60,
           "neutral": 0,
@@ -396,6 +400,7 @@
         -0.0005956795066595078
       ],
       "endpoint": "right-wrist",
+      "detail": "The rest hand is already supinated. Increasing this angle pronates; returning toward zero supinates.",
       "forearmClearance": {
         "distalUlna": [
           -0.24643805623054504,
@@ -546,9 +551,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread toward thumb / return",
+          "min": 0,
+          "max": 15,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "right-index-pip",
@@ -615,9 +633,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread toward thumb / return",
+          "min": 0,
+          "max": 12,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "right-middle-pip",
@@ -684,9 +715,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread outward / return",
+          "min": 0,
+          "max": 12,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "right-ring-pip",
@@ -753,9 +797,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread outward / return",
+          "min": 0,
+          "max": 12,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "right-little-pip",
@@ -896,6 +953,34 @@
           "unit": "degrees"
         }
       ]
+    },
+    {
+      "id": "right-subtalar",
+      "label": "Right hindfoot",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-subtalar",
+      "axes": [
+        {
+          "id": "inversion",
+          "label": "Sole inward / outward",
+          "min": -8,
+          "max": 15,
+          "neutral": 0,
+          "vector": [
+            0.10060308873653412,
+            0.6691306233406067,
+            0.7363037467002869
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "marker": [
+        -0.07975845038890839,
+        0.04780566319823265,
+        -0.04690634459257126
+      ],
+      "detail": "Inversion and eversion occur below the talus, not by tilting the tibia. The oblique hindfoot axis and rigid midfoot coupling are teaching approximations; individual joint axes vary."
     },
     {
       "id": "right-toes",
@@ -1045,7 +1130,7 @@
       "axes": [
         {
           "id": "pronation",
-          "label": "Pronate / supinate",
+          "label": "Pronation / return to supination",
           "min": 0,
           "max": 60,
           "neutral": 0,
@@ -1063,6 +1148,7 @@
         -0.0005956795066595078
       ],
       "endpoint": "left-wrist",
+      "detail": "The rest hand is already supinated. Increasing this angle pronates; returning toward zero supinates.",
       "forearmClearance": {
         "distalUlna": [
           0.2464379072189331,
@@ -1213,9 +1299,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread toward thumb / return",
+          "min": 0,
+          "max": 15,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "left-index-pip",
@@ -1282,9 +1381,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread toward thumb / return",
+          "min": 0,
+          "max": 12,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "left-middle-pip",
@@ -1351,9 +1463,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread outward / return",
+          "min": 0,
+          "max": 12,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "left-ring-pip",
@@ -1420,9 +1545,22 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Spread outward / return",
+          "min": 0,
+          "max": 12,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
         }
       ],
-      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated. Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening."
     },
     {
       "id": "left-little-pip",
@@ -1563,6 +1701,34 @@
           "unit": "degrees"
         }
       ]
+    },
+    {
+      "id": "left-subtalar",
+      "label": "Left hindfoot",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-subtalar",
+      "axes": [
+        {
+          "id": "inversion",
+          "label": "Sole inward / outward",
+          "min": -8,
+          "max": 15,
+          "neutral": 0,
+          "vector": [
+            0.10063448548316956,
+            -0.6691306233406067,
+            -0.736299455165863
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "marker": [
+        0.07975903153419495,
+        0.04780566319823265,
+        -0.04690634459257126
+      ],
+      "detail": "Inversion and eversion occur below the talus, not by tilting the tibia. The oblique hindfoot axis and rigid midfoot coupling are teaching approximations; individual joint axes vary."
     },
     {
       "id": "left-toes",
@@ -2040,6 +2206,16 @@
       "parent": "right-knee"
     },
     {
+      "id": "right-subtalar",
+      "name": "Pose_right-subtalar",
+      "pivot": [
+        -0.07837985455989838,
+        0.05700501799583435,
+        -0.04102490842342377
+      ],
+      "parent": "right-ankle"
+    },
+    {
       "id": "right-toes",
       "name": "Pose_right-toes",
       "pivot": [
@@ -2047,7 +2223,7 @@
         0.019,
         0.077
       ],
-      "parent": "right-ankle"
+      "parent": "right-subtalar"
     },
     {
       "id": "left-scapula",
@@ -2290,6 +2466,16 @@
       "parent": "left-knee"
     },
     {
+      "id": "left-subtalar",
+      "name": "Pose_left-subtalar",
+      "pivot": [
+        0.07837997376918793,
+        0.05700501799583435,
+        -0.04102490842342377
+      ],
+      "parent": "left-ankle"
+    },
+    {
       "id": "left-toes",
       "name": "Pose_left-toes",
       "pivot": [
@@ -2297,7 +2483,7 @@
         0.019,
         0.077
       ],
-      "parent": "left-ankle"
+      "parent": "left-subtalar"
     }
   ],
   "totalMuscleSurfaces": 476,
@@ -2353,12 +2539,15 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "motion-pose-body-20261115-183622-428129",
+  "backup": "motion-pose-body-20261115-191950-103928",
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
     "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
     "upperLimb": "https://pubmed.ncbi.nlm.nih.gov/16078622/",
-    "validation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/"
+    "validation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/",
+    "subtalarCT": "https://doi.org/10.1038/s41598-020-57912-z",
+    "subtalarAxis": "https://doi.org/10.1242/jeb.248069",
+    "fingerInterossei": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13649930/"
   },
   "inputs": {
     "assets\\skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",
@@ -2380,9 +2569,5 @@
     "assets\\motion-smile.glb": "a4cdb127c2087301dc232e93289f2464c41844875a8d6857d8fa2ea9e9698002",
     "assets\\motion-jaw.glb": "8763ce67092eb61b1b2c1a041ce2c0c7b476302ec7ee68b8827e4b911ff666d1",
     "assets\\motion-breath.glb": "4eb5571bb28c0abbc76f60a470a2390ef9bc28c01a1045c052b05794c5e7cd83"
-  },
-  "knownLimitations": [
-    "Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.",
-    "Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary."
-  ]
+  }
 }

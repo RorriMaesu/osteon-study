@@ -4,18 +4,17 @@ import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {MotionViewer} from './motion-viewer.js';
 import {loadPoseRig,applyPose,poseJointWorld,poseMarkerWorld,poseAxisWorld} from './motion-pose-rig.js';
 import {visiblePoseMarkers,dialDelta,solvePoseTarget,poseScopeMatches} from './motion-pose-ik.js';
+import {placePoseLabel,placePoseGrip,poseRect,overlapsPoseRect} from './motion-pose-overlays.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 
 const svgNS='http://www.w3.org/2000/svg';
 const vector=value=>value?.isVector3?value.clone():new THREE.Vector3(...value);
 const radians=Math.PI/180;
 const baseColor=new THREE.Color('#956c60');
-const contributorColor=new THREE.Color('#ffab68');
-const opponentColor=new THREE.Color('#a9b6e6');
 
 export class PoseViewer extends MotionViewer{
  constructor(stage,callbacks){
-  super(stage,{onFrame:()=>{},onTarget:()=>{},onMuscle:key=>callbacks.selectMuscle(key),onLimb:()=>{}});
+  super(stage,{onFrame:dt=>callbacks.frame?.(dt),onTarget:()=>{},onMuscle:key=>callbacks.selectMuscle(key),onLimb:()=>{}});
   this.callbacks=callbacks;
   this.poseScope='all';
   this.selectedJoint=null;this.selectedAxis=null;
@@ -29,6 +28,10 @@ export class PoseViewer extends MotionViewer{
   this.grip.textContent='↻';this.grip.hidden=true;
   this.grip.title='Drag to adjust the selected movement';
   stage.append(this.guide,this.grip);
+  this.jointLabelGuide=document.createElementNS(svgNS,'svg');
+  this.jointLabelGuide.classList.add('motion-selection-guide');
+  this.jointLabelGuide.setAttribute('aria-hidden','true');stage.append(this.jointLabelGuide);
+  for(const event of ['pointerover','pointerout','focusin','focusout'])stage.addEventListener(event,()=>{this.dirty=true;});
   this.grip.addEventListener('pointerdown',event=>this.startPoseDrag(event,this.selectedJoint,'ring'));
   this.grip.addEventListener('keydown',event=>{
    if(!['ArrowUp','ArrowRight','ArrowDown','ArrowLeft'].includes(event.key))return;
@@ -184,7 +187,7 @@ export class PoseViewer extends MotionViewer{
  focusJoint(){
   if(!this.current||!this.selectedJoint)return;
   const descriptor=this.descriptor(),position=this.jointPosition(this.selectedJoint);
-  const radius=descriptor.focusRadius||(/finger|thumb|index|middle|ring|little|toe/.test(descriptor.id)?.085:/jaw|blink|smile|wrist|forearm|ankle/.test(descriptor.id)?.16:.3);
+  const radius=descriptor.focusRadius||(/finger|thumb|index|middle|ring|little|toe/.test(descriptor.id)?.085:/jaw|blink|smile|wrist|forearm|ankle|subtalar/.test(descriptor.id)?.16:.3);
   const bounds=new THREE.Box3().setFromCenterAndSize(position,new THREE.Vector3(radius*2,radius*2,radius*2));
   this.fitBounds(bounds,'front');
  }
@@ -198,21 +201,59 @@ export class PoseViewer extends MotionViewer{
    const fine=/finger|thumb|index|middle|ring|little|toe|blink|smile/.test(joint.id);
    return {...pos,id:joint.id,locked:this.poseLocks.includes(joint.id),priority:joint.markerPriority??(fine?3:1),visible:pos.visible&&(!fine||pixelsPerMeter>1350||joint.id===this.selectedJoint)};
   });
-  const visible=visiblePoseMarkers(raw,{width:this.stage.clientWidth,height:this.stage.clientHeight,selectedId:this.selectedJoint});
-  this.callbacks.markers(visible.map(marker=>this.interaction==='endpoint'&&marker.id===this.selectedJoint?{...marker,visible:false}:marker));
+  let visible=visiblePoseMarkers(raw,{width:this.stage.clientWidth,height:this.stage.clientHeight,selectedId:this.selectedJoint});
   const selected=visible.find(marker=>marker.id===this.selectedJoint);
   const axes=this.axisDescriptor(),locked=this.poseLocks.includes(this.selectedJoint)||(axes?.requiresUnlocked||[]).some(id=>this.poseLocks.includes(id));
-  const show=!!selected&&!locked&&!!axes;
+  const fixed=this.fixedOverlayObstacles(),endpoint=this.interaction==='endpoint';
+  const grip=selected&&!locked&&axes?placePoseGrip({anchor:selected,width:this.stage.clientWidth,height:this.stage.clientHeight,obstacles:fixed,endpoint}):null;
+  const show=!!grip;
+  if(show)visible=visible.filter(marker=>marker.id===this.selectedJoint||!overlapsPoseRect(poseRect(marker.x,marker.y,44),poseRect(selected.x,selected.y,126),2));
+  visible=visible.filter(marker=>!fixed.some(rect=>overlapsPoseRect(poseRect(marker.x,marker.y,44),rect,3)));
+  this.callbacks.markers(visible.map(marker=>endpoint&&marker.id===this.selectedJoint?{...marker,visible:false}:marker));
   this.guide.style.display=show?'':'none';this.grip.hidden=!show;
-  if(!show)return;
-  const endpoint=this.interaction==='endpoint';
-  const ringX=endpoint?selected.x:selected.x+63>this.stage.clientWidth?selected.x-43:selected.x+43,ringY=selected.y;
-  this.guide.querySelector('circle').setAttribute('r',endpoint?'25':'43');
-  this.guide.querySelector('circle').setAttribute('cx',selected.x);
-  this.guide.querySelector('circle').setAttribute('cy',selected.y);
-  this.grip.style.left=ringX+'px';this.grip.style.top=ringY+'px';
-  this.grip.textContent=endpoint?'✥':'↻';
-  this.grip.setAttribute('aria-label',endpoint?'Move '+this.descriptor().label+' using linked joints. Drag or use arrow keys.':'Adjust '+this.descriptor().label+', '+axes.label+' with arrow keys or drag');
+  this.overlayObstacles=[...fixed,...visible.map(marker=>poseRect(marker.x,marker.y,44))];
+  if(show){
+   this.guide.querySelector('circle').setAttribute('r',endpoint?'25':'43');
+   this.guide.querySelector('circle').setAttribute('cx',selected.x);
+   this.guide.querySelector('circle').setAttribute('cy',selected.y);
+   this.grip.style.left=grip.x+'px';this.grip.style.top=grip.y+'px';
+   this.grip.textContent=endpoint?'✥':'↻';
+   this.grip.setAttribute('aria-label',endpoint?'Move '+this.descriptor().label+' using linked joints. Drag or use arrow keys.':'Adjust '+this.descriptor().label+', '+axes.label+' with arrow keys or drag');
+   this.overlayObstacles.push(poseRect(selected.x,selected.y,endpoint?56:126));
+  }
+  this.layoutJointLabels(visible);
+ }
+ fixedOverlayObstacles(){
+  const stage=this.stage.getBoundingClientRect();
+  return [...this.stage.querySelectorAll('.pose-stage-hint,.pose-view-actions button,.motion-status:not([hidden])')].map(element=>{
+   const rect=element.getBoundingClientRect();
+   return rect.width&&rect.height?{left:rect.left-stage.left,right:rect.right-stage.left,top:rect.top-stage.top,bottom:rect.bottom-stage.top}:null;
+  }).filter(Boolean);
+ }
+ layoutJointLabels(markers){
+  this.jointLabelGuide.replaceChildren();
+  for(const marker of markers){
+   const button=this.stage.querySelector('[data-pose-marker="'+marker.id+'"]'),label=button?.querySelector('span');
+   if(!label||button.hidden)continue;
+   label.style.visibility='';
+   if(!label.offsetWidth||!label.offsetHeight)continue;
+   const point=placePoseLabel({anchor:marker,width:this.stage.clientWidth,height:this.stage.clientHeight,labelWidth:label.offsetWidth,labelHeight:label.offsetHeight,obstacles:this.overlayObstacles});
+   if(!point){label.style.visibility='hidden';continue;}
+   label.style.left=(point.x-marker.x+22)+'px';label.style.top=(point.y-marker.y+22)+'px';
+   label.style.bottom='auto';label.style.transform='translate(-50%,-50%)';
+   this.overlayObstacles.push(poseRect(point.x,point.y,label.offsetWidth,label.offsetHeight));
+   const line=document.createElementNS(svgNS,'line');
+   line.setAttribute('x1',marker.x);line.setAttribute('y1',marker.y);line.setAttribute('x2',point.x);line.setAttribute('y2',point.y);this.jointLabelGuide.append(line);
+  }
+ }
+ updateSelectionLabel(){
+  super.updateSelectionLabel();
+  if(!this.selectionLabel||this.selectionLabel.hidden)return;
+  const anchor={x:Number(this.selectionLine.getAttribute('x1')),y:Number(this.selectionLine.getAttribute('y1'))};
+  const point=placePoseLabel({anchor,width:this.stage.clientWidth,height:this.stage.clientHeight,labelWidth:this.selectionLabel.offsetWidth,labelHeight:this.selectionLabel.offsetHeight,obstacles:this.overlayObstacles||this.fixedOverlayObstacles()});
+  if(!point){this.showSelectionLabel(false);return;}
+  this.selectionLabel.style.left=point.x+'px';this.selectionLabel.style.top=point.y+'px';
+  this.selectionLine.setAttribute('x2',point.x);this.selectionLine.setAttribute('y2',point.y);
  }
  startPoseDrag(event,jointId,kind='joint'){
   if(event.button!==0||!this.current||this.poseDrag)return;

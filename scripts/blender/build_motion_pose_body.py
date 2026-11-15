@@ -211,7 +211,7 @@ def add_rig():
         radial_points=np.asarray(points(bone(s('Radius'))))
         radial_end=Vector(np.median(radial_points[radial_points[:,1]<radial_points[:,1].min()+.016],axis=0))
         turn=(radial-distal).normalized()*(1 if right else -1)
-        joint(side+'-forearm',title+' forearm',side+'-arm',side,radial,side+'-elbow',[axis('pronation','Pronate / supinate',0,60,turn)],marker=list(radial.lerp(distal,.7)),endpoint=side+'-wrist',forearmClearance={'distalUlna':list(distal),'distalRadius':list(radial_end),'millimeters':1.5})
+        joint(side+'-forearm',title+' forearm',side+'-arm',side,radial,side+'-elbow',[axis('pronation','Pronation / return to supination',0,60,turn)],marker=list(radial.lerp(distal,.7)),endpoint=side+'-wrist',detail='The rest hand is already supinated. Increasing this angle pronates; returning toward zero supinates.',forearmClearance={'distalUlna':list(distal),'distalRadius':list(radial_end),'millimeters':1.5})
         BONE_BINDINGS[bone(s('Radius'))]=side+'-forearm'
         wrist=joint_gap(bone(s('Radius')),bone(s('Lunate bone')))
         joint(side+'-wrist',title+' wrist',side+'-arm',side,wrist,side+'-forearm',[axis('flexion','Palm / back bend',-35,45,UPPER['axes'][side]['elbow']),axis('deviation','Radial / ulnar deviation',-12,18,[0,0,-sign])])
@@ -233,7 +233,16 @@ def add_rig():
                 direction=(center(obj)-center(previous)).normalized()
                 bend_axis=direction.cross(Vector((-sign,0,0)) if digit=='thumb' else Vector((0,0,1))).normalized()
                 identifier=side+'-'+digit+'-'+level
-                joint(identifier,title+' '+digit+' '+level.upper(),side+'-arm',side,pivot,parent,[axis('flexion','Bend / straighten',0,60 if level=='mcp' else 70,bend_axis)],detail='An atlas-fitted hinge approximation; joint surface sliding is not simulated.')
+                channels=[axis('flexion','Bend / straighten',0,60 if level=='mcp' else 70,bend_axis)]
+                detail='An atlas-fitted hinge approximation; joint surface sliding is not simulated.'
+                if level=='mcp' and digit!='thumb':
+                    # The middle finger defines the digital midline. Its radial
+                    # excursion is abducted by dorsal interosseous II; returning
+                    # from that excursion can use dorsal interosseous III.
+                    radial=digit in {'index','middle'}
+                    channels.append(axis('abduction','Spread toward thumb / return' if radial else 'Spread outward / return',0,15 if digit=='index' else 12,[0,0,sign if radial else -sign]))
+                    detail+=' Finger spread is easiest with the MCP joint near straight; these bounded teaching axes do not model collateral-ligament tightening.'
+                joint(identifier,title+' '+digit+' '+level.upper(),side+'-arm',side,pivot,parent,channels,detail=detail)
                 BONE_BINDINGS[obj]=identifier
                 parent=identifier
                 previous=obj
@@ -242,7 +251,17 @@ def add_rig():
         joint(side+'-knee',title+' knee',side+'-leg',side,chain['knee'],side+'-hip',[axis('flexion','Bend / straighten',0,85,[1,0,0])],endpoint=side+'-ankle')
         node(side+'-patella',chain['knee'],side+'-hip')
         joint(side+'-ankle',title+' ankle',side+'-leg',side,chain['ankle'],side+'-knee',[axis('dorsiflexion','Toes up / down',-35,23,[-1,0,0])])
-        joint(side+'-toes',title+' toes',side+'-leg',side,chain['toe'],side+'-ankle',[axis('extension','Lift / curl toes',-15,35,[-1,0,0])],detail='The five toe rays move together in this teaching control.')
+        talus=bone(s('Talus'))
+        heel=bone(s('Calcaneus'))
+        forward=center(bone(s('Second metatarsal bone')))-center(heel)
+        forward.y=0
+        forward.normalize()
+        medial=Vector((0,1,0)).cross(forward)*(1 if right else -1)
+        horizontal=forward*math.cos(math.radians(16))+medial*math.sin(math.radians(16))
+        subtalar_axis=(horizontal*math.cos(math.radians(42))+Vector((0,math.sin(math.radians(42)),0)))*(1 if right else -1)
+        joint(side+'-subtalar',title+' hindfoot',side+'-leg',side,joint_gap(talus,heel),side+'-ankle',[axis('inversion','Sole inward / outward',-8,15,subtalar_axis)],marker=list(center(heel)),detail='Inversion and eversion occur below the talus, not by tilting the tibia. The oblique hindfoot axis and rigid midfoot coupling are teaching approximations; individual joint axes vary.')
+        BONE_BINDINGS[talus]=side+'-ankle'
+        joint(side+'-toes',title+' toes',side+'-leg',side,chain['toe'],side+'-subtalar',[axis('extension','Lift / curl toes',-15,35,[-1,0,0])],detail='The five toe rays move together in this teaching control.')
         BONE_BINDINGS[bone(s('Femur'))]=side+'-hip'
         BONE_BINDINGS[bone(s('Tibia'))]=side+'-knee'
         BONE_BINDINGS[bone(s('Fibula'))]=side+'-knee'
@@ -255,7 +274,7 @@ def bone_binding(obj):
     side='right' if name.endswith('.r') else 'left' if name.endswith('.l') else None
     if group=='Bones of free part of upper limb.g':return side+'-wrist'
     if group=='Phalanges of foot.g':return side+'-toes'
-    if group in {'Tarsal bones.g','Metatarsal bones.g','Bones of foot.g'}:return side+'-ankle'
+    if group in {'Tarsal bones.g','Metatarsal bones.g','Bones of foot.g'}:return side+'-subtalar'
     if group=='Bones of pelvic girdle.g' or name in {'Sacrum','Coccyx'}:return 'pelvis'
     if name=='Mandible' or name.startswith('Lower '):return 'jaw'
     if group in {'Bones of cranium.g','Extracranial bones of head.g','Frontal bone','Sphenoid bone','Auditory ossicles.g','Anterior teeth.g','Posterior teeth.g','Nasal cartilages.g'}:return 'head'
@@ -421,6 +440,8 @@ def bind_all(rig):
         elif obj.get('poseSupport')=='tendon':
             original={g.index:old_driver(g.name) for g in obj.vertex_groups}
             weights=[{original[g.group]:g.weight for g in v.groups if original.get(g.group)} for v in obj.data.vertices]
+            for row in weights:
+                for side in SIDES:replace_weight(row,side+'-ankle',{side+'-subtalar':1.})
             bind_mesh(obj,rig,weights)
             identifier=obj['motionSide']+'-ankle'
         else:bind_mesh(obj,rig,[{identifier:1.}]*len(obj.data.vertices))
@@ -493,10 +514,10 @@ def bind_all(rig):
             if 'thorax' in values and 'clavicular-head-of-pectoralis-major' in identifier:
                 replace_weight(values,'thorax',{side+'-scapula':1.})
             if part['region']=='pelvis-leg-foot' and side in SIDES and side+'-ankle' in values:
-                foot=side+'-ankle'
+                foot=side+'-subtalar'
                 toes=side+'-toes'
                 amount=smooth(p.z,NODES[toes]['pivot'][2]-.015,NODES[toes]['pivot'][2]+.018)
-                replace_weight(values,foot,{foot:1-amount,toes:amount})
+                replace_weight(values,side+'-ankle',{foot:1-amount,toes:amount})
             if scap_attachment:
                 origin,direction,length=scap_attachment
                 weight=smooth((p-origin).dot(direction)/length,-.08,1.08)
@@ -552,11 +573,11 @@ def main():
         'schema':1,'asset':NAME+'.glb','sha256':digest(target),'bytes':target.stat().st_size,
         'description':'Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.',
         'evidence':'Teaching geometry. Pose and muscle color do not measure activation or force.',
-        'scope':'Conservative joint ranges, distributed lumbar and cervical motion, coupled shoulder girdle, radius-led forearm turn, wrists and finger hinges. Toes move together. Existing reviewed blink, smile, jaw and breathing shapes are retained. Ligaments, tissue contact, independent carpal glides, individual toe joints, eye rotations and tongue control are not simulated.',
+        'scope':'Conservative joint ranges, distributed lumbar and cervical motion, coupled shoulder girdle, radius-led forearm turn, wrists, finger hinges and MCP finger spread, plus separate oblique hindfoot inversion/eversion. Toes move together. Existing reviewed blink, smile, jaw and breathing shapes are retained. Ligaments, tissue contact, independent carpal and midfoot glides, individual toe joints, eye rotations and tongue control are not simulated.',
         'knownLimitations':['Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.','Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary.'],
         'joints':JOINTS,'nodes':list(NODES.values()),'totalMuscleSurfaces':len(MUSCLES),'boneSurfaces':len(BONE_MESHES),
         'regionalMorphReplacements':sorted(REGIONAL_REPLACEMENTS),'backup':backed.name,
-        'sources':{'openstax':'https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements','sourceModel':'https://github.com/Z-Anatomy/Models-of-human-anatomy','upperLimb':'https://pubmed.ncbi.nlm.nih.gov/16078622/','validation':'https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/'},
+        'sources':{'openstax':'https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements','sourceModel':'https://github.com/Z-Anatomy/Models-of-human-anatomy','upperLimb':'https://pubmed.ncbi.nlm.nih.gov/16078622/','validation':'https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/','subtalarCT':'https://doi.org/10.1038/s41598-020-57912-z','subtalarAxis':'https://doi.org/10.1242/jeb.248069','fingerInterossei':'https://pmc.ncbi.nlm.nih.gov/articles/PMC13649930/'},
         'inputs':hashes,
     }
     (ASSETS/(NAME+'.json')).write_text(json.dumps(meta,indent=2)+'\n')

@@ -15,7 +15,7 @@ export function createPoseUI(host,callbacks={}){
  <section class="pose-model" aria-label="Whole-body posing workspace">
   <div class="motion-stage pose-stage" aria-label="Interactive whole-body pose">
    <div class="motion-status" role="status">Loading the whole-body model…</div>
-   <div class="pose-stage-hint"><span>Tap a joint. Drag its ring, or use the angle controls.</span><small>Teaching pose · muscle shapes are approximate</small></div>
+   <div class="pose-stage-hint"><span>Choose a joint. Drag its ring or try Play motion.</span><small>Teaching pose · muscle shapes are approximate</small></div>
    <div class="pose-joint-markers" role="group" aria-label="Joints in this view"></div>
    <span class="motion-handle" aria-hidden="true" hidden><i></i><span>Drag</span></span>
    <span class="motion-load-tag" aria-hidden="true" hidden></span>
@@ -34,19 +34,21 @@ export function createPoseUI(host,callbacks={}){
     <button type="button" data-pose-endpoint hidden aria-pressed="false" title="Move the end of this limb using linked joints">Move limb</button>
    </div>
    <div class="pose-angle-row">
-    <button type="button" data-pose-minus aria-label="Decrease joint angle">−</button>
+    <button type="button" data-pose-minus aria-label="Decrease joint angle">Back</button>
     <input type="range" data-pose-angle min="0" max="100" step="1" value="0" aria-label="Joint angle">
-    <output data-pose-angle-value aria-hidden="true">0°</output>
-    <button type="button" data-pose-plus aria-label="Increase joint angle">+</button>
+    <button type="button" data-pose-neutral title="Return this joint to its starting position"><output data-pose-angle-value aria-hidden="true">0°</output><small>Neutral</small></button>
+    <button type="button" data-pose-plus aria-label="Increase joint angle">Forward</button>
    </div>
    <div class="pose-action-row">
-    <button type="button" data-pose-undo aria-label="Undo last pose change" title="Undo the last pose change">Undo</button>
-    <button type="button" data-pose-redo aria-label="Redo pose change" title="Redo a pose change">Redo</button>
+    <button type="button" data-pose-play aria-pressed="false" title="Play this movement once, then return to your pose">Play motion</button>
+    <button type="button" data-pose-undo aria-label="Undo last pose change" title="Undo the last pose change"><span>Undo</span><i aria-hidden="true">↶</i></button>
+    <button type="button" data-pose-redo aria-label="Redo pose change" title="Redo a pose change"><span>Redo</span><i aria-hidden="true">↷</i></button>
     <button type="button" data-pose-lock aria-pressed="false" title="Keep this joint's angles fixed">Lock angles</button>
     <button type="button" data-pose-reset aria-label="Reset pose" title="Return all joints to their starting pose. You can undo this.">Reset</button>
     <button type="button" data-pose-muscles aria-pressed="true">Muscles</button>
     <button type="button" data-pose-notes aria-expanded="false" aria-controls="${prefix}-details">Explore</button>
    </div>
+   <button type="button" class="pose-muscle-summary" data-pose-muscle-summary title="Open the list of possible contributors and muscles with an opposing action"><span data-pose-movement-name>Explore a movement</span><span class="pose-summary-roles"><span class="pose-contributor-key" data-pose-contributor-summary>Move a joint to see muscle roles</span><span class="pose-opponent-key" data-pose-opponent-summary></span></span><span class="pose-summary-open" aria-hidden="true">Muscle roles ↗</span></button>
    <p class="pose-feedback" role="status" aria-live="polite"></p>
   </div>
  </section>
@@ -105,7 +107,9 @@ export function createPoseUI(host,callbacks={}){
   renderDetails();measureList();
  }
  const helpPages=[
-  ['Make a pose','Tap a joint or choose one below the model. Drag its ring, use the slider, or press − / +.'],
+  ['Make a pose','Choose a joint and movement. Use the named direction buttons, drag the slider, or drag the ring on the model.'],
+  ['Watch one movement','Play motion demonstrates the selected movement and returns to your pose. Pause keeps the current position.'],
+  ['Return one joint','The angle button marked Neutral resets only the selected joint. Reset returns the whole body. Both can be undone.'],
   ['Turn the view','Drag empty space to rotate. Pinch or scroll to zoom. Focus joint brings small joints closer.'],
   ['Keep your pose','Full body returns to the overview while keeping your pose. Reset returns all joints to their starting position.'],
   ['Keep a joint fixed','Lock angles fixes a joint’s settings. It still moves with its parent. Undo reverses one completed adjustment.'],
@@ -140,7 +144,7 @@ export function createPoseUI(host,callbacks={}){
    renderedListKey=key;
    if(tab==='help'){
     const [title,lead]=currentHelp[page];
-    $('.pose-help-page').innerHTML=`<h3>${escape(title)}</h3><p>${escape(lead)}</p>${page===8?'<div class="pose-lesson-links"><button type="button" data-pose-lesson="blink">Blink</button><button type="button" data-pose-lesson="smile">Smile</button><button type="button" data-pose-lesson="jaw">Jaw</button><button type="button" data-pose-lesson="breath">Breathing</button></div>':''}`;
+    $('.pose-help-page').innerHTML=`<h3>${escape(title)}</h3><p>${escape(lead)}</p>${title==='Face and breathing'?'<div class="pose-lesson-links"><button type="button" data-pose-lesson="blink">Blink</button><button type="button" data-pose-lesson="smile">Smile</button><button type="button" data-pose-lesson="jaw">Jaw</button><button type="button" data-pose-lesson="breath">Breathing</button></div>':''}`;
    }else{
     $('.pose-detail-list').innerHTML=visible.map(entry=>{
      const id=listId(entry),name=listName(entry),selected=tab==='joints'?id===state.selectedJoint:id===state.selectedMuscle;
@@ -177,8 +181,8 @@ export function createPoseUI(host,callbacks={}){
   }
   const previousJoint=$('[data-pose-joint]').value;
   $('[data-pose-joint]').value=state.selectedJoint||'';
-  const currentJoint=joint(),axes=axesFor(currentJoint),axisKey=JSON.stringify([state.selectedJoint,axes]);
-  if(renderedAxisKey!==axisKey){renderedAxisKey=axisKey;$('[data-pose-axis]').innerHTML=axes.map(entry=>`<option value="${escape(entry.id)}">${escape(entry.label||entry.id)}</option>`).join('');}
+  const currentJoint=joint(),axes=axesFor(currentJoint),axisKey=JSON.stringify([state.selectedJoint,axes,state.axisLabels]);
+  if(renderedAxisKey!==axisKey){renderedAxisKey=axisKey;$('[data-pose-axis]').innerHTML=axes.map(entry=>`<option value="${escape(entry.id)}">${escape(state.axisLabels?.[entry.id]||entry.label||entry.id)}</option>`).join('');}
   $('[data-pose-axis]').value=state.selectedAxis||axes[0]?.id||'';
   const currentAxis=axis(),locked=isLocked(),range=$('[data-pose-angle]'),value=angle();
   const percent=['%','percent'].includes(currentAxis?.unit),unit=percent?'%':'°';
@@ -191,8 +195,24 @@ export function createPoseUI(host,callbacks={}){
    range.setAttribute('aria-valuetext',`${Math.round(value*10)/10} ${percent?'percent':'degrees'}${locked?', joint angles locked':''}`);
   }
   $('[data-pose-angle-value]').textContent=(Math.round(value*10)/10)+unit;
+  const direction=state.directionLabels||{},step=percent?10:5;
+  for(const [selector,key,fallback] of [['[data-pose-minus]','negative','Back'],['[data-pose-plus]','positive','Forward']]){
+   const control=$(selector),name=direction[key]||fallback,hint=direction[key+'Hint']||name;
+   control.textContent=hint;
+   control.title=name+' · '+step+(percent?' percentage points':' degrees')+' per press';
+   control.setAttribute('aria-label',name+', '+step+(percent?' percentage points':' degrees')+' per press');
+  }
+  $('[data-pose-neutral]').setAttribute('aria-label',`Return ${currentJoint?.label||'this joint'} to neutral; current ${currentAxis?.label||'angle'} ${Math.round(value*10)/10} ${percent?'percent':'degrees'}`);
   for(const selector of ['[data-pose-joint]','[data-pose-axis]','[data-pose-reset]','[data-pose-full]','[data-pose-muscles]'])$(selector).disabled=!state.ready;
   for(const selector of ['[data-pose-minus]','[data-pose-plus]','[data-pose-angle]'])$(selector).disabled=!state.ready||!currentAxis||locked||state.movementLocked;
+  $('[data-pose-minus]').disabled||=value<=Number(range.min);
+  $('[data-pose-plus]').disabled||=value>=Number(range.max);
+  $('[data-pose-neutral]').disabled=!state.ready||!currentJoint||locked||state.canNeutralize===false;
+  $('[data-pose-play]').disabled=!state.ready||!currentAxis||locked||state.movementLocked;
+  $('[data-pose-play]').setAttribute('aria-pressed',String(!!state.playing));
+  $('[data-pose-play]').textContent=state.playing?'Pause':'Play motion';
+  $('[data-pose-play]').setAttribute('aria-label',state.playing?'Pause movement at this position':'Play the selected movement once');
+  $('[data-pose-play]').title=state.playing?'Pause and keep this position':'Play this movement once, then return to your pose';
   $('[data-pose-focus]').disabled=!state.ready||!currentJoint;
   $('[data-pose-lock]').disabled=!state.ready||!currentJoint;
   $('[data-pose-lock]').setAttribute('aria-pressed',String(locked));
@@ -206,7 +226,18 @@ export function createPoseUI(host,callbacks={}){
   endpoint.disabled=!state.ready||locked;
   endpoint.setAttribute('aria-pressed',String(state.interaction==='endpoint'));
   endpoint.textContent=state.interaction==='endpoint'?'Move joint':'Move limb';
-  $('.pose-feedback').textContent=state.message||(locked?'This joint’s angles are fixed. Unlock to adjust them.':state.evidence||'Colors show possible muscle roles, not measured activation.');
+  const contributorNames=(state.contributors||[]).map(listName),opponentNames=(state.opponents||[]).map(listName);
+  const compact=names=>names.length?names[0].replace(/ · (right|left|midline)$/i,'')+(names.length>1?' + '+(names.length-1):''):'';
+  const movementName=state.movementLabel&&state.movementLabel!=='Pose held'?state.movementLabel:currentAxis?.label||'Explore a movement';
+  $('[data-pose-movement-name]').textContent=movementName;
+  $('[data-pose-contributor-summary]').textContent=contributorNames.length?'◇ '+compact(contributorNames):opponentNames.length?'No mapped contributor':'Move a joint to see muscle roles';
+  $('[data-pose-opponent-summary]').textContent=opponentNames.length?'○ '+compact(opponentNames):'';
+  const roleSummary=$('[data-pose-muscle-summary]');
+  roleSummary.disabled=!state.ready;
+  roleSummary.title=[movementName,'Possible contributors: '+(contributorNames.join(', ')||'none mapped for this adjustment'),'Opposing action: '+(opponentNames.join(', ')||'none mapped'),'Colors show possible roles, not measured activity.'].join('. ');
+  roleSummary.setAttribute('aria-label',roleSummary.title+' Open muscle roles.');
+  $('.pose-feedback').textContent=state.message||(locked?'This joint’s angles are fixed. Unlock to adjust them.':'');
+  $('.pose-feedback').hidden=!$('.pose-feedback').textContent;
   $('.pose-feedback').title=$('.pose-feedback').textContent;
   for(const [id,item] of markers){item.button.setAttribute('aria-pressed',String(id===state.selectedJoint));item.button.classList.toggle('is-selected',id===state.selectedJoint);}
   if(previousJoint!==state.selectedJoint){page=0;renderedListKey='';}
@@ -264,8 +295,12 @@ export function createPoseUI(host,callbacks={}){
  on(document,'visibilitychange',()=>{if(document.hidden)finishRange(true);});
  on($('[data-pose-joint]'),'change',event=>{finishRange();call('selectJoint',event.currentTarget.value);});
  on($('[data-pose-axis]'),'change',event=>{finishRange();call('selectAxis',event.currentTarget.value);});
- button('[data-pose-minus]',()=>call('stepAngle',-Number(axis()?.step??1)));
- button('[data-pose-plus]',()=>call('stepAngle',Number(axis()?.step??1)));
+ const buttonStep=()=>['%','percent'].includes(axis()?.unit)?10:5;
+ button('[data-pose-minus]',()=>call('stepAngle',-buttonStep()));
+ button('[data-pose-plus]',()=>call('stepAngle',buttonStep()));
+ button('[data-pose-neutral]',()=>{finishRange();call('neutralJoint');});
+ button('[data-pose-play]',()=>{finishRange();call('togglePlayback');});
+ button('[data-pose-muscle-summary]',()=>{changeTab('muscles');toggleNotes(true,true);});
  button('[data-pose-undo]',()=>call('undo'));
  button('[data-pose-redo]',()=>call('redo'));
  button('[data-pose-reset]',()=>call('reset'));

@@ -2,6 +2,8 @@ import {createPoseUI} from './motion-pose-ui.js';
 import {PoseViewer} from './motion-pose-viewer.js';
 import {PoseHistory,combinedPoseRoles} from './motion-pose-core.js';
 import {poseScopeMatches} from './motion-pose-ik.js';
+import {describePoseAxis,poseMotionCycle} from './motion-pose-motions.js';
+import {createPosePreview,samplePosePreview} from './motion-pose-playback.js';
 import {setLearningContext} from './learning-context.js';
 
 const savedKey='osteon-whole-body-pose-v1';
@@ -9,22 +11,25 @@ const savedKey='osteon-whole-body-pose-v1';
 export function initPoseLab(host,{onLesson}={}){
  let active=false,revision=0,specimen=null,history=null,descriptors=[],selectedJoint=null,selectedAxis=null;
  let scope='all',interaction='joint',selectedMuscle=null,showMuscles=true,onlyRelated=false,message='',saveTimer=null,lastContext='';
+ let playback=null,playbackStarted=0;
  const descriptor=()=>descriptors.find(joint=>joint.id===selectedJoint);
  const ui=createPoseUI(host,{
   selectJoint,selectAxis:id=>{stopGesture();selectedAxis=id;history?.clearChanges();message='';draw();},
   changeAngle:(value,{phase})=>{
    if(!history)return;
-   if(phase==='start'){viewer.cancelPoseDrag();history.begin();}
+   if(phase==='start'){stopGesture();history.begin();}
    if(phase==='input'){setAngle(selectedJoint,selectedAxis,value);draw();}
    if(phase==='end')endGesture();
    if(phase==='cancel'){history.cancel();draw();}
   },
   stepAngle:step,
-  undo:()=>{if(!history)return;viewer.cancelPoseDrag();endGesture();history.undo();message='Last pose change undone.';draw();save();},
+  togglePlayback,
+  neutralJoint:()=>{if(!history)return;stopGesture();history.reset(selectedJoint);message='Unlocked movements at this joint returned to neutral. Other joints keep their pose.';draw();save();},
+  undo:()=>{if(!history)return;stopGesture();history.undo();message='Last pose change undone.';draw();save();},
   redo:()=>{if(!history)return;stopGesture();history.redo();message='Pose change restored.';draw();save();},
   reset:()=>{
    if(!history)return;
-   viewer.cancelPoseDrag();endGesture();history.begin();
+   stopGesture();history.begin();
    for(const id of history.locks)history.setLocked(id,false);
    history.reset();history.commit();history.clearChanges();
    message='Starting pose restored. Undo brings your pose back.';draw();save();
@@ -47,14 +52,42 @@ export function initPoseLab(host,{onLesson}={}){
  });
  const viewer=new PoseViewer(ui.stage,{
   selectJoint,selectMuscle,stepAngle:step,
-  markers:markers=>ui.setMarkers(markers),begin:()=>history?.begin(),
+  frame:previewFrame,
+  markers:markers=>ui.setMarkers(markers),begin:()=>{stopPlayback();history?.begin();},
   angle:(value,joint,axis)=>{if(setAngle(joint||selectedJoint,axis||selectedAxis,value))draw();},
   patch:values=>{history?.patch(values);draw();},
-  finish:cancel=>{if(!history)return;if(cancel){history.cancel();message='Adjustment cancelled.';}else history.commit();draw();save();},
+  finish:cancel=>{if(!history)return;if(cancel){history.cancel();message='Adjustment cancelled.';}else history.commit({preserveDirection:true});draw();save();},
   message:text=>{message=text;updateUI();},
  });
- function endGesture(){if(history?.inTransaction){history.commit();draw();save();}}
- function stopGesture(){viewer.cancelPoseDrag();endGesture();}
+ function endGesture(){if(history?.inTransaction){history.commit({preserveDirection:true});draw();save();}}
+ function stopGesture(){stopPlayback();viewer.cancelPoseDrag();endGesture();}
+ function stopPlayback({restore=false}={}){
+  if(!playback)return;
+  playback=null;
+  if(restore){history.cancel();history.clearChanges();}
+  else history.commit({preserveDirection:true});
+  save();
+ }
+ function togglePlayback(){
+  if(!history)return;
+  if(playback){stopPlayback();message='Preview paused. Keep adjusting, or Undo to return to your earlier pose.';draw();return;}
+  stopGesture();
+  if(history.isAxisLocked(selectedJoint,selectedAxis))return;
+  const cycle=poseMotionCycle(descriptor(),selectedAxis);
+  playback=createPosePreview(history.values,selectedJoint,selectedAxis,cycle);
+  if(!playback)return;
+  playbackStarted=performance.now();history.begin();interaction='joint';
+  message='Playing one gentle cycle. Pause keeps the pose; a complete cycle returns to your starting pose.';
+  draw();
+ }
+ function previewFrame(){
+  if(!playback||!active)return;
+  // Follow elapsed time, not the base viewer's capped physics step. A slower
+  // phone still plays one eight-second cycle rather than stretching it out.
+  const sample=samplePosePreview(playback,(performance.now()-playbackStarted)/1000);
+  if(sample.done){stopPlayback({restore:true});message='Preview finished. Your starting pose is restored.';draw();return;}
+  if(history.patch(sample.patch))draw();
+ }
  function setAngle(joint,axis,value){
   if(!history)return false;
   if(joint==='breathing'&&value>0)return history.patch({breathing:{[axis]:value,[axis==='inhale'?'exhale':'inhale']:0}});
@@ -69,13 +102,13 @@ export function initPoseLab(host,{onLesson}={}){
  function selectJoint(id,{pointer=false}={}){
   const joint=descriptors.find(item=>item.id===id);
   if(!joint||id===selectedJoint)return;
-  viewer.cancelPoseDrag();endGesture();
+  stopGesture();
   selectedJoint=id;selectedAxis=joint.axes[0].id;selectedMuscle=null;
   history?.clearChanges();
   if(!viewer.endpointChain(id))interaction='joint';
   if(scope!=='all'&&!poseScopeMatches(scope,joint)){scope='all';viewer.setScope(scope);}
   message=joint.note||'';
-  const detail=!pointer&&/thumb|index|middle|ring|little|toe|face-/.test(id);
+  const detail=!pointer&&/thumb|index|middle|ring|little|toe|subtalar|face-/.test(id);
   if(detail){scope=joint.region;viewer.setScope(scope);message='Detail view. Full body returns to your complete pose.';}
   draw();save();
   if(detail)viewer.focusJoint();
@@ -93,7 +126,7 @@ export function initPoseLab(host,{onLesson}={}){
  }
  function changeScope(next){
   if(!history)return;
-  viewer.cancelPoseDrag();endGesture();scope=next;viewer.setScope(scope);
+  stopGesture();scope=next;viewer.setScope(scope);
   const joint=descriptor();
   if(next!=='all'&&!poseScopeMatches(next,joint)){
    const candidate=descriptors.find(item=>poseScopeMatches(next,item))
@@ -116,7 +149,10 @@ export function initPoseLab(host,{onLesson}={}){
  function updateUI(role=roles()){
   const byId=new Map(specimen?.parts.map(part=>[part.key,part])||[]);
   const parts=keys=>keys.map(key=>byId.get(key)).filter(Boolean).map(part=>({key:part.key,name:part.name+' · '+part.side}));
+  const joint=descriptor(),directionLabels=joint?describePoseAxis(joint,selectedAxis):null;
   ui.update({ready:!!history&&active,descriptors,selectedJoint,selectedAxis,pose:history?.values||{},canUndo:!!history?.canUndo,canRedo:!!history?.canRedo,scope,locked:history?.locks||[],
+   playing:!!playback,directionLabels,axisLabels:Object.fromEntries((joint?.axes||[]).map(axis=>[axis.id,describePoseAxis(joint,axis.id).label])),
+   canNeutralize:!!joint?.axes.some(axis=>!history?.isAxisLocked(selectedJoint,axis.id)&&history?.values[selectedJoint]?.[axis.id]!==(axis.neutral??0)),
    message:history?.isAxisLocked(selectedJoint,selectedAxis)&&!history.isLocked(selectedJoint)?'Unlock the shoulder girdle to raise this arm.':shapeNotice()||message,
    movementLocked:!!history?.isAxisLocked(selectedJoint,selectedAxis),contributors:parts(role.contributors),opponents:parts(role.opposing),selectedMuscle,
    selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
@@ -182,8 +218,12 @@ export function initPoseLab(host,{onLesson}={}){
    updateUI();
   }
  }
- function close(){ui.cancelGesture?.();history?.cancel();active=false;revision++;viewer.close();host.hidden=true;}
+ function close(){stopPlayback();ui.cancelGesture?.();history?.cancel();active=false;revision++;viewer.close();host.hidden=true;}
+ const pauseWhenAway=()=>{if(!playback)return;stopPlayback();message='Preview paused while you were away.';draw();};
+ window.addEventListener('blur',pauseWhenAway);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseWhenAway();});
  host.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&playback){event.preventDefault();stopPlayback({restore:true});message='Preview cancelled. Your starting pose is restored.';draw();return;}
   if(!active||!history||event.target.matches('input,select,textarea'))return;
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){
    event.preventDefault();stopGesture();if(event.shiftKey)history.redo();else history.undo();draw();save();
