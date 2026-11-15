@@ -39,18 +39,36 @@ def apply(values):
         for axis in joint['axes']:
             angle=values.get(joint['id'],{}).get(axis['id'],0)
             for name,scale in joint.get('morphs',{}).get(axis['id'],{}).items():shapes[name]=angle*scale
+            for vector,degrees in axis.get('rotations',[]):rotate(joint['id'],vector,degrees*angle/axis['max'])
             if not axis.get('vector'):continue
             if joint.get('distribute'):
                 weights=joint.get('axisWeights',{}).get(axis['id'],[1/len(joint['distribute'])]*len(joint['distribute']))
                 assert abs(sum(weights)-1)<.00001
                 for identifier,weight in zip(joint['distribute'],weights):rotate(identifier,axis['vector'],angle*weight)
             else:
-                if joint['id'].endswith('-shoulder') and axis['id']=='abduction':
+                if joint['id'].endswith('-shoulder') and axis['id'] in {'abduction','scaption'}:
                     low,high=joint.get('scapularShare',[1/3,1/3])
                     girdle=angle*(low+(high-low)*min(1,max(0,angle/90)))
                     rotate(joint['side']+'-scapula',axis['vector'],girdle)
                     angle-=girdle
                 rotate(joint['id'],axis['vector'],angle)
+        if joint['id']=='pelvic-control' and any(values.get(joint['id'],{}).values()):
+            pelvis=rig.pose.bones[nodes['pelvis']['name']]
+            rest=pelvis.bone.matrix_local.to_quaternion()
+            delta=rest@pelvis.rotation_quaternion@rest.inverted()
+            for identifier in ['lumbar-5','right-hip','left-hip']:
+                child=rig.pose.bones[nodes[identifier]['name']]
+                basis=child.bone.matrix_local.to_quaternion()
+                child.rotation_quaternion=(basis.inverted()@delta.inverted()@basis)@child.rotation_quaternion
+            if values[joint['id']].get('obliquity'):
+                hip=rig.pose.bones[nodes['right-hip']['name']]
+                offset=hip.bone.head_local-pelvis.bone.head_local
+                pelvis.location=rest.inverted()@(offset-delta@offset)
+        if joint.get('unlockedRotation'):
+            rule=joint['unlockedRotation']
+            flexion=values.get(joint['id'],{}).get('flexion',0)
+            t=min(1,max(0,flexion/rule['endsAt']))
+            rotate(joint['id'],rule['axis'],rule['degrees']*t*t*(3-2*t))
         if joint['id']=='jaw':
             p=rig.pose.bones[nodes[joint['id']]['name']]
             jaw=values.get('jaw',{})
@@ -123,6 +141,12 @@ scenarios={
  'jaw-excursion':{'jaw':{'excursion':5}},
  'jaw-protrusion':{'jaw':{'protrusion':100}},
  'great-toe-extension':{'right-hallux':{'extension':25},'left-hallux':{'extension':25}},
+ 'scaption':{'right-shoulder':{'scaption':55},'left-shoulder':{'scaption':55}},
+ 'pelvis-tilt':{'pelvic-control':{'tilt':9}},
+ 'pelvic-drop':{'pelvic-control':{'obliquity':6},'left-hip':{'flexion':15},'left-knee':{'flexion':20}},
+ 'thoracic-rotation':{'thoracic-turn':{'rotation':11}},
+ 'thumb-opposition':{'right-thumb-cmc':{'opposition':80},'left-thumb-cmc':{'opposition':80}},
+ 'knee-unlock':{'right-knee':{'flexion':22},'left-knee':{'flexion':22}},
 }
 results={}
 for name,values in scenarios.items():
@@ -136,7 +160,7 @@ for name,values in scenarios.items():
         edges,lengths=edge_data[obj.name]
         ratio=np.linalg.norm(posed[edges[:,0]]-posed[edges[:,1]],axis=1)/lengths
         rows.append({'muscle':obj['muscleId'],'maxDisplacementMm':round(float(displacement.max())*1000,3),'edgeLengthRatio95':round(float(np.percentile(ratio,95)),3),'edgeLengthRatio99':round(float(np.percentile(ratio,99)),3)})
-    results[name]={'movedSurfaces':sum(row['maxDisplacementMm']>.01 for row in rows),'largestSkinStretch':sorted(rows,key=lambda row:row['edgeLengthRatio99'],reverse=True)[:12]}
+    results[name]={'controls':values,'movedSurfaces':sum(row['maxDisplacementMm']>.01 for row in rows),'largestSkinStretch':sorted(rows,key=lambda row:row['edgeLengthRatio99'],reverse=True)[:12]}
     print('POSE_REVIEW',name,results[name]['movedSurfaces'],results[name]['largestSkinStretch'][:3],flush=True)
 apply({})
 for obj in objects:

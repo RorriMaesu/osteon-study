@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#10191e">
 <title>Muscle coverage · Osteon</title>
 <link rel="icon" href="assets/favicon.svg">
-<link rel="stylesheet" href="muscle-coverage-index.css?v=1ad67b43fd6f">
+<link rel="stylesheet" href="muscle-coverage-index.css?v=6e11054f9701">
 </head>
 <body>
 <header>
@@ -19,6 +19,10 @@
   <p>Check which muscles have an atlas model, which are rigged to move, and which still need a model or a review.</p></div>
   <div id="coverage-totals" class="coverage-totals" aria-label="Inventory totals"></div>
  </section>
+ <details class="coverage-movements"><summary id="coverage-motion-heading">Movement coverage</summary>
+  <p>Every listed movement can be posed. A Blender sample means the exported model was checked in a pose that used that control.</p>
+  <div id="coverage-movement-rows"></div>
+ </details>
  <section class="coverage-index" aria-label="Muscle coverage inventory">
   <form id="coverage-filters">
    <label>Find a muscle <input type="search" id="coverage-search" placeholder="Name, head or part" autocomplete="off"></label>
@@ -58,6 +62,6 @@
  </details>
 </main>
 <footer><a href="https://github.com/RorriMaesu/osteon-study/commits/main/">GitHub changes ↗</a><a href="CREDITS.md">Sources and credits ↗</a></footer>
-<script type="module" src="src/motion-coverage-ui.js?v=df0cf9ababcb"></script>
+<script type="module" src="src/motion-coverage-ui.js?v=f5664925078b"></script>
 </body>
 </html>

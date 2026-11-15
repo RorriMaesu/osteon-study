@@ -25,19 +25,19 @@ export function initPoseLab(host,{onLesson}={}){
   },
   stepAngle:step,
   togglePlayback,
-  neutralJoint:()=>{if(!history)return;stopGesture();history.reset(selectedJoint);message='Unlocked movements at this joint returned to neutral. Other joints keep their pose.';draw();save();},
-  undo:()=>{if(!history)return;stopGesture();history.undo();message='Last pose change undone.';draw();save();},
-  redo:()=>{if(!history)return;stopGesture();history.redo();message='Pose change restored.';draw();save();},
+  neutralJoint:()=>{if(!history)return;stopGesture();guidedDirection=0;history.reset(selectedJoint);message='Unlocked movements at this joint returned to neutral. Other joints keep their pose.';draw();save();},
+  undo:()=>{if(!history)return;stopGesture();guidedDirection=0;history.undo();message='Last pose change undone.';draw();save();},
+  redo:()=>{if(!history)return;stopGesture();guidedDirection=0;history.redo();message='Pose change restored.';draw();save();},
   reset:()=>{
    if(!history)return;
-   stopGesture();history.begin();
+   stopGesture();guidedDirection=0;history.begin();
    for(const id of history.locks)history.setLocked(id,false);
    history.reset();history.commit();history.clearChanges();
    message='Starting pose restored. Undo brings your pose back.';draw();save();
   },
   setLock:locked=>{if(!history)return;stopGesture();history.setLocked(selectedJoint,locked);message=locked?'Joint angles locked. The limb still follows its parent joint.':'Joint angles unlocked.';draw();save();},
   setScope:changeScope,focus:()=>{stopGesture();viewer.focusJoint(studyGuide?.view,studyGuide?.radius);},
-  camera:view=>{stopGesture();if(studyGuide)viewer.focusJoint(view,studyGuide.radius);else viewer.frame(view);},
+  camera:view=>{stopGesture();if(studyGuide&&!studyGuide.fullFrame)viewer.focusJoint(view,studyGuide.radius);else viewer.frame(view);},
   zoom:direction=>viewer.zoom(direction),
   setMuscles:show=>{showMuscles=show;draw();},selectMuscle,
   setRelated:show=>{onlyRelated=show;draw();},
@@ -80,7 +80,7 @@ export function initPoseLab(host,{onLesson}={}){
   const joint=descriptor(),cycle=poseMotionCycle(joint,selectedAxis);
   if(!cycle)return;
   if(studyGuide?.setup&&Object.entries(studyGuide.setup).some(([id,axes])=>Object.keys(axes).some(axis=>history.isAxisLocked(id,axis)))){
-   message='Unlock the hip and knee controls used by this comparison.';draw();return;
+   message='Unlock the joints used by this comparison to play it.';draw();return;
   }
   history.begin();
   if(studyGuide?.setup)history.patch(studyGuide.setup);
@@ -162,8 +162,18 @@ export function initPoseLab(host,{onLesson}={}){
   scope=guide.scope;interaction='joint';showMuscles=true;onlyRelated=false;
   viewer.setScope(scope);
   message='Choose a direction or play the movement.';
-  ui.closeNotes();draw();viewer.focusJoint(guide.view,guide.radius);
+  ui.closeNotes();draw();
+  if(guide.fullFrame)viewer.frame(guide.view);
+  else viewer.focusJoint(guide.view,guide.radius);
   return true;
+ }
+ function applyMotionRoute(search){
+  if(chooseGuide(search.get('motionGuide')))return;
+  const joint=descriptors.find(entry=>entry.id===search.get('motionJoint'));
+  const axis=joint?.axes.find(entry=>entry.id===search.get('motionAxis'));
+  if(!axis)return;
+  selectedJoint=joint.id;selectedAxis=axis.id;scope=joint.region;
+  viewer.setScope(scope);draw();viewer.focusJoint();
  }
  function roles(){
   if(!history||!specimen)return {contributors:[],opposing:[],note:''};
@@ -171,7 +181,7 @@ export function initPoseLab(host,{onLesson}={}){
    const controlledReturn=guidedDirection<0&&studyGuide.controlledReturn;
    const direction=controlledReturn?1:guidedDirection||studyGuide.direction||1;
    const role=poseRoles(descriptor(),selectedAxis,direction,specimen.parts,history.values);
-   if(controlledReturn)return {...role,label:'Controlled lowering',movementNotes:[controlledReturn]};
+   if(controlledReturn)return {...role,label:studyGuide.returnLabel||'Controlled lowering',movementNotes:[controlledReturn]};
    return role;
   }
   return combinedPoseRoles(descriptors,history.changes,specimen.parts,history.values);
@@ -260,7 +270,7 @@ export function initPoseLab(host,{onLesson}={}){
     }
    }
    viewer.setScope(scope);draw();viewer.frame('front');ui.setStatus('');
-   if(!guideRouteRead){guideRouteRead=true;chooseGuide(new URLSearchParams(location.search).get('motionGuide'));}
+   if(!guideRouteRead){guideRouteRead=true;applyMotionRoute(new URLSearchParams(location.search));}
   }catch(error){
    if(!active||run!==revision)return;
    ui.setStatus(error.message||'The pose model could not load.',{error:true,retry:open});
@@ -275,7 +285,7 @@ export function initPoseLab(host,{onLesson}={}){
   if(event.key==='Escape'&&playback){event.preventDefault();stopPlayback({restore:true});message='Preview cancelled. Your starting pose is restored.';draw();return;}
   if(!active||!history||event.target.matches('input,select,textarea'))return;
   if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){
-   event.preventDefault();stopGesture();if(event.shiftKey)history.redo();else history.undo();draw();save();
+   event.preventDefault();stopGesture();guidedDirection=0;if(event.shiftKey)history.redo();else history.undo();draw();save();
   }
  });
  return {open,close,viewer,ui,get history(){return history;}};

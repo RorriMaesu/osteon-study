@@ -29,6 +29,7 @@ blender = lambda point: Vector((point[0],-point[2],point[1]))
 SIDES = {'right':'r','left':'l'}
 ORDINALS = ['first','second','third','fourth','fifth']
 DIGITS = ['thumb','index','middle','ring','little']
+RIB_ORDINALS = [*ORDINALS,'sixth','seventh','eighth','ninth','tenth','eleventh','twelfth']
 ATLAS = read(REPO/'src/muscle-models.json')
 PARTS = {p['id']:p for p in ATLAS['components'] if p['kind']=='muscle' and not p.get('retired')}
 LOWER = read(ASSETS/'motion-legs.json')
@@ -147,7 +148,7 @@ def joint(identifier,label,region,side,pivot,parent,axes,**kwargs):
     node(identifier,pivot,parent)
     if identifier.endswith('-shoulder'):
         for entry in axes:
-            if entry['id']=='abduction':entry['requiresUnlocked']=[side+'-scapula']
+            if entry['id'] in {'abduction','scaption'}:entry['requiresUnlocked']=[side+'-scapula']
     row=dict(id=identifier,label=label,region=region,side=side,node=NODES[identifier]['name'],axes=axes,**kwargs)
     JOINTS.append(row)
     return identifier
@@ -157,6 +158,10 @@ def bone(name):
 
 def add_rig():
     node('pelvis',LOWER['neutral']['pelvis'])
+    joint('pelvic-control','Pelvis','trunk','midline',LOWER['neutral']['pelvis'],None,[
+        axis('tilt','Tip forward / backward',-8,10,[1,0,0]),
+        axis('obliquity','Lower / level left side',0,7,[0,0,-1]),
+    ],distribute=['pelvis'],virtual=True,marker=[0,.87,.105],detail='The thigh and trunk orientations are compensated. For the side-tilt comparison the right hip is the support pivot.')
     # Lumbar motion is distributed across five intervertebral levels.
     lumbar=[]
     parent='pelvis'
@@ -169,6 +174,16 @@ def add_rig():
         lumbar.append(identifier)
         parent=identifier
     joint('trunk','Trunk','trunk','midline',UPPER['pelvisRest'],None,[axis('flexion','Forward / backward bend',-12,25,[1,0,0]),axis('lateral','Left / right bend',-15,15,[0,0,1]),axis('rotation','Left / right turn',-15,15,[0,-1,0])],distribute=lumbar,virtual=True,marker=[0,1.12,.11])
+    thoracic=[]
+    for level in range(12,0,-1):
+        identifier='thoracic-'+str(level)
+        obj=bone('Vertebra T'+str(level))
+        node(identifier,end(obj,Vector((0,-1,0))),parent)
+        BONE_BINDINGS[obj]=identifier
+        thoracic.append(identifier)
+        parent=identifier
+    joint('thoracic-turn','Thoracic spine','trunk','midline',[0,1.26,-.035],None,[axis('rotation','Turn chest right / left',-12,12,[0,-1,0])],
+          distribute=thoracic,virtual=True,marker=[0,1.27,.12],detail='Rotation is distributed through the rib-bearing spine. Compare with the lower-back Trunk control.')
     node('thorax',[0,1.16,-.035],parent)
     # C7 through C1 form a coupled neck chain, rather than one hinge at the base.
     cervical=[]
@@ -214,7 +229,9 @@ def add_rig():
         BONE_BINDINGS[scap]=side+'-scapula'
         shoulder=Vector(DRIVERS['driverRest'][UPPER['joints'][side]['shoulder']])
         elbow=Vector(DRIVERS['driverRest'][UPPER['joints'][side]['elbow']])
-        joint(side+'-shoulder',title+' shoulder',side+'-arm',side,shoulder,side+'-scapula',[axis('flexion','Forward / backward',-20,90,[-1,0,0]),axis('abduction','Arm out / in',0,90,[0,0,sign]),axis('rotation','Internal / external rotation',-30,30,[0,-sign,0])],endpoint=side+'-wrist')
+        elevation=[axis('flexion','Forward / backward',-20,90,[-1,0,0]),axis('abduction','Arm out / in',0,90,[0,0,sign]),
+                   axis('scaption','Raise diagonally forward',0,65,[-.5,0,sign*math.sqrt(.75)]),axis('rotation','Internal / external rotation',-30,30,[0,-sign,0])]
+        joint(side+'-shoulder',title+' shoulder',side+'-arm',side,shoulder,side+'-scapula',elevation,endpoint=side+'-wrist')
         JOINTS[-1]['scapularShare']=[.18,.34]
         joint(side+'-elbow',title+' elbow',side+'-arm',side,elbow,side+'-shoulder',[axis('flexion','Bend / straighten',0,115,UPPER['axes'][side]['elbow'])],endpoint=side+'-wrist')
         BONE_BINDINGS[bone(s('Humerus'))]=side+'-shoulder'
@@ -236,7 +253,9 @@ def add_rig():
             if digit=='thumb':
                 ray=(center(proximal)-center(meta)).normalized()
                 palm_axis=ray.cross(Vector((0,0,1))).normalized()
-                parent=joint(side+'-thumb-cmc',title+' thumb base',side+'-arm',side,joint_gap(bone(s('Trapezium bone')),meta),parent,[axis('flexion','Move across palm',0,25,[0,0,-sign]),axis('abduction','Lift away from palm',0,25,palm_axis)],detail='Limited thumb-base teaching range; opposition is a coupled motion.')
+                opposition=axis('opposition','Oppose / reposition thumb',0,100,unit='percent')
+                opposition['rotations']=[[list(palm_axis),10],[[0,0,-sign],18],[list(ray*sign),20]]
+                parent=joint(side+'-thumb-cmc',title+' thumb base',side+'-arm',side,joint_gap(bone(s('Trapezium bone')),meta),parent,[axis('flexion','Move across palm',0,25,[0,0,-sign]),axis('abduction','Lift away from palm',0,25,palm_axis),opposition],detail='Opposition combines palmar lift, movement across the palm and axial rotation of the first metacarpal. This short arc stops before contact.')
             BONE_BINDINGS[meta]=parent
             levels=[('mcp',proximal)]
             if digit!='thumb':levels.append(('pip',bone(s('Middle phalanx of '+ordinal+' finger of hand'))))
@@ -262,7 +281,9 @@ def add_rig():
                 previous=obj
         chain=LOWER['neutral'][side]
         joint(side+'-hip',title+' hip',side+'-leg',side,chain['hip'],'pelvis',[axis('flexion','Forward / backward',-20,85,[-1,0,0]),axis('abduction','Leg out / in',0,35,[0,0,sign]),axis('rotation','Internal / external rotation',-20,20,[0,-sign,0])],endpoint=side+'-ankle')
-        joint(side+'-knee',title+' knee',side+'-leg',side,chain['knee'],side+'-hip',[axis('flexion','Bend / straighten',0,85,[1,0,0])],endpoint=side+'-ankle')
+        joint(side+'-knee',title+' knee',side+'-leg',side,chain['knee'],side+'-hip',[axis('flexion','Bend / straighten',0,85,[1,0,0])],endpoint=side+'-ankle',
+              unlockedRotation={'axis':[0,-sign,0],'degrees':5,'endsAt':25},
+              detail='Small coupled tibial rotation during the first part of open-chain flexion. The motion illustrates unlocking from full extension.')
         node(side+'-patella',chain['knee'],side+'-hip')
         joint(side+'-ankle',title+' ankle',side+'-leg',side,chain['ankle'],side+'-knee',[axis('dorsiflexion','Toes up / down',-35,23,[-1,0,0])])
         talus=bone(s('Talus'))
@@ -445,9 +466,20 @@ def bind_all(rig):
     fixed_trunk=combined_tree([obj for name,obj in BONE_MESHES.items() if name.startswith(('Vertebra ','Atlas ','Axis ')) or 'rib.' in name or name=='Occipital bone'])
     for label,obj in BONE_MESHES.items():
         identifier=bone_binding(obj)
-        if obj.get('poseSupport')=='disc':
+        rib=re.fullmatch(r'(?:Costal cartilage of )?(\w+) rib\.[lr]',label,re.I)
+        if rib and rib[1].lower() in RIB_ORDINALS:
+            identifier='thoracic-'+str(RIB_ORDINALS.index(rib[1].lower())+1)
+            coordinates=points(obj)
+            low,high=min(p.z for p in coordinates),max(p.z for p in coordinates)
+            weights=[]
+            for p in coordinates:
+                anterior=smooth(p.z,low+(high-low)*.25,high) if high>.03 else 0
+                if label.startswith('Costal cartilage'):anterior=max(.65,anterior)
+                weights.append({identifier:1-anterior,'thorax':anterior})
+            bind_mesh(obj,rig,weights)
+        elif obj.get('poseSupport')=='disc':
             upper,lower=label.removeprefix('Intervertebral disc ').split('-')
-            segment=lambda code:{'C':'cervical-','L':'lumbar-'}.get(code[0],'')+code[1:] if code[0] in 'CL' else 'pelvis' if code[0]=='S' else 'thorax'
+            segment=lambda code:{'C':'cervical-','L':'lumbar-','T':'thoracic-'}[code[0]]+code[1:] if code[0] in 'CLT' else 'pelvis'
             top,bottom=segment(upper),segment(lower)
             coordinates=points(obj)
             low,high=min(p.y for p in coordinates),max(p.y for p in coordinates)
@@ -466,7 +498,7 @@ def bind_all(rig):
             identifier=obj['motionSide']+'-ankle'
         else:bind_mesh(obj,rig,[{identifier:1.}]*len(obj.data.vertices))
         obj['poseBone']=label
-        obj['poseRegion']='head-neck' if identifier in {'head','jaw'} or identifier.startswith('cervical-') else 'trunk' if identifier in {'thorax','pelvis'} or identifier.startswith('lumbar-') else identifier.rsplit('-',1)[0]+'-'+('arm' if any(x in identifier for x in ('shoulder','wrist','elbow','forearm','scapula','thumb','index','middle','ring','little')) else 'leg')
+        obj['poseRegion']='head-neck' if identifier in {'head','jaw'} or identifier.startswith('cervical-') else 'trunk' if identifier in {'thorax','pelvis'} or identifier.startswith(('lumbar-','thoracic-')) else identifier.rsplit('-',1)[0]+'-'+('arm' if any(x in identifier for x in ('shoulder','wrist','elbow','forearm','scapula','thumb','index','middle','ring','little')) else 'leg')
         side=next((side for side in SIDES if identifier.startswith(side+'-')),'midline')
         if side!='midline':obj['poseRegion']=side+('-arm' if 'arm' in obj['poseRegion'] else '-leg')
         obj['poseSide']=side

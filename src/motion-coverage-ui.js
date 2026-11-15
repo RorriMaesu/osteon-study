@@ -49,6 +49,27 @@ const attach=(parent,tag,content,css)=>{
  return node;
 };
 const chip=(parent,text,className='')=>attach(parent,'span',text,'coverage-chip '+className);
+function showMovementCoverage(movements){
+ const host=$('#coverage-movement-rows');
+ if(!host||!movements.length)return;
+ $('#coverage-motion-heading').textContent=movements.length+' pose movement controls';
+ const regions={all:'Whole body',trunk:'Trunk and pelvis','head-neck':'Head and neck','right-arm':'Right arm and hand','left-arm':'Left arm and hand','right-leg':'Right leg and foot','left-leg':'Left leg and foot'};
+ for(const regionId of new Set(movements.map(row=>row.region))){
+  const section=attach(host,'details');
+  attach(section,'summary',regions[regionId]||regionId);
+  const list=attach(section,'ul');
+  for(const row of movements.filter(item=>item.region===regionId)){
+   const item=attach(list,'li');
+   const link=attach(item,'a',row.label+' · '+row.movement);
+   link.href='./?'+new URLSearchParams({motionMode:'pose',motionJoint:row.joint,motionAxis:row.axis})+'#motion';
+   if(row.samples.length)attach(item,'small',' · Blender sample');
+   for(const guide of row.guides){
+    const lesson=attach(item,'a',guide.label+' ↗','coverage-movement-lesson');
+    lesson.href='./?'+new URLSearchParams({motionMode:'pose',motionGuide:guide.id})+'#motion';
+   }
+  }
+ }
+}
 
 let catalog=[],page=0,current=null;
 function change(){
@@ -162,6 +183,7 @@ try{
  const response=await fetch(url);
  if(!response.ok)throw Error('Coverage inventory could not load.');
  const data=await response.json();
+ showMovementCoverage(data.movements||[]);
  catalog=data.rows.map(row=>({...row,search:normalize([row.name,row.ta2,...parts(row,'atlas').map(part=>part.name),...parts(row,'motion').map(part=>part.name)].join(' '))}));
  const moving=catalog.filter(row=>parts(row,'motion').some(studyMotion)).length;
  const totals=$('#coverage-totals');

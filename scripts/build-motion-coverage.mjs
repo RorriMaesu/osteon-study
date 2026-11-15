@@ -7,6 +7,8 @@ import {fileURLToPath} from 'node:url';
 import {auditMuscleCoverage,muscleTermKey} from '../src/muscle-coverage.js';
 import {courseMuscleTargets} from '../src/muscle-spatial-data.js';
 import {regionalLessons} from '../src/motion-regional.js';
+import {motionStudyGuides} from '../src/motion-study-guides.js';
+import {describePoseAxis} from '../src/motion-pose-motions.js';
 
 const repoURL = new URL('../',import.meta.url);
 const assetURL = new URL('../assets/',import.meta.url);
@@ -19,6 +21,18 @@ const sourceJSON=relative=>JSON.parse(sourceBytes(relative).toString('utf8').rep
 const checklist=sourceJSON('src/muscle-reference-checklist.json');
 const manifest=sourceJSON('src/muscle-models.json');
 const motionFiles=()=>commit?git('ls-tree','--name-only',commit+':assets').toString().split(/\r?\n/):readdirSync(assetURL);
+function movementCoverage(){
+ if(!motionFiles().includes('motion-pose-body.json'))return [];
+ const {joints,sha256}=sourceJSON('assets/motion-pose-body.json');
+ const report=sourceJSON('model-sources/motion-pose-verification.json');
+ const scenarios=report.sha256===sha256?Object.entries(report.sampledPoses||{}):[];
+ return joints.flatMap(joint=>joint.axes.map(axis=>({
+  joint:joint.id,label:joint.label,region:joint.region,axis:axis.id,
+  movement:describePoseAxis(joint,axis.id).label,
+  guides:motionStudyGuides.filter(guide=>guide.joint===joint.id&&guide.axis===axis.id).map(({id,label})=>({id,label})),
+  samples:scenarios.filter(([,sample])=>!!sample.controls?.[joint.id]?.[axis.id]).map(([id])=>id),
+ })));
+}
 const sources = [
  {title:'FIPAT, Terminologia Anatomica, 2nd edition · Muscular system',url:'https://cdn.dal.ca/content/dam/dalhousie/pdf/library/FIPAT/TA2/FIPAT-TA2-Part-2.pdf'},
  {title:'OpenStax Anatomy & Physiology 2e · Muscular system',url:'https://openstax.org/books/anatomy-and-physiology-2e/pages/11-introduction'},
@@ -592,7 +606,7 @@ export async function buildCoverage(){
  return {
   schema:1,
   scope:'This checklist audits FIPAT skeletal-muscle names across body regions, including named subdivisions, variants and selected groups. It also tracks BI 231 targets and every named muscle part in Osteon’s delivered atlas and motion rigs. Entries, sides and mesh parts count different things. Source names alone do not verify anatomical attachments or motion.',
-  sources,counts,rows,
+  sources,counts,movements:movementCoverage(),rows,
  };
 }
 

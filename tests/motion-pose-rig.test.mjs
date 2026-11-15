@@ -180,6 +180,37 @@ test('great-toe lift changes the hallux without dragging other toe joints',()=>{
  assert.equal(rig.nodes.get('left-hallux').node.quaternion.angleTo(rig.nodes.get('left-hallux').rest),0);
 });
 
+test('the stance comparison lowers the free side while the support ankle stays fixed',()=>{
+ const rig=specimen(),ankle=poseJointWorld(rig,'right-ankle'),freeHip=poseJointWorld(rig,'left-hip');
+ applyPose(rig,{'pelvic-control':{obliquity:6}});
+ close(poseJointWorld(rig,'right-ankle').distanceTo(ankle),0);
+ assert(poseJointWorld(rig,'left-hip').y<freeHip.y-.01);
+});
+
+test('thoracic rotation leaves the lumbar levels still and turns the rib cage',()=>{
+ const rig=specimen(),thorax=rig.nodes.get('thorax').node,base=rig.nodes.get('lumbar-1').node;
+ const neutralBase=base.matrixWorld.clone(),neutralChest=thorax.getWorldQuaternion(new THREE.Quaternion());
+ applyPose(rig,{'thoracic-turn':{rotation:9}});
+ assert(base.matrixWorld.equals(neutralBase));
+ close(thorax.getWorldQuaternion(new THREE.Quaternion()).angleTo(neutralChest)*180/Math.PI,9);
+});
+
+test('scaption moves each wrist outward and forward while opposition moves each thumb across the palm',()=>{
+ const rig=specimen();
+ for(const side of ['left','right']){
+  const sign=side==='right'?-1:1,wrist=side+'-wrist',thumb=side+'-thumb-ip',index=side+'-index-mcp';
+  applyPose(rig,{});
+  const wristStart=poseJointWorld(rig,wrist),indexStart=poseJointWorld(rig,index);
+  const gap=poseJointWorld(rig,thumb).distanceTo(indexStart);
+  applyPose(rig,{[side+'-thumb-cmc']:{opposition:80}});
+  assert(poseJointWorld(rig,thumb).distanceTo(indexStart)<gap-.001);
+  close(poseJointWorld(rig,index).distanceTo(indexStart),0);
+  applyPose(rig,{[side+'-shoulder']:{scaption:50}});
+  const change=poseJointWorld(rig,wrist).sub(wristStart);
+  assert(change.x*sign>.15&&change.z>.12&&change.y>.15);
+ }
+});
+
 test('multi-axis hinges report the current axis without subsequent-axis contamination',()=>{
  const rig=specimen();
  applyPose(rig,{'right-hip':{flexion:30,abduction:20,rotation:15}});

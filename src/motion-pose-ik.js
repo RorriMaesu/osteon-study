@@ -16,7 +16,7 @@ export function poseMotionScope(scope,joint,role,parts,bones,selectedMuscle){
  const attachmentNames=kind==='neck'||kind==='upper-nod'
   ? /Vertebra T[1-4]$|Clavicle|Manubrium|Scapula/
   : kind==='shoulder'||kind==='scapula'
-   ? /^(?:Rib [1-9]\b|Vertebra T[1-8]$|Manubrium|Body of sternum)/
+   ? /\brib\b|^(?:Vertebra T[1-8]$|Manubrium|Body of sternum)/i
    : kind==='hip'?/Sacrum|Coccyx|Vertebra L[1-5]$|Ilium|Ischium|Pubis/:null;
  const muscleKeys=new Set(parts.filter(part=>poseScopeMatches(scope,part)||named.has(part.key)).map(part=>part.key));
  const attachmentBones=new Set(bones.filter(bone=>poseScopeMatches(scope,bone)

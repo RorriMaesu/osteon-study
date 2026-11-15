@@ -193,6 +193,7 @@ const directions={
  'scapula:protraction':pair('Scapular protraction','Scapular retraction',names('serratus anterior','pectoralis minor'),names('transverse part of trapezius','rhomboid (?:major|minor)'),poseSources.upper),
  'shoulder:flexion':pair('Shoulder flexion','Shoulder extension',shoulderFlex,shoulderExt,poseSources.upper,'Shoulder roles depend on arm position; the sternocostal pectoralis can extend an already flexed shoulder.'),
  'shoulder:abduction':pair('Shoulder abduction','Shoulder adduction',shoulderAbd,shoulderAdd,poseSources.upper,'Arm elevation includes coordinated shoulder-girdle movement. Serratus anterior and the upper and lower trapezius can contribute to scapular upward rotation alongside glenohumeral abductors.'),
+ 'shoulder:scaption':pair('Scapular-plane elevation','Lower from scapular-plane elevation',both(shoulderAbd,anteriorDeltoid),shoulderAdd,poseSources.upper,'Raise the arm diagonally forward. Mid and anterior deltoid and supraspinatus contribute at the humerus, with the scapular upward rotators helping the blade.'),
  'shoulder:rotation':pair('Shoulder internal rotation','Shoulder external rotation',shoulderInternal,shoulderExternal,poseSources.upper),
  'elbow:flexion':pair('Elbow flexion','Elbow extension',elbowFlex,elbowExt,poseSources.upper),
  'forearm:pronation':pair('Forearm pronation','Forearm supination',names('pronator teres','pronator quadratus'),names('supinator','biceps brachii'),poseSources.upper,'Biceps also crosses the elbow. Brachioradialis assists return toward a neutral forearm position.'),
@@ -206,6 +207,7 @@ const directions={
  'subtalar:inversion':pair('Foot inversion','Foot eversion',names('tibialis anterior','tibialis posterior'),names('fibularis longus','fibularis brevis','fibularis tertius'),poseSources.foot,'The hindfoot turns around an oblique teaching axis. Real inversion and eversion involve coupled hindfoot and midfoot movement; the model does not resolve every foot articulation. These are selected contributors, not an exhaustive recruitment list.'),
  'toes:extension':pair('Toe extension','Toe flexion',names('extensor digitorum (?:longus|brevis)','extensor hallucis (?:longus|brevis)'),names('flexor digitorum (?:longus|brevis)','flexor hallucis (?:longus|brevis)','flexor digiti minimi of foot'),poseSources.lower,'This grouped toe control combines separate muscles acting on different digits.'),
  'trunk:flexion':pair('Trunk flexion','Trunk extension',trunkFlex,trunkExt,poseSources.trunk),
+ 'pelvic-control:tilt':pair('Anterior pelvic tilt','Posterior pelvic tilt',both(hipFlex,trunkExt),both(hipExt,trunkFlex),poseSources.trunk,'With the thighs relatively fixed, hip flexors and back extensors can assist anterior tilt. Hip extensors and abdominal muscles can assist posterior tilt.'),
  'neck:flexion':pair('Neck flexion','Neck extension',neckFlex,neckExt,poseSources.axial,'This combined neck action does not resolve individual cervical joints. Sternocleidomastoid can extend the head at the upper cervical joints while flexing the lower neck.'),
  'upper-nod:flexion':pair('Nod down at the atlas','Nod up at the atlas',names('longus capitis','rectus anterior capitis'),names('rectus posterior (?:major|minor) capitis','obliquus superior capitis'),poseSources.axial,'Compare this small skull-on-atlas motion with bending the entire neck.'),
  'jaw:opening':pair('Jaw opening','Jaw closing',jawOpen,jawClose,poseSources.axial,'Suprahyoid opening assumes the hyoid is stabilized. Opening combines mandibular rotation and translation.'),
@@ -213,6 +215,7 @@ const directions={
  'hallux:extension':pair('Great-toe extension','Great-toe flexion',names('extensor hallucis (?:longus|brevis)'),names('flexor hallucis (?:longus|brevis)'),poseSources.lower,'The first metatarsophalangeal joint moves separately from the other toes.'),
  'thumb-cmc:flexion':pair('Thumb CMC flexion','Thumb CMC extension',names('flexor pollicis longus','flexor pollicis brevis','opponens pollicis','adductor pollicis'),names('extensor pollicis longus','extensor pollicis brevis','abductor pollicis longus'),poseSources.thumb,'Thumb flexion and abduction are components of opposition, which also requires rotation. Opponens pollicis contributes to these components; the control does not reproduce full opposition.'),
  'thumb-cmc:abduction':pair('Thumb CMC abduction','Thumb CMC adduction',names('abductor pollicis longus','abductor pollicis brevis','opponens pollicis'),names('adductor pollicis','extensor pollicis longus','flexor pollicis brevis'),poseSources.thumb,'The control shows palmar abduction. Individual muscle contributions vary with thumb position; the colors do not specify recruitment or force.'),
+ 'thumb-cmc:opposition':pair('Thumb opposition','Thumb reposition',names('opponens pollicis','abductor pollicis brevis','flexor pollicis brevis'),names('abductor pollicis longus','extensor pollicis longus','extensor pollicis brevis'),'https://pubmed.ncbi.nlm.nih.gov/28888568/','Watch the first metacarpal rotate as the thumb sweeps across the palm. The display uses a short arc without thumb–finger contact.'),
  'face-blink:closure':pair('Eyelid closing','Eyelid opening',names('orbicularis oculi'),names('levator palpebrae superioris'),poseSources.axial),
  'face-smile:smile':pair('Smile','Return from smile',names('zygomaticus major','zygomaticus minor','levator anguli oris','risorius'),[],poseSources.axial,'Returning the expression toward neutral does not establish antagonist recruitment.'),
  'breathing:inhale':pair('Inspiration','Return from inspiration',names('diaphragm','external intercostal'),[],poseSources.trunk,'Quiet expiration relies mainly on elastic recoil; a decreasing inspiration control does not imply abdominal contraction.'),
@@ -275,7 +278,7 @@ function axialRoles(kind,axis,positive,parts){
  if(kind==='neck'&&axis==='rotation'){
   ipsilateral=names('splenius capitis','splenius colli','longissimus capitis','obliquus inferior capitis','rectus posterior major capitis');
   contralateral=names('sternocleidomastoid','semispinalis colli','multifidus colli');
- }else if(kind==='trunk'&&axis==='rotation'){
+ }else if(['trunk','thoracic-turn'].includes(kind)&&axis==='rotation'){
   ipsilateral=names('internal abdominal oblique');
   contralateral=names('external abdominal oblique','multifidus (?:lumborum|thoracis)','rotatores');
  }else if(kind==='neck'&&axis==='lateral'){
@@ -287,8 +290,8 @@ function axialRoles(kind,axis,positive,parts){
   contralateral=names('inferior head of lateral pterygoid','medial pterygoid');
  }else return null;
  const select=(ipsi,contra)=>parts.filter(part=>part.side===ipsi&&matches(part,ipsilateral)||part.side===contra&&matches(part,contralateral)).map(part=>part.key||part.id);
- const label=kind[0].toUpperCase()+kind.slice(1)+' '+(axis==='rotation'?'rotation':axis==='lateral'?'side bend':'excursion')+' to the '+side;
- return {label,contributors:select(side,opposite(side)),opposing:select(opposite(side),side),source:kind==='trunk'?poseSources.trunk:poseSources.axial,note:kind==='jaw'?'Lateral excursion couples both temporomandibular joints. These highlights are selected possible contributors.':'Right and left muscles can contribute differently to rotation and side bending.'};
+ const label=(kind==='thoracic-turn'?'Thoracic spine':kind[0].toUpperCase()+kind.slice(1))+' '+(axis==='rotation'?'rotation':axis==='lateral'?'side bend':'excursion')+' to the '+side;
+ return {label,contributors:select(side,opposite(side)),opposing:select(opposite(side),side),source:['trunk','thoracic-turn'].includes(kind)?poseSources.trunk:poseSources.axial,note:kind==='jaw'?'Lateral excursion couples both temporomandibular joints. These highlights are selected possible contributors.':'Right and left muscles can contribute differently to rotation and side bending.'};
 }
 
 const roleNote='Possible contributors for the last adjustment. A pose does not measure activity, tension, or muscle shortening; recruitment depends on load and the task. Opposing actions can be active at the same time.';
@@ -299,6 +302,11 @@ export function poseRoles(joint,axisId,delta,parts=[],pose={}){
  if(!joint||!Number.isFinite(delta)||Math.abs(delta)<=epsilon)return empty;
  const kind=joint.id.replace(/^(right|left)-/,'');
  const positive=delta>0;
+ if(kind==='pelvic-control'&&axisId==='obliquity'){
+  const rightAbductors=parts.filter(part=>part.side==='right'&&matches(part,hipAbd)).map(part=>part.key||part.id);
+  return {...empty,label:positive?'Controlled pelvic drop':'Level the pelvis',contributors:rightAbductors,source:poseSources.lower,
+   note:roleNote+' In the right-leg stance example, the right hip abductors can control the left side lowering and help bring the pelvis back to level.'};
+ }
  const axial=axialRoles(kind,axisId,positive,parts);
  if(axial)return {...empty,...axial,note:roleNote+' '+axial.note};
  let direction=directions[kind+':'+axisId]||fingerDirection(kind,axisId);

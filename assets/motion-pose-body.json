@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "2b88236faff5cbff7b8461fd3f8685a6cd5c5a99f11470ed66de2e77e063e382",
-  "bytes": 16007144,
+  "sha256": "d451f18391ed6477ddb88fd6ef468d71b77672f8a6d659a98cd7ceb5811c41e0",
+  "bytes": 16153408,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
   "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation, forearm turn, finger hinges and spread, hindfoot roll, grouped toes plus a separate great toe, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, separate lesser-toe joints, gaze and tongue control.",
@@ -11,6 +11,51 @@
     "Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary."
   ],
   "joints": [
+    {
+      "id": "pelvic-control",
+      "label": "Pelvis",
+      "region": "trunk",
+      "side": "midline",
+      "node": "Pose_pelvic-control",
+      "axes": [
+        {
+          "id": "tilt",
+          "label": "Tip forward / backward",
+          "min": -8,
+          "max": 10,
+          "neutral": 0,
+          "vector": [
+            1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "obliquity",
+          "label": "Lower / level left side",
+          "min": 0,
+          "max": 7,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "distribute": [
+        "pelvis"
+      ],
+      "virtual": true,
+      "marker": [
+        0,
+        0.87,
+        0.105
+      ],
+      "detail": "The thigh and trunk orientations are compensated. For the side-tilt comparison the right hip is the support pivot."
+    },
     {
       "id": "trunk",
       "label": "Trunk",
@@ -71,6 +116,49 @@
         1.12,
         0.11
       ]
+    },
+    {
+      "id": "thoracic-turn",
+      "label": "Thoracic spine",
+      "region": "trunk",
+      "side": "midline",
+      "node": "Pose_thoracic-turn",
+      "axes": [
+        {
+          "id": "rotation",
+          "label": "Turn chest right / left",
+          "min": -12,
+          "max": 12,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "distribute": [
+        "thoracic-12",
+        "thoracic-11",
+        "thoracic-10",
+        "thoracic-9",
+        "thoracic-8",
+        "thoracic-7",
+        "thoracic-6",
+        "thoracic-5",
+        "thoracic-4",
+        "thoracic-3",
+        "thoracic-2",
+        "thoracic-1"
+      ],
+      "virtual": true,
+      "marker": [
+        0,
+        1.27,
+        0.12
+      ],
+      "detail": "Rotation is distributed through the rib-bearing spine. Compare with the lower-back Trunk control."
     },
     {
       "id": "neck",
@@ -404,6 +492,22 @@
           ]
         },
         {
+          "id": "scaption",
+          "label": "Raise diagonally forward",
+          "min": 0,
+          "max": 65,
+          "neutral": 0,
+          "vector": [
+            -0.5,
+            0,
+            -0.8660254037844386
+          ],
+          "unit": "degrees",
+          "requiresUnlocked": [
+            "right-scapula"
+          ]
+        },
+        {
           "id": "rotation",
           "label": "Internal / external rotation",
           "min": -30,
@@ -555,9 +659,44 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "opposition",
+          "label": "Oppose / reposition thumb",
+          "min": 0,
+          "max": 100,
+          "neutral": 0,
+          "vector": null,
+          "unit": "percent",
+          "rotations": [
+            [
+              [
+                -0.8552535176277161,
+                0.5182097554206848,
+                0.0
+              ],
+              10
+            ],
+            [
+              [
+                0,
+                0,
+                1
+              ],
+              18
+            ],
+            [
+              [
+                0.45711687207221985,
+                0.7544258236885071,
+                -0.4710475504398346
+              ],
+              20
+            ]
+          ]
         }
       ],
-      "detail": "Limited thumb-base teaching range; opposition is a coupled motion."
+      "detail": "Opposition combines palmar lift, movement across the palm and axial rotation of the first metacarpal. This short arc stops before contact."
     },
     {
       "id": "right-thumb-mcp",
@@ -1003,7 +1142,17 @@
           "unit": "degrees"
         }
       ],
-      "endpoint": "right-ankle"
+      "endpoint": "right-ankle",
+      "unlockedRotation": {
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "degrees": 5,
+        "endsAt": 25
+      },
+      "detail": "Small coupled tibial rotation during the first part of open-chain flexion. The motion illustrates unlocking from full extension."
     },
     {
       "id": "right-ankle",
@@ -1179,6 +1328,22 @@
           ]
         },
         {
+          "id": "scaption",
+          "label": "Raise diagonally forward",
+          "min": 0,
+          "max": 65,
+          "neutral": 0,
+          "vector": [
+            -0.5,
+            0,
+            0.8660254037844386
+          ],
+          "unit": "degrees",
+          "requiresUnlocked": [
+            "left-scapula"
+          ]
+        },
+        {
           "id": "rotation",
           "label": "Internal / external rotation",
           "min": -30,
@@ -1330,9 +1495,44 @@
             0.0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "opposition",
+          "label": "Oppose / reposition thumb",
+          "min": 0,
+          "max": 100,
+          "neutral": 0,
+          "vector": null,
+          "unit": "percent",
+          "rotations": [
+            [
+              [
+                -0.855275571346283,
+                -0.5181733965873718,
+                0.0
+              ],
+              10
+            ],
+            [
+              [
+                0,
+                0,
+                -1
+              ],
+              18
+            ],
+            [
+              [
+                0.45708221197128296,
+                -0.75444096326828,
+                0.4710569679737091
+              ],
+              20
+            ]
+          ]
         }
       ],
-      "detail": "Limited thumb-base teaching range; opposition is a coupled motion."
+      "detail": "Opposition combines palmar lift, movement across the palm and axial rotation of the first metacarpal. This short arc stops before contact."
     },
     {
       "id": "left-thumb-mcp",
@@ -1778,7 +1978,17 @@
           "unit": "degrees"
         }
       ],
-      "endpoint": "left-ankle"
+      "endpoint": "left-ankle",
+      "unlockedRotation": {
+        "axis": [
+          0,
+          -1,
+          0
+        ],
+        "degrees": 5,
+        "endsAt": 25
+      },
+      "detail": "Small coupled tibial rotation during the first part of open-chain flexion. The motion illustrates unlocking from full extension."
     },
     {
       "id": "left-ankle",
@@ -1889,6 +2099,16 @@
       "parent": null
     },
     {
+      "id": "pelvic-control",
+      "name": "Pose_pelvic-control",
+      "pivot": [
+        0,
+        0.85985,
+        -0.004835
+      ],
+      "parent": null
+    },
+    {
       "id": "lumbar-5",
       "name": "Pose_lumbar-5",
       "pivot": [
@@ -1949,6 +2169,136 @@
       "parent": null
     },
     {
+      "id": "thoracic-12",
+      "name": "Pose_thoracic-12",
+      "pivot": [
+        6.779683303648198e-07,
+        1.118374228477478,
+        -0.05755159631371498
+      ],
+      "parent": "lumbar-1"
+    },
+    {
+      "id": "thoracic-11",
+      "name": "Pose_thoracic-11",
+      "pivot": [
+        -0.00039464730070903897,
+        1.1493335962295532,
+        -0.06928407400846481
+      ],
+      "parent": "thoracic-12"
+    },
+    {
+      "id": "thoracic-10",
+      "name": "Pose_thoracic-10",
+      "pivot": [
+        0.00024424452567473054,
+        1.177787184715271,
+        -0.07944821566343307
+      ],
+      "parent": "thoracic-11"
+    },
+    {
+      "id": "thoracic-9",
+      "name": "Pose_thoracic-9",
+      "pivot": [
+        2.500120444892673e-06,
+        1.2123777866363525,
+        -0.082451730966568
+      ],
+      "parent": "thoracic-10"
+    },
+    {
+      "id": "thoracic-8",
+      "name": "Pose_thoracic-8",
+      "pivot": [
+        2.075172915283474e-06,
+        1.2295657396316528,
+        -0.09505198895931244
+      ],
+      "parent": "thoracic-9"
+    },
+    {
+      "id": "thoracic-7",
+      "name": "Pose_thoracic-7",
+      "pivot": [
+        1.2901065247206134e-06,
+        1.2649246454238892,
+        -0.0915268063545227
+      ],
+      "parent": "thoracic-8"
+    },
+    {
+      "id": "thoracic-6",
+      "name": "Pose_thoracic-6",
+      "pivot": [
+        -0.00014367347466759384,
+        1.2922676801681519,
+        -0.0952419862151146
+      ],
+      "parent": "thoracic-7"
+    },
+    {
+      "id": "thoracic-5",
+      "name": "Pose_thoracic-5",
+      "pivot": [
+        -0.00015381864795926958,
+        1.3315232992172241,
+        -0.07392998784780502
+      ],
+      "parent": "thoracic-6"
+    },
+    {
+      "id": "thoracic-4",
+      "name": "Pose_thoracic-4",
+      "pivot": [
+        -0.0003063242766074836,
+        1.359427809715271,
+        -0.07389990985393524
+      ],
+      "parent": "thoracic-5"
+    },
+    {
+      "id": "thoracic-3",
+      "name": "Pose_thoracic-3",
+      "pivot": [
+        -0.00022742360306438059,
+        1.3826634883880615,
+        -0.07398715615272522
+      ],
+      "parent": "thoracic-4"
+    },
+    {
+      "id": "thoracic-2",
+      "name": "Pose_thoracic-2",
+      "pivot": [
+        0.00012533909466583282,
+        1.4052265882492065,
+        -0.05278920754790306
+      ],
+      "parent": "thoracic-3"
+    },
+    {
+      "id": "thoracic-1",
+      "name": "Pose_thoracic-1",
+      "pivot": [
+        6.363107968354598e-05,
+        1.4246076345443726,
+        -0.046260934323072433
+      ],
+      "parent": "thoracic-2"
+    },
+    {
+      "id": "thoracic-turn",
+      "name": "Pose_thoracic-turn",
+      "pivot": [
+        0,
+        1.26,
+        -0.035
+      ],
+      "parent": null
+    },
+    {
       "id": "thorax",
       "name": "Pose_thorax",
       "pivot": [
@@ -1956,7 +2306,7 @@
         1.16,
         -0.035
       ],
-      "parent": "lumbar-1"
+      "parent": "thoracic-1"
     },
     {
       "id": "cervical-7",
@@ -2692,7 +3042,7 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "motion-pose-body-20261115-204059-163454",
+  "backup": "motion-pose-body-20261115-205013-757902",
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
     "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",

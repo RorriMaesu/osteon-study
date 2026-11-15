@@ -12,6 +12,18 @@ function shoulderGirdleAngle(joint,angle){
  const [low,high]=joint.scapularShare||[1/3,1/3];
  return angle*(low+(high-low)*clamp(angle/90,0,1));
 }
+const scapularElevation=['abduction','scaption'];
+function compensatePelvis(nodes,angles){
+ const pelvis=nodes.get('pelvis');
+ const undo=pelvis.node.quaternion.clone().invert().multiply(pelvis.rest);
+ for(const id of ['lumbar-5','right-hip','left-hip'])nodes.get(id).node.quaternion.premultiply(undo);
+ if(angles.obliquity){
+  const hip=nodes.get('right-hip').position;
+  const before=hip.clone().applyQuaternion(pelvis.rest);
+  const after=hip.clone().applyQuaternion(pelvis.node.quaternion);
+  pelvis.node.position.add(before.sub(after));
+ }
+}
 
 /** Load the additive rig. Existing atlas and walking specimens stay untouched. */
 export async function loadPoseRig(loader,baseURL,version='1'){
@@ -129,12 +141,13 @@ export function applyPose(specimen,values={},options={}){
    applied[joint.id][axis.id]=angle;
    const shapes=joint.morphs?.[axis.id];
    if(shapes)for(const [name,scale] of Object.entries(shapes))shaped[name]=angle*scale;
+   if(axis.rotations)for(const [vector,degrees] of axis.rotations)rotateBy(state,vector,degrees*angle/axis.max);
    if(!axis.vector)continue;
    if(joint.distribute){
     joint.distribute.forEach((id,index)=>rotateBy(nodes.get(id),axis.vector,angle*distributedShare(joint,axis.id,index)));
    }else{
     // The shoulder blade contributes gradually more during elevation.
-    if(joint.id.endsWith('-shoulder')&&axis.id==='abduction'){
+    if(joint.id.endsWith('-shoulder')&&scapularElevation.includes(axis.id)){
      const scapula=nodes.get(joint.side+'-scapula');
      const girdle=shoulderGirdleAngle(joint,angle);
      rotateBy(scapula,axis.vector,girdle);
@@ -142,6 +155,12 @@ export function applyPose(specimen,values={},options={}){
     }
     rotateBy(state,axis.vector,angle);
    }
+  }
+  if(joint.id==='pelvic-control'&&(applied[joint.id].tilt||applied[joint.id].obliquity))compensatePelvis(nodes,applied[joint.id]);
+  if(joint.unlockedRotation){
+   const rule=joint.unlockedRotation;
+   const t=clamp(applied[joint.id].flexion/rule.endsAt,0,1);
+   rotateBy(state,rule.axis,rule.degrees*t*t*(3-2*t));
   }
   if(joint.id==='jaw'&&joint.translation){
    const {opening=0,excursion=0,protrusion=0}=applied.jaw;
@@ -198,7 +217,7 @@ export function poseAxisWorld(specimen,id,axisId){
   if(!axis.local)continue;
   let angle=specimen.values[id]?.[axis.id]||0;
   if(state.descriptor.distribute)angle*=distributedShare(state.descriptor,axis.id,0);
-  if(id.endsWith('-shoulder')&&axis.id==='abduction')angle-=shoulderGirdleAngle(state.descriptor,angle);
+  if(id.endsWith('-shoulder')&&scapularElevation.includes(axis.id))angle-=shoulderGirdleAngle(state.descriptor,angle);
   rotation.multiply(new THREE.Quaternion().setFromAxisAngle(axis.local,angle*RAD));
  }
  return state.axes[wanted].local.clone().applyQuaternion(rotation).normalize();

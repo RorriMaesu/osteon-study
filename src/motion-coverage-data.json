@@ -44,6 +44,1094 @@
     "referenceConfirmed": 270,
     "referenceOpen": 110
   },
+  "movements": [
+    {
+      "joint": "pelvic-control",
+      "label": "Pelvis",
+      "region": "trunk",
+      "axis": "tilt",
+      "movement": "Tip pelvis forward / back",
+      "guides": [
+        {
+          "id": "pelvic-tilt",
+          "label": "Tip the pelvis"
+        }
+      ],
+      "samples": [
+        "pelvis-tilt"
+      ]
+    },
+    {
+      "joint": "pelvic-control",
+      "label": "Pelvis",
+      "region": "trunk",
+      "axis": "obliquity",
+      "movement": "Lower / level left pelvis",
+      "guides": [
+        {
+          "id": "hip-stance",
+          "label": "Level the pelvis on one leg"
+        }
+      ],
+      "samples": [
+        "pelvic-drop"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "label": "Trunk",
+      "region": "trunk",
+      "axis": "flexion",
+      "movement": "Bend forward / backward",
+      "guides": [],
+      "samples": [
+        "seated-bend"
+      ]
+    },
+    {
+      "joint": "trunk",
+      "label": "Trunk",
+      "region": "trunk",
+      "axis": "lateral",
+      "movement": "Bend to body’s right / left",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "trunk",
+      "label": "Trunk",
+      "region": "trunk",
+      "axis": "rotation",
+      "movement": "Turn to body’s right / left",
+      "guides": [
+        {
+          "id": "trunk-turn",
+          "label": "Turn the trunk"
+        }
+      ],
+      "samples": []
+    },
+    {
+      "joint": "thoracic-turn",
+      "label": "Thoracic spine",
+      "region": "trunk",
+      "axis": "rotation",
+      "movement": "Turn chest right / left",
+      "guides": [
+        {
+          "id": "thoracic-turn",
+          "label": "Turn the rib cage"
+        }
+      ],
+      "samples": [
+        "thoracic-rotation"
+      ]
+    },
+    {
+      "joint": "neck",
+      "label": "Neck",
+      "region": "head-neck",
+      "axis": "flexion",
+      "movement": "Look down / up",
+      "guides": [],
+      "samples": [
+        "seated-bend"
+      ]
+    },
+    {
+      "joint": "neck",
+      "label": "Neck",
+      "region": "head-neck",
+      "axis": "lateral",
+      "movement": "Tilt to body’s right / left",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "neck",
+      "label": "Neck",
+      "region": "head-neck",
+      "axis": "rotation",
+      "movement": "Turn to body’s right / left",
+      "guides": [
+        {
+          "id": "head-turn",
+          "label": "Turn your head"
+        }
+      ],
+      "samples": [
+        "cervical-turn-right",
+        "cervical-turn-left"
+      ]
+    },
+    {
+      "joint": "upper-nod",
+      "label": "Upper neck nod",
+      "region": "head-neck",
+      "axis": "flexion",
+      "movement": "Nod down / up",
+      "guides": [
+        {
+          "id": "upper-neck-nod",
+          "label": "Nod at the atlas"
+        }
+      ],
+      "samples": [
+        "upper-nod"
+      ]
+    },
+    {
+      "joint": "jaw",
+      "label": "Jaw",
+      "region": "head-neck",
+      "axis": "opening",
+      "movement": "Open / close mouth",
+      "guides": [],
+      "samples": [
+        "facial-shapes"
+      ]
+    },
+    {
+      "joint": "jaw",
+      "label": "Jaw",
+      "region": "head-neck",
+      "axis": "excursion",
+      "movement": "Jaw toward right / left",
+      "guides": [
+        {
+          "id": "jaw-side",
+          "label": "Slide the jaw sideways"
+        }
+      ],
+      "samples": [
+        "jaw-excursion"
+      ]
+    },
+    {
+      "joint": "jaw",
+      "label": "Jaw",
+      "region": "head-neck",
+      "axis": "protrusion",
+      "movement": "Jaw forward / return",
+      "guides": [
+        {
+          "id": "jaw-forward",
+          "label": "Slide the jaw forward"
+        }
+      ],
+      "samples": [
+        "jaw-protrusion"
+      ]
+    },
+    {
+      "joint": "face-blink",
+      "label": "Eyelids",
+      "region": "head-neck",
+      "axis": "closure",
+      "movement": "Close / open eyes",
+      "guides": [],
+      "samples": [
+        "facial-shapes"
+      ]
+    },
+    {
+      "joint": "face-smile",
+      "label": "Smile",
+      "region": "head-neck",
+      "axis": "smile",
+      "movement": "Smile / relax",
+      "guides": [],
+      "samples": [
+        "facial-shapes"
+      ]
+    },
+    {
+      "joint": "breathing",
+      "label": "Breathing",
+      "region": "trunk",
+      "axis": "inhale",
+      "movement": "Inhale / release",
+      "guides": [],
+      "samples": [
+        "inspiration"
+      ]
+    },
+    {
+      "joint": "breathing",
+      "label": "Breathing",
+      "region": "trunk",
+      "axis": "exhale",
+      "movement": "Exhale / relax",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "right-scapula",
+      "label": "Right shoulder girdle",
+      "region": "right-arm",
+      "axis": "elevation",
+      "movement": "Shrug / lower",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "right-scapula",
+      "label": "Right shoulder girdle",
+      "region": "right-arm",
+      "axis": "protraction",
+      "movement": "Reach / draw back",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "right-shoulder",
+      "label": "Right shoulder",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Arm forward / back",
+      "guides": [],
+      "samples": [
+        "overhead-combined"
+      ]
+    },
+    {
+      "joint": "right-shoulder",
+      "label": "Right shoulder",
+      "region": "right-arm",
+      "axis": "abduction",
+      "movement": "Arm out / in",
+      "guides": [
+        {
+          "id": "arm-abduction",
+          "label": "Raise your arm sideways"
+        }
+      ],
+      "samples": [
+        "overhead-combined",
+        "shoulder-abduction"
+      ]
+    },
+    {
+      "joint": "right-shoulder",
+      "label": "Right shoulder",
+      "region": "right-arm",
+      "axis": "scaption",
+      "movement": "Raise diagonally / lower",
+      "guides": [
+        {
+          "id": "scaption",
+          "label": "Raise the arm diagonally"
+        }
+      ],
+      "samples": [
+        "scaption"
+      ]
+    },
+    {
+      "joint": "right-shoulder",
+      "label": "Right shoulder",
+      "region": "right-arm",
+      "axis": "rotation",
+      "movement": "Turn arm in / out",
+      "guides": [],
+      "samples": [
+        "overhead-combined"
+      ]
+    },
+    {
+      "joint": "right-elbow",
+      "label": "Right elbow",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "elbow-flexion",
+        "overhead-combined"
+      ]
+    },
+    {
+      "joint": "right-forearm",
+      "label": "Right forearm",
+      "region": "right-arm",
+      "axis": "pronation",
+      "movement": "Turn palm back / front",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-wrist",
+      "label": "Right wrist",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Palm / back bend",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-wrist",
+      "label": "Right wrist",
+      "region": "right-arm",
+      "axis": "deviation",
+      "movement": "Hand toward little finger / thumb",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-thumb-cmc",
+      "label": "Right thumb base",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Thumb across / out of palm",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-thumb-cmc",
+      "label": "Right thumb base",
+      "region": "right-arm",
+      "axis": "abduction",
+      "movement": "Thumb away from / toward palm",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-thumb-cmc",
+      "label": "Right thumb base",
+      "region": "right-arm",
+      "axis": "opposition",
+      "movement": "Oppose / reposition thumb",
+      "guides": [
+        {
+          "id": "thumb-opposition",
+          "label": "Sweep the thumb across"
+        }
+      ],
+      "samples": [
+        "hand-flexion",
+        "thumb-opposition"
+      ]
+    },
+    {
+      "joint": "right-thumb-mcp",
+      "label": "Right thumb MCP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-thumb-ip",
+      "label": "Right thumb IP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-index-mcp",
+      "label": "Right index MCP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-index-mcp",
+      "label": "Right index MCP",
+      "region": "right-arm",
+      "axis": "abduction",
+      "movement": "Spread / bring together",
+      "guides": [
+        {
+          "id": "finger-spread",
+          "label": "Spread the index finger"
+        }
+      ],
+      "samples": [
+        "hand-flexion",
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "right-index-pip",
+      "label": "Right index PIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-index-dip",
+      "label": "Right index DIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-middle-mcp",
+      "label": "Right middle MCP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-middle-mcp",
+      "label": "Right middle MCP",
+      "region": "right-arm",
+      "axis": "abduction",
+      "movement": "Middle finger toward index / rest",
+      "guides": [],
+      "samples": [
+        "hand-flexion",
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "right-middle-pip",
+      "label": "Right middle PIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-middle-dip",
+      "label": "Right middle DIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-ring-mcp",
+      "label": "Right ring MCP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-ring-mcp",
+      "label": "Right ring MCP",
+      "region": "right-arm",
+      "axis": "abduction",
+      "movement": "Spread / bring together",
+      "guides": [],
+      "samples": [
+        "hand-flexion",
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "right-ring-pip",
+      "label": "Right ring PIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-ring-dip",
+      "label": "Right ring DIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-little-mcp",
+      "label": "Right little MCP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-little-mcp",
+      "label": "Right little MCP",
+      "region": "right-arm",
+      "axis": "abduction",
+      "movement": "Spread / bring together",
+      "guides": [],
+      "samples": [
+        "hand-flexion",
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "right-little-pip",
+      "label": "Right little PIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-little-dip",
+      "label": "Right little DIP",
+      "region": "right-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "hand-flexion"
+      ]
+    },
+    {
+      "joint": "right-hip",
+      "label": "Right hip",
+      "region": "right-leg",
+      "axis": "flexion",
+      "movement": "Thigh forward / back",
+      "guides": [
+        {
+          "id": "hip-flexion",
+          "label": "Lift the thigh"
+        },
+        {
+          "id": "hip-extension",
+          "label": "Move the thigh back"
+        }
+      ],
+      "samples": [
+        "seated-bend",
+        "flexed-hip-rotation"
+      ]
+    },
+    {
+      "joint": "right-hip",
+      "label": "Right hip",
+      "region": "right-leg",
+      "axis": "abduction",
+      "movement": "Leg out / in",
+      "guides": [
+        {
+          "id": "hip-abduction",
+          "label": "Move your leg sideways"
+        }
+      ],
+      "samples": [
+        "hip-abduction"
+      ]
+    },
+    {
+      "joint": "right-hip",
+      "label": "Right hip",
+      "region": "right-leg",
+      "axis": "rotation",
+      "movement": "Turn thigh in / out",
+      "guides": [
+        {
+          "id": "hip-rotation",
+          "label": "Turn the thigh in and out"
+        },
+        {
+          "id": "hip-rotation-flexed",
+          "label": "Turn a bent thigh"
+        }
+      ],
+      "samples": [
+        "flexed-hip-rotation"
+      ]
+    },
+    {
+      "joint": "right-knee",
+      "label": "Right knee",
+      "region": "right-leg",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [
+        {
+          "id": "knee-unlock",
+          "label": "Unlock the knee"
+        }
+      ],
+      "samples": [
+        "seated-bend",
+        "flexed-hip-rotation",
+        "knee-unlock"
+      ]
+    },
+    {
+      "joint": "right-ankle",
+      "label": "Right ankle",
+      "region": "right-leg",
+      "axis": "dorsiflexion",
+      "movement": "Foot up / down",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "right-subtalar",
+      "label": "Right hindfoot",
+      "region": "right-leg",
+      "axis": "inversion",
+      "movement": "Sole inward / outward",
+      "guides": [],
+      "samples": [
+        "hindfoot-inversion",
+        "hindfoot-eversion"
+      ]
+    },
+    {
+      "joint": "right-toes",
+      "label": "Right toes",
+      "region": "right-leg",
+      "axis": "extension",
+      "movement": "Lift / curl toes",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "right-hallux",
+      "label": "Right great toe",
+      "region": "right-leg",
+      "axis": "extension",
+      "movement": "Lift / curl great toe",
+      "guides": [
+        {
+          "id": "great-toe",
+          "label": "Lift your great toe"
+        }
+      ],
+      "samples": [
+        "great-toe-extension"
+      ]
+    },
+    {
+      "joint": "left-scapula",
+      "label": "Left shoulder girdle",
+      "region": "left-arm",
+      "axis": "elevation",
+      "movement": "Shrug / lower",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-scapula",
+      "label": "Left shoulder girdle",
+      "region": "left-arm",
+      "axis": "protraction",
+      "movement": "Reach / draw back",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-shoulder",
+      "label": "Left shoulder",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Arm forward / back",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-shoulder",
+      "label": "Left shoulder",
+      "region": "left-arm",
+      "axis": "abduction",
+      "movement": "Arm out / in",
+      "guides": [],
+      "samples": [
+        "shoulder-abduction"
+      ]
+    },
+    {
+      "joint": "left-shoulder",
+      "label": "Left shoulder",
+      "region": "left-arm",
+      "axis": "scaption",
+      "movement": "Raise diagonally / lower",
+      "guides": [],
+      "samples": [
+        "scaption"
+      ]
+    },
+    {
+      "joint": "left-shoulder",
+      "label": "Left shoulder",
+      "region": "left-arm",
+      "axis": "rotation",
+      "movement": "Turn arm in / out",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-elbow",
+      "label": "Left elbow",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "elbow-flexion"
+      ]
+    },
+    {
+      "joint": "left-forearm",
+      "label": "Left forearm",
+      "region": "left-arm",
+      "axis": "pronation",
+      "movement": "Turn palm back / front",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-wrist",
+      "label": "Left wrist",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Palm / back bend",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-wrist",
+      "label": "Left wrist",
+      "region": "left-arm",
+      "axis": "deviation",
+      "movement": "Hand toward little finger / thumb",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-thumb-cmc",
+      "label": "Left thumb base",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Thumb across / out of palm",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-thumb-cmc",
+      "label": "Left thumb base",
+      "region": "left-arm",
+      "axis": "abduction",
+      "movement": "Thumb away from / toward palm",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-thumb-cmc",
+      "label": "Left thumb base",
+      "region": "left-arm",
+      "axis": "opposition",
+      "movement": "Oppose / reposition thumb",
+      "guides": [],
+      "samples": [
+        "thumb-opposition"
+      ]
+    },
+    {
+      "joint": "left-thumb-mcp",
+      "label": "Left thumb MCP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-thumb-ip",
+      "label": "Left thumb IP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-index-mcp",
+      "label": "Left index MCP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-index-mcp",
+      "label": "Left index MCP",
+      "region": "left-arm",
+      "axis": "abduction",
+      "movement": "Spread / bring together",
+      "guides": [],
+      "samples": [
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "left-index-pip",
+      "label": "Left index PIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-index-dip",
+      "label": "Left index DIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-middle-mcp",
+      "label": "Left middle MCP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-middle-mcp",
+      "label": "Left middle MCP",
+      "region": "left-arm",
+      "axis": "abduction",
+      "movement": "Middle finger toward index / rest",
+      "guides": [],
+      "samples": [
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "left-middle-pip",
+      "label": "Left middle PIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-middle-dip",
+      "label": "Left middle DIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-ring-mcp",
+      "label": "Left ring MCP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-ring-mcp",
+      "label": "Left ring MCP",
+      "region": "left-arm",
+      "axis": "abduction",
+      "movement": "Spread / bring together",
+      "guides": [],
+      "samples": [
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "left-ring-pip",
+      "label": "Left ring PIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-ring-dip",
+      "label": "Left ring DIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-little-mcp",
+      "label": "Left little MCP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-little-mcp",
+      "label": "Left little MCP",
+      "region": "left-arm",
+      "axis": "abduction",
+      "movement": "Spread / bring together",
+      "guides": [],
+      "samples": [
+        "finger-spread"
+      ]
+    },
+    {
+      "joint": "left-little-pip",
+      "label": "Left little PIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-little-dip",
+      "label": "Left little DIP",
+      "region": "left-arm",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-hip",
+      "label": "Left hip",
+      "region": "left-leg",
+      "axis": "flexion",
+      "movement": "Thigh forward / back",
+      "guides": [],
+      "samples": [
+        "seated-bend",
+        "pelvic-drop"
+      ]
+    },
+    {
+      "joint": "left-hip",
+      "label": "Left hip",
+      "region": "left-leg",
+      "axis": "abduction",
+      "movement": "Leg out / in",
+      "guides": [],
+      "samples": [
+        "hip-abduction"
+      ]
+    },
+    {
+      "joint": "left-hip",
+      "label": "Left hip",
+      "region": "left-leg",
+      "axis": "rotation",
+      "movement": "Turn thigh in / out",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-knee",
+      "label": "Left knee",
+      "region": "left-leg",
+      "axis": "flexion",
+      "movement": "Bend / straighten",
+      "guides": [],
+      "samples": [
+        "seated-bend",
+        "pelvic-drop",
+        "knee-unlock"
+      ]
+    },
+    {
+      "joint": "left-ankle",
+      "label": "Left ankle",
+      "region": "left-leg",
+      "axis": "dorsiflexion",
+      "movement": "Foot up / down",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-subtalar",
+      "label": "Left hindfoot",
+      "region": "left-leg",
+      "axis": "inversion",
+      "movement": "Sole inward / outward",
+      "guides": [],
+      "samples": [
+        "hindfoot-inversion",
+        "hindfoot-eversion"
+      ]
+    },
+    {
+      "joint": "left-toes",
+      "label": "Left toes",
+      "region": "left-leg",
+      "axis": "extension",
+      "movement": "Lift / curl toes",
+      "guides": [],
+      "samples": []
+    },
+    {
+      "joint": "left-hallux",
+      "label": "Left great toe",
+      "region": "left-leg",
+      "axis": "extension",
+      "movement": "Lift / curl great toe",
+      "guides": [],
+      "samples": [
+        "great-toe-extension"
+      ]
+    }
+  ],
   "rows": [
     {"id":"ta2-2197","name":"(Ceratocricoid muscle)","region":"head-neck","ta2":2197,"origin":"reference","course":false,"variant":true,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2096","name":"(Muscle of terminal notch)","region":"head-neck","ta2":2096,"origin":"reference","course":false,"variant":true,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
@@ -76,7 +1164,7 @@
     {"id":"ta2-2098","name":"Antitragicus muscle","region":"head-neck","ta2":2098,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2475","name":"Articularis cubiti muscle","region":"shoulder-arm","ta2":2475,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"not-separately-resolved","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-medial-head-of-triceps-brachii-l","name":"Medial head of triceps brachii","side":"left","asset":"muscles-shoulder-arm.glb","role":"candidate","group":"Triceps brachii muscle","depth":"deeper"}],"right":[{"id":"muscle-medial-head-of-triceps-brachii-r","name":"Medial head of triceps brachii","side":"right","asset":"muscles-shoulder-arm.glb","role":"candidate","group":"Triceps brachii muscle","depth":"deeper"}],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":"No separately identified articularis cubiti. Review the deep triceps/capsular relationship before claiming the component is present or reconstructing it.","attachmentCertified":false,"atlasSides":{"left":"candidate","right":"candidate","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2625","name":"Articularis genus muscle","region":"pelvis-leg-foot","ta2":2625,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"not-separately-resolved","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-vastus-intermedius-muscle-l","name":"Vastus intermedius muscle","side":"left","asset":"muscles-pelvis-leg-foot.glb","role":"candidate","depth":"superficial"}],"right":[{"id":"muscle-vastus-intermedius-muscle-r","name":"Vastus intermedius muscle","side":"right","asset":"muscles-pelvis-leg-foot.glb","role":"candidate","depth":"superficial"}],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":"No separately identified articularis genus. A vastus intermedius mesh alone does not establish its presence.","attachmentCertified":false,"atlasSides":{"left":"candidate","right":"candidate","midline":"not-applicable","other":"not-applicable"}},
-    {"id":"ta2-2204","name":"Ary-epiglottic part of oblique arytenoid","region":"head-neck","ta2":2204,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"muscle-subdivision","atlas":{"left":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","name":"Ary-epiglottic part of oblique arytenoid muscle","side":"left","asset":"muscles-head-neck.glb","role":"match"}],"right":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","name":"Ary-epiglottic part of oblique arytenoid muscle","side":"right","asset":"muscles-head-neck.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"PoseMuscle_muscle-ary-epiglottic-part-of-oblique-arytenoid-mus","side":"left","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-2","Pose_cervical-3","Pose_cervical-4","Pose_cervical-5"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"Walk_muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","side":"left","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."}],"right":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"PoseMuscle_muscle-ary-epiglottic-part-of-oblique-arytenoid-musc","side":"right","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-2","Pose_cervical-3","Pose_cervical-4","Pose_cervical-5"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"Walk_muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","side":"right","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"componentOf":"ta2-2203","attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
+    {"id":"ta2-2204","name":"Ary-epiglottic part of oblique arytenoid","region":"head-neck","ta2":2204,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"muscle-subdivision","atlas":{"left":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","name":"Ary-epiglottic part of oblique arytenoid muscle","side":"left","asset":"muscles-head-neck.glb","role":"match"}],"right":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","name":"Ary-epiglottic part of oblique arytenoid muscle","side":"right","asset":"muscles-head-neck.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"PoseMuscle_muscle-ary-epiglottic-part-of-oblique-arytenoid-musc","side":"left","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-2","Pose_cervical-3","Pose_cervical-4","Pose_cervical-5"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"Walk_muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","side":"left","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."}],"right":[{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"PoseMuscle_muscle-ary-epiglottic-part-of-oblique-arytenoid-mus","side":"right","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-2","Pose_cervical-3","Pose_cervical-4","Pose_cervical-5"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","atlasId":"muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","name":"Ary-epiglottic part of oblique arytenoid muscle","node":"Walk_muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r","side":"right","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"componentOf":"ta2-2203","attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2089","name":"Auricularis anterior muscle","region":"head-neck","ta2":2089,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2091","name":"Auricularis posterior muscle","region":"head-neck","ta2":2091,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2090","name":"Auricularis superior muscle","region":"head-neck","ta2":2090,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
@@ -289,7 +1377,7 @@
     {"id":"ta2-2482","name":"Palmaris longus muscle","region":"forearm-hand","ta2":2482,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-palmaris-longus-muscle-l","name":"Palmaris longus muscle","side":"left","asset":"muscles-forearm-hand.glb","role":"match"}],"right":[{"id":"muscle-palmaris-longus-muscle-r","name":"Palmaris longus muscle","side":"right","asset":"muscles-forearm-hand.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-palmaris-longus-muscle-l","atlasId":"muscle-palmaris-longus-muscle-l","name":"Palmaris longus muscle","node":"PoseMuscle_muscle-palmaris-longus-muscle-l","side":"left","region":"forearm-hand","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-elbow","Pose_left-forearm","Pose_left-shoulder","Pose_left-wrist"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-palmaris-longus-muscle-l","atlasId":"muscle-palmaris-longus-muscle-l","name":"Palmaris longus muscle","node":"Walk_muscle-palmaris-longus-muscle-l","side":"left","region":"forearm-hand","asset":"motion-walk-muscles-forearm-hand.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionWalkElbowLeft","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"right":[{"id":"muscle-palmaris-longus-muscle-r","atlasId":"muscle-palmaris-longus-muscle-r","name":"Palmaris longus muscle","node":"PoseMuscle_muscle-palmaris-longus-muscle-r","side":"right","region":"forearm-hand","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-elbow","Pose_right-forearm","Pose_right-shoulder","Pose_right-wrist"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-palmaris-longus-muscle-r","atlasId":"muscle-palmaris-longus-muscle-r","name":"Palmaris longus muscle","node":"Walk_muscle-palmaris-longus-muscle-r","side":"right","region":"forearm-hand","asset":"motion-walk-muscles-forearm-hand.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionWalkElbowRight","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2067","name":"Palpebral part of orbicularis oculi","region":"head-neck","ta2":2067,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"muscle-subdivision","atlas":{"left":[{"id":"muscle-palpebral-part-of-orbicularis-oculi-l","name":"Palpebral part of orbicularis oculi","side":"left","asset":"muscles-head-neck.glb","role":"match","group":"Orbicularis oculi muscle","depth":"superficial"}],"right":[{"id":"muscle-palpebral-part-of-orbicularis-oculi-r","name":"Palpebral part of orbicularis oculi","side":"right","asset":"muscles-head-neck.glb","role":"match","group":"Orbicularis oculi muscle","depth":"superficial"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-palpebral-part-of-orbicularis-oculi-l","atlasId":"muscle-palpebral-part-of-orbicularis-oculi-l","name":"Palpebral part of orbicularis oculi","node":"Walk_muscle-palpebral-part-of-orbicularis-oculi-l","side":"left","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"orbicularis-oculi-palpebral","atlasId":"muscle-palpebral-part-of-orbicularis-oculi-l","name":"Palpebral part of orbicularis oculi","node":"Palpebral part of orbicularis oculi.l.001","side":"left","region":"head-neck","asset":"motion-blink.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"blink","evidence":["authored-regional-motion"],"qualification":"Closes the eyelids."},{"id":"orbicularis-oculi-palpebral","atlasId":"muscle-palpebral-part-of-orbicularis-oculi-l","name":"Palpebral part of orbicularis oculi","node":"PoseMuscle_muscle-palpebral-part-of-orbicularis-oculi-l","side":"left","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["morph-target"],"joints":["Pose_head"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."}],"right":[{"id":"muscle-palpebral-part-of-orbicularis-oculi-r","atlasId":"muscle-palpebral-part-of-orbicularis-oculi-r","name":"Palpebral part of orbicularis oculi","node":"Walk_muscle-palpebral-part-of-orbicularis-oculi-r","side":"right","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"orbicularis-oculi-palpebral","atlasId":"muscle-palpebral-part-of-orbicularis-oculi-r","name":"Palpebral part of orbicularis oculi","node":"Palpebral part of orbicularis oculi.r.001","side":"right","region":"head-neck","asset":"motion-blink.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"blink","evidence":["authored-regional-motion"],"qualification":"Closes the eyelids."},{"id":"orbicularis-oculi-palpebral","atlasId":"muscle-palpebral-part-of-orbicularis-oculi-r","name":"Palpebral part of orbicularis oculi","node":"PoseMuscle_muscle-palpebral-part-of-orbicularis-oculi-r","side":"right","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["morph-target"],"joints":["Pose_head"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."}],"midline":[],"other":[]},"note":null,"componentOf":"ta2-2066","attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2627","name":"Pectineus muscle","region":"pelvis-leg-foot","ta2":2627,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-pectineus-muscle-l","name":"Pectineus muscle","side":"left","asset":"muscles-pelvis-leg-foot.glb","role":"match"}],"right":[{"id":"muscle-pectineus-muscle-r","name":"Pectineus muscle","side":"right","asset":"muscles-pelvis-leg-foot.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-pectineus-muscle-l","atlasId":"muscle-pectineus-muscle-l","name":"Pectineus muscle","node":"PoseMuscle_muscle-pectineus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-hip","Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pectineus-muscle-l","atlasId":"muscle-pectineus-muscle-l","name":"Pectineus muscle","node":"Walk_muscle-pectineus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionHipL","WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"right":[{"id":"muscle-pectineus-muscle-r","atlasId":"muscle-pectineus-muscle-r","name":"Pectineus muscle","node":"PoseMuscle_muscle-pectineus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_pelvis","Pose_right-hip"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pectineus-muscle-r","atlasId":"muscle-pectineus-muscle-r","name":"Pectineus muscle","node":"Walk_muscle-pectineus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionHipR","WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
-    {"id":"ta2-2301","name":"Pectoralis major muscle","region":"trunk-back","ta2":2301,"origin":"reference","course":true,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"right":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-l","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","node":"PoseMuscle_muscle-abdominal-part-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-l","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","node":"Walk_muscle-abdominal-part-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-abdominal","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","node":"(Abdominal part of pectoralis major muscle).l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"The variable lower part is shown following the humeral insertion."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-l","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","node":"PoseMuscle_muscle-clavicular-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-scapula","Pose_left-shoulder"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-l","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","node":"Walk_muscle-clavicular-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-clavicular","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","node":"Clavicular head of pectoralis major muscle.l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Clavicular fibers assist glenohumeral flexion as the arm reaches forward."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle-","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"right":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-r","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","node":"PoseMuscle_muscle-abdominal-part-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-r","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","node":"Walk_muscle-abdominal-part-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-abdominal","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","node":"(Abdominal part of pectoralis major muscle).r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"The variable lower part is shown following the humeral insertion."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-r","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","node":"PoseMuscle_muscle-clavicular-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-scapula","Pose_right-shoulder"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-r","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","node":"Walk_muscle-clavicular-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-clavicular","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","node":"Clavicular head of pectoralis major muscle.r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Clavicular fibers assist glenohumeral flexion as the arm reaches forward."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"},"courseTargets":[{"id":"ch11-pectoralis-major","name":"Pectoralis major","status":"named"}]},
+    {"id":"ta2-2301","name":"Pectoralis major muscle","region":"trunk-back","ta2":2301,"origin":"reference","course":true,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"right":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-l","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","node":"PoseMuscle_muscle-abdominal-part-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-l","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","node":"Walk_muscle-abdominal-part-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-abdominal","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-l","name":"(Abdominal part of pectoralis major muscle)","node":"(Abdominal part of pectoralis major muscle).l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"The variable lower part is shown following the humeral insertion."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-l","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","node":"PoseMuscle_muscle-clavicular-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-scapula","Pose_left-shoulder"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-l","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","node":"Walk_muscle-clavicular-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-clavicular","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-l","name":"Clavicular head of pectoralis major muscle","node":"Clavicular head of pectoralis major muscle.l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Clavicular fibers assist glenohumeral flexion as the arm reaches forward."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"right":[{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-r","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","node":"PoseMuscle_muscle-abdominal-part-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-abdominal-part-of-pectoralis-major-muscle-r","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","node":"Walk_muscle-abdominal-part-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-abdominal","atlasId":"muscle-abdominal-part-of-pectoralis-major-muscle-r","name":"(Abdominal part of pectoralis major muscle)","node":"(Abdominal part of pectoralis major muscle).r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"The variable lower part is shown following the humeral insertion."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-r","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","node":"PoseMuscle_muscle-clavicular-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-scapula","Pose_right-shoulder"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-clavicular-head-of-pectoralis-major-muscle-r","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","node":"Walk_muscle-clavicular-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-clavicular","atlasId":"muscle-clavicular-head-of-pectoralis-major-muscle-r","name":"Clavicular head of pectoralis major muscle","node":"Clavicular head of pectoralis major muscle.r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Clavicular fibers assist glenohumeral flexion as the arm reaches forward."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle-","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"},"courseTargets":[{"id":"ch11-pectoralis-major","name":"Pectoralis major","status":"named"}]},
     {"id":"ta2-2305","name":"Pectoralis minor muscle","region":"trunk-back","ta2":2305,"origin":"reference","course":true,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-pectoralis-minor-muscle-l","name":"Pectoralis minor muscle","side":"left","asset":"muscles-trunk-back.glb","role":"match"}],"right":[{"id":"muscle-pectoralis-minor-muscle-r","name":"Pectoralis minor muscle","side":"right","asset":"muscles-trunk-back.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-pectoralis-minor-muscle-l","atlasId":"muscle-pectoralis-minor-muscle-l","name":"Pectoralis minor muscle","node":"PoseMuscle_muscle-pectoralis-minor-muscle-l","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-scapula","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pectoralis-minor-muscle-l","atlasId":"muscle-pectoralis-minor-muscle-l","name":"Pectoralis minor muscle","node":"Walk_muscle-pectoralis-minor-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionTorso"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"pectoralis-minor","atlasId":"muscle-pectoralis-minor-muscle-l","name":"Pectoralis minor muscle","node":"Pectoralis minor muscle.l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Runs from upper ribs to coracoid and acts on the scapula."}],"right":[{"id":"muscle-pectoralis-minor-muscle-r","atlasId":"muscle-pectoralis-minor-muscle-r","name":"Pectoralis minor muscle","node":"PoseMuscle_muscle-pectoralis-minor-muscle-r","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-scapula","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pectoralis-minor-muscle-r","atlasId":"muscle-pectoralis-minor-muscle-r","name":"Pectoralis minor muscle","node":"Walk_muscle-pectoralis-minor-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionTorso"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"pectoralis-minor","atlasId":"muscle-pectoralis-minor-muscle-r","name":"Pectoralis minor muscle","node":"Pectoralis minor muscle.r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Runs from upper ribs to coracoid and acts on the scapula."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"},"courseTargets":[{"id":"ch11-pectoralis-minor","name":"Pectoralis minor","status":"named"}]},
     {"id":"ta2-2402","name":"Pelvic diaphragm","region":"pelvis-leg-foot","ta2":2402,"origin":"reference","course":true,"variant":false,"sexScope":null,"atlasStatus":"represented-by-components","expectedSides":"left-and-right","entryType":"muscle-group","atlas":{"left":[{"id":"muscle-coccygeus-muscle-l","name":"Coccygeus muscle","side":"left","asset":"muscles-pelvis-leg-foot.glb","role":"match"},{"id":"muscle-iliococcygeus-muscle-l","name":"Iliococcygeus muscle","side":"left","asset":"muscles-pelvis-leg-foot.glb","role":"match"},{"id":"muscle-pubo-analis-muscle-l","name":"Pubo-analis muscle","side":"left","asset":"muscles-pelvis-leg-foot.glb","role":"match","note":"Puboanalis and puborectalis must not be treated as automatic synonyms. The pelvic-floor sling and attachment relationships require anatomical review."},{"id":"muscle-pubococcygeus-muscle-l","name":"Pubococcygeus muscle","side":"left","asset":"muscles-pelvis-leg-foot.glb","role":"match"}],"right":[{"id":"muscle-coccygeus-muscle-r","name":"Coccygeus muscle","side":"right","asset":"muscles-pelvis-leg-foot.glb","role":"match"},{"id":"muscle-iliococcygeus-muscle-r","name":"Iliococcygeus muscle","side":"right","asset":"muscles-pelvis-leg-foot.glb","role":"match"},{"id":"muscle-pubo-analis-muscle-r","name":"Pubo-analis muscle","side":"right","asset":"muscles-pelvis-leg-foot.glb","role":"match","note":"Puboanalis and puborectalis must not be treated as automatic synonyms. The pelvic-floor sling and attachment relationships require anatomical review."},{"id":"muscle-pubococcygeus-muscle-r","name":"Pubococcygeus muscle","side":"right","asset":"muscles-pelvis-leg-foot.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-coccygeus-muscle-l","atlasId":"muscle-coccygeus-muscle-l","name":"Coccygeus muscle","node":"PoseMuscle_muscle-coccygeus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-coccygeus-muscle-l","atlasId":"muscle-coccygeus-muscle-l","name":"Coccygeus muscle","node":"Walk_muscle-coccygeus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"muscle-iliococcygeus-muscle-l","atlasId":"muscle-iliococcygeus-muscle-l","name":"Iliococcygeus muscle","node":"PoseMuscle_muscle-iliococcygeus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-iliococcygeus-muscle-l","atlasId":"muscle-iliococcygeus-muscle-l","name":"Iliococcygeus muscle","node":"Walk_muscle-iliococcygeus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"muscle-pubo-analis-muscle-l","atlasId":"muscle-pubo-analis-muscle-l","name":"Pubo-analis muscle","node":"PoseMuscle_muscle-pubo-analis-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pubo-analis-muscle-l","atlasId":"muscle-pubo-analis-muscle-l","name":"Pubo-analis muscle","node":"Walk_muscle-pubo-analis-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"muscle-pubococcygeus-muscle-l","atlasId":"muscle-pubococcygeus-muscle-l","name":"Pubococcygeus muscle","node":"PoseMuscle_muscle-pubococcygeus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pubococcygeus-muscle-l","atlasId":"muscle-pubococcygeus-muscle-l","name":"Pubococcygeus muscle","node":"Walk_muscle-pubococcygeus-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."}],"right":[{"id":"muscle-coccygeus-muscle-r","atlasId":"muscle-coccygeus-muscle-r","name":"Coccygeus muscle","node":"PoseMuscle_muscle-coccygeus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-coccygeus-muscle-r","atlasId":"muscle-coccygeus-muscle-r","name":"Coccygeus muscle","node":"Walk_muscle-coccygeus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"muscle-iliococcygeus-muscle-r","atlasId":"muscle-iliococcygeus-muscle-r","name":"Iliococcygeus muscle","node":"PoseMuscle_muscle-iliococcygeus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-iliococcygeus-muscle-r","atlasId":"muscle-iliococcygeus-muscle-r","name":"Iliococcygeus muscle","node":"Walk_muscle-iliococcygeus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"muscle-pubo-analis-muscle-r","atlasId":"muscle-pubo-analis-muscle-r","name":"Pubo-analis muscle","node":"PoseMuscle_muscle-pubo-analis-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pubo-analis-muscle-r","atlasId":"muscle-pubo-analis-muscle-r","name":"Pubo-analis muscle","node":"Walk_muscle-pubo-analis-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."},{"id":"muscle-pubococcygeus-muscle-r","atlasId":"muscle-pubococcygeus-muscle-r","name":"Pubococcygeus muscle","node":"PoseMuscle_muscle-pubococcygeus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"rigid","deformation":[],"joints":["Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-pubococcygeus-muscle-r","atlasId":"muscle-pubococcygeus-muscle-r","name":"Pubococcygeus muscle","node":"Walk_muscle-pubococcygeus-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"rigid","deformation":[],"joints":["WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows one moving body segment. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"},"courseTargets":[{"id":"ch11-pelvic-diaphragm","name":"Pelvic diaphragm","status":"partial","note":"Partial model: coccygeus, pubococcygeus and iliococcygeus are present. The model does not establish puborectalis, and puboanalis is not substituted for it."}]},
     {"id":"ta2-2604","name":"Piriformis muscle","region":"pelvis-leg-foot","ta2":2604,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-piriformis-muscle-l","name":"Piriformis muscle","side":"left","asset":"muscles-pelvis-leg-foot.glb","role":"match","depth":"deeper"}],"right":[{"id":"muscle-piriformis-muscle-r","name":"Piriformis muscle","side":"right","asset":"muscles-pelvis-leg-foot.glb","role":"match","depth":"deeper"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-piriformis-muscle-l","atlasId":"muscle-piriformis-muscle-l","name":"Piriformis muscle","node":"PoseMuscle_muscle-piriformis-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-hip","Pose_pelvis"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-piriformis-muscle-l","atlasId":"muscle-piriformis-muscle-l","name":"Piriformis muscle","node":"Walk_muscle-piriformis-muscle-l","side":"left","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionHipL","WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"right":[{"id":"muscle-piriformis-muscle-r","atlasId":"muscle-piriformis-muscle-r","name":"Piriformis muscle","node":"PoseMuscle_muscle-piriformis-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_pelvis","Pose_right-hip"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-piriformis-muscle-r","atlasId":"muscle-piriformis-muscle-r","name":"Piriformis muscle","node":"Walk_muscle-piriformis-muscle-r","side":"right","region":"pelvis-leg-foot","asset":"motion-walk-muscles-pelvis-leg-foot.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionHipR","WalkSurface_MotionPelvis"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
@@ -369,7 +1457,7 @@
     {"id":"ta2-2103","name":"Stapedius muscle","region":"head-neck","ta2":2103,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2157","name":"Sternal head of sternocleidomastoid","region":"head-neck","ta2":2157,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"muscle-subdivision","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"componentOf":"ta2-2156","attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2156","name":"Sternocleidomastoid muscle","region":"head-neck","ta2":2156,"origin":"reference","course":true,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-sternocleidomastoid-muscle-l","name":"Sternocleidomastoid muscle","side":"left","asset":"muscles-head-neck.glb","role":"match","depth":"superficial"}],"right":[{"id":"muscle-sternocleidomastoid-muscle-r","name":"Sternocleidomastoid muscle","side":"right","asset":"muscles-head-neck.glb","role":"match","depth":"superficial"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-sternocleidomastoid-muscle-l","atlasId":"muscle-sternocleidomastoid-muscle-l","name":"Sternocleidomastoid muscle","node":"PoseMuscle_muscle-sternocleidomastoid-muscle-l","side":"left","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-1","Pose_cervical-2","Pose_cervical-3","Pose_cervical-4","Pose_cervical-5","Pose_cervical-6","Pose_cervical-7","Pose_head","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocleidomastoid-muscle-l","atlasId":"muscle-sternocleidomastoid-muscle-l","name":"Sternocleidomastoid muscle","node":"Walk_muscle-sternocleidomastoid-muscle-l","side":"left","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"right":[{"id":"muscle-sternocleidomastoid-muscle-r","atlasId":"muscle-sternocleidomastoid-muscle-r","name":"Sternocleidomastoid muscle","node":"PoseMuscle_muscle-sternocleidomastoid-muscle-r","side":"right","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-1","Pose_cervical-2","Pose_cervical-3","Pose_cervical-4","Pose_cervical-5","Pose_cervical-6","Pose_cervical-7","Pose_head","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocleidomastoid-muscle-r","atlasId":"muscle-sternocleidomastoid-muscle-r","name":"Sternocleidomastoid muscle","node":"Walk_muscle-sternocleidomastoid-muscle-r","side":"right","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"},"courseTargets":[{"id":"ch11-sternocleidomastoid","name":"Sternocleidomastoid","status":"named"}]},
-    {"id":"ta2-2303","name":"Sternocostal head of pectoralis major","region":"trunk-back","ta2":2303,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"muscle-subdivision","atlas":{"left":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"right":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle-","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"right":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"midline":[],"other":[]},"note":null,"componentOf":"ta2-2301","attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
+    {"id":"ta2-2303","name":"Sternocostal head of pectoralis major","region":"trunk-back","ta2":2303,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"muscle-subdivision","atlas":{"left":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","side":"left","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"right":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","side":"right","asset":"muscles-trunk-back.glb","role":"match","group":"Pectoralis major muscle","depth":"superficial"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle","side":"left","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_left-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-l","side":"left","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderLeft"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-l","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.l.001","side":"left","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"right":[{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"PoseMuscle_muscle-sternocostal-head-of-pectoralis-major-muscle-","side":"right","region":"trunk-back","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_right-shoulder","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Walk_muscle-sternocostal-head-of-pectoralis-major-muscle-r","side":"right","region":"trunk-back","asset":"motion-walk-muscles-trunk-back.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkShoulderRight"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."},{"id":"pectoralis-sternocostal","atlasId":"muscle-sternocostal-head-of-pectoralis-major-muscle-r","name":"Sternocostal head of pectoralis major muscle","node":"Sternocostal head of pectoralis major muscle.r.001","side":"right","region":"trunk-back","asset":"motion-pectoral.glb","rig":"deforms","deformation":["morph-target"],"joints":[],"modes":["regional-action"],"lesson":"pectoral","evidence":["authored-regional-motion"],"qualification":"Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range."}],"midline":[],"other":[]},"note":null,"componentOf":"ta2-2301","attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2168","name":"Sternohyoid muscle","region":"head-neck","ta2":2168,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-sternohyoid-muscle-l","name":"Sternohyoid muscle","side":"left","asset":"muscles-head-neck.glb","role":"match"}],"right":[{"id":"muscle-sternohyoid-muscle-r","name":"Sternohyoid muscle","side":"right","asset":"muscles-head-neck.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-sternohyoid-muscle-l","atlasId":"muscle-sternohyoid-muscle-l","name":"Sternohyoid muscle","node":"PoseMuscle_muscle-sternohyoid-muscle-l","side":"left","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-3","Pose_cervical-4","Pose_cervical-5","Pose_cervical-6","Pose_cervical-7","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternohyoid-muscle-l","atlasId":"muscle-sternohyoid-muscle-l","name":"Sternohyoid muscle","node":"Walk_muscle-sternohyoid-muscle-l","side":"left","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"right":[{"id":"muscle-sternohyoid-muscle-r","atlasId":"muscle-sternohyoid-muscle-r","name":"Sternohyoid muscle","node":"PoseMuscle_muscle-sternohyoid-muscle-r","side":"right","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-3","Pose_cervical-4","Pose_cervical-5","Pose_cervical-6","Pose_cervical-7","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternohyoid-muscle-r","atlasId":"muscle-sternohyoid-muscle-r","name":"Sternohyoid muscle","node":"Walk_muscle-sternohyoid-muscle-r","side":"right","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2173","name":"Sternothyroid muscle","region":"head-neck","ta2":2173,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"named-geometry","expectedSides":"left-and-right","entryType":"named-muscle-or-serial-group","atlas":{"left":[{"id":"muscle-sternothyroid-muscle-l","name":"Sternothyroid muscle","side":"left","asset":"muscles-head-neck.glb","role":"match"}],"right":[{"id":"muscle-sternothyroid-muscle-r","name":"Sternothyroid muscle","side":"right","asset":"muscles-head-neck.glb","role":"match"}],"midline":[],"other":[]},"motion":{"left":[{"id":"muscle-sternothyroid-muscle-l","atlasId":"muscle-sternothyroid-muscle-l","name":"Sternothyroid muscle","node":"PoseMuscle_muscle-sternothyroid-muscle-l","side":"left","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-4","Pose_cervical-5","Pose_cervical-6","Pose_cervical-7","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternothyroid-muscle-l","atlasId":"muscle-sternothyroid-muscle-l","name":"Sternothyroid muscle","node":"Walk_muscle-sternothyroid-muscle-l","side":"left","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"right":[{"id":"muscle-sternothyroid-muscle-r","atlasId":"muscle-sternothyroid-muscle-r","name":"Sternothyroid muscle","node":"PoseMuscle_muscle-sternothyroid-muscle-r","side":"right","region":"head-neck","asset":"motion-pose-body.glb","rig":"deforms","deformation":["joint-weights"],"joints":["Pose_cervical-4","Pose_cervical-5","Pose_cervical-6","Pose_cervical-7","Pose_thorax"],"modes":["whole-body-pose"],"evidence":["pose-teaching-envelope"],"qualification":"Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics."},{"id":"muscle-sternothyroid-muscle-r","atlasId":"muscle-sternothyroid-muscle-r","name":"Sternothyroid muscle","node":"Walk_muscle-sternothyroid-muscle-r","side":"right","region":"head-neck","asset":"motion-walk-muscles-head-neck.glb","rig":"deforms","deformation":["joint-weights"],"joints":["WalkSurface_MotionTorso","WalkSurface_MotionWalkHead"],"modes":["walk"],"evidence":["walk-anatomical-context"],"qualification":"Follows the pose with a guided skin blend. No activity was recorded for this part."}],"midline":[],"other":[]},"note":null,"attachmentCertified":false,"atlasSides":{"left":"present","right":"present","midline":"not-applicable","other":"not-applicable"}},
     {"id":"ta2-2615","name":"Straight head of rectus femoris","region":"pelvis-leg-foot","ta2":2615,"origin":"reference","course":false,"variant":false,"sexScope":null,"atlasStatus":"no-named-mesh","expectedSides":"left-and-right","entryType":"muscle-subdivision","atlas":{"left":[],"right":[],"midline":[],"other":[]},"motion":{"left":[],"right":[],"midline":[],"other":[]},"note":null,"componentOf":"ta2-2614","attachmentCertified":false,"atlasSides":{"left":"not-found","right":"not-found","midline":"not-applicable","other":"not-applicable"}},

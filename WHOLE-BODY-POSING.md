@@ -18,14 +18,14 @@ The **Pose skeleton** workspace keeps one body pose while you inspect different 
 
 ## Shipped model
 
-The additive Blender 4.5 specimen contains all **476 existing atlas muscle surfaces**, **59 user controls** and **88 movement channels**, plus **296 bone/support surfaces** including 23 discs and both Achilles tendons. Surface counts include left/right parts and named heads.
+The additive Blender 4.5 specimen contains all **476 existing atlas muscle surfaces**, **61 user controls** and **95 movement channels**, plus **296 bone/support surfaces** including 23 discs and both Achilles tendons. Surface counts include left/right parts and named heads.
 
 | Region | Available controls |
 | --- | --- |
-| Shoulder and arm | Shoulder girdle, shoulder flexion/abduction/rotation, elbow flexion, forearm pronation, wrist flexion/deviation |
-| Hand | Thumb base and finger MCP/IP hinges, plus individual index/middle/ring/little MCP spread and return, separately on each side |
-| Pelvis and leg | Hip flexion/abduction/rotation, knee flexion, ankle dorsiflexion/plantarflexion, hindfoot inversion/eversion, grouped toes with a separate great-toe movement |
-| Axial body | Distributed lumbar and cervical bending/rotation, skull-on-atlas nod, jaw opening and small side and forward glides |
+| Shoulder and arm | Shoulder girdle, shoulder flexion/abduction/scapular-plane elevation/rotation, elbow flexion, forearm pronation, wrist flexion/deviation |
+| Hand | Thumb base opposition with a short teaching arc, finger MCP/IP hinges, plus index/middle/ring/little MCP spread and return on each hand |
+| Pelvis and leg | Pelvic tilt and supported-side obliquity, hip flexion/abduction/rotation, knee flexion with small coupled tibial rotation, ankle flexion, hindfoot roll, grouped toes with a separate great-toe movement |
+| Axial body | Separate thoracic rotation, distributed lumbar and cervical bending/rotation, skull-on-atlas nod, jaw opening and small side and forward glides |
 | Face and thorax | Guided blink, smile, inspiration and forced-expiration shapes |
 
 The skeleton, walking rigs and original regional lesson models are retained. The build saves checksum-verified backups before every authoring pass and records its source and backup inventory in `assets/motion-pose-body.json`. The editable Blender project and backup copies stay outside the published site.
@@ -57,6 +57,9 @@ This is an atlas-derived teaching rig with approximate skin envelopes and conser
 | [Lift the thigh](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-flexion#motion) and [move it back](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-extension#motion) | Compare iliopsoas and rectus femoris with gluteus maximus and the hamstrings that cross the hip. |
 | [Turn the thigh](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-rotation#motion) and [turn a bent thigh](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-rotation-flexed#motion) | Compare near-neutral and deep flexion. Piriformis is a possible internal rotator in the deeply flexed example. Grouped gluteal surfaces remain neutral in the rotation comparison. |
 | [Turn the trunk](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=trunk-turn#motion) and [spread the index finger](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=finger-spread#motion) | Compare the oblique pair and interosseous actions respectively. |
+| [Raise the arm diagonally](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=scaption#motion) | Compare elevation in the scapular plane with the sideways raise. |
+| [Tip the pelvis](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=pelvic-tilt#motion) and [level it on one leg](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-stance#motion) | Compare pelvic tilt with a stance example that keeps the right support ankle still. |
+| [Turn the rib cage](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=thoracic-turn#motion), [sweep the thumb across](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=thumb-opposition#motion), and [unlock the knee](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=knee-unlock#motion) | Compare thoracic and lumbar turning, observe first-metacarpal rotation, and inspect slight tibial rotation as the knee bends. |
 | [Lift the great toe](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=great-toe#motion), [slide the jaw sideways](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=jaw-side#motion), and [slide it forward](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=jaw-forward#motion) | Inspect the independent great-toe joint and compare the moving mandibular condyles. Tooth and disc contact remain outside the jaw teaching approximation. |
 
 ## References
