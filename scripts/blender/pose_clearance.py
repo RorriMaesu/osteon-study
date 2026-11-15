@@ -8,6 +8,28 @@ from mathutils import Matrix, Quaternion, Vector
 from mathutils.bvhtree import BVHTree
 
 
+# Posed-space millimeters, measured on the left specimen and mirrored on the
+# right. The lateral fold rides over the scapula, while the more medial sheet
+# stays superficial to the clavicle. See Minelli et al. (PMCID PMC10702465).
+# Each field is (center, spread, displacement) in Blender coordinates.
+PLATYSMA_RAISE = (
+    (30, (((121.56,26.25,1419.12), (33,23,30), (0,9.1,14)),
+          ((58.18,-32.47,1413.90), (33,23,30), (2.4,-8.5,1.25)))),
+    (40, (((120.83,28.25,1421.93), (17,14,16), (0,6.5,10)),
+          ((58.18,-32.47,1413.90), (22,19,21), (4.2,-14,2.1)))),
+    (48, (((120.83,28.25,1421.93), (33,23,30), (0,12.35,19)),
+          ((58,-34,1419), (22,18,24), (2.4,-9,1.2)))),
+    (56, (((117.43,34.28,1423.43), (33,23,30), (0,12.35,19)),
+          ((54,-31,1419), (26,23,28), (.8,-6,.9)))),
+    (60, (((119,33,1424), (33,23,30), (0,11.7,18.5)),
+          ((51.25,-34.2,1418.68), (33,23,30), (2.2,-4,0)))),
+    (64, (((45.39,-35.58,1421.36), (17,14,16), (0,-4,.6)),)),
+    (72, (((45.39,-35.58,1421.36), (17,14,16), (0,-4,.6)),)),
+    (81, (((51.8,-32.55,1425.07), (33,23,30), (2.2,-4,0)),)),
+    (90, (((43.44,-33.14,1426.44), (17,14,16), (3.85,-7,0)),)),
+)
+
+
 def from_web(point):
     return Vector((point[0], -point[2], point[1]))
 
@@ -195,6 +217,40 @@ def bake_shape(obj, rig, deltas, name):
     return True
 
 
+def shoulder_sheet_delta(point, fields, sign):
+    # Fade toward the jaw so the lower-face attachments keep their own motion.
+    blend = min(1., max(0., (1505 - point.z * 1000) / 30))
+    blend *= blend * (3 - 2 * blend)
+    coordinates = (sign * point.x * 1000, point.y * 1000, point.z * 1000)
+    result = Vector()
+    for center, spread, displacement in fields:
+        squared = sum(((c - anchor) / width) ** 2
+                      for c, anchor, width in zip(coordinates, center, spread))
+        result += Vector((sign * displacement[0], *displacement[1:])) * math.exp(-.5 * squared)
+    return result * (blend * .001)
+
+
+def bake_shoulder_clearance(rig, joints, nodes, actor, side, suffix, sign):
+    shoulder = side + '-shoulder'
+    same_plane = [
+        (shoulder,'horizontal',25,10), (shoulder,'horizontal',-24,-10),
+        (shoulder,'flexion',45,15), (shoulder,'flexion',-20,-10),
+        (shoulder,'rotation',30,10), (shoulder,'rotation',-30,-10),
+        (shoulder,'scaption',20,5),
+    ]
+    for index, (angle, fields) in enumerate(PLATYSMA_RAISE):
+        previous = PLATYSMA_RAISE[index-1][0] if index else 16
+        ramps = [(shoulder, 'abduction', previous, angle), *same_plane]
+        if index + 1 < len(PLATYSMA_RAISE):
+            ramps.append((shoulder, 'abduction', PLATYSMA_RAISE[index+1][0], angle))
+        apply_sample(rig, joints, nodes, {shoulder: {'abduction': angle}})
+        points, _ = posed_geometry(actor, bpy.context.evaluated_depsgraph_get())
+        delta = [shoulder_sheet_delta(point, fields, sign) for point in points]
+        name = f'ClearancePlatysmaRaise{angle}{suffix.upper()}'
+        if bake_shape(actor, rig, delta, name):
+            yield {'target': name, 'ramps': ramps, 'surfaces': [actor['muscleId']]}
+
+
 def bake_clearance(rig, joints, nodes, bones, muscles):
     """Author corrections from fitted asset surfaces and transport them by skinning."""
     rules = []
@@ -267,5 +323,6 @@ def bake_clearance(rig, joints, nodes, bones, muscles):
             if fitted:
                 rules.append({'target':name,'ramps':ramps,'surfaces':fitted})
                 print('CLEARANCE',name,len(fitted),flush=True)
+        rules.extend(bake_shoulder_clearance(rig, joints, nodes, muscle('platysma'), side, suffix, sign))
     apply_sample(rig,joints,nodes,{})
     return rules

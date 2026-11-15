@@ -52,6 +52,19 @@ test('published clearance entries refer to supported joint axes and delivered mu
  }
 });
 
+test('platysma clearance follows a side raise and releases during other shoulder motions',()=>{
+ for(const [side,suffix] of [['left','L'],['right','R']]){
+  const joint=side+'-shoulder';
+  const rules=meta.clearanceCorrectives.filter(({target})=>target.startsWith('ClearancePlatysmaRaise')&&target.endsWith(suffix));
+  const weight=axes=>rules.reduce((sum,rule)=>sum+clearanceWeight(rule.ramps,{[joint]:axes}),0);
+  assert.ok(rules.length>1);
+  for(const degrees of [30,37,43,53,58,63,67,86,90])close(weight({abduction:degrees}),1);
+  for(const pose of [{},{scaption:55},{abduction:58,horizontal:42},{abduction:58,flexion:80}]){
+   assert.equal(weight(pose),0);
+  }
+ }
+});
+
 test('whole-body pose asset matches its manifest and exact atlas muscle census',()=>{
  const buffer=fs.readFileSync(new URL('../assets/motion-pose-body.glb',import.meta.url));
  assert.equal(createHash('sha256').update(buffer).digest('hex'),meta.sha256);

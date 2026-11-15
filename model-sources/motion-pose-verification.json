@@ -1,5 +1,5 @@
 {
-  "sha256": "9070def48181ff4a93203996f1678494e5f5622a9ca6ef1d8d5fd77ef8c50f75",
+  "sha256": "3102b4ab050b3b7d2fe7354a29866c73c2795ed62a31e34ae0a3635045fbfffa",
   "reimportedMuscles": 476,
   "reimportedBoneSurfaces": 296,
   "maximumNeutralBoundsErrorMillimeters": 0.009466,
@@ -1126,7 +1126,7 @@
           "abduction": 58
         }
       },
-      "movedSurfaces": 134,
+      "movedSurfaces": 136,
       "largestSkinStretch": [
         {
           "muscle": "muscle-latissimus-dorsi-muscle-l",
