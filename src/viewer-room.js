@@ -5,7 +5,7 @@ export function initViewerRoom({viewer,toast}){
  tools.innerHTML='<button type="button" id="viewer-details" aria-expanded="false" aria-controls="atlas-details">Details</button><button type="button" id="viewer-controls" aria-expanded="false" aria-controls="viewer-control-guide"><span class="viewer-desktop-help">Controls</span><span class="viewer-mobile-help">Help</span></button><button type="button" id="viewer-fullscreen" hidden>Full screen</button><button type="button" id="viewer-expand" aria-expanded="false" aria-controls="viewer-room"><span aria-hidden="true">⛶</span> <span>Expand viewer</span></button>';
  stage.querySelector('.stage-header').after(tools);
  const guide=document.createElement('section');guide.id='viewer-control-guide';guide.className='viewer-control-guide';guide.hidden=true;guide.setAttribute('aria-label','How to explore the skeleton');
- guide.innerHTML='<div class="viewer-guide-heading"><strong>Get closer. Keep your bearings.</strong><button type="button" id="viewer-guide-close" aria-label="Close viewer controls">×</button></div><div class="viewer-guide-steps"><p><b>1</b><span><strong>Explore a region</strong>Double-click or double-tap a bone.</span></p><p><b>2</b><span><strong>Study one bone</strong>Do it again inside that region.</span></p><p><b>↶</b><span><strong>Return one step</strong>Use Back above the model, or choose Full skeleton to start from the whole body.</span></p></div><p class="viewer-guide-practice" hidden>During a question, use rotate and zoom to inspect the target. Region navigation is paused so the exercise stays intact.</p><div class="viewer-guide-motion"><span>Drag / one finger<strong>Rotate</strong></span><span>Scroll / pinch<strong>Zoom</strong></span><span>Right-drag / two fingers<strong>Pan</strong></span></div><p class="viewer-keyboard-camera">With the model focused, use arrow keys to rotate and + or − to zoom.</p><p class="viewer-guide-keyboard">Select a bone and press Enter to explore. Escape goes back. The Zoom to region and Bone buttons offer the same actions.</p><button type="button" id="viewer-guide-done">Got it — explore</button>';
+ guide.innerHTML='<div class="viewer-guide-heading"><strong>Get closer. Keep your bearings.</strong><button type="button" id="viewer-guide-close" aria-label="Close viewer controls">×</button></div><div class="viewer-guide-steps"><p><b>1</b><span><strong>Explore a region</strong>Double-click or double-tap a bone.</span></p><p><b>2</b><span><strong>Study one bone</strong>Do it again inside that region.</span></p><p><b>↶</b><span><strong>Return one step</strong>Use Back above the model, or choose Full skeleton to start from the whole body.</span></p></div><p class="viewer-guide-practice" hidden>During a question, use rotate and zoom to inspect the target. Region navigation is paused so the exercise stays intact.</p><div class="viewer-guide-motion"><span>Drag / one finger<strong>Rotate</strong></span><span>Zoom + / − buttons<strong>Zoom</strong></span><span>Right-drag / two fingers<strong>Pan</strong></span></div><p class="viewer-keyboard-camera">Tap Zoom + or Zoom − below the model; pinching is optional. Scrolling also zooms. With the model focused, use arrow keys to rotate and + or − to zoom.</p><p class="viewer-guide-keyboard">Select a bone and press Enter to explore. Escape goes back. The Zoom to region and Bone buttons offer the same actions.</p><button type="button" id="viewer-guide-done">Got it — explore</button>';
  stage.append(guide);
  const room=document.createElement('div');room.id='viewer-room';room.className='viewer-room';room.hidden=true;room.setAttribute('role','dialog');room.setAttribute('aria-modal','true');room.setAttribute('aria-label','Expanded anatomy viewer');document.body.append(room);
  const expand=tools.querySelector('#viewer-expand'),full=tools.querySelector('#viewer-fullscreen'),help=tools.querySelector('#viewer-controls');
@@ -32,6 +32,31 @@ export function initViewerRoom({viewer,toast}){
   angle.value='';
  };
  const mobile=matchMedia('(max-width: 999px)');
+ // Keep zoom outside the drawing area so pins cannot cover these controls.
+ // One group follows the same stage into expanded and practice views.
+ const cameraToolbar=document.createElement('div');cameraToolbar.className='viewer-camera-toolbar';
+ presets.before(cameraToolbar);cameraToolbar.append(presets);
+ const zoom=document.createElement('div');zoom.className='viewer-zoom-controls';zoom.setAttribute('role','group');zoom.setAttribute('aria-label','Model zoom');
+ zoom.innerHTML='<button type="button" data-viewer-zoom="in" aria-label="Zoom in" title="Zoom in without pinching" disabled><b aria-hidden="true">+</b><span aria-hidden="true">Zoom</span></button><button type="button" data-viewer-zoom="out" aria-label="Zoom out" title="Zoom out without pinching" disabled><b aria-hidden="true">−</b><span aria-hidden="true">Zoom</span></button>';
+ const zoomButtons=[...zoom.querySelectorAll('button')];
+ function placeZoom(){(mobile.matches?mobileControls:cameraToolbar).append(zoom);}
+ function syncZoom(){for(const button of zoomButtons)button.disabled=!viewer.loaded||!viewer.controls;}
+ const cameraSpacing=new ResizeObserver(()=>{
+  if(mobile.matches||!stage.clientHeight)return;
+  const bottom=Math.max(52,stage.clientHeight-actions.offsetTop+8);
+  stage.style.setProperty('--viewer-camera-bottom',bottom+'px');
+ });
+ cameraSpacing.observe(actions);cameraSpacing.observe(stage);
+ zoom.addEventListener('click',event=>{
+  const button=event.target.closest('[data-viewer-zoom]');
+  if(!button||button.disabled||!viewer.loaded)return;
+  setMenu(false);closeGuide(false);
+  viewer.keyboardCamera(button.dataset.viewerZoom==='in'?'+':'-');
+  stage.querySelector('#rotate-btn')?.setAttribute('aria-pressed','false');
+ });
+ mobile.addEventListener('change',placeZoom);
+ document.addEventListener('anatomyready',syncZoom);
+ placeZoom();syncZoom();
  const menuOpen=()=>more.getAttribute('aria-expanded')==='true';
  function setMenu(open,restoreFocus=false){
   stage.classList.toggle('viewer-action-menu-open',open);
