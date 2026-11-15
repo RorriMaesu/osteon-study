@@ -107,7 +107,7 @@ The bilateral anconeus and calf surfaces were checked against their registered a
 
 Walk cycle uses trial 1 at 4 km/h from participant 1 in the [Moreira et al. dataset (CC0 1.0)](https://doi.org/10.6084/m9.figshare.13169240.v1). Each side’s sagittal joint angles and the four surface EMG traces are synchronized to the source force-plate contacts. The model’s vertical position is adjusted for the floor display. Upper-body motion is illustrative. Optional replay restarts the recorded stride at its original beginning. Extraction and provenance are documented in `scripts/process-motion-gait.py` and `src/motion-gait-data.json`. The five full-body walking packs reuse the registered muscle atlas for anatomical context. The walk uses the original eight surface EMG channels, with no activity assigned to the added meshes. [Full-body model authoring and verification](model-sources/MOTION-WALK-MUSCLES.md).
 
-Regional motion lessons use authored Blender shape changes on registered atlas meshes. They demonstrate named movements and task-specific roles for blinking, smiling, chewing mechanics, and breathing. [Regional model methods, evidence and sources](model-sources/MOTION-REGIONAL.md).
+Regional motion lessons use authored Blender shape changes on registered atlas meshes. They demonstrate named movements and task-specific roles for blinking, smiling, chewing mechanics, and breathing. [Regional model methods, evidence and sources](model-sources/MOTION-REGIONAL.md). The bilateral ankle correction couples the lateral gastrocnemius and Achilles geometry to ankle position while retaining the original EMG. [Ankle correction methods and checks](model-sources/MOTION-GASTROCNEMIUS-ANKLE.md).
 
 ## Regional muscle atlas
 

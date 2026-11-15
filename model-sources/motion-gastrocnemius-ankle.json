@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "baseAssetSHA256": "4481cd449ffbc0de3a8acc53417dad5ca0bf40ac136b175f06868654e91c869c",
+  "correctedAssetSHA256": "47366d17eb652e68013f35ff4adbf8ce91ccedfb7231915b1828afe713a56055",
+  "correctedNodes": [
+    "MotionLeftCalcanealTendon",
+    "MotionLeftLateralHeadOfGastrocnemius",
+    "MotionRightCalcanealTendon",
+    "MotionRightLateralHeadOfGastrocnemius"
+  ],
+  "baseCompatibility": {
+    "namedNodesAndRestTransforms": "d87838e6941cf296411361ddc3f94f651779e423c95a3621b1b385061b2cc3dc",
+    "skinJointsAndInverseBindMatrices": "4a1a35ebd3c1eebb6348245b6526e853ebfa4d8fc76d90f8ba621418f65280d0",
+    "unchangedDracoPrimitives": "2275e162b58280a934eff1fce8dcb769c62b77fac32054c2b3d96be2ae1381d3"
+  },
+  "targetAngles": {
+    "AnklePosePlantarflexion": -35,
+    "AnklePoseDorsiflexion": 23
+  },
+  "attachmentCorrectionVectorsMeters": {
+    "Right": {
+      "AnklePosePlantarflexion": [
+        -0.0007501155487261713,
+        0.01236981526017189,
+        0.0009353188797831535
+      ],
+      "AnklePoseDorsiflexion": [
+        0.0003366924647707492,
+        -0.005552242510020733,
+        -0.0004198217357043177
+      ]
+    },
+    "Left": {
+      "AnklePosePlantarflexion": [
+        0.0007501234067603946,
+        0.012369832023978233,
+        0.0009353206260129809
+      ],
+      "AnklePoseDorsiflexion": [
+        -0.0003366952296346426,
+        -0.00555223785340786,
+        -0.00041982161928899586
+      ]
+    }
+  },
+  "reimport": {
+    "Right": {
+      "hip0_knee0_ankle-35": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 12.428,
+        "joinMeanVerticalMovementMm": 12.316,
+        "joinNearestDistanceP95Mm": 1.435,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle-18": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 6.391,
+        "joinMeanVerticalMovementMm": 6.334,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle0": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 0,
+        "joinMeanVerticalMovementMm": 0,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle11.5": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 2.789,
+        "joinMeanVerticalMovementMm": -2.764,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.011,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle23": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 5.578,
+        "joinMeanVerticalMovementMm": -5.528,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.022,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle-35": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 12.428,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.435,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle-18": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 6.391,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle0": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 0,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle11.5": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 2.789,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.011,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle23": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 5.578,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.022,
+        "joinSampleVertices": 67
+      }
+    },
+    "Left": {
+      "hip0_knee0_ankle-35": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 12.428,
+        "joinMeanVerticalMovementMm": 12.316,
+        "joinNearestDistanceP95Mm": 1.436,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle-18": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 6.391,
+        "joinMeanVerticalMovementMm": 6.334,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle0": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 0,
+        "joinMeanVerticalMovementMm": 0,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle11.5": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 2.789,
+        "joinMeanVerticalMovementMm": -2.764,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.011,
+        "joinSampleVertices": 67
+      },
+      "hip0_knee0_ankle23": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 5.578,
+        "joinMeanVerticalMovementMm": -5.528,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.022,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle-35": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 12.428,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.436,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle-18": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 6.391,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle0": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 0,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle11.5": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 2.789,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.011,
+        "joinSampleVertices": 67
+      },
+      "hip28_knee50_ankle23": {
+        "originCorrectionDriftMm": 0,
+        "insertionCorrectionDriftMm": 0,
+        "lateralGastrocnemiusMaxDeformationMm": 5.578,
+        "joinMeanVerticalMovementMm": null,
+        "joinNearestDistanceP95Mm": 1.44,
+        "joinMaxIncrementMm": 0.022,
+        "joinSampleVertices": 67
+      }
+    }
+  },
+  "scope": "Ankle-driven teaching approximation. This is separate from EMG and does not reproduce measured fascicle lengths or tendon strain.",
+  "sources": [
+    "https://pubmed.ncbi.nlm.nih.gov/17280557/",
+    "https://pubmed.ncbi.nlm.nih.gov/21825027/",
+    "https://pubmed.ncbi.nlm.nih.gov/25457482/"
+  ]
+}

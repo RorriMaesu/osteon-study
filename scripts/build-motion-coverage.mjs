@@ -352,9 +352,9 @@ function inspectSkin(node,doc,bin,lib,decoder,trackNames){
   return ext?dracoJoints(ext,doc,bin,lib,decoder,joints):uncompressedJoints(doc,bin,attributes,joints);
  });
  const hasMorph=mesh.primitives.some(p=>p.targets?.some(target=>target.POSITION!==undefined));
- const targetName=node.extras.motionHeelDeformation||node.extras.motionDeformationTarget;
+ const targets=[node.extras.motionHeelDeformation,node.extras.motionDeformationTarget,node.extras.motionAnklePlantar,node.extras.motionAnkleDorsi].filter(Boolean);
  const activeMorph=hasMorph&&(
-  (targetName&&(mesh.extras?.targetNames||[]).includes(targetName))||
+  targets.some(name=>(mesh.extras?.targetNames||[]).includes(name))||
   (mesh.extras?.targetNames||[]).some(name=>trackNames?.has(name))||
   (doc.animations||[]).some(a=>a.channels.some(c=>c.target.path==='weights'&&doc.nodes[c.target.node]===node))
  );
@@ -372,7 +372,8 @@ function motionEvidence(file,id,heelReplacement){
  if(file==='motion-legs.glb'){
   const measured=gaitIDs.has(id);
   const inHeel=heelIDs.has(id)&&!heelReplacement;
-  const scope=id==='biceps-femoris'?'The long-head mesh marks the sampled biceps femoris region. The recording does not distinguish its two heads.':'';
+  const scope=id==='biceps-femoris'?'The long-head mesh marks the sampled biceps femoris region. The recording does not distinguish its two heads.':
+   id==='gastrocnemius-lateral'?'The ankle drives the calf shape. Its recorded EMG is an independent signal.':'';
   return {modes:['pose','walk',...(inHeel?['heel-raise']:[])],
    evidence:[...(measured?['recorded-surface-emg']:['pose-context']),...(inHeel?['textbook-contraction']:[])],qualification:scope||undefined};
  }
@@ -400,18 +401,19 @@ async function motionParts(byID){
     const region=info.walkRegion||info.muscleRegion||atlas?.region;
     if(!side||!region)throw Error(file+' motion mesh lacks side or region: '+node.name);
     const context=!!info.walkRegion;
+    const inspection=inspectSkin(node,doc,bin,lib,decoder,trackNames);
     const evidence=context?{
      modes:['walk'],
      evidence:['walk-anatomical-context'],
      qualification:info.walkDeformation==='guided-blend'?'Follows the pose with a guided skin blend. No activity was recorded for this part.':'Follows one moving body segment. No activity was recorded for this part.',
     }:study?{
      modes:['regional-action'],lesson:regional[0],
-     evidence:[info.motionModeling==='static-context'?'regional-context':'authored-regional-motion'],
+     evidence:[inspection.rig==='deforms'?'authored-regional-motion':'regional-context'],
      qualification:study.components.find(part=>part.id===info.muscleId)?.note,
     }:motionEvidence(file,info.motionMuscle,heelReplacements.has(node.name));
     const displayName=atlas?.geometryReview?.displayName||atlas?.name||info.motionPart||node.name;
     parts.push({id:info.motionMuscle||info.muscleId,atlasId:atlas?.id||null,name:displayName,
-     node:node.name,side,region,asset:file,...inspectSkin(node,doc,bin,lib,decoder,trackNames),...evidence});
+     node:node.name,side,region,asset:file,...inspection,...evidence});
    }
   }
  }finally{lib.destroy(decoder);}

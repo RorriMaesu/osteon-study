@@ -1,0 +1,587 @@
+{
+  "region": "forearm",
+  "asset": "motion-forearm.glb",
+  "sha256": "5d44261cf07c13ebef40eaf16eb1cf90c615a85c2449335be61757444f896727",
+  "bytes": 2862436,
+  "camera": {
+    "target": [
+      0.0,
+      1.004,
+      -0.014
+    ],
+    "direction": [
+      0.11,
+      0.14,
+      1.0
+    ],
+    "diameter": 0.84
+  },
+  "sources": {
+    "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
+    "study": "https://pubmed.ncbi.nlm.nih.gov/20696507/",
+    "attachments": "https://pubmed.ncbi.nlm.nih.gov/16078622/",
+    "forearmMomentArms": "https://pubmed.ncbi.nlm.nih.gov/16678316/"
+  },
+  "evidence": "Anatomical teaching motion. Highlights show possible roles for the demonstrated direction.",
+  "scope": "Bilateral 60\u00b0 forearm rotation from the atlas starting pose with the humerus and ulna held fixed. The radius and hand rotate together. The tissue envelopes illustrate approximate shape change. Highlights describe the mechanical role for the direction shown.",
+  "components": [
+    {
+      "id": "muscle-pronator-quadratus-r",
+      "name": "Pronator quadratus",
+      "side": "right",
+      "role": "pronator-quadratus",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-supinator-r",
+      "name": "Supinator",
+      "side": "right",
+      "role": "supinator",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-superficial-head-of-pronator-teres-r",
+      "name": "Superficial head of pronator teres",
+      "side": "right",
+      "role": "pronator-teres",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-deep-head-of-pronator-teres-r",
+      "name": "Deep head of pronator teres",
+      "side": "right",
+      "role": "pronator-teres",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-long-head-of-biceps-brachii-r",
+      "name": "Long head of biceps brachii",
+      "side": "right",
+      "role": "biceps",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-short-head-of-biceps-brachii-r",
+      "name": "Short head of biceps brachii",
+      "side": "right",
+      "role": "biceps",
+      "note": "The short-head belly is labeled separately. The common distal biceps tendon is represented with the long-head surface.",
+      "modeling": "regional-context"
+    },
+    {
+      "id": "muscle-pronator-quadratus-l",
+      "name": "Pronator quadratus",
+      "side": "left",
+      "role": "pronator-quadratus",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-superficial-head-of-pronator-teres-l",
+      "name": "Superficial head of pronator teres",
+      "side": "left",
+      "role": "pronator-teres",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-supinator-l",
+      "name": "Supinator",
+      "side": "left",
+      "role": "supinator",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-deep-head-of-pronator-teres-l",
+      "name": "Deep head of pronator teres",
+      "side": "left",
+      "role": "pronator-teres",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    },
+    {
+      "id": "muscle-short-head-of-biceps-brachii-l",
+      "name": "Short head of biceps brachii",
+      "side": "left",
+      "role": "biceps",
+      "note": "The short-head belly is labeled separately. The common distal biceps tendon is represented with the long-head surface.",
+      "modeling": "regional-context"
+    },
+    {
+      "id": "muscle-long-head-of-biceps-brachii-l",
+      "name": "Long head of biceps brachii",
+      "side": "left",
+      "role": "biceps",
+      "note": "Atlas-derived attachment neighborhoods guide this approximate muscle envelope.",
+      "modeling": "guided-morph"
+    }
+  ],
+  "clips": [
+    {
+      "id": "forearm-rotation",
+      "name": "Pronation & supination",
+      "duration": 4.9,
+      "morphInterpolation": "linear",
+      "morphTracks": {
+        "Forearm12": [
+          [
+            0.0,
+            0
+          ],
+          [
+            0.6494,
+            1
+          ],
+          [
+            0.959,
+            0
+          ],
+          [
+            1.241,
+            0
+          ],
+          [
+            1.5506,
+            0
+          ],
+          [
+            2.2,
+            0
+          ],
+          [
+            2.7,
+            0
+          ],
+          [
+            3.3494,
+            0
+          ],
+          [
+            3.659,
+            0
+          ],
+          [
+            3.941,
+            0
+          ],
+          [
+            4.2506,
+            1
+          ],
+          [
+            4.9,
+            0
+          ]
+        ],
+        "Forearm24": [
+          [
+            0.0,
+            0
+          ],
+          [
+            0.6494,
+            0
+          ],
+          [
+            0.959,
+            1
+          ],
+          [
+            1.241,
+            0
+          ],
+          [
+            1.5506,
+            0
+          ],
+          [
+            2.2,
+            0
+          ],
+          [
+            2.7,
+            0
+          ],
+          [
+            3.3494,
+            0
+          ],
+          [
+            3.659,
+            0
+          ],
+          [
+            3.941,
+            1
+          ],
+          [
+            4.2506,
+            0
+          ],
+          [
+            4.9,
+            0
+          ]
+        ],
+        "Forearm36": [
+          [
+            0.0,
+            0
+          ],
+          [
+            0.6494,
+            0
+          ],
+          [
+            0.959,
+            0
+          ],
+          [
+            1.241,
+            1
+          ],
+          [
+            1.5506,
+            0
+          ],
+          [
+            2.2,
+            0
+          ],
+          [
+            2.7,
+            0
+          ],
+          [
+            3.3494,
+            0
+          ],
+          [
+            3.659,
+            1
+          ],
+          [
+            3.941,
+            0
+          ],
+          [
+            4.2506,
+            0
+          ],
+          [
+            4.9,
+            0
+          ]
+        ],
+        "Forearm48": [
+          [
+            0.0,
+            0
+          ],
+          [
+            0.6494,
+            0
+          ],
+          [
+            0.959,
+            0
+          ],
+          [
+            1.241,
+            0
+          ],
+          [
+            1.5506,
+            1
+          ],
+          [
+            2.2,
+            0
+          ],
+          [
+            2.7,
+            0
+          ],
+          [
+            3.3494,
+            1
+          ],
+          [
+            3.659,
+            0
+          ],
+          [
+            3.941,
+            0
+          ],
+          [
+            4.2506,
+            0
+          ],
+          [
+            4.9,
+            0
+          ]
+        ],
+        "Forearm60": [
+          [
+            0.0,
+            0
+          ],
+          [
+            0.6494,
+            0
+          ],
+          [
+            0.959,
+            0
+          ],
+          [
+            1.241,
+            0
+          ],
+          [
+            1.5506,
+            0
+          ],
+          [
+            2.2,
+            1
+          ],
+          [
+            2.7,
+            1
+          ],
+          [
+            3.3494,
+            0
+          ],
+          [
+            3.659,
+            0
+          ],
+          [
+            3.941,
+            0
+          ],
+          [
+            4.2506,
+            0
+          ],
+          [
+            4.9,
+            0
+          ]
+        ]
+      },
+      "phases": [
+        {
+          "start": 0,
+          "label": "Pronation",
+          "detail": "Pronator teres and pronator quadratus turn the radius over the ulna through 60\u00b0. Watch the wrist and both elbow ends.",
+          "active": [
+            "pronator-teres",
+            "pronator-quadratus"
+          ],
+          "opposes": [
+            "supinator",
+            "biceps"
+          ]
+        },
+        {
+          "start": 2.2,
+          "label": "Pause in pronation",
+          "detail": "Compare the radius and ulna while the pose is held. This pause depicts position only.",
+          "active": [],
+          "opposes": []
+        },
+        {
+          "start": 2.7,
+          "label": "Supination",
+          "detail": "Supinator and biceps brachii act in the return direction. Biceps generally has greater leverage for supination when the elbow is flexed.",
+          "active": [
+            "supinator",
+            "biceps"
+          ],
+          "opposes": [
+            "pronator-teres",
+            "pronator-quadratus"
+          ]
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "right": {
+      "radialHead": [
+        -0.24040429294109344,
+        1.0886847972869873,
+        -0.02916106767952442
+      ],
+      "distalUlnarHeadAxisPoint": [
+        -0.24643805623054504,
+        0.8636274337768555,
+        0.011646631173789501
+      ],
+      "maximumRotationDegrees": 60,
+      "maxDistalClearanceMillimeters": 1.5,
+      "sampledNoBoneIntersectionAtDegrees": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46,
+        48,
+        50,
+        52,
+        54,
+        56,
+        58,
+        60
+      ],
+      "attachmentNeighborhoods": {
+        "muscle-pronator-quadratus-r": {
+          "nearRadiusSurfaceSamples": 111,
+          "stronglyRotatingRadialSamples": 111,
+          "nearFixedOriginSurfaceSamples": 91,
+          "mostlyFixedOriginSamples": 91
+        },
+        "muscle-supinator-r": {
+          "nearRadiusSurfaceSamples": 686,
+          "stronglyRotatingRadialSamples": 686,
+          "nearFixedOriginSurfaceSamples": 168,
+          "mostlyFixedOriginSamples": 168
+        },
+        "muscle-superficial-head-of-pronator-teres-r": {
+          "nearRadiusSurfaceSamples": 116,
+          "stronglyRotatingRadialSamples": 91,
+          "nearFixedOriginSurfaceSamples": 74,
+          "mostlyFixedOriginSamples": 74
+        },
+        "muscle-deep-head-of-pronator-teres-r": {
+          "nearRadiusSurfaceSamples": 82,
+          "stronglyRotatingRadialSamples": 53,
+          "nearFixedOriginSurfaceSamples": 22,
+          "mostlyFixedOriginSamples": 22
+        },
+        "muscle-long-head-of-biceps-brachii-r": {
+          "nearRadiusSurfaceSamples": 47,
+          "stronglyRotatingRadialSamples": 47,
+          "nearFixedOriginSurfaceSamples": 18,
+          "mostlyFixedOriginSamples": 18
+        }
+      }
+    },
+    "left": {
+      "radialHead": [
+        0.24040287733078003,
+        1.0886847972869873,
+        -0.02916106767952442
+      ],
+      "distalUlnarHeadAxisPoint": [
+        0.2464379072189331,
+        0.8636274337768555,
+        0.011646631173789501
+      ],
+      "maximumRotationDegrees": 60,
+      "maxDistalClearanceMillimeters": 1.5,
+      "sampledNoBoneIntersectionAtDegrees": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30,
+        32,
+        34,
+        36,
+        38,
+        40,
+        42,
+        44,
+        46,
+        48,
+        50,
+        52,
+        54,
+        56,
+        58,
+        60
+      ],
+      "attachmentNeighborhoods": {
+        "muscle-pronator-quadratus-l": {
+          "nearRadiusSurfaceSamples": 111,
+          "stronglyRotatingRadialSamples": 111,
+          "nearFixedOriginSurfaceSamples": 91,
+          "mostlyFixedOriginSamples": 91
+        },
+        "muscle-superficial-head-of-pronator-teres-l": {
+          "nearRadiusSurfaceSamples": 116,
+          "stronglyRotatingRadialSamples": 91,
+          "nearFixedOriginSurfaceSamples": 74,
+          "mostlyFixedOriginSamples": 74
+        },
+        "muscle-supinator-l": {
+          "nearRadiusSurfaceSamples": 686,
+          "stronglyRotatingRadialSamples": 686,
+          "nearFixedOriginSurfaceSamples": 167,
+          "mostlyFixedOriginSamples": 167
+        },
+        "muscle-deep-head-of-pronator-teres-l": {
+          "nearRadiusSurfaceSamples": 82,
+          "stronglyRotatingRadialSamples": 53,
+          "nearFixedOriginSurfaceSamples": 22,
+          "mostlyFixedOriginSamples": 22
+        },
+        "muscle-long-head-of-biceps-brachii-l": {
+          "nearRadiusSurfaceSamples": 47,
+          "stronglyRotatingRadialSamples": 47,
+          "nearFixedOriginSurfaceSamples": 18,
+          "mostlyFixedOriginSamples": 18
+        }
+      }
+    }
+  },
+  "inputs": {
+    "skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",
+    "muscles-forearm-hand.glb": "23fd9639d6c3da947ff4fe8e850c5ae4b85cb08b5cbbd3f1995de93cbf0c96c1",
+    "muscles-shoulder-arm.glb": "dbac493d9c9d0882cafa516c835ac9ad9c47e0a324488b4de5e883d496f757e3",
+    "muscle-models.json": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7",
+    "MODEL-LICENSE.md": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+  }
+}

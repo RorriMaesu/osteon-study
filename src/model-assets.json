@@ -20,7 +20,7 @@
   "lymph-nodes-upper-limb": "ee39d9c0d127",
   "motion-arm": "51ed0fa57371",
   "motion-arm-left": "2ba25466e70f",
-  "motion-legs": "7b074a8dc8de",
+  "motion-legs": "6b36a4d56399",
   "motion-gait": "ef24ceb383e2",
   "motion-walk-context": "e59a7dff8366",
   "motion-leg-actions": "2edf622d5d03",
@@ -28,5 +28,7 @@
   "motion-breath": "cdb2cc2369d9",
   "motion-jaw": "a4a88383fd7c",
   "motion-smile": "7eebda037295",
+  "motion-forearm": "6e9e97cebb16",
+  "motion-pectoral": "0fc8fe6a9795",
   "motion-walk-muscles": "fe4ef3f07244"
 }

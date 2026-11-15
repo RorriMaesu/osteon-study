@@ -21,7 +21,8 @@ test('each regional clip connects exact named atlas IDs, available morphs and su
   const used=new Set(meta.clips.flatMap(clip=>Object.keys(clip.morphTracks)));
   for(const node of muscles){
    const targets=json.meshes[node.mesh].extras?.targetNames||[];
-   assert.equal(targets.some(target=>used.has(target)),node.extras.motionModeling!=='static-context');
+   const component=meta.components.find(part=>part.id===node.extras.muscleId);
+   assert.equal(targets.some(target=>used.has(target)),!component.modeling.endsWith('-context'));
   }
   for(const clip of meta.clips){
    assert.equal(clip.phases[0].start,0);
@@ -43,4 +44,5 @@ test('the regional timeline respects phase changes and eases bounded morph weigh
  assert.deepEqual(regionalFrame(clip,.5),{phase:clip.phases[0],weights:{Relax:.5}});
  assert.deepEqual(regionalFrame(clip,1),{phase:clip.phases[1],weights:{Relax:1}});
  assert.equal(regionalFrame(clip,100).weights.Relax,0);
+ assert.equal(regionalFrame({...clip,morphInterpolation:'linear'},.25).weights.Relax,.25);
 });

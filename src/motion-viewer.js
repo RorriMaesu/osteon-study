@@ -4,6 +4,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {elbowAngle,planarLimbPose,clamp} from './motion-core.js';
+import {ankleMorphBinding,poseAnkleMorphs} from './motion-ankle.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 import muscleModels from './muscle-models.json' with {type:'json'};
 import {walkScopeMatches,walkBoneRegion,captureWalkDrivers,mountWalkPack,updateWalkPacks,walkScopeBounds} from './motion-walk-model.js';
@@ -156,7 +157,7 @@ export class MotionViewer {
        const record=info.get(part.key);
        part.note=record?.note;
        part.deformation=record?.modeling;
-       part.contextOnly=part.deformation==='static-context';
+       part.contextOnly=targets.length===0;
        parts.push(part);
       }
      });
@@ -168,12 +169,16 @@ export class MotionViewer {
      pelvis:attach(meta.joints.pelvis),
      ...Object.fromEntries(['right','left'].map(side=>[side,Object.fromEntries(Object.entries(meta.joints[side]).map(([key,name])=>[key,attach(name)]))])),
     };
-    const parts=[],legBones=[];
+    const parts=[],legBones=[],ankleMorphs={left:[],right:[]};
     model.traverse(mesh=>{
      if(!mesh.isMesh)return;
      if(mesh.isSkinnedMesh)mesh.frustumCulled=false;
      const side=!arm&&mesh.userData.motionKind==='bone'&&mesh.userData.zname?.match(/\.(r|l)$/i);
      if(side)legBones.push({mesh,side:side[1].toLowerCase()==='r'?'right':'left'});
+     if(!arm){
+      const binding=ankleMorphBinding(mesh);
+      if(binding)ankleMorphs[binding.side].push(binding);
+     }
      if(!mesh.userData.motionMuscle)return;
      parts.push(musclePart(mesh));
     });
@@ -182,7 +187,7 @@ export class MotionViewer {
     const action=clip?mixer.clipAction(clip).setLoop(THREE.LoopOnce,1):null;
     if(action)action.clampWhenFinished=true;
     const contacts=!arm?Object.fromEntries(Object.entries(meta.contact).map(([side,points])=>[side,Object.values(points).map(point=>({node:model.getObjectByName(point.node),offset:new THREE.Vector3(...point.local)}))])):null;
-    return {model,meta,joints,parts,kind:arm?'arm':'legs',side:meta.side||'right',mixer,action,contacts,legBones};
+    return {model,meta,joints,parts,kind:arm?'arm':'legs',side:meta.side||'right',mixer,action,contacts,legBones,ankleMorphs};
   })();
   this.cache.set(kind,loading);
   loading.catch(()=>this.cache.delete(kind));
@@ -307,6 +312,7 @@ export class MotionViewer {
    listed.push(torso,head,...Object.values(arms).flatMap(arm=>Object.values(arm)));
   }
   for(const joint of listed){joint.node.quaternion.copy(joint.rest);joint.node.position.copy(joint.position);}
+  if(kind==='legs')for(const bindings of Object.values(this.current.ankleMorphs||{}))poseAnkleMorphs(bindings,0);
   this.dirty=true;
  }
  applyRegional(weights,showContext){
@@ -336,6 +342,7 @@ export class MotionViewer {
    this.rotate(joints[side][joint],meta.axes[side][joint],pose[joint]-rest);
   }
   this.rotate(joints[side].patella,meta.axes[side].patella,Math.max(0,pose.knee)*.55);
+  poseAnkleMorphs(this.current.ankleMorphs?.[side],pose.ankle);
   this.dirty=true;
  }
  showGround(visible){if(this.grid){this.grid.visible=visible;if(!visible)this.grid.position.z=0;}}

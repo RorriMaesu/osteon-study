@@ -89,7 +89,7 @@ export function initMotionLab({setView}){
   <label><input type="checkbox" data-motion-active> <span data-motion-filter-label>Highlighted only</span></label>
   <label><input type="checkbox" data-motion-antagonists checked> Show antagonist roles</label>
   <label hidden><input type="checkbox" data-motion-context checked> Show bones &amp; context</label>
-  <label hidden>Breathing layer <select data-motion-breath-layer><option value="thorax">Diaphragm &amp; ribs</option><option value="outer">Outer abdominal wall</option><option value="deep">Deep wall &amp; intercostals</option><option value="all">All breathing muscles</option></select></label>
+  <label hidden>Breathing layer <select data-motion-breath-layer><option value="thorax">Diaphragm &amp; ribs</option><option value="front">Rectus abdominis</option><option value="outer">External obliques</option><option value="deep">Deep wall &amp; intercostals</option><option value="all">All breathing muscles</option></select></label>
   <label hidden><input type="checkbox" data-motion-isolate> Isolate selected</label>
   <label hidden><input type="checkbox" data-motion-group> Whole muscle</label>
  </div>
@@ -172,6 +172,7 @@ export function initMotionLab({setView}){
   state.walkScope=scope;
   const selected=partsInMode().find(part=>part.key===state.selected);
   if(selected&&!inWalkScope(selected))clearSelection();
+  if(scope.endsWith('-leg'))changeSide(scope.split('-')[0]);
   state.walkQuery='';
   $('[data-motion-search]').value='';
   updateWalkList(scope==='all'?'recorded':'all');
@@ -455,7 +456,7 @@ export function initMotionLab({setView}){
    contextRef=regionalLessons[state.lesson].reference;
    for(const part of specimen.parts){
     if(current.active?.includes(part.id)&&!part.contextOnly)strengths[roleKey(part)]=1;
-    if(current.opposes?.includes(part.id))opposing.add(roleKey(part));
+    if(current.opposes?.includes(part.id)&&!part.contextOnly)opposing.add(roleKey(part));
    }
   }else if(heelLesson()){
    const frame=heelFrame(state.time);
@@ -514,13 +515,22 @@ export function initMotionLab({setView}){
    for(const side of ['right','left']){
     for(const [id,value] of Object.entries(current[side].emg))if(value!=null)strengths[side+':'+id]=value/100;
    }
-   const joint=current[state.side];
-   readoutText='Hip '+Math.round(joint.hip)+'° · Knee '+Math.round(joint.knee)+'° · Ankle '+Math.round(joint.ankle)+'°';
-   const contact=current[state.side].contact;
-   title=contact?'Stance':'Swing';
-   jointText=(state.side==='right'?'Right':'Left')+' leg · '+title;
-   tag='Recorded surface EMG';
-   detail=(state.side==='right'?'Right':'Left')+' foot '+(contact?'is in contact with the ground.':'is moving through the air.');
+   const scope=state.walkScope;
+   if(fullWalk&&scope!=='all'&&!scope.endsWith('-leg')){
+    title=walkScopes[scope];
+    jointText=title+' · Walk cycle';
+    tag='Illustrative movement';
+    detail='This region follows the walk without a surface EMG recording.';
+    cue=null;
+   }else{
+    const side=scope.endsWith('-leg')?scope.split('-')[0]:state.side;
+    const joint=current[side];
+    readoutText='Hip '+Math.round(joint.hip)+'° · Knee '+Math.round(joint.knee)+'° · Ankle '+Math.round(joint.ankle)+'°';
+    title=joint.contact?'Stance':'Swing';
+    jointText=sideName(side)+' leg · '+title;
+    tag='Recorded surface EMG';
+    detail=sideName(side)+' foot '+(joint.contact?'is in contact with the ground.':'is moving through the air.');
+   }
   }
   const parts=partsInMode(),partsByKey=partCache.byKey;
   const selected=partsByKey.get(state.selected);
@@ -528,7 +538,7 @@ export function initMotionLab({setView}){
   for(const key of Object.keys(strengths))opposing.delete(key);
   const threshold=state.mode==='walk'&&state.onlyActive ? .05 : 0;
   const breathing=regionalLesson()&&state.lesson==='breath';
-  const layer=breathing?(state.breathLayer||(currentRegionalClip().id==='forced-expiration'?'outer':'thorax')):null;
+  const layer=breathing?(state.breathLayer||(currentRegionalClip().id==='forced-expiration'?'front':'thorax')):null;
   const layerControl=$('[data-motion-breath-layer]');
   layerControl.parentElement.hidden=!breathing;
   if(breathing&&layerControl.value!==layer)layerControl.value=layer;

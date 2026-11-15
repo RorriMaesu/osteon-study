@@ -1,0 +1,731 @@
+{
+  "schema": 1,
+  "region": "pectoral",
+  "asset": "motion-pectoral.glb",
+  "sha256": "b611f7c52b2d0eec619ac699a05a68d1f668b7a5bf2eb346c08f34874d9c3562",
+  "bytes": 2239108,
+  "camera": {
+    "target": [
+      0,
+      1.228,
+      -0.004
+    ],
+    "direction": [
+      0.65,
+      0.12,
+      1
+    ],
+    "diameter": 0.9
+  },
+  "sources": {
+    "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+    "study": "https://onlinelibrary.wiley.com/doi/10.1111/j.1469-7580.2008.00965.x",
+    "detail": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2857390/"
+  },
+  "evidence": "Authored teaching deformation",
+  "scope": "Both shoulders flex through a limited available range in an authored reach. The model shows distinct muscle paths, scapular movement, and selected actions. It omits hands, instrumented activity and measured whole-body recruitment.",
+  "components": [
+    {
+      "id": "muscle-acromial-part-of-deltoid-muscle-r",
+      "name": "Acromial part of deltoid muscle",
+      "side": "right",
+      "role": "deltoid-middle",
+      "note": "The acromial fibers are prominent abductors. This surface follows the arm during flexion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-clavicular-part-of-deltoid-muscle-r",
+      "name": "Clavicular part of deltoid muscle",
+      "side": "right",
+      "role": "deltoid-anterior",
+      "note": "The clavicular or anterior fibers flex the shoulder.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "name": "Scapular spinal part of deltoid muscle",
+      "side": "right",
+      "role": "deltoid-posterior",
+      "note": "The posterior fibers have a shoulder-extension moment arm opposite flexion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-acromial-part-of-deltoid-muscle-l",
+      "name": "Acromial part of deltoid muscle",
+      "side": "left",
+      "role": "deltoid-middle",
+      "note": "The acromial fibers are prominent abductors. This surface follows the arm during flexion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-clavicular-part-of-deltoid-muscle-l",
+      "name": "Clavicular part of deltoid muscle",
+      "side": "left",
+      "role": "deltoid-anterior",
+      "note": "The clavicular or anterior fibers flex the shoulder.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "name": "Scapular spinal part of deltoid muscle",
+      "side": "left",
+      "role": "deltoid-posterior",
+      "note": "The posterior fibers have a shoulder-extension moment arm opposite flexion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-subscapularis-muscle-r",
+      "name": "Subscapularis muscle",
+      "side": "right",
+      "role": "subscapularis",
+      "note": "Assists internal rotation and stability.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-supraspinatus-muscle-r",
+      "name": "Supraspinatus muscle",
+      "side": "right",
+      "role": "supraspinatus",
+      "note": "Follows the humerus near its insertion and contributes to humeral-head control.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-teres-minor-muscle-r",
+      "name": "Teres minor muscle",
+      "side": "right",
+      "role": "teres-minor",
+      "note": "Assists external rotation and stability.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-infraspinatus-muscle-r",
+      "name": "Infraspinatus muscle",
+      "side": "right",
+      "role": "infraspinatus",
+      "note": "Assists external rotation and stability.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-subscapularis-muscle-l",
+      "name": "Subscapularis muscle",
+      "side": "left",
+      "role": "subscapularis",
+      "note": "Assists internal rotation and stability.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-supraspinatus-muscle-l",
+      "name": "Supraspinatus muscle",
+      "side": "left",
+      "role": "supraspinatus",
+      "note": "Follows the humerus near its insertion and contributes to humeral-head control.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-teres-minor-muscle-l",
+      "name": "Teres minor muscle",
+      "side": "left",
+      "role": "teres-minor",
+      "note": "Assists external rotation and stability.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-infraspinatus-muscle-l",
+      "name": "Infraspinatus muscle",
+      "side": "left",
+      "role": "infraspinatus",
+      "note": "Assists external rotation and stability.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-teres-major-muscle-r",
+      "name": "Teres major muscle",
+      "side": "right",
+      "role": "teres-major",
+      "note": "Extends, adducts and medially rotates the humerus.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-teres-major-muscle-l",
+      "name": "Teres major muscle",
+      "side": "left",
+      "role": "teres-major",
+      "note": "Extends, adducts and medially rotates the humerus.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-coracobrachialis-muscle-r",
+      "name": "Coracobrachialis muscle",
+      "side": "right",
+      "role": "coracobrachialis",
+      "note": "Assists flexion and adduction at the shoulder.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-coracobrachialis-muscle-l",
+      "name": "Coracobrachialis muscle",
+      "side": "left",
+      "role": "coracobrachialis",
+      "note": "Assists flexion and adduction at the shoulder.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-latissimus-dorsi-muscle-r",
+      "name": "Latissimus dorsi muscle",
+      "side": "right",
+      "role": "latissimus-dorsi",
+      "note": "Can oppose forward flexion with a shoulder-extension moment arm.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-latissimus-dorsi-muscle-l",
+      "name": "Latissimus dorsi muscle",
+      "side": "left",
+      "role": "latissimus-dorsi",
+      "note": "Can oppose forward flexion with a shoulder-extension moment arm.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-clavicular-head-of-pectoralis-major-muscle-r",
+      "name": "Clavicular head of pectoralis major muscle",
+      "side": "right",
+      "role": "pectoralis-clavicular",
+      "note": "Clavicular fibers assist glenohumeral flexion as the arm reaches forward.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-sternocostal-head-of-pectoralis-major-muscle-r",
+      "name": "Sternocostal head of pectoralis major muscle",
+      "side": "right",
+      "role": "pectoralis-sternocostal",
+      "note": "Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-abdominal-part-of-pectoralis-major-muscle-r",
+      "name": "(Abdominal part of pectoralis major muscle)",
+      "side": "right",
+      "role": "pectoralis-abdominal",
+      "note": "The variable lower part is shown following the humeral insertion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-clavicular-head-of-pectoralis-major-muscle-l",
+      "name": "Clavicular head of pectoralis major muscle",
+      "side": "left",
+      "role": "pectoralis-clavicular",
+      "note": "Clavicular fibers assist glenohumeral flexion as the arm reaches forward.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-sternocostal-head-of-pectoralis-major-muscle-l",
+      "name": "Sternocostal head of pectoralis major muscle",
+      "side": "left",
+      "role": "pectoralis-sternocostal",
+      "note": "Many fibers adduct and internally rotate the arm. Direction and contribution vary across the joint range.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-abdominal-part-of-pectoralis-major-muscle-l",
+      "name": "(Abdominal part of pectoralis major muscle)",
+      "side": "left",
+      "role": "pectoralis-abdominal",
+      "note": "The variable lower part is shown following the humeral insertion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-pectoralis-minor-muscle-r",
+      "name": "Pectoralis minor muscle",
+      "side": "right",
+      "role": "pectoralis-minor",
+      "note": "Runs from upper ribs to coracoid and acts on the scapula.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-serratus-anterior-muscle-r",
+      "name": "Serratus anterior muscle",
+      "side": "right",
+      "role": "serratus-anterior",
+      "note": "The scapular insertion follows scapular rotation. The serratus can assist upward rotation and protraction.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-pectoralis-minor-muscle-l",
+      "name": "Pectoralis minor muscle",
+      "side": "left",
+      "role": "pectoralis-minor",
+      "note": "Runs from upper ribs to coracoid and acts on the scapula.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-serratus-anterior-muscle-l",
+      "name": "Serratus anterior muscle",
+      "side": "left",
+      "role": "serratus-anterior",
+      "note": "The scapular insertion follows scapular rotation. The serratus can assist upward rotation and protraction.",
+      "modeling": "authored-deformation"
+    }
+  ],
+  "clips": [
+    {
+      "id": "forward-reach",
+      "name": "Forward reach",
+      "duration": 4.2,
+      "morphTracks": {
+        "Reach": [
+          [
+            0,
+            0
+          ],
+          [
+            0.28,
+            0
+          ],
+          [
+            1.6,
+            1
+          ],
+          [
+            2.13,
+            1
+          ],
+          [
+            3.8,
+            0
+          ],
+          [
+            4.2,
+            0
+          ]
+        ]
+      },
+      "phases": [
+        {
+          "start": 0,
+          "label": "Arms at rest",
+          "detail": "Compare the clavicular and sternocostal portions of pectoralis major.",
+          "active": [],
+          "opposes": []
+        },
+        {
+          "start": 0.28,
+          "label": "Forward reach",
+          "detail": "Clavicular pectoralis major, anterior deltoid and coracobrachialis assist flexion. The highlighted opposing muscles have extension moment arms.",
+          "active": [
+            "pectoralis-clavicular",
+            "deltoid-anterior",
+            "coracobrachialis"
+          ],
+          "opposes": [
+            "deltoid-posterior",
+            "teres-major",
+            "latissimus-dorsi"
+          ]
+        },
+        {
+          "start": 1.6,
+          "label": "Hold the reach",
+          "detail": "The raised arms hold position in this teaching example.",
+          "active": [
+            "pectoralis-clavicular",
+            "deltoid-anterior",
+            "coracobrachialis"
+          ],
+          "opposes": [
+            "deltoid-posterior",
+            "teres-major",
+            "latissimus-dorsi"
+          ]
+        },
+        {
+          "start": 2.13,
+          "label": "Return under control",
+          "detail": "Shoulder flexors can control the descent with lengthening under tension.",
+          "active": [
+            "pectoralis-clavicular",
+            "deltoid-anterior",
+            "coracobrachialis"
+          ],
+          "opposes": []
+        },
+        {
+          "start": 3.8,
+          "label": "Arms at rest",
+          "detail": "The arms are back at the starting posture.",
+          "active": [],
+          "opposes": []
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "muscle-acromial-part-of-deltoid-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 17.876,
+        "maxDisplacementMm": 66.669,
+        "edgeLengthRatio95": 1.235,
+        "originFollowErrorMmP95": 0.527,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-clavicular-part-of-deltoid-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 22.735,
+        "maxDisplacementMm": 67.481,
+        "edgeLengthRatio95": 1.04,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-scapular-spinal-part-of-deltoid-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 18.583,
+        "maxDisplacementMm": 75.158,
+        "edgeLengthRatio95": 1.298,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-acromial-part-of-deltoid-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 17.876,
+        "maxDisplacementMm": 66.669,
+        "edgeLengthRatio95": 1.234,
+        "originFollowErrorMmP95": 0.527,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-clavicular-part-of-deltoid-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 22.733,
+        "maxDisplacementMm": 67.48,
+        "edgeLengthRatio95": 1.04,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-scapular-spinal-part-of-deltoid-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 18.583,
+        "maxDisplacementMm": 75.158,
+        "edgeLengthRatio95": 1.298,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-subscapularis-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 12.104,
+        "maxDisplacementMm": 25.152,
+        "edgeLengthRatio95": 1.121,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-supraspinatus-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 10.394,
+        "maxDisplacementMm": 18.668,
+        "edgeLengthRatio95": 1.092,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-teres-minor-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 14.876,
+        "maxDisplacementMm": 21.68,
+        "edgeLengthRatio95": 1.083,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-infraspinatus-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 11.504,
+        "maxDisplacementMm": 18.087,
+        "edgeLengthRatio95": 1.041,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-subscapularis-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 12.104,
+        "maxDisplacementMm": 25.152,
+        "edgeLengthRatio95": 1.121,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-supraspinatus-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 10.394,
+        "maxDisplacementMm": 18.667,
+        "edgeLengthRatio95": 1.092,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-teres-minor-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 14.876,
+        "maxDisplacementMm": 21.679,
+        "edgeLengthRatio95": 1.083,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-infraspinatus-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 11.504,
+        "maxDisplacementMm": 18.087,
+        "edgeLengthRatio95": 1.041,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-teres-major-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 32.94,
+        "maxDisplacementMm": 44.074,
+        "edgeLengthRatio95": 1.264,
+        "originFollowErrorMmP95": 2.045,
+        "insertionFollowErrorMmP95": 0.414
+      }
+    },
+    "muscle-teres-major-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 32.939,
+        "maxDisplacementMm": 44.074,
+        "edgeLengthRatio95": 1.264,
+        "originFollowErrorMmP95": 2.045,
+        "insertionFollowErrorMmP95": 0.414
+      }
+    },
+    "muscle-coracobrachialis-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 40.039,
+        "maxDisplacementMm": 84.239,
+        "edgeLengthRatio95": 1.101,
+        "originFollowErrorMmP95": 1.235,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-coracobrachialis-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 40.037,
+        "maxDisplacementMm": 84.238,
+        "edgeLengthRatio95": 1.1,
+        "originFollowErrorMmP95": 1.237,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-latissimus-dorsi-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 0.0,
+        "maxDisplacementMm": 53.742,
+        "edgeLengthRatio95": 1.445,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 8.31
+      }
+    },
+    "muscle-latissimus-dorsi-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 0.0,
+        "maxDisplacementMm": 53.742,
+        "edgeLengthRatio95": 1.443,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 8.373
+      }
+    },
+    "muscle-clavicular-head-of-pectoralis-major-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 12.777,
+        "maxDisplacementMm": 50.835,
+        "edgeLengthRatio95": 1.02,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-sternocostal-head-of-pectoralis-major-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 0.081,
+        "maxDisplacementMm": 46.398,
+        "edgeLengthRatio95": 1.077,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 9.137
+      }
+    },
+    "muscle-abdominal-part-of-pectoralis-major-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 0.0,
+        "maxDisplacementMm": 40.467,
+        "edgeLengthRatio95": 1.199,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.1
+      }
+    },
+    "muscle-clavicular-head-of-pectoralis-major-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 12.775,
+        "maxDisplacementMm": 50.835,
+        "edgeLengthRatio95": 1.02,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.0
+      }
+    },
+    "muscle-sternocostal-head-of-pectoralis-major-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 0.081,
+        "maxDisplacementMm": 46.397,
+        "edgeLengthRatio95": 1.077,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 9.135
+      }
+    },
+    "muscle-abdominal-part-of-pectoralis-major-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 0.0,
+        "maxDisplacementMm": 40.467,
+        "edgeLengthRatio95": 1.199,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.1
+      }
+    },
+    "muscle-pectoralis-minor-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 0.0,
+        "maxDisplacementMm": 9.313,
+        "edgeLengthRatio95": 1.147,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.006
+      }
+    },
+    "muscle-serratus-anterior-muscle-r": {
+      "Reach": {
+        "medianDisplacementMm": 0.051,
+        "maxDisplacementMm": 21.362,
+        "edgeLengthRatio95": 1.135,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 1.079
+      }
+    },
+    "muscle-pectoralis-minor-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 0.0,
+        "maxDisplacementMm": 9.313,
+        "edgeLengthRatio95": 1.147,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 0.006
+      }
+    },
+    "muscle-serratus-anterior-muscle-l": {
+      "Reach": {
+        "medianDisplacementMm": 0.053,
+        "maxDisplacementMm": 21.362,
+        "edgeLengthRatio95": 1.136,
+        "originFollowErrorMmP95": 0.0,
+        "insertionFollowErrorMmP95": 1.052
+      }
+    }
+  },
+  "jointReview": {
+    "r": {
+      "maxForearmForwardMm": 256.053,
+      "samples": [
+        {
+          "fraction": 0,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 18,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 0.25,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 16,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 0.5,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 14,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 0.75,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 14,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 1,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 14,
+          "glenoidToHeadCenterMm": 28.08
+        }
+      ]
+    },
+    "l": {
+      "maxForearmForwardMm": 256.053,
+      "samples": [
+        {
+          "fraction": 0,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 18,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 0.25,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 16,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 0.5,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 14,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 0.75,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 14,
+          "glenoidToHeadCenterMm": 28.08
+        },
+        {
+          "fraction": 1,
+          "glenohumeralTrianglePairsInContact": 0,
+          "acromioclavicularTrianglePairsInContact": 14,
+          "glenoidToHeadCenterMm": 28.08
+        }
+      ]
+    }
+  },
+  "sourceFiles": [
+    {
+      "file": "skeleton.glb",
+      "sha256": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb"
+    },
+    {
+      "file": "muscles-shoulder-arm.glb",
+      "sha256": "dbac493d9c9d0882cafa516c835ac9ad9c47e0a324488b4de5e883d496f757e3"
+    },
+    {
+      "file": "muscles-trunk-back.glb",
+      "sha256": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b"
+    },
+    {
+      "file": "landmarks.json",
+      "sha256": "472f99f02c47a2571cc81ea8aeb595e1f3714fa02340ce13c6a53db83916518a"
+    },
+    {
+      "file": "MODEL-LICENSE.md",
+      "sha256": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+    },
+    {
+      "file": "muscle-models.json",
+      "sha256": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7"
+    }
+  ]
+}
