@@ -39,6 +39,17 @@ test('each regional clip connects exact named atlas IDs, available morphs and su
  }
 });
 
+test('jaw opening moves the lip, cheek, chin and tongue on each side without assigning them chewing roles',()=>{
+ const {components,clips,checks}=JSON.parse(readFileSync(assetURL('motion-jaw','.json'),'utf8'));
+ const cues=new Set(clips.flatMap(clip=>clip.phases.flatMap(phase=>[...phase.active,...phase.opposes])));
+ for(const side of ['left','right'])for(const role of ['orbicularis-oris','buccinator','mentalis','genioglossus']){
+  const part=components.find(part=>part.role===role&&part.side===side);
+  assert.equal(part?.modeling,'passive-deformation',side+' '+role);
+  assert.ok(checks[part.id].JawOpen.maxDisplacementMm>10);
+  assert.ok(!cues.has(role),role);
+ }
+});
+
 test('the regional timeline respects phase changes and eases bounded morph weights',()=>{
  const clip={duration:2,morphTracks:{Relax:[[0,0],[1,1],[2,0]]},phases:[{start:0,label:'Start'},{start:1,label:'Return'}]};
  assert.deepEqual(regionalFrame(clip,.5),{phase:clip.phases[0],weights:{Relax:.5}});

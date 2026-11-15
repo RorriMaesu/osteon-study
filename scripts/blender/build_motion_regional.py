@@ -21,6 +21,8 @@ import bpy
 from mathutils import Matrix, Quaternion, Vector
 from mathutils.kdtree import KDTree
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from mouth_deformation import ORAL_FOLLOW, oral_jaw_weight
 
 SIDES = {"r": ("right", -1), "l": ("left", 1)}
 ORDINALS = "first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth".split()
@@ -35,6 +37,8 @@ SOURCES = {
         "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back",
         "study": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/",
         "detail": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12553608/",
+        "perioralAttachments": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9944027/",
+        "mouthFloor": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8130842/",
     },
     "smile": {
         "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back",
@@ -70,11 +74,12 @@ JAW = {
     "Temporalis muscle": ("temporalis", "Elevates the mandible; some posterior fibers can also retract it."),
     "Medial pterygoid muscle": ("medial-pterygoid", "Assists elevation and can contribute to protrusion."),
     "Inferior head of lateral pterygoid muscle": ("lateral-pterygoid-inferior", "Helps draw the condyle forward during opening."),
-    "Superior head of lateral pterygoid muscle": ("lateral-pterygoid-superior", "The disc-associated head is shown as regional context."),
+    "Superior head of lateral pterygoid muscle": ("lateral-pterygoid-superior", "The skull attachment stays fixed while the fibers near the joint follow the condyle."),
     "Anterior belly of digastric muscle": ("digastric-anterior", "Helps depress the mandible when the hyoid is stabilized."),
     "Posterior belly of digastric muscle": ("digastric-posterior", "Acts on the hyoid. It is shown as regional context."),
     "Geniohyoid muscle": ("geniohyoid", "Can help depress the mandible with the hyoid stabilized."),
     "Mylohyoid muscle": ("mylohyoid", "Forms the floor of the mouth and can assist mandibular depression with the hyoid fixed."),
+    **{name: entry for name, entry in ORAL_FOLLOW.items() if name != "Platysma"},
 }
 JAW_ELEVATORS = ["masseter-superficial", "masseter-deep", "temporalis", "medial-pterygoid"]
 JAW_OPENERS = ["lateral-pterygoid-inferior", "digastric-anterior", "geniohyoid", "mylohyoid"]
@@ -457,8 +462,12 @@ def build_jaw(bones_path, muscles_path, registration_path):
     for label, obj in muscles.items():
         name, _, _ = split_side(label)
         role = JAW[name][0]
-        if role in ("lateral-pterygoid-superior", "digastric-posterior"):
+        if role == "digastric-posterior":
             entries.append(tag_muscle(obj, label, JAW, "static-context"))
+            continue
+        if name in ORAL_FOLLOW:
+            entries.append(tag_muscle(obj, label, JAW, "passive-deformation"))
+            add_shape(obj, "JawOpen", lambda point: point.lerp(jaw_transform(point, pivot), oral_jaw_weight(role, point)))
             continue
         entries.append(tag_muscle(obj, label, JAW, "authored-deformation"))
         face, temporal, pterygoid = masticatory[label[-1]]
@@ -487,8 +496,8 @@ def build_jaw(bones_path, muscles_path, registration_path):
             return jaw_transform(point, pivot, weight)
 
         add_shape(obj, "JawOpen", deformation)
-    if len(entries) != 20:
-        raise ValueError(f"Expected 20 bilateral jaw components, found {len(entries)}")
+    if len(entries) != 2 * len(JAW):
+        raise ValueError(f"Expected {2 * len(JAW)} bilateral jaw components, found {len(entries)}")
     return entries
 
 
@@ -579,7 +588,7 @@ def lessons(region):
                 "phases": [
                     phase(0, "Jaw closed", "The mandible sits beneath the maxilla."),
                     phase(.28, "Opening", "The condyles rotate and glide forward and down. The inferior lateral pterygoid and suprahyoids assist opening with the hyoid stabilized.", JAW_OPENERS, JAW_ELEVATORS),
-                    phase(1.38, "Open pose", "Inspect the position of the mandibular condyle relative to the temporal bone and the changed paths of the jaw muscles."),
+                    phase(1.38, "Open pose", "Compare the lower lip and cheek with the fixed upper face. The chewing muscles change length as the condyle glides forward."),
                     phase(1.85, "Closing", "The masseter, temporalis and medial pterygoid elevate the mandible as it returns toward the maxilla.", JAW_ELEVATORS, JAW_OPENERS),
                     phase(2.99, "Jaw closed", "The closing movement is complete."),
                 ]
@@ -715,7 +724,7 @@ def main():
             raise RuntimeError(f"Input changed in the course of authoring: {row['original']}")
     notes = {
         "blink": "Authored bilateral eyelid motion based on human blink studies. Atlas skin, eyelash, lid tarsal plate, globe and all other facial muscles are outside this model.",
-        "jaw": "Bilateral symmetric teaching motion from registered jaw anatomy. The fixed hyoid simplifies suprahyoid stabilization. Disc deformation, bite forces, tongue movement and hyoid motion are outside the model.",
+        "jaw": "Bilateral teaching motion with a stabilized hyoid. Lip, cheek and tongue surfaces show passive jaw follow-through. Separate tongue gestures, disc deformation and bite forces are outside the model.",
         "smile": "Bilateral authored smile. The mesh shows geometric muscle movement and a taught force direction. Labial skin and individual smile variants are outside the model.",
         "breath": "Authored respiratory motion. The diaphragm itself deforms, the ribs rotate on posterior pivots, and intercostal geometry follows the nearest ribs. Abdominal-wall changes are teaching approximations. Regional intercostal recruitment, organ deformation, pressure, and individual forces are not simulated.",
     }

@@ -164,6 +164,41 @@ for obj in objects:
         edge_data[obj.name]=(edges[chosen],lengths[chosen])
 assert max_bounds_error<.0007,max_bounds_error
 
+def check_jaw_opening():
+    apply({'jaw':{'opening':15}})
+    anchored = ('levator-labii-superioris', 'posterior-belly-of-digastric-muscle')
+    followers = {
+        'mentalis-muscle':16, 'depressor-labii-inferioris':16, 'depressor-anguli-oris':12,
+        'genioglossus-muscle':12, 'mylohyoid-muscle':8, 'anterior-belly-of-digastric-muscle':8,
+        'superior-head-of-lateral-pterygoid-muscle':2,
+    }
+    report = {}
+    for side in ('l','r'):
+        def samples(part):
+            obj = muscle_by_id[f'muscle-{part}-{side}']
+            rest = neutral[obj.name]
+            delta = np.linalg.norm(vertices(obj)-rest,axis=1)*1000
+            return rest[:,2],delta
+
+        lip_height, lip = samples('orbicularis-oris-muscle')
+        cheek_height, cheek = samples('bucinator')
+        lower_lip, upper_lip = lip[lip_height<1.525], lip[lip_height>1.545]
+        lower_cheek, upper_cheek = cheek[cheek_height<1.523], cheek[cheek_height>1.548]
+        assert np.median(lower_lip)>16 and np.max(upper_lip)<.35,(side,'lip opening')
+        assert np.median(lower_cheek)>8 and np.max(upper_cheek)<.35,(side,'cheek opening')
+        for part in anchored:
+            assert samples(part)[1].max()<.35,(side,part,'stationary attachment')
+        for part,minimum in followers.items():
+            peak = samples(part)[1].max()
+            assert peak>minimum,(side,part,'missing jaw motion',peak)
+        report[side] = {'lowerLipMedianMm':round(float(np.median(lower_lip)),3),
+                        'lowerCheekMedianMm':round(float(np.median(lower_cheek)),3),
+                        'upperLipPeakMm':round(float(upper_lip.max()),3),
+                        'upperCheekPeakMm':round(float(upper_cheek.max()),3)}
+    return report
+
+jaw_opening = check_jaw_opening()
+
 hand={j['id']:{a['id']:a['max'] for a in j['axes']} for j in META['joints'] if j['id'].startswith('right-') and any(d in j['id'] for d in ('thumb','index','middle','ring','little'))}
 scenarios={
  'elbow-flexion':{'right-elbow':{'flexion':115},'left-elbow':{'flexion':115}},
@@ -219,6 +254,7 @@ report={
  'sha256':hashlib.sha256(MODEL.read_bytes()).hexdigest(),'reimportedMuscles':len(muscles),'reimportedBoneSurfaces':len(objects)-len(muscles),
  'maximumNeutralBoundsErrorMillimeters':round(max_bounds_error*1000,6),'maximumSkinWeightSumError':max_weight_error,
  'jointControls':len(META['joints']),'rigNodes':len(rig.pose.bones),'exactNeutralReset':True,
+ 'jawOpening':jaw_opening,
  'sampledPoses':results,
  'limits':'Numerical re-import and sampled skin-envelope checks. This does not validate tissue collision, dynamic forces, clinical range of motion, or activation.',
 }

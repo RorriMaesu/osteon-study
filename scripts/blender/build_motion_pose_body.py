@@ -18,6 +18,8 @@ import numpy as np
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from mouth_deformation import ORAL_FOLLOW, oral_jaw_weight
 REPO, WORK = [Path(p).resolve() for p in sys.argv[sys.argv.index('--')+1:]]
 if WORK.is_relative_to(REPO):
     raise ValueError('Keep editable Blender files and backups outside the repo.')
@@ -365,6 +367,8 @@ def import_sources():
             identifier=obj.get('muscleId')
             label=obj.get('zname') or obj.get('motionBone') or obj.get('motionContext')
             if identifier in PARTS:
+                if region=='jaw' and PARTS[identifier]['sourceName'].rsplit('.',1)[0] in ORAL_FOLLOW:
+                    continue  # Jaw skin carries oral surfaces, including those with a Smile morph.
                 previous=MUSCLES[identifier]
                 if previous.data.shape_keys and len(previous.data.shape_keys.key_blocks)>1:
                     # These regional assets retain the original atlas topology.
@@ -517,6 +521,7 @@ def bind_all(rig):
         part=PARTS[identifier]
         name=part['muscleName']
         side=part['side']
+        oral=ORAL_FOLLOW.get(part['sourceName'].rsplit('.',1)[0])
         original_groups={group.index:old_driver(group.name) for group in obj.vertex_groups}
         positions=points(obj)
         scap_attachment=attachment_axis(positions,scapular[side],fixed_trunk) if name in girdle_names and side in SIDES else None
@@ -598,13 +603,11 @@ def bind_all(rig):
                 weight=smooth((p-origin).dot(direction)/length,-.08,1.08)
                 values={key:value*(1-weight) for key,value in values.items()}
                 values[side+'-scapula']=weight
-            if part['region']=='head-neck' and identifier not in REGIONAL_REPLACEMENTS and 'head' in values:
-                # Lower facial and suprahyoid source meshes follow jaw motion;
-                # regional replacement muscles use their verified morphs.
-                if name in {'Platysma','Platysma muscle','Depressor labii inferioris','Mentalis muscle','Buccinator muscle','Depressor anguli oris','Hyoglossus muscle','Genioglossus muscle'}:
-                    amount=smooth(p.y,1.43,1.52) if name.startswith('Platysma') else 1-smooth(p.y,1.515,1.548)
-                    replace_weight(values,'head',{'head':1-amount,'jaw':amount})
-            if identifier not in REGIONAL_REPLACEMENTS:values=distributed(values,p)
+            if oral:
+                amount=oral_jaw_weight(oral[0],p)
+                values={'head':1-amount,'jaw':amount}
+                if oral[0]=='platysma':values=distributed(values,p)
+            elif identifier not in REGIONAL_REPLACEMENTS:values=distributed(values,p)
             weights.append(values)
         found=bind_mesh(obj,rig,weights)
         obj.name='PoseMuscle_'+identifier

@@ -2,8 +2,8 @@
   "schema": 1,
   "region": "jaw",
   "asset": "motion-jaw.glb",
-  "sha256": "86d5c9c1eef64489dc5b3841f9c30c26e46819b8f304377f5074c2b765fa2f1d",
-  "bytes": 978796,
+  "sha256": "2f9d4d3f6eed325ef8b62fae19b827b4082b0e8038b8b4c2ccfca184a7610263",
+  "bytes": 1228352,
   "camera": {
     "target": [
       0,
@@ -20,11 +20,141 @@
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back",
     "study": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/",
-    "detail": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12553608/"
+    "detail": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12553608/",
+    "perioralAttachments": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9944027/",
+    "mouthFloor": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8130842/"
   },
   "evidence": "Authored teaching deformation",
-  "scope": "Bilateral symmetric teaching motion from registered jaw anatomy. The fixed hyoid simplifies suprahyoid stabilization. Disc deformation, bite forces, tongue movement and hyoid motion are outside the model.",
+  "scope": "Bilateral teaching motion with a stabilized hyoid. Lip, cheek and tongue surfaces show passive jaw follow-through. Separate tongue gestures, disc deformation and bite forces are outside the model.",
   "components": [
+    {
+      "id": "muscle-orbicularis-oris-muscle-r",
+      "name": "Orbicularis oris muscle",
+      "side": "right",
+      "role": "orbicularis-oris",
+      "note": "The lower lip follows the mandible while the upper lip stays supported by the upper face.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-orbicularis-oris-muscle-l",
+      "name": "Orbicularis oris muscle",
+      "side": "left",
+      "role": "orbicularis-oris",
+      "note": "The lower lip follows the mandible while the upper lip stays supported by the upper face.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-zygomaticus-major-muscle-r",
+      "name": "Zygomaticus major muscle",
+      "side": "right",
+      "role": "zygomaticus-major",
+      "note": "The cheekbone attachment stays fixed while the mouth corner can shift.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-depressor-anguli-oris-r",
+      "name": "Depressor anguli oris",
+      "side": "right",
+      "role": "depressor-anguli-oris",
+      "note": "The mandibular attachment follows the jaw while the mouth corner moves partway.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-depressor-labii-inferioris-r",
+      "name": "Depressor labii inferioris",
+      "side": "right",
+      "role": "depressor-labii-inferioris",
+      "note": "Moves with the mandibular attachment and the lower lip.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-levator-anguli-oris-r",
+      "name": "Levator anguli oris",
+      "side": "right",
+      "role": "levator-anguli-oris",
+      "note": "The maxillary attachment stays fixed while the mouth corner can shift.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-risorius-muscle-r",
+      "name": "Risorius muscle",
+      "side": "right",
+      "role": "risorius",
+      "note": "The mouth corner follows part of the jaw displacement.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-mentalis-muscle-r",
+      "name": "Mentalis muscle",
+      "side": "right",
+      "role": "mentalis",
+      "note": "The chin muscle and its lower-lip attachment travel with the mandibular symphysis.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-bucinator-r",
+      "name": "Buccinator muscle",
+      "side": "right",
+      "role": "buccinator",
+      "note": "The lower cheek follows the mandible and the upper cheek keeps its maxillary attachment.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-zygomaticus-major-muscle-l",
+      "name": "Zygomaticus major muscle",
+      "side": "left",
+      "role": "zygomaticus-major",
+      "note": "The cheekbone attachment stays fixed while the mouth corner can shift.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-depressor-anguli-oris-l",
+      "name": "Depressor anguli oris",
+      "side": "left",
+      "role": "depressor-anguli-oris",
+      "note": "The mandibular attachment follows the jaw while the mouth corner moves partway.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-depressor-labii-inferioris-l",
+      "name": "Depressor labii inferioris",
+      "side": "left",
+      "role": "depressor-labii-inferioris",
+      "note": "Moves with the mandibular attachment and the lower lip.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-levator-anguli-oris-l",
+      "name": "Levator anguli oris",
+      "side": "left",
+      "role": "levator-anguli-oris",
+      "note": "The maxillary attachment stays fixed while the mouth corner can shift.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-risorius-muscle-l",
+      "name": "Risorius muscle",
+      "side": "left",
+      "role": "risorius",
+      "note": "The mouth corner follows part of the jaw displacement.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-mentalis-muscle-l",
+      "name": "Mentalis muscle",
+      "side": "left",
+      "role": "mentalis",
+      "note": "The chin muscle and its lower-lip attachment travel with the mandibular symphysis.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-bucinator-l",
+      "name": "Buccinator muscle",
+      "side": "left",
+      "role": "buccinator",
+      "note": "The lower cheek follows the mandible and the upper cheek keeps its maxillary attachment.",
+      "modeling": "passive-deformation"
+    },
     {
       "id": "muscle-superficial-part-of-masseter-r",
       "name": "Superficial part of masseter",
@@ -86,8 +216,8 @@
       "name": "Superior head of lateral pterygoid muscle",
       "side": "right",
       "role": "lateral-pterygoid-superior",
-      "note": "The disc-associated head is shown as regional context.",
-      "modeling": "static-context"
+      "note": "The skull attachment stays fixed while the fibers near the joint follow the condyle.",
+      "modeling": "authored-deformation"
     },
     {
       "id": "muscle-inferior-head-of-lateral-pterygoid-muscle-l",
@@ -102,8 +232,8 @@
       "name": "Superior head of lateral pterygoid muscle",
       "side": "left",
       "role": "lateral-pterygoid-superior",
-      "note": "The disc-associated head is shown as regional context.",
-      "modeling": "static-context"
+      "note": "The skull attachment stays fixed while the fibers near the joint follow the condyle.",
+      "modeling": "authored-deformation"
     },
     {
       "id": "muscle-temporalis-muscle-r",
@@ -120,6 +250,38 @@
       "role": "temporalis",
       "note": "Elevates the mandible; some posterior fibers can also retract it.",
       "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-hyoglossus-muscle-r",
+      "name": "Hyoglossus muscle",
+      "side": "right",
+      "role": "hyoglossus",
+      "note": "The tongue-side fibers follow partway while the hyoid attachment stays fixed in this demonstration.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-hyoglossus-muscle-l",
+      "name": "Hyoglossus muscle",
+      "side": "left",
+      "role": "hyoglossus",
+      "note": "The tongue-side fibers follow partway while the hyoid attachment stays fixed in this demonstration.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-genioglossus-muscle-r",
+      "name": "Genioglossus muscle",
+      "side": "right",
+      "role": "genioglossus",
+      "note": "The anterior mandibular attachment follows the jaw and the tongue base follows partway.",
+      "modeling": "passive-deformation"
+    },
+    {
+      "id": "muscle-genioglossus-muscle-l",
+      "name": "Genioglossus muscle",
+      "side": "left",
+      "role": "genioglossus",
+      "note": "The anterior mandibular attachment follows the jaw and the tongue base follows partway.",
+      "modeling": "passive-deformation"
     },
     {
       "id": "muscle-anterior-belly-of-digastric-muscle-r",
@@ -247,7 +409,7 @@
         {
           "start": 1.38,
           "label": "Open pose",
-          "detail": "Inspect the position of the mandibular condyle relative to the temporal bone and the changed paths of the jaw muscles.",
+          "detail": "Compare the lower lip and cheek with the fixed upper face. The chewing muscles change length as the condyle glides forward.",
           "active": [],
           "opposes": []
         },
@@ -279,6 +441,150 @@
     }
   ],
   "checks": {
+    "muscle-orbicularis-oris-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 26.524,
+        "medianDisplacementMm": 7.985,
+        "minVerticalMm": -25.155,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.985
+      }
+    },
+    "muscle-orbicularis-oris-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 26.525,
+        "medianDisplacementMm": 7.985,
+        "minVerticalMm": -25.155,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.985
+      }
+    },
+    "muscle-zygomaticus-major-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.745,
+        "medianDisplacementMm": 3.499,
+        "minVerticalMm": -8.456,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.362
+      }
+    },
+    "muscle-depressor-anguli-oris-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 24.164,
+        "medianDisplacementMm": 21.431,
+        "minVerticalMm": -19.853,
+        "maxVerticalMm": -8.568,
+        "edgeLengthRatio95": 1.391
+      }
+    },
+    "muscle-depressor-labii-inferioris-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 25.117,
+        "medianDisplacementMm": 22.493,
+        "minVerticalMm": -22.9,
+        "maxVerticalMm": -15.846,
+        "edgeLengthRatio95": 1.17
+      }
+    },
+    "muscle-levator-anguli-oris-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 6.708,
+        "medianDisplacementMm": 1.594,
+        "minVerticalMm": -6.638,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.639
+      }
+    },
+    "muscle-risorius-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.84,
+        "medianDisplacementMm": 0.0,
+        "minVerticalMm": -8.621,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.081
+      }
+    },
+    "muscle-mentalis-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 25.808,
+        "medianDisplacementMm": 24.868,
+        "minVerticalMm": -21.793,
+        "maxVerticalMm": -20.089,
+        "edgeLengthRatio95": 1.0
+      }
+    },
+    "muscle-bucinator-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 20.155,
+        "medianDisplacementMm": 6.792,
+        "minVerticalMm": -18.35,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.897
+      }
+    },
+    "muscle-zygomaticus-major-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.745,
+        "medianDisplacementMm": 3.499,
+        "minVerticalMm": -8.456,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.362
+      }
+    },
+    "muscle-depressor-anguli-oris-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 24.164,
+        "medianDisplacementMm": 21.431,
+        "minVerticalMm": -19.853,
+        "maxVerticalMm": -8.568,
+        "edgeLengthRatio95": 1.391
+      }
+    },
+    "muscle-depressor-labii-inferioris-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 25.117,
+        "medianDisplacementMm": 22.493,
+        "minVerticalMm": -22.9,
+        "maxVerticalMm": -15.846,
+        "edgeLengthRatio95": 1.17
+      }
+    },
+    "muscle-levator-anguli-oris-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 6.708,
+        "medianDisplacementMm": 1.594,
+        "minVerticalMm": -6.638,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.639
+      }
+    },
+    "muscle-risorius-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.84,
+        "medianDisplacementMm": 0.0,
+        "minVerticalMm": -8.621,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.081
+      }
+    },
+    "muscle-mentalis-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 25.808,
+        "medianDisplacementMm": 24.868,
+        "minVerticalMm": -21.793,
+        "maxVerticalMm": -20.089,
+        "edgeLengthRatio95": 1.0
+      }
+    },
+    "muscle-bucinator-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 20.155,
+        "medianDisplacementMm": 6.792,
+        "minVerticalMm": -18.35,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.896
+      }
+    },
     "muscle-superficial-part-of-masseter-r": {
       "JawOpen": {
         "maxDisplacementMm": 15.988,
@@ -300,7 +606,7 @@
     "muscle-superficial-part-of-masseter-l": {
       "JawOpen": {
         "maxDisplacementMm": 15.988,
-        "medianDisplacementMm": 4.786,
+        "medianDisplacementMm": 4.785,
         "minVerticalMm": -12.96,
         "maxVerticalMm": 0.0,
         "edgeLengthRatio95": 1.281
@@ -342,6 +648,15 @@
         "edgeLengthRatio95": 1.027
       }
     },
+    "muscle-superior-head-of-lateral-pterygoid-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 9.683,
+        "medianDisplacementMm": 6.508,
+        "minVerticalMm": -6.332,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.161
+      }
+    },
     "muscle-inferior-head-of-lateral-pterygoid-muscle-l": {
       "JawOpen": {
         "maxDisplacementMm": 9.975,
@@ -349,6 +664,15 @@
         "minVerticalMm": -6.002,
         "maxVerticalMm": 0.0,
         "edgeLengthRatio95": 1.027
+      }
+    },
+    "muscle-superior-head-of-lateral-pterygoid-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 9.683,
+        "medianDisplacementMm": 6.508,
+        "minVerticalMm": -6.332,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.161
       }
     },
     "muscle-temporalis-muscle-r": {
@@ -367,6 +691,42 @@
         "minVerticalMm": -16.074,
         "maxVerticalMm": 0.352,
         "edgeLengthRatio95": 1.254
+      }
+    },
+    "muscle-hyoglossus-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.134,
+        "medianDisplacementMm": 2.431,
+        "minVerticalMm": -7.457,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.0
+      }
+    },
+    "muscle-hyoglossus-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.134,
+        "medianDisplacementMm": 2.431,
+        "minVerticalMm": -7.457,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.0
+      }
+    },
+    "muscle-genioglossus-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 22.881,
+        "medianDisplacementMm": 5.026,
+        "minVerticalMm": -21.65,
+        "maxVerticalMm": -1.267,
+        "edgeLengthRatio95": 1.255
+      }
+    },
+    "muscle-genioglossus-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 22.881,
+        "medianDisplacementMm": 5.026,
+        "minVerticalMm": -21.65,
+        "maxVerticalMm": -1.267,
+        "edgeLengthRatio95": 1.255
       }
     },
     "muscle-anterior-belly-of-digastric-muscle-r": {
@@ -431,15 +791,15 @@
     },
     {
       "file": "muscles-head-neck.glb",
-      "sha256": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2"
+      "sha256": "7e72ba170d439a46a6fcd31cabfbaa35dbe45e1d6f22c86a34be01ee2bd0e211"
     },
     {
       "file": "MODEL-LICENSE.md",
-      "sha256": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+      "sha256": "5b492502cbd78fb08fb056ddb92818bddc773a29e513ae970cd422b570bbef57"
     },
     {
       "file": "muscle-models.json",
-      "sha256": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7"
+      "sha256": "a346ef510a0b6ae105c606c9e6fa4a2c8ad0e715325dcb1b25945b27f645cb0b"
     },
     {
       "file": "three-d-landmarks.json",
