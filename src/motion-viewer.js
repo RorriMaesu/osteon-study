@@ -9,6 +9,7 @@ import modelAssets from './model-assets.json' with {type:'json'};
 import muscleModels from './muscle-models.json' with {type:'json'};
 import {walkScopeMatches,walkBoneRegion,captureWalkDrivers,mountWalkPack,updateWalkPacks,walkScopeBounds} from './motion-walk-model.js';
 import {regionalLessons} from './motion-regional.js';
+import {overlapsPoseRect,placePoseLabel,poseRect} from './motion-pose-overlays.js';
 
 const radians = Math.PI / 180;
 const axis = values => new THREE.Vector3(...values).normalize();
@@ -444,6 +445,15 @@ export class MotionViewer {
   }
   this.dirty=true;
  }
+ zoom(direction){
+  if(!this.renderer||!this.controls.enabled||!this.current?.model.visible)return;
+  const {target,minDistance,maxDistance}=this.controls;
+  const offset=this.camera.position.clone().sub(target);
+  const distance=offset.length()*(direction==='in'?1/1.22:1.22);
+  this.camera.position.copy(offset.setLength(clamp(distance,minDistance,maxDistance)).add(target));
+  this.controls.update();
+  this.dirty=true;
+ }
  frame(view='lesson'){
   if(!this.current||!this.controls)return;
   if(this.current.kind==='regional'){
@@ -510,6 +520,12 @@ export class MotionViewer {
   element.hidden=x<4||x>96||y<6||y>94||Math.abs(pos.z)>1;
   element.style.left=x+'%';
   element.style.top=y+'%';
+  if(this.showLoad&&!element.hidden){
+   element.style.translate='';
+   const toolbar=this.stage.querySelector('.motion-camera')?.getBoundingClientRect();
+   const tag=element.getBoundingClientRect();
+   if(toolbar?.height&&overlapsPoseRect(tag,toolbar,4))element.style.translate='0 '+(toolbar.top-tag.bottom-4)+'px';
+  }
  }
  rayAt(event){
   const rect=this.renderer.domElement.getBoundingClientRect();
@@ -605,8 +621,17 @@ export class MotionViewer {
   const notesCover=notesBounds?.height&&notesBounds.left<stageBounds.right&&notesBounds.right>stageBounds.left&&notesBounds.top>stageBounds.top+38&&notesBounds.top<stageBounds.bottom;
   const lowerEdge=notesCover?notesBounds.top-stageBounds.top:height;
   const halfWidth=label.offsetWidth/2;
-  const top=clamp(anchorY-38,notesCover?95:48,Math.max(notesCover?95:48,lowerEdge-label.offsetHeight/2-8));
-  const left=clamp(anchorX+(anchorX<width*.58?42:-42),halfWidth+8,width-halfWidth-8);
+  let top=clamp(anchorY-38,notesCover?95:48,Math.max(notesCover?95:48,lowerEdge-label.offsetHeight/2-8));
+  let left=clamp(anchorX+(anchorX<width*.58?42:-42),halfWidth+8,width-halfWidth-8);
+  const toolbar=this.stage.querySelector('.motion-camera')?.getBoundingClientRect();
+  if(toolbar?.height){
+   const obstacle={left:toolbar.left-stageBounds.left,right:toolbar.right-stageBounds.left,top:toolbar.top-stageBounds.top,bottom:toolbar.bottom-stageBounds.top};
+   if(overlapsPoseRect(poseRect(left,top,label.offsetWidth,label.offsetHeight),obstacle,7)){
+    const point=placePoseLabel({anchor:{x:anchorX,y:anchorY},width,height:lowerEdge,labelWidth:label.offsetWidth,labelHeight:label.offsetHeight,obstacles:[obstacle]});
+    if(!point){this.showSelectionLabel(false);return;}
+    left=point.x;top=point.y;
+   }
+  }
   label.style.left=left+'px';
   label.style.top=top+'px';
   this.selectionLine.setAttribute('x1',anchorX);

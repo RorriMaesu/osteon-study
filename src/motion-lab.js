@@ -6,6 +6,7 @@ import {sampleWalk,gaitEventName,gaitChannel} from './motion-walk.js';
 import {walkScopes,walkScopeMatches} from './motion-walk-model.js';
 import {regionalLessons,regionalFrame,breathingLayers} from './motion-regional.js';
 import {setLearningContext} from './learning-context.js';
+import {viewerZoomControls} from './viewer-guidance.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 
 const sources={
@@ -80,7 +81,7 @@ export function initMotionLab({setView}){
  <span data-motion-selection-label aria-hidden="true" hidden></span>
  <span class="motion-handle" aria-hidden="true" hidden><i></i><span>Drag</span></span>
  <span class="motion-load-tag" aria-hidden="true" hidden>↓ Hand load</span>
- <div class="motion-camera" role="group" aria-label="Camera angle"><button type="button" data-motion-camera="front">Front</button><button type="button" data-motion-camera="side">Side</button><button type="button" data-motion-camera="back">Back</button><button type="button" data-motion-camera="lesson">Reset view</button></div>
+ <div class="motion-camera" role="group" aria-label="View controls"><button type="button" data-motion-camera="front">Front</button><button type="button" data-motion-camera="side">Side</button><button type="button" data-motion-camera="back">Back</button><button type="button" data-motion-camera="lesson">Reset view</button>${viewerZoomControls}</div>
  </div>
  <div class="motion-controls"></div></div>
  <aside class="motion-info" id="motion-notes" aria-label="Movement notes">
@@ -225,7 +226,16 @@ export function initMotionLab({setView}){
   }
   pendingPart=part;
  }
- const setStatus=(text='',retry=false)=>{status.textContent=text;status.hidden=!text;if(retry){const button=document.createElement('button');button.type='button';button.textContent='Retry loading';button.onclick=load;status.append(button);}};
+ const zoomButtons=$('.motion-camera').querySelectorAll('[data-viewer-zoom]');
+ function setStatus(text='',retry=false){
+  status.textContent=text;
+  status.hidden=!text;
+  for(const button of zoomButtons)button.disabled=!!text;
+  if(retry){
+   const button=document.createElement('button');
+   button.type='button';button.textContent='Retry loading';button.onclick=load;status.append(button);
+  }
+ }
  const range=(id,label,min,max,value,step=1)=>`<label class="motion-range" for="${id}"><span>${label}</span><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${value}"><output for="${id}"></output></label>`;
  function renderControls(){
   for(const button of root.querySelectorAll('[data-motion-mode]'))button.setAttribute('aria-pressed',String(button.dataset.motionMode===state.mode));
@@ -662,6 +672,7 @@ export function initMotionLab({setView}){
  }
  for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{const mode=button.dataset.motionMode;if(state.mode!==mode){state.mode=mode;clearSelection();state.time=0;state.loop=mode!=='walk';load();}};
  for(const button of root.querySelectorAll('[data-motion-camera]'))button.onclick=()=>motion.frame(button.dataset.motionCamera);
+ for(const button of zoomButtons)button.onclick=()=>motion.zoom(button.dataset.viewerZoom);
  $('[data-motion-muscles]').onchange=event=>{state.showMuscles=event.target.checked;draw();};
  $('[data-motion-context]').onchange=event=>{state.showContext=event.target.checked;draw();};
  $('[data-motion-breath-layer]').onchange=event=>{state.breathLayer=event.target.value;draw();};

@@ -1,3 +1,8 @@
+export const viewerZoomControls=`<div class="viewer-zoom-controls" role="group" aria-label="Model zoom">
+ <button type="button" data-viewer-zoom="in" aria-label="Zoom in" title="Zoom in without pinching" disabled><b aria-hidden="true">+</b><span aria-hidden="true">Zoom</span></button>
+ <button type="button" data-viewer-zoom="out" aria-label="Zoom out" title="Zoom out without pinching" disabled><b aria-hidden="true">−</b><span aria-hidden="true">Zoom</span></button>
+</div>`;
+
 export function viewerGuidance({level='overview',touch=false,blocked=false,peel=false}={}){
  const gesture=touch?'Double-tap':'Double-click';
  if(peel)return {intro:'Peel is on',hint:'Turn Peel off to select or zoom into a bone.',action:''};

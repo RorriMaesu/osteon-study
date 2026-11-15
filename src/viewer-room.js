@@ -1,3 +1,5 @@
+import {viewerZoomControls} from './viewer-guidance.js';
+
 // Expand the existing canvas, retaining its controls, specimen and quiz state.
 export function initViewerRoom({viewer,toast}){
  const stage=document.querySelector('.specimen-stage'),canvas=document.querySelector('#viewer');
@@ -36,8 +38,8 @@ export function initViewerRoom({viewer,toast}){
  // One group follows the same stage into expanded and practice views.
  const cameraToolbar=document.createElement('div');cameraToolbar.className='viewer-camera-toolbar';
  presets.before(cameraToolbar);cameraToolbar.append(presets);
- const zoom=document.createElement('div');zoom.className='viewer-zoom-controls';zoom.setAttribute('role','group');zoom.setAttribute('aria-label','Model zoom');
- zoom.innerHTML='<button type="button" data-viewer-zoom="in" aria-label="Zoom in" title="Zoom in without pinching" disabled><b aria-hidden="true">+</b><span aria-hidden="true">Zoom</span></button><button type="button" data-viewer-zoom="out" aria-label="Zoom out" title="Zoom out without pinching" disabled><b aria-hidden="true">−</b><span aria-hidden="true">Zoom</span></button>';
+ cameraToolbar.insertAdjacentHTML('beforeend',viewerZoomControls);
+ const zoom=cameraToolbar.querySelector('.viewer-zoom-controls');
  const zoomButtons=[...zoom.querySelectorAll('button')];
  function placeZoom(){(mobile.matches?mobileControls:cameraToolbar).append(zoom);}
  function syncZoom(){for(const button of zoomButtons)button.disabled=!viewer.loaded||!viewer.controls;}

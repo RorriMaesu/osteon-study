@@ -36,6 +36,7 @@ export function initPoseLab(host,{onLesson}={}){
   },
   setLock:locked=>{if(!history)return;stopGesture();history.setLocked(selectedJoint,locked);message=locked?'Joint angles locked. The limb still follows its parent joint.':'Joint angles unlocked.';draw();save();},
   setScope:changeScope,focus:()=>{stopGesture();viewer.focusJoint();},camera:view=>{stopGesture();viewer.frame(view);},
+  zoom:direction=>viewer.zoom(direction),
   setMuscles:show=>{showMuscles=show;draw();},selectMuscle,
   setRelated:show=>{onlyRelated=show;draw();},
   setInteraction:mode=>{

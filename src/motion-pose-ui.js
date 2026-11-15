@@ -1,3 +1,5 @@
+import {viewerZoomControls} from './viewer-guidance.js';
+
 const scopes={all:'Whole body','head-neck':'Head & neck',trunk:'Chest, abdomen & back','right-arm':'Right arm','left-arm':'Left arm','right-leg':'Right leg','left-leg':'Left leg'};
 const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 const normalize=value=>String(value??'').normalize('NFKD').replace(/\p{M}/gu,'').toLowerCase();
@@ -25,6 +27,7 @@ export function createPoseUI(host,callbacks={}){
     <button type="button" data-pose-focus title="Move the camera closer to this joint">Focus joint</button>
     <button type="button" data-pose-camera="front">Front</button>
     <button type="button" data-pose-camera="side">Side</button>
+    ${viewerZoomControls}
    </div>
   </div>
   <div class="pose-controls" aria-label="Pose controls">
@@ -110,7 +113,7 @@ export function createPoseUI(host,callbacks={}){
   ['Make a pose','Choose a joint and movement. Use the named direction buttons, drag the slider, or drag the ring on the model.'],
   ['Watch one movement','Play motion demonstrates the selected movement and returns to your pose. Pause keeps the current position.'],
   ['Return one joint','The angle button marked Neutral resets only the selected joint. Reset returns the whole body. Both can be undone.'],
-  ['Turn the view','Drag empty space to rotate. Pinch or scroll to zoom. Focus joint brings small joints closer.'],
+  ['Turn the view','Drag to rotate. Tap Zoom + or Zoom − to change magnification. Focus joint centers the selected joint.'],
   ['Keep your pose','Full body returns to the overview while keeping your pose. Reset returns all joints to their starting position.'],
   ['Keep a joint fixed','Lock angles fixes a joint’s settings. It still moves with its parent. Undo reverses one completed adjustment.'],
   ['Read the colors','Green marks possible contributors to the last adjustment. Violet marks muscles with an opposing action.'],
@@ -214,6 +217,7 @@ export function createPoseUI(host,callbacks={}){
   $('[data-pose-play]').setAttribute('aria-label',state.playing?'Pause movement at this position':'Play the selected movement once');
   $('[data-pose-play]').title=state.playing?'Pause and keep this position':'Play this movement once, then return to your pose';
   $('[data-pose-focus]').disabled=!state.ready||!currentJoint;
+  for(const button of zoomButtons)button.disabled=!state.ready;
   $('[data-pose-lock]').disabled=!state.ready||!currentJoint;
   $('[data-pose-lock]').setAttribute('aria-pressed',String(locked));
   $('[data-pose-lock]').textContent=locked?'Unlock':'Lock angles';
@@ -317,6 +321,8 @@ export function createPoseUI(host,callbacks={}){
  on($('[data-pose-scope]'),'change',event=>call('setScope',event.currentTarget.value));
  on($('[data-pose-search]'),'input',event=>{query=normalize(event.currentTarget.value).trim();page=0;renderDetails();});
  for(const item of host.querySelectorAll('[data-pose-camera]'))on(item,'click',()=>call('camera',item.dataset.poseCamera));
+ const zoomButtons=host.querySelectorAll('[data-viewer-zoom]');
+ for(const item of zoomButtons)on(item,'click',()=>call('zoom',item.dataset.viewerZoom));
  for(const item of host.querySelectorAll('[data-pose-tab]')){
   on(item,'click',()=>changeTab(item.dataset.poseTab));
   on(item,'keydown',event=>{
