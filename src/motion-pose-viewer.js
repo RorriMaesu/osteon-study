@@ -108,7 +108,7 @@ export class PoseViewer extends MotionViewer{
  }
  inScope(entry){return poseScopeMatches(this.poseScope,entry);}
  setScope(scope){this.poseScope=scope;this.dirty=true;}
- color({contributors=[],opposing=[],selectedMuscle=null,showMuscles=true,onlyRelated=false}){
+ color({contributors=[],opposing=[],selectedMuscle=null,showMuscles=true,onlyRelated=false,visibleAnatomy}){
   if(!this.current)return;
   const up=new Set(contributors),down=new Set(opposing);
   const strengths={},antagonists=new Set();
@@ -120,12 +120,13 @@ export class PoseViewer extends MotionViewer{
    if(down.has(part.key))antagonists.add(part.side+':'+part.key);
   }
   super.highlight({strengths,antagonists,selected:selectedMuscle,showMuscles,onlyActive:onlyRelated,cue:up.size||down.size?'role':null});
+  this.visibleAnatomy=visibleAnatomy;
   for(const part of this.current.parts){
-   part.mesh.visible=part.mesh.visible&&this.inScope(part);
+   part.mesh.visible=part.mesh.visible&&(visibleAnatomy?.muscleKeys.has(part.key)??this.inScope(part));
    if(part.outline)part.outline.visible=part.outline.visible&&part.mesh.visible;
    if(this.selectedPart===part&&!part.mesh.visible)this.selectedPart=null;
   }
-  for(const bone of this.current.bones||[])bone.mesh.visible=this.inScope(bone);
+  for(const bone of this.current.bones||[])bone.mesh.visible=visibleAnatomy?.attachmentBones.has(bone)??this.inScope(bone);
   this.dirty=true;
  }
  bounds(scope=this.poseScope){
@@ -133,7 +134,8 @@ export class PoseViewer extends MotionViewer{
   this.current.model.updateMatrixWorld(true);
   const entries=[...(this.current.bones||[]),...this.current.parts];
   for(const part of entries){
-   if(!poseScopeMatches(scope,part))continue;
+   const focused=this.visibleAnatomy&&scope===this.poseScope;
+   if(focused?!(part.key?this.visibleAnatomy.muscleKeys.has(part.key):this.visibleAnatomy.attachmentBones.has(part)):!poseScopeMatches(scope,part))continue;
    const mesh=part.mesh;
    if(mesh.isSkinnedMesh||mesh.morphTargetInfluences){
     if(mesh.isSkinnedMesh)mesh.computeBoundingBox();
@@ -184,12 +186,12 @@ export class PoseViewer extends MotionViewer{
    this.notesWereOpen=open;
   }
  }
- focusJoint(){
+ focusJoint(view='front'){
   if(!this.current||!this.selectedJoint)return;
   const descriptor=this.descriptor(),position=this.jointPosition(this.selectedJoint);
   const radius=descriptor.focusRadius||(/finger|thumb|index|middle|ring|little|toe/.test(descriptor.id)?.085:/jaw|blink|smile|wrist|forearm|ankle|subtalar/.test(descriptor.id)?.16:.3);
   const bounds=new THREE.Box3().setFromCenterAndSize(position,new THREE.Vector3(radius*2,radius*2,radius*2));
-  this.fitBounds(bounds,'front');
+  this.fitBounds(bounds,view);
  }
  updateMarker(){
   this.handle.hidden=true;this.loadTag.hidden=true;

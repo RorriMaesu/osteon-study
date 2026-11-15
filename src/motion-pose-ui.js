@@ -1,4 +1,5 @@
 import {viewerZoomControls} from './viewer-guidance.js';
+import {motionStudyGuides} from './motion-study-guides.js';
 
 const scopes={all:'Whole body','head-neck':'Head & neck',trunk:'Chest, abdomen & back','right-arm':'Right arm','left-arm':'Left arm','right-leg':'Right leg','left-leg':'Left leg'};
 const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -27,6 +28,7 @@ export function createPoseUI(host,callbacks={}){
     <button type="button" data-pose-focus title="Move the camera closer to this joint">Focus joint</button>
     <button type="button" data-pose-camera="front">Front</button>
     <button type="button" data-pose-camera="side">Side</button>
+    <button type="button" data-pose-camera="back" hidden>Back</button>
     ${viewerZoomControls}
    </div>
   </div>
@@ -59,6 +61,7 @@ export function createPoseUI(host,callbacks={}){
   <div class="pose-details-heading"><strong>Pose explorer</strong><button type="button" data-pose-close aria-label="Close pose explorer">×</button></div>
   <div class="pose-details-tabs" role="tablist" aria-label="Pose explorer content">
    <button type="button" role="tab" data-pose-tab="muscles" aria-selected="true" id="${prefix}-tab-muscles" aria-controls="${prefix}-panel">Muscles</button>
+   <button type="button" role="tab" data-pose-tab="guides" aria-selected="false" tabindex="-1" id="${prefix}-tab-guides" aria-controls="${prefix}-panel">Motions</button>
    <button type="button" role="tab" data-pose-tab="joints" aria-selected="false" tabindex="-1" id="${prefix}-tab-joints" aria-controls="${prefix}-panel">Find joint</button>
    <button type="button" role="tab" data-pose-tab="help" aria-selected="false" tabindex="-1" id="${prefix}-tab-help" aria-controls="${prefix}-panel">How it works</button>
   </div>
@@ -69,6 +72,7 @@ export function createPoseUI(host,callbacks={}){
    </div>
    <div class="pose-role-key"><span class="pose-contributor-key">◇ Possible contributors</span><span class="pose-opponent-key">○ Opposing action</span><button type="button" data-pose-related aria-pressed="false" title="Show only related muscles and the selected muscle" hidden>Related only</button></div>
    <p class="pose-list-summary"></p>
+   <p class="pose-role-note" hidden></p>
    <div class="pose-detail-list"></div>
    <div class="pose-help-page" hidden></div>
    <nav class="pose-list-pager" aria-label="Explorer pages"><button type="button" data-pose-previous aria-label="Previous explorer page">←</button><span data-pose-page></span><button type="button" data-pose-next aria-label="Next explorer page">→</button></nav>
@@ -123,6 +127,7 @@ export function createPoseUI(host,callbacks={}){
   ['Face and breathing','Try a timed lesson.'],
  ];
  function rows(){
+  if(tab==='guides')return motionStudyGuides.map(guide=>({...guide,name:guide.label,kind:'guide'}));
   if(tab==='joints')return state.descriptors.filter(entry=>!query||normalize(entry.label+' '+entry.region+' '+entry.side).includes(query)).map(entry=>({...entry,name:entry.label,kind:'joint'}));
   const entries=[],seen=new Set();
   for(const [kind,list] of [['contributor',state.contributors],['opponent',state.opponents]])for(const entry of list||[]){
@@ -138,8 +143,11 @@ export function createPoseUI(host,callbacks={}){
   const currentHelp=[...helpPages,...notePages];
   const list=rows(),pages=tab==='help'?currentHelp.length:Math.max(1,Math.ceil(list.length/pageSize));
   page=Math.max(0,Math.min(page,pages-1));
-  const summary=tab==='joints'?`${list.length} ${list.length===1?'joint':'joints'} · choose one to pose`:tab==='help'?'Pose, inspect and compare':list.length?state.movementLabel||`${joint()?.label||'Joint'} · last adjustment`:state.selectedMuscleName?state.selectedMuscleName+' · selected muscle':'Move a joint to explore possible muscle roles.';
+  const summary=tab==='guides'?'Choose a movement to study':tab==='joints'?`${list.length} ${list.length===1?'joint':'joints'} · choose one to pose`:tab==='help'?'Pose, inspect and compare':list.length?state.movementLabel||`${joint()?.label||'Joint'} · last adjustment`:state.selectedMuscleName?state.selectedMuscleName+' · selected muscle':'Move a joint to explore possible muscle roles.';
   $('.pose-list-summary').textContent=summary;
+  const roleNote=$('.pose-role-note');
+  roleNote.hidden=tab!=='muscles'||!state.roleNote;
+  if(roleNote.textContent!==state.roleNote)roleNote.textContent=state.roleNote||'';
   $('[data-pose-related]').hidden=!list.length&&!state.selectedMuscle&&!state.onlyRelated;
   $('[data-pose-related]').setAttribute('aria-pressed',String(!!state.onlyRelated));
   const visible=list.slice(page*pageSize,(page+1)*pageSize),key=JSON.stringify([tab,page,pageSize,visible.map(entry=>[listId(entry),listName(entry),entry.kind,entry.note]),state.selectedJoint,state.selectedMuscle,movementNote]);
@@ -150,8 +158,9 @@ export function createPoseUI(host,callbacks={}){
     $('.pose-help-page').innerHTML=`<h3>${escape(title)}</h3><p>${escape(lead)}</p>${title==='Face and breathing'?'<div class="pose-lesson-links"><button type="button" data-pose-lesson="blink">Blink</button><button type="button" data-pose-lesson="smile">Smile</button><button type="button" data-pose-lesson="jaw">Jaw</button><button type="button" data-pose-lesson="breath">Breathing</button></div>':''}`;
    }else{
     $('.pose-detail-list').innerHTML=visible.map(entry=>{
-     const id=listId(entry),name=listName(entry),selected=tab==='joints'?id===state.selectedJoint:id===state.selectedMuscle;
-     return `<button type="button" data-pose-row="${escape(id)}" data-kind="${entry.kind}" aria-pressed="${selected}" title="${escape(entry.note||name)}"><span>${entry.kind==='contributor'?'◇ ':entry.kind==='opponent'?'○ ':''}${escape(name)}</span><small>${escape(entry.kind==='joint'?entry.regionLabel||scopes[entry.region]||entry.region||'Joint':entry.kind==='contributor'?'Possible contributor':'Opposing action')}</small></button>`;
+     const id=listId(entry),name=listName(entry),selected=tab==='guides'?id===state.studyGuide?.id:tab==='joints'?id===state.selectedJoint:id===state.selectedMuscle;
+     const subtitle=entry.kind==='guide'?(scopes[entry.scope]||'Guided movement'):entry.kind==='joint'?entry.regionLabel||scopes[entry.region]||entry.region||'Joint':entry.kind==='contributor'?'Possible contributor':'Opposing action';
+     return `<button type="button" data-pose-row="${escape(id)}" data-kind="${entry.kind}" aria-pressed="${selected}" title="${escape(entry.note||name)}"><span>${entry.kind==='contributor'?'◇ ':entry.kind==='opponent'?'○ ':''}${escape(name)}</span><small>${escape(subtitle)}</small></button>`;
     }).join('')||`<p class="pose-empty">${tab==='joints'?'No matching joint. Try a shorter name.':state.ready?'The model will highlight supported muscle roles when you adjust a joint.':'The model is loading.'}</p>`;
    }
   }
@@ -217,6 +226,8 @@ export function createPoseUI(host,callbacks={}){
   $('[data-pose-play]').setAttribute('aria-label',state.playing?'Pause movement at this position':'Play the selected movement once');
   $('[data-pose-play]').title=state.playing?'Pause and keep this position':'Play this movement once, then return to your pose';
   $('[data-pose-focus]').disabled=!state.ready||!currentJoint;
+  $('[data-pose-camera="back"]').hidden=state.studyGuide?.scope!=='head-neck';
+  $('[data-pose-camera="side"]').hidden=state.studyGuide?.scope==='head-neck';
   for(const button of zoomButtons)button.disabled=!state.ready;
   $('[data-pose-lock]').disabled=!state.ready||!currentJoint;
   $('[data-pose-lock]').setAttribute('aria-pressed',String(locked));
@@ -327,12 +338,14 @@ export function createPoseUI(host,callbacks={}){
   on(item,'click',()=>changeTab(item.dataset.poseTab));
   on(item,'keydown',event=>{
    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-   event.preventDefault();const tabs=['muscles','joints','help'],index=tabs.indexOf(tab);
+   event.preventDefault();const tabs=['muscles','guides','joints','help'],index=tabs.indexOf(tab);
    changeTab(tabs[event.key==='Home'?0:event.key==='End'?2:(index+(event.key==='ArrowRight'?1:2))%3],true);
   });
  }
  on($('.pose-details-panel'),'click',event=>{
-  const item=event.target.closest('[data-pose-row]');if(item)call(item.dataset.kind==='joint'?'selectJoint':'selectMuscle',item.dataset.poseRow);
+  const item=event.target.closest('[data-pose-row]');
+  if(item?.dataset.kind==='guide'){call('selectGuide',item.dataset.poseRow);changeTab('muscles');}
+  else if(item)call(item.dataset.kind==='joint'?'selectJoint':'selectMuscle',item.dataset.poseRow);
   const lesson=event.target.closest('[data-pose-lesson]');if(lesson)call('openLesson',lesson.dataset.poseLesson);
  });
  on(host,'keydown',event=>{

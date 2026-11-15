@@ -1,20 +1,21 @@
 import {createPoseUI} from './motion-pose-ui.js';
 import {PoseViewer} from './motion-pose-viewer.js';
-import {PoseHistory,combinedPoseRoles} from './motion-pose-core.js';
-import {poseScopeMatches} from './motion-pose-ik.js';
+import {PoseHistory,combinedPoseRoles,poseRoles} from './motion-pose-core.js';
+import {poseMotionScope,poseScopeMatches} from './motion-pose-ik.js';
 import {describePoseAxis,poseMotionCycle} from './motion-pose-motions.js';
 import {createPosePreview,samplePosePreview} from './motion-pose-playback.js';
 import {setLearningContext} from './learning-context.js';
+import {findMotionStudyGuide} from './motion-study-guides.js';
 
 const savedKey='osteon-whole-body-pose-v1';
 
 export function initPoseLab(host,{onLesson}={}){
  let active=false,revision=0,specimen=null,history=null,descriptors=[],selectedJoint=null,selectedAxis=null;
  let scope='all',interaction='joint',selectedMuscle=null,showMuscles=true,onlyRelated=false,message='',saveTimer=null,lastContext='';
- let playback=null,playbackStarted=0;
+ let playback=null,playbackStarted=0,studyGuide=null;
  const descriptor=()=>descriptors.find(joint=>joint.id===selectedJoint);
  const ui=createPoseUI(host,{
-  selectJoint,selectAxis:id=>{stopGesture();selectedAxis=id;history?.clearChanges();message='';draw();},
+  selectJoint,selectAxis:id=>{stopGesture();studyGuide=null;selectedAxis=id;history?.clearChanges();message='';draw();},
   changeAngle:(value,{phase})=>{
    if(!history)return;
    if(phase==='start'){stopGesture();history.begin();}
@@ -48,6 +49,7 @@ export function initPoseLab(host,{onLesson}={}){
    interaction=mode;message=mode==='endpoint'?'Drag the wrist or ankle target to move its linked joints.':'Drag the ring to adjust one movement.';draw();
   },
   markerPointerDown:(event,id)=>viewer.startPoseDrag(event,id),
+  selectGuide:chooseGuide,
   openLesson:id=>onLesson?.(id),
   notesChange:()=>{viewer.dirty=true;},
  });
@@ -104,6 +106,7 @@ export function initPoseLab(host,{onLesson}={}){
   const joint=descriptors.find(item=>item.id===id);
   if(!joint||id===selectedJoint)return;
   stopGesture();
+  studyGuide=null;
   selectedJoint=id;selectedAxis=joint.axes[0].id;selectedMuscle=null;
   history?.clearChanges();
   if(!viewer.endpointChain(id))interaction='joint';
@@ -137,7 +140,23 @@ export function initPoseLab(host,{onLesson}={}){
   selectedMuscle=null;message=next==='all'?'Whole body shown. Your pose is kept.':'Region isolated. Your pose is kept.';
   draw();viewer.frame();save();
  }
- function roles(){return history&&specimen?combinedPoseRoles(descriptors,history.changes,specimen.parts):{contributors:[],opposing:[],note:''};}
+ function chooseGuide(id){
+  const guide=findMotionStudyGuide(id);
+  const joint=descriptors.find(entry=>entry.id===guide?.joint);
+  if(!history||!joint?.axes.some(axis=>axis.id===guide.axis))return false;
+  stopGesture();history.clearChanges();studyGuide=guide;
+  selectedJoint=joint.id;selectedAxis=guide.axis;selectedMuscle=null;
+  scope=guide.scope;interaction='joint';showMuscles=true;onlyRelated=false;
+  viewer.setScope(scope);
+  message='Choose a direction or play the movement.';
+  ui.closeNotes();draw();viewer.focusJoint(guide.view);
+  return true;
+ }
+ function roles(){
+  if(!history||!specimen)return {contributors:[],opposing:[],note:''};
+  if(studyGuide&&!history.changes.length)return poseRoles(descriptor(),selectedAxis,studyGuide.id==='hip-extension'?-1:1,specimen.parts);
+  return combinedPoseRoles(descriptors,history.changes,specimen.parts);
+ }
  function shapeNotice(){
   if(!history)return '';
   const values=history.values;
@@ -147,25 +166,28 @@ export function initPoseLab(host,{onLesson}={}){
   });
   return large?'Large teaching pose: muscle shapes may stretch or overlap.':'';
  }
- function updateUI(role=roles()){
+ function updateUI(role=roles(),visibleAnatomy){
   const byId=new Map(specimen?.parts.map(part=>[part.key,part])||[]);
-  const parts=keys=>keys.map(key=>byId.get(key)).filter(Boolean).map(part=>({key:part.key,name:part.name+' · '+part.side}));
   const joint=descriptor(),directionLabels=joint?describePoseAxis(joint,selectedAxis):null;
+  const visible=visibleAnatomy||poseMotionScope(scope,joint,role,specimen?.parts||[],specimen?.bones||[],selectedMuscle);
+  const parts=keys=>keys.filter(key=>visible.muscleKeys.has(key)).map(key=>byId.get(key)).filter(Boolean).map(part=>({key:part.key,name:part.name+' · '+part.side}));
   ui.update({ready:!!history&&active,descriptors,selectedJoint,selectedAxis,pose:history?.values||{},canUndo:!!history?.canUndo,canRedo:!!history?.canRedo,scope,locked:history?.locks||[],
    playing:!!playback,directionLabels,axisLabels:Object.fromEntries((joint?.axes||[]).map(axis=>[axis.id,describePoseAxis(joint,axis.id).label])),
    canNeutralize:!!joint?.axes.some(axis=>!history?.isAxisLocked(selectedJoint,axis.id)&&history?.values[selectedJoint]?.[axis.id]!==(axis.neutral??0)),
    message:history?.isAxisLocked(selectedJoint,selectedAxis)&&!history.isLocked(selectedJoint)?'Unlock the shoulder girdle to raise this arm.':shapeNotice()||message,
    movementLocked:!!history?.isAxisLocked(selectedJoint,selectedAxis),contributors:parts(role.contributors),opponents:parts(role.opposing),selectedMuscle,
    selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
-   evidence:role.note,movementLabel:role.label,movementNote:[descriptor()?.detail,descriptor()?.coupling,specimen?.meta.scope].filter(Boolean).join(' ')});
+   evidence:role.note,movementLabel:role.label,studyGuide,roleNote:studyGuide?.note||role.movementNotes?.[0]||'',
+   movementNote:[...(role.movementNotes||[]),joint?.detail,joint?.coupling].filter(Boolean).join(' ')});
  }
  function draw(){
   if(!history||!specimen||!active)return;
   viewer.apply(history.values);
   viewer.setPoseSelection(selectedJoint,selectedAxis,{locks:history.locks,interaction});
   const role=roles();
-  viewer.color({contributors:role.contributors,opposing:role.opposing,selectedMuscle,showMuscles,onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||selectedMuscle)});
-  updateUI(role);
+  const visibleAnatomy=poseMotionScope(scope,descriptor(),role,specimen.parts,specimen.bones,selectedMuscle);
+  viewer.color({contributors:role.contributors,opposing:role.opposing,selectedMuscle,showMuscles,visibleAnatomy,onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||selectedMuscle)});
+  updateUI(role,visibleAnatomy);
   const context=[selectedJoint,role.label,selectedMuscle].join('|');
   if(context!==lastContext){setLearningContext({type:'study',label:'Pose skeleton · '+descriptor()?.label,reference:'9.5',text:role.note+' '+(role.label||'')});lastContext=context;}
  }
@@ -213,6 +235,7 @@ export function initPoseLab(host,{onLesson}={}){
     }
    }
    viewer.setScope(scope);draw();viewer.frame('front');ui.setStatus('');
+   if(run===1)chooseGuide(new URLSearchParams(location.search).get('motionGuide'));
   }catch(error){
    if(!active||run!==revision)return;
    ui.setStatus(error.message||'The pose model could not load.',{error:true,retry:open});

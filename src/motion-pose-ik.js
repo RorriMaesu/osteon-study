@@ -5,6 +5,25 @@ export function poseScopeMatches(scope,entry){
  return scope==='all'||entry.region===scope||walkScopeMatches(scope,entry.region,entry.side,entry.segments||entry.walkSegments);
 }
 
+// Movements can span more than one atlas region. Keep their muscle surfaces
+// and attachment landmarks in the focused view without exposing a whole
+// unrelated limb. Joint markers continue to use the original region filter.
+export function poseMotionScope(scope,joint,role,parts,bones,selectedMuscle){
+ const contextual=joint&&scope!=='all'&&poseScopeMatches(scope,joint);
+ const named=new Set(contextual?[...role.contributors,...role.opposing]:[]);
+ if(contextual&&selectedMuscle)named.add(selectedMuscle);
+ const kind=joint?.id.replace(/^(right|left)-/,'');
+ const attachmentNames=kind==='neck'||kind==='upper-nod'
+  ? /Vertebra T[1-4]$|Clavicle|Manubrium|Scapula/
+  : kind==='shoulder'||kind==='scapula'
+   ? /^(?:Rib [1-9]\b|Vertebra T[1-8]$|Manubrium|Body of sternum)/
+   : kind==='hip'?/Sacrum|Coccyx|Vertebra L[1-5]$|Ilium|Ischium|Pubis/:null;
+ const muscleKeys=new Set(parts.filter(part=>poseScopeMatches(scope,part)||named.has(part.key)).map(part=>part.key));
+ const attachmentBones=new Set(bones.filter(bone=>poseScopeMatches(scope,bone)
+  ||contextual&&attachmentNames?.test(bone.name)&&(!joint.side||joint.side==='midline'||bone.side==='midline'||bone.side===joint.side)));
+ return {muscleKeys,attachmentBones};
+}
+
 const radians=Math.PI/180;
 const copy=value=>Object.fromEntries(Object.entries(value).map(([id,angles])=>[id,{...angles}]));
 
