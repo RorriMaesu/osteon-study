@@ -22,7 +22,8 @@ from mathutils import Matrix, Quaternion, Vector
 from mathutils.kdtree import KDTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from mouth_deformation import ORAL_FOLLOW, oral_jaw_weight
+from mouth_deformation import ORAL_FOLLOW, incisor_clearance, jaw_transform, oral_jaw_weight
+from muscle_clearance import directional_clearance, registered_surface
 
 SIDES = {"r": ("right", -1), "l": ("left", 1)}
 ORDINALS = "first second third fourth fifth sixth seventh eighth ninth tenth eleventh twelfth".split()
@@ -426,11 +427,6 @@ def surface_lookup(objects):
     return result
 
 
-def jaw_transform(point, pivot, weight=1):
-    angle = math.radians(15 * weight)
-    return pivot + Quaternion(Vector((1, 0, 0)), angle) @ (point - pivot) + Vector((0, -.0048, .0075)) * weight
-
-
 def build_jaw(bones_path, muscles_path, registration_path):
     contextual = {
         "Mandible", "Hyoid bone", "Frontal bone", "Parietal bone.r", "Parietal bone.l",
@@ -447,12 +443,17 @@ def build_jaw(bones_path, muscles_path, registration_path):
     mobile = surface_lookup([jaw])
     hyoid = surface_lookup([bones["Hyoid bone"]])
     masticatory = {}
+    cheekbones = {}
     for suffix in SIDES:
         selected = lambda stem: bones[f"{stem}.{suffix}"]
         face = surface_lookup([selected("Zygomatic bone")])
         temporal = surface_lookup([bones["Frontal bone"], selected("Parietal bone"), selected("Temporal bone"), bones["Sphenoid bone"]])
         pterygoid = surface_lookup([bones["Sphenoid bone"]])
         masticatory[suffix] = face, temporal, pterygoid
+        cheekbones[suffix] = (
+            registered_surface([selected("Zygomatic bone")], to_web),
+            registered_surface([selected("Maxilla")], to_web),
+        )
     for label, obj in bones.items():
         tag_context(obj, label)
         if label == "Mandible" or label.startswith("Lower "):
@@ -467,6 +468,8 @@ def build_jaw(bones_path, muscles_path, registration_path):
             continue
         if name in ORAL_FOLLOW:
             entries.append(tag_muscle(obj, label, JAW, "passive-deformation"))
+            if role == "orbicularis-oris":
+                incisor_clearance(obj, bones, pivot, to_web, to_blender)
             add_shape(obj, "JawOpen", lambda point: point.lerp(jaw_transform(point, pivot), oral_jaw_weight(role, point)))
             continue
         entries.append(tag_muscle(obj, label, JAW, "authored-deformation"))
@@ -493,7 +496,26 @@ def build_jaw(bones_path, muscles_path, registration_path):
         def deformation(point):
             longitudinal = (point - origin).dot(axis) / span
             weight = smooth(-.12, 1.15, longitudinal)
-            return jaw_transform(point, pivot, weight)
+            if role != "temporalis":
+                return jaw_transform(point, pivot, weight)
+            # Retain the temporal fossa attachment. The mobile tendon passes
+            # medial to the zygomatic arch and behind the maxilla.
+            weight *= 1 - smooth(1.552, 1.575, point.y)
+            posed = jaw_transform(point, pivot, weight)
+            inward = Vector((-SIDES[label[-1]][1], 0, 0))
+            behind = Vector((0, 0, -1))
+            arch, maxilla = cheekbones[label[-1]]
+            window = smooth(1.537, 1.551, point.y) * (1 - smooth(1.565, 1.575, point.y))
+            if window > 0:
+                _, _, _, arch_distance = arch.find_nearest(posed)
+                _, _, _, maxilla_distance = maxilla.find_nearest(posed)
+                gap = directional_clearance(arch, posed, inward, .008, .0012)
+                reserve = .0015 * (1 - smooth(.002, .006, arch_distance))
+                posed += inward * min(.006, gap + reserve) * window
+                gap = directional_clearance(maxilla, posed, behind, .008, .0012)
+                reserve = .0015 * (1 - smooth(.002, .005, maxilla_distance))
+                posed += behind * min(.006, gap + reserve) * window
+            return posed
 
         add_shape(obj, "JawOpen", deformation)
     if len(entries) != 2 * len(JAW):

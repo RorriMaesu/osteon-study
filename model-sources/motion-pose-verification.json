@@ -1,5 +1,5 @@
 {
-  "sha256": "e59adc3fb3dc0e9390e34aed97437d31a7c9b65d0f8459fe13ce9d5dd7dd1751",
+  "sha256": "31de15e77119875876fcc53c3f83f1a765b59b4de8a205566cf69a5988b77081",
   "reimportedMuscles": 476,
   "reimportedBoneSurfaces": 296,
   "maximumNeutralBoundsErrorMillimeters": 0.009466,
@@ -445,14 +445,14 @@
         {
           "muscle": "muscle-orbicularis-oris-muscle-l",
           "maxDisplacementMm": 26.492,
-          "edgeLengthRatio95": 1.988,
-          "edgeLengthRatio99": 2.645
+          "edgeLengthRatio95": 1.975,
+          "edgeLengthRatio99": 2.691
         },
         {
           "muscle": "muscle-orbicularis-oris-muscle-r",
           "maxDisplacementMm": 26.492,
-          "edgeLengthRatio95": 1.988,
-          "edgeLengthRatio99": 2.645
+          "edgeLengthRatio95": 1.974,
+          "edgeLengthRatio99": 2.691
         },
         {
           "muscle": "muscle-depressor-anguli-oris-l",
@@ -491,6 +491,18 @@
           "edgeLengthRatio99": 1.947
         },
         {
+          "muscle": "muscle-temporalis-muscle-l",
+          "maxDisplacementMm": 14.906,
+          "edgeLengthRatio95": 1.438,
+          "edgeLengthRatio99": 1.765
+        },
+        {
+          "muscle": "muscle-temporalis-muscle-r",
+          "maxDisplacementMm": 14.906,
+          "edgeLengthRatio95": 1.438,
+          "edgeLengthRatio99": 1.765
+        },
+        {
           "muscle": "muscle-superficial-part-of-masseter-l",
           "maxDisplacementMm": 15.988,
           "edgeLengthRatio95": 1.277,
@@ -501,18 +513,6 @@
           "maxDisplacementMm": 15.988,
           "edgeLengthRatio95": 1.277,
           "edgeLengthRatio99": 1.329
-        },
-        {
-          "muscle": "muscle-genioglossus-muscle-l",
-          "maxDisplacementMm": 22.881,
-          "edgeLengthRatio95": 1.253,
-          "edgeLengthRatio99": 1.322
-        },
-        {
-          "muscle": "muscle-genioglossus-muscle-r",
-          "maxDisplacementMm": 22.881,
-          "edgeLengthRatio95": 1.253,
-          "edgeLengthRatio99": 1.322
         }
       ]
     },
@@ -1383,9 +1383,9 @@
       "largestSkinStretch": [
         {
           "muscle": "muscle-orbicularis-oris-muscle-l",
-          "maxDisplacementMm": 8.872,
-          "edgeLengthRatio95": 1.262,
-          "edgeLengthRatio99": 1.405
+          "maxDisplacementMm": 8.88,
+          "edgeLengthRatio95": 1.264,
+          "edgeLengthRatio99": 1.408
         },
         {
           "muscle": "muscle-bucinator-l",
@@ -1396,8 +1396,8 @@
         {
           "muscle": "muscle-orbicularis-oris-muscle-r",
           "maxDisplacementMm": 8.363,
-          "edgeLengthRatio95": 1.137,
-          "edgeLengthRatio99": 1.295
+          "edgeLengthRatio95": 1.128,
+          "edgeLengthRatio99": 1.281
         },
         {
           "muscle": "muscle-genioglossus-muscle-l",
@@ -1467,13 +1467,13 @@
           "muscle": "muscle-orbicularis-oris-muscle-l",
           "maxDisplacementMm": 5.314,
           "edgeLengthRatio95": 1.156,
-          "edgeLengthRatio99": 1.235
+          "edgeLengthRatio99": 1.232
         },
         {
           "muscle": "muscle-orbicularis-oris-muscle-r",
           "maxDisplacementMm": 5.314,
           "edgeLengthRatio95": 1.156,
-          "edgeLengthRatio99": 1.235
+          "edgeLengthRatio99": 1.232
         },
         {
           "muscle": "muscle-bucinator-l",

@@ -19,7 +19,7 @@ from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from mouth_deformation import ORAL_FOLLOW, oral_jaw_weight
+from mouth_deformation import ORAL_FOLLOW, incisor_clearance, oral_jaw_weight
 REPO, WORK = [Path(p).resolve() for p in sys.argv[sys.argv.index('--')+1:]]
 if WORK.is_relative_to(REPO):
     raise ValueError('Keep editable Blender files and backups outside the repo.')
@@ -387,6 +387,9 @@ def import_sources():
     for obj in list(bpy.context.scene.objects):
         if obj not in kept:bpy.data.objects.remove(obj,do_unlink=True)
     bpy.context.view_layer.update()
+    pivot=Vector((0,JAW_LANDMARK[1]-.0015,JAW_LANDMARK[2]+.0015))
+    for side in SIDES.values():
+        incisor_clearance(MUSCLES['muscle-orbicularis-oris-muscle-'+side], BONE_MESHES, pivot, web, blender)
 
 def armature():
     data=bpy.data.armatures.new('Osteon whole-body pose joints')

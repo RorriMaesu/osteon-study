@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "e59adc3fb3dc0e9390e34aed97437d31a7c9b65d0f8459fe13ce9d5dd7dd1751",
-  "bytes": 16295748,
+  "sha256": "31de15e77119875876fcc53c3f83f1a765b59b4de8a205566cf69a5988b77081",
+  "bytes": 16191292,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
   "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.",
@@ -3336,7 +3336,7 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "jaw-opening-20261115-222937-7690",
+  "backup": "jaw-clearance-20261115-224909-0898",
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
     "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
@@ -3368,7 +3368,7 @@
     "assets\\motion-walk-muscles-trunk-back.glb": "e3528ed1b4e18f28778dabed0be9c0ee1618b058cf8c0fc33ca32c38fd000c16",
     "assets\\motion-blink.glb": "8306831f75b838a6c609e3ca9450f0003663e64a4365ae22d33aabbb4c0af459",
     "assets\\motion-smile.glb": "d73ca1c3ef342a307f8046400bdcd0a647e6236a22f8cff6bbefbb1f5394174a",
-    "assets\\motion-jaw.glb": "2f9d4d3f6eed325ef8b62fae19b827b4082b0e8038b8b4c2ccfca184a7610263",
+    "assets\\motion-jaw.glb": "82c718daf903dfc43e07e3ecaeed233847ce927689f0072daedd69987c8656fd",
     "assets\\motion-breath.glb": "42a3b7090caaa11b816260159bcde0f0bd7f71b29db2470289805922f2cc97ed"
   }
 }

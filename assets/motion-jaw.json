@@ -2,8 +2,8 @@
   "schema": 1,
   "region": "jaw",
   "asset": "motion-jaw.glb",
-  "sha256": "2f9d4d3f6eed325ef8b62fae19b827b4082b0e8038b8b4c2ccfca184a7610263",
-  "bytes": 1228352,
+  "sha256": "82c718daf903dfc43e07e3ecaeed233847ce927689f0072daedd69987c8656fd",
+  "bytes": 1171156,
   "camera": {
     "target": [
       0,
@@ -443,20 +443,20 @@
   "checks": {
     "muscle-orbicularis-oris-muscle-r": {
       "JawOpen": {
-        "maxDisplacementMm": 26.524,
-        "medianDisplacementMm": 7.985,
-        "minVerticalMm": -25.155,
+        "maxDisplacementMm": 26.525,
+        "medianDisplacementMm": 8.058,
+        "minVerticalMm": -25.163,
         "maxVerticalMm": 0.0,
-        "edgeLengthRatio95": 1.985
+        "edgeLengthRatio95": 1.96
       }
     },
     "muscle-orbicularis-oris-muscle-l": {
       "JawOpen": {
         "maxDisplacementMm": 26.525,
-        "medianDisplacementMm": 7.985,
-        "minVerticalMm": -25.155,
+        "medianDisplacementMm": 8.058,
+        "minVerticalMm": -25.163,
         "maxVerticalMm": 0.0,
-        "edgeLengthRatio95": 1.985
+        "edgeLengthRatio95": 1.96
       }
     },
     "muscle-zygomaticus-major-muscle-r": {
@@ -677,20 +677,20 @@
     },
     "muscle-temporalis-muscle-r": {
       "JawOpen": {
-        "maxDisplacementMm": 16.816,
-        "medianDisplacementMm": 3.873,
-        "minVerticalMm": -16.066,
-        "maxVerticalMm": 0.379,
-        "edgeLengthRatio95": 1.253
+        "maxDisplacementMm": 14.906,
+        "medianDisplacementMm": 0.0,
+        "minVerticalMm": -14.9,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.436
       }
     },
     "muscle-temporalis-muscle-l": {
       "JawOpen": {
-        "maxDisplacementMm": 16.85,
-        "medianDisplacementMm": 3.858,
-        "minVerticalMm": -16.074,
-        "maxVerticalMm": 0.352,
-        "edgeLengthRatio95": 1.254
+        "maxDisplacementMm": 14.906,
+        "medianDisplacementMm": 0.0,
+        "minVerticalMm": -14.9,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.436
       }
     },
     "muscle-hyoglossus-muscle-r": {
