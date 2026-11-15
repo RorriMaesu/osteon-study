@@ -24,10 +24,10 @@
     },
     "pelvis-leg-foot": {
       "file": "muscles-pelvis-leg-foot.glb",
-      "bytes": 2620964,
-      "sha256": "0c84c835078c350bcddd9b31b2c5773d70b644018dbc8be9807f0cbc6ace66a2",
+      "bytes": 2789644,
+      "sha256": "a598631c16290e7454f0f5de4070883a06f874541450c806734b4de3bcc563e1",
       "components": 250,
-      "backup": "muscles-20261105-013125-235764"
+      "backup": "lower-muscle-winding-20261115-215422-9085"
     },
     "shoulder-arm": {
       "file": "muscles-shoulder-arm.glb",

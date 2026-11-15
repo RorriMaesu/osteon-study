@@ -4,6 +4,7 @@ import json
 import math
 import sys
 from pathlib import Path
+import bmesh
 import bpy
 import numpy as np
 from mathutils import Vector,Quaternion
@@ -21,6 +22,23 @@ muscles=[o for o in objects if o.get('poseMuscle')]
 assert len(muscles)==META['totalMuscleSurfaces']
 assert len(set(o['muscleId'] for o in muscles))==len(muscles)
 assert len(objects)-len(muscles)==META['boneSurfaces']
+hamstring_parts = ('long-head-of-biceps-femoris', 'short-head-of-biceps-femoris',
+                   'semimembranosus-muscle', 'semitendinosus-muscle')
+muscle_by_id = {obj['muscleId']: obj for obj in muscles}
+for part in hamstring_parts:
+    volumes = []
+    for side in ('l', 'r'):
+        obj = muscle_by_id[f'muscle-{part}-{side}']
+        mesh = bmesh.new()
+        try:
+            mesh.from_mesh(obj.data)
+            mesh.transform(obj.matrix_world)
+            signed_volume = mesh.calc_volume(signed=True)
+        finally:
+            mesh.free()
+        assert signed_volume > 0, (obj.name, 'hamstring faces point inward')
+        volumes.append(signed_volume)
+    assert math.isclose(*volumes, rel_tol=.01), (part, 'asymmetric hamstring volumes')
 nodes={row['id']:row for row in META['nodes']}
 
 def rotate(identifier,axis,angle):

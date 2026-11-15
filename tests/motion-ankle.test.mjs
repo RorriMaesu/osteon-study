@@ -33,7 +33,7 @@ test('ankle shape binding tolerates earlier assets, keeps case-sensitive extras 
 
 test('the shipped base leg model has signed corrective targets on both lateral gastrocnemius and Achilles surfaces',()=>{
  const bytes=read('assets/motion-legs.glb');
- assert.equal(createHash('sha256').update(bytes).digest('hex'),metadata.correctedAssetSHA256);
+ assert.equal(createHash('sha256').update(bytes).digest('hex'),metadata.surfaceWindingRepair.sha256);
  const jsonEnd=20+bytes.readUInt32LE(12);
  const {nodes,meshes,accessors}=JSON.parse(bytes.subarray(20,jsonEnd));
  const shaped=nodes.filter(node=>node.extras?.motionAnklePlantar||node.extras?.motionAnkleDorsi);

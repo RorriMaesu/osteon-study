@@ -13,6 +13,17 @@
     "skinJointsAndInverseBindMatrices": "4a1a35ebd3c1eebb6348245b6526e853ebfa4d8fc76d90f8ba621418f65280d0",
     "unchangedDracoPrimitives": "2275e162b58280a934eff1fce8dcb769c62b77fac32054c2b3d96be2ae1381d3"
   },
+  "surfaceWindingRepair": {
+    "sha256": "1dda42c027b33de5264cb0cca4b8608a38a132d90a56b91b3d612fad2a0910ea",
+    "correctedNodes": [
+      "MotionLeftCalcanealTendon",
+      "MotionLeftLateralHeadOfGastrocnemius",
+      "MotionLeftLongHeadOfBicepsFemoris",
+      "MotionLeftTibialisAnteriorMuscle",
+      "MotionLeftVastusLateralisMuscle"
+    ],
+    "unchangedDracoPrimitives": "0751184d4ab7b400303bd3829603e8851029e5aa110fc33200e15b6074ce850a"
+  },
   "targetAngles": {
     "AnklePosePlantarflexion": -35,
     "AnklePoseDorsiflexion": 23

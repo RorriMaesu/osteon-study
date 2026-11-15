@@ -60,8 +60,12 @@ test('whole-body walking covers exactly the active atlas surfaces with the origi
  if(hash(legs)!==authorshipInput){
   const upgrade=read('model-sources/motion-gastrocnemius-ankle.json');
   assert.equal(upgrade.baseAssetSHA256,authorshipInput,'Historical authoring input stays pinned');
-  assert.deepEqual(lowerRigSignature(legs,upgrade.correctedNodes),upgrade.baseCompatibility,
-    'Morph-only updates must preserve named nodes, rest transforms, skin bindings and unrelated mesh payloads');
+  const winding=upgrade.surfaceWindingRepair;
+  const correctedNodes=[...upgrade.correctedNodes,...winding.correctedNodes];
+  assert.deepEqual(lowerRigSignature(legs,correctedNodes),{
+   ...upgrade.baseCompatibility,
+   unchangedDracoPrimitives:winding.unchangedDracoPrimitives,
+  },'Surface repairs must preserve named nodes, rest transforms, skin bindings and unrelated mesh payloads');
  }
  assert.equal(hash(asset('motion-walk-context.glb')),manifest.inputs['motion-walk-context.glb']);
  const recorded=meshNodes(glb(legs)).filter(node=>node.extras?.motionMuscle).map(node=>node.extras.muscleId);

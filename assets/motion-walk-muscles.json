@@ -154,8 +154,8 @@
     },
     "pelvis-leg-foot": {
       "file": "motion-walk-muscles-pelvis-leg-foot.glb",
-      "sha256": "0d09f349d686e1c194dc83ada8a5ac527699030ac295846350f8769231a7c863",
-      "bytes": 1338444,
+      "sha256": "6bf336945ea3b50f348210c07f0d7c21a1bd34e70d5b9503bcdc0bcf5cc3be42",
+      "bytes": 2479612,
       "parts": 120,
       "deformation": {
         "segment-follow": 48,
@@ -192,7 +192,7 @@
     }
   },
   "inputs": {
-    "muscle-models.json": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7",
+    "muscle-models.json": "2bd20e4ac4f3e07043601193e0ae166ad919b09b463178e9af3d9ab1aa93e39c",
     "motion-legs.glb": "4481cd449ffbc0de3a8acc53417dad5ca0bf40ac136b175f06868654e91c869c",
     "motion-walk-context.glb": "2f84deacfe276add2369b16a95f7514027e919a6b7ec7c3a7b61463044b55b18",
     "motion-legs.json": "b4699b5ec2be5733f07635185d7fbfcb48eb17826966cfbbe6fa3b3995d42740",
@@ -200,7 +200,7 @@
     "MODEL-LICENSE.md": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624",
     "muscles-forearm-hand.glb": "23fd9639d6c3da947ff4fe8e850c5ae4b85cb08b5cbbd3f1995de93cbf0c96c1",
     "muscles-head-neck.glb": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2",
-    "muscles-pelvis-leg-foot.glb": "0c84c835078c350bcddd9b31b2c5773d70b644018dbc8be9807f0cbc6ace66a2",
+    "muscles-pelvis-leg-foot.glb": "a598631c16290e7454f0f5de4070883a06f874541450c806734b4de3bcc563e1",
     "muscles-shoulder-arm.glb": "dbac493d9c9d0882cafa516c835ac9ad9c47e0a324488b4de5e883d496f757e3",
     "muscles-trunk-back.glb": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b"
   }
