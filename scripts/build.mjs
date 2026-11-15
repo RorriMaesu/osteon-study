@@ -46,4 +46,11 @@ for(const sheet of ['worksheet.css','muscle-spatial.css','motion-lab.css']){
  html=html.replace(expression,`href="${sheet}?v=${hash(sheet)}"`);
 }
 fs.writeFileSync(file,html);
+const coverageFile=path.join(root,'muscle-coverage.html');
+let coverage=fs.readFileSync(coverageFile,'utf8');
+const coverageAssets=['src/motion-coverage-ui.js','src/motion-coverage-data.json'].filter(file=>fs.existsSync(path.join(root,file)));
+const coverageVersion=createHash('sha256').update(coverageAssets.map(hash).join('')).digest('hex').slice(0,12);
+coverage=coverage.replace(/href="muscle-coverage-index\.css(?:\?v=[a-f0-9]+)?"/,`href="muscle-coverage-index.css?v=${hash('muscle-coverage-index.css')}"`)
+ .replace(/src="src\/motion-coverage-ui\.js(?:\?v=[a-f0-9]+)?"/,`src="src/motion-coverage-ui.js?v=${coverageVersion}"`);
+fs.writeFileSync(coverageFile,coverage);
 console.log('Built application and versioned assets.');

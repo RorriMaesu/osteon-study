@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10191e">
+<title>Muscle coverage · Osteon</title>
+<link rel="icon" href="assets/favicon.svg">
+<link rel="stylesheet" href="muscle-coverage-index.css?v=034d5c97a257">
+</head>
+<body>
+<header>
+ <a class="coverage-brand" href="./#atlas" aria-label="Osteon 3D Atlas"><span aria-hidden="true">✳</span> osteon<span>.</span></a>
+ <nav aria-label="Osteon"><a href="./#atlas">3D Atlas</a><a href="./#motion">Motion Lab ↗</a></nav>
+</header>
+<main>
+ <section class="coverage-intro" aria-labelledby="coverage-title">
+  <div><p class="coverage-kicker">OSTEON / MUSCULAR SYSTEM</p><h1 id="coverage-title">Muscle <em>coverage.</em></h1>
+  <p>Check which muscles have an atlas model, which are rigged to move, and which still need a model or a review.</p></div>
+  <div id="coverage-totals" class="coverage-totals" aria-label="Inventory totals"></div>
+ </section>
+ <section class="coverage-index" aria-label="Muscle coverage inventory">
+  <form id="coverage-filters">
+   <label>Find a muscle <input type="search" id="coverage-search" placeholder="Name, head or part" autocomplete="off"></label>
+   <label>Region <select id="coverage-region"><option value="">All regions</option></select></label>
+   <label>Coverage <select id="coverage-filter">
+     <option value="">All entries</option><option value="course">Course list</option><option value="moving">Has a motion mesh</option>
+     <option value="gap">Atlas gap or review needed</option><option value="variants">Variant or sex-specific</option>
+   </select></label>
+  </form>
+  <div class="coverage-results-head"><p id="coverage-state" role="status">Loading the inventory…</p><button id="coverage-clear" type="button" hidden>Clear filters</button></div>
+  <ol id="coverage-rows"></ol>
+  <div id="coverage-detail"></div>
+  <nav class="coverage-pages" id="coverage-pages" aria-label="Coverage pages" hidden>
+   <button type="button" id="coverage-prev">← Previous</button><span id="coverage-page"></span><button type="button" id="coverage-next">Next →</button>
+  </nav>
+ </section>
+ <details class="coverage-method">
+  <summary>How to read this inventory</summary>
+  <p id="coverage-scope"></p>
+  <p>A static match confirms that a named surface can be found in the atlas. Motion coverage refers to geometry in a shipped rig. Each item shows the evidence available for its movement.</p>
+  <div id="coverage-sources"></div>
+ </details>
+</main>
+<footer><a href="https://github.com/RorriMaesu/osteon-study/commits/main/">GitHub changes ↗</a><a href="CREDITS.md">Sources and credits ↗</a></footer>
+<script type="module" src="src/motion-coverage-ui.js?v=1a9e87917ff1"></script>
+</body>
+</html>
