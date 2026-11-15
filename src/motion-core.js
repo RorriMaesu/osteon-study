@@ -6,6 +6,8 @@ export const curlDuration = 4;
 const degrees = 180 / Math.PI;
 export const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 const smooth = value => value * value * (3 - 2 * value);
+const travelDuration=1.6;
+const loweringStart=2.4;
 
 export const armRoles = {
  'biceps-brachii':{name:'Biceps brachii', role:'Elbow flexor. It also supinates the forearm.'},
@@ -16,8 +18,8 @@ export const armRoles = {
 };
 
 const activity=(seconds)=>{
- const time=clamp(seconds,0,curlDuration),phase=time<1.6?0:time<2.4?1:2;
- const travel=phase===0?smooth(time/1.6):phase===1?1:1-smooth((time-2.4)/1.6);
+ const time=clamp(seconds,0,curlDuration),phase=time<travelDuration?0:time<loweringStart?1:2;
+ const travel=phase===0?smooth(time/travelDuration):phase===1?1:1-smooth((time-loweringStart)/travelDuration);
  return {time,phase,travel};
 };
 const lessonAngle=(value,limits)=>limits[0]+(limits[1]-limits[0])*value;
@@ -25,7 +27,8 @@ export const contractionCues={
  concentric:{label:'Shortening',symbol:'→←'},
  isometric:{label:'Holding tension',symbol:'='},
  eccentric:{label:'Lengthening under tension',symbol:'←→'},
- role:{label:'Possible contributors',symbol:'◇'},
+ role:{label:'Possible agonists',symbol:'◇'},
+ unavailable:{label:'Agonist geometry unavailable',symbol:'○'},
  emg:{label:'Recorded surface EMG',symbol:'▂▅'},
 };
 const bakedRange=[10,100];
@@ -38,7 +41,7 @@ export function curlFrame(seconds,limits=bakedRange){
 
 export function pressFrame(seconds,limits=bakedRange){
  const {phase,time,travel}=activity(seconds),contraction=curlPhases[phase].type;
- return {phase,contraction,angle:lessonAngle(1-travel,limits),clipTime:[2.4+time,4,time-2.4][phase],
+ return {phase,contraction,angle:lessonAngle(1-travel,limits),clipTime:[loweringStart+time,curlDuration,time-loweringStart][phase],
   joint:['Elbow extension','Elbow held','Elbow flexion'][phase],
   name:['Press down','Hold the extension','Return under control'][phase],
   detail:[
@@ -46,6 +49,20 @@ export function pressFrame(seconds,limits=bakedRange){
    'The elbow extensors maintain tension while the hand stays in place.',
    'As the cable pulls the hand upward, the elbow flexes and the elbow extensors lengthen under tension to control the return.',
   ][phase]};
+}
+
+// Both comparisons use the extension segment of the same baked elbow clip.
+export function compareElbowTime(angle,toCurl,sampleAngle){
+ let start=loweringStart,end=curlDuration;
+ if(angle>=sampleAngle(start))end=start;
+ else if(angle<=sampleAngle(end))start=end;
+ else for(let index=0;index<17;index++){
+  const middle=(start+end)/2;
+  if(sampleAngle(middle)>angle)start=middle;
+  else end=middle;
+ }
+ const time=(start+end)/2;
+ return toCurl?time:time-loweringStart;
 }
 
 export function heelFrame(seconds){

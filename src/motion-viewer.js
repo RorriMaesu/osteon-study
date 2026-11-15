@@ -5,11 +5,15 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {elbowAngle,planarLimbPose,clamp} from './motion-core.js';
 import modelAssets from './model-assets.json' with {type:'json'};
+import muscleModels from './muscle-models.json' with {type:'json'};
 
 const radians = Math.PI / 180;
 const axis = values => new THREE.Vector3(...values).normalize();
 const muscleBase = new THREE.Color('#9d7261');
 const muscleMuted = new THREE.Color('#604f4e');
+const opposingRoleColor=new THREE.Color('#a9b6e6');
+const atlasParts=new Map(muscleModels.components.map(part=>[part.id,part]));
+const svgNamespace='http://www.w3.org/2000/svg';
 const cueColors=Object.fromEntries(Object.entries({concentric:'#ff9855',isometric:'#d7a1ff',eccentric:'#68d8ff',role:'#9cdec0',emg:'#ffd8a0'}).map(([key,value])=>[key,new THREE.Color(value)]));
 
 function jointState(node){
@@ -30,7 +34,10 @@ function outlinePart(part){
 function musclePart(mesh){
  const material=new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
  mesh.material=material;
- return {mesh,material,id:mesh.userData.motionMuscle,side:mesh.userData.motionSide||'right'};
+ const data=mesh.userData,key=data.muscleId;
+ const atlas=atlasParts.get(key);
+ return {mesh,material,key,id:data.motionMuscle,side:data.motionSide||atlas?.side||'right',
+  name:data.motionPart||atlas?.geometryReview?.displayName||atlas?.name||mesh.name,contextOnly:!!data.motionContextOnly};
 }
 async function readRig(name){
  const version=modelAssets[name];
@@ -51,6 +58,17 @@ export class MotionViewer {
   this.onLimb=onLimb;
   this.handle=stage.querySelector('.motion-handle');
   this.loadTag=stage.querySelector('.motion-load-tag');
+  this.selectionLabel=stage.querySelector('[data-motion-selection-label]');
+  this.selectionGuide=document.createElementNS(svgNamespace,'svg');
+  this.selectionGuide.classList.add('motion-selection-guide');
+  this.selectionGuide.setAttribute('aria-hidden','true');
+  this.selectionGuide.style.display='none';
+  this.selectionLine=document.createElementNS(svgNamespace,'line');
+  this.selectionDot=document.createElementNS(svgNamespace,'circle');
+  this.selectionDot.setAttribute('r','3');
+  this.selectionGuide.append(this.selectionLine,this.selectionDot);
+  this.stage.append(this.selectionGuide);
+  this.labelAnchor=new THREE.Vector3();
   this.cache=new Map();
   this.camera=new THREE.PerspectiveCamera(35,1,.004,30);
   this.pointer=new THREE.Vector2();
@@ -104,6 +122,8 @@ export class MotionViewer {
   this.renderer=null;
   this.drag=null;
   this.lastTime=undefined;
+  this.selectedPart=null;
+  this.showSelectionLabel(false);
  }
  async load(kind){
   if(this.cache.has(kind))return this.cache.get(kind);
@@ -293,21 +313,27 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,showMuscles,onlyActive,showCalves=false,cue,displayThreshold=0}){
+ highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists}){
   if(!this.current)return;
   const replaced=new Set();
   for(const {mesh,base} of this.current.calves||[]){
    if(base){base.visible=!showCalves;if(showCalves)replaced.add(base);}
    mesh.visible=showCalves;
   }
+  this.selectedPart=null;
+  const isolate=isolateSelection&&!!(selected||selectedGroup);
   for(const p of this.current.parts){
    const key=p.side+':'+p.id, strength=strengths[key];
-   const focused=selected===key;
+   const exact=selected===p.key;
+   const focused=exact||selectedGroup===key;
    const visibleSignal=strength>0&&strength>=displayThreshold;
-   p.mesh.visible=showMuscles&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal);
+   const opposing=antagonists?.has(key);
+   p.mesh.visible=showMuscles&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing)&&(!isolate||focused);
+   if(exact&&p.mesh.visible)this.selectedPart=p;
    p.material.color.copy(cue?muscleMuted:muscleBase);
    const intensity=visibleSignal?clamp(strength,0,1):0;
    if(cueColors[cue]&&intensity)p.material.color.lerp(cueColors[cue],intensity);
+   else if(opposing)p.material.color.lerp(opposingRoleColor,.78);
    p.material.emissive.copy(p.material.color).multiplyScalar(intensity*.23);
    if(p.outline||focused)outlinePart(p).visible=focused&&p.mesh.visible;
   }
@@ -425,7 +451,51 @@ export class MotionViewer {
   const byMesh=new Map(candidates.map(part=>[part.mesh,part]));
   for(const mesh of byMesh.keys())if(mesh.isSkinnedMesh)mesh.computeBoundingSphere();
   const hit=this.ray.intersectObjects([...byMesh.keys()],false)[0];
-  if(hit){const p=byMesh.get(hit.object);if(p.id)this.onMuscle(p.side+':'+p.id);else this.onLimb(p.side);}
+  if(hit){const p=byMesh.get(hit.object);if(p.key)this.onMuscle(p.key);else this.onLimb(p.side);}
+ }
+ showSelectionLabel(visible){
+  if(this.selectionLabel)this.selectionLabel.hidden=!visible;
+  this.selectionGuide.style.display=visible?'':'none';
+ }
+ updateSelectionLabel(){
+  const part=this.current?.model.visible&&this.selectedPart;
+  const label=this.selectionLabel;
+  if(!part||!label){this.showSelectionLabel(false);return;}
+  const {mesh}=part,geometry=mesh.geometry;
+  if(part.anchorIndex===undefined){
+   if(!geometry.boundingBox)geometry.computeBoundingBox();
+   const center=geometry.boundingBox.getCenter(new THREE.Vector3());
+   const positions=geometry.getAttribute('position');
+   let closest=Infinity;
+   for(let index=0;index<positions.count;index++){
+    const distance=this.labelAnchor.fromBufferAttribute(positions,index).distanceToSquared(center);
+    if(distance<closest){part.anchorIndex=index;closest=distance;}
+   }
+  }
+  mesh.getVertexPosition(part.anchorIndex,this.labelAnchor);
+  const {x,y,z}=mesh.localToWorld(this.labelAnchor).project(this.camera);
+  if(Math.abs(x)>.98||Math.abs(y)>.98||Math.abs(z)>1){this.showSelectionLabel(false);return;}
+  const {clientWidth:width,clientHeight:height}=this.stage;
+  const anchorX=(1+x)*width/2,anchorY=(1-y)*height/2;
+  const name=part.name+(['left','right'].includes(part.side)?' · '+part.side:'');
+  if(label.textContent!==name)label.textContent=name;
+  this.showSelectionLabel(true);
+  const stageBounds=this.stage.getBoundingClientRect();
+  const notes=this.stage.closest('#motion-view')?.querySelector('.motion-info');
+  const notesBounds=notes?.getBoundingClientRect();
+  const notesCover=notesBounds?.height&&notesBounds.left<stageBounds.right&&notesBounds.right>stageBounds.left&&notesBounds.top>stageBounds.top+38&&notesBounds.top<stageBounds.bottom;
+  const lowerEdge=notesCover?notesBounds.top-stageBounds.top:height;
+  const halfWidth=label.offsetWidth/2;
+  const top=clamp(anchorY-38,notesCover?95:48,Math.max(notesCover?95:48,lowerEdge-label.offsetHeight/2-8));
+  const left=clamp(anchorX+(anchorX<width*.58?42:-42),halfWidth+8,width-halfWidth-8);
+  label.style.left=left+'px';
+  label.style.top=top+'px';
+  this.selectionLine.setAttribute('x1',anchorX);
+  this.selectionLine.setAttribute('y1',anchorY);
+  this.selectionLine.setAttribute('x2',left);
+  this.selectionLine.setAttribute('y2',top);
+  this.selectionDot.setAttribute('cx',anchorX);
+  this.selectionDot.setAttribute('cy',anchorY);
  }
  tick(now){
   if(!this.renderer)return;
@@ -437,6 +507,7 @@ export class MotionViewer {
   if(this.dirty&&this.stage.clientHeight){
    this.renderer.render(this.scene,this.camera);
    this.updateMarker();
+   this.updateSelectionLabel();
    this.dirty=false;
   }
  }

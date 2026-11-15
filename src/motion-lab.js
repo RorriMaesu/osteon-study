@@ -1,6 +1,6 @@
 
 import {MotionViewer} from './motion-viewer.js';
-import {armRoles,clamp,curlDuration,curlFrame,heelFrame,pressFrame,elbowLimits,contractionCues} from './motion-core.js';
+import {armRoles,clamp,curlDuration,curlFrame,heelFrame,pressFrame,compareElbowTime,elbowLimits,contractionCues} from './motion-core.js';
 import {sampleWalk,gaitEventName,gaitChannel} from './motion-walk.js';
 import {setLearningContext} from './learning-context.js';
 import modelAssets from './model-assets.json' with {type:'json'};
@@ -14,16 +14,35 @@ const sources={
 const gaitMuscles={
  'tibialis-anterior':{name:'Tibialis anterior',role:'Ankle dorsiflexor'},
  'gastrocnemius-lateral':{name:'Lateral head of gastrocnemius',role:'Ankle plantar flexor that also crosses the knee'},
- 'biceps-femoris':{name:'Biceps femoris',role:'The sampled part contributes to knee flexion'},
+ 'biceps-femoris':{name:'Biceps femoris',role:'Long-head mesh. The surface EMG does not distinguish the heads.'},
  'vastus-lateralis':{name:'Vastus lateralis',role:'Part of the quadriceps that extends the knee'},
 };
 const calfRoles={
+ ...gaitMuscles,
  'gastrocnemius-medial':{name:'Medial head of gastrocnemius',role:'Ankle plantar flexor that also crosses the knee'},
- 'gastrocnemius-lateral':gaitMuscles['gastrocnemius-lateral'],
  soleus:{name:'Soleus',role:'Ankle plantar flexor that does not cross the knee'},
  plantaris:{name:'Plantaris',role:'Small muscle crossing the knee and ankle. Shown as anatomical context.'},
 };
 const legLimits={hip:[-22,85],knee:[0,85],ankle:[-35,23]};
+const flexors=['biceps-brachii','brachialis','brachioradialis'];
+const extensors=['triceps-brachii','anconeus'];
+const heelMovers=['gastrocnemius-medial','gastrocnemius-lateral','soleus'];
+const legRoles={
+ hip:[
+  ['Hip extension',['biceps-femoris'],[]],
+  ['Hip flexion',[],['biceps-femoris']],
+ ],
+ knee:[
+  ['Knee extension',['vastus-lateralis'],['biceps-femoris','gastrocnemius-lateral']],
+  ['Knee flexion',['biceps-femoris','gastrocnemius-lateral'],['vastus-lateralis']],
+ ],
+ ankle:[
+  ['Ankle plantarflexion',['gastrocnemius-lateral'],['tibialis-anterior']],
+  ['Ankle dorsiflexion',['tibialis-anterior'],['gastrocnemius-lateral']],
+ ],
+};
+const sideName=side=>side==='left'?'Left':side==='right'?'Right':'Midline';
+const roleKey=part=>part.side+':'+part.id;
 const emptyPose=()=>({hip:0,knee:0,ankle:0});
 const gaitFile=()=>new URL('src/motion-gait-data.json?v='+modelAssets['motion-gait'],document.baseURI).href;
 
@@ -49,6 +68,7 @@ export function initMotionLab({setView}){
  <div class="motion-stage" aria-label="Interactive motion specimen">
  <div class="motion-status" role="status"></div>
  <div class="motion-phase-tag"><span data-motion-heading></span><span data-motion-cue></span></div>
+ <span data-motion-selection-label aria-hidden="true" hidden></span>
  <span class="motion-handle" aria-hidden="true" hidden><i></i><span>Drag</span></span>
  <span class="motion-load-tag" aria-hidden="true" hidden>↓ Hand load</span>
  <div class="motion-camera" role="group" aria-label="Camera angle"><button type="button" data-motion-camera="front">Front</button><button type="button" data-motion-camera="side">Side</button><button type="button" data-motion-camera="back">Back</button><button type="button" data-motion-camera="lesson">Reset view</button></div>
@@ -56,7 +76,13 @@ export function initMotionLab({setView}){
  <div class="motion-controls"></div></div>
  <aside class="motion-info" id="motion-notes" aria-label="Movement notes">
  <div class="motion-phase"></div>
- <div class="motion-filter"><label><input type="checkbox" data-motion-muscles checked> Muscles</label><label><input type="checkbox" data-motion-active> <span data-motion-filter-label>Highlighted only</span></label></div>
+ <div class="motion-filter">
+  <label><input type="checkbox" data-motion-muscles checked> Muscles</label>
+  <label><input type="checkbox" data-motion-active> <span data-motion-filter-label>Highlighted only</span></label>
+  <label><input type="checkbox" data-motion-antagonists> Show antagonist roles</label>
+  <label hidden><input type="checkbox" data-motion-isolate> Isolate selected</label>
+  <label hidden><input type="checkbox" data-motion-group> Whole muscle</label>
+ </div>
  <div class="motion-muscle-list"></div>
  <figure class="motion-trace" hidden><figcaption></figcaption><canvas width="300" height="90" aria-hidden="true"></canvas></figure>
  <button type="button" class="motion-compare" hidden></button>
@@ -66,9 +92,9 @@ export function initMotionLab({setView}){
 
  const $=selector=>root.querySelector(selector);
  const controls=$('.motion-controls'), phase=$('.motion-phase'), names=$('.motion-muscle-list'), status=$('.motion-status');
- const state={mode:'actions',lesson:'curl',armSide:'right',limb:'arm',elbow:{right:25,left:25},leg:{right:emptyPose(),left:emptyPose()},time:0,speed:1,playing:false,loop:true,showMuscles:true,onlyActive:false,selected:null,action:'flex',side:'left',showUpper:true,poseJoint:'',poseDelta:0};
- let active=false,revision=0,specimen=null,gait=null,lastInfo='',lastContext='';
- let gaitPromise,recallKey='';
+ const state={mode:'actions',lesson:'curl',armSide:'right',limb:'arm',elbow:{right:25,left:25},leg:{right:emptyPose(),left:emptyPose()},time:0,speed:1,playing:false,loop:true,showMuscles:true,onlyActive:false,selected:null,selectedGroup:false,isolateSelection:false,showAntagonists:false,action:'flex',side:'left',showUpper:true,poseChanges:[],poseDelta:0};
+ let active=false,revision=0,specimen=null,gait=null,lastInfo='',lastListKey='',lastContext='';
+ let gaitPromise,recallKey='',shownAngle=null,pendingPart=null,routeRead=false;
  const ready=()=>active&&!!specimen;
  const heelLesson=()=>state.mode==='actions'&&state.lesson==='heel';
  const pressLesson=()=>state.mode==='actions'&&state.lesson==='press';
@@ -77,6 +103,46 @@ export function initMotionLab({setView}){
  const shape=()=>state.mode==='walk'||heelLesson()||(state.mode==='pose'&&!isArmPose())?'legs':armSide()==='left'?'arm-left':'arm';
  const duration=()=>state.mode==='walk'?gait?.durationSeconds||1:curlDuration;
  const motion=new MotionViewer($('.motion-stage'),{onFrame:advance,onTarget:target,onMuscle:selectMuscle,onLimb:selectLeg});
+ function partsInMode(){
+  if(!specimen)return [];
+  const available=new Map();
+  for(const part of specimen.parts){
+   if(part.lessonOnly&&!heelLesson())continue;
+   if(part.lessonOnly||!available.has(part.key))available.set(part.key,part);
+  }
+  return [...available.values()];
+ }
+ function clearSelection(){
+  state.selected=null;
+  state.selectedGroup=false;
+  state.isolateSelection=false;
+ }
+ function changeSide(side){
+  if(side===state.side)return;
+  const parts=partsInMode(),previous=parts.find(part=>part.key===state.selected);
+  const matching=previous&&parts.find(part=>part.side===side&&part.name===previous.name&&part.id===previous.id);
+  state.side=side;
+  if(previous&&matching)state.selected=matching.key;
+  else clearSelection();
+  const sideControl=$('#motion-side');
+  if(sideControl)sideControl.value=side;
+  if(state.mode==='walk')steps();
+ }
+ function readRoute(){
+  if(routeRead)return;
+  routeRead=true;
+  const params=new URLSearchParams(location.search),part=params.get('motionPart');
+  if(!part)return;
+  const mode=params.get('motionMode'),lesson=params.get('motionLesson'),requestedSide=params.get('motionSide');
+  const side=['left','right'].includes(requestedSide)?requestedSide:part.endsWith('-l')?'left':'right';
+  if(mode==='pose'||mode==='actions'||mode==='walk'&&walking)state.mode=mode;
+  if(lesson==='heel'&&calfLesson||lesson==='curl'||lesson==='press')state.lesson=lesson;
+  state.armSide=side==='left'&&secondArm?'left':'right';
+  state.side=side;
+  state.limb=state.lesson==='heel'&&walking?side:state.armSide==='left'?'arm-left':'arm';
+  state.loop=state.mode!=='walk';
+  pendingPart=part;
+ }
  const setStatus=(text='',retry=false)=>{status.textContent=text;status.hidden=!text;if(retry){const button=document.createElement('button');button.type='button';button.textContent='Retry loading';button.onclick=load;status.append(button);}};
  const range=(id,label,min,max,value,step=1)=>`<label class="motion-range" for="${id}"><span>${label}</span><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${value}"><output for="${id}"></output></label>`;
  function renderControls(){
@@ -86,19 +152,19 @@ export function initMotionLab({setView}){
    ${isArmPose()?'<label>Compare roles <select id="motion-action"><option value="flex">Elbow flexion</option><option value="extend">Elbow extension</option></select></label>':''}
    <button type="button" id="motion-reset">Reset pose</button></div>
    <div class="motion-angles">${isArmPose()?range('motion-elbow','Elbow flexion',...elbowLimits,state.elbow[armSide()]):Object.entries(legLimits).map(([key,bounds])=>range('motion-'+key,key[0].toUpperCase()+key.slice(1),...bounds,state.leg[state.limb][key])).join('')}</div>`;
-   if(walking){$('#motion-limb').value=state.limb;$('#motion-limb').onchange=event=>{state.limb=event.target.value;state.selected=null;state.poseDelta=0;state.poseJoint='';load();};}
+   if(walking){$('#motion-limb').value=state.limb;$('#motion-limb').onchange=event=>{state.limb=event.target.value;clearSelection();state.poseDelta=0;state.poseChanges=[];load();};}
    if(isArmPose()){
     $('#motion-action').value=state.action;
     $('#motion-action').onchange=event=>{state.action=event.target.value;state.poseDelta=0;draw();};
     $('#motion-elbow').oninput=event=>target(Number(event.target.value));
    }else for(const key of Object.keys(legLimits))$('#motion-'+key).oninput=event=>target({[key]:Number(event.target.value)});
-   $('#motion-reset').onclick=()=>{state.poseDelta=0;state.poseJoint='';if(isArmPose())state.elbow[armSide()]=specimen?.meta.neutralFlexionDegrees||0;else state.leg[state.limb]=emptyPose();draw();motion.frame();};
+   $('#motion-reset').onclick=()=>{state.poseDelta=0;state.poseChanges=[];if(isArmPose())state.elbow[armSide()]=specimen?.meta.neutralFlexionDegrees||0;else state.leg[state.limb]=emptyPose();draw();motion.frame();};
   }else{
    controls.innerHTML=`<div class="motion-settings">${state.mode==='actions'&&calfLesson?'<label>Lesson <select id="motion-lesson"><option value="curl">Elbow curl</option><option value="press">Triceps press</option><option value="heel">Heel raise</option></select></label>':''}<button type="button" class="primary" id="motion-play">Play</button><button type="button" id="motion-reset">Restart</button>
    ${state.mode==='actions'&&!heelLesson()&&secondArm?'<label>Arm <select id="motion-arm-side"><option value="right">Right</option><option value="left">Left</option></select></label>':''}
    <label>Speed <select id="motion-speed"><option value=".25">¼×</option><option value=".5">½×</option><option value="1">1×</option></select></label>
    <label class="motion-check"><input type="checkbox" id="motion-loop" ${state.loop?'checked':''}> Loop</label>
-   ${state.mode==='walk'?'<label>Focus <select id="motion-side"><option value="right">Right leg</option><option value="left">Left leg</option></select></label>':''}${state.mode==='walk'&&fullBody?'<label class="motion-check"><input type="checkbox" id="motion-upper"> Whole body</label>':''}</div>
+   ${state.mode==='walk'||heelLesson()?'<label>Inspect <select id="motion-side"><option value="right">Right leg</option><option value="left">Left leg</option></select></label>':''}${state.mode==='walk'&&fullBody?'<label class="motion-check"><input type="checkbox" id="motion-upper"> Upper body</label>':''}</div>
    ${range('motion-time',state.mode==='walk'?'Stride':'Movement',0,duration(),state.time,.001)}
    <div class="motion-steps" role="group" aria-label="Jump to a movement event"></div>`;
    $('#motion-speed').value=String(state.speed).replace(/^0\./,'.');
@@ -106,19 +172,19 @@ export function initMotionLab({setView}){
    $('#motion-loop').onchange=event=>{state.loop=event.target.checked;};
    if($('#motion-arm-side')){
     $('#motion-arm-side').value=state.armSide;
-    $('#motion-arm-side').onchange=event=>{state.armSide=event.target.value;state.selected=null;load();};
+    $('#motion-arm-side').onchange=event=>{state.armSide=event.target.value;clearSelection();load();};
    }
    if($('#motion-lesson')){
     $('#motion-lesson').value=state.lesson;
-    $('#motion-lesson').onchange=event=>{state.lesson=event.target.value;state.selected=null;state.time=0;load();};
+    $('#motion-lesson').onchange=event=>{state.lesson=event.target.value;clearSelection();state.time=0;load();};
    }
    if($('#motion-upper')){
     $('#motion-upper').checked=state.showUpper;
     $('#motion-upper').onchange=event=>{state.showUpper=event.target.checked;draw();motion.frame();};
    }
-   if(state.mode==='walk'){
+   if($('#motion-side')){
     $('#motion-side').value=state.side;
-    $('#motion-side').onchange=event=>{state.side=event.target.value;renderControls();draw();};
+    $('#motion-side').onchange=event=>{changeSide(event.target.value);draw();};
    }
    $('#motion-play').onclick=()=>{if(!ready())return;if(!state.playing&&state.time>=duration())state.time=0;state.playing=!state.playing;draw();};
    $('#motion-reset').onclick=()=>{state.playing=false;state.time=0;draw();};
@@ -145,23 +211,29 @@ export function initMotionLab({setView}){
    $('#motion-action').value=state.action;
   }else{
    const pose=state.leg[state.limb],values=Object.entries(value).map(([joint,angle])=>[joint,Math.round(angle)]);
-   const changed=values.map(([joint,angle])=>[joint,angle-pose[joint]]).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]))[0];
-   [state.poseJoint,state.poseDelta]=changed;
+   const changed=values.map(([joint,angle])=>[joint,angle-pose[joint]]).filter(([,delta])=>delta);
+   if(changed.length)state.poseChanges=changed;
    Object.assign(pose,Object.fromEntries(values));
   }
   draw();
  }
  function selectLeg(side){
   if(state.mode!=='pose'||isArmPose()||state.limb===side)return;
-  state.limb=side;state.selected=null;state.poseDelta=0;state.poseJoint='';renderControls();draw();
+  state.limb=side;clearSelection();state.poseDelta=0;state.poseChanges=[];renderControls();draw();
  }
  function selectMuscle(key){
-  if(state.mode==='pose'&&!isArmPose())selectLeg(key.split(':')[0]);
-  if(state.mode==='walk'||heelLesson()){
-   const side=key.split(':')[0];
-   if(state.side!==side){state.side=side;if($('#motion-side'))$('#motion-side').value=side;steps();}
+  const part=partsInMode().find(item=>item.key===key);
+  if(!part)return;
+  const same=state.selected===key;
+  if(state.mode==='pose'&&!isArmPose())selectLeg(part.side);
+  if((state.mode==='walk'||heelLesson())&&['left','right'].includes(part.side))changeSide(part.side);
+  clearSelection();
+  if(!same){
+   state.selected=key;
+   state.showMuscles=true;
+   $('[data-motion-muscles]').checked=true;
   }
-  state.selected=state.selected===key?null:key;draw();
+  draw();
  }
  function advance(dt){
   if(!ready()||!state.playing)return;
@@ -195,6 +267,8 @@ export function initMotionLab({setView}){
    if(!active||run!==revision)return;
    gait=recording||gait;
    specimen=loaded;
+   if(pendingPart&&partsInMode().some(part=>part.key===pendingPart))state.selected=pendingPart;
+   pendingPart=null;
    motion.use(loaded);
    motion.reset();
    if(state.mode==='walk')motion.setWalkTracks(gait.samples);
@@ -210,16 +284,17 @@ export function initMotionLab({setView}){
    setStatus(error.message||'The motion specimen could not load.',true);
   }
  }
- function drawEmgTrace(current){
+ function drawEmgTrace(current,selected){
   const figure=$('.motion-trace');
   figure.hidden=!current;
   if(!current)return;
-  const side=state.side,id=state.selected?.startsWith(side+':')?state.selected.split(':')[1]:'tibialis-anterior';
-  if(!gaitMuscles[id])return;
+  const side=state.side;
+  if(selected&&!gaitMuscles[selected.id]){figure.hidden=true;return;}
+  const id=selected?.side===side?selected.id:'tibialis-anterior';
   const canvas=figure.querySelector('canvas'),ctx=canvas.getContext('2d');
   if(!ctx)return;
   const scaled=gait.samples.map(sample=>gaitChannel(sample,side,id)),currentValue=current[side].emg[id];
-  const caption=gaitMuscles[id].name+' · '+(side==='left'?'Left':'Right')+' · '+(currentValue==null?'No recording':Math.round(currentValue)+'% MVC');
+  const caption=gaitMuscles[id].name+' · '+sideName(side)+' · '+(currentValue==null?'No recording':Math.round(currentValue)+'% MVC');
   figure.querySelector('figcaption').textContent=caption;
   const left=25,right=canvas.width-4,top=10,bottom=canvas.height-12;
   const x=percent=>left+(right-left)*percent/100;
@@ -245,8 +320,13 @@ export function initMotionLab({setView}){
  }
  function draw(){
   if(!ready())return;
-  const strengths={};
+  const strengths={},opposing=new Set();
+  const markRoles=(side,agonists,antagonists)=>{
+   for(const id of agonists)strengths[side+':'+id]=1;
+   for(const id of antagonists)opposing.add(side+':'+id);
+  };
   let frameData=null,readoutText='',jointText='',cue=state.mode==='walk'?'emg':state.mode==='pose'?'role':null;
+  shownAngle=null;
   let title,detail,tag,roleMap=armRoles,source=state.mode==='pose'?sources.roles:sources.actions, contextRef=state.mode==='pose'?'11.5':'10.4';
   motion.target=null;
   motion.showLoad=false;
@@ -258,21 +338,21 @@ export function initMotionLab({setView}){
    roleMap=calfRoles;title=frame.name;tag=frame.contraction;detail=frame.detail;
    cue=frame.contraction.toLowerCase();
    jointText=frame.joint+' · '+Math.round(frame.angle)+'° plantarflexed';
-   for(const side of ['right','left'])for(const id of Object.keys(calfRoles))if(id!=='plantaris')strengths[side+':'+id]=1;
+   for(const side of ['right','left'])markRoles(side,heelMovers,['tibialis-anterior']);
   }else if(state.mode==='actions'){
    const pressure=pressLesson(),animation=specimen.meta.animation;
    const limits=Number.isFinite(animation?.startAngle)&&Number.isFinite(animation?.peakAngle)?[animation.startAngle,animation.peakAngle]:undefined;
    const frame=pressure?pressFrame(state.time,limits):curlFrame(state.time,limits);
-   const angle=motion.sampleCurl(frame.clipTime??state.time,frame.angle);
+   shownAngle=motion.sampleCurl(frame.clipTime??state.time,frame.angle);
    cue=frame.contraction.toLowerCase();
-   jointText=frame.joint+' · '+Math.round(angle)+'°';
+   jointText=frame.joint+' · '+Math.round(shownAngle)+'°';
    motion.target=armSide();
    motion.showLoad=true;
    $('.motion-load-tag').textContent=pressure?'↑ Cable resistance':'↓ Hand load';
    title=frame.name;
    tag=frame.contraction;
    detail=frame.detail;
-   for(const id of pressure?['triceps-brachii','anconeus']:['biceps-brachii','brachialis','brachioradialis'])strengths[armSide()+':'+id]=id==='anconeus' ? .7 : 1;
+   markRoles(armSide(),pressure?extensors:flexors,pressure?flexors:extensors);
   }else if(state.mode==='pose'){
    motion.target=isArmPose()?armSide():state.limb;
    if(isArmPose()){
@@ -282,21 +362,23 @@ export function initMotionLab({setView}){
     const flex=state.action==='flex';
     title=flex?'Elbow flexion':'Elbow extension';
     jointText=(state.poseDelta?title:'Elbow pose')+' · '+angle+'°';
-    for(const id of flex?['biceps-brachii','brachialis','brachioradialis']:['triceps-brachii','anconeus'])strengths[armSide()+':'+id]=id==='anconeus' ? .5 : 1;
-    detail='Drag the wrist ring, or set an angle below. The upper arm stays in place.';
-    tag='Possible contributors';
+    markRoles(armSide(),flex?flexors:extensors,flex?extensors:flexors);
+    detail='Drag the wrist ring or set an angle below. These are possible roles for the selected joint direction.';
+    tag='Possible agonists';
    }else{
     roleMap=gaitMuscles;
     motion.poseLeg('left',state.leg.left);
     motion.poseLeg('right',state.leg.right);
-    const joint=state.poseJoint,positive=state.poseDelta>0;
-    const action=joint==='ankle'?(positive?'Ankle dorsiflexion':'Ankle plantarflexion'):joint?(joint==='knee'?'Knee':'Hip')+(positive?' flexion':' extension'):'';
-    const roleIds=joint==='ankle'?(positive?['tibialis-anterior']:['gastrocnemius-lateral']):joint==='knee'?(positive?['biceps-femoris','gastrocnemius-lateral']:['vastus-lateralis']):joint==='hip'&&!positive?['biceps-femoris']:[];
-    if(state.poseDelta)for(const id of roleIds)strengths[state.limb+':'+id]=.85;
-    title=state.limb==='right'?'Right leg':'Left leg';
-    jointText=state.poseDelta&&action?action+' · '+state.leg[state.limb][joint]+'°':title;
-    tag='Possible contributors';
-    detail='Select either leg on the model. Drag its ankle ring to move the hip and knee, or set angles with the sliders.';
+    const motions=state.poseChanges.map(([joint,delta])=>({joint,role:legRoles[joint][Number(delta>0)]}));
+    for(const {role:[,agonists,antagonists]} of motions)markRoles(state.limb,agonists,antagonists);
+    const unavailable=motions.filter(({role})=>!role[1].length).map(({role})=>role[0]);
+    const single=motions.length===1?motions[0]:null;
+    title=sideName(state.limb)+' leg';
+    jointText=single?single.role[0]+' · '+state.leg[state.limb][single.joint]+'°':motions.length?motions.map(({role})=>role[0]).join(' + '):title;
+    cue=motions.length?Object.keys(strengths).length?'role':'unavailable':null;
+    tag=cue?contractionCues[cue].label:'Joint pose';
+    detail='Drag the ankle ring to move the hip and knee, or use the sliders. Highlights describe possible roles for the last adjustment.';
+    if(unavailable.length)detail+=' This rig has no modeled agonist for '+unavailable.join(' or ').toLowerCase()+'.';
     source=sources.joints;contextRef='9.5';
    }
   }else{
@@ -315,13 +397,27 @@ export function initMotionLab({setView}){
    tag='Recorded surface EMG';
    detail=(state.side==='right'?'Right':'Left')+' foot '+(contact?'is in contact with the ground.':'is moving through the air.');
   }
+  const parts=partsInMode(),partsByKey=new Map(parts.map(part=>[part.key,part]));
+  const selected=partsByKey.get(state.selected);
+  const selectedGroup=selected&&state.selectedGroup?roleKey(selected):null;
+  for(const key of Object.keys(strengths))opposing.delete(key);
   const threshold=state.mode==='walk'&&state.onlyActive ? .05 : 0;
-  motion.highlight({strengths,selected:state.selected,showMuscles:state.showMuscles,onlyActive:state.onlyActive,showCalves:heelLesson(),cue,displayThreshold:threshold});
+  motion.highlight({
+   strengths,selected:state.selected,selectedGroup,isolateSelection:state.isolateSelection&&!!selected,
+   antagonists:state.showAntagonists?opposing:new Set(),showMuscles:state.showMuscles,
+   onlyActive:state.onlyActive,showCalves:heelLesson(),cue,displayThreshold:threshold,
+  });
+  const isolate=$('[data-motion-isolate]'),group=$('[data-motion-group]'),antagonists=$('[data-motion-antagonists]');
+  isolate.parentElement.hidden=!selected;
+  isolate.checked=state.isolateSelection;
+  group.parentElement.hidden=!selected||parts.filter(part=>roleKey(part)===roleKey(selected)).length<2;
+  group.checked=state.selectedGroup;
+  antagonists.parentElement.hidden=state.mode==='walk';
   const indicator=$('.motion-phase-tag'),cueText=contractionCues[cue];
   indicator.dataset.cue=cue||'';
   $('[data-motion-heading]').textContent=jointText||title;
   $('[data-motion-cue]').textContent=cueText?cueText.symbol+' '+cueText.label:'';
-  $('[data-motion-filter-label]').textContent=state.mode==='walk'?'Above 5% MVC':'Highlighted only';
+  $('[data-motion-filter-label]').textContent=state.mode==='walk'?'5% MVC or higher':'Highlighted only';
   const compare=$('.motion-compare');
   compare.hidden=state.mode!=='actions'||heelLesson();
   compare.textContent=pressLesson()?'Compare curl lowering at the same angle':'Compare cable press at the same angle';
@@ -335,27 +431,43 @@ export function initMotionLab({setView}){
   }else if(isArmPose()){ const angle=state.elbow[armSide()];$('#motion-elbow').value=angle;$('.motion-range output').textContent=angle+'°';}
   else for(const [joint,angle] of Object.entries(state.leg[state.limb])){$('#motion-'+joint).value=angle;root.querySelector('[for="motion-'+joint+'"] output').textContent=angle+'°';}
 
-  const entries=Object.entries(roleMap).filter(([id])=>specimen.parts.some(part=>part.id===id));
   const side=roleMap===armRoles?armSide():heelLesson()||state.mode==='walk'?state.side:state.limb;
+  const entries=parts.filter(part=>part.side===side);
   const infoKey=[title,tag,detail,side,state.mode,state.showUpper].join('|');
   if(lastInfo!==infoKey){
    phase.innerHTML=`<p class="motion-evidence">${escape(tag)}</p><h2>${escape(title)}</h2><p>${escape(detail)}</p>${state.mode==='walk'?'<p class="motion-joint-readout"></p>':''}`;
-   names.innerHTML=entries.map(([id,entry])=>`<button type="button" data-motion-pick="${side+':'+id}" aria-pressed="${state.selected===side+':'+id}"><span>${escape(entry.name)}</span><small>${escape(entry.role)}</small><span class="motion-signal" aria-hidden="true"></span><span class="motion-measure"></span></button>`).join('');
-   for(const button of names.querySelectorAll('button'))button.onclick=()=>selectMuscle(button.dataset.motionPick);
-   $('.motion-note').textContent=state.mode==='walk'?'Surface EMG is shown relative to each muscle’s maximum voluntary contraction (MVC). Only four muscles per leg were measured. The 5% filter changes the display. The floor height is adjusted for the model. If shown, arm and torso motion is illustrative.':heelLesson()?'Highlights show the main calf plantar flexors in this body-weight task. Plantaris is available for comparison with the other muscles.':state.mode==='actions'?(pressLesson()?'Highlights show the elbow extensors in this cable-resistance example.':'Highlights show the flexors in this hand-load example.'):'Muscle recruitment depends on the task and load.';
+   $('.motion-note').textContent=state.mode==='walk'?'One recorded stride at 4 km/h. Surface EMG is relative to each muscle’s maximum voluntary contraction (MVC). Four muscles per leg were measured. Upper-body motion is illustrative.':state.mode==='actions'?'The colors show contraction roles for this teaching example. Antagonist roles describe the opposing action.':'Muscle recruitment depends on the task and load. The pose shows possible agonist and antagonist roles.';
    const link=$('.motion-source');link.href=source;link.textContent=state.mode==='walk'?'Walking data & methods ↗':'Read the OpenStax section ↗';
    lastInfo=infoKey;
   }
+  const listKey=[state.mode,state.lesson,...entries.map(part=>part.key)].join('|');
+  if(lastListKey!==listKey){
+   names.innerHTML=entries.map(part=>{
+    const role=state.mode==='walk'?roleMap[part.id]?.role:part.id==='biceps-femoris'?'Contributes to knee flexion and hip extension':roleMap[part.id]?.role;
+    return `<button type="button" data-motion-pick="${escape(part.key)}" data-motion-role-key="${escape(roleKey(part))}" aria-pressed="false" aria-label="${escape(sideName(part.side)+' · '+part.name)}" aria-describedby="${escape('role-'+part.key+' measure-'+part.key)}"><span>${escape(part.name)}</span><small id="${escape('role-'+part.key)}">${escape(role||'Anatomical context')}</small><span class="motion-signal" aria-hidden="true"></span><span class="motion-measure" id="${escape('measure-'+part.key)}"></span></button>`;
+   }).join('');
+   for(const button of names.querySelectorAll('button'))button.onclick=()=>selectMuscle(button.dataset.motionPick);
+   lastListKey=listKey;
+  }
   if(readoutText)$('.motion-joint-readout').textContent=readoutText;
   for(const button of names.querySelectorAll('button')){
-   const measured=strengths[button.dataset.motionPick];
-   button.setAttribute('aria-pressed',String(state.selected===button.dataset.motionPick));
-   button.dataset.contributing=String(measured>0&&measured>=threshold);
-   button.dataset.cue=cue||'';
-   button.querySelector('.motion-signal').style.setProperty('--signal',100*clamp(measured||0,0,1)+'%');
-   button.querySelector('.motion-measure').textContent=state.mode==='walk'?(measured==null?'No data':Math.round(measured*100)+'% MVC'):measured?cueText.label:button.dataset.motionPick.endsWith(':plantaris')?'Context':'';
+   const key=button.dataset.motionRoleKey,measured=strengths[key],antagonist=opposing.has(key);
+   const context=partsByKey.get(button.dataset.motionPick)?.contextOnly;
+   const picked=String(state.selected===button.dataset.motionPick||selectedGroup===key);
+   const contributing=String(measured>0&&measured>=threshold);
+   const role=antagonist?'antagonist':state.mode==='walk'&&measured!=null?'recorded':measured?'agonist':'context';
+   const signal=state.mode==='walk'?(measured==null?'No recording':Math.round(measured*100)+'% MVC'):
+    measured?cueText.label:antagonist?'Antagonist role':context?'Context':'';
+   if(button.getAttribute('aria-pressed')!==picked)button.setAttribute('aria-pressed',picked);
+   if(button.dataset.contributing!==contributing)button.dataset.contributing=contributing;
+   if(button.dataset.role!==role)button.dataset.role=role;
+   if(button.dataset.cue!==(cue||''))button.dataset.cue=cue||'';
+   const meter=button.querySelector('.motion-signal'),amount=Math.round(100*clamp(measured||0,0,1))+'%';
+   if(meter.style.getPropertyValue('--signal')!==amount)meter.style.setProperty('--signal',amount);
+   const measure=button.querySelector('.motion-measure');
+   if(measure.textContent!==signal)measure.textContent=signal;
   }
-  drawEmgTrace(frameData);
+  drawEmgTrace(frameData,selected);
   const recall=state.mode==='actions'?state.lesson:state.mode;
   if(recall!==recallKey){
    const [question,answer]={
@@ -371,19 +483,24 @@ export function initMotionLab({setView}){
   }
   const contextKey=[state.mode,side,title,state.selected].join('|');
   if(contextKey!==lastContext&&!state.playing){
-   setLearningContext({type:'study',label:'Motion Lab · '+title,reference:contextRef,text:detail});
+   setLearningContext({type:'study',label:'Motion Lab · '+(selected?sideName(selected.side)+' '+selected.name:title),reference:contextRef,text:detail});
    lastContext=contextKey;
   }
  }
- for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{const mode=button.dataset.motionMode;if(state.mode!==mode){state.mode=mode;state.selected=null;state.time=0;state.loop=mode!=='walk';load();}};
+ for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{const mode=button.dataset.motionMode;if(state.mode!==mode){state.mode=mode;clearSelection();state.time=0;state.loop=mode!=='walk';load();}};
  for(const button of root.querySelectorAll('[data-motion-camera]'))button.onclick=()=>motion.frame(button.dataset.motionCamera);
  $('[data-motion-muscles]').onchange=event=>{state.showMuscles=event.target.checked;draw();};
  $('[data-motion-active]').onchange=event=>{state.onlyActive=event.target.checked;draw();};
+ $('[data-motion-antagonists]').onchange=event=>{state.showAntagonists=event.target.checked;draw();};
+ $('[data-motion-isolate]').onchange=event=>{state.isolateSelection=event.target.checked;draw();};
+ $('[data-motion-group]').onchange=event=>{state.selectedGroup=event.target.checked;draw();};
  $('.motion-compare').onclick=()=>{
-  const toCurl=pressLesson();
+  if(!ready()||shownAngle==null)return;
+  const toCurl=pressLesson(),limits=[specimen.meta.animation?.startAngle,specimen.meta.animation?.peakAngle];
+  const sampleAngle=time=>motion.sampleCurl(time,curlFrame(time,limits.every(Number.isFinite)?limits:undefined).angle);
+  state.time=compareElbowTime(shownAngle,toCurl,sampleAngle);
   state.lesson=toCurl?'curl':'press';
-  state.time=toCurl?3.2:.8;
-  state.playing=false;state.selected=null;
+  state.playing=false;
   renderControls();draw();
  };
  $('.motion-reveal').onclick=event=>{
@@ -397,6 +514,7 @@ export function initMotionLab({setView}){
   notesToggle.setAttribute('aria-pressed',String(open));
   notesToggle.firstElementChild.textContent=open?'Show model':'Muscles & notes';
   notesToggle.lastElementChild.textContent=open?'Model':'Muscles';
+  motion.dirty=true;
  };
  root.addEventListener('keydown',event=>{
   if(event.key!=='Escape')return;
@@ -406,7 +524,7 @@ export function initMotionLab({setView}){
  $('.motion-back').onclick=event=>{event.preventDefault();setView('atlas');document.querySelector('[data-open-motion]')?.focus({preventScroll:true});};
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&active&&state.playing){state.playing=false;draw();}});
  document.addEventListener('viewchange',event=>{
-  if(event.detail==='motion'){if(!active){active=true;load();}}
+  if(event.detail==='motion'){if(!active){active=true;readRoute();load();}}
   else if(active){active=false;state.playing=false;revision++;motion.close();}
  });
 }

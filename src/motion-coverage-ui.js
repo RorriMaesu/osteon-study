@@ -20,6 +20,17 @@ const labelStatus={
 const evidenceLabel={'pose-context':'Pose context','textbook-contraction':'Textbook example','recorded-surface-emg':'Recorded EMG'};
 const parts=(row,kind)=>Object.values(row[kind]||{}).flat();
 const missing=row=>!['named-geometry','represented-by-components','atlas-inventory'].includes(row.atlasStatus);
+function hasPartialMotion(row){
+ const motion=parts(row,'motion');
+ const covered=new Set(motion.map(part=>part.atlasId));
+ return motion.length&&parts(row,'atlas').some(part=>part.role!=='candidate'&&!covered.has(part.id));
+}
+function motionLink(part){
+ const walk=part.modes.includes('walk');
+ const heel=part.modes.includes('heel-raise')&&!walk;
+ const parameters=new URLSearchParams({motionPart:part.atlasId,motionMode:walk?'walk':'actions',motionLesson:heel?'heel':'curl',motionSide:part.side});
+ return './?'+parameters+'#motion';
+}
 const filterMatches={
  course:row=>row.course,
  moving:row=>parts(row,'motion').length,
@@ -56,13 +67,17 @@ function tagsFor(parent,row){
  const atlas=parts(row,'atlas'),motion=parts(row,'motion');
  if(missing(row))chip(parent,'Review','gap');
  else if(atlas.length)chip(parent,'Atlas');
- if(motion.length)chip(parent,'Motion','moving');
+ if(motion.length)chip(parent,hasPartialMotion(row)?'Partial motion':'Motion','moving');
  if(row.course)chip(parent,'Course','course');
  if(filterMatches.variants(row))chip(parent,'Variant / scope');
 }
 function showParts(target,row,kind){
  const fields=row[kind]||{},section=attach(target,'section');
- attach(section,'h3',kind==='atlas'?'Atlas geometry':'Motion geometry');
+ attach(section,'h3',kind==='atlas'?'Atlas geometry':hasPartialMotion(row)?'Motion geometry · partial':'Motion geometry');
+ if(kind==='atlas'){
+  const partial=Object.entries(row.atlasSides||{}).filter(([,status])=>status==='partial').map(([side])=>side);
+  if(partial.length)attach(section,'p','Partial representation · '+partial.join(' and '));
+ }else if(hasPartialMotion(row))attach(section,'p','Some atlas parts in this entry still need a motion model.');
  if(!parts(row,kind).length){attach(section,'p','No '+(kind==='atlas'?'mesh matched in this inventory.':'motion mesh in this release.'));return;}
  const keys=[...new Set([...order,...Object.keys(fields)])];
  for(const side of keys){
@@ -77,9 +92,13 @@ function showParts(target,row,kind){
     link.href='./?muscle='+encodeURIComponent(part.id)+'#atlas';
     link.setAttribute('aria-label','Inspect '+part.side+' '+part.name+' in 3D Atlas');
     if(part.role==='candidate')line.append(document.createTextNode(' · candidate'));
+   }else if(part.atlasId&&part.modes?.length){
+    const link=attach(line,'a',part.name+' ↗');
+    link.href=motionLink(part);
+    link.setAttribute('aria-label','Inspect '+part.side+' '+part.name+' in Motion Lab');
    }else line.append(document.createTextNode(part.name));
    if(kind==='motion'){
-    const rig=part.rig==='rigid'?'Rigid surface':part.rig==='deforms'?'Deforming rig':'Rigged surface';
+    const rig=part.rig==='rigid'?'Rigid surface':part.rig==='deforms'?'Has deformation weights or shapes':'Rigged surface';
     attach(line,'small',' · '+rig);
     if(part.evidence?.length)attach(line,'small',' · '+part.evidence.map(id=>evidenceLabel[id]||id).join(', '));
     if(part.qualification)attach(line,'small',' · '+part.qualification);

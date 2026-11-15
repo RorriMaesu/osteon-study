@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {curlDuration,curlFrame,heelFrame,pressFrame,elbowAngle,elbowLimits,planarLimbPose} from '../src/motion-core.js';
+import {curlDuration,curlFrame,heelFrame,pressFrame,compareElbowTime,elbowAngle,elbowLimits,planarLimbPose} from '../src/motion-core.js';
 
 test('arm lesson has continuous lift, stationary hold, and controlled lowering',()=>{
  assert.equal(curlFrame(0).angle,curlFrame(curlDuration).angle);
@@ -29,6 +29,18 @@ test('triceps press reverses the elbow movement while retaining the extension mu
  assert.ok(Math.abs(pressFrame(.8).angle-curlFrame(3.2).angle)<1e-8);
  assert.equal(pressFrame(0).clipTime,2.4);
  assert.match(pressFrame(3).detail,/extensors lengthen/);
+});
+
+test('comparing the lessons preserves an arbitrary pose during elbow extension',()=>{
+ const sample=time=>curlFrame(time).angle;
+ for(const angle of [10,31.4,72.2,91,100]){
+  const press=pressFrame(compareElbowTime(angle,false,sample));
+  const curl=curlFrame(compareElbowTime(angle,true,sample));
+  assert.ok(Math.abs(press.angle-angle)<.002);
+  assert.ok(Math.abs(curl.angle-angle)<.002);
+  assert.equal(curl.joint,'Elbow extension');
+  if(angle>10)assert.equal(press.joint,'Elbow extension');
+ }
 });
 
 test('both shipped elbow clips agree with lesson joint angles at their boundaries',()=>{

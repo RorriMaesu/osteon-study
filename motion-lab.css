@@ -75,7 +75,16 @@
 @media(max-height:480px) and (orientation:landscape){
  .motion-workspace{grid-template-columns:minmax(0,1fr) minmax(170px,32%)}
  .motion-heading{align-items:end;flex-direction:row}
- .motion-stage{min-height:220px}
+ body:has(#motion-view.active){height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+ body:has(#motion-view.active)>.topbar,body:has(#motion-view.active)>footer{display:none}
+ body:has(#motion-view.active)>main{flex:1;min-height:0;overflow:hidden;padding:0 8px}
+ #motion-view.active{height:100%;gap:4px;padding:4px 0}
+ .motion-heading h1{display:inline-block;margin:0 3px;font-size:26px}
+ .motion-stage{min-height:105px}
+ .motion-controls{padding:4px 7px;gap:3px}
+ .motion-settings button,.motion-settings select,.motion-modes button,.motion-camera button,.motion-steps button{min-height:31px;padding:3px 6px}
+ .motion-range,.motion-range input{min-height:28px}
+ .motion-settings label,.motion-camera button,.motion-steps button{font-size:11px}
 }
 
 .motion-modes .motion-notes-toggle{display:none}
@@ -144,8 +153,13 @@
 @media(max-width:760px) and (orientation:portrait){
  #motion-view[data-motion-notes] .motion-stage{visibility:visible}
  #motion-view[data-motion-notes] .motion-info{align-self:end;max-height:53%;box-shadow:0 -4px 18px #0b191c9a}
- #motion-view[data-motion-notes] .motion-camera{display:none}
+ #motion-view[data-motion-notes] .motion-camera{top:53px;bottom:auto}
 }
 .motion-trace{margin:8px 0 6px;padding:6px;border:1px solid #405a56;border-radius:7px;background:#14272c}
 .motion-trace figcaption{font-size:11px;color:#ecd2a2}
 .motion-trace canvas{display:block;width:100%;height:auto;max-height:90px}
+.motion-selection-guide{position:absolute;inset:0;z-index:1;width:100%;height:100%;pointer-events:none;overflow:visible}
+.motion-selection-guide line{stroke:#f7f5dd;stroke-width:1.4;opacity:.8}
+.motion-selection-guide circle{stroke:#f7f5dd;stroke-width:1.4;fill:#1b3233}
+[data-motion-selection-label]{position:absolute;z-index:2;transform:translate(-50%,-50%);pointer-events:none;width:max-content;max-width:min(210px,72%);border:1px solid #e6e4cd;border-radius:7px;background:#182c2bee;padding:4px 8px;color:#fffbea;font-size:11px;font-weight:700;text-align:center;line-height:1.2;overflow-wrap:anywhere}
+.motion-muscle-list button[data-role=antagonist]>span:first-child{color:#bec9ff}
