@@ -108,18 +108,19 @@ export class PoseViewer extends MotionViewer{
  }
  inScope(entry){return poseScopeMatches(this.poseScope,entry);}
  setScope(scope){this.poseScope=scope;this.dirty=true;}
- color({contributors=[],opposing=[],selectedMuscle=null,showMuscles=true,onlyRelated=false,visibleAnatomy}){
+ color({contributors=[],opposing=[],shared=[],selectedMuscle=null,showMuscles=true,onlyRelated=false,visibleAnatomy,selectionRoles}){
   if(!this.current)return;
-  const up=new Set(contributors),down=new Set(opposing);
-  const strengths={},antagonists=new Set();
+  const up=new Set(contributors),down=new Set(opposing),mixed=new Set(shared);
+  const strengths={},antagonists=new Set(),mixedRoles=new Set();
   // Use exact component keys. Some atlas heads have different actions, so a
   // single shared group material would hide the distinction being taught.
   for(const part of this.current.parts){
    part.id=part.key;
    if(up.has(part.key))strengths[part.side+':'+part.key]=1;
    if(down.has(part.key))antagonists.add(part.side+':'+part.key);
+   if(mixed.has(part.key))mixedRoles.add(part.side+':'+part.key);
   }
-  super.highlight({strengths,antagonists,selected:selectedMuscle,showMuscles,onlyActive:onlyRelated,cue:up.size||down.size?'role':null});
+  super.highlight({strengths,antagonists,mixedRoles,selectionRoles,selected:selectedMuscle,showMuscles,onlyActive:onlyRelated,cue:up.size||down.size||mixed.size?'role':null});
   this.visibleAnatomy=visibleAnatomy;
   for(const part of this.current.parts){
    part.mesh.visible=part.mesh.visible&&(visibleAnatomy?.muscleKeys.has(part.key)??this.inScope(part));

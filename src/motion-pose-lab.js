@@ -201,8 +201,8 @@ export function initPoseLab(host,{onLesson}={}){
    return {...roles,label:studyGuide.compoundLabels[guidedDirection<0?1:0],movementNotes:[studyGuide.note]};
   }
   if(studyGuide&&(guidedDirection||!history.changes.length)){
-   const controlledReturn=guidedDirection<0&&studyGuide.controlledReturn;
-   const direction=controlledReturn?1:guidedDirection||studyGuide.direction||1;
+   const controlledReturn=guidedDirection===(studyGuide.returnDirection??-1)&&studyGuide.controlledReturn;
+   const direction=controlledReturn?studyGuide.direction||1:guidedDirection||studyGuide.direction||1;
    const role=poseRoles(descriptor(),selectedAxis,direction,specimen.parts,history.values);
    if(controlledReturn)return {...role,label:studyGuide.returnLabel||'Controlled lowering',movementNotes:[controlledReturn]};
    return role;
@@ -218,14 +218,27 @@ export function initPoseLab(host,{onLesson}={}){
   });
   return large?'Large teaching pose: muscle shapes may stretch or overlap.':'';
  }
- function updateUI(role=roles(),visibleAnatomy){
+ function actionLabels(role){
+  const labels=new Map();
+  for(const movement of role.movements||[role]){
+   for(const [keys,label] of [[movement.contributors,movement.contributorLabel],[movement.opposing,movement.opposingLabel]]){
+    if(!label)continue;
+    for(const key of keys){
+     if(!labels.has(key))labels.set(key,new Set());
+     labels.get(key).add(label);
+    }
+   }
+  }
+  return new Map([...labels].map(([key,values])=>[key,[...values].join(' · ')]));
+ }
+ function updateUI(role=roles(),visibleAnatomy,labels=actionLabels(role)){
   const byId=new Map(specimen?.parts.map(part=>[part.key,part])||[]);
   const joint=descriptor(),directionLabels=joint?describePoseAxis(joint,selectedAxis):null;
   const setupNeeded=!isHorizontalReady();
   const locked=!!history?.isAxisLocked(selectedJoint,selectedAxis);
   const visible=visibleAnatomy||poseMotionScope(scope,joint,role,specimen?.parts||[],specimen?.bones||[],selectedMuscle);
   const parts=(keys,contributor)=>keys.filter(key=>visible.muscleKeys.has(key)).map(key=>byId.get(key)).filter(Boolean).map(part=>{
-   let roleLabel;
+   let roleLabel=labels.get(part.key);
    if(contributor&&studyGuide?.id==='arm-abduction'&&['Shoulder abduction','Controlled lowering'].includes(role.label)){
     roleLabel=/serratus|trapezius/i.test(part.name)?'Shoulder blade · possible contributor':'Upper arm · possible contributor';
    }
@@ -235,7 +248,10 @@ export function initPoseLab(host,{onLesson}={}){
    playing:!!playback,directionLabels,axisLabels:Object.fromEntries((joint?.axes||[]).map(axis=>[axis.id,describePoseAxis(joint,axis.id).label])),
    canNeutralize:!!joint?.axes.some(axis=>!history?.isAxisLocked(selectedJoint,axis.id)&&history?.values[selectedJoint]?.[axis.id]!==(axis.neutral??0)),
    message:locked&&!history.isLocked(selectedJoint)?'Unlock the shoulder girdle to raise this arm.':setupNeeded?(studyGuide?.setup?'Play motion to lift the arm first.':'Raise the arm to 45° first to use Across chest.') :shapeNotice()||message,
-   movementLocked:locked||setupNeeded,playbackLocked:locked||setupNeeded&&!studyGuide?.setup,contributors:parts(role.contributors,true),opponents:parts(role.opposing,false),selectedMuscle,
+   movementLocked:locked||setupNeeded,playbackLocked:locked||setupNeeded&&!studyGuide?.setup,
+   contributors:parts(role.contributors,true),opponents:parts(role.opposing,false),mixedRoles:parts(role.shared||[],false),
+   contributorLabel:role.contributorLabel||(role.movements?.length===1?role.movements[0].contributorLabel:null),
+   opposingLabel:role.opposingLabel||(role.movements?.length===1?role.movements[0].opposingLabel:null),selectedMuscle,
    selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
    evidence:role.note,movementLabel:role.label,studyGuide,roleNote:role.movementNotes?.[0]||studyGuide?.note||'',
    movementNote:[studyGuide?.note,...(role.movementNotes||[]),joint?.detail,joint?.coupling].filter(Boolean).join(' ')});
@@ -246,8 +262,11 @@ export function initPoseLab(host,{onLesson}={}){
   viewer.setPoseSelection(selectedJoint,selectedAxis,{locks:history.locks,interaction});
   const role=roles();
   const visibleAnatomy=poseMotionScope(scope,descriptor(),role,specimen.parts,specimen.bones,selectedMuscle);
-  viewer.color({contributors:role.contributors,opposing:role.opposing,selectedMuscle,showMuscles,visibleAnatomy,onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||selectedMuscle)});
-  updateUI(role,visibleAnatomy);
+  const labels=actionLabels(role);
+  for(const key of role.shared||[])if(!labels.has(key))labels.set(key,'Mixed joint roles');
+  viewer.color({contributors:role.contributors,opposing:role.opposing,shared:role.shared,selectionRoles:labels,selectedMuscle,showMuscles,visibleAnatomy,
+   onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||role.shared?.length||selectedMuscle)});
+  updateUI(role,visibleAnatomy,labels);
   const context=[selectedJoint,role.label,selectedMuscle].join('|');
   if(context!==lastContext){setLearningContext({type:'study',label:'Pose skeleton · '+descriptor()?.label,reference:'9.5',text:role.note+' '+(role.label||'')});lastContext=context;}
  }

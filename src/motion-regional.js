@@ -12,6 +12,7 @@ export const regionalLessons={
  forearm:{asset:'motion-forearm',label:'Turn the forearm',reference:'11.5',
   recall:['Which forearm bone moves around the other during pronation?','The radius turns around the ulna. Pronator teres and pronator quadratus can produce the motion.']},
  pectoral:{asset:'motion-pectoral',label:'Reach forward',reference:'11.5',
+  contractionByPhase:{'Forward reach':'concentric','Hold the reach':'isometric','Return under control':'eccentric'},
   recall:['Which portion of pectoralis major assists this forward reach?','Its clavicular portion assists shoulder flexion. Compare it with the anterior and posterior deltoid.']},
 };
 

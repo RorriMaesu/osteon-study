@@ -373,11 +373,56 @@ test('combined joint movements flag biarticular ambiguity without contradictory 
  ],parts);
  const rectus='muscle-rectus-femoris-muscle-r';
  assert.ok(result.shared.includes(rectus));
- assert.ok(result.contributors.includes(rectus));
+ assert.ok(!result.contributors.includes(rectus));
  assert.ok(!result.opposing.includes(rectus));
+ assert.ok(result.movements.some(role=>role.contributors.includes(rectus)&&role.contributorLabel==='Hip flexor'));
+ assert.ok(result.movements.some(role=>role.opposing.includes(rectus)&&role.opposingLabel==='Knee extensor'));
  assert.match(result.note,/net length or activity is not determined/);
  assert.equal(result.evidence,'possible-roles');
  assert.deepEqual(result.sources,[poseSources.lower]);
+});
+
+test('every flexion, extension and ankle-flexion axis reverses exact labeled muscle roles',()=>{
+ const metadata=JSON.parse(readFileSync(new URL('../assets/motion-pose-body.json',import.meta.url),'utf8'));
+ const glb=readFileSync(new URL('../assets/motion-pose-body.glb',import.meta.url));
+ const nodes=JSON.parse(glb.subarray(20,20+glb.readUInt32LE(12))).nodes;
+ const surfaces=nodes.filter(node=>node.extras?.poseMuscle).map(({extras:data})=>({
+  key:data.muscleId,name:data.poseName,side:data.poseSide,region:data.poseRegion,
+ }));
+ const indexed=new Map(surfaces.map(surface=>[surface.key,surface]));
+ let count=0;
+ for(const joint of metadata.joints)for(const axis of joint.axes){
+  if(!['flexion','extension','dorsiflexion'].includes(axis.id))continue;
+  count++;
+  const positive=poseRoles(joint,axis.id,1,surfaces),negative=poseRoles(joint,axis.id,-1,surfaces);
+  const scope=joint.id+':'+axis.id;
+  assert(positive.contributors.length&&negative.contributors.length,scope);
+  assert(positive.contributorLabel&&positive.opposingLabel,scope);
+  assert.notEqual(positive.contributorLabel,negative.contributorLabel,scope);
+  assert.equal(positive.contributorLabel,negative.opposingLabel,scope);
+  assert.deepEqual(positive.contributors,negative.opposing,scope);
+  assert.deepEqual(negative.contributors,positive.opposing,scope);
+  const used=[...positive.contributors,...negative.contributors];
+  assert.equal(used.length,new Set(used).size,scope);
+  if(['left','right'].includes(joint.side))assert(used.every(key=>indexed.get(key)?.side===joint.side),scope);
+ }
+ assert.equal(count,57);
+});
+
+test('grouped hand interossei retain their anatomical digit restrictions',()=>{
+ const little=roles('right-little-pip','flexion',-1),middle=roles('right-middle-pip','flexion',-1);
+ assert.match(named(little.contributors).join(' '),/palmar interosse/i);
+ assert.doesNotMatch(named(little.contributors).join(' '),/dorsal interosse/i);
+ assert.match(named(middle.contributors).join(' '),/dorsal interosse/i);
+ assert.doesNotMatch(named(middle.contributors).join(' '),/palmar interosse/i);
+});
+
+test('toe-base flexion selects the correct lumbrical ray and short extensors stop at toe four',()=>{
+ const second=roles('right-toe-2','extension',-1),little=roles('right-toe-5','extension',-1);
+ assert.match(named(second.contributors).join(' '),/first lumbrical/i);
+ assert.doesNotMatch(named(second.contributors).join(' '),/fourth lumbrical|flexor digiti minimi/i);
+ assert.match(named(little.contributors).join(' '),/fourth lumbrical/i);
+ assert.doesNotMatch(named(little.opposing).join(' '),/extensor digitorum brevis/i);
 });
 
 test('unknown axes remain explicitly unmapped instead of supplying generic active muscles',()=>{

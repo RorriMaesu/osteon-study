@@ -53,7 +53,7 @@ export function createPoseUI(host,callbacks={}){
     <button type="button" data-pose-muscles aria-pressed="true">Muscles</button>
     <button type="button" data-pose-notes aria-expanded="false" aria-controls="${prefix}-details">Explore</button>
    </div>
-   <button type="button" class="pose-muscle-summary" data-pose-muscle-summary title="Open the list of possible contributors and muscles with an opposing action"><span data-pose-movement-name>Explore a movement</span><span class="pose-summary-roles"><span class="pose-contributor-key" data-pose-contributor-summary>Move a joint to see muscle roles</span><span class="pose-opponent-key" data-pose-opponent-summary></span></span><span class="pose-summary-open" aria-hidden="true">Muscle roles ↗</span></button>
+   <button type="button" class="pose-muscle-summary" data-pose-muscle-summary><span data-pose-movement-name>Explore a movement</span><span class="pose-summary-roles"><span class="pose-contributor-key" data-pose-contributor-summary>Move a joint to see muscle roles</span><span class="pose-opponent-key" data-pose-opponent-summary></span><span class="pose-mixed-key" data-pose-mixed-summary hidden></span></span><span class="pose-summary-open" aria-hidden="true">Muscle roles ↗</span></button>
    <p class="pose-feedback" role="status" aria-live="polite"></p>
   </div>
  </section>
@@ -70,7 +70,7 @@ export function createPoseUI(host,callbacks={}){
     <input type="search" data-pose-search aria-label="Find a joint by name" placeholder="Find a joint…" autocomplete="off">
     <label>Show<select data-pose-scope aria-label="Show body region">${Object.entries(scopes).map(([key,value])=>`<option value="${key}">${value}</option>`).join('')}</select></label>
    </div>
-   <div class="pose-role-key"><span class="pose-contributor-key">◇ Possible contributors</span><span class="pose-opponent-key">○ Opposing action</span><button type="button" data-pose-related aria-pressed="false" title="Show only related muscles and the selected muscle" hidden>Related only</button></div>
+   <div class="pose-role-key"><span class="pose-contributor-key" data-pose-contributor-key>◇ Possible contributors</span><span class="pose-opponent-key" data-pose-opponent-key>○ Opposing action</span><span class="pose-mixed-key" data-pose-mixed-key hidden>◆ Mixed joint roles</span><button type="button" data-pose-related aria-pressed="false" title="Show only related muscles and the selected muscle" hidden>Related only</button></div>
    <p class="pose-list-summary"></p>
    <p class="pose-role-note" hidden></p>
    <div class="pose-detail-list"></div>
@@ -120,7 +120,7 @@ export function createPoseUI(host,callbacks={}){
   ['Turn the view','Drag to rotate. Tap Zoom + or Zoom − to change magnification. Focus joint centers the selected joint.'],
   ['Keep your pose','Full body returns to the overview while keeping your pose. Reset returns all joints to their starting position.'],
   ['Keep a joint fixed','Lock angles fixes a joint’s settings. It still moves with its parent. Undo reverses one completed adjustment.'],
-  ['Read the colors','Green marks possible contributors to the last adjustment. Violet marks muscles with an opposing action.'],
+  ['Read the colors','Green marks possible contributors. Violet marks opposing actions. Gold identifies muscles or grouped surfaces with mixed roles.'],
   ['Understand activity','A fixed pose cannot tell us which muscles are active. Task, load and coordination affect recruitment.'],
   ['Compare muscle activity','Muscle actions offers guided contraction examples. Walk cycle shows recorded EMG for measured muscles.'],
   ['Find an articulation','Find joint searches supported articulations and lets you isolate a region. Facial and breathing controls guide surface shapes.'],
@@ -130,7 +130,7 @@ export function createPoseUI(host,callbacks={}){
   if(tab==='guides')return motionStudyGuides.map(guide=>({...guide,name:guide.label,kind:'guide'}));
   if(tab==='joints')return state.descriptors.filter(entry=>!query||normalize(entry.label+' '+entry.region+' '+entry.side).includes(query)).map(entry=>({...entry,name:entry.label,kind:'joint'}));
   const entries=[],seen=new Set();
-  for(const [kind,list] of [['contributor',state.contributors],['opponent',state.opponents]])for(const entry of list||[]){
+  for(const [kind,list] of [['contributor',state.contributors],['opponent',state.opponents],['mixed',state.mixedRoles]])for(const entry of list||[]){
    const id=listId(entry);if(!id||seen.has(id))continue;seen.add(id);
    entries.push({...(typeof entry==='string'?{id,name:entry}:entry),kind});
   }
@@ -159,8 +159,9 @@ export function createPoseUI(host,callbacks={}){
    }else{
     $('.pose-detail-list').innerHTML=visible.map(entry=>{
      const id=listId(entry),name=listName(entry),selected=tab==='guides'?id===state.studyGuide?.id:tab==='joints'?id===state.selectedJoint:id===state.selectedMuscle;
-     const subtitle=entry.kind==='guide'?(scopes[entry.scope]||'Guided movement'):entry.kind==='joint'?entry.regionLabel||scopes[entry.region]||entry.region||'Joint':entry.roleLabel||(entry.kind==='contributor'?'Possible contributor':'Opposing action');
-     return `<button type="button" data-pose-row="${escape(id)}" data-kind="${entry.kind}" aria-pressed="${selected}" title="${escape(entry.note||name)}"><span>${entry.kind==='contributor'?'◇ ':entry.kind==='opponent'?'○ ':''}${escape(name)}</span><small>${escape(subtitle)}</small></button>`;
+     const subtitle=entry.kind==='guide'?(scopes[entry.scope]||'Guided movement'):entry.kind==='joint'?entry.regionLabel||scopes[entry.region]||entry.region||'Joint':entry.roleLabel||(entry.kind==='contributor'?'Possible contributor':entry.kind==='mixed'?'Mixed joint roles':'Opposing action');
+     const symbol={contributor:'◇ ',opponent:'○ ',mixed:'◆ '}[entry.kind]||'';
+     return `<button type="button" data-pose-row="${escape(id)}" data-kind="${entry.kind}" aria-pressed="${selected}" title="${escape(entry.note||name+' · '+subtitle)}"><span>${symbol}${escape(name)}</span><small>${escape(subtitle)}</small></button>`;
     }).join('')||`<p class="pose-empty">${tab==='joints'?'No matching joint. Try a shorter name.':state.ready?'The model will highlight supported muscle roles when you adjust a joint.':'The model is loading.'}</p>`;
    }
   }
@@ -242,15 +243,23 @@ export function createPoseUI(host,callbacks={}){
   endpoint.disabled=!state.ready||locked;
   endpoint.setAttribute('aria-pressed',String(state.interaction==='endpoint'));
   endpoint.textContent=state.interaction==='endpoint'?'Move joint':'Move limb';
-  const contributorNames=(state.contributors||[]).map(listName),opponentNames=(state.opponents||[]).map(listName);
+  const contributorNames=(state.contributors||[]).map(listName),opponentNames=(state.opponents||[]).map(listName),mixedNames=(state.mixedRoles||[]).map(listName);
   const compact=names=>names.length?names[0].replace(/ · (right|left|midline)$/i,'')+(names.length>1?' + '+(names.length-1):''):'';
   const movementName=state.movementLabel&&state.movementLabel!=='Pose held'?state.movementLabel:currentAxis?.label||'Explore a movement';
   $('[data-pose-movement-name]').textContent=movementName;
-  $('[data-pose-contributor-summary]').textContent=contributorNames.length?'◇ '+compact(contributorNames):opponentNames.length?'No mapped contributor':'Move a joint to see muscle roles';
+  $('[data-pose-contributor-summary]').textContent=contributorNames.length?'◇ '+compact(contributorNames):opponentNames.length||mixedNames.length?'No single-role contributor':'Move a joint to see muscle roles';
   $('[data-pose-opponent-summary]').textContent=opponentNames.length?'○ '+compact(opponentNames):'';
+  const contributorKey=state.contributorLabel?state.contributorLabel+'s · possible':'Possible contributors';
+  const opponentKey=state.opposingLabel?state.opposingLabel+'s · opposing':'Opposing action';
+  $('[data-pose-contributor-key]').textContent='◇ '+contributorKey;
+  $('[data-pose-opponent-key]').textContent='○ '+opponentKey;
+  $('[data-pose-mixed-key]').hidden=!mixedNames.length;
+  const mixedSummary=$('[data-pose-mixed-summary]');
+  mixedSummary.hidden=!mixedNames.length;
+  mixedSummary.textContent=mixedNames.length?'◆ '+compact(mixedNames):'';
   const roleSummary=$('[data-pose-muscle-summary]');
   roleSummary.disabled=!state.ready;
-  roleSummary.title=[movementName,'Possible contributors: '+(contributorNames.join(', ')||'none mapped for this adjustment'),'Opposing action: '+(opponentNames.join(', ')||'none mapped'),'Colors show possible roles, not measured activity.'].join('. ');
+  roleSummary.title=[movementName,contributorKey+': '+(contributorNames.join(', ')||'none mapped for this adjustment'),opponentKey+': '+(opponentNames.join(', ')||'none mapped'),mixedNames.length?'Mixed joint roles: '+mixedNames.join(', '):'', 'Colors show possible muscle roles'].filter(Boolean).join('. ');
   roleSummary.setAttribute('aria-label',roleSummary.title+' Open muscle roles.');
   $('.pose-feedback').textContent=state.message||(locked?'This joint’s angles are fixed. Unlock to adjust them.':'');
   $('.pose-feedback').hidden=!$('.pose-feedback').textContent;

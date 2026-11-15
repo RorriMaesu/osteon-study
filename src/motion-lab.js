@@ -459,7 +459,7 @@ export function initMotionLab({setView}){
   };
   let frameData=null,readoutText='',jointText='',cue=state.mode==='walk'?'emg':state.mode==='pose'?'role':null;
   shownAngle=null;
-  let title,detail,tag,roleMap=armRoles,source=state.mode==='pose'?sources.roles:sources.actions, contextRef=state.mode==='pose'?'11.5':'10.4';
+  let title,detail,tag,activeAction,opposingAction,roleMap=armRoles,source=state.mode==='pose'?sources.roles:sources.actions, contextRef=state.mode==='pose'?'11.5':'10.4';
   motion.target=null;
   motion.showLoad=false;
   motion.showGround(state.mode==='walk'||heelLesson());
@@ -471,7 +471,11 @@ export function initMotionLab({setView}){
    title=current.label;
    tag=specimen.meta.evidence;
    detail=current.detail;
-   cue=current.active?.length?'authored':null;
+   cue=current.active?.length?(regionalLessons[state.lesson].contractionByPhase?.[current.label]||'authored'):null;
+   if(state.lesson==='pectoral'){
+    activeAction='Shoulder flexor';opposingAction='Shoulder extensor';
+    if(cue)jointText=cue==='isometric'?'Shoulder held':cue==='eccentric'?'Shoulder extension · lowering':'Shoulder flexion';
+   }
    source=specimen.meta.sources?.openstax||specimen.meta.sources?.study||sources.actions;
    contextRef=regionalLessons[state.lesson].reference;
    for(const part of specimen.parts){
@@ -482,6 +486,7 @@ export function initMotionLab({setView}){
    const frame=heelFrame(state.time);
    motion.heelRise(frame.angle);
    roleMap=calfRoles;title=frame.name;tag=frame.contraction;detail=frame.detail;
+   activeAction='Ankle plantar flexor';opposingAction='Ankle dorsiflexor';
    cue=frame.contraction.toLowerCase();
    jointText=frame.joint+' · '+Math.round(frame.angle)+'° plantarflexed';
    for(const side of ['right','left'])markRoles(side,heelMovers,['tibialis-anterior']);
@@ -490,6 +495,8 @@ export function initMotionLab({setView}){
    const limits=Number.isFinite(animation?.startAngle)&&Number.isFinite(animation?.peakAngle)?[animation.startAngle,animation.peakAngle]:undefined;
    const frame=pressure?pressFrame(state.time,limits):curlFrame(state.time,limits);
    shownAngle=motion.sampleCurl(frame.clipTime??state.time,frame.angle);
+   activeAction=pressure?'Elbow extensor':'Elbow flexor';
+   opposingAction=pressure?'Elbow flexor':'Elbow extensor';
    cue=frame.contraction.toLowerCase();
    jointText=frame.joint+' · '+Math.round(shownAngle)+'°';
    motion.target=armSide();
@@ -556,6 +563,16 @@ export function initMotionLab({setView}){
   const selected=partsByKey.get(state.selected);
   const selectedGroup=selected&&state.selectedGroup?roleKey(selected):null;
   for(const key of Object.keys(strengths))opposing.delete(key);
+  const shownOpposing=state.showAntagonists?opposing:new Set();
+  const cueText=contractionCues[cue];
+  const selectionRoles=new Map();
+  if(!['walk','pose'].includes(state.mode)){
+   for(const part of parts){
+    const key=roleKey(part);
+    if(strengths[key]&&activeAction)selectionRoles.set(part.key,activeAction);
+    if(shownOpposing.has(key)&&opposingAction)selectionRoles.set(part.key,opposingAction);
+   }
+  }
   const threshold=state.mode==='walk'&&state.onlyActive ? .05 : 0;
   const breathing=regionalLesson()&&state.lesson==='breath';
   const layer=breathing?(state.breathLayer||(currentRegionalClip().id==='forced-expiration'?'front':'thorax')):null;
@@ -564,7 +581,7 @@ export function initMotionLab({setView}){
   if(breathing&&layerControl.value!==layer)layerControl.value=layer;
   motion.highlight({
    strengths,selected:state.selected,selectedGroup,isolateSelection:state.isolateSelection&&!!selected,
-   antagonists:state.showAntagonists?opposing:new Set(),showMuscles:state.showMuscles,
+   antagonists:shownOpposing,selectionRoles,showMuscles:state.showMuscles,
    onlyActive:state.onlyActive,showCalves:heelLesson(),cue,displayThreshold:threshold,
    regionalRoles:breathingLayers[layer],
   });
@@ -575,11 +592,13 @@ export function initMotionLab({setView}){
   group.checked=state.selectedGroup;
   antagonists.parentElement.hidden=state.mode==='walk';
   $('[data-motion-context]').parentElement.hidden=!regionalLesson();
-  $('[data-motion-opposing-cue]').hidden=!state.showAntagonists||!opposing.size;
-  const indicator=$('.motion-phase-tag'),cueText=contractionCues[cue];
+  const opposingCue=$('[data-motion-opposing-cue]');
+  opposingCue.hidden=!shownOpposing.size;
+  opposingCue.textContent=opposingAction?'○ '+opposingAction+'s · opposing':'○ Opposing action';
+  const indicator=$('.motion-phase-tag');
   indicator.dataset.cue=cue||'';
   $('[data-motion-heading]').textContent=jointText||title;
-  $('[data-motion-cue]').textContent=cueText?cueText.symbol+' '+cueText.label:'';
+  $('[data-motion-cue]').textContent=cueText?cueText.symbol+' '+(activeAction&&cueText.verb?activeAction+'s · '+cueText.verb:cueText.label):'';
   $('[data-motion-filter-label]').textContent=state.mode==='walk'?'5% MVC or higher':'Highlighted only';
   const compare=$('.motion-compare');
   compare.hidden=state.mode!=='actions'||heelLesson()||regionalLesson();
@@ -633,14 +652,14 @@ export function initMotionLab({setView}){
   }
   if(readoutText)$('.motion-joint-readout').textContent=readoutText;
   for(const button of names.querySelectorAll('button')){
-   const key=button.dataset.motionRoleKey,part=partsByKey.get(button.dataset.motionPick),antagonist=opposing.has(key);
+   const key=button.dataset.motionRoleKey,part=partsByKey.get(button.dataset.motionPick),antagonist=shownOpposing.has(key);
    const context=part?.contextOnly;
    const measured=state.mode==='walk'&&!hasRecording(part)?undefined:strengths[key];
    const picked=String(state.selected===button.dataset.motionPick||selectedGroup===key);
    const contributing=String(measured>0&&measured>=threshold);
    const role=antagonist?'antagonist':state.mode==='walk'&&measured!=null?'recorded':measured?'agonist':'context';
    const signal=state.mode==='walk'?(measured==null?'No recording':Math.round(measured*100)+'% MVC'):
-    measured?cueText.label:antagonist?'Antagonist role':context?'Context':'';
+    measured?cueText?.label||'Contributor':antagonist?'Opposing action':context?'Context':'';
    if(button.getAttribute('aria-pressed')!==picked)button.setAttribute('aria-pressed',picked);
    if(button.dataset.contributing!==contributing)button.dataset.contributing=contributing;
    if(button.dataset.role!==role)button.dataset.role=role;
@@ -649,6 +668,9 @@ export function initMotionLab({setView}){
    if(meter.style.getPropertyValue('--signal')!==amount)meter.style.setProperty('--signal',amount);
    const measure=button.querySelector('.motion-measure');
    if(measure.textContent!==signal)measure.textContent=signal;
+   const anatomicalLabel=selectionRoles.get(part?.key);
+   if(anatomicalLabel)measure.title=anatomicalLabel+' · '+signal;
+   else measure.removeAttribute('title');
   }
   drawEmgTrace(frameData,selected);
   const recall=state.mode==='actions'?state.lesson:state.mode;

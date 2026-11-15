@@ -24,9 +24,9 @@ const activity=(seconds)=>{
 };
 const lessonAngle=(value,limits)=>limits[0]+(limits[1]-limits[0])*value;
 export const contractionCues={
- concentric:{label:'Shortening',symbol:'→←'},
- isometric:{label:'Holding tension',symbol:'='},
- eccentric:{label:'Lengthening under tension',symbol:'←→'},
+ concentric:{label:'Shortening',symbol:'→←',verb:'shortening'},
+ isometric:{label:'Holding tension',symbol:'=',verb:'holding tension'},
+ eccentric:{label:'Lengthening under tension',symbol:'←→',verb:'lengthening under tension'},
  role:{label:'Possible agonists',symbol:'◇'},
  authored:{label:'Agonists in this lesson',symbol:'●'},
  unavailable:{label:'Agonist geometry unavailable',symbol:'○'},

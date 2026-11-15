@@ -32,11 +32,13 @@ The skeleton, walking rigs and original regional lesson models are retained. The
 
 ## Reading the muscles
 
-Green marks **possible contributors to the last adjustment**; violet marks an opposing anatomical action. The model keeps exact side and head identities. Finger-specific intrinsic muscles are matched to their digit. Shared muscle surfaces are described as shared. Biarticular muscles can contribute at one joint while opposing another.
+Green marks **possible contributors to the last adjustment**. Violet marks opposing anatomical actions. Gold marks a muscle or grouped surface with both roles in the current movement. The legend and muscle labels give the joint and action, such as **Elbow flexor** or **Knee extensor**. The model keeps exact side and head identities. Finger-specific intrinsic muscles are matched to their digit.
 
 The always-visible muscle summary names a contributor and an opposing muscle and opens the full named list. Preview pauses retain the last actual direction rather than confusing the net change in angle with the movement being demonstrated. Finger spreading is intended near straight MCP joints; collateral-ligament tightening is not simulated. The middle finger's grouped dorsal interosseous surface cannot separately color its radial and ulnar heads. Foot inversion/eversion uses a distinct hindfoot pivot with the talus remaining at the ankle, while midfoot and forefoot motion is coupled for this teaching model.
 
 A pose does not reveal neural recruitment, force, or concentric versus eccentric contraction. The separate Muscle actions lessons supply a stated task. Walking retains its original eight recorded surface-EMG channels. The pose inventory is listed separately from measured walking activity.
+
+In the elbow curl, triceps press, heel raise and forward reach, the lesson names the muscle group and describes shortening, holding tension or lengthening under tension as the phase changes. The group controlling a lowering phase keeps its anatomical label.
 
 ## Review and limits
 

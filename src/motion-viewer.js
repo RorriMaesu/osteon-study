@@ -16,6 +16,7 @@ const axis = values => new THREE.Vector3(...values).normalize();
 const muscleBase = new THREE.Color('#9d7261');
 const muscleMuted = new THREE.Color('#604f4e');
 const opposingRoleColor=new THREE.Color('#a9b6e6');
+const mixedRoleColor=new THREE.Color('#f3c479');
 const walkContextMaterial=new THREE.MeshStandardMaterial({color:'#8f6559',roughness:.78});
 const atlasParts=new Map(muscleModels.components.map(part=>[part.id,part]));
 const svgNamespace='http://www.w3.org/2000/svg';
@@ -415,7 +416,7 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,regionalRoles}){
+ highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,selectionRoles,regionalRoles}){
   if(!this.current)return;
   const replaced=new Set();
   for(const {mesh,base} of this.current.calves||[]){
@@ -423,6 +424,7 @@ export class MotionViewer {
    mesh.visible=showCalves;
   }
   this.selectedPart=null;
+  this.selectionRoles=selectionRoles;
   const isolate=isolateSelection&&!!(selected||selectedGroup);
   for(const p of this.current.parts){
    const key=p.side+':'+p.id, strength=this.walkActive&&p.walkOnly?0:strengths[key];
@@ -430,14 +432,16 @@ export class MotionViewer {
    const focused=exact||selectedGroup===key;
    const visibleSignal=strength>0&&strength>=displayThreshold;
    const opposing=antagonists?.has(key);
+   const mixed=mixedRoles?.has(key);
    const inScope=this.walkActive?walkScopeMatches(this.walkScope,p.region,p.side,p.walkSegments):
     !regionalRoles||focused||regionalRoles.includes(p.id);
-   p.mesh.visible=showMuscles&&inScope&&(!p.walkOnly||this.walkActive)&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing)&&(!isolate||focused);
+   p.mesh.visible=showMuscles&&inScope&&(!p.walkOnly||this.walkActive)&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing||mixed)&&(!isolate||focused);
    if(exact&&p.mesh.visible)this.selectedPart=p;
    if(!p.walkOnly){
     p.material.color.copy(cue?muscleMuted:muscleBase);
     const intensity=visibleSignal?clamp(strength,0,1):0;
-    if(cueColors[cue]&&intensity)p.material.color.lerp(cueColors[cue],intensity);
+    if(mixed)p.material.color.copy(mixedRoleColor);
+    else if(cueColors[cue]&&intensity)p.material.color.lerp(cueColors[cue],intensity);
     else if(opposing)p.material.color.lerp(opposingRoleColor,.78);
     p.material.emissive.copy(p.material.color).multiplyScalar(intensity*.23);
    }
@@ -612,7 +616,9 @@ export class MotionViewer {
   if(Math.abs(x)>.98||Math.abs(y)>.98||Math.abs(z)>1){this.showSelectionLabel(false);return;}
   const {clientWidth:width,clientHeight:height}=this.stage;
   const anchorX=(1+x)*width/2,anchorY=(1-y)*height/2;
-  const name=part.name+(['left','right'].includes(part.side)?' · '+part.side:'');
+  const side=['left','right'].includes(part.side)?' · '+part.side:'';
+  const role=this.selectionRoles?.get(part.key);
+  const name=part.name+side+(role?' · '+role:'');
   if(label.textContent!==name)label.textContent=name;
   this.showSelectionLabel(true);
   const stageBounds=this.stage.getBoundingClientRect();

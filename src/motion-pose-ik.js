@@ -10,7 +10,7 @@ export function poseScopeMatches(scope,entry){
 // unrelated limb. Joint markers continue to use the original region filter.
 export function poseMotionScope(scope,joint,role,parts,bones,selectedMuscle){
  const contextual=joint&&scope!=='all'&&poseScopeMatches(scope,joint);
- const named=new Set(contextual?[...role.contributors,...role.opposing]:[]);
+ const named=new Set(contextual?[...role.contributors,...role.opposing,...(role.shared||[])]:[]);
  if(contextual&&selectedMuscle)named.add(selectedMuscle);
  const kind=joint?.id.replace(/^(right|left)-/,'');
  const attachmentNames=kind==='neck'||kind==='upper-nod'

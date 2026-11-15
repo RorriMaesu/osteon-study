@@ -171,6 +171,7 @@
 .motion-selection-guide circle{stroke:#f7f5dd;stroke-width:1.4;fill:#1b3233}
 [data-motion-selection-label]{position:absolute;z-index:2;transform:translate(-50%,-50%);pointer-events:none;width:max-content;max-width:min(210px,72%);border:1px solid #e6e4cd;border-radius:7px;background:#182c2bee;padding:4px 8px;color:#fffbea;font-size:11px;font-weight:700;text-align:center;line-height:1.2;overflow-wrap:anywhere}
 .motion-muscle-list button[data-role=antagonist]>span:first-child{color:#bec9ff}
+.motion-muscle-list button[data-role=antagonist] .motion-measure{color:#bec9ff}
 [data-cue=authored]{--motion-cue:#ffc897}
 [data-motion-opposing-cue]{color:#c5d0ff;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
 [data-motion-opposing-cue][hidden],.motion-filter label[hidden]{display:none}

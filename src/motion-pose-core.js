@@ -165,10 +165,10 @@ const shoulderAbd=names('acromial part of deltoid','middle (?:part of )?deltoid'
 const shoulderAdd=names('pectoralis major','latissimus dorsi','teres major');
 const shoulderInternal=both(anteriorDeltoid,names('subscapularis','pectoralis major','latissimus dorsi','teres major'));
 const shoulderExternal=both(posteriorDeltoid,names('infraspinatus','teres minor'));
-const wristFlex=names('flexor carpi radialis','flexor carpi ulnaris','palmaris longus');
-const wristExt=names('extensor carpi radialis','extensor carpi ulnaris');
+const wristFlex=names('flexor carpi radialis','flexor carpi ulnaris','palmaris longus','flexor digitorum superficialis','flexor digitorum profundus');
+const wristExt=names('extensor carpi radialis','extensor carpi ulnaris','extensor indicis');
 const hipFlex=names('iliacus','psoas major','rectus femoris','sartorius','tensor fasciae latae','pectineus');
-const hipExt=names('gluteus maximus','semitendinosus','semimembranosus','long head of biceps femoris');
+const hipExt=names('gluteus maximus','semitendinosus','semimembranosus','long head of biceps femoris','(?:hamstring|ischiocondylar) part of adductor magnus');
 const hipAbd=names('gluteus medius','gluteus minimus','tensor fasciae latae');
 const hipAdd=names('adductor longus','adductor brevis','adductor magnus','gracilis','pectineus');
 const hipInternal=names('tensor fasciae latae');
@@ -191,22 +191,22 @@ const pair=(positive,negative,up,down,source,note='')=>({positive,negative,up,do
 const directions={
  'scapula:elevation':pair('Scapular elevation','Scapular depression',names('upper descending part of trapezius','levator scapulae','rhomboid (?:major|minor)'),names('lower ascending part of trapezius','pectoralis minor'),poseSources.upper,'Scapular motion couples with the clavicle; it is not a separate ball-and-socket joint.'),
  'scapula:protraction':pair('Scapular protraction','Scapular retraction',names('serratus anterior','pectoralis minor'),names('transverse part of trapezius','rhomboid (?:major|minor)'),poseSources.upper),
- 'shoulder:flexion':pair('Shoulder flexion','Shoulder extension',shoulderFlex,shoulderExt,poseSources.upper,'Shoulder roles depend on arm position; the sternocostal pectoralis can extend an already flexed shoulder.'),
+ 'shoulder:flexion':pair('Shoulder flexion','Shoulder extension',shoulderFlex,shoulderExt,poseSources.upper,'Compare the anterior and posterior deltoid. The pectoralis major has regions with different leverage, so this flexion cue uses its clavicular part.'),
  'shoulder:abduction':pair('Shoulder abduction','Shoulder adduction',shoulderAbd,shoulderAdd,poseSources.upper,'Arm elevation includes coordinated shoulder-girdle movement. Serratus anterior and the upper and lower trapezius can contribute to scapular upward rotation alongside glenohumeral abductors.'),
  'shoulder:scaption':pair('Scapular-plane elevation','Lower from scapular-plane elevation',both(shoulderAbd,anteriorDeltoid),shoulderAdd,poseSources.upper,'Raise the arm diagonally forward. Mid and anterior deltoid and supraspinatus contribute at the humerus, with the scapular upward rotators helping the blade.'),
  'shoulder:horizontal':pair('Horizontal adduction','Horizontal abduction',both(anteriorDeltoid,names('pectoralis major')),both(posteriorDeltoid,names('infraspinatus','teres minor')),poseSources.upper,'With the arm elevated, the humerus sweeps toward or away from the chest. Use the raised-arm study to set up this position.'),
  'shoulder:rotation':pair('Shoulder internal rotation','Shoulder external rotation',shoulderInternal,shoulderExternal,poseSources.upper),
  'elbow:flexion':pair('Elbow flexion','Elbow extension',elbowFlex,elbowExt,poseSources.upper),
  'forearm:pronation':pair('Forearm pronation','Forearm supination',names('pronator teres','pronator quadratus'),names('supinator','biceps brachii'),poseSources.upper,'Biceps also crosses the elbow. Brachioradialis assists return toward a neutral forearm position.'),
- 'wrist:flexion':pair('Wrist flexion','Wrist extension',wristFlex,wristExt,poseSources.upper),
+ 'wrist:flexion':pair('Wrist flexion','Wrist extension',wristFlex,wristExt,poseSources.upper,'The carpal flexors and extensors are the main wrist movers in this view. Long finger muscles that cross the wrist can assist.'),
  'wrist:deviation':pair('Wrist ulnar deviation','Wrist radial deviation',names('flexor carpi ulnaris','extensor carpi ulnaris'),names('flexor carpi radialis','extensor carpi radialis','abductor pollicis longus'),poseSources.upper),
- 'hip:flexion':pair('Hip flexion','Hip extension',hipFlex,hipExt,poseSources.lower,'The short head of biceps femoris does not cross the hip.'),
+ 'hip:flexion':pair('Hip flexion','Hip extension',hipFlex,hipExt,poseSources.lower,'The long head of biceps femoris crosses the hip. The hamstring part of adductor magnus can assist extension, but the atlas groups it with the rest of that muscle.'),
  'hip:abduction':pair('Hip abduction','Hip adduction',hipAbd,hipAdd,poseSources.lower),
  'hip:rotation':pair('Hip internal rotation','Hip external rotation',hipInternal,hipExternal,poseSources.lower,'Anterior fibers of gluteus medius and minimus also assist internal rotation; their whole-muscle meshes are left neutral because fiber regions have different actions. Rotation roles change with hip flexion.'),
  'knee:flexion':pair('Knee flexion','Knee extension',kneeFlex,kneeExt,poseSources.lower),
- 'ankle:dorsiflexion':pair('Ankle dorsiflexion','Ankle plantarflexion',ankleDorsi,anklePlantar,poseSources.lower),
+ 'ankle:dorsiflexion':pair('Ankle dorsiflexion','Ankle plantarflexion',ankleDorsi,anklePlantar,poseSources.lower,'Gastrocnemius crosses the knee and ankle. Knee angle can change its contribution relative to soleus.'),
  'subtalar:inversion':pair('Foot inversion','Foot eversion',names('tibialis anterior','tibialis posterior'),names('fibularis longus','fibularis brevis','fibularis tertius'),poseSources.foot,'The hindfoot turns around an oblique teaching axis. Real inversion and eversion involve coupled hindfoot and midfoot movement; the model does not resolve every foot articulation. These are selected contributors, not an exhaustive recruitment list.'),
- 'toes:extension':pair('Toe extension','Toe flexion',names('extensor digitorum (?:longus|brevis)','extensor hallucis (?:longus|brevis)'),names('flexor digitorum (?:longus|brevis)','flexor hallucis (?:longus|brevis)','flexor digiti minimi of foot'),poseSources.lower,'This grouped toe control combines separate muscles acting on different digits.'),
+ 'toes:extension':pair('Toe extension','Toe flexion',names('extensor digitorum (?:longus|brevis)','extensor hallucis (?:longus|brevis)'),names('flexor digitorum (?:longus|brevis)','flexor hallucis (?:longus|brevis)','flexor digiti minimi of foot','lumbrical muscle of foot'),poseSources.lower,'The toes bend at their bases in this view. The foot lumbricals assist flexion at those joints.'),
  'trunk:flexion':pair('Trunk flexion','Trunk extension',trunkFlex,trunkExt,poseSources.trunk),
  'pelvic-control:tilt':pair('Anterior pelvic tilt','Posterior pelvic tilt',both(hipFlex,trunkExt),both(hipExt,trunkFlex),poseSources.trunk,'With the thighs relatively fixed, hip flexors and back extensors can assist anterior tilt. Hip extensors and abdominal muscles can assist posterior tilt.'),
  'neck:flexion':pair('Neck flexion','Neck extension',neckFlex,neckExt,poseSources.axial,'This combined neck action does not resolve individual cervical joints. Sternocleidomastoid can extend the head at the upper cervical joints while flexing the lower neck.'),
@@ -260,6 +260,8 @@ function belongsToDigit(part,digit){
  if(part.region==='pelvis-leg-foot'||/\b(foot|toe|toes)\b/.test(name))return false;
  const namedDigit=name.match(/\b(thumb|index|middle|ring|little)(?: finger)?\b/)?.[1];
  if(namedDigit&&namedDigit!==digit)return false;
+ // Generic grouped surfaces still have anatomical digit restrictions.
+ if((digit==='little'&&/dorsal interosse/.test(name))||(digit==='middle'&&/palmar interosse/.test(name)))return false;
  // Keep grouped atlas meshes available, but an individually named intrinsic
  // muscle must attach to the selected digit. Dorsal interossei 2 and 3 both
  // act on the middle finger; neither crosses the index or ring MCP joint.
@@ -297,6 +299,22 @@ function axialRoles(kind,axis,positive,parts){
 
 const roleNote='Possible contributors for the last adjustment. A pose does not measure activity, tension, or muscle shortening; recruitment depends on load and the task. Opposing actions can be active at the same time.';
 
+const flexionJointLabels={
+ shoulder:'Shoulder',elbow:'Elbow',wrist:'Wrist',hip:'Hip',knee:'Knee',trunk:'Trunk',neck:'Neck','upper-nod':'Skull-on-atlas',
+};
+function flexionLabels(kind,axis){
+ if(kind==='ankle'&&axis==='dorsiflexion')return ['Ankle dorsiflexor','Ankle plantar flexor'];
+ if(axis==='extension'){
+  if(kind==='hallux')return ['Great-toe extensor','Great-toe flexor'];
+  if(kind==='toes'||/^toe-[2-5]$/.test(kind))return ['Toe-base extensor','Toe-base flexor'];
+ }
+ if(axis!=='flexion')return null;
+ let joint=flexionJointLabels[kind];
+ const digit=kind.match(/^(?:thumb|index|middle|ring|little)-(cmc|mcp|pip|dip|ip)$/);
+ if(digit)joint=(kind.startsWith('thumb')?'Thumb ':'')+digit[1].toUpperCase();
+ return joint?[joint+' flexor',joint+' extensor']:null;
+}
+
 /** Exact surface keys, never an activity estimate. Positive signs follow the rig manifest. */
 export function poseRoles(joint,axisId,delta,parts=[],pose={}){
  const empty={label:'Pose held',contributors:[],opposing:[],evidence:'possible-roles',note:roleNote,source:poseSources.recruitment};
@@ -312,9 +330,11 @@ export function poseRoles(joint,axisId,delta,parts=[],pose={}){
  if(axial)return {...empty,...axial,note:roleNote+' '+axial.note};
  let direction=directions[kind+':'+axisId]||fingerDirection(kind,axisId);
  if(/^toe-[2-5]$/.test(kind)&&axisId==='extension'){
+  const toe=Number(kind.at(-1)),lumbrical=['first','second','third','fourth'][toe-2];
   const ext=kind==='toe-5'?names('extensor digitorum longus'):names('extensor digitorum (?:longus|brevis)');
-  const flex=kind==='toe-5'?names('flexor digitorum (?:longus|brevis)','flexor digiti minimi of foot'):names('flexor digitorum (?:longus|brevis)');
-  direction=pair('Toe extension','Toe flexion',ext,flex,poseSources.lower,'The selected toe bends separately at its base. Shared extensor and flexor surfaces also serve other toes.');
+  const flex=names('flexor digitorum (?:longus|brevis)',lumbrical+' lumbrical muscle of foot');
+  if(toe===5)flex.push(...names('flexor digiti minimi of foot'));
+  direction=pair('Toe extension','Toe flexion',ext,flex,poseSources.lower,'This control bends the base of one toe. Shared long muscle surfaces serve more than one toe.');
  }
  if(!direction)return {...empty,label:'Joint adjustment',note:roleNote+' Muscle roles have not been mapped for this axis.'};
  if(kind==='hip'&&axisId==='rotation'&&pose[joint.id]?.flexion>25){
@@ -328,10 +348,15 @@ export function poseRoles(joint,axisId,delta,parts=[],pose={}){
  }
  const side=joint.side||joint.id.match(/^(left|right)-/)?.[1];
  const digit=kind.match(/^(thumb|index|middle|ring|little)-/)?.[1];
- const candidates=parts.filter(part=>(!['left','right'].includes(side)||part.side===side)&&belongsToDigit(part,digit));
+ const foot=kind==='ankle'||kind==='toes'||kind==='hallux'||/^toe-[2-5]$/.test(kind);
+ const candidates=parts.filter(part=>(!['left','right'].includes(side)||part.side===side)&&belongsToDigit(part,digit)
+  &&(!foot||!['forearm-hand','shoulder-arm'].includes(part.region))
+  &&(kind!=='wrist'||part.region!=='pelvis-leg-foot'));
  const choose=patterns=>candidates.filter(part=>matches(part,patterns)).map(part=>part.key||part.id);
+ const labels=flexionLabels(kind,axisId);
  return {...empty,label:positive?direction.positive:direction.negative,
   contributors:choose(positive?direction.up:direction.down),opposing:choose(positive?direction.down:direction.up),
+  contributorLabel:labels?.[positive?0:1],opposingLabel:labels?.[positive?1:0],
   source:direction.source,note:roleNote+(direction.note?' '+direction.note:'')};
 }
 
@@ -342,7 +367,7 @@ export function combinedPoseRoles(descriptors,changes,parts=[],pose={}){
  const allOpposing=[...new Set(movements.flatMap(role=>role.opposing))];
  const shared=contributors.filter(key=>allOpposing.includes(key));
  const movementNotes=[...new Set(movements.map(role=>role.note.startsWith(roleNote)?role.note.slice(roleNote.length).trim():role.note).filter(Boolean))];
- return {label:movements.length?movements.map(role=>role.label).join(' + '):'Pose held',contributors,
+ return {label:movements.length?movements.map(role=>role.label).join(' + '):'Pose held',contributors:contributors.filter(key=>!shared.includes(key)),
   opposing:allOpposing.filter(key=>!contributors.includes(key)),shared,movements,movementNotes,
   evidence:'possible-roles',note:roleNote+(movementNotes.length?' '+movementNotes.join(' '):'')+(shared.length?' Some muscles contribute to one adjusted joint and oppose another. Their net length or activity is not determined.':''),
   sources:[...new Set(movements.map(role=>role.source))]};
