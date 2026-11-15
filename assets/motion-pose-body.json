@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "3102b4ab050b3b7d2fe7354a29866c73c2795ed62a31e34ae0a3635045fbfffa",
-  "bytes": 17536420,
+  "sha256": "9869f8995424252b3cf14fbf66d3892a08c99a6cad543e87970e8c115264eab7",
+  "bytes": 17829548,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
   "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.",
@@ -3336,7 +3336,7 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "shoulder-clearance-20261115-153744-0434",
+  "backup": "gluteal-clearance-20261115-154643-7867",
   "clearanceCorrectives": [
     {
       "target": "ClearanceHipFlexionMidL",
@@ -4062,6 +4062,352 @@
       ]
     },
     {
+      "target": "ClearanceGlutealFold44L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          34,
+          44
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "left-hip",
+          "flexion",
+          48,
+          44
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold48L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          44,
+          48
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "left-hip",
+          "flexion",
+          55,
+          48
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold55L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          48,
+          55
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "left-hip",
+          "flexion",
+          65,
+          55
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold65L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          55,
+          65
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "left-hip",
+          "flexion",
+          70,
+          65
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold70L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          65,
+          70
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "left-hip",
+          "flexion",
+          75,
+          70
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold75L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          70,
+          75
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "left-hip",
+          "flexion",
+          80,
+          75
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold80L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          75,
+          80
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "left-hip",
+          "flexion",
+          85,
+          80
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold85L",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          80,
+          85
+        ],
+        [
+          "left-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "left-hip",
+          "abduction",
+          20,
+          8
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-l"
+      ]
+    },
+    {
       "target": "ClearanceHipFlexionMidR",
       "ramps": [
         [
@@ -4783,6 +5129,352 @@
       "surfaces": [
         "muscle-platysma-r"
       ]
+    },
+    {
+      "target": "ClearanceGlutealFold44R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          34,
+          44
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "right-hip",
+          "flexion",
+          48,
+          44
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold48R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          44,
+          48
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "right-hip",
+          "flexion",
+          55,
+          48
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold55R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          48,
+          55
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "right-hip",
+          "flexion",
+          65,
+          55
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold65R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          55,
+          65
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "right-hip",
+          "flexion",
+          70,
+          65
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold70R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          65,
+          70
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "right-hip",
+          "flexion",
+          75,
+          70
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold75R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          70,
+          75
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "right-hip",
+          "flexion",
+          80,
+          75
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold80R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          75,
+          80
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ],
+        [
+          "right-hip",
+          "flexion",
+          85,
+          80
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceGlutealFold85R",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          80,
+          85
+        ],
+        [
+          "right-knee",
+          "flexion",
+          20,
+          32
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ],
+        [
+          "right-hip",
+          "abduction",
+          20,
+          8
+        ]
+      ],
+      "surfaces": [
+        "muscle-gluteus-maximus-muscle-r"
+      ]
     }
   ],
   "sources": {
@@ -4797,6 +5489,7 @@
     "atlantoOccipital": "https://pubmed.ncbi.nlm.nih.gov/39084063/",
     "shoulderElevation": "https://pubmed.ncbi.nlm.nih.gov/19181982/",
     "platysmaAttachments": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10702465/",
+    "ischialRegion": "https://pubmed.ncbi.nlm.nih.gov/16998454/",
     "mandibularTranslation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/"
   },
   "inputs": {

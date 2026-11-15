@@ -668,6 +668,7 @@ def main():
                            atlantoOccipital='https://pubmed.ncbi.nlm.nih.gov/39084063/',
                            shoulderElevation='https://pubmed.ncbi.nlm.nih.gov/19181982/',
                            platysmaAttachments='https://pmc.ncbi.nlm.nih.gov/articles/PMC10702465/',
+                           ischialRegion='https://pubmed.ncbi.nlm.nih.gov/16998454/',
                            mandibularTranslation='https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/')
     (ASSETS/(NAME+'.json')).write_text(json.dumps(meta,indent=2)+'\n')
     print('EXPORTED_POSE_BODY',len(JOINTS),len(NODES),len(MUSCLES),target.stat().st_size,flush=True)

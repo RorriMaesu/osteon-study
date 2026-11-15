@@ -1,5 +1,5 @@
 {
-  "sha256": "3102b4ab050b3b7d2fe7354a29866c73c2795ed62a31e34ae0a3635045fbfffa",
+  "sha256": "9869f8995424252b3cf14fbf66d3892a08c99a6cad543e87970e8c115264eab7",
   "reimportedMuscles": 476,
   "reimportedBoneSurfaces": 296,
   "maximumNeutralBoundsErrorMillimeters": 0.009466,
@@ -1141,13 +1141,13 @@
           "edgeLengthRatio99": 2.234
         },
         {
-          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-l",
+          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-r",
           "maxDisplacementMm": 106.783,
           "edgeLengthRatio95": 1.599,
           "edgeLengthRatio99": 1.736
         },
         {
-          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-r",
+          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-l",
           "maxDisplacementMm": 106.783,
           "edgeLengthRatio95": 1.599,
           "edgeLengthRatio99": 1.736
@@ -1658,15 +1658,15 @@
           "edgeLengthRatio99": 1.688
         },
         {
-          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-l",
-          "maxDisplacementMm": 91.266,
-          "edgeLengthRatio95": 1.474,
-          "edgeLengthRatio99": 1.61
-        },
-        {
           "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-r",
           "maxDisplacementMm": 91.266,
           "edgeLengthRatio95": 1.473,
+          "edgeLengthRatio99": 1.61
+        },
+        {
+          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-l",
+          "maxDisplacementMm": 91.266,
+          "edgeLengthRatio95": 1.474,
           "edgeLengthRatio99": 1.61
         },
         {

@@ -65,6 +65,22 @@ test('platysma clearance follows a side raise and releases during other shoulder
  }
 });
 
+test('gluteal clearance blends during a seated bend and releases outside the fitted motion',()=>{
+ for(const [side,suffix] of [['left','L'],['right','R']]){
+  const hip=side+'-hip', knee=side+'-knee';
+  const rules=meta.clearanceCorrectives.filter(({target})=>target.startsWith('ClearanceGlutealFold')&&target.endsWith(suffix));
+  const weight=(hipAngles,kneeFlexion)=>rules.reduce((sum,rule)=>sum+clearanceWeight(rule.ramps,
+   {[hip]:hipAngles,[knee]:{flexion:kneeFlexion}}),0);
+  assert.ok(rules.length>1);
+  for(const degrees of [44,46,48,60,72,85])close(weight({flexion:degrees},degrees),1);
+  assert.equal(weight({flexion:0},0),0);
+  assert.equal(weight({flexion:34},40),0);
+  assert.equal(weight({flexion:85},0),0);
+  assert.equal(weight({flexion:85,rotation:15},80),0);
+  assert.equal(weight({flexion:85,abduction:20},80),0);
+ }
+});
+
 test('whole-body pose asset matches its manifest and exact atlas muscle census',()=>{
  const buffer=fs.readFileSync(new URL('../assets/motion-pose-body.glb',import.meta.url));
  assert.equal(createHash('sha256').update(buffer).digest('hex'),meta.sha256);

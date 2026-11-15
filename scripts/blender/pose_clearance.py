@@ -251,6 +251,96 @@ def bake_shoulder_clearance(rig, joints, nodes, actor, side, suffix, sign):
             yield {'target': name, 'ramps': ramps, 'surfaces': [actor['muscleId']]}
 
 
+def gluteal_envelope(actor, points, faces, targets, sign):
+    """Compress the deep surface behind the hamstrings and retain the outer contour."""
+    membership, neighbors = neighboring_vertices(actor.data)
+    envelope = BVHTree.FromPolygons(points, faces, all_triangles=True)
+    posterior = Vector((0., 1., 0.))
+    anterior = -posterior
+    reach = .09
+    thickness = .002
+    limit = .023
+    anchors = defaultdict(float)
+    capacity = {}
+
+    def room(index):
+        if index not in capacity:
+            point = points[index]
+            outer, _, _, _ = envelope.ray_cast(point + posterior * reach, anterior, reach)
+            capacity[index] = min(limit, max(0., outer.y - point.y - thickness)) if outer is not None else 0.
+        return capacity[index]
+
+    for target in targets:
+        contact_patch = {vertex for face, _ in envelope.overlap(target) for vertex in faces[face]}
+        for i in contact_patch:
+            p = points[i]
+            # Keep the medial sacral and lateral femoral attachments out of the fit.
+            if not (.033 < sign * p.x < .108 and .757 < p.z < .87):
+                continue
+            hit, _, _, _ = target.ray_cast(p + posterior * reach, anterior, reach + .002)
+            if hit is None or hit.y - p.y < .0006:
+                continue
+            node = membership[i]
+            anchors[node] = max(anchors[node], min(room(node), hit.y - p.y + .0012))
+
+    offsets = dict(anchors)
+    for _ in range(16):
+        expanded = offsets.copy()
+        for index in offsets.keys() | {j for i in offsets for j in neighbors[i]}:
+            adjacent = neighbors[index]
+            if adjacent:
+                mean = sum(offsets.get(j, 0.) for j in adjacent) / len(adjacent)
+                expanded[index] = min(room(index), max(anchors.get(index, 0.), .98 * mean))
+        offsets = expanded
+    return [posterior * offsets.get(index, 0.) for index in membership]
+
+
+def bake_gluteal_clearance(rig, joints, nodes, actor, contacts, existing_rules, side, suffix, sign):
+    # The dorsal boundary of the ischial region is the gluteus maximus.
+    # The proximal hamstrings and quadratus femoris remain deep to it.
+    # See the paired MRI and dissection study, PMID 16998454.
+    hip, knee = side + '-hip', side + '-knee'
+    angles = (44, 48, 55, 65, 70, 75, 80, 85)
+    bent_plane = [(knee,'flexion',20,32), (hip,'rotation',15,5), (hip,'rotation',-15,-5),
+                  (hip,'abduction',20,8)]
+    for index, angle in enumerate(angles):
+        previous = angles[index-1] if index else 34
+        sample = {hip:{'flexion':angle}, knee:{'flexion':angle},
+                  'trunk':{'flexion':angle * 25 / 85}}
+        apply_sample(rig, joints, nodes, sample)
+        # Include the shapes already fitted to the deep thigh tissue.
+        driven = []
+        for obj in contacts:
+            if not obj.data.shape_keys:
+                continue
+            for rule in existing_rules:
+                key = obj.data.shape_keys.key_blocks.get(rule['target'])
+                if key is None:
+                    continue
+                weight = 1.
+                for joint, axis, start, end in rule['ramps']:
+                    t = min(1., max(0., (axis_value(sample, (joint, axis)) - start) / (end - start)))
+                    weight *= t*t*(3 - 2*t)
+                key.value = weight
+                driven.append(key)
+        bpy.context.view_layer.update()
+        depsgraph = bpy.context.evaluated_depsgraph_get()
+        points, faces = posed_geometry(actor, depsgraph)
+        trees = []
+        for obj in contacts:
+            p, f = posed_geometry(obj, depsgraph)
+            trees.append(BVHTree.FromPolygons(p, f, all_triangles=True))
+        delta = gluteal_envelope(actor, points, faces, trees, sign)
+        for key in driven:
+            key.value = 0.
+        name = f'ClearanceGlutealFold{angle}{suffix.upper()}'
+        if bake_shape(actor, rig, delta, name):
+            ramps = [(hip,'flexion',previous,angle), *bent_plane]
+            if index + 1 < len(angles):
+                ramps.append((hip,'flexion',angles[index+1],angle))
+            yield {'target':name, 'ramps':ramps, 'surfaces':[actor['muscleId']]}
+
+
 def bake_clearance(rig, joints, nodes, bones, muscles):
     """Author corrections from fitted asset surfaces and transport them by skinning."""
     rules = []
@@ -324,5 +414,10 @@ def bake_clearance(rig, joints, nodes, bones, muscles):
                 rules.append({'target':name,'ramps':ramps,'surfaces':fitted})
                 print('CLEARANCE',name,len(fitted),flush=True)
         rules.extend(bake_shoulder_clearance(rig, joints, nodes, muscle('platysma'), side, suffix, sign))
+        gluteal_contacts = [muscle(part) for part in ('semimembranosus-muscle',
+                            'semitendinosus-muscle','long-head-of-biceps-femoris','quadratus-femoris-muscle')]
+        gluteal_contacts.append(skeletal('Hip bone'))
+        rules.extend(bake_gluteal_clearance(rig, joints, nodes, muscle('gluteus-maximus-muscle'),
+                                           gluteal_contacts, rules, side, suffix, sign))
     apply_sample(rig,joints,nodes,{})
     return rules
