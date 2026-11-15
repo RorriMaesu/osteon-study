@@ -14,6 +14,15 @@ const descriptor=id=>({id,side:id.startsWith('right-')?'right':id.startsWith('le
 const roles=(id,axis,delta=1)=>poseRoles(descriptor(id),axis,delta,parts);
 const named=keys=>keys.map(id=>parts.find(part=>part.id===id)?.name);
 
+test('deep hip flexion changes the piriformis cue while grouped gluteal surfaces stay unassigned',()=>{
+ const hip=descriptor('right-hip'),state=flexion=>({'right-hip':{flexion}});
+ const neutral=poseRoles(hip,'rotation',1,parts,state(0)),bent=poseRoles(hip,'rotation',1,parts,state(82));
+ assert(named(neutral.opposing).some(name=>/piriformis/i.test(name)));
+ assert(named(bent.contributors).some(name=>/piriformis/i.test(name)));
+ assert(!named(bent.opposing).some(name=>/piriformis/i.test(name)));
+ assert(!named([...bent.contributors,...bent.opposing]).some(name=>/gluteus/i.test(name)));
+});
+
 test('neutral pose includes all axes and immutable prior states remain intact',()=>{
  const history=new PoseHistory(descriptors),initial=history.values;
  assert.deepEqual(initial,neutralPose(descriptors));

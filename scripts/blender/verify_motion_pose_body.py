@@ -41,15 +41,25 @@ def apply(values):
             for name,scale in joint.get('morphs',{}).get(axis['id'],{}).items():shapes[name]=angle*scale
             if not axis.get('vector'):continue
             if joint.get('distribute'):
-                for identifier in joint['distribute']:rotate(identifier,axis['vector'],angle/len(joint['distribute']))
+                weights=joint.get('axisWeights',{}).get(axis['id'],[1/len(joint['distribute'])]*len(joint['distribute']))
+                assert abs(sum(weights)-1)<.00001
+                for identifier,weight in zip(joint['distribute'],weights):rotate(identifier,axis['vector'],angle*weight)
             else:
                 if joint['id'].endswith('-shoulder') and axis['id']=='abduction':
-                    rotate(joint['side']+'-scapula',axis['vector'],angle/3)
-                    angle*=2/3
+                    low,high=joint.get('scapularShare',[1/3,1/3])
+                    girdle=angle*(low+(high-low)*min(1,max(0,angle/90)))
+                    rotate(joint['side']+'-scapula',axis['vector'],girdle)
+                    angle-=girdle
                 rotate(joint['id'],axis['vector'],angle)
-                if joint['id']=='jaw':
-                    p=rig.pose.bones[nodes[joint['id']]['name']]
-                    p.location=p.bone.matrix_local.to_quaternion().inverted()@blender(joint['translation'])*(angle/axis['max'])
+        if joint['id']=='jaw':
+            p=rig.pose.bones[nodes[joint['id']]['name']]
+            jaw=values.get('jaw',{})
+            shift=Vector(joint['translation'])*(jaw.get('opening',0)/joint['axes'][0]['max'])
+            slide=joint.get('condyleHalfWidth',0)*math.sin(math.radians(abs(jaw.get('excursion',0))))
+            protrusion=jaw.get('protrusion',0)
+            shift.z+=slide+protrusion*.00005
+            shift.y-=slide*.22+protrusion*.000018
+            p.location=p.bone.matrix_local.to_quaternion().inverted()@blender(shift)
     for side in ['left','right']:
         rotate(side+'-patella',[1,0,0],values.get(side+'-knee',{}).get('flexion',0)*.55)
     for obj in objects:
@@ -104,6 +114,15 @@ scenarios={
  'finger-spread':{j['id']:{'abduction':next(a['max'] for a in j['axes'] if a['id']=='abduction')} for j in META['joints'] if j['id'].endswith('-mcp') and any(a['id']=='abduction' for a in j['axes'])},
  'hindfoot-inversion':{'right-subtalar':{'inversion':15},'left-subtalar':{'inversion':15}},
  'hindfoot-eversion':{'right-subtalar':{'inversion':-8},'left-subtalar':{'inversion':-8}},
+ 'cervical-turn-right':{'neck':{'rotation':40}},
+ 'cervical-turn-left':{'neck':{'rotation':-40}},
+ 'upper-nod':{'upper-nod':{'flexion':7}},
+ 'shoulder-abduction':{'right-shoulder':{'abduction':58},'left-shoulder':{'abduction':58}},
+ 'hip-abduction':{'right-hip':{'abduction':30},'left-hip':{'abduction':30}},
+ 'flexed-hip-rotation':{'right-hip':{'flexion':82,'rotation':15},'right-knee':{'flexion':60}},
+ 'jaw-excursion':{'jaw':{'excursion':5}},
+ 'jaw-protrusion':{'jaw':{'protrusion':100}},
+ 'great-toe-extension':{'right-hallux':{'extension':25},'left-hallux':{'extension':25}},
 }
 results={}
 for name,values in scenarios.items():

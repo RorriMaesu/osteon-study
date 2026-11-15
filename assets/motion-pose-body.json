@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "e1f91ccf26be585f95f1c821918210c00eac1fc5469cecac8f108a75f670b908",
-  "bytes": 15979016,
+  "sha256": "2b88236faff5cbff7b8461fd3f8685a6cd5c5a99f11470ed66de2e77e063e382",
+  "bytes": 16007144,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
-  "scope": "Conservative joint ranges, distributed lumbar and cervical motion, coupled shoulder girdle, radius-led forearm turn, wrists, finger hinges and MCP finger spread, plus separate oblique hindfoot inversion/eversion. Toes move together. Existing reviewed blink, smile, jaw and breathing shapes are retained. Ligaments, tissue contact, independent carpal and midfoot glides, individual toe joints, eye rotations and tongue control are not simulated.",
+  "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation, forearm turn, finger hinges and spread, hindfoot roll, grouped toes plus a separate great toe, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, separate lesser-toe joints, gaze and tongue control.",
   "knownLimitations": [
     "Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.",
     "Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary."
@@ -133,7 +133,52 @@
         0,
         1.51,
         0.02
-      ]
+      ],
+      "axisWeights": {
+        "rotation": [
+          0.03,
+          0.045,
+          0.08,
+          0.09,
+          0.065,
+          0.09,
+          0.6
+        ]
+      },
+      "detail": "C1 turns around the dens of C2. The upper joint receives most of this teaching turn."
+    },
+    {
+      "id": "upper-nod",
+      "label": "Upper neck nod",
+      "region": "head-neck",
+      "side": "midline",
+      "node": "Pose_upper-nod",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Nod down / up",
+          "min": -7,
+          "max": 7,
+          "neutral": 0,
+          "vector": [
+            1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "distribute": [
+        "head"
+      ],
+      "virtual": true,
+      "marker": [
+        0,
+        1.5552935,
+        -0.0774563
+      ],
+      "focusRadius": 0.1,
+      "detail": "A small skull-on-atlas tilt, with the cervical vertebrae held still."
     },
     {
       "id": "jaw",
@@ -154,6 +199,28 @@
             0
           ],
           "unit": "degrees"
+        },
+        {
+          "id": "excursion",
+          "label": "Slide right / left",
+          "min": -5,
+          "max": 5,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "protrusion",
+          "label": "Slide forward / return",
+          "min": 0,
+          "max": 100,
+          "neutral": 0,
+          "vector": null,
+          "unit": "percent"
         }
       ],
       "marker": [
@@ -171,7 +238,9 @@
         -0.0048,
         0.0075
       ],
-      "morphBones": true
+      "condyleHalfWidth": 0.0475303,
+      "morphBones": true,
+      "detail": "Small teaching excursions. The opposite condyle glides forward on a side slide. The disc and tooth contact are outside this model."
     },
     {
       "id": "face-blink",
@@ -348,7 +417,11 @@
           "unit": "degrees"
         }
       ],
-      "endpoint": "right-wrist"
+      "endpoint": "right-wrist",
+      "scapularShare": [
+        0.18,
+        0.34
+      ]
     },
     {
       "id": "right-elbow",
@@ -1006,6 +1079,29 @@
       "detail": "The five toe rays move together in this teaching control."
     },
     {
+      "id": "right-hallux",
+      "label": "Right great toe",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-hallux",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl great toe",
+          "min": -12,
+          "max": 30,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "The great toe bends independently at the first metatarsophalangeal joint. The group control still moves all five rays."
+    },
+    {
       "id": "left-scapula",
       "label": "Left shoulder girdle",
       "region": "left-arm",
@@ -1096,7 +1192,11 @@
           "unit": "degrees"
         }
       ],
-      "endpoint": "left-wrist"
+      "endpoint": "left-wrist",
+      "scapularShare": [
+        0.18,
+        0.34
+      ]
     },
     {
       "id": "left-elbow",
@@ -1752,6 +1852,29 @@
         }
       ],
       "detail": "The five toe rays move together in this teaching control."
+    },
+    {
+      "id": "left-hallux",
+      "label": "Left great toe",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-hallux",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl great toe",
+          "min": -12,
+          "max": 30,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "The great toe bends independently at the first metatarsophalangeal joint. The group control still moves all five rays."
     }
   ],
   "nodes": [
@@ -1901,7 +2024,7 @@
       "pivot": [
         -7.313142123166472e-05,
         1.5351908206939697,
-        -0.02257729135453701
+        -0.00366
       ],
       "parent": "cervical-2"
     },
@@ -1910,8 +2033,8 @@
       "name": "Pose_head",
       "pivot": [
         0,
-        1.52,
-        -0.035
+        1.5552935,
+        -0.0254563
       ],
       "parent": "cervical-1"
     },
@@ -1922,6 +2045,16 @@
         0,
         1.48,
         -0.045
+      ],
+      "parent": null
+    },
+    {
+      "id": "upper-nod",
+      "name": "Pose_upper-nod",
+      "pivot": [
+        0,
+        1.5552935,
+        -0.0254563
       ],
       "parent": null
     },
@@ -2226,6 +2359,16 @@
       "parent": "right-subtalar"
     },
     {
+      "id": "right-hallux",
+      "name": "Pose_right-hallux",
+      "pivot": [
+        -0.0702304020524025,
+        0.023227419704198837,
+        0.082089863717556
+      ],
+      "parent": "right-toes"
+    },
+    {
       "id": "left-scapula",
       "name": "Pose_left-scapula",
       "pivot": [
@@ -2484,6 +2627,16 @@
         0.077
       ],
       "parent": "left-subtalar"
+    },
+    {
+      "id": "left-hallux",
+      "name": "Pose_left-hallux",
+      "pivot": [
+        0.07023054361343384,
+        0.023227419704198837,
+        0.082089863717556
+      ],
+      "parent": "left-toes"
     }
   ],
   "totalMuscleSurfaces": 476,
@@ -2539,7 +2692,7 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "motion-pose-body-20261115-191950-103928",
+  "backup": "motion-pose-body-20261115-204059-163454",
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
     "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
@@ -2547,7 +2700,11 @@
     "validation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/",
     "subtalarCT": "https://doi.org/10.1038/s41598-020-57912-z",
     "subtalarAxis": "https://doi.org/10.1242/jeb.248069",
-    "fingerInterossei": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13649930/"
+    "fingerInterossei": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13649930/",
+    "cervicalRotation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3701975/",
+    "atlantoOccipital": "https://pubmed.ncbi.nlm.nih.gov/39084063/",
+    "shoulderElevation": "https://pubmed.ncbi.nlm.nih.gov/19181982/",
+    "mandibularTranslation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/"
   },
   "inputs": {
     "assets\\skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",

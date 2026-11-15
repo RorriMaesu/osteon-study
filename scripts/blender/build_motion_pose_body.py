@@ -35,7 +35,8 @@ LOWER = read(ASSETS/'motion-legs.json')
 UPPER = read(ASSETS/'motion-walk-context.json')
 FOREARM = read(ASSETS/'motion-forearm.json')
 DRIVERS = read(ASSETS/'motion-walk-muscles.json')
-JAW_LANDMARK = read(REPO/'src/three-d-landmarks.json')['mandibular-condyle']['point']
+LANDMARKS = read(REPO/'src/three-d-landmarks.json')
+JAW_LANDMARK = LANDMARKS['mandibular-condyle']['point']
 JOINTS, NODES, BONE_BINDINGS, BONE_MESHES, MUSCLES, MORPHS = [], {}, {}, {}, {}, {}
 REGIONAL_REPLACEMENTS = set()
 
@@ -180,10 +181,22 @@ def add_rig():
         BONE_BINDINGS[obj]=identifier
         cervical.append(identifier)
         parent=identifier
-    node('head',[0,1.52,-.035],parent)
+    condyle=LANDMARKS['occipital-condyles']['point']
+    nod_pivot=[0,condyle[1],condyle[2]]
+    node('head',nod_pivot,parent)
     joint('neck','Neck','head-neck','midline',[0,1.48,-.045],None,[axis('flexion','Look down / up',-20,25,[1,0,0]),axis('lateral','Tilt left / right',-20,20,[0,0,1]),axis('rotation','Turn left / right',-45,45,[0,-1,0])],distribute=cervical,virtual=True,marker=[0,1.51,.02])
+    # Closed, conservative rotation distribution for the teaching range.
+    # C1 rotates relative to C2 around the dens; no fixed clinical ROM is inferred.
+    NODES['cervical-1']['pivot'][2]=LANDMARKS['dens']['points'][0]['point'][2]
+    JOINTS[-1]['axisWeights']={'rotation':[.03,.045,.08,.09,.065,.09,.60]}
+    JOINTS[-1]['detail']='C1 turns around the dens of C2. The upper joint receives most of this teaching turn.'
+    joint('upper-nod','Upper neck nod','head-neck','midline',nod_pivot,None,[axis('flexion','Nod down / up',-7,7,[1,0,0])],
+          distribute=['head'],virtual=True,marker=[0,condyle[1],condyle[2]-.052],focusRadius=.10,detail='A small skull-on-atlas tilt, with the cervical vertebrae held still.')
     jaw_pivot=[0,JAW_LANDMARK[1]-.0015,JAW_LANDMARK[2]+.0015]
-    joint('jaw','Jaw','head-neck','midline',jaw_pivot,'head',[axis('opening','Open / close',0,15,[1,0,0])],marker=[0,1.50,.077],morphs={'opening':{'JawOpen':1/15}},translation=[0,-.0048,.0075],morphBones=True)
+    jaw_axes=[axis('opening','Open / close',0,15,[1,0,0]),axis('excursion','Slide right / left',-5,5,[0,-1,0]),axis('protrusion','Slide forward / return',0,100,unit='percent')]
+    joint('jaw','Jaw','head-neck','midline',jaw_pivot,'head',jaw_axes,marker=[0,1.50,.077],morphs={'opening':{'JawOpen':1/15}},
+          translation=[0,-.0048,.0075],condyleHalfWidth=abs(JAW_LANDMARK[0]),morphBones=True,
+          detail='Small teaching excursions. The opposite condyle glides forward on a side slide. The disc and tooth contact are outside this model.')
     for identifier,label,key,marker in [('face-blink','Eyelids','Blink',[0,1.594,.084]),('face-smile','Smile','Smile',[0,1.54,.08])]:
         aid='closure' if identifier=='face-blink' else 'smile'
         joint(identifier,label,'head-neck','bilateral',marker,'head',[axis(aid,label,0,100,unit='percent')],morphs={aid:{key:.01}},virtual=True)
@@ -202,6 +215,7 @@ def add_rig():
         shoulder=Vector(DRIVERS['driverRest'][UPPER['joints'][side]['shoulder']])
         elbow=Vector(DRIVERS['driverRest'][UPPER['joints'][side]['elbow']])
         joint(side+'-shoulder',title+' shoulder',side+'-arm',side,shoulder,side+'-scapula',[axis('flexion','Forward / backward',-20,90,[-1,0,0]),axis('abduction','Arm out / in',0,90,[0,0,sign]),axis('rotation','Internal / external rotation',-30,30,[0,-sign,0])],endpoint=side+'-wrist')
+        JOINTS[-1]['scapularShare']=[.18,.34]
         joint(side+'-elbow',title+' elbow',side+'-arm',side,elbow,side+'-shoulder',[axis('flexion','Bend / straighten',0,115,UPPER['axes'][side]['elbow'])],endpoint=side+'-wrist')
         BONE_BINDINGS[bone(s('Humerus'))]=side+'-shoulder'
         BONE_BINDINGS[bone(s('Ulna'))]=side+'-elbow'
@@ -262,6 +276,12 @@ def add_rig():
         joint(side+'-subtalar',title+' hindfoot',side+'-leg',side,joint_gap(talus,heel),side+'-ankle',[axis('inversion','Sole inward / outward',-8,15,subtalar_axis)],marker=list(center(heel)),detail='Inversion and eversion occur below the talus, not by tilting the tibia. The oblique hindfoot axis and rigid midfoot coupling are teaching approximations; individual joint axes vary.')
         BONE_BINDINGS[talus]=side+'-ankle'
         joint(side+'-toes',title+' toes',side+'-leg',side,chain['toe'],side+'-subtalar',[axis('extension','Lift / curl toes',-15,35,[-1,0,0])],detail='The five toe rays move together in this teaching control.')
+        great_toe=bone(s('Proximal phalanx of first finger of foot'))
+        toe_pivot=joint_gap(bone(s('First metatarsal bone')),great_toe)
+        joint(side+'-hallux',title+' great toe',side+'-leg',side,toe_pivot,side+'-toes',[axis('extension','Lift / curl great toe',-12,30,[-1,0,0])],
+              detail='The great toe bends independently at the first metatarsophalangeal joint. The group control still moves all five rays.')
+        BONE_BINDINGS[great_toe]=side+'-hallux'
+        BONE_BINDINGS[bone(s('Distal phalanx of first finger of foot'))]=side+'-hallux'
         BONE_BINDINGS[bone(s('Femur'))]=side+'-hip'
         BONE_BINDINGS[bone(s('Tibia'))]=side+'-knee'
         BONE_BINDINGS[bone(s('Fibula'))]=side+'-knee'
@@ -518,6 +538,10 @@ def bind_all(rig):
                 toes=side+'-toes'
                 amount=smooth(p.z,NODES[toes]['pivot'][2]-.015,NODES[toes]['pivot'][2]+.018)
                 replace_weight(values,side+'-ankle',{foot:1-amount,toes:amount})
+            if side in SIDES and 'hallucis' in name.lower() and side+'-toes' in values:
+                hallux=side+'-hallux'
+                amount=smooth(p.z,NODES[hallux]['pivot'][2]-.009,NODES[hallux]['pivot'][2]+.015)
+                replace_weight(values,side+'-toes',{side+'-toes':1-amount,hallux:amount})
             if scap_attachment:
                 origin,direction,length=scap_attachment
                 weight=smooth((p-origin).dot(direction)/length,-.08,1.08)
@@ -573,13 +597,17 @@ def main():
         'schema':1,'asset':NAME+'.glb','sha256':digest(target),'bytes':target.stat().st_size,
         'description':'Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.',
         'evidence':'Teaching geometry. Pose and muscle color do not measure activation or force.',
-        'scope':'Conservative joint ranges, distributed lumbar and cervical motion, coupled shoulder girdle, radius-led forearm turn, wrists, finger hinges and MCP finger spread, plus separate oblique hindfoot inversion/eversion. Toes move together. Existing reviewed blink, smile, jaw and breathing shapes are retained. Ligaments, tissue contact, independent carpal and midfoot glides, individual toe joints, eye rotations and tongue control are not simulated.',
+        'scope':'Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation, forearm turn, finger hinges and spread, hindfoot roll, grouped toes plus a separate great toe, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, separate lesser-toe joints, gaze and tongue control.',
         'knownLimitations':['Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.','Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary.'],
         'joints':JOINTS,'nodes':list(NODES.values()),'totalMuscleSurfaces':len(MUSCLES),'boneSurfaces':len(BONE_MESHES),
         'regionalMorphReplacements':sorted(REGIONAL_REPLACEMENTS),'backup':backed.name,
         'sources':{'openstax':'https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements','sourceModel':'https://github.com/Z-Anatomy/Models-of-human-anatomy','upperLimb':'https://pubmed.ncbi.nlm.nih.gov/16078622/','validation':'https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/','subtalarCT':'https://doi.org/10.1038/s41598-020-57912-z','subtalarAxis':'https://doi.org/10.1242/jeb.248069','fingerInterossei':'https://pmc.ncbi.nlm.nih.gov/articles/PMC13649930/'},
         'inputs':hashes,
     }
+    meta['sources'].update(cervicalRotation='https://pmc.ncbi.nlm.nih.gov/articles/PMC3701975/',
+                           atlantoOccipital='https://pubmed.ncbi.nlm.nih.gov/39084063/',
+                           shoulderElevation='https://pubmed.ncbi.nlm.nih.gov/19181982/',
+                           mandibularTranslation='https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/')
     (ASSETS/(NAME+'.json')).write_text(json.dumps(meta,indent=2)+'\n')
     print('EXPORTED_POSE_BODY',len(JOINTS),len(NODES),len(MUSCLES),target.stat().st_size,flush=True)
 

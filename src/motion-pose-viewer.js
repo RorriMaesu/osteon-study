@@ -149,7 +149,7 @@ export class PoseViewer extends MotionViewer{
  fitBounds(bounds,view='front'){
   if(bounds.isEmpty()||!this.controls)return;
   const center=bounds.getCenter(new THREE.Vector3());
-  const direction=new THREE.Vector3(...({front:[0,.03,1],back:[0,.03,-1],side:[1,.04,0],lesson:[.6,.06,1]}[view]||[0,.03,1])).normalize();
+  const direction=new THREE.Vector3(...({front:[0,.03,1],back:[0,.03,-1],side:[1,.04,0],right:[-1,.04,0],lesson:[.6,.06,1]}[view]||[0,.03,1])).normalize();
   const right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),direction).normalize();
   const up=new THREE.Vector3().crossVectors(direction,right).normalize();
   const height=this.stage.clientHeight,width=this.stage.clientWidth;
@@ -186,10 +186,10 @@ export class PoseViewer extends MotionViewer{
    this.notesWereOpen=open;
   }
  }
- focusJoint(view='front'){
+ focusJoint(view='front',radiusOverride){
   if(!this.current||!this.selectedJoint)return;
   const descriptor=this.descriptor(),position=this.jointPosition(this.selectedJoint);
-  const radius=descriptor.focusRadius||(/finger|thumb|index|middle|ring|little|toe/.test(descriptor.id)?.085:/jaw|blink|smile|wrist|forearm|ankle|subtalar/.test(descriptor.id)?.16:.3);
+  const radius=radiusOverride||descriptor.focusRadius||(/finger|thumb|index|middle|ring|little|toe|hallux/.test(descriptor.id)?.085:/jaw|blink|smile|wrist|forearm|ankle|subtalar/.test(descriptor.id)?.16:.3);
   const bounds=new THREE.Box3().setFromCenterAndSize(position,new THREE.Vector3(radius*2,radius*2,radius*2));
   this.fitBounds(bounds,view);
  }
@@ -200,7 +200,7 @@ export class PoseViewer extends MotionViewer{
   const pixelsPerMeter=this.stage.clientHeight/(2*Math.tan(this.camera.fov*radians/2)*this.camera.position.distanceTo(this.controls.target));
   const raw=descriptors.filter(joint=>joint.id===this.selectedJoint||this.inScope(joint)).map(joint=>{
    const pos=this.project(vector(poseMarkerWorld(this.current,joint.id)));
-   const fine=/finger|thumb|index|middle|ring|little|toe|blink|smile/.test(joint.id);
+   const fine=/finger|thumb|index|middle|ring|little|toe|hallux|blink|smile|upper-nod/.test(joint.id);
    return {...pos,id:joint.id,locked:this.poseLocks.includes(joint.id),priority:joint.markerPriority??(fine?3:1),visible:pos.visible&&(!fine||pixelsPerMeter>1350||joint.id===this.selectedJoint)};
   });
   let visible=visiblePoseMarkers(raw,{width:this.stage.clientWidth,height:this.stage.clientHeight,selectedId:this.selectedJoint});

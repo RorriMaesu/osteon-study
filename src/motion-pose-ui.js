@@ -147,10 +147,10 @@ export function createPoseUI(host,callbacks={}){
   $('.pose-list-summary').textContent=summary;
   const roleNote=$('.pose-role-note');
   roleNote.hidden=tab!=='muscles'||!state.roleNote;
-  if(roleNote.textContent!==state.roleNote)roleNote.textContent=state.roleNote||'';
+  if(roleNote.textContent!==state.roleNote){roleNote.textContent=state.roleNote||'';roleNote.title=state.roleNote||'';}
   $('[data-pose-related]').hidden=!list.length&&!state.selectedMuscle&&!state.onlyRelated;
   $('[data-pose-related]').setAttribute('aria-pressed',String(!!state.onlyRelated));
-  const visible=list.slice(page*pageSize,(page+1)*pageSize),key=JSON.stringify([tab,page,pageSize,visible.map(entry=>[listId(entry),listName(entry),entry.kind,entry.note]),state.selectedJoint,state.selectedMuscle,movementNote]);
+  const visible=list.slice(page*pageSize,(page+1)*pageSize),key=JSON.stringify([tab,page,pageSize,visible.map(entry=>[listId(entry),listName(entry),entry.kind,entry.note,entry.roleLabel]),state.selectedJoint,state.selectedMuscle,state.studyGuide?.id,movementNote]);
   if(key!==renderedListKey){
    renderedListKey=key;
    if(tab==='help'){
@@ -159,7 +159,7 @@ export function createPoseUI(host,callbacks={}){
    }else{
     $('.pose-detail-list').innerHTML=visible.map(entry=>{
      const id=listId(entry),name=listName(entry),selected=tab==='guides'?id===state.studyGuide?.id:tab==='joints'?id===state.selectedJoint:id===state.selectedMuscle;
-     const subtitle=entry.kind==='guide'?(scopes[entry.scope]||'Guided movement'):entry.kind==='joint'?entry.regionLabel||scopes[entry.region]||entry.region||'Joint':entry.kind==='contributor'?'Possible contributor':'Opposing action';
+     const subtitle=entry.kind==='guide'?(scopes[entry.scope]||'Guided movement'):entry.kind==='joint'?entry.regionLabel||scopes[entry.region]||entry.region||'Joint':entry.roleLabel||(entry.kind==='contributor'?'Possible contributor':'Opposing action');
      return `<button type="button" data-pose-row="${escape(id)}" data-kind="${entry.kind}" aria-pressed="${selected}" title="${escape(entry.note||name)}"><span>${entry.kind==='contributor'?'◇ ':entry.kind==='opponent'?'○ ':''}${escape(name)}</span><small>${escape(subtitle)}</small></button>`;
     }).join('')||`<p class="pose-empty">${tab==='joints'?'No matching joint. Try a shorter name.':state.ready?'The model will highlight supported muscle roles when you adjust a joint.':'The model is loading.'}</p>`;
    }
@@ -226,8 +226,9 @@ export function createPoseUI(host,callbacks={}){
   $('[data-pose-play]').setAttribute('aria-label',state.playing?'Pause movement at this position':'Play the selected movement once');
   $('[data-pose-play]').title=state.playing?'Pause and keep this position':'Play this movement once, then return to your pose';
   $('[data-pose-focus]').disabled=!state.ready||!currentJoint;
-  $('[data-pose-camera="back"]').hidden=state.studyGuide?.scope!=='head-neck';
-  $('[data-pose-camera="side"]').hidden=state.studyGuide?.scope==='head-neck';
+  const rear=state.studyGuide?.scope==='head-neck'||state.studyGuide?.rear;
+  $('[data-pose-camera="back"]').hidden=!rear;
+  $('[data-pose-camera="side"]').hidden=!!rear;
   for(const button of zoomButtons)button.disabled=!state.ready;
   $('[data-pose-lock]').disabled=!state.ready||!currentJoint;
   $('[data-pose-lock]').setAttribute('aria-pressed',String(locked));

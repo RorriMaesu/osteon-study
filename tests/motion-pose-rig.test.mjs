@@ -142,6 +142,44 @@ test('trunk and neck flexion move forward; neck handles follow a bent trunk',()=
  assert.ok(rig.nodes.get('head').node.getWorldPosition(new THREE.Vector3()).z>head.z+.01);
 });
 
+test('the head turn favors C1 and a skull nod leaves cervical bones still',()=>{
+ const rig=specimen(),spin=id=>rig.nodes.get(id).node.quaternion.angleTo(rig.nodes.get(id).rest);
+ applyPose(rig,{neck:{rotation:30}});
+ close(spin('cervical-1')*180/Math.PI,18);
+ assert(spin('cervical-1')>spin('cervical-2')*5);
+ applyPose(rig,{'upper-nod':{flexion:6}});
+ close(spin('head')*180/Math.PI,6);
+ for(let i=1;i<=7;i++)close(spin('cervical-'+i),0);
+});
+
+test('jaw translations advance the opposite condyle or both condyles as appropriate',()=>{
+ const rig=specimen(),jaw=rig.nodes.get('jaw').node;
+ const half=rig.descriptors.find(joint=>joint.id==='jaw').condyleHalfWidth;
+ const condyle=side=>jaw.localToWorld(new THREE.Vector3(side*half,0,0)).z;
+ const rest=[condyle(-1),condyle(1)];
+ for(const side of [-1,1]){
+  applyPose(rig,{jaw:{excursion:side*5}});
+  const motion=[condyle(-1)-rest[0],condyle(1)-rest[1]];
+  const working=side>0?0:1;
+  assert(motion[1-working]>.004);
+  assert(Math.abs(motion[working])<.00001);
+ }
+ applyPose(rig,{jaw:{protrusion:100}});
+ close(condyle(-1)-rest[0],.005);
+ close(condyle(1)-rest[1],.005);
+});
+
+test('great-toe lift changes the hallux without dragging other toe joints',()=>{
+ const rig=specimen(),lesser=rig.nodes.get('right-toes').node.matrixWorld.clone();
+ const great=rig.nodes.get('right-hallux').node;
+ const tip=()=>great.localToWorld(new THREE.Vector3(0,0,.04));
+ const rest=tip();
+ applyPose(rig,{'right-hallux':{extension:24}});
+ assert(tip().y>rest.y+.01);
+ assert(rig.nodes.get('right-toes').node.matrixWorld.equals(lesser));
+ assert.equal(rig.nodes.get('left-hallux').node.quaternion.angleTo(rig.nodes.get('left-hallux').rest),0);
+});
+
 test('multi-axis hinges report the current axis without subsequent-axis contamination',()=>{
  const rig=specimen();
  applyPose(rig,{'right-hip':{flexion:30,abduction:20,rotation:15}});

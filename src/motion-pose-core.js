@@ -207,7 +207,10 @@ const directions={
  'toes:extension':pair('Toe extension','Toe flexion',names('extensor digitorum (?:longus|brevis)','extensor hallucis (?:longus|brevis)'),names('flexor digitorum (?:longus|brevis)','flexor hallucis (?:longus|brevis)','flexor digiti minimi of foot'),poseSources.lower,'This grouped toe control combines separate muscles acting on different digits.'),
  'trunk:flexion':pair('Trunk flexion','Trunk extension',trunkFlex,trunkExt,poseSources.trunk),
  'neck:flexion':pair('Neck flexion','Neck extension',neckFlex,neckExt,poseSources.axial,'This combined neck action does not resolve individual cervical joints. Sternocleidomastoid can extend the head at the upper cervical joints while flexing the lower neck.'),
+ 'upper-nod:flexion':pair('Nod down at the atlas','Nod up at the atlas',names('longus capitis','rectus anterior capitis'),names('rectus posterior (?:major|minor) capitis','obliquus superior capitis'),poseSources.axial,'Compare this small skull-on-atlas motion with bending the entire neck.'),
  'jaw:opening':pair('Jaw opening','Jaw closing',jawOpen,jawClose,poseSources.axial,'Suprahyoid opening assumes the hyoid is stabilized. Opening combines mandibular rotation and translation.'),
+ 'jaw:protrusion':pair('Jaw protrusion','Jaw retraction',names('inferior head of lateral pterygoid'),names('temporalis'),poseSources.axial,'Both lateral pterygoids help bring the mandible forward. The posterior fibers of temporalis assist return, and the atlas shows the whole temporalis surface.'),
+ 'hallux:extension':pair('Great-toe extension','Great-toe flexion',names('extensor hallucis (?:longus|brevis)'),names('flexor hallucis (?:longus|brevis)'),poseSources.lower,'The first metatarsophalangeal joint moves separately from the other toes.'),
  'thumb-cmc:flexion':pair('Thumb CMC flexion','Thumb CMC extension',names('flexor pollicis longus','flexor pollicis brevis','opponens pollicis','adductor pollicis'),names('extensor pollicis longus','extensor pollicis brevis','abductor pollicis longus'),poseSources.thumb,'Thumb flexion and abduction are components of opposition, which also requires rotation. Opponens pollicis contributes to these components; the control does not reproduce full opposition.'),
  'thumb-cmc:abduction':pair('Thumb CMC abduction','Thumb CMC adduction',names('abductor pollicis longus','abductor pollicis brevis','opponens pollicis'),names('adductor pollicis','extensor pollicis longus','flexor pollicis brevis'),poseSources.thumb,'The control shows palmar abduction. Individual muscle contributions vary with thumb position; the colors do not specify recruitment or force.'),
  'face-blink:closure':pair('Eyelid closing','Eyelid opening',names('orbicularis oculi'),names('levator palpebrae superioris'),poseSources.axial),
@@ -291,15 +294,24 @@ function axialRoles(kind,axis,positive,parts){
 const roleNote='Possible contributors for the last adjustment. A pose does not measure activity, tension, or muscle shortening; recruitment depends on load and the task. Opposing actions can be active at the same time.';
 
 /** Exact surface keys, never an activity estimate. Positive signs follow the rig manifest. */
-export function poseRoles(joint,axisId,delta,parts=[]){
+export function poseRoles(joint,axisId,delta,parts=[],pose={}){
  const empty={label:'Pose held',contributors:[],opposing:[],evidence:'possible-roles',note:roleNote,source:poseSources.recruitment};
  if(!joint||!Number.isFinite(delta)||Math.abs(delta)<=epsilon)return empty;
  const kind=joint.id.replace(/^(right|left)-/,'');
  const positive=delta>0;
  const axial=axialRoles(kind,axisId,positive,parts);
  if(axial)return {...empty,...axial,note:roleNote+' '+axial.note};
- const direction=directions[kind+':'+axisId]||fingerDirection(kind,axisId);
+ let direction=directions[kind+':'+axisId]||fingerDirection(kind,axisId);
  if(!direction)return {...empty,label:'Joint adjustment',note:roleNote+' Muscle roles have not been mapped for this axis.'};
+ if(kind==='hip'&&axisId==='rotation'&&pose[joint.id]?.flexion>25){
+  const deepFlexion=pose[joint.id].flexion>=80;
+  direction=pair('Hip internal rotation','Hip external rotation',
+   deepFlexion?both(hipInternal,names('piriformis')):hipInternal,
+   names('obturator internus','obturator externus','quadratus femoris'),
+   'https://nmbl.stanford.edu/publications/pdf/Delp1999.pdf',
+   deepFlexion?'With the hip deeply flexed, piriformis can assist internal rotation. Gluteal compartments can have different actions, so their grouped surfaces stay neutral.':
+    'Rotational leverage changes as the hip flexes. Compare near-neutral and deep flexion rather than assigning a fixed role to the whole gluteal surface.');
+ }
  const side=joint.side||joint.id.match(/^(left|right)-/)?.[1];
  const digit=kind.match(/^(thumb|index|middle|ring|little)-/)?.[1];
  const candidates=parts.filter(part=>(!['left','right'].includes(side)||part.side===side)&&belongsToDigit(part,digit));
@@ -309,9 +321,9 @@ export function poseRoles(joint,axisId,delta,parts=[]){
   source:direction.source,note:roleNote+(direction.note?' '+direction.note:'')};
 }
 
-export function combinedPoseRoles(descriptors,changes,parts=[]){
+export function combinedPoseRoles(descriptors,changes,parts=[],pose={}){
  const byId=new Map(descriptors.map(joint=>[joint.id,joint]));
- const movements=(changes||[]).map(change=>poseRoles(byId.get(change.joint),change.axis,change.delta,parts)).filter(role=>role.label!=='Pose held');
+ const movements=(changes||[]).map(change=>poseRoles(byId.get(change.joint),change.axis,change.delta,parts,pose)).filter(role=>role.label!=='Pose held');
  const contributors=[...new Set(movements.flatMap(role=>role.contributors))];
  const allOpposing=[...new Set(movements.flatMap(role=>role.opposing))];
  const shared=contributors.filter(key=>allOpposing.includes(key));

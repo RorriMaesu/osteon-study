@@ -1,11 +1,11 @@
 {
-  "sha256": "e1f91ccf26be585f95f1c821918210c00eac1fc5469cecac8f108a75f670b908",
+  "sha256": "2b88236faff5cbff7b8461fd3f8685a6cd5c5a99f11470ed66de2e77e063e382",
   "reimportedMuscles": 476,
   "reimportedBoneSurfaces": 296,
   "maximumNeutralBoundsErrorMillimeters": 0.009041,
-  "maximumSkinWeightSumError": 0.00017197523266077042,
-  "jointControls": 56,
-  "rigNodes": 73,
+  "maximumSkinWeightSumError": 0.00017538666725158691,
+  "jointControls": 59,
+  "rigNodes": 76,
   "exactNeutralReset": true,
   "sampledPoses": {
     "elbow-flexion": {
@@ -90,73 +90,73 @@
       "largestSkinStretch": [
         {
           "muscle": "muscle-latissimus-dorsi-muscle-r",
-          "maxDisplacementMm": 278.876,
-          "edgeLengthRatio95": 3.144,
-          "edgeLengthRatio99": 3.409
+          "maxDisplacementMm": 280.284,
+          "edgeLengthRatio95": 3.153,
+          "edgeLengthRatio99": 3.418
         },
         {
           "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-r",
-          "maxDisplacementMm": 201.391,
-          "edgeLengthRatio95": 2.344,
-          "edgeLengthRatio99": 2.64
+          "maxDisplacementMm": 203.154,
+          "edgeLengthRatio95": 2.345,
+          "edgeLengthRatio99": 2.643
         },
         {
           "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-r",
-          "maxDisplacementMm": 182.385,
+          "maxDisplacementMm": 183.385,
           "edgeLengthRatio95": 2.396,
           "edgeLengthRatio99": 2.525
         },
         {
           "muscle": "muscle-teres-major-muscle-r",
-          "maxDisplacementMm": 191.038,
-          "edgeLengthRatio95": 2.349,
-          "edgeLengthRatio99": 2.446
+          "maxDisplacementMm": 192.758,
+          "edgeLengthRatio95": 2.351,
+          "edgeLengthRatio99": 2.448
         },
         {
           "muscle": "muscle-long-head-of-triceps-brachii-r",
-          "maxDisplacementMm": 576.108,
-          "edgeLengthRatio95": 2.038,
-          "edgeLengthRatio99": 2.195
+          "maxDisplacementMm": 578.819,
+          "edgeLengthRatio95": 2.039,
+          "edgeLengthRatio99": 2.198
         },
         {
           "muscle": "muscle-lateral-head-of-triceps-brachii-r",
-          "maxDisplacementMm": 577.969,
+          "maxDisplacementMm": 580.746,
           "edgeLengthRatio95": 1.939,
           "edgeLengthRatio99": 2.065
         },
         {
           "muscle": "muscle-medial-head-of-triceps-brachii-r",
-          "maxDisplacementMm": 582.268,
+          "maxDisplacementMm": 584.951,
           "edgeLengthRatio95": 1.898,
           "edgeLengthRatio99": 1.995
         },
         {
           "muscle": "muscle-humeral-head-of-extensor-carpi-ulnaris-r",
-          "maxDisplacementMm": 939.514,
+          "maxDisplacementMm": 940.927,
           "edgeLengthRatio95": 1.451,
           "edgeLengthRatio99": 1.852
         },
         {
           "muscle": "muscle-subscapularis-muscle-r",
-          "maxDisplacementMm": 109.218,
-          "edgeLengthRatio95": 1.653,
-          "edgeLengthRatio99": 1.801
+          "maxDisplacementMm": 110.685,
+          "edgeLengthRatio95": 1.651,
+          "edgeLengthRatio99": 1.8
         },
         {
           "muscle": "muscle-coracobrachialis-muscle-r",
-          "maxDisplacementMm": 321.846,
+          "maxDisplacementMm": 323.911,
           "edgeLengthRatio95": 1.704,
-          "edgeLengthRatio99": 1.778
+          "edgeLengthRatio99": 1.777
         },
         {
           "muscle": "muscle-anconeus-muscle-r",
-          "maxDisplacementMm": 680.114,
+          "maxDisplacementMm": 682.573,
           "edgeLengthRatio95": 1.665,
           "edgeLengthRatio99": 1.762
         },
         {
           "muscle": "muscle-extensor-digitorum-r",
-          "maxDisplacementMm": 1162.342,
+          "maxDisplacementMm": 1163.563,
           "edgeLengthRatio95": 1.191,
           "edgeLengthRatio99": 1.749
         }
@@ -340,30 +340,30 @@
         {
           "muscle": "muscle-genioglossus-muscle-r",
           "maxDisplacementMm": 22.275,
-          "edgeLengthRatio95": 1.716,
-          "edgeLengthRatio99": 1.83
+          "edgeLengthRatio95": 1.715,
+          "edgeLengthRatio99": 1.831
         },
         {
           "muscle": "muscle-depressor-labii-inferioris-l",
           "maxDisplacementMm": 25.16,
-          "edgeLengthRatio95": 1.541,
-          "edgeLengthRatio99": 1.757
+          "edgeLengthRatio95": 1.54,
+          "edgeLengthRatio99": 1.755
         },
         {
           "muscle": "muscle-depressor-labii-inferioris-r",
           "maxDisplacementMm": 25.16,
-          "edgeLengthRatio95": 1.541,
-          "edgeLengthRatio99": 1.757
+          "edgeLengthRatio95": 1.54,
+          "edgeLengthRatio99": 1.755
         },
         {
           "muscle": "muscle-hyoglossus-muscle-l",
-          "maxDisplacementMm": 18.588,
+          "maxDisplacementMm": 18.587,
           "edgeLengthRatio95": 1.284,
           "edgeLengthRatio99": 1.477
         },
         {
           "muscle": "muscle-hyoglossus-muscle-r",
-          "maxDisplacementMm": 18.588,
+          "maxDisplacementMm": 18.587,
           "edgeLengthRatio95": 1.284,
           "edgeLengthRatio99": 1.477
         },
@@ -698,6 +698,699 @@
           "maxDisplacementMm": 8.393,
           "edgeLengthRatio95": 1.006,
           "edgeLengthRatio99": 1.02
+        }
+      ]
+    },
+    "cervical-turn-right": {
+      "movedSurfaces": 145,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-rectus-posterior-major-capitis-muscle-l",
+          "maxDisplacementMm": 37.237,
+          "edgeLengthRatio95": 1.641,
+          "edgeLengthRatio99": 1.754
+        },
+        {
+          "muscle": "muscle-splenius-capitis-muscle-l",
+          "maxDisplacementMm": 44.6,
+          "edgeLengthRatio95": 1.422,
+          "edgeLengthRatio99": 1.713
+        },
+        {
+          "muscle": "muscle-spinalis-capitis-muscle-r",
+          "maxDisplacementMm": 43.534,
+          "edgeLengthRatio95": 1.381,
+          "edgeLengthRatio99": 1.595
+        },
+        {
+          "muscle": "muscle-sternocleidomastoid-muscle-r",
+          "maxDisplacementMm": 41.693,
+          "edgeLengthRatio95": 1.194,
+          "edgeLengthRatio99": 1.57
+        },
+        {
+          "muscle": "muscle-obliquus-inferior-capitis-muscle-l",
+          "maxDisplacementMm": 29.575,
+          "edgeLengthRatio95": 1.468,
+          "edgeLengthRatio99": 1.529
+        },
+        {
+          "muscle": "muscle-stylohyoid-muscle-r",
+          "maxDisplacementMm": 28.62,
+          "edgeLengthRatio95": 1.46,
+          "edgeLengthRatio99": 1.513
+        },
+        {
+          "muscle": "muscle-ascending-part-of-trapezius-muscle-r",
+          "maxDisplacementMm": 45.63,
+          "edgeLengthRatio95": 1.186,
+          "edgeLengthRatio99": 1.506
+        },
+        {
+          "muscle": "muscle-spinalis-capitis-muscle-l",
+          "maxDisplacementMm": 44.861,
+          "edgeLengthRatio95": 1.208,
+          "edgeLengthRatio99": 1.5
+        },
+        {
+          "muscle": "muscle-rectus-posterior-major-capitis-muscle-r",
+          "maxDisplacementMm": 35.09,
+          "edgeLengthRatio95": 1.18,
+          "edgeLengthRatio99": 1.436
+        },
+        {
+          "muscle": "muscle-posterior-belly-of-digastric-muscle-r",
+          "maxDisplacementMm": 38.689,
+          "edgeLengthRatio95": 1.368,
+          "edgeLengthRatio99": 1.429
+        },
+        {
+          "muscle": "muscle-longissimus-capitis-muscle-l",
+          "maxDisplacementMm": 43.688,
+          "edgeLengthRatio95": 1.142,
+          "edgeLengthRatio99": 1.419
+        },
+        {
+          "muscle": "muscle-obliquus-inferior-capitis-muscle-r",
+          "maxDisplacementMm": 25.856,
+          "edgeLengthRatio95": 1.125,
+          "edgeLengthRatio99": 1.395
+        }
+      ]
+    },
+    "cervical-turn-left": {
+      "movedSurfaces": 145,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-rectus-posterior-major-capitis-muscle-r",
+          "maxDisplacementMm": 37.213,
+          "edgeLengthRatio95": 1.641,
+          "edgeLengthRatio99": 1.753
+        },
+        {
+          "muscle": "muscle-splenius-capitis-muscle-r",
+          "maxDisplacementMm": 44.552,
+          "edgeLengthRatio95": 1.421,
+          "edgeLengthRatio99": 1.711
+        },
+        {
+          "muscle": "muscle-spinalis-capitis-muscle-l",
+          "maxDisplacementMm": 43.555,
+          "edgeLengthRatio95": 1.384,
+          "edgeLengthRatio99": 1.598
+        },
+        {
+          "muscle": "muscle-sternocleidomastoid-muscle-l",
+          "maxDisplacementMm": 41.738,
+          "edgeLengthRatio95": 1.195,
+          "edgeLengthRatio99": 1.572
+        },
+        {
+          "muscle": "muscle-obliquus-inferior-capitis-muscle-r",
+          "maxDisplacementMm": 29.526,
+          "edgeLengthRatio95": 1.467,
+          "edgeLengthRatio99": 1.527
+        },
+        {
+          "muscle": "muscle-stylohyoid-muscle-l",
+          "maxDisplacementMm": 28.648,
+          "edgeLengthRatio95": 1.462,
+          "edgeLengthRatio99": 1.515
+        },
+        {
+          "muscle": "muscle-ascending-part-of-trapezius-muscle-l",
+          "maxDisplacementMm": 45.648,
+          "edgeLengthRatio95": 1.186,
+          "edgeLengthRatio99": 1.507
+        },
+        {
+          "muscle": "muscle-spinalis-capitis-muscle-r",
+          "maxDisplacementMm": 44.847,
+          "edgeLengthRatio95": 1.207,
+          "edgeLengthRatio99": 1.5
+        },
+        {
+          "muscle": "muscle-rectus-posterior-major-capitis-muscle-l",
+          "maxDisplacementMm": 35.124,
+          "edgeLengthRatio95": 1.18,
+          "edgeLengthRatio99": 1.436
+        },
+        {
+          "muscle": "muscle-posterior-belly-of-digastric-muscle-l",
+          "maxDisplacementMm": 38.741,
+          "edgeLengthRatio95": 1.369,
+          "edgeLengthRatio99": 1.431
+        },
+        {
+          "muscle": "muscle-longissimus-capitis-muscle-r",
+          "maxDisplacementMm": 43.639,
+          "edgeLengthRatio95": 1.142,
+          "edgeLengthRatio99": 1.417
+        },
+        {
+          "muscle": "muscle-obliquus-inferior-capitis-muscle-l",
+          "maxDisplacementMm": 25.905,
+          "edgeLengthRatio95": 1.126,
+          "edgeLengthRatio99": 1.397
+        }
+      ]
+    },
+    "upper-nod": {
+      "movedSurfaces": 114,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-genioglossus-muscle-r",
+          "maxDisplacementMm": 13.08,
+          "edgeLengthRatio95": 1.423,
+          "edgeLengthRatio99": 1.487
+        },
+        {
+          "muscle": "muscle-genioglossus-muscle-l",
+          "maxDisplacementMm": 13.08,
+          "edgeLengthRatio95": 1.423,
+          "edgeLengthRatio99": 1.486
+        },
+        {
+          "muscle": "muscle-depressor-labii-inferioris-l",
+          "maxDisplacementMm": 14.357,
+          "edgeLengthRatio95": 1.321,
+          "edgeLengthRatio99": 1.442
+        },
+        {
+          "muscle": "muscle-depressor-labii-inferioris-r",
+          "maxDisplacementMm": 14.357,
+          "edgeLengthRatio95": 1.321,
+          "edgeLengthRatio99": 1.442
+        },
+        {
+          "muscle": "muscle-hyoglossus-muscle-l",
+          "maxDisplacementMm": 11.339,
+          "edgeLengthRatio95": 1.18,
+          "edgeLengthRatio99": 1.286
+        },
+        {
+          "muscle": "muscle-hyoglossus-muscle-r",
+          "maxDisplacementMm": 11.339,
+          "edgeLengthRatio95": 1.18,
+          "edgeLengthRatio99": 1.286
+        },
+        {
+          "muscle": "muscle-spinalis-capitis-muscle-l",
+          "maxDisplacementMm": 6.904,
+          "edgeLengthRatio95": 1.135,
+          "edgeLengthRatio99": 1.25
+        },
+        {
+          "muscle": "muscle-spinalis-capitis-muscle-r",
+          "maxDisplacementMm": 6.904,
+          "edgeLengthRatio95": 1.135,
+          "edgeLengthRatio99": 1.25
+        },
+        {
+          "muscle": "muscle-ascending-part-of-trapezius-muscle-l",
+          "maxDisplacementMm": 7.37,
+          "edgeLengthRatio95": 1.071,
+          "edgeLengthRatio99": 1.232
+        },
+        {
+          "muscle": "muscle-ascending-part-of-trapezius-muscle-r",
+          "maxDisplacementMm": 7.37,
+          "edgeLengthRatio95": 1.071,
+          "edgeLengthRatio99": 1.232
+        },
+        {
+          "muscle": "muscle-rectus-posterior-major-capitis-muscle-r",
+          "maxDisplacementMm": 4.461,
+          "edgeLengthRatio95": 1.167,
+          "edgeLengthRatio99": 1.224
+        },
+        {
+          "muscle": "muscle-rectus-posterior-major-capitis-muscle-l",
+          "maxDisplacementMm": 4.461,
+          "edgeLengthRatio95": 1.167,
+          "edgeLengthRatio99": 1.223
+        }
+      ]
+    },
+    "shoulder-abduction": {
+      "movedSurfaces": 134,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-latissimus-dorsi-muscle-r",
+          "maxDisplacementMm": 147.235,
+          "edgeLengthRatio95": 2.094,
+          "edgeLengthRatio99": 2.234
+        },
+        {
+          "muscle": "muscle-latissimus-dorsi-muscle-l",
+          "maxDisplacementMm": 147.19,
+          "edgeLengthRatio95": 2.094,
+          "edgeLengthRatio99": 2.233
+        },
+        {
+          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-r",
+          "maxDisplacementMm": 106.783,
+          "edgeLengthRatio95": 1.599,
+          "edgeLengthRatio99": 1.736
+        },
+        {
+          "muscle": "muscle-sternocostal-head-of-pectoralis-major-muscle-l",
+          "maxDisplacementMm": 106.783,
+          "edgeLengthRatio95": 1.599,
+          "edgeLengthRatio99": 1.736
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-l",
+          "maxDisplacementMm": 89.28,
+          "edgeLengthRatio95": 1.622,
+          "edgeLengthRatio99": 1.692
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-r",
+          "maxDisplacementMm": 89.284,
+          "edgeLengthRatio95": 1.623,
+          "edgeLengthRatio99": 1.692
+        },
+        {
+          "muscle": "muscle-teres-major-muscle-l",
+          "maxDisplacementMm": 100.0,
+          "edgeLengthRatio95": 1.549,
+          "edgeLengthRatio99": 1.63
+        },
+        {
+          "muscle": "muscle-teres-major-muscle-r",
+          "maxDisplacementMm": 99.998,
+          "edgeLengthRatio95": 1.549,
+          "edgeLengthRatio99": 1.63
+        },
+        {
+          "muscle": "muscle-long-head-of-triceps-brachii-l",
+          "maxDisplacementMm": 310.751,
+          "edgeLengthRatio95": 1.423,
+          "edgeLengthRatio99": 1.512
+        },
+        {
+          "muscle": "muscle-long-head-of-triceps-brachii-r",
+          "maxDisplacementMm": 310.751,
+          "edgeLengthRatio95": 1.42,
+          "edgeLengthRatio99": 1.509
+        },
+        {
+          "muscle": "muscle-coracobrachialis-muscle-l",
+          "maxDisplacementMm": 176.158,
+          "edgeLengthRatio95": 1.35,
+          "edgeLengthRatio99": 1.398
+        },
+        {
+          "muscle": "muscle-coracobrachialis-muscle-r",
+          "maxDisplacementMm": 176.158,
+          "edgeLengthRatio95": 1.35,
+          "edgeLengthRatio99": 1.398
+        }
+      ]
+    },
+    "hip-abduction": {
+      "movedSurfaces": 118,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-quadratus-femoris-muscle-l",
+          "maxDisplacementMm": 32.053,
+          "edgeLengthRatio95": 1.826,
+          "edgeLengthRatio99": 1.971
+        },
+        {
+          "muscle": "muscle-quadratus-femoris-muscle-r",
+          "maxDisplacementMm": 32.053,
+          "edgeLengthRatio95": 1.826,
+          "edgeLengthRatio99": 1.971
+        },
+        {
+          "muscle": "muscle-gracilis-muscle-l",
+          "maxDisplacementMm": 267.531,
+          "edgeLengthRatio95": 1.522,
+          "edgeLengthRatio99": 1.587
+        },
+        {
+          "muscle": "muscle-gracilis-muscle-r",
+          "maxDisplacementMm": 267.531,
+          "edgeLengthRatio95": 1.523,
+          "edgeLengthRatio99": 1.587
+        },
+        {
+          "muscle": "muscle-obturator-externus-l",
+          "maxDisplacementMm": 22.823,
+          "edgeLengthRatio95": 1.326,
+          "edgeLengthRatio99": 1.459
+        },
+        {
+          "muscle": "muscle-obturator-externus-r",
+          "maxDisplacementMm": 22.823,
+          "edgeLengthRatio95": 1.326,
+          "edgeLengthRatio99": 1.459
+        },
+        {
+          "muscle": "muscle-semimembranosus-muscle-l",
+          "maxDisplacementMm": 246.043,
+          "edgeLengthRatio95": 1.309,
+          "edgeLengthRatio99": 1.361
+        },
+        {
+          "muscle": "muscle-semimembranosus-muscle-r",
+          "maxDisplacementMm": 246.044,
+          "edgeLengthRatio95": 1.309,
+          "edgeLengthRatio99": 1.361
+        },
+        {
+          "muscle": "muscle-long-head-of-biceps-femoris-l",
+          "maxDisplacementMm": 241.538,
+          "edgeLengthRatio95": 1.261,
+          "edgeLengthRatio99": 1.311
+        },
+        {
+          "muscle": "muscle-long-head-of-biceps-femoris-r",
+          "maxDisplacementMm": 241.538,
+          "edgeLengthRatio95": 1.261,
+          "edgeLengthRatio99": 1.311
+        },
+        {
+          "muscle": "muscle-adductor-longus-l",
+          "maxDisplacementMm": 146.588,
+          "edgeLengthRatio95": 1.24,
+          "edgeLengthRatio99": 1.299
+        },
+        {
+          "muscle": "muscle-adductor-longus-r",
+          "maxDisplacementMm": 146.588,
+          "edgeLengthRatio95": 1.239,
+          "edgeLengthRatio99": 1.299
+        }
+      ]
+    },
+    "flexed-hip-rotation": {
+      "movedSurfaces": 59,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-quadratus-femoris-muscle-r",
+          "maxDisplacementMm": 84.858,
+          "edgeLengthRatio95": 2.722,
+          "edgeLengthRatio99": 3.168
+        },
+        {
+          "muscle": "muscle-semimembranosus-muscle-r",
+          "maxDisplacementMm": 552.132,
+          "edgeLengthRatio95": 2.156,
+          "edgeLengthRatio99": 2.249
+        },
+        {
+          "muscle": "muscle-long-head-of-biceps-femoris-r",
+          "maxDisplacementMm": 557.562,
+          "edgeLengthRatio95": 2.131,
+          "edgeLengthRatio99": 2.238
+        },
+        {
+          "muscle": "muscle-inferior-gemellus-muscle-r",
+          "maxDisplacementMm": 33.436,
+          "edgeLengthRatio95": 1.832,
+          "edgeLengthRatio99": 2.008
+        },
+        {
+          "muscle": "muscle-semitendinosus-muscle-r",
+          "maxDisplacementMm": 565.513,
+          "edgeLengthRatio95": 1.855,
+          "edgeLengthRatio99": 1.961
+        },
+        {
+          "muscle": "muscle-piriformis-muscle-r",
+          "maxDisplacementMm": 31.069,
+          "edgeLengthRatio95": 1.811,
+          "edgeLengthRatio99": 1.944
+        },
+        {
+          "muscle": "muscle-gluteus-medius-muscle-r",
+          "maxDisplacementMm": 55.659,
+          "edgeLengthRatio95": 1.684,
+          "edgeLengthRatio99": 1.905
+        },
+        {
+          "muscle": "muscle-gluteus-maximus-muscle-r",
+          "maxDisplacementMm": 202.493,
+          "edgeLengthRatio95": 1.656,
+          "edgeLengthRatio99": 1.901
+        },
+        {
+          "muscle": "muscle-superior-gemellus-muscle-r",
+          "maxDisplacementMm": 24.809,
+          "edgeLengthRatio95": 1.644,
+          "edgeLengthRatio99": 1.791
+        },
+        {
+          "muscle": "muscle-obturator-internus-r",
+          "maxDisplacementMm": 29.029,
+          "edgeLengthRatio95": 1.488,
+          "edgeLengthRatio99": 1.781
+        },
+        {
+          "muscle": "muscle-obturator-externus-r",
+          "maxDisplacementMm": 46.333,
+          "edgeLengthRatio95": 1.53,
+          "edgeLengthRatio99": 1.723
+        },
+        {
+          "muscle": "muscle-gluteus-minimus-muscle-r",
+          "maxDisplacementMm": 47.309,
+          "edgeLengthRatio95": 1.529,
+          "edgeLengthRatio99": 1.684
+        }
+      ]
+    },
+    "jaw-excursion": {
+      "movedSurfaces": 10,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-depressor-labii-inferioris-l",
+          "maxDisplacementMm": 8.391,
+          "edgeLengthRatio95": 1.121,
+          "edgeLengthRatio99": 1.185
+        },
+        {
+          "muscle": "muscle-genioglossus-muscle-l",
+          "maxDisplacementMm": 7.028,
+          "edgeLengthRatio95": 1.126,
+          "edgeLengthRatio99": 1.157
+        },
+        {
+          "muscle": "muscle-genioglossus-muscle-r",
+          "maxDisplacementMm": 6.719,
+          "edgeLengthRatio95": 1.115,
+          "edgeLengthRatio99": 1.144
+        },
+        {
+          "muscle": "muscle-depressor-labii-inferioris-r",
+          "maxDisplacementMm": 7.731,
+          "edgeLengthRatio95": 1.044,
+          "edgeLengthRatio99": 1.097
+        },
+        {
+          "muscle": "muscle-hyoglossus-muscle-l",
+          "maxDisplacementMm": 6.538,
+          "edgeLengthRatio95": 1.011,
+          "edgeLengthRatio99": 1.081
+        },
+        {
+          "muscle": "muscle-hyoglossus-muscle-r",
+          "maxDisplacementMm": 5.571,
+          "edgeLengthRatio95": 1.011,
+          "edgeLengthRatio99": 1.064
+        },
+        {
+          "muscle": "muscle-platysma-l",
+          "maxDisplacementMm": 8.669,
+          "edgeLengthRatio95": 1.033,
+          "edgeLengthRatio99": 1.043
+        },
+        {
+          "muscle": "muscle-platysma-r",
+          "maxDisplacementMm": 6.836,
+          "edgeLengthRatio95": 1.009,
+          "edgeLengthRatio99": 1.021
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-l",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-r",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        },
+        {
+          "muscle": "muscle-abductor-digiti-minimi-of-foot-l",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        },
+        {
+          "muscle": "muscle-abductor-digiti-minimi-of-foot-r",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        }
+      ]
+    },
+    "jaw-protrusion": {
+      "movedSurfaces": 10,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-genioglossus-muscle-l",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.143,
+          "edgeLengthRatio99": 1.158
+        },
+        {
+          "muscle": "muscle-genioglossus-muscle-r",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.143,
+          "edgeLengthRatio99": 1.158
+        },
+        {
+          "muscle": "muscle-depressor-labii-inferioris-l",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.075,
+          "edgeLengthRatio99": 1.125
+        },
+        {
+          "muscle": "muscle-depressor-labii-inferioris-r",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.075,
+          "edgeLengthRatio99": 1.125
+        },
+        {
+          "muscle": "muscle-hyoglossus-muscle-l",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.016,
+          "edgeLengthRatio99": 1.08
+        },
+        {
+          "muscle": "muscle-hyoglossus-muscle-r",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.016,
+          "edgeLengthRatio99": 1.08
+        },
+        {
+          "muscle": "muscle-platysma-l",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.014,
+          "edgeLengthRatio99": 1.021
+        },
+        {
+          "muscle": "muscle-platysma-r",
+          "maxDisplacementMm": 5.314,
+          "edgeLengthRatio95": 1.014,
+          "edgeLengthRatio99": 1.021
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-l",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-r",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        },
+        {
+          "muscle": "muscle-abductor-digiti-minimi-of-foot-l",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        },
+        {
+          "muscle": "muscle-abductor-digiti-minimi-of-foot-r",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        }
+      ]
+    },
+    "great-toe-extension": {
+      "movedSurfaces": 12,
+      "largestSkinStretch": [
+        {
+          "muscle": "muscle-flexor-hallucis-longus-l",
+          "maxDisplacementMm": 16.329,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.286
+        },
+        {
+          "muscle": "muscle-flexor-hallucis-longus-r",
+          "maxDisplacementMm": 16.329,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.286
+        },
+        {
+          "muscle": "muscle-lateral-head-of-flexor-hallucis-brevis-l",
+          "maxDisplacementMm": 2.894,
+          "edgeLengthRatio95": 1.099,
+          "edgeLengthRatio99": 1.281
+        },
+        {
+          "muscle": "muscle-lateral-head-of-flexor-hallucis-brevis-r",
+          "maxDisplacementMm": 2.894,
+          "edgeLengthRatio95": 1.099,
+          "edgeLengthRatio99": 1.281
+        },
+        {
+          "muscle": "muscle-medial-head-of-flexor-hallucis-brevis-l",
+          "maxDisplacementMm": 2.771,
+          "edgeLengthRatio95": 1.095,
+          "edgeLengthRatio99": 1.192
+        },
+        {
+          "muscle": "muscle-medial-head-of-flexor-hallucis-brevis-r",
+          "maxDisplacementMm": 2.771,
+          "edgeLengthRatio95": 1.095,
+          "edgeLengthRatio99": 1.192
+        },
+        {
+          "muscle": "muscle-abductor-hallucis-l",
+          "maxDisplacementMm": 1.443,
+          "edgeLengthRatio95": 1.033,
+          "edgeLengthRatio99": 1.102
+        },
+        {
+          "muscle": "muscle-abductor-hallucis-r",
+          "maxDisplacementMm": 1.443,
+          "edgeLengthRatio95": 1.033,
+          "edgeLengthRatio99": 1.101
+        },
+        {
+          "muscle": "muscle-extensor-hallucis-brevis-l",
+          "maxDisplacementMm": 4.133,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.006
+        },
+        {
+          "muscle": "muscle-extensor-hallucis-brevis-r",
+          "maxDisplacementMm": 4.133,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.006
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-l",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
+        },
+        {
+          "muscle": "muscle-abdominal-part-of-pectoralis-major-muscle-r",
+          "maxDisplacementMm": 0.0,
+          "edgeLengthRatio95": 1.0,
+          "edgeLengthRatio99": 1.0
         }
       ]
     }

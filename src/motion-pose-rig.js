@@ -7,6 +7,11 @@ const valueAt=(values,joint,axis)=>{
  const value=Number(values?.[joint.id]?.[axis.id]);
  return clamp(Number.isFinite(value)?value:axis.neutral||0,axis.min,axis.max);
 };
+const distributedShare=(joint,axisId,index)=>joint.axisWeights?.[axisId]?.[index]??1/joint.distribute.length;
+function shoulderGirdleAngle(joint,angle){
+ const [low,high]=joint.scapularShare||[1/3,1/3];
+ return angle*(low+(high-low)*clamp(angle/90,0,1));
+}
 
 /** Load the additive rig. Existing atlas and walking specimens stay untouched. */
 export async function loadPoseRig(loader,baseURL,version='1'){
@@ -126,21 +131,28 @@ export function applyPose(specimen,values={},options={}){
    if(shapes)for(const [name,scale] of Object.entries(shapes))shaped[name]=angle*scale;
    if(!axis.vector)continue;
    if(joint.distribute){
-    for(const id of joint.distribute)rotateBy(nodes.get(id),axis.vector,angle/joint.distribute.length);
+    joint.distribute.forEach((id,index)=>rotateBy(nodes.get(id),axis.vector,angle*distributedShare(joint,axis.id,index)));
    }else{
-    // Scapular/clavicular upward rotation contributes to elevation. The fixed
-    // 2:1 split is an explicit teaching approximation, not a patient prediction.
+    // The shoulder blade contributes gradually more during elevation.
     if(joint.id.endsWith('-shoulder')&&axis.id==='abduction'){
      const scapula=nodes.get(joint.side+'-scapula');
-     rotateBy(scapula,axis.vector,angle/3);
-     angle*=2/3;
-    }
-    if(joint.id==='jaw'&&joint.translation){
-     const shift=new THREE.Vector3(...joint.translation).applyQuaternion(state.restWorld.clone().invert());
-     state.node.position.addScaledVector(shift,angle/axis.max);
+     const girdle=shoulderGirdleAngle(joint,angle);
+     rotateBy(scapula,axis.vector,girdle);
+     angle-=girdle;
     }
     rotateBy(state,axis.vector,angle);
    }
+  }
+  if(joint.id==='jaw'&&joint.translation){
+   const {opening=0,excursion=0,protrusion=0}=applied.jaw;
+   const openMax=state.axes.find(axis=>axis.id==='opening').max;
+   const shift=new THREE.Vector3(...joint.translation).multiplyScalar(opening/openMax);
+   if(joint.condyleHalfWidth){
+    const oppositeGlide=joint.condyleHalfWidth*Math.sin(Math.abs(excursion)*RAD);
+    shift.z+=oppositeGlide+protrusion*.00005;
+    shift.y-=oppositeGlide*.22+protrusion*.000018;
+   }
+   state.node.position.add(shift.applyQuaternion(state.restWorld.clone().invert()));
   }
   if(joint.forearmClearance)applyForearmClearance(state,applied[joint.id].pronation||0);
  }
@@ -185,8 +197,8 @@ export function poseAxisWorld(specimen,id,axisId){
  for(const axis of state.axes.slice(0,wanted)){
   if(!axis.local)continue;
   let angle=specimen.values[id]?.[axis.id]||0;
-  if(state.descriptor.distribute)angle/=state.descriptor.distribute.length;
-  if(id.endsWith('-shoulder')&&axis.id==='abduction')angle*=2/3;
+  if(state.descriptor.distribute)angle*=distributedShare(state.descriptor,axis.id,0);
+  if(id.endsWith('-shoulder')&&axis.id==='abduction')angle-=shoulderGirdleAngle(state.descriptor,angle);
   rotation.multiply(new THREE.Quaternion().setFromAxisAngle(axis.local,angle*RAD));
  }
  return state.axes[wanted].local.clone().applyQuaternion(rotation).normalize();

@@ -14,17 +14,18 @@ The **Pose skeleton** workspace keeps one body pose while you inspect different 
 - **Undo** reverses one completed adjustment, including an entire drag. Escape or a cancelled pointer restores the pose from before the drag. Reset returns the model and locks to the starting state and can be undone.
 - The most recent pose is saved in this browser. Switching between Pose, Muscle actions and Walk preserves the pose.
 - Canvas labels move around joint handles, neighbouring markers, and camera buttons. Where space is insufficient, the optional canvas label yields; the selected joint and muscle names remain in the controls and explorer. Camera and posing controls stay usable.
+- Open **Motions** in the Pose explorer to choose a focused study movement. The lesson opens with related muscles visible, and **Play motion** demonstrates the action. Use **Related only** to expose deeper muscles.
 
 ## Shipped model
 
-The additive Blender 4.5 specimen contains all **476 existing atlas muscle surfaces**, **56 user controls** and **83 movement channels**, plus **296 bone/support surfaces** including 23 discs and both Achilles tendons. Surface counts include left/right parts and named heads, not 476 distinct anatomical muscles.
+The additive Blender 4.5 specimen contains all **476 existing atlas muscle surfaces**, **59 user controls** and **88 movement channels**, plus **296 bone/support surfaces** including 23 discs and both Achilles tendons. Surface counts include left/right parts and named heads.
 
 | Region | Available controls |
 | --- | --- |
 | Shoulder and arm | Shoulder girdle, shoulder flexion/abduction/rotation, elbow flexion, forearm pronation, wrist flexion/deviation |
 | Hand | Thumb base and finger MCP/IP hinges, plus individual index/middle/ring/little MCP spread and return, separately on each side |
-| Pelvis and leg | Hip flexion/abduction/rotation, knee flexion, ankle dorsiflexion/plantarflexion, separate hindfoot inversion/eversion, grouped toes |
-| Axial body | Distributed lumbar and cervical bending/rotation, jaw opening with translation |
+| Pelvis and leg | Hip flexion/abduction/rotation, knee flexion, ankle dorsiflexion/plantarflexion, hindfoot inversion/eversion, grouped toes with a separate great-toe movement |
+| Axial body | Distributed lumbar and cervical bending/rotation, skull-on-atlas nod, jaw opening and small side and forward glides |
 | Face and thorax | Guided blink, smile, inspiration and forced-expiration shapes |
 
 The skeleton, walking rigs and original regional lesson models are retained. The build saves checksum-verified backups before every authoring pass and records its source and backup inventory in `assets/motion-pose-body.json`. The editable Blender project and backup copies stay outside the published site.
@@ -43,12 +44,30 @@ The implementation checks state persistence, one-step drag undo, cancellation, j
 
 Release checks passed all 450 automated tests and browser interaction/layout checks at 1440×820, 1024×600, 768×1024, 390×844, 320×568 and 667×375. These are desktop-browser viewport checks, not physical-device certification. Checks include preview direction changes, pause/undo, complete-cycle restoration, Escape cancellation, isolated joint reset, new motion roles, and label/control non-overlap. The real exported joint hierarchy also passed bilateral direction checks and endpoint-target regressions. Existing walking playback and pose recovery after switching modes or reloading were checked in the browser. Blender re-import inspected nine pose scenarios, including both new foot directions and bilateral finger spreading.
 
-This is an atlas-derived teaching rig with approximate skin envelopes and conservative working ranges. Large combined poses still produce local stretching or overlap; the viewer identifies the model as approximate and flags large teaching poses. The [Blender re-import report](model-sources/motion-pose-verification.json) records the tested geometry, reset and stretching measurements. It is not a validated contact or muscle-force simulation. Individual carpal glides, individual toe joints, eye rotations, tongue actions, tissue collision and ligament constraints remain outside this rig. Distributed spinal motion and shoulder coupling are teaching approximations. The [coverage inventory](https://rorrimaesu.github.io/osteon-study/muscle-coverage.html) continues to flag missing or unresolved anatomy rather than treating a rigged surface as anatomical certification.
+This is an atlas-derived teaching rig with approximate skin envelopes and conservative working ranges. Large combined poses still produce local stretching or overlap. The [Blender re-import report](model-sources/motion-pose-verification.json) records the tested geometry, reset and stretching measurements. Open work includes individual carpal and lesser-toe joints, eye and tongue movements, tissue contact, and ligament constraints. The [coverage inventory](https://rorrimaesu.github.io/osteon-study/muscle-coverage.html) records missing and unresolved anatomy.
+
+## Guided study
+
+| Movement | Study cue |
+| --- | --- |
+| [Turn your head](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=head-turn#motion) | Compare opposite-side sternocleidomastoid with same-side splenius. Use the rear view and Related only to see posterior muscles. The rig gives C1–C2 the largest share of the turn. |
+| [Nod at the atlas](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=upper-neck-nod#motion) | Compare a small skull-on-atlas tilt with whole-neck flexion. |
+| [Raise your arm sideways](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=arm-abduction#motion) | Compare humeral abductors with scapular upward rotators. During the guided return the same muscles can control lowering under gravity. |
+| [Move your leg sideways](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-abduction#motion) | Compare abductors with the adductors of the free thigh. |
+| [Lift the thigh](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-flexion#motion) and [move it back](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-extension#motion) | Compare iliopsoas and rectus femoris with gluteus maximus and the hamstrings that cross the hip. |
+| [Turn the thigh](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-rotation#motion) and [turn a bent thigh](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=hip-rotation-flexed#motion) | Compare near-neutral and deep flexion. Piriformis is a possible internal rotator in the deeply flexed example. Grouped gluteal surfaces remain neutral in the rotation comparison. |
+| [Turn the trunk](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=trunk-turn#motion) and [spread the index finger](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=finger-spread#motion) | Compare the oblique pair and interosseous actions respectively. |
+| [Lift the great toe](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=great-toe#motion), [slide the jaw sideways](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=jaw-side#motion), and [slide it forward](https://rorrimaesu.github.io/osteon-study/?motionMode=pose&motionGuide=jaw-forward#motion) | Inspect the independent great-toe joint and compare the moving mandibular condyles. Tooth and disc contact remain outside the jaw teaching approximation. |
 
 ## References
 
 - [OpenStax body movements](https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements)
 - [OpenStax muscle interactions](https://openstax.org/books/anatomy-and-physiology-2e/pages/11-1-interactions-of-skeletal-muscles-their-fascicle-arrangement-and-their-lever-systems)
+- [Cervical segment rotation in vivo](https://pmc.ncbi.nlm.nih.gov/articles/PMC3701975/)
+- [Atlanto-occipital motion in vivo](https://pubmed.ncbi.nlm.nih.gov/39084063/)
+- [Shoulder complex during arm elevation](https://pubmed.ncbi.nlm.nih.gov/19181982/)
+- [Hip flexion and rotational moment arms](https://nmbl.stanford.edu/publications/pdf/Delp1999.pdf)
+- [Mandibular kinematics in vivo](https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/)
 - [Holzbaur et al., upper-extremity musculoskeletal model](https://pubmed.ncbi.nlm.nih.gov/16078622/)
 - [Hicks et al., verification and validation of musculoskeletal simulations](https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/)
 - [W3C alternatives to dragging](https://www.w3.org/WAI/WCAG22/Understanding/dragging-movements.html)
