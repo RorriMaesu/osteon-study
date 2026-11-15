@@ -20,6 +20,7 @@ from mathutils.bvhtree import BVHTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from mouth_deformation import ORAL_FOLLOW, incisor_clearance, oral_jaw_weight
+from pose_clearance import bake_clearance
 REPO, WORK = [Path(p).resolve() for p in sys.argv[sys.argv.index('--')+1:]]
 if WORK.is_relative_to(REPO):
     raise ValueError('Keep editable Blender files and backups outside the repo.')
@@ -641,6 +642,7 @@ def main():
     rig=armature()
     bind_all(rig)
     bpy.context.view_layer.update()
+    clearance=bake_clearance(rig,JOINTS,NODES,BONE_MESHES,MUSCLES)
     bpy.context.preferences.filepaths.save_version=0
     bpy.ops.wm.save_as_mainfile(filepath=str(WORK/(NAME+'.blend')),compress=True)
     target=ASSETS/(NAME+'.glb')
@@ -655,9 +657,10 @@ def main():
         'description':'Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.',
         'evidence':'Teaching geometry. Pose and muscle color do not measure activation or force.',
         'scope':'Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.',
-        'knownLimitations':['Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.','Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary.'],
+        'knownLimitations':['Clearance shapes are fitted to sampled motions. Other combinations can still show muscle overlap or stretch. These shapes do not predict physiological shortening or contact forces.','Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary.'],
         'joints':JOINTS,'nodes':list(NODES.values()),'totalMuscleSurfaces':len(MUSCLES),'boneSurfaces':len(BONE_MESHES),
         'regionalMorphReplacements':sorted(REGIONAL_REPLACEMENTS),'backup':backed.name,
+        'clearanceCorrectives':clearance,
         'sources':{'openstax':'https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements','sourceModel':'https://github.com/Z-Anatomy/Models-of-human-anatomy','upperLimb':'https://pubmed.ncbi.nlm.nih.gov/16078622/','validation':'https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/','subtalarCT':'https://doi.org/10.1038/s41598-020-57912-z','subtalarAxis':'https://doi.org/10.1242/jeb.248069','fingerInterossei':'https://pmc.ncbi.nlm.nih.gov/articles/PMC13649930/'},
         'inputs':hashes,
     }

@@ -13,6 +13,16 @@ function shoulderGirdleAngle(joint,angle){
  return angle*(low+(high-low)*clamp(angle/90,0,1));
 }
 const scapularElevation=['abduction','scaption'];
+
+export function clearanceWeight(ramps,applied){
+ let weight=1;
+ for(const [joint,axis,start,end] of ramps){
+  const t=clamp(((applied[joint]?.[axis]||0)-start)/(end-start),0,1);
+  weight*=t*t*(3-2*t);
+ }
+ return weight;
+}
+
 const elevationAmount=angles=>Math.max(angles.abduction||0,angles.scaption||0,angles.flexion||0);
 const horizontalAmount=(angle,angles)=>angle*clamp((elevationAmount(angles)-25)/20,0,1);
 function referenceAxis(nodes,axis){
@@ -196,6 +206,9 @@ export function applyPose(specimen,values={},options={}){
   // Preserve the signed calf/Achilles shape already checked in the source rig.
   const angle=applied[side+'-ankle']?.dorsiflexion||0;
   poseAnkleMorphs(specimen.ankleMorphs[side],angle);
+ }
+ if(!options.jointsOnly)for(const {target,ramps} of specimen.meta.clearanceCorrectives||[]){
+  shaped[target]=clearanceWeight(ramps,applied);
  }
  if(!options.jointsOnly)for(const {mesh,targets} of specimen.morphables){
   for(const [name,index] of targets){

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import * as THREE from 'three';
-import {preparePoseRig,applyPose,poseJointWorld,poseMarkerWorld,poseAxisWorld} from '../src/motion-pose-rig.js';
+import {preparePoseRig,applyPose,poseJointWorld,poseMarkerWorld,poseAxisWorld,clearanceWeight} from '../src/motion-pose-rig.js';
 
 const meta=JSON.parse(fs.readFileSync(new URL('../assets/motion-pose-body.json',import.meta.url)));
 function specimen(){
@@ -22,6 +22,35 @@ function specimen(){
  return preparePoseRig(model,{...meta,totalMuscleSurfaces:0});
 }
 const close=(a,b,tolerance=1e-7)=>assert.ok(Math.abs(a-b)<tolerance,`${a} differs from ${b}`);
+
+test('pose clearance ramps blend adjacent fits and release after returning to neutral',()=>{
+ const hip='left-hip', mid=[[hip,'flexion',29,66],[hip,'flexion',85,66]], high=[[hip,'flexion',66,85]];
+ for(const degrees of [66,71,79,85]){
+  const sample={[hip]:{flexion:degrees}};
+  close(clearanceWeight(mid,sample)+clearanceWeight(high,sample),1);
+ }
+ assert.equal(clearanceWeight(mid,{}),0);
+ assert.equal(clearanceWeight(high,{[hip]:{flexion:55}}),0);
+ assert.equal(clearanceWeight([[hip,'flexion',66,85],['trunk','flexion',12,25]],
+  {[hip]:{flexion:85}}),0);
+ const fittedHip=meta.clearanceCorrectives.find(rule=>rule.target==='ClearanceHipFlexionL');
+ close(clearanceWeight(fittedHip.ramps,{[hip]:{flexion:85,rotation:0}}),1);
+ for(const rotation of [-15,15])assert.equal(clearanceWeight(fittedHip.ramps,{[hip]:{flexion:85,rotation}}),0);
+});
+
+test('published clearance entries refer to supported joint axes and delivered muscle morphs',()=>{
+ const bytes=fs.readFileSync(new URL('../assets/motion-pose-body.glb',import.meta.url));
+ const gltf=JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)).toString());
+ const byId=new Map(gltf.nodes.filter(n=>n.extras?.poseMuscle).map(n=>[n.extras.muscleId,n]));
+ assert.ok(meta.clearanceCorrectives.length>=8);
+ for(const {target,ramps,surfaces} of meta.clearanceCorrectives){
+  for(const [joint,axis,start,end] of ramps){
+   const base=meta.joints.find(row=>row.id===joint)?.axes.find(row=>row.id===axis);
+   assert.ok(base&&start>=base.min&&end>=base.min&&start<=base.max&&end<=base.max&&start!==end,target);
+  }
+  for(const id of surfaces)assert.ok(gltf.meshes[byId.get(id).mesh].extras.targetNames.includes(target),id+' '+target);
+ }
+});
 
 test('whole-body pose asset matches its manifest and exact atlas muscle census',()=>{
  const buffer=fs.readFileSync(new URL('../assets/motion-pose-body.glb',import.meta.url));

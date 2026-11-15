@@ -1,13 +1,13 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "31de15e77119875876fcc53c3f83f1a765b59b4de8a205566cf69a5988b77081",
-  "bytes": 16191292,
+  "sha256": "9070def48181ff4a93203996f1678494e5f5622a9ca6ef1d8d5fd77ef8c50f75",
+  "bytes": 16947620,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
   "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.",
   "knownLimitations": [
-    "Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.",
+    "Clearance shapes are fitted to sampled motions. Other combinations can still show muscle overlap or stretch. These shapes do not predict physiological shortening or contact forces.",
     "Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary."
   ],
   "joints": [
@@ -3336,7 +3336,351 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "jaw-clearance-20261115-224909-0898",
+  "backup": "pose-clearance-20261115-225712-5330",
+  "clearanceCorrectives": [
+    {
+      "target": "ClearanceHipFlexionMidL",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          29,
+          66
+        ],
+        [
+          "left-hip",
+          "flexion",
+          85,
+          66
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ]
+      ],
+      "surfaces": [
+        "muscle-sartorius-muscle-l",
+        "muscle-rectus-femoris-muscle-l",
+        "muscle-long-head-of-biceps-femoris-l"
+      ]
+    },
+    {
+      "target": "ClearanceHipFlexionL",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          66,
+          85
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ]
+      ],
+      "surfaces": [
+        "muscle-sartorius-muscle-l",
+        "muscle-rectus-femoris-muscle-l",
+        "muscle-long-head-of-biceps-femoris-l"
+      ]
+    },
+    {
+      "target": "ClearanceAbdominalFlexionMidL",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          29,
+          66
+        ],
+        [
+          "left-hip",
+          "flexion",
+          85,
+          66
+        ],
+        [
+          "trunk",
+          "flexion",
+          8,
+          19.4
+        ]
+      ],
+      "surfaces": [
+        "muscle-internal-abdominal-oblique-muscle-l",
+        "muscle-transversus-abdominis-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceAbdominalFlexionL",
+      "ramps": [
+        [
+          "left-hip",
+          "flexion",
+          66,
+          85
+        ],
+        [
+          "trunk",
+          "flexion",
+          12,
+          25
+        ]
+      ],
+      "surfaces": [
+        "muscle-internal-abdominal-oblique-muscle-l",
+        "muscle-transversus-abdominis-muscle-l"
+      ]
+    },
+    {
+      "target": "ClearanceKneeFlexionL",
+      "ramps": [
+        [
+          "left-knee",
+          "flexion",
+          32,
+          85
+        ],
+        [
+          "left-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "left-hip",
+          "rotation",
+          -15,
+          -5
+        ]
+      ],
+      "surfaces": [
+        "muscle-lateral-head-of-gastrocnemius-l"
+      ]
+    },
+    {
+      "target": "ClearanceForearmPronationL",
+      "ramps": [
+        [
+          "left-forearm",
+          "pronation",
+          24,
+          60
+        ]
+      ],
+      "surfaces": [
+        "muscle-flexor-carpi-radialis-l",
+        "muscle-humero-ulnar-head-of-flexor-digitorum-superficialis-l"
+      ]
+    },
+    {
+      "target": "ClearanceWristFlexionL",
+      "ramps": [
+        [
+          "left-wrist",
+          "flexion",
+          18,
+          45
+        ],
+        [
+          "left-forearm",
+          "pronation",
+          20,
+          60
+        ]
+      ],
+      "surfaces": [
+        "muscle-flexor-pollicis-longus-l"
+      ]
+    },
+    {
+      "target": "ClearanceHipFlexionMidR",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          29,
+          66
+        ],
+        [
+          "right-hip",
+          "flexion",
+          85,
+          66
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ]
+      ],
+      "surfaces": [
+        "muscle-sartorius-muscle-r",
+        "muscle-rectus-femoris-muscle-r",
+        "muscle-long-head-of-biceps-femoris-r"
+      ]
+    },
+    {
+      "target": "ClearanceHipFlexionR",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          66,
+          85
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ]
+      ],
+      "surfaces": [
+        "muscle-sartorius-muscle-r",
+        "muscle-rectus-femoris-muscle-r",
+        "muscle-long-head-of-biceps-femoris-r"
+      ]
+    },
+    {
+      "target": "ClearanceAbdominalFlexionMidR",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          29,
+          66
+        ],
+        [
+          "right-hip",
+          "flexion",
+          85,
+          66
+        ],
+        [
+          "trunk",
+          "flexion",
+          8,
+          19.4
+        ]
+      ],
+      "surfaces": [
+        "muscle-internal-abdominal-oblique-muscle-r",
+        "muscle-transversus-abdominis-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceAbdominalFlexionR",
+      "ramps": [
+        [
+          "right-hip",
+          "flexion",
+          66,
+          85
+        ],
+        [
+          "trunk",
+          "flexion",
+          12,
+          25
+        ]
+      ],
+      "surfaces": [
+        "muscle-internal-abdominal-oblique-muscle-r",
+        "muscle-transversus-abdominis-muscle-r"
+      ]
+    },
+    {
+      "target": "ClearanceKneeFlexionR",
+      "ramps": [
+        [
+          "right-knee",
+          "flexion",
+          32,
+          85
+        ],
+        [
+          "right-hip",
+          "rotation",
+          15,
+          5
+        ],
+        [
+          "right-hip",
+          "rotation",
+          -15,
+          -5
+        ]
+      ],
+      "surfaces": [
+        "muscle-lateral-head-of-gastrocnemius-r"
+      ]
+    },
+    {
+      "target": "ClearanceForearmPronationR",
+      "ramps": [
+        [
+          "right-forearm",
+          "pronation",
+          24,
+          60
+        ]
+      ],
+      "surfaces": [
+        "muscle-flexor-carpi-radialis-r",
+        "muscle-humero-ulnar-head-of-flexor-digitorum-superficialis-r"
+      ]
+    },
+    {
+      "target": "ClearanceWristFlexionR",
+      "ramps": [
+        [
+          "right-wrist",
+          "flexion",
+          18,
+          45
+        ],
+        [
+          "right-forearm",
+          "pronation",
+          20,
+          60
+        ]
+      ],
+      "surfaces": [
+        "muscle-flexor-pollicis-longus-r"
+      ]
+    }
+  ],
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
     "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",

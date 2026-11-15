@@ -1,5 +1,5 @@
 {
-  "sha256": "31de15e77119875876fcc53c3f83f1a765b59b4de8a205566cf69a5988b77081",
+  "sha256": "9070def48181ff4a93203996f1678494e5f5622a9ca6ef1d8d5fd77ef8c50f75",
   "reimportedMuscles": 476,
   "reimportedBoneSurfaces": 296,
   "maximumNeutralBoundsErrorMillimeters": 0.009466,
@@ -272,8 +272,8 @@
         {
           "muscle": "muscle-flexor-carpi-radialis-r",
           "maxDisplacementMm": 57.739,
-          "edgeLengthRatio95": 1.466,
-          "edgeLengthRatio99": 2.543
+          "edgeLengthRatio95": 1.477,
+          "edgeLengthRatio99": 2.527
         },
         {
           "muscle": "muscle-extensor-digitorum-r",
@@ -367,6 +367,12 @@
           "edgeLengthRatio99": 3.053
         },
         {
+          "muscle": "muscle-sartorius-muscle-l",
+          "maxDisplacementMm": 580.235,
+          "edgeLengthRatio95": 1.4,
+          "edgeLengthRatio99": 2.687
+        },
+        {
           "muscle": "muscle-semimembranosus-muscle-l",
           "maxDisplacementMm": 544.244,
           "edgeLengthRatio95": 2.34,
@@ -379,16 +385,22 @@
           "edgeLengthRatio99": 2.438
         },
         {
-          "muscle": "muscle-long-head-of-biceps-femoris-r",
-          "maxDisplacementMm": 549.349,
-          "edgeLengthRatio95": 2.307,
-          "edgeLengthRatio99": 2.418
-        },
-        {
           "muscle": "muscle-long-head-of-biceps-femoris-l",
           "maxDisplacementMm": 549.349,
-          "edgeLengthRatio95": 2.307,
-          "edgeLengthRatio99": 2.417
+          "edgeLengthRatio95": 2.309,
+          "edgeLengthRatio99": 2.424
+        },
+        {
+          "muscle": "muscle-long-head-of-biceps-femoris-r",
+          "maxDisplacementMm": 549.349,
+          "edgeLengthRatio95": 2.309,
+          "edgeLengthRatio99": 2.424
+        },
+        {
+          "muscle": "muscle-sartorius-muscle-r",
+          "maxDisplacementMm": 573.611,
+          "edgeLengthRatio95": 1.385,
+          "edgeLengthRatio99": 2.268
         },
         {
           "muscle": "muscle-semitendinosus-muscle-r",
@@ -413,18 +425,6 @@
           "maxDisplacementMm": 36.958,
           "edgeLengthRatio95": 1.82,
           "edgeLengthRatio99": 1.97
-        },
-        {
-          "muscle": "muscle-inferior-gemellus-muscle-l",
-          "maxDisplacementMm": 34.896,
-          "edgeLengthRatio95": 1.772,
-          "edgeLengthRatio99": 1.96
-        },
-        {
-          "muscle": "muscle-inferior-gemellus-muscle-r",
-          "maxDisplacementMm": 34.896,
-          "edgeLengthRatio95": 1.772,
-          "edgeLengthRatio99": 1.96
         }
       ]
     },

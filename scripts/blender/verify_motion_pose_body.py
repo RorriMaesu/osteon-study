@@ -123,6 +123,12 @@ def apply(values):
             p.location=p.bone.matrix_local.to_quaternion().inverted()@blender(shift)
     for side in ['left','right']:
         rotate(side+'-patella',[1,0,0],values.get(side+'-knee',{}).get('flexion',0)*.55)
+    for rule in META.get('clearanceCorrectives',[]):
+        weight=1.
+        for joint,axis,start,end in rule['ramps']:
+            t=max(0,min(1,(values.get(joint,{}).get(axis,0)-start)/(end-start)))
+            weight*=t*t*(3-2*t)
+        shapes[rule['target']]=weight
     for obj in objects:
         if obj.data.shape_keys:
             for block in obj.data.shape_keys.key_blocks[1:]:block.value=shapes.get(block.name,0)
