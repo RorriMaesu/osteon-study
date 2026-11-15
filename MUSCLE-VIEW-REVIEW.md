@@ -50,11 +50,13 @@ The forearm/hand open entry is the separately tracked pollical palmar-interosseo
 
 ## Source recovery candidates
 
-The existing BodyParts3D 4.3 source cache contains **13 original surfaces across seven open checks**: levator veli palatini, tensor veli palatini, musculus uvulae, salpingopharyngeus, vocalis, oblique arytenoid and semispinalis capitis. [Source names, IDs and hashes](MUSCLE-SOURCE-CANDIDATES.csv) are recorded individually.
+The pre-vocalis review catalogued **13 BodyParts3D 4.3 source surfaces across seven anatomy checks**: levator veli palatini, tensor veli palatini, musculus uvulae, salpingopharyngeus, vocalis, oblique arytenoid and semispinalis capitis. [Source names, IDs and hashes](MUSCLE-SOURCE-CANDIDATES.csv) are recorded individually.
 
-These are recovery candidates, not newly verified additions. Earlier regional fitting reports show errors large enough to matter for small head/neck structures, including a palatine comparison with an approximately 8.26 mm 95th-percentile surface distance. A single global fit is insufficient to establish small-muscle attachments. The semispinalis candidate also needs comparison with the existing source's ambiguously named spinalis capitis to avoid duplicating tissue.
+The two vocalis originals are now selectable static anatomy. Blender checked both sides against nearby laryngeal cartilages and vocal ligaments. The figures and counts in the preceding sections document the pre-vocalis review. [Vocalis registration and checks](model-sources/REGISTRATION.md#vocalis).
 
-The next model phase should register and inspect the five absent-name candidates first, compare the partial oblique arytenoid with its original source, and resolve the spinalis/semispinalis identity. Each geometry change needs a fresh verified backup. Acceptance requires relevant bone/cartilage context, checks on structures excluded from the fit, anatomy-based comparison from multiple directions and correct individual selection. A downloaded name or a good-looking overview cannot substitute for those checks.
+Earlier regional fitting reports show errors large enough to matter for small head/neck structures, including a palatine comparison with an approximately 8.26 mm 95th-percentile surface distance. A single global fit is insufficient to establish small-muscle attachments. The semispinalis candidate also needs comparison with the existing source's ambiguously named spinalis capitis to avoid duplicating tissue.
+
+The next model phase should register and inspect the four remaining absent-name candidates, compare the partial oblique arytenoid with its original source, and resolve the spinalis/semispinalis identity. Each geometry change needs a fresh verified backup. Acceptance requires relevant bone/cartilage context, checks on structures excluded from the fit, anatomy-based comparison from multiple directions and correct individual selection. A downloaded name or a good-looking overview cannot substitute for those checks.
 
 ## Verification and limits
 

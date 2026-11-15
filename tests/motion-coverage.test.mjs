@@ -41,6 +41,24 @@ test('unresolved candidate surfaces do not pass as anatomically identified motio
   }
 });
 
+test('verified reference rows distinguish whole muscles, named subdivisions and serial parts', () => {
+  const buccinator = rows.get('ta2-2086');
+  const constrictor = rows.get('ta2-2179');
+  const constrictorPart = rows.get('ta2-2181');
+  const rightCrus = rows.get('ta2-2332');
+  const footLumbrical = rows.get('atlas-pelvis-leg-foot-first-lumbrical-of-foot');
+  assert.equal(buccinator.atlasSides.left, 'present');
+  assert.match(buccinator.note, /Bucinator/);
+  assert.equal(constrictor.atlasSides.right, 'present');
+  assert.equal(constrictorPart.componentOf, constrictor.id);
+  assert.equal(constrictorPart.atlasSides.right, 'not-found');
+  assert.equal(rightCrus.atlasSides.left, 'not-applicable');
+  assert.equal(rightCrus.atlasSides.right, 'not-found');
+  assert.equal(footLumbrical.componentOf, 'ta2-2685');
+  assert.equal(rows.get('ta2-2426').atlasSides.midline, 'present');
+  assert.equal(rows.get('ta2-2617').variant, true);
+});
+
 test('the recorded gait is limited to the available surface EMG channels', () => {
   const channels = new Set(coverage.rows.flatMap(row => allParts(row.motion)
     .filter(part => part.evidence.includes('recorded-surface-emg'))
@@ -49,6 +67,20 @@ test('the recorded gait is limited to the available surface EMG channels', () =>
     'biceps-femoris', 'gastrocnemius-lateral', 'tibialis-anterior', 'vastus-lateralis',
   ].map(id => side + ':' + id));
   assert.deepEqual([...channels].sort(), expected.sort());
+});
+
+test('a dedicated heel-raise surface replaces the base surface for the same lesson', () => {
+  for (const side of ['left', 'right']) {
+    const parts = rows.get('ta2-2658').motion[side];
+    const base = parts.find(part => part.asset === 'motion-legs.glb');
+    const replacement = parts.find(part => part.asset === 'motion-leg-actions.glb');
+    assert.ok(base.modes.includes('walk'));
+    assert.equal(base.modes.includes('heel-raise'), false);
+    assert.ok(replacement.modes.includes('heel-raise'));
+    assert.equal(replacement.rig, 'deforms');
+    assert.ok(replacement.deformation.includes('morph-target'));
+    assert.equal(replacement.evidence.includes('recorded-surface-emg'), false);
+  }
 });
 
 test('soleus weighting to a single joint alone is rigid', () => {

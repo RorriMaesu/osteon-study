@@ -684,3 +684,5 @@
 "muscle-bp43-lumbrical-foot-4-left","Fourth lumbrical muscle of foot","Fourth lumbrical of left foot (FJ1389M)","Fourth lumbrical muscle of foot","left","pelvis-leg-foot","muscle","deeper","source-aligned-reference","learn-only","","muscles-pelvis-leg-foot.glb",""
 "muscle-open3d-palmaris-brevis-right","Palmaris brevis muscle","Palmaris brevis muscle — right source","Palmaris brevis muscle","right","forearm-hand","muscle","superficial","source-aligned-reference","learn-only","","muscles-forearm-hand.glb",""
 "muscle-open3d-palmaris-brevis-left","Palmaris brevis muscle","Palmaris brevis muscle — mirrored left derivative","Palmaris brevis muscle","left","forearm-hand","muscle","superficial","source-aligned-reference","learn-only","","muscles-forearm-hand.glb",""
+"muscle-bp43-vocalis-left","Vocalis muscle","Vocalis muscle.l","Vocalis muscle","left","head-neck","muscle","deeper","source-aligned-reference","learn-only","","muscles-head-neck.glb",""
+"muscle-bp43-vocalis-right","Vocalis muscle","Vocalis muscle.r","Vocalis muscle","right","head-neck","muscle","deeper","source-aligned-reference","learn-only","","muscles-head-neck.glb",""

@@ -2,22 +2,22 @@
 
 **The current muscle atlas is incomplete. Named geometry is not a certificate of anatomical accuracy.**
 
-The atlas displays 681 active components (4 superseded objects are retained for rollback). Correct tissue classification gives **474 muscle parts and 207 supporting components**. Parts include separate heads, sides and aggregate groups; they are not counts of distinct human muscles. The previous 485-muscle-part figure included 25 connective components and excluded both tensor fasciae latae meshes. This audit corrects those classifications. Original mesh identities are preserved. Four incomplete aggregate objects are retained in the rollback record and model files but are hidden from selection and rendering; 14 recovered source surfaces replace them; two additional palmaris brevis surfaces come from the revised LUMC Open3D hand.
+The atlas displays 683 active components (4 superseded objects are retained for rollback). Correct tissue classification gives **476 muscle parts and 207 supporting components**. Parts include separate heads, sides and aggregate groups; they are not counts of distinct human muscles. The previous 485-muscle-part figure included 25 connective components and excluded both tensor fasciae latae meshes. This audit corrects those classifications. Original mesh identities are preserved. Four incomplete aggregate objects are retained in the rollback record and model files but are hidden from selection and rendering; 14 recovered source surfaces replace them; two additional palmaris brevis surfaces come from the revised LUMC Open3D hand.
 
 ## What was checked
 
 - A finite flat checklist of **226 reference entries**, based on named TA2 skeletal-muscle terms, selected serial groups, common composites and one additional clinical pelvic-floor check. This is not every anatomical variant, a reproduction of TA2 hierarchy, or a universal muscle count.
 - Every shipped component against the source inventory, original ID, side and asset hash.
 - Read-only Blender 4.5 examination of all 669 source components (462 corrected muscle parts and 207 supporting components), including connectivity, finite coordinates and world-space bounds. The original source hash is unchanged. This is structural inspection, not a visual or anatomical certification of every surface.
-- Current delivered-model review: all 685 imported components, including the recovered hand/foot surfaces, were inspected in Blender 4.5. [Current view and geometry findings](MUSCLE-VIEW-REVIEW.md) and [per-component records](MUSCLE-COMPONENT-REVIEW.csv) separate geometry checks from anatomical certification.
+- Before the vocalis addition, all 685 imported components, including the recovered hand/foot surfaces, were inspected in Blender 4.5. [Current view and geometry findings](MUSCLE-VIEW-REVIEW.md) and [per-component records](MUSCLE-COMPONENT-REVIEW.csv) separate geometry checks from anatomical certification.
 - Independent OpenStax regional muscle names, university anatomy tables, and published anatomical studies for identified gaps.
 - Normal variation, sex-specific structures, source naming ambiguity, unsegmented groups and complete absence of a named model are recorded separately.
 
 | Checklist result | Entries |
 |---|---:|
-| Named geometry found | 161 |
+| Named geometry found | 162 |
 | Group represented by named components | 8 |
-| No named source mesh | 50 |
+| No named source mesh | 49 |
 | Not separately resolved | 4 |
 | Partial model | 1 |
 | Anatomical naming/attachment review | 2 |
@@ -36,6 +36,7 @@ The atlas displays 681 active components (4 superseded objects are retained for 
 - **Palmar interossei, repaired:** three individual digit-2/4/5 surfaces per hand, recovered from the original BodyParts3D 4.3 set. Major connected members were separated and small source fragments assigned to their nearest member. The optional pollical variant remains a separate open entry.
 - **Palmaris brevis, added:** the revised Open3DModel hand supplies a separately named surface. Both sides are available; the left is explicitly mirrored from the right-hand source. Geometry is registered to the existing hand, with source attribution and attachment teaching. This is not an independently certified bilateral specimen.
 - **Foot lumbricals, repaired:** all four named source surfaces per foot are separately selectable. Individual origins, insertions and actions are provided. Regional registration is checked against corresponding metatarsals and held-out proximal phalanges; this is not a certificate of attachment anatomy.
+- **Vocalis, added on both sides:** original BodyParts3D 4.3 shapes were aligned to matching laryngeal cartilages. The exported surfaces and their relationships to the arytenoid vocal processes and inner thyroid cartilage were checked in Blender. [Registration and validation](model-sources/REGISTRATION.md#vocalis).
 - **Oblique arytenoid:** only its ary-epiglottic extension is named.
 - **Semispinalis capitis:** no separately named mesh. The nearby source spinalis capitis needs attachment-based review before deciding between omission, fusion and mislabeling.
 - **Pelvic floor:** the puboanalis source must not automatically be relabeled puborectalis. The sling and attachment relationships need independent review.
@@ -74,7 +75,6 @@ The atlas displays 681 active components (4 superseded objects are retained for 
 | (Scalenus minimus muscle) | head-neck | No named source mesh | Listed inconstant in TA2 |
 | Salpingopharyngeus muscle | head-neck | No named source mesh |  |
 | (Ceratocricoid muscle) | head-neck | No named source mesh | Listed inconstant in TA2 |
-| Vocalis muscle | head-neck | No named source mesh |  |
 | Oblique arytenoid muscle | head-neck | Partial model | Only the ary-epiglottic extension is named. It does not establish that the main oblique arytenoid portion is modeled. |
 | (Transversus nuchae muscle) | trunk-back | No named source mesh | Listed inconstant in TA2 |
 | Anterior intertransversarii colli muscles | trunk-back | No named source mesh |  |

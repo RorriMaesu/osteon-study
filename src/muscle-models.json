@@ -17,10 +17,10 @@
     },
     "head-neck": {
       "file": "muscles-head-neck.glb",
-      "bytes": 1300416,
-      "sha256": "0a29855e344dc5602fb85180c8674fea6366e9dae78beb3d3d1edd51af566fd1",
-      "components": 149,
-      "backup": "muscles-20261104-213139-264329"
+      "bytes": 1348428,
+      "sha256": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2",
+      "components": 151,
+      "backup": "vocalis-20261115-091936-611751/before_blender_edit"
     },
     "pelvis-leg-foot": {
       "file": "muscles-pelvis-leg-foot.glb",
@@ -23765,6 +23765,96 @@
       "status": "source-aligned-reference",
       "assessment": "learn-only",
       "reviewNotice": "Original named source geometry registered to the existing skeleton. Attachment extents and movement are not independently certified."
+    },
+    {
+      "id": "muscle-bp43-vocalis-left",
+      "sourceName": "Vocalis muscle.l",
+      "name": "Vocalis muscle",
+      "muscleName": "Vocalis muscle",
+      "nameCorrection": null,
+      "region": "head-neck",
+      "side": "left",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Intrinsic muscles of the larynx",
+        "Thyroarytenoid muscle"
+      ],
+      "sourcePolygons": 1152,
+      "sourceDataset": "BodyParts3D / Anatomography 4.3",
+      "sourceURL": "https://lifesciencedb.jp/bp3d/?lng=en",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ2788_BP23926_FMA46593_Left vocalis.obj",
+      "sourceSHA256": "d40ccf123c20a945c2acfc0e4af9076c0dc1965c80122ac1f20301c54ee6e5a8",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "bounds": {
+        "min": [
+          0.001806562184356153,
+          1.4732202291488647,
+          0.009513095021247864
+        ],
+        "max": [
+          0.0034820623695850372,
+          1.4746882915496826,
+          0.02398627996444702
+        ]
+      },
+      "teaching": {
+        "name": "Vocalis muscle",
+        "origin": "Vocal ligament in the medial thyroarytenoid region near the inner thyroid angle.",
+        "insertion": "Vocal process of the arytenoid cartilage.",
+        "action": "Makes fine adjustments to vocal-fold tension during phonation.",
+        "sourceURL": "https://www.elsevier.com/resources/anatomy/muscular-system/muscles-of-neck/vocalis-muscle/19754"
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry registered against four laryngeal cartilages. Both vocal-process and anterior thyroid relationships were checked. Static teaching reference."
+    },
+    {
+      "id": "muscle-bp43-vocalis-right",
+      "sourceName": "Vocalis muscle.r",
+      "name": "Vocalis muscle",
+      "muscleName": "Vocalis muscle",
+      "nameCorrection": null,
+      "region": "head-neck",
+      "side": "right",
+      "kind": "muscle",
+      "depth": "deeper",
+      "parents": [
+        "Intrinsic muscles of the larynx",
+        "Thyroarytenoid muscle"
+      ],
+      "sourcePolygons": 1148,
+      "sourceDataset": "BodyParts3D / Anatomography 4.3",
+      "sourceURL": "https://lifesciencedb.jp/bp3d/?lng=en",
+      "sourceFile": "model-sources/bodyparts3d-4.3/FJ2806_BP20211_FMA46592_Right vocalis.obj",
+      "sourceSHA256": "b82494356232fa57d2914bbbd494c923568fbd05e592a100a7b9eea79d035390",
+      "sourceLicense": "CC BY 4.0",
+      "sourceLicenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+      "sourceAttribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+      "bounds": {
+        "min": [
+          -0.0035621621645987034,
+          1.473222255706787,
+          0.009490758180618286
+        ],
+        "max": [
+          -0.0019727495964616537,
+          1.474700927734375,
+          0.02396617829799652
+        ]
+      },
+      "teaching": {
+        "name": "Vocalis muscle",
+        "origin": "Vocal ligament in the medial thyroarytenoid region near the inner thyroid angle.",
+        "insertion": "Vocal process of the arytenoid cartilage.",
+        "action": "Makes fine adjustments to vocal-fold tension during phonation.",
+        "sourceURL": "https://www.elsevier.com/resources/anatomy/muscular-system/muscles-of-neck/vocalis-muscle/19754"
+      },
+      "status": "source-aligned-reference",
+      "assessment": "learn-only",
+      "reviewNotice": "Named source geometry registered against four laryngeal cartilages. Both vocal-process and anterior thyroid relationships were checked. Static teaching reference."
     }
   ],
   "note": "Component count is not distinct muscle count. Depth is a regional study filter, not a complete dissection plane. No movement rig or certified insertion footprint is asserted.",
@@ -23773,5 +23863,8 @@
     "stage": "hand-foot-groups-and-palmaris-brevis",
     "addedComponents": 16,
     "retiredComponents": 4
+  },
+  "supplements": {
+    "vocalis": "model-sources/muscle-vocalis.json"
   }
 }

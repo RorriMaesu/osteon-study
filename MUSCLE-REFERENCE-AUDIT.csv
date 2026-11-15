@@ -75,7 +75,7 @@
 "ta2-2197","2197","(Ceratocricoid muscle)","head-neck","no-named-mesh","Yes","not sex-specific","","","No"
 "ta2-2198","2198","Lateral crico-arytenoid muscle","head-neck","named-geometry","No","not sex-specific","muscle-lateral-crico-arytenoid-muscle-r | muscle-lateral-crico-arytenoid-muscle-l","","No"
 "ta2-2199","2199","Thyro-arytenoid muscle","head-neck","named-geometry","No","not sex-specific","muscle-external-part-of-thyro-arytenoid-muscle-r | muscle-external-part-of-thyro-arytenoid-muscle-l | muscle-thyro-epiglottic-part-of-thyro-arytenoid-muscle-r | muscle-thyro-epiglottic-part-of-thyro-arytenoid-muscle-l","","No"
-"ta2-2202","2202","Vocalis muscle","head-neck","no-named-mesh","No","not sex-specific","","","No"
+"ta2-2202","2202","Vocalis muscle","head-neck","named-geometry","No","not sex-specific","muscle-bp43-vocalis-left | muscle-bp43-vocalis-right","","No"
 "ta2-2203","2203","Oblique arytenoid muscle","head-neck","partial-model","No","not sex-specific","muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-r | muscle-ary-epiglottic-part-of-oblique-arytenoid-muscle-l","Only the ary-epiglottic extension is named. It does not establish that the main oblique arytenoid portion is modeled.","No"
 "ta2-2205","2205","Transverse arytenoid muscle","head-neck","named-geometry","No","not sex-specific","muscle-transverse-arytenoid-muscle","","No"
 "ta2-2226","2226","Trapezius muscle","trunk-back","named-geometry","No","not sex-specific","muscle-ascending-part-of-trapezius-muscle-r | muscle-descending-part-of-trapezius-muscle-r | muscle-transverse-part-of-trapezius-muscle-r | muscle-ascending-part-of-trapezius-muscle-l | muscle-descending-part-of-trapezius-muscle-l | muscle-transverse-part-of-trapezius-muscle-l","","No"

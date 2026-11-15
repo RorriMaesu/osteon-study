@@ -56,7 +56,9 @@ h2{font-size:32px}
 .coverage-pages{justify-content:center;padding-top:6px}
 .coverage-pages button{font-size:12px}
 .coverage-method{margin-top:10px;color:var(--muted);font-size:13px}
-.coverage-method summary{cursor:pointer;color:var(--ink)}
+.coverage-method summary{cursor:pointer;color:var(--ink);width:fit-content}
+.coverage-releases{padding-left:24px}
+.coverage-releases li+li{margin-top:5px}
 #coverage-sources{display:flex;gap:12px;flex-wrap:wrap}
 @media(max-width:620px){
  body>header,body>footer{padding:6px 12px;font-size:12px}

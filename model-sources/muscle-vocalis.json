@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "sourceURL": "https://lifesciencedb.jp/bp3d/?lng=en",
+  "licenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+  "attribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International",
+  "registration": {
+    "method": "Single similarity transform fitted to matching thyroid, cricoid and paired arytenoid cartilage surfaces at Blender atlas coordinates. Percentile errors use exact nearest point on target triangles in both directions.",
+    "formula": "Atlas native Z-up meters = scale * rotation @ (source XYZ millimeters / 1000) + translationM, using column vectors.",
+    "targetSkeletonSHA256": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",
+    "scale": 1.027290358234773,
+    "rotation": [
+      [
+        0.9999936015185331,
+        0.00313650640545222,
+        0.0017202469478349192
+      ],
+      [
+        -0.0031576707323015692,
+        0.9999176151922129,
+        0.012441541056627736
+      ],
+      [
+        -0.001681082252402966,
+        -0.012446893423097375,
+        0.999921121292362
+      ]
+    ],
+    "translationM": [
+      -0.0015196287097826858,
+      0.07617928696034053,
+      0.030037677268417384
+    ],
+    "referenceSources": [
+      {
+        "id": "FJ2769",
+        "file": "FJ2769_BP22903_FMA9615_Cricoid cartilage.obj",
+        "sha256": "4c69ae5d7f1374691dec77b1cb4e096509727caa6c8e0a42238d0e1388db01e9"
+      },
+      {
+        "id": "FJ2775",
+        "file": "FJ2775_BP23122_FMA55114_Left arytenoid cartilage.obj",
+        "sha256": "02eed5745be85712cd2ad3587c33e7308f1cebba1962c9c8b0bf90feeef146c4"
+      },
+      {
+        "id": "FJ2787",
+        "file": "FJ2787_BP22944_FMA55246_Left vocal ligament.obj",
+        "sha256": "e0050c71ea56d2926234367192b4949f6d9f91e83423e3ba839b79221b055b0d"
+      },
+      {
+        "id": "FJ2792",
+        "file": "FJ2792_BP22608_FMA55113_Right arytenoid cartilage.obj",
+        "sha256": "0b21781173a6de39a14ef7c56c4f171d6a0d6ebb87a1489ea46f3cc27d13d374"
+      },
+      {
+        "id": "FJ2805",
+        "file": "FJ2805_BP22941_FMA55245_Right vocal ligament.obj",
+        "sha256": "a84e1c21797b9c2c5082d29e7617d8af1901a7dd60a3d0f4ba7f364d62d5296d"
+      },
+      {
+        "id": "FJ2808",
+        "file": "FJ2808_BP22917_FMA55099_Thyroid cartilage.obj",
+        "sha256": "7ee325a7e90428925aa6885abb683d9e06df2fe13f8f35f398a2ae6de1ec2a21"
+      }
+    ],
+    "heldOutSurfaceP95MM": {
+      "left arytenoid, fitted thyroid plus cricoid": 0.803,
+      "right arytenoid, fitted thyroid plus cricoid": 0.767,
+      "thyroid, fitted cricoid plus both arytenoids": 2.04
+    },
+    "endpointReview": {
+      "method": "Anterior and posterior deciles of the source meshes along the Y axis. Distance measurements use atlas cartilage and unmodified donor vocal ligament. The nearest arytenoid footprint on the source is transformed for comparison to the nearest atlas arytenoid footprint.",
+      "left": {
+        "anteriorThyroidSurfaceP95MM": 0.437,
+        "posteriorVocalProcessSurfaceP95MM": 0.363,
+        "posteriorVocalProcessCentroidDifferenceMM": 0.055,
+        "middleDonorVocalLigamentMedianMM": 0.308
+      },
+      "right": {
+        "anteriorThyroidSurfaceP95MM": 0.508,
+        "posteriorVocalProcessSurfaceP95MM": 0.396,
+        "posteriorVocalProcessCentroidDifferenceMM": 0.048,
+        "middleDonorVocalLigamentMedianMM": 0.309
+      }
+    }
+  },
+  "parts": [
+    {
+      "id": "muscle-bp43-vocalis-left",
+      "side": "left",
+      "sourceName": "Vocalis muscle.l",
+      "sourceFile": "bodyparts3d-4.3/FJ2788_BP23926_FMA46593_Left vocalis.obj",
+      "sourceSHA256": "d40ccf123c20a945c2acfc0e4af9076c0dc1965c80122ac1f20301c54ee6e5a8",
+      "sourceID": "FJ2788"
+    },
+    {
+      "id": "muscle-bp43-vocalis-right",
+      "side": "right",
+      "sourceName": "Vocalis muscle.r",
+      "sourceFile": "bodyparts3d-4.3/FJ2806_BP20211_FMA46592_Right vocalis.obj",
+      "sourceSHA256": "b82494356232fa57d2914bbbd494c923568fbd05e592a100a7b9eea79d035390",
+      "sourceID": "FJ2806"
+    }
+  ],
+  "teaching": {
+    "name": "Vocalis muscle",
+    "origin": "Vocal ligament in the medial thyroarytenoid region near the inner thyroid angle.",
+    "insertion": "Vocal process of the arytenoid cartilage.",
+    "action": "Makes fine adjustments to vocal-fold tension during phonation.",
+    "sourceURL": "https://www.elsevier.com/resources/anatomy/muscular-system/muscles-of-neck/vocalis-muscle/19754"
+  },
+  "reviewNotice": "Named source geometry registered against four laryngeal cartilages. Both vocal-process and anterior thyroid relationships were checked. Static teaching reference."
+}

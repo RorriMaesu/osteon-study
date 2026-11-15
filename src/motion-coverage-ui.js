@@ -72,8 +72,12 @@ function showParts(target,row,kind){
   const list=attach(section,'ul');
   for(const part of sideParts){
    const line=attach(list,'li');
-   line.append(document.createTextNode(part.name));
-   if(kind==='atlas'&&part.role==='candidate')line.append(document.createTextNode(' · candidate'));
+   if(kind==='atlas'){
+    const link=attach(line,'a',part.name+' ↗');
+    link.href='./?muscle='+encodeURIComponent(part.id)+'#atlas';
+    link.setAttribute('aria-label','Inspect '+part.side+' '+part.name+' in 3D Atlas');
+    if(part.role==='candidate')line.append(document.createTextNode(' · candidate'));
+   }else line.append(document.createTextNode(part.name));
    if(kind==='motion'){
     const rig=part.rig==='rigid'?'Rigid surface':part.rig==='deforms'?'Deforming rig':'Rigged surface';
     attach(line,'small',' · '+rig);
@@ -138,7 +142,7 @@ try{
  catalog=data.rows.map(row=>({...row,search:normalize([row.name,row.ta2,...parts(row,'atlas').map(part=>part.name),...parts(row,'motion').map(part=>part.name)].join(' '))}));
  const moving=catalog.filter(row=>parts(row,'motion').length).length;
  const totals=$('#coverage-totals');
- for(const [value,label] of [[catalog.length,'Inventory entries'],[catalog.filter(row=>row.course).length,'Course entries'],[moving,'Motion entries']]){
+ for(const [value,label] of [[data.counts.referenceEntries,'Reference checks'],[data.counts.referenceOpen,'Open checks'],[catalog.filter(row=>row.course).length,'Course entries'],[moving,'Motion entries']]){
   const box=attach(totals,'div');attach(box,'strong',value);attach(box,'span',label);
  }
  for(const key of [...new Set(catalog.map(row=>row.region))].sort((a,b)=>(labelRegion[a]||a).localeCompare(labelRegion[b]||b))){

@@ -43,18 +43,237 @@ const heads = [
  entryType:'muscle-head',expectedSides:'left-and-right',inconstantInTA2:false,
 }));
 
+// Osteon coverage terms checked individually against TA2 2.07, Part II, chapter 4.
+// These are anatomical names and identifiers. The categories, matching rules and notes are Osteon's.
+const additionalTerms = {
+ 'head-neck': [
+  [2052,'Levator palpebrae superioris'],
+  [2054,'Epicranius'],
+  [2063,'Transverse part of nasalis',2062],
+  [2064,'Alar part of nasalis',2062],
+  [2065,'Depressor septi nasi'],
+  [2067,'Palpebral part of orbicularis oculi',2066],
+  [2068,'Ciliary bundle of orbicularis oculi',2066],
+  [2069,'Deep palpebral part of orbicularis oculi',2066],
+  [2070,'Orbital part of orbicularis oculi',2066],
+  [2072,'Depressor supercilii'],
+  [2074,'Marginal part of orbicularis oris',2073],
+  [2075,'Labial part of orbicularis oris',2073],
+  [2076,'Depressor anguli oris'],
+  [2081,'Levator labii superioris'],
+  [2082,'Levator nasolabialis'],
+  [2083,'Depressor labii inferioris'],
+  [2084,'Levator anguli oris'],
+  [2086,'Buccinator'],
+  [2105,'Masseter'],
+  [2106,'Superficial part of masseter',2105],
+  [2107,'Deep part of masseter',2105],
+  [2110,'Superior head of lateral pterygoid',2109],
+  [2111,'Inferior head of lateral pterygoid',2109],
+  [2114,'Deep head of medial pterygoid',2113],
+  [2115,'Superficial head of medial pterygoid',2113],
+  [2133,'Anterior fascicle of palatopharyngeus',2132],
+  [2134,'Posterior fascicle of palatopharyngeus',2132],
+  [2157,'Sternal head of sternocleidomastoid',2156],
+  [2158,'Clavicular head of sternocleidomastoid',2156],
+  [2161,'Anterior belly of digastric',2160],
+  [2163,'Posterior belly of digastric',2160],
+  [2170,'Superior belly of omohyoid',2169],
+  [2172,'Inferior belly of omohyoid',2169],
+  [2175,'Levator glandulae thyroideae',null,{variant:true,side:'unspecified'}],
+  [2179,'Superior pharyngeal constrictor'],
+  [2180,'Pterygopharyngeal part of superior pharyngeal constrictor',2179],
+  [2181,'Buccopharyngeal part of superior pharyngeal constrictor',2179],
+  [2182,'Mylopharyngeal part of superior pharyngeal constrictor',2179],
+  [2183,'Glossopharyngeal part of superior pharyngeal constrictor',2179],
+  [2184,'Middle pharyngeal constrictor'],
+  [2185,'Chondropharyngeal part of middle pharyngeal constrictor',2184],
+  [2186,'Ceratopharyngeal part of middle pharyngeal constrictor',2184],
+  [2187,'Inferior pharyngeal constrictor'],
+  [2188,'Thyropharyngeal part of inferior pharyngeal constrictor',2187],
+  [2189,'Cricopharyngeal part of inferior pharyngeal constrictor',2187],
+  [2194,'Straight part of cricothyroid',2193],
+  [2195,'Oblique part of cricothyroid',2193],
+  [2200,'External part of thyro-arytenoid',2199],
+  [2201,'Thyro-epiglottic part of thyro-arytenoid',2199],
+  [2204,'Ary-epiglottic part of oblique arytenoid',2203],
+ ],
+ 'trunk-back': [
+  [2227,'Upper (descending) part of trapezius',2226],
+  [2228,'Transverse part of trapezius',2226],
+  [2229,'Lower (ascending) part of trapezius',2226],
+  [2234,'Levator scapulae'],
+  [2240,'Dorsal parts of lateral intertransversarii lumborum',2239],
+  [2241,'Ventral parts of lateral intertransversarii lumborum',2239],
+  [2254,'Erector spinae'],
+  [2257,'Iliocostalis',2254],
+  [2262,'Longissimus',2254],
+  [2264,'Lumbar part of longissimus thoracis',2263],
+  [2267,'Spinalis',2254],
+  [2272,'Splenius'],
+  [2276,'Multifidus'],
+  [2280,'Semispinalis'],
+  [2285,'Lumbar rotatores',2284,{variant:true}],
+  [2286,'Thoracic rotatores',2284],
+  [2287,'Long thoracic rotatores',2286],
+  [2288,'Short thoracic rotatores',2286],
+  [2289,'Cervical rotatores',2284,{variant:true}],
+  [2290,'Interspinales'],
+  [2294,'Intertransversarii'],
+  [2302,'Clavicular head of pectoralis major',2301],
+  [2303,'Sternocostal head of pectoralis major',2301],
+  [2304,'Abdominal part of pectoralis major',2301,{variant:true}],
+  [2308,'Levatores costarum'],
+  [2309,'Levatores longi costarum',2308],
+  [2310,'Levatores breves costarum',2308],
+  [2330,'Muscular part of right hemidiaphragm',2327,{side:'right-only'}],
+  [2331,'Right lumbar part of diaphragm',2330,{side:'right-only'}],
+  [2332,'Right crus of diaphragm',2331,{side:'right-only'}],
+  [2336,'Right costal part of diaphragm',2330,{side:'right-only'}],
+  [2337,'Right sternal part of diaphragm',2330,{side:'right-only'}],
+  [2345,'Muscular part of left hemidiaphragm',2327,{side:'left-only'}],
+  [2346,'Left lumbar part of diaphragm',2345,{side:'left-only'}],
+  [2347,'Left crus of diaphragm',2346,{side:'left-only'}],
+  [2351,'Left costal part of diaphragm',2345,{side:'left-only'}],
+  [2352,'Left sternal part of diaphragm',2345,{side:'left-only'}],
+ ],
+ 'shoulder-arm': [
+  [2453,'Clavicular part of deltoid',2452],
+  [2454,'Acromial part of deltoid',2452],
+  [2455,'Scapular spinal part of deltoid',2452],
+ ],
+ 'forearm-hand': [
+  [2478,'Pronator teres'],
+  [2479,'Superficial head of pronator teres',2478],
+  [2480,'Deep head of pronator teres',2478],
+  [2481,'Flexor carpi radialis'],
+  [2483,'Flexor carpi ulnaris'],
+  [2484,'Humeral head of flexor carpi ulnaris',2483],
+  [2485,'Ulnar head of flexor carpi ulnaris',2483],
+  [2486,'Flexor digitorum superficialis'],
+  [2487,'Humero-ulnar head of flexor digitorum superficialis',2486],
+  [2488,'Radial head of flexor digitorum superficialis',2486],
+  [2491,'Flexor digitorum profundus'],
+  [2492,'Flexor pollicis longus'],
+  [2493,'Pronator quadratus'],
+  [2508,'Humeral head of extensor carpi ulnaris',2507],
+  [2509,'Ulnar head of extensor carpi ulnaris',2507],
+  [2512,'Supinator'],
+  [2513,'Humeral head of supinator',2512],
+  [2514,'Ulnar head of supinator',2512],
+  [2517,'Abductor pollicis longus'],
+  [2521,'Abductor pollicis brevis'],
+  [2522,'Flexor pollicis brevis'],
+  [2523,'Superficial head of flexor pollicis brevis',2522],
+  [2524,'Deep head of flexor pollicis brevis',2522],
+  [2526,'Adductor pollicis'],
+  [2527,'Oblique head of adductor pollicis',2526],
+  [2528,'Transverse head of adductor pollicis',2526],
+  [2529,'Abductor digiti minimi of hand'],
+  [2530,'Flexor digiti minimi of hand'],
+ ],
+ 'pelvis-leg-foot': [
+  [2402,'Pelvic diaphragm'],
+  [2427,'Subcutaneous part of external anal sphincter',2426,{side:'midline'}],
+  [2428,'Superficial part of external anal sphincter',2426,{side:'midline'}],
+  [2429,'Deep part of external anal sphincter',2426,{side:'midline'}],
+  [2605,'Obturator internus'],
+  [2615,'Straight head of rectus femoris',2614],
+  [2616,'Reflected head of rectus femoris',2614],
+  [2617,'Third head of rectus femoris',2614,{variant:true}],
+  [2628,'Adductor longus'],
+  [2629,'Adductor brevis'],
+  [2630,'Adductor magnus'],
+  [2631,'Adductor part of adductor magnus',2630],
+  [2632,'Adductor minimus',2630,{variant:true}],
+  [2633,'Ischiocondylar part of adductor magnus',2630],
+  [2636,'Obturator externus'],
+  [2668,'Flexor hallucis longus'],
+  [2672,'Abductor hallucis'],
+  [2673,'Flexor hallucis brevis'],
+  [2674,'Medial head of flexor hallucis brevis',2673],
+  [2675,'Lateral head of flexor hallucis brevis',2673],
+  [2676,'Adductor hallucis'],
+  [2677,'Oblique head of adductor hallucis',2676],
+  [2678,'Transverse head of adductor hallucis',2676],
+  [2679,'Abductor digiti minimi of foot'],
+  [2680,'Abductor of fifth metatarsal',2679,{variant:true}],
+  [2682,'Flexor digiti minimi of foot'],
+  [2683,'Flexor digitorum brevis'],
+ ],
+};
+
+// A model can represent a group with several independently named surfaces.
+// Match all listed parts for that group. Never use a whole parent mesh to fill a subdivision.
+const groupedTerms = {
+ 2054:[2056,2057,2058],
+ 2105:[2106,2107],
+ 2254:[2258,2260,2261,2263,2265,2266,2268,2269,2270],
+ 2257:[2258,2260,2261],
+ 2262:[2263,2265,2266],
+ 2267:[2268,2269,2270],
+ 2272:[2273,2274],
+ 2276:[2277,2278,2279],
+ 2280:[2281,2282,2283],
+ 2290:[2291,2292,2293],
+ 2294:[2237,2238,2239,2295,2296,2297],
+ 2308:[2309,2310],
+ 2402:[2403,2412],
+ 2478:[2479,2480],
+ 2483:[2484,2485],
+ 2486:[2487,2488],
+ 2522:[2523,2524],
+ 2526:[2527,2528],
+ 2673:[2674,2675],
+ 2676:[2677,2678],
+};
+const termNotes = {
+ 2086:'TA2 uses the spelling Bucinator and lists Buccinator as an alternative.',
+ 2327:'The atlas has a combined diaphragm surface. Check its named muscular subdivisions separately.',
+ 2426:'The atlas sphincter surface does not identify each named depth subdivision separately.',
+ 2632:'The source provides a distinct named mesh. The anatomical structure can vary.',
+};
+
+function referenceTerms(){
+ const added=Object.entries(additionalTerms).flatMap(([region,terms])=>terms.map(([ta2,name,parent,options={}])=>({
+  id:'ta2-'+ta2,ta2,name,region,inconstantInTA2:options.variant||false,
+  entryType:parent?'muscle-subdivision':groupedTerms[ta2]?'muscle-group':'named-muscle-or-serial-group',
+  componentOf:parent?'ta2-'+parent:undefined,expectedSides:options.side||'left-and-right',note:termNotes[ta2],
+ })));
+ const base=new Map(checklist.items.map(term=>[term.id,term]));
+ for(const term of [...heads,...added])if(!base.has(term.id))base.set(term.id,term);
+ return [...base.values()].map(term=>{
+  const members=groupedTerms[term.ta2];
+  if(!members&&!termNotes[term.ta2])return term;
+  return {...term,note:term.note||termNotes[term.ta2],
+   requiredGroups:members?.flatMap(id=>{
+    const member=base.get('ta2-'+id);
+    if(!member)throw Error('Missing standard muscle group member: '+id);
+    return member.requiredGroups||[member.name];
+   })||term.requiredGroups};
+ });
+}
+
 const sides=['left','right','midline','other'];
 const blankSides=()=>Object.fromEntries(sides.map(side=>[side,[]]));
 const slug=value=>muscleTermKey(value).replace(/ +/g,'-');
 const byLabel=(a,b)=>a.name.localeCompare(b.name,'en')||a.id.localeCompare(b.id,'en');
 const expectedBuckets={
  'left-and-right':['left','right'],
+ 'left-only':['left'],
+ 'right-only':['right'],
  midline:['midline'],
  bilateral:['other'],
  unspecified:[],
 };
 const atlasConfirmed=['named-geometry','represented-by-components','source-inventory'];
 const unconfirmed=['needs-anatomical-review','not-separately-resolved','partial-model'];
+const namedSeries = new Map([
+ ['first lumbrical of foot','ta2-2685'],['second lumbrical of foot','ta2-2685'],
+ ['third lumbrical of foot','ta2-2685'],['fourth lumbrical of foot','ta2-2685'],
+ ['palmar interosseous of index finger','ta2-2534'],['palmar interosseous of ring finger','ta2-2534'],
+ ['palmar interosseous of little finger','ta2-2534'],
+]);
 const elbowIDs=new Set(['anconeus','biceps-brachii','brachialis','brachioradialis','triceps-brachii']);
 const gaitIDs=new Set(['biceps-femoris','gastrocnemius-lateral','tibialis-anterior','vastus-lateralis']);
 const heelIDs=new Set(['gastrocnemius-lateral','gastrocnemius-medial','soleus']);
@@ -229,12 +448,29 @@ function bySide(list){
 function sideStatus(row,groups){
  const expected=expectedBuckets[row.expectedSides];
  return Object.fromEntries(sides.map(side=>{
-  const present=groups.filter(group=>group.some(part=>bucketFor(part.side)===side||
-   part.side==='bilateral'&&['left','right'].includes(side)&&expected.includes(side))).length;
+  const present=groups.filter(group=>{
+   const pair=side==='midline'&&row.expectedSides==='midline'&&
+    ['left','right'].every(half=>group.some(part=>part.side===half));
+   return pair||group.some(part=>bucketFor(part.side)===side||
+    part.side==='bilateral'&&row.expectedSides==='left-and-right'&&expected.includes(side));
+  }).length;
   const candidate=row.atlas[side].some(part=>part.role==='candidate');
   return [side,present?(present<groups.length||unconfirmed.includes(row.atlasStatus)?'partial':'present'):
    candidate?'candidate':expected.includes(side)?'not-found':'not-applicable'];
  }));
+}
+
+function referenceStatus(item,groups){
+ if(item.reviewStatus)return item.status;
+ if(item.status==='no-named-mesh'&&groups.some(group=>group.length))return 'partial-model';
+ if(item.status==='side-review'){
+  const [side]=expectedBuckets[item.expectedSides];
+  const expectsOneSide=['left-only','right-only'].includes(item.expectedSides);
+  if(item.expectedSides==='unspecified'||expectsOneSide&&groups.every(group=>group.some(part=>part.side===side))){
+   return item.requiredGroups?'represented-by-components':'named-geometry';
+  }
+ }
+ return item.status;
 }
 
 export async function buildCoverage(){
@@ -254,11 +490,11 @@ export async function buildCoverage(){
   rows.push(row);
   return row;
  }
- const base=[...checklist.items,...heads.filter(head=>!checklist.items.some(item=>item.id===head.id))];
- const reference=auditMuscleCoverage(staticParts,base);
+ const reference=auditMuscleCoverage(staticParts,referenceTerms());
  for(const item of reference.rows){
-  rowFor({...item,origin:'reference',variant:item.inconstantInTA2,atlasStatus:item.status,
-   note:item.note||item.variationNote,groups:(item.requiredGroups||[item.name]).map(findName),
+  const groups=(item.requiredGroups||[item.name]).map(findName);
+  rowFor({...item,origin:'reference',variant:item.inconstantInTA2,atlasStatus:referenceStatus(item,groups),
+   note:item.note||item.variationNote,groups,
    candidates:(item.candidateNames||[]).flatMap(findName)});
  }
 
@@ -275,7 +511,7 @@ export async function buildCoverage(){
   const both=parts.some(p=>p.side==='left')&&parts.some(p=>p.side==='right');
   rowFor({id:'atlas-'+region+'-'+slug(name),name,region,origin:'atlas',
    expectedSides:both?'left-and-right':'unspecified',entryType:'atlas-named-part',
-   atlasStatus:'source-inventory',groups:[parts]});
+   componentOf:namedSeries.get(muscleTermKey(name)),atlasStatus:'source-inventory',groups:[parts]});
  }
 
  const sameMembers=(row,ids)=>{
@@ -305,13 +541,17 @@ export async function buildCoverage(){
    groups:[],directMotion:[part]});
  }
 
+ const census={};
+ for(const row of rows.filter(row=>row.origin==='reference')){
+  census[row.atlasStatus]=(census[row.atlasStatus]||0)+1;
+ }
  const counts={
   entries:rows.length,referenceEntries:reference.referenceChecks,
   atlasOnlyEntries:rows.filter(row=>row.origin==='atlas').length,
   courseEntries:rows.filter(row=>row.course).length,
   courseTargets:rows.reduce((n,row)=>n+(row.courseTargets?.length||0),0),
   atlasMuscleParts:staticParts.length,motionMuscleParts:motion.length,
-  census:reference.counts,
+  census,
   referenceConfirmed:rows.filter(row=>row.origin==='reference'&&atlasConfirmed.includes(row.atlasStatus)).length,
   referenceOpen:rows.filter(row=>row.origin==='reference'&&!atlasConfirmed.includes(row.atlasStatus)).length,
  };
@@ -320,7 +560,7 @@ export async function buildCoverage(){
  rows.sort(byLabel);
  return {
   schema:1,
-  scope:'This working checklist combines selected FIPAT skeletal-muscle terms, separately tracked heads, BI 231 targets and all named muscle parts in Osteon’s delivered atlas and motion models. Muscle names, sides and mesh parts are different units. Coverage states track geometry and evidence without certifying anatomical attachments.',
+  scope:'This checklist audits FIPAT skeletal-muscle names across body regions, including named subdivisions, variants and selected groups. It also tracks BI 231 targets and every named muscle part in Osteon’s delivered atlas and motion rigs. Entries, sides and mesh parts count different things. Source names alone do not verify anatomical attachments or motion.',
   sources,counts,rows,
  };
 }

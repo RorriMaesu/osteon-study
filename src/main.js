@@ -360,4 +360,10 @@ document.addEventListener('click',event=>{const id=event.target.closest('[data-m
 
 export {muscleAtlas};
 
-if(new URLSearchParams(location.search).get('muscles')==='1')document.addEventListener('anatomyready',()=>muscleAtlas.openRegion(new URLSearchParams(location.search).get('muscleRegion')||null),{once:true});
+const muscleParams=new URLSearchParams(location.search);
+const requestedMuscle=muscleParams.get('muscle');
+if((requestedMuscle||muscleParams.get('muscles')==='1')&&$('#atlas-view').classList.contains('active')){
+ const openMuscle=()=>muscleAtlas.openRegion(muscleParams.get('muscleRegion'),requestedMuscle);
+ if(ready||muscleAtlas.unavailable)openMuscle();
+ else document.addEventListener('anatomyready',openMuscle,{once:true});
+}

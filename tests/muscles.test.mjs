@@ -24,7 +24,7 @@ test('tissue classification exposes tensor fasciae latae and excludes connective
   assert.ok(componentVisible(c,{enabled:true,region:c.region,side,depth:'all',support:false,hidden:new Set()}));assert.equal(c.depth,'superficial');
  }
  for(const term of ['Linea alba','Iliotibial tract.r','Medial intermuscular septum of arm.r','Tendinous arch of levator ani.l','Synovial sheaths of digits of hand.r'])assert.equal(muscleKind(term),'support',term);
- assert.equal(muscleCoverage.muscleParts,474);assert.equal(muscleCoverage.supportParts,207);
+ assert.equal(muscleCoverage.muscleParts,476);assert.equal(muscleCoverage.supportParts,207);
 });
 test('reviewed whole-muscle grouping preserves separate heads and trapezius parts',()=>{
  for(const [name,count]of [['Trapezius muscle',3],['Pronator teres muscle',2],['Flexor carpi ulnaris',2],['Adductor pollicis muscle',2]])for(const side of ['right','left'])assert.equal(manifest.components.filter(c=>c.kind==='muscle'&&c.muscleName===name&&c.side===side).length,count,name+' '+side);
@@ -49,6 +49,23 @@ test('palmaris brevis preserves the university source and teaches its soft-tissu
  for(const c of rows){assert.equal(c.sourceDataset,'Open3DModel hand (LUMC)');assert.equal(c.depth,'superficial');assert.match(muscleFacts(c).insertion,/no bony insertion/);assert.match(c.sourceAttribution,/Open3D/);assert.equal(c.mirrorSource,c.side==='left');assert.equal(createHash('sha256').update(fs.readFileSync(new URL('../'+c.sourceFile,import.meta.url))).digest('hex'),c.sourceSHA256);}
 });
 
+test('both vocalis muscles use authentic regional source meshes and appear in the deeper atlas',()=>{
+ const rows=manifest.components.filter(c=>c.muscleName==='Vocalis muscle');
+ assert.deepEqual(new Set(rows.map(c=>c.side)),new Set(['left','right']));
+ const coverage=muscleCoverage.rows.find(row=>row.id==='ta2-2202');
+ assert.equal(coverage.status,'named-geometry');
+ assert.deepEqual(new Set(coverage.componentIds),new Set(rows.map(c=>c.id)));
+ for(const c of rows){
+  assert.equal(c.sourceLicense,'CC BY 4.0');
+  const source=fs.readFileSync(new URL('../'+c.sourceFile,import.meta.url));
+  assert.equal(createHash('sha256').update(source).digest('hex'),c.sourceSHA256);
+  assert.match(muscleFacts(c).origin,/Vocal ligament/);
+  assert.match(muscleFacts(c).insertion,/Vocal process of the arytenoid/);
+  assert.ok(componentVisible(c,{enabled:true,region:'head-neck',side:c.side,depth:'deeper',support:false,hidden:new Set()}));
+  assert.ok(c.side==='left'?c.bounds.min[0]>0:c.bounds.max[0]<0);
+ }
+});
+
 test('recovered serial groups require every member on both sides and hide superseded aggregates',()=>{
  const repaired=manifest.components.filter(c=>c.sourceDataset==='BodyParts3D 4.3');assert.equal(repaired.length,14);
  for(const c of repaired){assert.ok(muscleFacts(c)?.origin&&muscleFacts(c)?.insertion&&muscleFacts(c)?.action);assert.equal(c.sourceLicense,'CC BY 4.0');const source=fs.readFileSync(new URL('../'+c.sourceFile,import.meta.url));assert.equal(createHash('sha256').update(source).digest('hex'),c.sourceSHA256);assert.ok(c.registration.heldOutValidation.length>=2);}
@@ -71,7 +88,7 @@ test('the shoulder pilot contains both sides, separate heads and explicit attach
  assert.ok(manifest.components.filter(c=>c.side==='right'&&/head of biceps brachii/.test(c.sourceName)).length===2);
 });
 test('regional atlas coverage preserves source sides and corrected anatomical grouping',()=>{
- assert.equal(manifest.components.length,685);assert.equal(Object.keys(manifest.assets).length,5);
+ assert.equal(manifest.components.length,687);assert.equal(Object.keys(manifest.assets).length,5);
  for(const c of manifest.components){if(c.side==='right')assert.ok(c.bounds.min[0]<.002,c.sourceName);if(c.side==='left')assert.ok(c.bounds.max[0]>-.002,c.sourceName);}
  const pectoralHeads=manifest.components.filter(c=>/head of pectoralis major/.test(c.sourceName));assert.ok(pectoralHeads.length);assert.ok(pectoralHeads.every(c=>c.region==='trunk-back'));
  const upper=manifest.components.filter(c=>c.name==='Upper (descending) part of trapezius'),lower=manifest.components.filter(c=>c.name==='Lower (ascending) part of trapezius');assert.equal(upper.length,2);assert.equal(lower.length,2);assert.ok(Math.min(...upper.map(c=>c.bounds.min[1]))>Math.min(...lower.map(c=>c.bounds.min[1])));
