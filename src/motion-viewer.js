@@ -44,6 +44,9 @@ export class MotionViewer {
   this.renderer.domElement.addEventListener('pointerup',event=>this.pick(event));
   this.renderer.domElement.addEventListener('webglcontextrestored',()=>{this.dirty=true;});
   this.scene=new THREE.Scene();
+  this.grid=new THREE.GridHelper(2.4,24,0x426660,0x2d4a4c);
+  this.grid.visible=false;
+  this.scene.add(this.grid);
   this.scene.add(new THREE.HemisphereLight(0xf4f6ed,0x668780,2.15));
   const key=new THREE.DirectionalLight(0xfff3d9,2.1);
   key.position.set(.8,1.8,2.6);this.scene.add(key);
@@ -95,7 +98,9 @@ export class MotionViewer {
     };
     const parts=[];
     model.traverse(mesh=>{
-     if(!mesh.isMesh||!mesh.userData.motionMuscle)return;
+     if(!mesh.isMesh)return;
+     if(mesh.isSkinnedMesh)mesh.frustumCulled=false;
+     if(!mesh.userData.motionMuscle)return;
      const material=new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
      mesh.material=material;
      parts.push({mesh,material,id:mesh.userData.motionMuscle,side:mesh.userData.motionSide||'right'});
@@ -104,7 +109,8 @@ export class MotionViewer {
     const mixer=clip?new THREE.AnimationMixer(model):null;
     const action=clip?mixer.clipAction(clip).setLoop(THREE.LoopOnce,1):null;
     if(action)action.clampWhenFinished=true;
-    return {model,meta,joints,parts,kind,mixer,action};
+    const contacts=kind==='legs'?Object.fromEntries(Object.entries(meta.contact).map(([side,points])=>[side,Object.values(points).map(point=>({node:model.getObjectByName(point.node),offset:new THREE.Vector3(...point.local)}))])):null;
+    return {model,meta,joints,parts,kind,mixer,action,contacts};
    }finally{decoder.dispose();}
   })();
   this.cache.set(kind,loading);
@@ -151,6 +157,34 @@ export class MotionViewer {
    const rest=meta.neutralAngles?.[side]?.[joint]||0;
    this.rotate(joints[side][joint],meta.axes[side][joint],pose[joint]-rest);
   }
+  this.rotate(joints[side].patella,meta.axes[side].patella,Math.max(0,pose.knee)*.55);
+  this.dirty=true;
+ }
+ showGround(visible){if(this.grid)this.grid.visible=visible;}
+ setWalkTracks(samples){
+  const {joints,contacts,model}=this.current;
+  joints.pelvis.node.position.copy(joints.pelvis.position);
+  const height=sample=>{
+   for(const side of ['left','right'])this.poseLeg(side,sample[side]);
+   model.updateMatrixWorld(true);
+   const y=Object.keys(contacts).filter(side=>sample[side].contact).flatMap(side=>contacts[side].map(({node,offset})=>node.localToWorld(offset.clone()).y));
+   return y.length?Math.min(...y):0;
+  };
+  const raw=samples.map(height);
+  const filter=[1,4,6,4,1];
+  this.walkOffsets=raw.map((_,index)=>filter.reduce((sum,weight,j)=>sum+weight*raw[clamp(index+j-2,0,raw.length-1)],0)/16);
+  this.reset();
+ }
+ walk(frame,distance){
+  const {joints}=this.current;
+  const clock=frame.percent/100;
+  const index=clock*(this.walkOffsets.length-1);
+  const a=this.walkOffsets[Math.floor(index)],b=this.walkOffsets[Math.ceil(index)];
+  const floorCorrection=a+(b-a)*(index-Math.floor(index));
+  const {forwardMeters,rightMeters}=frame.pelvis;
+  joints.pelvis.node.position.copy(joints.pelvis.position).add(new THREE.Vector3(-rightMeters,-floorCorrection,forwardMeters-distance*clock));
+  for(const side of ['left','right'])this.poseLeg(side,frame[side]);
+  if(this.grid)this.grid.position.z=-distance*clock%.1;
   this.dirty=true;
  }
  highlight({strengths,selected,showMuscles,onlyActive}){
@@ -253,8 +287,12 @@ export class MotionViewer {
   const thigh=elbowWorld.clone().sub(pivot),shank=marker.clone().sub(elbowWorld);
   const vertical=new THREE.Vector3(0,-1,0).projectOnPlane(normal).normalize();
   const tangent=new THREE.Vector3().crossVectors(normal,vertical);
-  const choice=planarLimbPose(thigh.length(),shank.length(),offset.dot(vertical),offset.dot(tangent),-1);
-  this.onTarget({hip:clamp(choice.root,-22,85),knee:clamp(-choice.bend,0,120)});
+  const choice=planarLimbPose(thigh.clone().projectOnPlane(normal).length(),shank.clone().projectOnPlane(normal).length(),offset.dot(vertical),offset.dot(tangent),-1);
+  const {hip,knee,ankle}=this.current.meta.neutral[this.target];
+  const neutralThigh=new THREE.Vector3(...knee).sub(new THREE.Vector3(...hip));
+  const neutralShank=new THREE.Vector3(...ankle).sub(new THREE.Vector3(...knee));
+  const restAngle=vector=>Math.atan2(vector.dot(tangent),vector.dot(vertical))/radians;
+  this.onTarget({hip:clamp(choice.root-restAngle(neutralThigh),-22,85),knee:clamp(restAngle(neutralShank)-restAngle(neutralThigh)-choice.bend,0,85)});
  }
  endDrag(event){
   if(this.drag?.id!==event.pointerId)return;
@@ -264,7 +302,9 @@ export class MotionViewer {
  pick(event){
   if(!this.current||!this.pickStart||Math.hypot(event.clientX-this.pickStart.x,event.clientY-this.pickStart.y)>6)return;
   this.rayAt(event);
+  this.scene.updateMatrixWorld(true);
   const byMesh=new Map(this.current.parts.filter(part=>part.mesh.visible).map(part=>[part.mesh,part]));
+  for(const mesh of byMesh.keys())if(mesh.isSkinnedMesh)mesh.computeBoundingSphere();
   const hit=this.ray.intersectObjects([...byMesh.keys()],false)[0];
   if(hit){const p=byMesh.get(hit.object);this.onMuscle(p.side+':'+p.id);}
  }

@@ -1,6 +1,7 @@
 
 import {MotionViewer} from './motion-viewer.js';
 import {armRoles,clamp,curlDuration,curlFrame,elbowLimits} from './motion-core.js';
+import {sampleWalk,gaitEventName} from './motion-walk.js';
 import {setLearningContext} from './learning-context.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 
@@ -15,12 +16,12 @@ const gaitMuscles={
  'biceps-femoris':{name:'Biceps femoris',role:'The sampled part contributes to knee flexion'},
  'vastus-lateralis':{name:'Vastus lateralis',role:'Part of the quadriceps that extends the knee'},
 };
-const legLimits={hip:[-22,85],knee:[0,120],ankle:[-35,23]};
+const legLimits={hip:[-22,85],knee:[0,85],ankle:[-35,23]};
 const emptyPose=()=>({hip:0,knee:0,ankle:0});
 const gaitFile=()=>new URL('src/motion-gait-data.json?v='+modelAssets['motion-gait'],document.baseURI).href;
 
 const escape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-const nextOf=(a,b,t)=>a+(b-a)*t;
+
 
 export function initMotionLab({setView}){
  const root=document.querySelector('#motion-view');
@@ -50,7 +51,7 @@ export function initMotionLab({setView}){
 
  const $=selector=>root.querySelector(selector);
  const controls=$('.motion-controls'), phase=$('.motion-phase'), names=$('.motion-muscle-list'), status=$('.motion-status');
- const state={mode:'actions',limb:'arm',elbow:25,leg:{right:emptyPose(),left:emptyPose()},time:0,speed:1,playing:false,loop:true,showMuscles:true,onlyActive:false,selected:null,action:'flex',side:'right'};
+ const state={mode:'actions',limb:'arm',elbow:25,leg:{right:emptyPose(),left:emptyPose()},time:0,speed:1,playing:false,loop:true,showMuscles:true,onlyActive:false,selected:null,action:'flex',side:'left'};
  let active=false,revision=0,specimen=null,gait=null,lastInfo='',lastContext='';
  let gaitPromise;
  const ready=()=>active&&!!specimen;
@@ -78,7 +79,7 @@ export function initMotionLab({setView}){
    <label>Speed <select id="motion-speed"><option value=".25">¼×</option><option value=".5">½×</option><option value="1">1×</option></select></label>
    <label class="motion-check"><input type="checkbox" id="motion-loop" ${state.loop?'checked':''}> Loop</label>
    ${state.mode==='walk'?'<label>Focus <select id="motion-side"><option value="right">Right leg</option><option value="left">Left leg</option></select></label>':''}</div>
-   ${range('motion-time',state.mode==='walk'?'Stride':'Movement',0,duration(),state.time,.01)}
+   ${range('motion-time',state.mode==='walk'?'Stride':'Movement',0,duration(),state.time,.001)}
    <div class="motion-steps" role="group" aria-label="Jump to a movement event"></div>`;
    $('#motion-speed').value=String(state.speed).replace(/^0\./,'.');
    $('#motion-speed').onchange=event=>{state.speed=Number(event.target.value);};
@@ -97,9 +98,9 @@ export function initMotionLab({setView}){
   const buttons=root.querySelector('.motion-steps');
   const events=state.mode==='actions'?[{phase:'Lift',percent:14},{phase:'Hold',percent:46},{phase:'Lower',percent:76}]:
    (gait?.events||[]).filter(event=>event.side===state.side&&event.percent<100);
-  buttons.replaceChildren(...events.map(({phase,percent})=>{
-   const button=document.createElement('button');button.type='button';button.textContent=phase;
-   button.onclick=()=>{state.playing=false;state.time=percent/100*duration();draw();};return button;
+  buttons.replaceChildren(...events.map(event=>{
+   const button=document.createElement('button');button.type='button';button.textContent=state.mode==='walk'?gaitEventName(event):event.phase;
+   button.onclick=()=>{state.playing=false;state.time=event.timeSeconds??event.percent/100*duration();draw();};return button;
   }));
  }
  function target(value){
@@ -140,6 +141,7 @@ export function initMotionLab({setView}){
    specimen=loaded;
    motion.use(loaded);
    motion.reset();
+   if(state.mode==='walk')motion.setWalkTracks(gait.samples);
    setStatus();
    renderControls();
    controls.inert=false;
@@ -155,9 +157,11 @@ export function initMotionLab({setView}){
  function draw(){
   if(!ready())return;
   const strengths={active:true};
+  let readoutText='';
   let title,detail,tag,roleMap=armRoles,source=state.mode==='pose'?sources.roles:sources.actions, contextRef=state.mode==='pose'?'11.5':'10.4';
   motion.target=null;
   motion.showLoad=false;
+  motion.showGround(state.mode==='walk');
   if(state.mode==='actions'){
    const frame=curlFrame(state.time);
    motion.sampleCurl(state.time,frame.angle);
@@ -189,12 +193,13 @@ export function initMotionLab({setView}){
    }
   }else{
    roleMap=gaitMuscles;source=sources.walk;contextRef='11.6';
-   const current=walkFrame(gait,state.time);
+   const current=sampleWalk(gait,state.time);
+   motion.walk(current,gait.samples.at(-1).pelvis.forwardMeters);
    for(const side of ['right','left']){
-    const sample=current[side];
-    motion.poseLeg(side,sample);
-    for(const [id,value] of Object.entries(sample.emg))if(value!=null)strengths[side+':'+id]=clamp(value*.01,0,1);
+    for(const [id,value] of Object.entries(current[side].emg))if(value!=null)strengths[side+':'+id]=value/100;
    }
+   const joint=current[state.side];
+   readoutText='Hip '+Math.round(joint.hip)+'° · Knee '+Math.round(joint.knee)+'° · Ankle '+Math.round(joint.ankle)+'°';
    const contact=current[state.side].contact;
    title=contact?'Stance':'Swing';
    tag='Recorded surface EMG';
@@ -215,17 +220,18 @@ export function initMotionLab({setView}){
   const side=roleMap===armRoles?'right':state.mode==='walk'?state.side:state.limb;
   const infoKey=[title,tag,detail,side,state.selected,state.mode].join('|');
   if(lastInfo!==infoKey){
-   phase.innerHTML=`<p class="motion-evidence">${escape(tag)}</p><h2>${escape(title)}</h2><p>${escape(detail)}</p>`;
+   phase.innerHTML=`<p class="motion-evidence">${escape(tag)}</p><h2>${escape(title)}</h2><p>${escape(detail)}</p>${state.mode==='walk'?'<p class="motion-joint-readout"></p>':''}`;
    names.innerHTML=entries.map(([id,entry])=>`<button type="button" data-motion-pick="${side+':'+id}" aria-pressed="${state.selected===side+':'+id}"><span>${escape(entry.name)}</span><small>${escape(entry.role)}</small><span class="motion-signal" aria-hidden="true"></span><span class="motion-measure"></span></button>`).join('');
    for(const button of names.querySelectorAll('button'))button.onclick=()=>selectMuscle(button.dataset.motionPick);
-   $('.motion-note').textContent=state.mode==='walk'?'EMG shows electrical activity relative to the muscle’s reference contraction. Muscles outside these recordings are unmeasured.':state.mode==='actions'?'Highlights show the flexors in this hand-load example.':'Muscle recruitment depends on the task and load.';
+   $('.motion-note').textContent=state.mode==='walk'?'Surface EMG is shown relative to each muscle’s maximum voluntary contraction (MVC). Only four muscles per leg were measured. The floor display follows the supporting foot.':state.mode==='actions'?'Highlights show the flexors in this hand-load example.':'Muscle recruitment depends on the task and load.';
    const link=$('.motion-source');link.href=source;link.textContent=state.mode==='walk'?'Walking data & methods ↗':'Read the OpenStax section ↗';
    lastInfo=infoKey;
   }
+  if(readoutText)$('.motion-joint-readout').textContent=readoutText;
   for(const button of names.querySelectorAll('button')){
    const measured=strengths[button.dataset.motionPick];
    button.dataset.contributing=String(measured>0);
-   button.querySelector('.motion-signal').style.setProperty('--signal',100*(measured||0)+'%');
+   button.querySelector('.motion-signal').style.setProperty('--signal',100*clamp(measured||0,0,1)+'%');
    button.querySelector('.motion-measure').textContent=state.mode==='walk'?(measured==null?'No data':Math.round(measured*100)+'% MVC'):measured?'Contributes':'';
   }
   const contextKey=[state.mode,side,title,state.selected].join('|');
@@ -234,18 +240,7 @@ export function initMotionLab({setView}){
    lastContext=contextKey;
   }
  }
- function walkFrame(data,seconds){
-  const percent=clamp(seconds/data.durationSeconds*100,0,100);
-  const upper=data.samples.findIndex(sample=>sample.percent>=percent);
-  if(upper<=0)return data.samples[upper===0?0:data.samples.length-1];
-  const a=data.samples[upper-1],b=data.samples[upper],fraction=(percent-a.percent)/(b.percent-a.percent);
-  return Object.fromEntries(['right','left'].map(side=>[side,{
-   ...Object.fromEntries(['hip','knee','ankle'].map(key=>[key,nextOf(a[side][key],b[side][key],fraction)])),
-   emg:Object.fromEntries(Object.keys(gaitMuscles).map(id=>[id,a[side].emg[id]==null||b[side].emg[id]==null?null:nextOf(a[side].emg[id],b[side].emg[id],fraction)])),
-   contact:a[side].contact,
-  }]));
- }
- for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{const mode=button.dataset.motionMode;if(state.mode!==mode){state.mode=mode;state.selected=null;state.time=0;load();}};
+ for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{const mode=button.dataset.motionMode;if(state.mode!==mode){state.mode=mode;state.selected=null;state.time=0;state.loop=mode!=='walk';load();}};
  for(const button of root.querySelectorAll('[data-motion-camera]'))button.onclick=()=>motion.frame(button.dataset.motionCamera);
  $('[data-motion-muscles]').onchange=event=>{state.showMuscles=event.target.checked;draw();};
  $('[data-motion-active]').onchange=event=>{state.onlyActive=event.target.checked;draw();};

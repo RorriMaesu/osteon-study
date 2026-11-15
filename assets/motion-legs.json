@@ -1,0 +1,264 @@
+{
+  "schema": 1,
+  "joints": {
+    "pelvis": "MotionPelvis",
+    "right": {
+      "hip": "MotionHipR",
+      "knee": "MotionKneeR",
+      "ankle": "MotionAnkleR",
+      "toe": "MotionToeR",
+      "patella": "MotionPatellaR"
+    },
+    "left": {
+      "hip": "MotionHipL",
+      "knee": "MotionKneeL",
+      "ankle": "MotionAnkleL",
+      "toe": "MotionToeL",
+      "patella": "MotionPatellaL"
+    }
+  },
+  "axes": {
+    "right": {
+      "hip": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "knee": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "ankle": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "toe": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "patella": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "left": {
+      "hip": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "knee": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "ankle": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "toe": [
+        -1.0,
+        0.0,
+        0.0
+      ],
+      "patella": [
+        1.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "additionalAxes": {
+    "right": {
+      "hip": {
+        "adduction": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "internalRotation": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      }
+    },
+    "left": {
+      "hip": {
+        "adduction": [
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "internalRotation": [
+          0.0,
+          -1.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "neutral": {
+    "frame": "+Y superior, +Z anterior, -X anatomical right",
+    "pelvis": [
+      0,
+      0.85985,
+      -0.004835
+    ],
+    "right": {
+      "hip": [
+        -0.0842,
+        0.85985,
+        -0.004835
+      ],
+      "knee": [
+        -0.0757,
+        0.4569,
+        -0.0274
+      ],
+      "ankle": [
+        -0.075,
+        0.071,
+        -0.035
+      ],
+      "toe": [
+        -0.087,
+        0.019,
+        0.077
+      ],
+      "patella": [
+        -0.0757,
+        0.4569,
+        -0.0274
+      ]
+    },
+    "left": {
+      "hip": [
+        0.0842,
+        0.85985,
+        -0.004835
+      ],
+      "knee": [
+        0.0757,
+        0.4569,
+        -0.0274
+      ],
+      "ankle": [
+        0.075,
+        0.071,
+        -0.035
+      ],
+      "toe": [
+        0.087,
+        0.019,
+        0.077
+      ],
+      "patella": [
+        0.0757,
+        0.4569,
+        -0.0274
+      ]
+    }
+  },
+  "contact": {
+    "right": {
+      "heel": {
+        "node": "MotionAnkleR",
+        "local": [
+          0.0074834,
+          -0.0595506,
+          -0.0322725
+        ]
+      },
+      "ball": {
+        "node": "MotionAnkleR",
+        "local": [
+          0.0015011,
+          -0.0563605,
+          0.1108345
+        ]
+      },
+      "toe": {
+        "node": "MotionToeR",
+        "local": [
+          0.0109807,
+          -0.0090517,
+          0.0398139
+        ]
+      },
+      "lateralBall": {
+        "node": "MotionAnkleR",
+        "local": [
+          -0.0520783,
+          -0.0611417,
+          0.0840698
+        ]
+      }
+    },
+    "left": {
+      "heel": {
+        "node": "MotionAnkleL",
+        "local": [
+          -0.0074828,
+          -0.0595506,
+          -0.0322725
+        ]
+      },
+      "ball": {
+        "node": "MotionAnkleL",
+        "local": [
+          -0.001502,
+          -0.0563605,
+          0.1108345
+        ]
+      },
+      "toe": {
+        "node": "MotionToeL",
+        "local": [
+          -0.0109807,
+          -0.0090517,
+          0.0398139
+        ]
+      },
+      "lateralBall": {
+        "node": "MotionAnkleL",
+        "local": [
+          0.0520776,
+          -0.0611417,
+          0.0840698
+        ]
+      }
+    }
+  },
+  "muscles": {
+    "right": {
+      "vastus-lateralis": "MotionRightVastusLateralisMuscle",
+      "biceps-femoris": "MotionRightLongHeadOfBicepsFemoris",
+      "tibialis-anterior": "MotionRightTibialisAnteriorMuscle",
+      "gastrocnemius-lateral": "MotionRightLateralHeadOfGastrocnemius"
+    },
+    "left": {
+      "vastus-lateralis": "MotionLeftVastusLateralisMuscle",
+      "biceps-femoris": "MotionLeftLongHeadOfBicepsFemoris",
+      "tibialis-anterior": "MotionLeftTibialisAnteriorMuscle",
+      "gastrocnemius-lateral": "MotionLeftLateralHeadOfGastrocnemius"
+    }
+  },
+  "notes": {
+    "geometry": "Original atlas surfaces keep their neutral alignment. This teaching rig simplifies joint translations and soft-tissue geometry.",
+    "knee": "The knee uses a sagittal hinge. Patella rotation uses a separate node for a teaching approximation of tracking.",
+    "gastrocnemius": "Use the lateral head as the recorded region. The calcaneal tendon is included as supporting geometry.",
+    "bicepsFemoris": "The long-head surface locates the recorded biceps femoris muscle. The signal cannot distinguish its two heads.",
+    "contact": "Heel, ball of foot and toe coordinates are from the osseous surfaces. Sole thickness is absent.",
+    "sources": [
+      "assets/skeleton.glb",
+      "assets/muscles-pelvis-leg-foot.glb",
+      "assets/MODEL-LICENSE.md"
+    ]
+  }
+}

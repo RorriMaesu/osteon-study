@@ -8,7 +8,7 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const nerveAssets=Object.keys(JSON.parse(fs.readFileSync(path.join(root,'src/nerve-models.json'),'utf8')).files).map(key=>'nerves-'+key);
 const nodeAssets=Object.keys(JSON.parse(fs.readFileSync(path.join(root,'src/lymph-node-models.json'),'utf8')).files).map(key=>'lymph-nodes-'+key);
 const modelAssets=Object.fromEntries(['skeleton','course-tissues','landmark-details','fetal-skull','ligaments',...nerveAssets,...nodeAssets].map(n=>[n,createHash('sha256').update(fs.readFileSync(path.join(root,'assets',n+'.glb'))).digest('hex').slice(0,12)]));
-for(const name of ['motion-arm']){
+for(const name of ['motion-arm','motion-legs','motion-gait']){
  const files=name==='motion-gait'?['src/motion-gait-data.json']:[`assets/${name}.glb`,`assets/${name}.json`];
  if(files.every(file=>fs.existsSync(path.join(root,file)))){
   const digest=createHash('sha256');
