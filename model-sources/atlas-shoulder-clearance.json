@@ -1,0 +1,155 @@
+{
+  "scope": {
+    "before": {
+      "muscles": 476,
+      "context": 271,
+      "snapshots": [
+        "neutral"
+      ]
+    },
+    "after": {
+      "muscles": 476,
+      "context": 271,
+      "snapshots": [
+        "neutral"
+      ]
+    }
+  },
+  "changedSurfaceContacts": [
+    {
+      "pair": [
+        "muscle-acromial-part-of-deltoid-muscle-l",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l"
+      ],
+      "beforeMm": 0.8,
+      "afterMm": 1.03
+    },
+    {
+      "pair": [
+        "muscle-acromial-part-of-deltoid-muscle-r",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r"
+      ],
+      "beforeMm": 0.8,
+      "afterMm": 1.43
+    },
+    {
+      "pair": [
+        "muscle-brachialis-muscle-l",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l"
+      ],
+      "beforeMm": 0.0,
+      "afterMm": 0.0
+    },
+    {
+      "pair": [
+        "muscle-brachialis-muscle-r",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r"
+      ],
+      "beforeMm": 0.0,
+      "afterMm": 0.0
+    },
+    {
+      "pair": [
+        "muscle-descending-part-of-trapezius-muscle-l",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l"
+      ],
+      "beforeMm": 5.01,
+      "afterMm": 5.01
+    },
+    {
+      "pair": [
+        "muscle-descending-part-of-trapezius-muscle-r",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r"
+      ],
+      "beforeMm": 5.01,
+      "afterMm": 5.01
+    },
+    {
+      "pair": [
+        "muscle-infraspinatus-muscle-l",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l"
+      ],
+      "beforeMm": 6.24,
+      "afterMm": 6.24
+    },
+    {
+      "pair": [
+        "muscle-infraspinatus-muscle-r",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r"
+      ],
+      "beforeMm": 5.75,
+      "afterMm": 5.39
+    },
+    {
+      "pair": [
+        "muscle-lateral-head-of-triceps-brachii-l",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l"
+      ],
+      "beforeMm": 6.36,
+      "afterMm": 2.1
+    },
+    {
+      "pair": [
+        "muscle-lateral-head-of-triceps-brachii-r",
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r"
+      ],
+      "beforeMm": 6.05,
+      "afterMm": 2.1
+    },
+    {
+      "pair": [
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+        "muscle-transverse-part-of-trapezius-muscle-l"
+      ],
+      "beforeMm": 0.0,
+      "afterMm": 0.0
+    },
+    {
+      "pair": [
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+        "Humerus.l"
+      ],
+      "beforeMm": 0.0,
+      "afterMm": 0.0
+    },
+    {
+      "pair": [
+        "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+        "Scapula.l"
+      ],
+      "beforeMm": 1.87,
+      "afterMm": 1.81
+    },
+    {
+      "pair": [
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+        "muscle-transverse-part-of-trapezius-muscle-r"
+      ],
+      "beforeMm": 0.0,
+      "afterMm": 0.0
+    },
+    {
+      "pair": [
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+        "Humerus.r"
+      ],
+      "beforeMm": 0.0,
+      "afterMm": 0.0
+    },
+    {
+      "pair": [
+        "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+        "Scapula.r"
+      ],
+      "beforeMm": 1.81,
+      "afterMm": 1.87
+    }
+  ],
+  "model": "muscles-shoulder-arm.glb",
+  "sha256": "5c705c30cfae406d6acf19d6cabc4adb5a571eb3da9d9fd2034f453f39c54b1a",
+  "sources": [
+    "https://pubmed.ncbi.nlm.nih.gov/19186076/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC11064717/"
+  ],
+  "scopeNote": "Sampled overlap depths for the neutral Atlas. Attachments and small contacts require interpretation."
+}
