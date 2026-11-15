@@ -7,6 +7,7 @@ import {elbowAngle,planarLimbPose,clamp} from './motion-core.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 import muscleModels from './muscle-models.json' with {type:'json'};
 import {walkScopeMatches,walkBoneRegion,captureWalkDrivers,mountWalkPack,updateWalkPacks,walkScopeBounds} from './motion-walk-model.js';
+import {regionalLessons} from './motion-regional.js';
 
 const radians = Math.PI / 180;
 const axis = values => new THREE.Vector3(...values).normalize();
@@ -16,7 +17,7 @@ const opposingRoleColor=new THREE.Color('#a9b6e6');
 const walkContextMaterial=new THREE.MeshStandardMaterial({color:'#8f6559',roughness:.78});
 const atlasParts=new Map(muscleModels.components.map(part=>[part.id,part]));
 const svgNamespace='http://www.w3.org/2000/svg';
-const cueColors=Object.fromEntries(Object.entries({concentric:'#ff9855',isometric:'#d7a1ff',eccentric:'#68d8ff',role:'#9cdec0',emg:'#ffd8a0'}).map(([key,value])=>[key,new THREE.Color(value)]));
+const cueColors=Object.fromEntries(Object.entries({concentric:'#ff9855',isometric:'#d7a1ff',eccentric:'#68d8ff',role:'#9cdec0',authored:'#ff9e61',emg:'#ffd8a0'}).map(([key,value])=>[key,new THREE.Color(value)]));
 
 function jointState(node){
  if(!node)throw new Error('A required joint is missing from the model.');
@@ -133,11 +134,35 @@ export class MotionViewer {
  }
  async load(kind){
   if(this.cache.has(kind))return this.cache.get(kind);
-  const arm=kind!=='legs';
-  const name=arm?(kind==='arm-left'?'motion-arm-left':'motion-arm'):'motion-legs';
+  const regional=Object.hasOwn(regionalLessons,kind);
+  const arm=kind!=='legs'&&!regional;
+  const name=regional?regionalLessons[kind].asset:arm?(kind==='arm-left'?'motion-arm-left':'motion-arm'):'motion-legs';
   const loading=(async()=>{
     const [modelFile,meta]=await readRig(name);
     const model=modelFile.scene;
+    if(regional){
+     const info=new Map(meta.components.map(part=>[part.id,part]));
+     const parts=[],morphables=[],context=[];
+     model.traverse(mesh=>{
+      if(!mesh.isMesh)return;
+      const targets=Object.entries(mesh.morphTargetDictionary||{});
+      if(targets.length)morphables.push({mesh,targets});
+      if(mesh.userData.motionContext){
+       mesh.material=new THREE.MeshStandardMaterial({color:'#d1cec1',roughness:.83,opacity:.38,transparent:true,depthWrite:false});
+       context.push(mesh);
+      }
+      if(mesh.userData.motionMuscle){
+       const part=musclePart(mesh);
+       const record=info.get(part.key);
+       part.note=record?.note;
+       part.deformation=record?.modeling;
+       part.contextOnly=part.deformation==='static-context';
+       parts.push(part);
+      }
+     });
+     if(parts.length!==meta.components.length||!morphables.length)throw new Error('The regional movement and its named surfaces do not match.');
+     return {model,meta,parts,morphables,context,kind:'regional'};
+    }
     const attach=name=>jointState(model.getObjectByName(name));
     const joints=arm?Object.fromEntries(Object.entries(meta.joints).map(([key,name])=>[key,attach(name)])):{
      pelvis:attach(meta.joints.pelvis),
@@ -274,6 +299,7 @@ export class MotionViewer {
  reset(){
   if(!this.current)return;
   const {joints,kind,action}=this.current;
+  if(kind==='regional'){this.applyRegional({},true);return;}
   action?.stop();
   const listed=kind==='arm'?Object.values(joints):[joints.pelvis,...Object.values(joints.left),...Object.values(joints.right)];
   if(this.current.upper){
@@ -281,6 +307,12 @@ export class MotionViewer {
    listed.push(torso,head,...Object.values(arms).flatMap(arm=>Object.values(arm)));
   }
   for(const joint of listed){joint.node.quaternion.copy(joint.rest);joint.node.position.copy(joint.position);}
+  this.dirty=true;
+ }
+ applyRegional(weights,showContext){
+  const {morphables,context}=this.current;
+  for(const {mesh,targets} of morphables)for(const [name,index] of targets)mesh.morphTargetInfluences[index]=weights[name]||0;
+  for(const mesh of context)mesh.visible=showContext;
   this.dirty=true;
  }
  sampleCurl(seconds,angle){
@@ -375,7 +407,7 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists}){
+ highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,regionalRoles}){
   if(!this.current)return;
   const replaced=new Set();
   for(const {mesh,base} of this.current.calves||[]){
@@ -390,7 +422,8 @@ export class MotionViewer {
    const focused=exact||selectedGroup===key;
    const visibleSignal=strength>0&&strength>=displayThreshold;
    const opposing=antagonists?.has(key);
-   const inScope=!this.walkActive||walkScopeMatches(this.walkScope,p.region,p.side,p.walkSegments);
+   const inScope=this.walkActive?walkScopeMatches(this.walkScope,p.region,p.side,p.walkSegments):
+    !regionalRoles||focused||regionalRoles.includes(p.id);
    p.mesh.visible=showMuscles&&inScope&&(!p.walkOnly||this.walkActive)&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing)&&(!isolate||focused);
    if(exact&&p.mesh.visible)this.selectedPart=p;
    if(!p.walkOnly){
@@ -406,6 +439,19 @@ export class MotionViewer {
  }
  frame(view='lesson'){
   if(!this.current||!this.controls)return;
+  if(this.current.kind==='regional'){
+   const {target,direction,diameter}=this.current.meta.camera;
+   const vector=({front:[0,0,1],side:[1,.03,0],back:[0,0,-1]})[view]||direction;
+   const fitting=Math.min(1,Math.max(.24,this.camera.aspect));
+   const distance=diameter/(2*Math.tan(this.camera.fov*radians/2)*fitting);
+   this.controls.target.set(...target);
+   this.camera.position.copy(this.controls.target).addScaledVector(axis(vector),distance);
+   this.controls.minDistance=distance*.32;
+   this.controls.maxDistance=distance*3.5;
+   this.controls.update();
+   this.dirty=true;
+   return;
+  }
   const isolated=this.walkActive&&this.walkScope!=='all'&&this.current.walkBones;
   const bounds=isolated?walkScopeBounds(this.current.parts,this.current.walkBones,this.walkScope):new THREE.Box3().setFromObject(this.current.model);
   if(bounds.isEmpty())return;

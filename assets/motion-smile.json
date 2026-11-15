@@ -1,0 +1,360 @@
+{
+  "schema": 1,
+  "region": "smile",
+  "asset": "motion-smile.glb",
+  "sha256": "a4cdb127c2087301dc232e93289f2464c41844875a8d6857d8fa2ea9e9698002",
+  "bytes": 286460,
+  "camera": {
+    "target": [
+      0,
+      1.533,
+      0.072
+    ],
+    "direction": [
+      0.24,
+      0.04,
+      1
+    ],
+    "diameter": 0.164
+  },
+  "sources": {
+    "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back",
+    "study": "https://pubmed.ncbi.nlm.nih.gov/18300963/",
+    "detail": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13105802/"
+  },
+  "evidence": "Authored teaching deformation",
+  "scope": "Bilateral authored smile. The mesh shows geometric muscle movement and a taught force direction. Labial skin and individual smile variants are outside the model.",
+  "components": [
+    {
+      "id": "muscle-orbicularis-oris-muscle-r",
+      "name": "Orbicularis oris muscle",
+      "side": "right",
+      "role": "orbicularis-oris",
+      "note": "A portion of the lip is carried with the mouth angle as the smile widens.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-orbicularis-oris-muscle-l",
+      "name": "Orbicularis oris muscle",
+      "side": "left",
+      "role": "orbicularis-oris",
+      "note": "A portion of the lip is carried with the mouth angle as the smile widens.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-zygomaticus-major-muscle-r",
+      "name": "Zygomaticus major muscle",
+      "side": "right",
+      "role": "zygomaticus-major",
+      "note": "Draws the corner of the mouth upward and laterally.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-depressor-anguli-oris-r",
+      "name": "Depressor anguli oris",
+      "side": "right",
+      "role": "depressor-anguli-oris",
+      "note": "Its downward pull opposes the corner-raising direction.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-levator-anguli-oris-r",
+      "name": "Levator anguli oris",
+      "side": "right",
+      "role": "levator-anguli-oris",
+      "note": "Raises the mouth angle. This surface follows the modeled corner displacement.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-risorius-muscle-r",
+      "name": "Risorius muscle",
+      "side": "right",
+      "role": "risorius",
+      "note": "Draws the mouth corner laterally. Its actual recruitment varies.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-zygomaticus-minor-muscle-r",
+      "name": "Zygomaticus minor muscle",
+      "side": "right",
+      "role": "zygomaticus-minor",
+      "note": "Acts on the upper lip. The demonstration does not specify its recruitment.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-bucinator-r",
+      "name": "Buccinator muscle",
+      "side": "right",
+      "role": "buccinator",
+      "note": "Forms part of the cheek and blends near the corner of the mouth.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-zygomaticus-major-muscle-l",
+      "name": "Zygomaticus major muscle",
+      "side": "left",
+      "role": "zygomaticus-major",
+      "note": "Draws the corner of the mouth upward and laterally.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-depressor-anguli-oris-l",
+      "name": "Depressor anguli oris",
+      "side": "left",
+      "role": "depressor-anguli-oris",
+      "note": "Its downward pull opposes the corner-raising direction.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-levator-anguli-oris-l",
+      "name": "Levator anguli oris",
+      "side": "left",
+      "role": "levator-anguli-oris",
+      "note": "Raises the mouth angle. This surface follows the modeled corner displacement.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-risorius-muscle-l",
+      "name": "Risorius muscle",
+      "side": "left",
+      "role": "risorius",
+      "note": "Draws the mouth corner laterally. Its actual recruitment varies.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-zygomaticus-minor-muscle-l",
+      "name": "Zygomaticus minor muscle",
+      "side": "left",
+      "role": "zygomaticus-minor",
+      "note": "Acts on the upper lip. The demonstration does not specify its recruitment.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-bucinator-l",
+      "name": "Buccinator muscle",
+      "side": "left",
+      "role": "buccinator",
+      "note": "Forms part of the cheek and blends near the corner of the mouth.",
+      "modeling": "authored-deformation"
+    }
+  ],
+  "clips": [
+    {
+      "id": "smile",
+      "name": "Smile",
+      "duration": 3.6,
+      "morphTracks": {
+        "Smile": [
+          [
+            0,
+            0
+          ],
+          [
+            0.32,
+            0
+          ],
+          [
+            1.25,
+            1
+          ],
+          [
+            2.0,
+            1
+          ],
+          [
+            3.2,
+            0
+          ],
+          [
+            3.6,
+            0
+          ]
+        ]
+      },
+      "phases": [
+        {
+          "start": 0,
+          "label": "Neutral rest",
+          "detail": "Compare the muscle paths from the cheek and jaw to the corner of the mouth.",
+          "active": [],
+          "opposes": []
+        },
+        {
+          "start": 0.32,
+          "label": "Raise the mouth corners",
+          "detail": "The zygomaticus major draws the corner upward and outward. The depressor anguli oris has the opposing direction.",
+          "active": [
+            "zygomaticus-major"
+          ],
+          "opposes": [
+            "depressor-anguli-oris"
+          ]
+        },
+        {
+          "start": 1.25,
+          "label": "Hold the smile",
+          "detail": "The lifted corner changes the shape of nearby muscles. Only the main taught contributor is colored for activity.",
+          "active": [
+            "zygomaticus-major"
+          ],
+          "opposes": [
+            "depressor-anguli-oris"
+          ]
+        },
+        {
+          "start": 2.0,
+          "label": "Relax to neutral",
+          "detail": "The corner returns toward its resting position as the demonstration releases.",
+          "active": [],
+          "opposes": []
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "muscle-orbicularis-oris-muscle-r": {
+      "Smile": {
+        "maxDisplacementMm": 12.508,
+        "medianDisplacementMm": 2.672,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 9.468,
+        "edgeLengthRatio95": 1.365
+      }
+    },
+    "muscle-orbicularis-oris-muscle-l": {
+      "Smile": {
+        "maxDisplacementMm": 12.508,
+        "medianDisplacementMm": 2.672,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 9.468,
+        "edgeLengthRatio95": 1.365
+      }
+    },
+    "muscle-zygomaticus-major-muscle-r": {
+      "Smile": {
+        "maxDisplacementMm": 12.548,
+        "medianDisplacementMm": 7.697,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 9.499,
+        "edgeLengthRatio95": 1.079
+      }
+    },
+    "muscle-depressor-anguli-oris-r": {
+      "Smile": {
+        "maxDisplacementMm": 12.489,
+        "medianDisplacementMm": 0.561,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 9.454,
+        "edgeLengthRatio95": 1.469
+      }
+    },
+    "muscle-levator-anguli-oris-r": {
+      "Smile": {
+        "maxDisplacementMm": 3.066,
+        "medianDisplacementMm": 0.247,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 2.321,
+        "edgeLengthRatio95": 1.2
+      }
+    },
+    "muscle-risorius-muscle-r": {
+      "Smile": {
+        "maxDisplacementMm": 12.496,
+        "medianDisplacementMm": 2.871,
+        "minVerticalMm": 1.259,
+        "maxVerticalMm": 9.46,
+        "edgeLengthRatio95": 1.162
+      }
+    },
+    "muscle-zygomaticus-minor-muscle-r": {
+      "Smile": {
+        "maxDisplacementMm": 3.473,
+        "medianDisplacementMm": 0.943,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 2.629,
+        "edgeLengthRatio95": 1.084
+      }
+    },
+    "muscle-bucinator-r": {
+      "Smile": {
+        "maxDisplacementMm": 12.52,
+        "medianDisplacementMm": 7.457,
+        "minVerticalMm": 0.937,
+        "maxVerticalMm": 9.477,
+        "edgeLengthRatio95": 1.251
+      }
+    },
+    "muscle-zygomaticus-major-muscle-l": {
+      "Smile": {
+        "maxDisplacementMm": 12.548,
+        "medianDisplacementMm": 7.697,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 9.499,
+        "edgeLengthRatio95": 1.079
+      }
+    },
+    "muscle-depressor-anguli-oris-l": {
+      "Smile": {
+        "maxDisplacementMm": 12.489,
+        "medianDisplacementMm": 0.562,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 9.454,
+        "edgeLengthRatio95": 1.469
+      }
+    },
+    "muscle-levator-anguli-oris-l": {
+      "Smile": {
+        "maxDisplacementMm": 3.066,
+        "medianDisplacementMm": 0.247,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 2.321,
+        "edgeLengthRatio95": 1.2
+      }
+    },
+    "muscle-risorius-muscle-l": {
+      "Smile": {
+        "maxDisplacementMm": 12.496,
+        "medianDisplacementMm": 2.871,
+        "minVerticalMm": 1.259,
+        "maxVerticalMm": 9.46,
+        "edgeLengthRatio95": 1.162
+      }
+    },
+    "muscle-zygomaticus-minor-muscle-l": {
+      "Smile": {
+        "maxDisplacementMm": 3.473,
+        "medianDisplacementMm": 0.944,
+        "minVerticalMm": 0.0,
+        "maxVerticalMm": 2.629,
+        "edgeLengthRatio95": 1.084
+      }
+    },
+    "muscle-bucinator-l": {
+      "Smile": {
+        "maxDisplacementMm": 12.52,
+        "medianDisplacementMm": 7.457,
+        "minVerticalMm": 0.937,
+        "maxVerticalMm": 9.477,
+        "edgeLengthRatio95": 1.251
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "file": "skeleton.glb",
+      "sha256": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb"
+    },
+    {
+      "file": "muscles-head-neck.glb",
+      "sha256": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2"
+    },
+    {
+      "file": "MODEL-LICENSE.md",
+      "sha256": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+    },
+    {
+      "file": "muscle-models.json",
+      "sha256": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7"
+    }
+  ]
+}

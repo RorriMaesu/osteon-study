@@ -24,5 +24,9 @@
   "motion-gait": "ef24ceb383e2",
   "motion-walk-context": "e59a7dff8366",
   "motion-leg-actions": "2edf622d5d03",
+  "motion-blink": "c201cd9e5538",
+  "motion-breath": "cdb2cc2369d9",
+  "motion-jaw": "a4a88383fd7c",
+  "motion-smile": "7eebda037295",
   "motion-walk-muscles": "fe4ef3f07244"
 }

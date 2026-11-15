@@ -1,0 +1,449 @@
+{
+  "schema": 1,
+  "region": "jaw",
+  "asset": "motion-jaw.glb",
+  "sha256": "8763ce67092eb61b1b2c1a041ce2c0c7b476302ec7ee68b8827e4b911ff666d1",
+  "bytes": 858880,
+  "camera": {
+    "target": [
+      0,
+      1.541,
+      0.034
+    ],
+    "direction": [
+      0.89,
+      0.1,
+      0.74
+    ],
+    "diameter": 0.185
+  },
+  "sources": {
+    "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back",
+    "study": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/",
+    "detail": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12553608/"
+  },
+  "evidence": "Authored teaching deformation",
+  "scope": "Bilateral symmetric teaching motion from registered jaw anatomy. The fixed hyoid simplifies suprahyoid stabilization. Disc deformation, bite forces, tongue movement and hyoid motion are outside the model.",
+  "components": [
+    {
+      "id": "muscle-superficial-part-of-masseter-r",
+      "name": "Superficial part of masseter",
+      "side": "right",
+      "role": "masseter-superficial",
+      "note": "Elevates the mandible during jaw closing.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-deep-part-of-masseter-r",
+      "name": "Deep part of masseter",
+      "side": "right",
+      "role": "masseter-deep",
+      "note": "Assists mandibular elevation.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-superficial-part-of-masseter-l",
+      "name": "Superficial part of masseter",
+      "side": "left",
+      "role": "masseter-superficial",
+      "note": "Elevates the mandible during jaw closing.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-deep-part-of-masseter-l",
+      "name": "Deep part of masseter",
+      "side": "left",
+      "role": "masseter-deep",
+      "note": "Assists mandibular elevation.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-medial-pterygoid-muscle-r",
+      "name": "Medial pterygoid muscle",
+      "side": "right",
+      "role": "medial-pterygoid",
+      "note": "Assists elevation and can contribute to protrusion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-medial-pterygoid-muscle-l",
+      "name": "Medial pterygoid muscle",
+      "side": "left",
+      "role": "medial-pterygoid",
+      "note": "Assists elevation and can contribute to protrusion.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-inferior-head-of-lateral-pterygoid-muscle-r",
+      "name": "Inferior head of lateral pterygoid muscle",
+      "side": "right",
+      "role": "lateral-pterygoid-inferior",
+      "note": "Helps draw the condyle forward during opening.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-superior-head-of-lateral-pterygoid-muscle-r",
+      "name": "Superior head of lateral pterygoid muscle",
+      "side": "right",
+      "role": "lateral-pterygoid-superior",
+      "note": "The disc-associated head is shown as regional context.",
+      "modeling": "static-context"
+    },
+    {
+      "id": "muscle-inferior-head-of-lateral-pterygoid-muscle-l",
+      "name": "Inferior head of lateral pterygoid muscle",
+      "side": "left",
+      "role": "lateral-pterygoid-inferior",
+      "note": "Helps draw the condyle forward during opening.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-superior-head-of-lateral-pterygoid-muscle-l",
+      "name": "Superior head of lateral pterygoid muscle",
+      "side": "left",
+      "role": "lateral-pterygoid-superior",
+      "note": "The disc-associated head is shown as regional context.",
+      "modeling": "static-context"
+    },
+    {
+      "id": "muscle-temporalis-muscle-r",
+      "name": "Temporalis muscle",
+      "side": "right",
+      "role": "temporalis",
+      "note": "Elevates the mandible; some posterior fibers can also retract it.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-temporalis-muscle-l",
+      "name": "Temporalis muscle",
+      "side": "left",
+      "role": "temporalis",
+      "note": "Elevates the mandible; some posterior fibers can also retract it.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-anterior-belly-of-digastric-muscle-r",
+      "name": "Anterior belly of digastric muscle",
+      "side": "right",
+      "role": "digastric-anterior",
+      "note": "Helps depress the mandible when the hyoid is stabilized.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-posterior-belly-of-digastric-muscle-r",
+      "name": "Posterior belly of digastric muscle",
+      "side": "right",
+      "role": "digastric-posterior",
+      "note": "Acts on the hyoid. It is shown as regional context.",
+      "modeling": "static-context"
+    },
+    {
+      "id": "muscle-anterior-belly-of-digastric-muscle-l",
+      "name": "Anterior belly of digastric muscle",
+      "side": "left",
+      "role": "digastric-anterior",
+      "note": "Helps depress the mandible when the hyoid is stabilized.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-posterior-belly-of-digastric-muscle-l",
+      "name": "Posterior belly of digastric muscle",
+      "side": "left",
+      "role": "digastric-posterior",
+      "note": "Acts on the hyoid. It is shown as regional context.",
+      "modeling": "static-context"
+    },
+    {
+      "id": "muscle-mylohyoid-muscle-r",
+      "name": "Mylohyoid muscle",
+      "side": "right",
+      "role": "mylohyoid",
+      "note": "Forms the floor of the mouth and can assist mandibular depression with the hyoid fixed.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-geniohyoid-muscle-r",
+      "name": "Geniohyoid muscle",
+      "side": "right",
+      "role": "geniohyoid",
+      "note": "Can help depress the mandible with the hyoid stabilized.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-mylohyoid-muscle-l",
+      "name": "Mylohyoid muscle",
+      "side": "left",
+      "role": "mylohyoid",
+      "note": "Forms the floor of the mouth and can assist mandibular depression with the hyoid fixed.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-geniohyoid-muscle-l",
+      "name": "Geniohyoid muscle",
+      "side": "left",
+      "role": "geniohyoid",
+      "note": "Can help depress the mandible with the hyoid stabilized.",
+      "modeling": "authored-deformation"
+    }
+  ],
+  "clips": [
+    {
+      "id": "jaw",
+      "name": "Jaw opening and closing",
+      "duration": 3.4,
+      "morphTracks": {
+        "JawOpen": [
+          [
+            0,
+            0
+          ],
+          [
+            0.28,
+            0
+          ],
+          [
+            1.38,
+            1
+          ],
+          [
+            1.85,
+            1
+          ],
+          [
+            2.99,
+            0
+          ],
+          [
+            3.4,
+            0
+          ]
+        ]
+      },
+      "phases": [
+        {
+          "start": 0,
+          "label": "Jaw closed",
+          "detail": "The mandible sits beneath the maxilla.",
+          "active": [],
+          "opposes": []
+        },
+        {
+          "start": 0.28,
+          "label": "Opening",
+          "detail": "The condyles rotate and glide forward and down. The inferior lateral pterygoid and suprahyoids assist opening with the hyoid stabilized.",
+          "active": [
+            "lateral-pterygoid-inferior",
+            "digastric-anterior",
+            "geniohyoid",
+            "mylohyoid"
+          ],
+          "opposes": [
+            "masseter-superficial",
+            "masseter-deep",
+            "temporalis",
+            "medial-pterygoid"
+          ]
+        },
+        {
+          "start": 1.38,
+          "label": "Open pose",
+          "detail": "Inspect the position of the mandibular condyle relative to the temporal bone and the changed paths of the jaw muscles.",
+          "active": [],
+          "opposes": []
+        },
+        {
+          "start": 1.85,
+          "label": "Closing",
+          "detail": "The masseter, temporalis and medial pterygoid elevate the mandible as it returns toward the maxilla.",
+          "active": [
+            "masseter-superficial",
+            "masseter-deep",
+            "temporalis",
+            "medial-pterygoid"
+          ],
+          "opposes": [
+            "lateral-pterygoid-inferior",
+            "digastric-anterior",
+            "geniohyoid",
+            "mylohyoid"
+          ]
+        },
+        {
+          "start": 2.99,
+          "label": "Jaw closed",
+          "detail": "The closing movement is complete.",
+          "active": [],
+          "opposes": []
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "muscle-superficial-part-of-masseter-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 15.988,
+        "medianDisplacementMm": 4.786,
+        "minVerticalMm": -12.96,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.281
+      }
+    },
+    "muscle-deep-part-of-masseter-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 15.414,
+        "medianDisplacementMm": 4.487,
+        "minVerticalMm": -12.262,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.191
+      }
+    },
+    "muscle-superficial-part-of-masseter-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 15.988,
+        "medianDisplacementMm": 4.786,
+        "minVerticalMm": -12.96,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.281
+      }
+    },
+    "muscle-deep-part-of-masseter-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 15.414,
+        "medianDisplacementMm": 4.487,
+        "minVerticalMm": -12.262,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.191
+      }
+    },
+    "muscle-medial-pterygoid-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.191,
+        "medianDisplacementMm": 4.286,
+        "minVerticalMm": -7.363,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.228
+      }
+    },
+    "muscle-medial-pterygoid-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 8.191,
+        "medianDisplacementMm": 4.286,
+        "minVerticalMm": -7.363,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.228
+      }
+    },
+    "muscle-inferior-head-of-lateral-pterygoid-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 9.975,
+        "medianDisplacementMm": 2.114,
+        "minVerticalMm": -6.002,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.027
+      }
+    },
+    "muscle-inferior-head-of-lateral-pterygoid-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 9.975,
+        "medianDisplacementMm": 2.114,
+        "minVerticalMm": -6.002,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.027
+      }
+    },
+    "muscle-temporalis-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 16.816,
+        "medianDisplacementMm": 3.873,
+        "minVerticalMm": -16.066,
+        "maxVerticalMm": 0.379,
+        "edgeLengthRatio95": 1.253
+      }
+    },
+    "muscle-temporalis-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 16.85,
+        "medianDisplacementMm": 3.858,
+        "minVerticalMm": -16.074,
+        "maxVerticalMm": 0.352,
+        "edgeLengthRatio95": 1.254
+      }
+    },
+    "muscle-anterior-belly-of-digastric-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 23.026,
+        "medianDisplacementMm": 14.322,
+        "minVerticalMm": -18.323,
+        "maxVerticalMm": -0.022,
+        "edgeLengthRatio95": 1.083
+      }
+    },
+    "muscle-anterior-belly-of-digastric-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 23.025,
+        "medianDisplacementMm": 14.309,
+        "minVerticalMm": -18.323,
+        "maxVerticalMm": -0.019,
+        "edgeLengthRatio95": 1.084
+      }
+    },
+    "muscle-mylohyoid-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 23.797,
+        "medianDisplacementMm": 8.105,
+        "minVerticalMm": -19.113,
+        "maxVerticalMm": -0.023,
+        "edgeLengthRatio95": 1.077
+      }
+    },
+    "muscle-geniohyoid-muscle-r": {
+      "JawOpen": {
+        "maxDisplacementMm": 22.557,
+        "medianDisplacementMm": 2.635,
+        "minVerticalMm": -18.564,
+        "maxVerticalMm": -0.002,
+        "edgeLengthRatio95": 1.021
+      }
+    },
+    "muscle-mylohyoid-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 23.797,
+        "medianDisplacementMm": 8.075,
+        "minVerticalMm": -19.113,
+        "maxVerticalMm": -0.03,
+        "edgeLengthRatio95": 1.081
+      }
+    },
+    "muscle-geniohyoid-muscle-l": {
+      "JawOpen": {
+        "maxDisplacementMm": 22.558,
+        "medianDisplacementMm": 2.642,
+        "minVerticalMm": -18.565,
+        "maxVerticalMm": -0.002,
+        "edgeLengthRatio95": 1.02
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "file": "skeleton.glb",
+      "sha256": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb"
+    },
+    {
+      "file": "muscles-head-neck.glb",
+      "sha256": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2"
+    },
+    {
+      "file": "MODEL-LICENSE.md",
+      "sha256": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+    },
+    {
+      "file": "muscle-models.json",
+      "sha256": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7"
+    },
+    {
+      "file": "three-d-landmarks.json",
+      "sha256": "aa336cfbaa55cb3ef0a2ac4fc9f1914c5998abf1f69a3856a3ac8c8ecb177bd5"
+    }
+  ]
+}

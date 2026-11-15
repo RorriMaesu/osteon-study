@@ -1,0 +1,217 @@
+{
+  "schema": 1,
+  "region": "blink",
+  "asset": "motion-blink.glb",
+  "sha256": "d6bac359fe643c9c21419125ef7886b4daf9be2506e2c5b76e942d8e762d69b0",
+  "bytes": 171804,
+  "camera": {
+    "target": [
+      0,
+      1.591,
+      0.062
+    ],
+    "direction": [
+      0.22,
+      0.08,
+      1
+    ],
+    "diameter": 0.162
+  },
+  "sources": {
+    "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back",
+    "study": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12358864/",
+    "detail": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4043155/"
+  },
+  "evidence": "Authored teaching deformation",
+  "scope": "Authored bilateral eyelid motion based on human blink studies. Atlas skin, eyelash, lid tarsal plate, globe and all other facial muscles are outside this model.",
+  "components": [
+    {
+      "id": "muscle-levator-palpebrae-superioris-r",
+      "name": "Levator palpebrae superioris",
+      "side": "right",
+      "role": "levator-palpebrae-superioris",
+      "note": "Raises the upper eyelid as it reopens.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-levator-palpebrae-superioris-l",
+      "name": "Levator palpebrae superioris",
+      "side": "left",
+      "role": "levator-palpebrae-superioris",
+      "note": "Raises the upper eyelid as it reopens.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-orbital-part-of-orbicularis-oculi-r",
+      "name": "Orbital part of orbicularis oculi",
+      "side": "right",
+      "role": "orbicularis-oculi-orbital",
+      "note": "Surrounds the orbital rim and assists forceful eye closure. Use it here for anatomical context.",
+      "modeling": "static-context"
+    },
+    {
+      "id": "muscle-palpebral-part-of-orbicularis-oculi-r",
+      "name": "Palpebral part of orbicularis oculi",
+      "side": "right",
+      "role": "orbicularis-oculi-palpebral",
+      "note": "Closes the eyelids.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-orbital-part-of-orbicularis-oculi-l",
+      "name": "Orbital part of orbicularis oculi",
+      "side": "left",
+      "role": "orbicularis-oculi-orbital",
+      "note": "Surrounds the orbital rim and assists forceful eye closure. Use it here for anatomical context.",
+      "modeling": "static-context"
+    },
+    {
+      "id": "muscle-palpebral-part-of-orbicularis-oculi-l",
+      "name": "Palpebral part of orbicularis oculi",
+      "side": "left",
+      "role": "orbicularis-oculi-palpebral",
+      "note": "Closes the eyelids.",
+      "modeling": "authored-deformation"
+    }
+  ],
+  "clips": [
+    {
+      "id": "blink",
+      "name": "Blink",
+      "duration": 1.2,
+      "morphTracks": {
+        "Blink": [
+          [
+            0,
+            0
+          ],
+          [
+            0.19,
+            0
+          ],
+          [
+            0.36,
+            1
+          ],
+          [
+            0.45,
+            1
+          ],
+          [
+            0.68,
+            0
+          ],
+          [
+            1.2,
+            0
+          ]
+        ]
+      },
+      "phases": [
+        {
+          "start": 0,
+          "label": "Eyes open",
+          "detail": "The levator raises and holds the upper eyelid. The orbital portion of orbicularis oculi is shown for orientation.",
+          "active": [
+            "levator-palpebrae-superioris"
+          ],
+          "opposes": []
+        },
+        {
+          "start": 0.19,
+          "label": "Closing",
+          "detail": "Palpebral orbicularis oculi closes the eyelids as the levator relaxes.",
+          "active": [
+            "orbicularis-oculi-palpebral"
+          ],
+          "opposes": [
+            "levator-palpebrae-superioris"
+          ]
+        },
+        {
+          "start": 0.36,
+          "label": "Peak closure",
+          "detail": "The upper margin descends farther than the lower margin rises.",
+          "active": [],
+          "opposes": []
+        },
+        {
+          "start": 0.45,
+          "label": "Reopening",
+          "detail": "The levator raises the upper eyelid as the closer releases.",
+          "active": [
+            "levator-palpebrae-superioris"
+          ],
+          "opposes": [
+            "orbicularis-oculi-palpebral"
+          ]
+        },
+        {
+          "start": 0.68,
+          "label": "Eyes open",
+          "detail": "The levator maintains the raised upper eyelid.",
+          "active": [
+            "levator-palpebrae-superioris"
+          ],
+          "opposes": []
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "muscle-levator-palpebrae-superioris-r": {
+      "Blink": {
+        "maxDisplacementMm": 7.752,
+        "medianDisplacementMm": 7.443,
+        "minVerticalMm": -7.7,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.092
+      }
+    },
+    "muscle-levator-palpebrae-superioris-l": {
+      "Blink": {
+        "maxDisplacementMm": 7.752,
+        "medianDisplacementMm": 7.443,
+        "minVerticalMm": -7.7,
+        "maxVerticalMm": 0.0,
+        "edgeLengthRatio95": 1.092
+      }
+    },
+    "muscle-palpebral-part-of-orbicularis-oculi-r": {
+      "Blink": {
+        "maxDisplacementMm": 12.396,
+        "medianDisplacementMm": 1.7,
+        "minVerticalMm": -12.329,
+        "maxVerticalMm": 8.004,
+        "edgeLengthRatio95": 1.071
+      }
+    },
+    "muscle-palpebral-part-of-orbicularis-oculi-l": {
+      "Blink": {
+        "maxDisplacementMm": 12.396,
+        "medianDisplacementMm": 1.7,
+        "minVerticalMm": -12.329,
+        "maxVerticalMm": 8.004,
+        "edgeLengthRatio95": 1.071
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "file": "skeleton.glb",
+      "sha256": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb"
+    },
+    {
+      "file": "muscles-head-neck.glb",
+      "sha256": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2"
+    },
+    {
+      "file": "MODEL-LICENSE.md",
+      "sha256": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+    },
+    {
+      "file": "muscle-models.json",
+      "sha256": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7"
+    }
+  ]
+}

@@ -163,6 +163,10 @@
 .motion-selection-guide circle{stroke:#f7f5dd;stroke-width:1.4;fill:#1b3233}
 [data-motion-selection-label]{position:absolute;z-index:2;transform:translate(-50%,-50%);pointer-events:none;width:max-content;max-width:min(210px,72%);border:1px solid #e6e4cd;border-radius:7px;background:#182c2bee;padding:4px 8px;color:#fffbea;font-size:11px;font-weight:700;text-align:center;line-height:1.2;overflow-wrap:anywhere}
 .motion-muscle-list button[data-role=antagonist]>span:first-child{color:#bec9ff}
+[data-cue=authored]{--motion-cue:#ffc897}
+[data-motion-opposing-cue]{color:#c5d0ff;font-size:10px;text-transform:uppercase;letter-spacing:.04em}
+[data-motion-opposing-cue][hidden],.motion-filter label[hidden]{display:none}
+[data-motion-breath-layer]{max-width:100%;min-height:31px;border:1px solid #45625e;border-radius:6px;background:#15282d;color:#e6f1eb;font:inherit;padding:3px 4px}
 .motion-walk-explorer{display:grid;grid-template-columns:minmax(0,1fr) minmax(96px,auto);gap:6px;margin:7px 0}
 .motion-walk-explorer[hidden],.motion-walk-pages[hidden]{display:none}
 .motion-walk-explorer label{display:grid;gap:3px;color:#c7d9d2;font-size:11px;min-width:0}

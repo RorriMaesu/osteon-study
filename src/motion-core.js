@@ -28,6 +28,7 @@ export const contractionCues={
  isometric:{label:'Holding tension',symbol:'='},
  eccentric:{label:'Lengthening under tension',symbol:'←→'},
  role:{label:'Possible agonists',symbol:'◇'},
+ authored:{label:'Agonists in this lesson',symbol:'●'},
  unavailable:{label:'Agonist geometry unavailable',symbol:'○'},
  emg:{label:'Recorded surface EMG',symbol:'▂▅'},
 };

@@ -1,0 +1,555 @@
+{
+  "schema": 1,
+  "region": "breath",
+  "asset": "motion-breath.glb",
+  "sha256": "4eb5571bb28c0abbc76f60a470a2390ef9bc28c01a1045c052b05794c5e7cd83",
+  "bytes": 5172168,
+  "camera": {
+    "target": [
+      0,
+      1.128,
+      0.015
+    ],
+    "direction": [
+      0.74,
+      0.12,
+      1
+    ],
+    "diameter": 0.66
+  },
+  "sources": {
+    "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/22-3-the-process-of-breathing",
+    "study": "https://pubmed.ncbi.nlm.nih.gov/27989446/",
+    "detail": "https://journals.physiology.org/doi/10.1152/physrev.00007.2004",
+    "ribs": "https://journals.physiology.org/doi/10.1152/japplphysiol.01046.2020",
+    "parasternal": "https://pubmed.ncbi.nlm.nih.gov/6461619/"
+  },
+  "evidence": "Authored teaching deformation",
+  "scope": "Authored respiratory motion. The diaphragm itself deforms, the ribs rotate on posterior pivots, and intercostal geometry follows the nearest ribs. Abdominal-wall changes are teaching approximations. Regional intercostal recruitment, organ deformation, pressure, and individual forces are not simulated.",
+  "components": [
+    {
+      "id": "muscle-external-intercostal-muscles-r",
+      "name": "External intercostal muscles",
+      "side": "right",
+      "role": "external-intercostals",
+      "note": "Move with the adjacent ribs. Region-specific inspiratory contribution varies with task and interspace.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-internal-intercostal-muscles-r",
+      "name": "Internal intercostal muscles",
+      "side": "right",
+      "role": "internal-intercostals",
+      "note": "The parasternal portion assists inspiration, while many interosseous portions assist expiration. This mesh groups them.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-innermost-intercostal-muscles-r",
+      "name": "Innermost intercostal muscles",
+      "side": "right",
+      "role": "innermost-intercostals",
+      "note": "The deepest layer of the intercostal muscles follows the adjacent ribs.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-external-intercostal-muscles-l",
+      "name": "External intercostal muscles",
+      "side": "left",
+      "role": "external-intercostals",
+      "note": "Move with the adjacent ribs. Region-specific inspiratory contribution varies with task and interspace.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-internal-intercostal-muscles-l",
+      "name": "Internal intercostal muscles",
+      "side": "left",
+      "role": "internal-intercostals",
+      "note": "The parasternal portion assists inspiration, while many interosseous portions assist expiration. This mesh groups them.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-innermost-intercostal-muscles-l",
+      "name": "Innermost intercostal muscles",
+      "side": "left",
+      "role": "innermost-intercostals",
+      "note": "The deepest layer of the intercostal muscles follows the adjacent ribs.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-diaphragm",
+      "name": "Diaphragm",
+      "side": "midline",
+      "role": "diaphragm",
+      "note": "Its domes descend during inspiration. During forced expiration abdominal pressure displaces them upward.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-rectus-abdominis-muscle-r",
+      "name": "Rectus abdominis muscle",
+      "side": "right",
+      "role": "rectus-abdominis",
+      "note": "The abdominal wall helps drive forced expiration. It is shown following the motion of the abdomen during inspiration.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-rectus-abdominis-muscle-l",
+      "name": "Rectus abdominis muscle",
+      "side": "left",
+      "role": "rectus-abdominis",
+      "note": "The abdominal wall helps drive forced expiration. It is shown following the motion of the abdomen during inspiration.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-external-abdominal-oblique-muscle-r",
+      "name": "External abdominal oblique muscle",
+      "side": "right",
+      "role": "external-abdominal-oblique",
+      "note": "Compresses the abdomen during active expiration.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-external-abdominal-oblique-muscle-l",
+      "name": "External abdominal oblique muscle",
+      "side": "left",
+      "role": "external-abdominal-oblique",
+      "note": "Compresses the abdomen during active expiration.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-internal-abdominal-oblique-muscle-r",
+      "name": "Internal abdominal oblique muscle",
+      "side": "right",
+      "role": "internal-abdominal-oblique",
+      "note": "Compresses the abdomen during active expiration.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-internal-abdominal-oblique-muscle-l",
+      "name": "Internal abdominal oblique muscle",
+      "side": "left",
+      "role": "internal-abdominal-oblique",
+      "note": "Compresses the abdomen during active expiration.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-transversus-abdominis-muscle-r",
+      "name": "Transversus abdominis muscle",
+      "side": "right",
+      "role": "transversus-abdominis",
+      "note": "Draws the abdominal wall inward during active expiration.",
+      "modeling": "authored-deformation"
+    },
+    {
+      "id": "muscle-transversus-abdominis-muscle-l",
+      "name": "Transversus abdominis muscle",
+      "side": "left",
+      "role": "transversus-abdominis",
+      "note": "Draws the abdominal wall inward during active expiration.",
+      "modeling": "authored-deformation"
+    }
+  ],
+  "clips": [
+    {
+      "id": "quiet-breath",
+      "name": "Quiet breathing",
+      "duration": 4.8,
+      "morphTracks": {
+        "Inhale": [
+          [
+            0,
+            0
+          ],
+          [
+            1.8,
+            1
+          ],
+          [
+            2.02,
+            1
+          ],
+          [
+            4.5,
+            0
+          ],
+          [
+            4.8,
+            0
+          ]
+        ]
+      },
+      "phases": [
+        {
+          "start": 0,
+          "label": "Inspiration",
+          "detail": "The diaphragm contracts and its domes descend. Rib rotation widens and deepens the thorax. Different intercostal regions have different roles.",
+          "active": [
+            "diaphragm"
+          ],
+          "opposes": []
+        },
+        {
+          "start": 1.8,
+          "label": "End of inspiration",
+          "detail": "Compare the lower dome and expanded rib cage with the start of the breath.",
+          "active": [],
+          "opposes": []
+        },
+        {
+          "start": 2.02,
+          "label": "Passive expiration",
+          "detail": "The diaphragm relaxes and the chest wall recoils. The abdominal wall follows along in this quiet-breathing example.",
+          "active": [],
+          "opposes": []
+        }
+      ]
+    },
+    {
+      "id": "forced-expiration",
+      "name": "Forced expiration",
+      "duration": 4.8,
+      "morphTracks": {
+        "Inhale": [
+          [
+            0,
+            0
+          ],
+          [
+            1.65,
+            1
+          ],
+          [
+            1.85,
+            1
+          ],
+          [
+            2.8,
+            0
+          ],
+          [
+            4.8,
+            0
+          ]
+        ],
+        "ForcedExhale": [
+          [
+            0,
+            0
+          ],
+          [
+            2.8,
+            0
+          ],
+          [
+            3.7,
+            1
+          ],
+          [
+            3.95,
+            1
+          ],
+          [
+            4.8,
+            0
+          ]
+        ]
+      },
+      "phases": [
+        {
+          "start": 0,
+          "label": "Inspiration",
+          "detail": "The diaphragm contracts as the abdominal wall accommodates the movement.",
+          "active": [
+            "diaphragm"
+          ],
+          "opposes": [
+            "rectus-abdominis",
+            "external-abdominal-oblique",
+            "internal-abdominal-oblique",
+            "transversus-abdominis"
+          ]
+        },
+        {
+          "start": 1.85,
+          "label": "Forced expiration",
+          "detail": "The abdominal muscles draw the wall inward. Rising abdominal pressure displaces the relaxed diaphragm upward. Intercostal recruitment varies by region.",
+          "active": [
+            "rectus-abdominis",
+            "external-abdominal-oblique",
+            "internal-abdominal-oblique",
+            "transversus-abdominis"
+          ],
+          "opposes": [
+            "diaphragm"
+          ]
+        },
+        {
+          "start": 3.95,
+          "label": "Release",
+          "detail": "The model returns to neutral as the expiratory effort ends.",
+          "active": [],
+          "opposes": []
+        }
+      ]
+    }
+  ],
+  "checks": {
+    "muscle-external-intercostal-muscles-r": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 6.522,
+        "medianDisplacementMm": 2.262,
+        "minVerticalMm": -5.084,
+        "maxVerticalMm": 0.232,
+        "edgeLengthRatio95": 1.026
+      },
+      "Inhale": {
+        "maxDisplacementMm": 10.868,
+        "medianDisplacementMm": 3.77,
+        "minVerticalMm": -0.351,
+        "maxVerticalMm": 8.677,
+        "edgeLengthRatio95": 1.019
+      }
+    },
+    "muscle-internal-intercostal-muscles-r": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 7.412,
+        "medianDisplacementMm": 3.632,
+        "minVerticalMm": -5.036,
+        "maxVerticalMm": 0.003,
+        "edgeLengthRatio95": 1.022
+      },
+      "Inhale": {
+        "maxDisplacementMm": 12.352,
+        "medianDisplacementMm": 6.053,
+        "minVerticalMm": 0.012,
+        "maxVerticalMm": 8.631,
+        "edgeLengthRatio95": 1.065
+      }
+    },
+    "muscle-innermost-intercostal-muscles-r": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 6.561,
+        "medianDisplacementMm": 3.37,
+        "minVerticalMm": -4.959,
+        "maxVerticalMm": -0.204,
+        "edgeLengthRatio95": 1.018
+      },
+      "Inhale": {
+        "maxDisplacementMm": 10.934,
+        "medianDisplacementMm": 5.616,
+        "minVerticalMm": 0.39,
+        "maxVerticalMm": 8.474,
+        "edgeLengthRatio95": 1.062
+      }
+    },
+    "muscle-external-intercostal-muscles-l": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 6.522,
+        "medianDisplacementMm": 2.262,
+        "minVerticalMm": -5.088,
+        "maxVerticalMm": 0.232,
+        "edgeLengthRatio95": 1.026
+      },
+      "Inhale": {
+        "maxDisplacementMm": 10.868,
+        "medianDisplacementMm": 3.77,
+        "minVerticalMm": -0.351,
+        "maxVerticalMm": 8.684,
+        "edgeLengthRatio95": 1.019
+      }
+    },
+    "muscle-internal-intercostal-muscles-l": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 7.412,
+        "medianDisplacementMm": 3.619,
+        "minVerticalMm": -5.039,
+        "maxVerticalMm": 0.004,
+        "edgeLengthRatio95": 1.022
+      },
+      "Inhale": {
+        "maxDisplacementMm": 12.353,
+        "medianDisplacementMm": 6.031,
+        "minVerticalMm": 0.012,
+        "maxVerticalMm": 8.634,
+        "edgeLengthRatio95": 1.065
+      }
+    },
+    "muscle-innermost-intercostal-muscles-l": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 6.563,
+        "medianDisplacementMm": 3.368,
+        "minVerticalMm": -4.964,
+        "maxVerticalMm": -0.204,
+        "edgeLengthRatio95": 1.018
+      },
+      "Inhale": {
+        "maxDisplacementMm": 10.937,
+        "medianDisplacementMm": 5.614,
+        "minVerticalMm": 0.39,
+        "maxVerticalMm": 8.482,
+        "edgeLengthRatio95": 1.063
+      }
+    },
+    "muscle-diaphragm": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 7.979,
+        "medianDisplacementMm": 3.939,
+        "minVerticalMm": -4.847,
+        "maxVerticalMm": 7.968,
+        "edgeLengthRatio95": 1.056
+      },
+      "Inhale": {
+        "maxDisplacementMm": 16.015,
+        "medianDisplacementMm": 6.824,
+        "minVerticalMm": -16.0,
+        "maxVerticalMm": 8.354,
+        "edgeLengthRatio95": 1.089
+      }
+    },
+    "muscle-rectus-abdominis-muscle-r": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.069,
+        "medianDisplacementMm": 7.649,
+        "minVerticalMm": -4.53,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.007
+      },
+      "Inhale": {
+        "maxDisplacementMm": 8.701,
+        "medianDisplacementMm": 5.976,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 7.694,
+        "edgeLengthRatio95": 1.089
+      }
+    },
+    "muscle-rectus-abdominis-muscle-l": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.069,
+        "medianDisplacementMm": 7.651,
+        "minVerticalMm": -4.53,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.007
+      },
+      "Inhale": {
+        "maxDisplacementMm": 8.699,
+        "medianDisplacementMm": 5.976,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 7.693,
+        "edgeLengthRatio95": 1.089
+      }
+    },
+    "muscle-external-abdominal-oblique-muscle-r": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.503,
+        "medianDisplacementMm": 6.561,
+        "minVerticalMm": -4.729,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.005
+      },
+      "Inhale": {
+        "maxDisplacementMm": 9.047,
+        "medianDisplacementMm": 5.903,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 8.034,
+        "edgeLengthRatio95": 1.087
+      }
+    },
+    "muscle-external-abdominal-oblique-muscle-l": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.503,
+        "medianDisplacementMm": 6.562,
+        "minVerticalMm": -4.728,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.005
+      },
+      "Inhale": {
+        "maxDisplacementMm": 9.045,
+        "medianDisplacementMm": 5.903,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 8.032,
+        "edgeLengthRatio95": 1.087
+      }
+    },
+    "muscle-internal-abdominal-oblique-muscle-r": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.404,
+        "medianDisplacementMm": 8.211,
+        "minVerticalMm": -3.326,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.006
+      },
+      "Inhale": {
+        "maxDisplacementMm": 7.095,
+        "medianDisplacementMm": 5.9,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 5.739,
+        "edgeLengthRatio95": 1.059
+      }
+    },
+    "muscle-internal-abdominal-oblique-muscle-l": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.404,
+        "medianDisplacementMm": 8.211,
+        "minVerticalMm": -3.326,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.006
+      },
+      "Inhale": {
+        "maxDisplacementMm": 7.096,
+        "medianDisplacementMm": 5.901,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 5.74,
+        "edgeLengthRatio95": 1.059
+      }
+    },
+    "muscle-transversus-abdominis-muscle-r": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.422,
+        "medianDisplacementMm": 5.37,
+        "minVerticalMm": -3.377,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.003
+      },
+      "Inhale": {
+        "maxDisplacementMm": 7.278,
+        "medianDisplacementMm": 4.421,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 5.907,
+        "edgeLengthRatio95": 1.07
+      }
+    },
+    "muscle-transversus-abdominis-muscle-l": {
+      "ForcedExhale": {
+        "maxDisplacementMm": 9.422,
+        "medianDisplacementMm": 5.362,
+        "minVerticalMm": -3.38,
+        "maxVerticalMm": 2.5,
+        "edgeLengthRatio95": 1.003
+      },
+      "Inhale": {
+        "maxDisplacementMm": 7.285,
+        "medianDisplacementMm": 4.418,
+        "minVerticalMm": -1.9,
+        "maxVerticalMm": 5.913,
+        "edgeLengthRatio95": 1.07
+      }
+    }
+  },
+  "sourceFiles": [
+    {
+      "file": "skeleton.glb",
+      "sha256": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb"
+    },
+    {
+      "file": "muscles-trunk-back.glb",
+      "sha256": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b"
+    },
+    {
+      "file": "MODEL-LICENSE.md",
+      "sha256": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624"
+    },
+    {
+      "file": "muscle-models.json",
+      "sha256": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7"
+    }
+  ]
+}

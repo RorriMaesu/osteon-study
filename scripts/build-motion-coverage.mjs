@@ -6,6 +6,7 @@ import {runInNewContext} from 'node:vm';
 import {fileURLToPath} from 'node:url';
 import {auditMuscleCoverage,muscleTermKey} from '../src/muscle-coverage.js';
 import {courseMuscleTargets} from '../src/muscle-spatial-data.js';
+import {regionalLessons} from '../src/motion-regional.js';
 
 const repoURL = new URL('../',import.meta.url);
 const assetURL = new URL('../assets/',import.meta.url);
@@ -343,7 +344,7 @@ function dracoJoints(ext,doc,bin,lib,decoder,out){
  }
 }
 
-function inspectSkin(node,doc,bin,lib,decoder){
+function inspectSkin(node,doc,bin,lib,decoder,trackNames){
  const mesh=doc.meshes[node.mesh],joints=new Set();
  const skin=doc.skins?.[node.skin];
  const bound=skin&&mesh.primitives.every(({extensions,attributes})=>{
@@ -354,6 +355,7 @@ function inspectSkin(node,doc,bin,lib,decoder){
  const targetName=node.extras.motionHeelDeformation||node.extras.motionDeformationTarget;
  const activeMorph=hasMorph&&(
   (targetName&&(mesh.extras?.targetNames||[]).includes(targetName))||
+  (mesh.extras?.targetNames||[]).some(name=>trackNames?.has(name))||
   (doc.animations||[]).some(a=>a.channels.some(c=>c.target.path==='weights'&&doc.nodes[c.target.node]===node))
  );
  const deformation=[];
@@ -387,6 +389,9 @@ async function motionParts(byID){
     .map(node=>node.extras?.motionHeelReplacement).filter(Boolean)
   );
   for(const {file,doc,bin} of rigs){
+   const regional=Object.entries(regionalLessons).find(([,entry])=>entry.asset+'.glb'===file);
+   const study=regional?sourceJSON('assets/'+regional[1].asset+'.json'):null;
+   const trackNames=study?new Set(study.clips.flatMap(clip=>Object.keys(clip.morphTracks))):null;
    for(const node of doc.nodes||[]){
     const info=node.extras;
     if(node.mesh===undefined||!(info?.motionMuscle||info?.walkRegion))continue;
@@ -399,10 +404,14 @@ async function motionParts(byID){
      modes:['walk'],
      evidence:['walk-anatomical-context'],
      qualification:info.walkDeformation==='guided-blend'?'Follows the pose with a guided skin blend. No activity was recorded for this part.':'Follows one moving body segment. No activity was recorded for this part.',
+    }:study?{
+     modes:['regional-action'],lesson:regional[0],
+     evidence:[info.motionModeling==='static-context'?'regional-context':'authored-regional-motion'],
+     qualification:study.components.find(part=>part.id===info.muscleId)?.note,
     }:motionEvidence(file,info.motionMuscle,heelReplacements.has(node.name));
     const displayName=atlas?.geometryReview?.displayName||atlas?.name||info.motionPart||node.name;
     parts.push({id:info.motionMuscle||info.muscleId,atlasId:atlas?.id||null,name:displayName,
-     node:node.name,side,region,asset:file,...inspectSkin(node,doc,bin,lib,decoder),...evidence});
+     node:node.name,side,region,asset:file,...inspectSkin(node,doc,bin,lib,decoder,trackNames),...evidence});
    }
   }
  }finally{lib.destroy(decoder);}

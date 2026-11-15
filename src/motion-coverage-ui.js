@@ -17,10 +17,10 @@ const labelStatus={
  'partial-model':'Partial model','needs-anatomical-review':'Anatomy review needed',
  'atlas-inventory':'Named in atlas','course-only':'Course target under review',
 };
-const evidenceLabel={'pose-context':'Pose context','textbook-contraction':'Textbook example','recorded-surface-emg':'Recorded EMG','walk-anatomical-context':'Walk context'};
+const evidenceLabel={'pose-context':'Pose context','textbook-contraction':'Textbook example','recorded-surface-emg':'Recorded EMG','walk-anatomical-context':'Walk context','regional-context':'Lesson context','authored-regional-motion':'Authored lesson movement'};
 const parts=(row,kind)=>Object.values(row[kind]||{}).flat();
 const missing=row=>!['named-geometry','represented-by-components','atlas-inventory'].includes(row.atlasStatus);
-const studyMotion=part=>!part.evidence?.includes('walk-anatomical-context');
+const studyMotion=part=>!part.evidence?.some(evidence=>evidence==='walk-anatomical-context'||evidence==='regional-context');
 function hasPartialMotion(row){
  const motion=parts(row,'motion').filter(studyMotion);
  const covered=new Set(motion.map(part=>part.atlasId));
@@ -29,7 +29,7 @@ function hasPartialMotion(row){
 function motionLink(part){
  const walk=part.modes.includes('walk');
  const heel=part.modes.includes('heel-raise')&&!walk;
- const parameters=new URLSearchParams({motionPart:part.atlasId,motionMode:walk?'walk':'actions',motionLesson:heel?'heel':'curl',motionSide:part.side});
+ const parameters=new URLSearchParams({motionPart:part.atlasId,motionMode:walk?'walk':'actions',motionLesson:part.lesson||(heel?'heel':'curl'),motionSide:part.side});
  return './?'+parameters+'#motion';
 }
 const filterMatches={
@@ -70,7 +70,7 @@ function tagsFor(parent,row){
  if(missing(row))chip(parent,'Review','gap');
  else if(atlas.length)chip(parent,'Atlas');
  if(motion.some(studyMotion))chip(parent,hasPartialMotion(row)?'Partial study motion':'Study motion','moving');
- else if(motion.length)chip(parent,'Walk context');
+ else if(motion.length)chip(parent,motion.some(part=>part.modes.includes('walk'))?'Walk context':'Lesson context');
  if(row.course)chip(parent,'Course','course');
  if(filterMatches.variants(row))chip(parent,'Variant / scope');
 }
