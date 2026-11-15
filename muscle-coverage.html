@@ -24,7 +24,7 @@
    <label>Find a muscle <input type="search" id="coverage-search" placeholder="Name, head or part" autocomplete="off"></label>
    <label>Region <select id="coverage-region"><option value="">All regions</option></select></label>
    <label>Coverage <select id="coverage-filter">
-     <option value="">All entries</option><option value="course">Course list</option><option value="moving">Has a motion mesh</option>
+     <option value="">All entries</option><option value="course">Course list</option><option value="moving">Has a study motion</option><option value="walk">Appears in the walk cycle</option>
      <option value="gap">Atlas gap or review needed</option><option value="variants">Variant or sex-specific</option>
    </select></label>
   </form>
@@ -39,12 +39,14 @@
   <summary>How to read this inventory</summary>
   <p id="coverage-scope"></p>
   <p>The 380 checks cover named skeletal muscles and contractile subdivisions in FIPAT’s muscular-system chapter, plus a separate clinical check for puborectalis. The inventory also tracks all 61 course targets.</p>
-  <p>A static match confirms that a named surface can be found in the atlas. Motion coverage refers to geometry in a shipped rig. Each item shows the evidence available for its movement.</p>
+  <p>A static match identifies a named surface in the atlas. Walk context moves with the body and may use a guided blend. Study motions show specific joint movement or recorded activity. Each row shows the evidence for its individual parts.</p>
   <div id="coverage-sources"></div>
  </details>
  <details class="coverage-method">
   <summary>Release history</summary>
   <ol class="coverage-releases">
+   <li><strong>Full-body walk anatomy.</strong> Inspect all 476 atlas muscle surfaces in the walk cycle, with limb isolation and separate recorded activity.</li>
+   <li><a href="https://github.com/RorriMaesu/osteon-study/commit/da493ddbad915cd0306b76469189d8c79089b9ea">Individual labels and roles.</a> Added exact muscle and head selection, antagonist roles, and a same-angle exercise comparison.</li>
    <li><strong>Deep neck review.</strong> The model comparison links both capitis names to the same candidate surfaces and explains the remaining identification limits.</li>
    <li><a href="https://github.com/RorriMaesu/osteon-study/commit/96850bc7cd1330874d58663941d1c81b7b78ef93">Named anatomy and atlas links.</a> Expanded the checklist to 380 reference entries, added both vocalis muscles, and linked named surfaces to the 3D atlas.</li>
    <li><a href="https://github.com/RorriMaesu/osteon-study/commit/9c854dcfb1b2e5fc3697f5937e675672450aaf04">Muscle actions and gait.</a> Added bilateral anconeus, calf deformation, contraction cues, and synchronized EMG traces.</li>
@@ -53,6 +55,6 @@
  </details>
 </main>
 <footer><a href="https://github.com/RorriMaesu/osteon-study/commits/main/">GitHub changes ↗</a><a href="CREDITS.md">Sources and credits ↗</a></footer>
-<script type="module" src="src/motion-coverage-ui.js?v=58290297fa78"></script>
+<script type="module" src="src/motion-coverage-ui.js?v=9202a60befde"></script>
 </body>
 </html>

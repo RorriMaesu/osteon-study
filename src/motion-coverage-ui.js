@@ -17,11 +17,12 @@ const labelStatus={
  'partial-model':'Partial model','needs-anatomical-review':'Anatomy review needed',
  'atlas-inventory':'Named in atlas','course-only':'Course target under review',
 };
-const evidenceLabel={'pose-context':'Pose context','textbook-contraction':'Textbook example','recorded-surface-emg':'Recorded EMG'};
+const evidenceLabel={'pose-context':'Pose context','textbook-contraction':'Textbook example','recorded-surface-emg':'Recorded EMG','walk-anatomical-context':'Walk context'};
 const parts=(row,kind)=>Object.values(row[kind]||{}).flat();
 const missing=row=>!['named-geometry','represented-by-components','atlas-inventory'].includes(row.atlasStatus);
+const studyMotion=part=>!part.evidence?.includes('walk-anatomical-context');
 function hasPartialMotion(row){
- const motion=parts(row,'motion');
+ const motion=parts(row,'motion').filter(studyMotion);
  const covered=new Set(motion.map(part=>part.atlasId));
  return motion.length&&parts(row,'atlas').some(part=>part.role!=='candidate'&&!covered.has(part.id));
 }
@@ -33,7 +34,8 @@ function motionLink(part){
 }
 const filterMatches={
  course:row=>row.course,
- moving:row=>parts(row,'motion').length,
+ moving:row=>parts(row,'motion').some(studyMotion),
+ walk:row=>parts(row,'motion').some(part=>part.modes.includes('walk')),
  gap:missing,
  variants:row=>row.variant||/female|male|sex\s*variant/i.test(row.sexScope||''),
 };
@@ -67,7 +69,8 @@ function tagsFor(parent,row){
  const atlas=parts(row,'atlas'),motion=parts(row,'motion');
  if(missing(row))chip(parent,'Review','gap');
  else if(atlas.length)chip(parent,'Atlas');
- if(motion.length)chip(parent,hasPartialMotion(row)?'Partial motion':'Motion','moving');
+ if(motion.some(studyMotion))chip(parent,hasPartialMotion(row)?'Partial study motion':'Study motion','moving');
+ else if(motion.length)chip(parent,'Walk context');
  if(row.course)chip(parent,'Course','course');
  if(filterMatches.variants(row))chip(parent,'Variant / scope');
 }
@@ -77,7 +80,7 @@ function showParts(target,row,kind){
  if(kind==='atlas'){
   const partial=Object.entries(row.atlasSides||{}).filter(([,status])=>status==='partial').map(([side])=>side);
   if(partial.length)attach(section,'p','Partial representation · '+partial.join(' and '));
- }else if(hasPartialMotion(row))attach(section,'p','Some atlas parts in this entry still need a motion model.');
+ }else if(hasPartialMotion(row))attach(section,'p','Study motions cover some parts of this entry. The full-body walk can also show contextual anatomy.');
  if(!parts(row,kind).length){attach(section,'p','No '+(kind==='atlas'?'mesh matched in this inventory.':'motion mesh in this release.'));return;}
  const keys=[...new Set([...order,...Object.keys(fields)])];
  for(const side of keys){
@@ -159,9 +162,9 @@ try{
  if(!response.ok)throw Error('Coverage inventory could not load.');
  const data=await response.json();
  catalog=data.rows.map(row=>({...row,search:normalize([row.name,row.ta2,...parts(row,'atlas').map(part=>part.name),...parts(row,'motion').map(part=>part.name)].join(' '))}));
- const moving=catalog.filter(row=>parts(row,'motion').length).length;
+ const moving=catalog.filter(row=>parts(row,'motion').some(studyMotion)).length;
  const totals=$('#coverage-totals');
- for(const [value,label] of [[data.counts.referenceEntries,'Reference checks'],[data.counts.referenceOpen,'Open checks'],[catalog.filter(row=>row.course).length,'Course entries'],[moving,'Motion entries']]){
+ for(const [value,label] of [[data.counts.referenceEntries,'Reference checks'],[data.counts.referenceOpen,'Open checks'],[catalog.filter(row=>row.course).length,'Course entries'],[moving,'Study motions']]){
   const box=attach(totals,'div');attach(box,'strong',value);attach(box,'span',label);
  }
  for(const key of [...new Set(catalog.map(row=>row.region))].sort((a,b)=>(labelRegion[a]||a).localeCompare(labelRegion[b]||b))){

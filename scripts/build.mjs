@@ -16,6 +16,10 @@ for(const name of ['motion-arm','motion-arm-left','motion-legs','motion-gait','m
   modelAssets[name]=digest.digest('hex').slice(0,12);
  }
 }
+const walkMuscleManifest=path.join(root,'assets/motion-walk-muscles.json');
+if(fs.existsSync(walkMuscleManifest)){
+  modelAssets['motion-walk-muscles']=createHash('sha256').update(fs.readFileSync(walkMuscleManifest)).digest('hex').slice(0,12);
+}
 fs.writeFileSync(path.join(root,'src/model-assets.json'),JSON.stringify(modelAssets,null,2)+'\n');
 const nodeModules=path.dirname(path.dirname(path.dirname(require.resolve('three'))));
 const threeRoot=path.dirname(path.dirname(require.resolve('three')));

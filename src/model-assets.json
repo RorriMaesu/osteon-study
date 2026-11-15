@@ -23,5 +23,6 @@
   "motion-legs": "7b074a8dc8de",
   "motion-gait": "ef24ceb383e2",
   "motion-walk-context": "e59a7dff8366",
-  "motion-leg-actions": "2edf622d5d03"
+  "motion-leg-actions": "2edf622d5d03",
+  "motion-walk-muscles": "fe4ef3f07244"
 }

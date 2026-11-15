@@ -389,14 +389,20 @@ async function motionParts(byID){
   for(const {file,doc,bin} of rigs){
    for(const node of doc.nodes||[]){
     const info=node.extras;
-    if(node.mesh===undefined||!info?.motionMuscle)continue;
+    if(node.mesh===undefined||!(info?.motionMuscle||info?.walkRegion))continue;
     const atlas=byID.get(info.muscleId);
     const side=info.motionSide||info.anatomicalSide||atlas?.side;
-    const region=info.muscleRegion||atlas?.region;
+    const region=info.walkRegion||info.muscleRegion||atlas?.region;
     if(!side||!region)throw Error(file+' motion mesh lacks side or region: '+node.name);
-    parts.push({id:info.motionMuscle,atlasId:atlas?.id||null,name:atlas?.name||info.motionPart||node.name,
-     node:node.name,side,region,asset:file,...inspectSkin(node,doc,bin,lib,decoder),
-     ...motionEvidence(file,info.motionMuscle,heelReplacements.has(node.name))});
+    const context=!!info.walkRegion;
+    const evidence=context?{
+     modes:['walk'],
+     evidence:['walk-anatomical-context'],
+     qualification:info.walkDeformation==='guided-blend'?'Follows the pose with a guided skin blend. No activity was recorded for this part.':'Follows one moving body segment. No activity was recorded for this part.',
+    }:motionEvidence(file,info.motionMuscle,heelReplacements.has(node.name));
+    const displayName=atlas?.geometryReview?.displayName||atlas?.name||info.motionPart||node.name;
+    parts.push({id:info.motionMuscle||info.muscleId,atlasId:atlas?.id||null,name:displayName,
+     node:node.name,side,region,asset:file,...inspectSkin(node,doc,bin,lib,decoder),...evidence});
    }
   }
  }finally{lib.destroy(decoder);}
@@ -551,6 +557,7 @@ export async function buildCoverage(){
   courseEntries:rows.filter(row=>row.course).length,
   courseTargets:rows.reduce((n,row)=>n+(row.courseTargets?.length||0),0),
   atlasMuscleParts:staticParts.length,motionMuscleParts:motion.length,
+  walkMuscleParts:motion.filter(part=>part.modes.includes('walk')).length,
   census,
   referenceConfirmed:rows.filter(row=>row.origin==='reference'&&atlasConfirmed.includes(row.atlasStatus)).length,
   referenceOpen:rows.filter(row=>row.origin==='reference'&&!atlasConfirmed.includes(row.atlasStatus)).length,

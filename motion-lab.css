@@ -163,3 +163,11 @@
 .motion-selection-guide circle{stroke:#f7f5dd;stroke-width:1.4;fill:#1b3233}
 [data-motion-selection-label]{position:absolute;z-index:2;transform:translate(-50%,-50%);pointer-events:none;width:max-content;max-width:min(210px,72%);border:1px solid #e6e4cd;border-radius:7px;background:#182c2bee;padding:4px 8px;color:#fffbea;font-size:11px;font-weight:700;text-align:center;line-height:1.2;overflow-wrap:anywhere}
 .motion-muscle-list button[data-role=antagonist]>span:first-child{color:#bec9ff}
+.motion-walk-explorer{display:grid;grid-template-columns:minmax(0,1fr) minmax(96px,auto);gap:6px;margin:7px 0}
+.motion-walk-explorer[hidden],.motion-walk-pages[hidden]{display:none}
+.motion-walk-explorer label{display:grid;gap:3px;color:#c7d9d2;font-size:11px;min-width:0}
+.motion-walk-explorer input,.motion-walk-explorer select,.motion-walk-pages button{min-width:0;min-height:32px;border:1px solid #45625e;border-radius:7px;padding:4px 6px;background:#15282d;color:#e6f1eb;font:inherit;font-size:11px}
+.motion-walk-list-info{font-variant-numeric:tabular-nums;color:#c1d4cd;font-size:11px;margin:4px 0 6px}
+.motion-walk-pages{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:6px;font-size:11px;color:#c7d9d2}
+.motion-walk-pages button:disabled{opacity:.45}
+@media(max-width:700px) and (orientation:landscape){.motion-walk-explorer{grid-template-columns:1fr}}

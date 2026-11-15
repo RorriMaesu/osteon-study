@@ -1,0 +1,207 @@
+{
+  "schema": 1,
+  "description": "Existing atlas muscles follow the Osteon whole-body walk. Joint blends approximate regional deformation.",
+  "activity": "Existing recorded gait channels are retained. Additive muscles have no recorded activity.",
+  "restFrame": "Neutral Osteon atlas coordinates, metres, +Y up",
+  "retargeting": "Flat receiver bones apply the live driver world transform relative to its rest frame.",
+  "drivers": {
+    "MotionPelvis": "WalkSurface_MotionPelvis",
+    "MotionHipL": "WalkSurface_MotionHipL",
+    "MotionKneeL": "WalkSurface_MotionKneeL",
+    "MotionAnkleL": "WalkSurface_MotionAnkleL",
+    "MotionToeL": "WalkSurface_MotionToeL",
+    "MotionPatellaL": "WalkSurface_MotionPatellaL",
+    "MotionHipR": "WalkSurface_MotionHipR",
+    "MotionKneeR": "WalkSurface_MotionKneeR",
+    "MotionAnkleR": "WalkSurface_MotionAnkleR",
+    "MotionToeR": "WalkSurface_MotionToeR",
+    "MotionPatellaR": "WalkSurface_MotionPatellaR",
+    "MotionTorso": "WalkSurface_MotionTorso",
+    "MotionWalkHead": "WalkSurface_MotionWalkHead",
+    "MotionWalkShoulderLeft": "WalkSurface_MotionWalkShoulderLeft",
+    "MotionWalkElbowLeft": "WalkSurface_MotionWalkElbowLeft",
+    "MotionWalkShoulderRight": "WalkSurface_MotionWalkShoulderRight",
+    "MotionWalkElbowRight": "WalkSurface_MotionWalkElbowRight"
+  },
+  "driverRest": {
+    "MotionPelvis": [
+      0.0,
+      0.8598499894142151,
+      -0.004834999796003103
+    ],
+    "MotionHipL": [
+      0.08419999480247498,
+      0.8598499894142151,
+      -0.004834999796003103
+    ],
+    "MotionKneeL": [
+      0.07569999247789383,
+      0.4569000005722046,
+      -0.02739999070763588
+    ],
+    "MotionAnkleL": [
+      0.07499999552965164,
+      0.0710000991821289,
+      -0.03499998524785042
+    ],
+    "MotionToeL": [
+      0.08699999004602432,
+      0.019000012427568436,
+      0.07700000703334808
+    ],
+    "MotionPatellaL": [
+      0.07569999247789383,
+      0.4569000005722046,
+      -0.02739999070763588
+    ],
+    "MotionHipR": [
+      -0.08419999480247498,
+      0.8598499894142151,
+      -0.004834999796003103
+    ],
+    "MotionKneeR": [
+      -0.07569999247789383,
+      0.4569000005722046,
+      -0.02739999257028103
+    ],
+    "MotionAnkleR": [
+      -0.07499999552965164,
+      0.0710000991821289,
+      -0.03499998524785042
+    ],
+    "MotionToeR": [
+      -0.08699999004602432,
+      0.019000012427568436,
+      0.07700000703334808
+    ],
+    "MotionPatellaR": [
+      -0.07569999247789383,
+      0.4569000005722046,
+      -0.02739999257028103
+    ],
+    "MotionTorso": [
+      0.0,
+      0.9789999723434448,
+      -0.029999999329447746
+    ],
+    "MotionWalkHead": [
+      0.0,
+      1.4809999465942383,
+      -0.05400000140070915
+    ],
+    "MotionWalkShoulderLeft": [
+      0.16699999570846558,
+      1.38100004196167,
+      -0.029999999329447746
+    ],
+    "MotionWalkElbowLeft": [
+      0.21899999678134918,
+      1.0989999771118164,
+      -0.03400000184774399
+    ],
+    "MotionWalkShoulderRight": [
+      -0.16699999570846558,
+      1.38100004196167,
+      -0.029999999329447746
+    ],
+    "MotionWalkElbowRight": [
+      -0.21899999678134918,
+      1.0989999771118164,
+      -0.03400000184774399
+    ]
+  },
+  "walkMeshDensity": {
+    "targetTrianglesPerLargeSurface": 3200,
+    "sampledErrorLimitMillimeters": 0.45
+  },
+  "baseMuscleIds": [
+    "muscle-lateral-head-of-gastrocnemius-l",
+    "muscle-lateral-head-of-gastrocnemius-r",
+    "muscle-long-head-of-biceps-femoris-l",
+    "muscle-long-head-of-biceps-femoris-r",
+    "muscle-tibialis-anterior-muscle-l",
+    "muscle-tibialis-anterior-muscle-r",
+    "muscle-vastus-lateralis-muscle-l",
+    "muscle-vastus-lateralis-muscle-r"
+  ],
+  "totalMuscleSurfaces": 476,
+  "regions": {
+    "forearm-hand": {
+      "file": "motion-walk-muscles-forearm-hand.glb",
+      "sha256": "e5f1d17baaeb4d6afc6b70591f6d7296f9a4d3545be56c2c667c663097e15b79",
+      "bytes": 623704,
+      "parts": 78,
+      "deformation": {
+        "guided-blend": 24,
+        "segment-follow": 54
+      },
+      "triangles": 126392,
+      "simplifiedSurfaces": 14,
+      "maximumSampledSimplificationErrorMillimeters": 0.3428
+    },
+    "head-neck": {
+      "file": "motion-walk-muscles-head-neck.glb",
+      "sha256": "1d9199c10a9dd43d1b45374da7d0d50f1ec595991557472b12212042ebce429d",
+      "bytes": 1003620,
+      "parts": 133,
+      "deformation": {
+        "segment-follow": 117,
+        "guided-blend": 16
+      },
+      "triangles": 212992,
+      "simplifiedSurfaces": 20,
+      "maximumSampledSimplificationErrorMillimeters": 0.3336
+    },
+    "pelvis-leg-foot": {
+      "file": "motion-walk-muscles-pelvis-leg-foot.glb",
+      "sha256": "0d09f349d686e1c194dc83ada8a5ac527699030ac295846350f8769231a7c863",
+      "bytes": 1338444,
+      "parts": 120,
+      "deformation": {
+        "segment-follow": 48,
+        "guided-blend": 72
+      },
+      "triangles": 274150,
+      "simplifiedSurfaces": 42,
+      "maximumSampledSimplificationErrorMillimeters": 0.4395
+    },
+    "shoulder-arm": {
+      "file": "motion-walk-muscles-shoulder-arm.glb",
+      "sha256": "f207aeef484ab013f5d2a216d337495b9605d6656949d4aa1b88948427e44f89",
+      "bytes": 456156,
+      "parts": 30,
+      "deformation": {
+        "guided-blend": 30
+      },
+      "triangles": 77824,
+      "simplifiedSurfaces": 8,
+      "maximumSampledSimplificationErrorMillimeters": 0.2164
+    },
+    "trunk-back": {
+      "file": "motion-walk-muscles-trunk-back.glb",
+      "sha256": "7d5b1de338a7cff0401fda83f5e178379bca2ccab6b02cc72398fc9f40801a9c",
+      "bytes": 2811800,
+      "parts": 107,
+      "deformation": {
+        "guided-blend": 38,
+        "segment-follow": 69
+      },
+      "triangles": 537001,
+      "simplifiedSurfaces": 39,
+      "maximumSampledSimplificationErrorMillimeters": 0.4467
+    }
+  },
+  "inputs": {
+    "muscle-models.json": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7",
+    "motion-legs.glb": "4481cd449ffbc0de3a8acc53417dad5ca0bf40ac136b175f06868654e91c869c",
+    "motion-walk-context.glb": "2f84deacfe276add2369b16a95f7514027e919a6b7ec7c3a7b61463044b55b18",
+    "motion-legs.json": "b4699b5ec2be5733f07635185d7fbfcb48eb17826966cfbbe6fa3b3995d42740",
+    "motion-walk-context.json": "20b6df6905b8a46dbc7c585170bdc62fc812bb14cf5ab49fc93636c9aeaa6131",
+    "MODEL-LICENSE.md": "c04e5edbaa249372d414041034c4fe8a4a8be4d543c1682cc9adc3d8e84a3624",
+    "muscles-forearm-hand.glb": "23fd9639d6c3da947ff4fe8e850c5ae4b85cb08b5cbbd3f1995de93cbf0c96c1",
+    "muscles-head-neck.glb": "d91f2ff55436396d8b36467592cbda65dd9f42d4ff4e48b6ec7d391725d1b7f2",
+    "muscles-pelvis-leg-foot.glb": "0c84c835078c350bcddd9b31b2c5773d70b644018dbc8be9807f0cbc6ace66a2",
+    "muscles-shoulder-arm.glb": "dbac493d9c9d0882cafa516c835ac9ad9c47e0a324488b4de5e883d496f757e3",
+    "muscles-trunk-back.glb": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b"
+  }
+}

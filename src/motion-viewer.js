@@ -6,12 +6,14 @@ import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {elbowAngle,planarLimbPose,clamp} from './motion-core.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 import muscleModels from './muscle-models.json' with {type:'json'};
+import {walkScopeMatches,walkBoneRegion,captureWalkDrivers,mountWalkPack,updateWalkPacks,walkScopeBounds} from './motion-walk-model.js';
 
 const radians = Math.PI / 180;
 const axis = values => new THREE.Vector3(...values).normalize();
 const muscleBase = new THREE.Color('#9d7261');
 const muscleMuted = new THREE.Color('#604f4e');
 const opposingRoleColor=new THREE.Color('#a9b6e6');
+const walkContextMaterial=new THREE.MeshStandardMaterial({color:'#8f6559',roughness:.78});
 const atlasParts=new Map(muscleModels.components.map(part=>[part.id,part]));
 const svgNamespace='http://www.w3.org/2000/svg';
 const cueColors=Object.fromEntries(Object.entries({concentric:'#ff9855',isometric:'#d7a1ff',eccentric:'#68d8ff',role:'#9cdec0',emg:'#ffd8a0'}).map(([key,value])=>[key,new THREE.Color(value)]));
@@ -32,12 +34,14 @@ function outlinePart(part){
  return part.outline=outline;
 }
 function musclePart(mesh){
- const material=new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
- mesh.material=material;
  const data=mesh.userData,key=data.muscleId;
+ const material=data.walkRegion?walkContextMaterial:new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
+ mesh.material=material;
  const atlas=atlasParts.get(key);
- return {mesh,material,key,id:data.motionMuscle,side:data.motionSide||atlas?.side||'right',
-  name:data.motionPart||atlas?.geometryReview?.displayName||atlas?.name||mesh.name,contextOnly:!!data.motionContextOnly};
+ return {mesh,material,key,id:data.motionMuscle||data.walkMuscleGroup||key,side:data.motionSide||atlas?.side||'right',
+  name:atlas?.geometryReview?.displayName||data.motionPart||atlas?.name||mesh.name,
+  region:data.walkRegion||atlas?.region,walkSegments:data.walkSegments,deformation:data.walkDeformation,
+  contextOnly:!!(data.motionContextOnly||data.walkEvidence),walkOnly:!!data.walkRegion};
 }
 async function readRig(name){
  const version=modelAssets[name];
@@ -70,6 +74,8 @@ export class MotionViewer {
   this.stage.append(this.selectionGuide);
   this.labelAnchor=new THREE.Vector3();
   this.cache=new Map();
+  this.walkScope='all';
+  this.walkActive=false;
   this.camera=new THREE.PerspectiveCamera(35,1,.004,30);
   this.pointer=new THREE.Vector2();
   this.ray=new THREE.Raycaster();
@@ -170,6 +176,57 @@ export class MotionViewer {
   root.visible=false;
   specimen.upper={root,torso,head,arms,meta};
  }
+ async addWalkMuscles(specimen){
+  if(specimen.walkPacks)return;
+  if(specimen.walkLoading)return specimen.walkLoading;
+  const version=modelAssets['motion-walk-muscles'];
+  if(!version||!specimen.upper)return;
+  specimen.model.updateMatrixWorld(true);
+  const bones=[];
+  specimen.model.traverse(mesh=>{
+   if(mesh.isMesh&&(mesh.userData.motionKind==='bone'||mesh.userData.motionBone))bones.push({mesh,...walkBoneRegion(mesh)});
+  });
+  const load=async()=>{
+   const url=new URL('assets/motion-walk-muscles.json?v='+version,document.baseURI);
+   const response=await fetch(url);
+   if(!response.ok)throw new Error('Could not load the full-body muscle inventory.');
+   const manifest=await response.json();
+   const drivers=captureWalkDrivers(specimen.model,Object.keys(manifest.drivers));
+   const decoder=new DRACOLoader().setDecoderPath(new URL('vendor/draco/',document.baseURI).href).setWorkerLimit(2);
+   const loader=new GLTFLoader().setDRACOLoader(decoder);
+   let files;
+   try{
+    files=await Promise.all(Object.values(manifest.regions).map(asset=>loader.loadAsync(new URL(asset.file+'?v='+asset.sha256.slice(0,12),url).href)));
+   }finally{decoder.dispose();}
+   const unique=new Set(manifest.baseMuscleIds),parts=[];
+   for(const {scene} of files)scene.traverse(mesh=>{
+    if(!mesh.isMesh||!mesh.userData.walkRegion)return;
+    if(!mesh.userData.muscleId||unique.has(mesh.userData.muscleId))throw new Error('The walking muscle inventory contains a duplicate or unnamed surface.');
+    unique.add(mesh.userData.muscleId);
+    if(mesh.isSkinnedMesh)mesh.frustumCulled=false;
+    parts.push(musclePart(mesh));
+   });
+   if(unique.size!==manifest.totalMuscleSurfaces)throw new Error('The full-body muscle inventory did not load completely.');
+   try{
+    specimen.walkPacks=files.map(({scene})=>mountWalkPack(specimen,scene,manifest.drivers,drivers));
+   }catch(error){
+    for(const {scene} of files)scene.removeFromParent();
+    throw error;
+   }
+   specimen.walkBones=bones;
+   specimen.parts.push(...parts);
+  };
+  specimen.walkLoading=load();
+  try{await specimen.walkLoading;}finally{specimen.walkLoading=null;}
+ }
+ setWalkScope(scope,active){
+  if(this.walkScope===scope&&this.walkActive===active&&this.walkScopeSpecimen===this.current)return;
+  this.walkScope=scope;
+  this.walkActive=active;
+  this.walkScopeSpecimen=this.current;
+  for(const entry of this.current?.walkBones||[])entry.mesh.visible=!active||walkScopeMatches(scope,entry.region,entry.side,entry.walkSegments);
+  this.dirty=true;
+ }
  async addCalves(specimen){
   if(specimen.calves)return;
   const [file,meta]=await readRig('motion-leg-actions');
@@ -219,6 +276,10 @@ export class MotionViewer {
   const {joints,kind,action}=this.current;
   action?.stop();
   const listed=kind==='arm'?Object.values(joints):[joints.pelvis,...Object.values(joints.left),...Object.values(joints.right)];
+  if(this.current.upper){
+   const {torso,head,arms}=this.current.upper;
+   listed.push(torso,head,...Object.values(arms).flatMap(arm=>Object.values(arm)));
+  }
   for(const joint of listed){joint.node.quaternion.copy(joint.rest);joint.node.position.copy(joint.position);}
   this.dirty=true;
  }
@@ -310,6 +371,7 @@ export class MotionViewer {
   const {forwardMeters,rightMeters}=frame.pelvis;
   joints.pelvis.node.position.copy(joints.pelvis.position).add(new THREE.Vector3(-rightMeters,-floorCorrection,forwardMeters-distance*clock));
   for(const side of ['left','right'])this.poseLeg(side,frame[side]);
+  if(this.current.walkPacks)updateWalkPacks(this.current.walkPacks);
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
@@ -323,25 +385,29 @@ export class MotionViewer {
   this.selectedPart=null;
   const isolate=isolateSelection&&!!(selected||selectedGroup);
   for(const p of this.current.parts){
-   const key=p.side+':'+p.id, strength=strengths[key];
+   const key=p.side+':'+p.id, strength=this.walkActive&&p.walkOnly?0:strengths[key];
    const exact=selected===p.key;
    const focused=exact||selectedGroup===key;
    const visibleSignal=strength>0&&strength>=displayThreshold;
    const opposing=antagonists?.has(key);
-   p.mesh.visible=showMuscles&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing)&&(!isolate||focused);
+   const inScope=!this.walkActive||walkScopeMatches(this.walkScope,p.region,p.side,p.walkSegments);
+   p.mesh.visible=showMuscles&&inScope&&(!p.walkOnly||this.walkActive)&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing)&&(!isolate||focused);
    if(exact&&p.mesh.visible)this.selectedPart=p;
-   p.material.color.copy(cue?muscleMuted:muscleBase);
-   const intensity=visibleSignal?clamp(strength,0,1):0;
-   if(cueColors[cue]&&intensity)p.material.color.lerp(cueColors[cue],intensity);
-   else if(opposing)p.material.color.lerp(opposingRoleColor,.78);
-   p.material.emissive.copy(p.material.color).multiplyScalar(intensity*.23);
+   if(!p.walkOnly){
+    p.material.color.copy(cue?muscleMuted:muscleBase);
+    const intensity=visibleSignal?clamp(strength,0,1):0;
+    if(cueColors[cue]&&intensity)p.material.color.lerp(cueColors[cue],intensity);
+    else if(opposing)p.material.color.lerp(opposingRoleColor,.78);
+    p.material.emissive.copy(p.material.color).multiplyScalar(intensity*.23);
+   }
    if(p.outline||focused)outlinePart(p).visible=focused&&p.mesh.visible;
   }
   this.dirty=true;
  }
  frame(view='lesson'){
   if(!this.current||!this.controls)return;
-  const bounds=new THREE.Box3().setFromObject(this.current.model,true);
+  const isolated=this.walkActive&&this.walkScope!=='all'&&this.current.walkBones;
+  const bounds=isolated?walkScopeBounds(this.current.parts,this.current.walkBones,this.walkScope):new THREE.Box3().setFromObject(this.current.model);
   if(bounds.isEmpty())return;
   const size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
   const left=this.current.side==='left';
@@ -350,10 +416,10 @@ export class MotionViewer {
    const elbow=joints.elbow.node.getWorldPosition(new THREE.Vector3());
    center.set(elbow.x+(left ? .018 : -.018),elbow.y-.020,elbow.z+.164);
   }
-  if(this.current.kind==='legs'&&!this.current.upper?.root.visible){
+  if(this.current.kind==='legs'&&!isolated&&!this.current.upper?.root.visible){
    size.y=.94;center.y=.46;
   }
-  const diagonal=this.current.kind==='arm'?.91:Math.max(size.y,size.x)*1.15;
+  const diagonal=this.current.kind==='arm'?.91:Math.max(size.y,size.x,size.z)*(isolated?1.45:1.15);
   const direction=({
    lesson:this.current.kind==='arm'?[left?1:-1,.11,.24]:[1,.13,1.25],
    front:[0,.08,1],back:[0,.08,-1],side:this.current.kind==='arm'?[left?1:-1,.05,0]:[1,.05,0],
