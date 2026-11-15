@@ -220,7 +220,7 @@ export function createPoseUI(host,callbacks={}){
   $('[data-pose-minus]').disabled||=value<=Number(range.min);
   $('[data-pose-plus]').disabled||=value>=Number(range.max);
   $('[data-pose-neutral]').disabled=!state.ready||!currentJoint||locked||state.canNeutralize===false;
-  $('[data-pose-play]').disabled=!state.ready||!currentAxis||locked||state.movementLocked;
+  $('[data-pose-play]').disabled=!state.ready||!currentAxis||locked||(state.playbackLocked??state.movementLocked);
   $('[data-pose-play]').setAttribute('aria-pressed',String(!!state.playing));
   $('[data-pose-play]').textContent=state.playing?'Pause':'Play motion';
   $('[data-pose-play]').setAttribute('aria-label',state.playing?'Pause movement at this position':'Play the selected movement once');

@@ -1,11 +1,11 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "d451f18391ed6477ddb88fd6ef468d71b77672f8a6d659a98cd7ceb5811c41e0",
-  "bytes": 16153408,
+  "sha256": "fa82ced19575b7e92cf52ee2d3ae74369831e0e0124a9298672778de8b0396a3",
+  "bytes": 16169044,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
-  "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation, forearm turn, finger hinges and spread, hindfoot roll, grouped toes plus a separate great toe, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, separate lesser-toe joints, gaze and tongue control.",
+  "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.",
   "knownLimitations": [
     "Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.",
     "Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary."
@@ -506,6 +506,20 @@
           "requiresUnlocked": [
             "right-scapula"
           ]
+        },
+        {
+          "id": "horizontal",
+          "label": "Across chest / open",
+          "min": -24,
+          "max": 48,
+          "neutral": 0,
+          "vector": [
+            0,
+            1,
+            0
+          ],
+          "unit": "degrees",
+          "relativeTo": "thorax"
         },
         {
           "id": "rotation",
@@ -1251,6 +1265,98 @@
       "detail": "The great toe bends independently at the first metatarsophalangeal joint. The group control still moves all five rays."
     },
     {
+      "id": "right-toe-2",
+      "label": "Right second toe",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-toe-2",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
+    },
+    {
+      "id": "right-toe-3",
+      "label": "Right third toe",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-toe-3",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
+    },
+    {
+      "id": "right-toe-4",
+      "label": "Right fourth toe",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-toe-4",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
+    },
+    {
+      "id": "right-toe-5",
+      "label": "Right fifth toe",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-toe-5",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
+    },
+    {
       "id": "left-scapula",
       "label": "Left shoulder girdle",
       "region": "left-arm",
@@ -1342,6 +1448,20 @@
           "requiresUnlocked": [
             "left-scapula"
           ]
+        },
+        {
+          "id": "horizontal",
+          "label": "Across chest / open",
+          "min": -24,
+          "max": 48,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees",
+          "relativeTo": "thorax"
         },
         {
           "id": "rotation",
@@ -2085,6 +2205,98 @@
         }
       ],
       "detail": "The great toe bends independently at the first metatarsophalangeal joint. The group control still moves all five rays."
+    },
+    {
+      "id": "left-toe-2",
+      "label": "Left second toe",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-toe-2",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
+    },
+    {
+      "id": "left-toe-3",
+      "label": "Left third toe",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-toe-3",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
+    },
+    {
+      "id": "left-toe-4",
+      "label": "Left fourth toe",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-toe-4",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
+    },
+    {
+      "id": "left-toe-5",
+      "label": "Left fifth toe",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-toe-5",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toe",
+          "min": -12,
+          "max": 24,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes."
     }
   ],
   "nodes": [
@@ -2719,6 +2931,46 @@
       "parent": "right-toes"
     },
     {
+      "id": "right-toe-2",
+      "name": "Pose_right-toe-2",
+      "pivot": [
+        -0.09275531768798828,
+        0.022059937939047813,
+        0.08317768573760986
+      ],
+      "parent": "right-toes"
+    },
+    {
+      "id": "right-toe-3",
+      "name": "Pose_right-toe-3",
+      "pivot": [
+        -0.10842601954936981,
+        0.01976158283650875,
+        0.0783914178609848
+      ],
+      "parent": "right-toes"
+    },
+    {
+      "id": "right-toe-4",
+      "name": "Pose_right-toe-4",
+      "pivot": [
+        -0.119731605052948,
+        0.01962355151772499,
+        0.07017135620117188
+      ],
+      "parent": "right-toes"
+    },
+    {
+      "id": "right-toe-5",
+      "name": "Pose_right-toe-5",
+      "pivot": [
+        -0.13141551613807678,
+        0.01599159464240074,
+        0.057439304888248444
+      ],
+      "parent": "right-toes"
+    },
+    {
       "id": "left-scapula",
       "name": "Pose_left-scapula",
       "pivot": [
@@ -2987,6 +3239,46 @@
         0.082089863717556
       ],
       "parent": "left-toes"
+    },
+    {
+      "id": "left-toe-2",
+      "name": "Pose_left-toe-2",
+      "pivot": [
+        0.09275532513856888,
+        0.022059939801692963,
+        0.08317768573760986
+      ],
+      "parent": "left-toes"
+    },
+    {
+      "id": "left-toe-3",
+      "name": "Pose_left-toe-3",
+      "pivot": [
+        0.10842642188072205,
+        0.0197615846991539,
+        0.0783914178609848
+      ],
+      "parent": "left-toes"
+    },
+    {
+      "id": "left-toe-4",
+      "name": "Pose_left-toe-4",
+      "pivot": [
+        0.11973191797733307,
+        0.01962355151772499,
+        0.07017135620117188
+      ],
+      "parent": "left-toes"
+    },
+    {
+      "id": "left-toe-5",
+      "name": "Pose_left-toe-5",
+      "pivot": [
+        0.1314152628183365,
+        0.015991592779755592,
+        0.057439304888248444
+      ],
+      "parent": "left-toes"
     }
   ],
   "totalMuscleSurfaces": 476,
@@ -3042,7 +3334,7 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "motion-pose-body-20261115-205013-757902",
+  "backup": "motion-pose-body-20261115-210139-033919",
   "sources": {
     "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
     "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",

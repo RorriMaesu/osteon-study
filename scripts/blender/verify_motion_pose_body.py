@@ -41,6 +41,20 @@ def apply(values):
             for name,scale in joint.get('morphs',{}).get(axis['id'],{}).items():shapes[name]=angle*scale
             for vector,degrees in axis.get('rotations',[]):rotate(joint['id'],vector,degrees*angle/axis['max'])
             if not axis.get('vector'):continue
+            if axis.get('relativeTo'):
+                posed=values.get(joint['id'],{})
+                elevation=max(posed.get(key,0) for key in ('flexion','abduction','scaption'))
+                angle*=min(1,max(0,(elevation-25)/20))
+                if angle:
+                    bpy.context.view_layer.update()
+                    bone=rig.pose.bones[nodes[joint['id']]['name']]
+                    reference=rig.pose.bones[nodes[axis['relativeTo']]['name']]
+                    relative=reference.matrix.to_quaternion()@reference.bone.matrix_local.to_quaternion().inverted()
+                    parent_basis=bone.parent.matrix.to_quaternion()@bone.parent.bone.matrix_local.to_quaternion().inverted()
+                    basis=parent_basis@bone.bone.matrix_local.to_quaternion()
+                    axis_local=basis.inverted()@relative@blender(axis['vector']).normalized()
+                    bone.rotation_quaternion=Quaternion(axis_local,math.radians(angle))@bone.rotation_quaternion
+                continue
             if joint.get('distribute'):
                 weights=joint.get('axisWeights',{}).get(axis['id'],[1/len(joint['distribute'])]*len(joint['distribute']))
                 assert abs(sum(weights)-1)<.00001
@@ -147,6 +161,13 @@ scenarios={
  'thoracic-rotation':{'thoracic-turn':{'rotation':11}},
  'thumb-opposition':{'right-thumb-cmc':{'opposition':80},'left-thumb-cmc':{'opposition':80}},
  'knee-unlock':{'right-knee':{'flexion':22},'left-knee':{'flexion':22}},
+ 'across-chest':{'right-shoulder':{'abduction':65,'horizontal':42},'right-elbow':{'flexion':15}},
+ 'second-toe':{'right-toe-2':{'extension':20},'left-toe-2':{'extension':20}},
+ 'pinch-approach':{'right-thumb-cmc':{'opposition':80,'flexion':9,'abduction':16},'right-thumb-ip':{'flexion':8},
+                   'right-index-mcp':{'flexion':56},'right-index-pip':{'flexion':36},'right-index-dip':{'flexion':1}},
+ 'power-grip':{**{'right-'+digit+'-'+joint:{'flexion':amount}
+                 for digit in ('index','middle','ring','little') for joint,amount in [('mcp',43),('pip',55),('dip',32)]},
+               'right-thumb-cmc':{'opposition':54},'right-thumb-mcp':{'flexion':18}},
 }
 results={}
 for name,values in scenarios.items():

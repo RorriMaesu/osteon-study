@@ -72,6 +72,11 @@ export function initPoseLab(host,{onLesson}={}){
   else history.commit({preserveDirection:true});
   save();
  }
+ function isHorizontalReady(){
+  if(selectedAxis!=='horizontal')return true;
+  const angles=history?.values[selectedJoint];
+  return !!angles&&Math.max(angles.abduction,angles.scaption,angles.flexion)>=45;
+ }
  function togglePlayback(){
   if(!history)return;
   if(playback){stopPlayback();message='Preview paused. Keep adjusting, or Undo to return to your earlier pose.';draw();return;}
@@ -79,11 +84,19 @@ export function initPoseLab(host,{onLesson}={}){
   if(history.isAxisLocked(selectedJoint,selectedAxis))return;
   const joint=descriptor(),cycle=poseMotionCycle(joint,selectedAxis);
   if(!cycle)return;
-  if(studyGuide?.setup&&Object.entries(studyGuide.setup).some(([id,axes])=>Object.keys(axes).some(axis=>history.isAxisLocked(id,axis)))){
+  if(!isHorizontalReady()&&!studyGuide?.setup)return;
+  const setup=structuredClone(studyGuide?.setup||{});
+  if(studyGuide?.follow){
+   setup[selectedJoint]={[selectedAxis]:0};
+   for(const [id,axes] of Object.entries(studyGuide.follow)){
+    setup[id]={...setup[id],...Object.fromEntries(Object.keys(axes).map(axis=>[axis,0]))};
+   }
+  }
+  if(Object.entries(setup).some(([id,axes])=>Object.keys(axes).some(axis=>history.isAxisLocked(id,axis)))){
    message='Unlock the joints used by this comparison to play it.';draw();return;
   }
   history.begin();
-  if(studyGuide?.setup)history.patch(studyGuide.setup);
+  if(Object.keys(setup).length)history.patch(setup);
   if(studyGuide?.range){
    const axis=joint.axes.find(axis=>axis.id===selectedAxis);
    [cycle.from,cycle.to]=studyGuide.range.map(value=>Math.max(axis.min,Math.min(axis.max,value)));
@@ -101,10 +114,16 @@ export function initPoseLab(host,{onLesson}={}){
   const sample=samplePosePreview(playback,(performance.now()-playbackStarted)/1000);
   if(sample.done){stopPlayback({restore:true});message='Preview finished. Your starting pose is restored.';draw();return;}
   if(studyGuide)guidedDirection=sample.direction;
+  if(studyGuide?.follow){
+   const fraction=sample.patch[selectedJoint][selectedAxis]/studyGuide.range[1];
+   for(const [id,axes] of Object.entries(studyGuide.follow)){
+    sample.patch[id]={...sample.patch[id],...Object.fromEntries(Object.entries(axes).map(([axis,value])=>[axis,value*fraction]))};
+   }
+  }
   if(history.patch(sample.patch))draw();
  }
  function setAngle(joint,axis,value){
-  if(!history)return false;
+  if(!history||axis==='horizontal'&&!isHorizontalReady())return false;
   guidedDirection=0;
   if(joint==='breathing'&&value>0)return history.patch({breathing:{[axis]:value,[axis==='inhale'?'exhale':'inhale']:0}});
   return history.set(joint,axis,value);
@@ -177,6 +196,10 @@ export function initPoseLab(host,{onLesson}={}){
  }
  function roles(){
   if(!history||!specimen)return {contributors:[],opposing:[],note:''};
+  if(studyGuide?.compoundLabels&&guidedDirection&&history.changes.length){
+   const roles=combinedPoseRoles(descriptors,history.changes,specimen.parts,history.values);
+   return {...roles,label:studyGuide.compoundLabels[guidedDirection<0?1:0],movementNotes:[studyGuide.note]};
+  }
   if(studyGuide&&(guidedDirection||!history.changes.length)){
    const controlledReturn=guidedDirection<0&&studyGuide.controlledReturn;
    const direction=controlledReturn?1:guidedDirection||studyGuide.direction||1;
@@ -198,6 +221,8 @@ export function initPoseLab(host,{onLesson}={}){
  function updateUI(role=roles(),visibleAnatomy){
   const byId=new Map(specimen?.parts.map(part=>[part.key,part])||[]);
   const joint=descriptor(),directionLabels=joint?describePoseAxis(joint,selectedAxis):null;
+  const setupNeeded=!isHorizontalReady();
+  const locked=!!history?.isAxisLocked(selectedJoint,selectedAxis);
   const visible=visibleAnatomy||poseMotionScope(scope,joint,role,specimen?.parts||[],specimen?.bones||[],selectedMuscle);
   const parts=(keys,contributor)=>keys.filter(key=>visible.muscleKeys.has(key)).map(key=>byId.get(key)).filter(Boolean).map(part=>{
    let roleLabel;
@@ -209,8 +234,8 @@ export function initPoseLab(host,{onLesson}={}){
   ui.update({ready:!!history&&active,descriptors,selectedJoint,selectedAxis,pose:history?.values||{},canUndo:!!history?.canUndo,canRedo:!!history?.canRedo,scope,locked:history?.locks||[],
    playing:!!playback,directionLabels,axisLabels:Object.fromEntries((joint?.axes||[]).map(axis=>[axis.id,describePoseAxis(joint,axis.id).label])),
    canNeutralize:!!joint?.axes.some(axis=>!history?.isAxisLocked(selectedJoint,axis.id)&&history?.values[selectedJoint]?.[axis.id]!==(axis.neutral??0)),
-   message:history?.isAxisLocked(selectedJoint,selectedAxis)&&!history.isLocked(selectedJoint)?'Unlock the shoulder girdle to raise this arm.':shapeNotice()||message,
-   movementLocked:!!history?.isAxisLocked(selectedJoint,selectedAxis),contributors:parts(role.contributors,true),opponents:parts(role.opposing,false),selectedMuscle,
+   message:locked&&!history.isLocked(selectedJoint)?'Unlock the shoulder girdle to raise this arm.':setupNeeded?(studyGuide?.setup?'Play motion to lift the arm first.':'Raise the arm to 45° first to use Across chest.') :shapeNotice()||message,
+   movementLocked:locked||setupNeeded,playbackLocked:locked||setupNeeded&&!studyGuide?.setup,contributors:parts(role.contributors,true),opponents:parts(role.opposing,false),selectedMuscle,
    selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
    evidence:role.note,movementLabel:role.label,studyGuide,roleNote:role.movementNotes?.[0]||studyGuide?.note||'',
    movementNote:[studyGuide?.note,...(role.movementNotes||[]),joint?.detail,joint?.coupling].filter(Boolean).join(' ')});

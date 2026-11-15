@@ -211,6 +211,34 @@ test('scaption moves each wrist outward and forward while opposition moves each 
  }
 });
 
+test('the raised arm sweeps forward at the same height and the hanging arm does not twist',()=>{
+ const rig=specimen();
+ for(const side of ['left','right']){
+  const shoulder=side+'-shoulder',wrist=side+'-wrist';
+  applyPose(rig,{});
+  const low=poseJointWorld(rig,wrist);
+  applyPose(rig,{[shoulder]:{horizontal:40}});
+  close(poseJointWorld(rig,wrist).distanceTo(low),0);
+  applyPose(rig,{[shoulder]:{abduction:65}});
+  const open=poseJointWorld(rig,wrist);
+  applyPose(rig,{[shoulder]:{abduction:65,horizontal:40}});
+  const across=poseJointWorld(rig,wrist);
+  close(across.y,open.y);
+  assert(across.z-open.z>.2);
+  assert(Math.abs(across.x)<Math.abs(open.x));
+ }
+});
+
+test('a lesser toe moves at its base while the great toe and adjacent toes stay still',()=>{
+ const rig=specimen(),names=['right-hallux','right-toe-3','right-toe-4','right-toe-5'];
+ const rest=names.map(name=>rig.nodes.get(name).node.matrixWorld.clone());
+ const second=rig.nodes.get('right-toe-2').node;
+ const initial=second.localToWorld(new THREE.Vector3(0,0,.033));
+ applyPose(rig,{'right-toe-2':{extension:20}});
+ assert(second.localToWorld(new THREE.Vector3(0,0,.033)).y>initial.y+.01);
+ for(const [i,name] of names.entries())assert(rig.nodes.get(name).node.matrixWorld.equals(rest[i]));
+});
+
 test('multi-axis hinges report the current axis without subsequent-axis contamination',()=>{
  const rig=specimen();
  applyPose(rig,{'right-hip':{flexion:30,abduction:20,rotation:15}});

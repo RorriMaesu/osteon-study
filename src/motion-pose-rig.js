@@ -13,6 +13,13 @@ function shoulderGirdleAngle(joint,angle){
  return angle*(low+(high-low)*clamp(angle/90,0,1));
 }
 const scapularElevation=['abduction','scaption'];
+const elevationAmount=angles=>Math.max(angles.abduction||0,angles.scaption||0,angles.flexion||0);
+const horizontalAmount=(angle,angles)=>angle*clamp((elevationAmount(angles)-25)/20,0,1);
+function referenceAxis(nodes,axis){
+ const reference=nodes.get(axis.relativeTo);
+ const orientation=reference.node.getWorldQuaternion(new THREE.Quaternion()).multiply(reference.restWorld.clone().invert());
+ return new THREE.Vector3(...axis.vector).normalize().applyQuaternion(orientation);
+}
 function compensatePelvis(nodes,angles){
  const pelvis=nodes.get('pelvis');
  const undo=pelvis.node.quaternion.clone().invert().multiply(pelvis.rest);
@@ -143,6 +150,14 @@ export function applyPose(specimen,values={},options={}){
    if(shapes)for(const [name,scale] of Object.entries(shapes))shaped[name]=angle*scale;
    if(axis.rotations)for(const [vector,degrees] of axis.rotations)rotateBy(state,vector,degrees*angle/axis.max);
    if(!axis.vector)continue;
+   if(axis.relativeTo){
+    angle=horizontalAmount(angle,applied[joint.id]);
+    if(angle){
+     const inParent=referenceAxis(nodes,axis).applyQuaternion(state.node.parent.getWorldQuaternion(new THREE.Quaternion()).invert());
+     state.node.quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(inParent,angle*RAD));
+    }
+    continue;
+   }
    if(joint.distribute){
     joint.distribute.forEach((id,index)=>rotateBy(nodes.get(id),axis.vector,angle*distributedShare(joint,axis.id,index)));
    }else{
@@ -211,11 +226,17 @@ export function poseAxisWorld(specimen,id,axisId){
  if(!state)return null;
  const wanted=state.axes.findIndex(axis=>axis.id===axisId);
  if(wanted<0||!state.axes[wanted].local)return null;
+ if(state.axes[wanted].relativeTo)return referenceAxis(specimen.nodes,state.axes[wanted]);
  const origin=state.pivotState;
  const rotation=origin.node.parent.getWorldQuaternion(new THREE.Quaternion()).multiply(origin.rest);
  for(const axis of state.axes.slice(0,wanted)){
   if(!axis.local)continue;
   let angle=specimen.values[id]?.[axis.id]||0;
+  if(axis.relativeTo){
+   angle=horizontalAmount(angle,specimen.values[id]);
+   rotation.premultiply(new THREE.Quaternion().setFromAxisAngle(referenceAxis(specimen.nodes,axis),angle*RAD));
+   continue;
+  }
   if(state.descriptor.distribute)angle*=distributedShare(state.descriptor,axis.id,0);
   if(id.endsWith('-shoulder')&&scapularElevation.includes(axis.id))angle-=shoulderGirdleAngle(state.descriptor,angle);
   rotation.multiply(new THREE.Quaternion().setFromAxisAngle(axis.local,angle*RAD));

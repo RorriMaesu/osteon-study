@@ -12,6 +12,7 @@ const directions=Object.freeze({
  'shoulder:flexion':named('Arm forward / back','Shoulder flexion','Shoulder extension','Forward','Backward'),
  'shoulder:abduction':named('Arm out / in','Shoulder abduction','Shoulder adduction','Arm out','Arm in'),
  'shoulder:scaption':named('Raise diagonally / lower','Scapular-plane elevation','Lower from scapular-plane elevation','Raise diagonal','Lower',poseSources.upper),
+ 'shoulder:horizontal':named('Across chest / open','Horizontal adduction','Horizontal abduction','Across chest','Open out',poseSources.upper),
  'shoulder:rotation':named('Turn arm in / out','Shoulder internal rotation','Shoulder external rotation','Turn in','Turn out'),
  'elbow:flexion':named('Bend / straighten','Elbow flexion','Elbow extension','Bend','Straighten'),
  'forearm:pronation':named('Turn palm back / front','Forearm pronation','Forearm supination','Pronate','Supinate'),
@@ -50,6 +51,7 @@ const directions=Object.freeze({
 function description(joint,axisId){
  const kind=String(joint?.id||'').replace(/^(right|left)-/,'');
  if(directions[kind+':'+axisId])return directions[kind+':'+axisId];
+ if(/^toe-[2-5]$/.test(kind)&&axisId==='extension')return named('Lift / curl toe','Toe extension','Toe flexion','Lift toe','Curl toe',poseSources.lower);
  const digit=kind.match(/^(thumb|index|middle|ring|little)-(mcp|pip|dip|ip)$/);
  if(!digit)return null;
  const title=digit[1][0].toUpperCase()+digit[1].slice(1)+' '+digit[2].toUpperCase();

@@ -229,8 +229,10 @@ def add_rig():
         BONE_BINDINGS[scap]=side+'-scapula'
         shoulder=Vector(DRIVERS['driverRest'][UPPER['joints'][side]['shoulder']])
         elbow=Vector(DRIVERS['driverRest'][UPPER['joints'][side]['elbow']])
+        horizontal=axis('horizontal','Across chest / open',-24,48,[0,-sign,0])
+        horizontal['relativeTo']='thorax'
         elevation=[axis('flexion','Forward / backward',-20,90,[-1,0,0]),axis('abduction','Arm out / in',0,90,[0,0,sign]),
-                   axis('scaption','Raise diagonally forward',0,65,[-.5,0,sign*math.sqrt(.75)]),axis('rotation','Internal / external rotation',-30,30,[0,-sign,0])]
+                   axis('scaption','Raise diagonally forward',0,65,[-.5,0,sign*math.sqrt(.75)]),horizontal,axis('rotation','Internal / external rotation',-30,30,[0,-sign,0])]
         joint(side+'-shoulder',title+' shoulder',side+'-arm',side,shoulder,side+'-scapula',elevation,endpoint=side+'-wrist')
         JOINTS[-1]['scapularShare']=[.18,.34]
         joint(side+'-elbow',title+' elbow',side+'-arm',side,elbow,side+'-shoulder',[axis('flexion','Bend / straighten',0,115,UPPER['axes'][side]['elbow'])],endpoint=side+'-wrist')
@@ -303,6 +305,14 @@ def add_rig():
               detail='The great toe bends independently at the first metatarsophalangeal joint. The group control still moves all five rays.')
         BONE_BINDINGS[great_toe]=side+'-hallux'
         BONE_BINDINGS[bone(s('Distal phalanx of first finger of foot'))]=side+'-hallux'
+        for number,ordinal in enumerate(ORDINALS[1:],2):
+            phalanx=lambda level:bone(s(level+' phalanx of '+ordinal+' finger of foot'))
+            metatarsal=bone(s(ordinal.title()+' metatarsal bone'))
+            identifier=side+'-toe-'+str(number)
+            joint(identifier,title+' '+ordinal+' toe',side+'-leg',side,joint_gap(metatarsal,phalanx('Proximal')),side+'-toes',
+                  [axis('extension','Lift / curl toe',-12,24,[-1,0,0])],
+                  detail='An independent metatarsophalangeal hinge. Digit tendons share some muscle surfaces with the other toes.')
+            for level in ('Proximal','Middle','Distal'):BONE_BINDINGS[phalanx(level)]=identifier
         BONE_BINDINGS[bone(s('Femur'))]=side+'-hip'
         BONE_BINDINGS[bone(s('Tibia'))]=side+'-knee'
         BONE_BINDINGS[bone(s('Fibula'))]=side+'-knee'
@@ -574,6 +584,15 @@ def bind_all(rig):
                 hallux=side+'-hallux'
                 amount=smooth(p.z,NODES[hallux]['pivot'][2]-.009,NODES[hallux]['pivot'][2]+.015)
                 replace_weight(values,side+'-toes',{side+'-toes':1-amount,hallux:amount})
+            elif part['region']=='pelvis-leg-foot' and side in SIDES and side+'-toes' in values and re.search(r'digitorum|interosse|lumbrical|digiti minimi',name,re.I):
+                rays=[side+'-toe-'+str(number) for number in range(2,6)]
+                if re.search(r'digiti minimi',name,re.I):rays=rays[-1:]
+                if re.search(r'extensor digitorum brevis',name,re.I):rays=rays[:-1]
+                if rays:
+                    closest=min(rays,key=lambda identifier:abs(p.x-NODES[identifier]['pivot'][0]))
+                    pivot=NODES[closest]['pivot']
+                    amount=smooth(p.z,pivot[2]-.006,pivot[2]+.012)*smooth(-abs(p.x-pivot[0]),-.012,-.002)
+                    replace_weight(values,side+'-toes',{side+'-toes':1-amount,closest:amount})
             if scap_attachment:
                 origin,direction,length=scap_attachment
                 weight=smooth((p-origin).dot(direction)/length,-.08,1.08)
@@ -629,7 +648,7 @@ def main():
         'schema':1,'asset':NAME+'.glb','sha256':digest(target),'bytes':target.stat().st_size,
         'description':'Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.',
         'evidence':'Teaching geometry. Pose and muscle color do not measure activation or force.',
-        'scope':'Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation, forearm turn, finger hinges and spread, hindfoot roll, grouped toes plus a separate great toe, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, separate lesser-toe joints, gaze and tongue control.',
+        'scope':'Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.',
         'knownLimitations':['Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.','Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary.'],
         'joints':JOINTS,'nodes':list(NODES.values()),'totalMuscleSurfaces':len(MUSCLES),'boneSurfaces':len(BONE_MESHES),
         'regionalMorphReplacements':sorted(REGIONAL_REPLACEMENTS),'backup':backed.name,

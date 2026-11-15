@@ -2,6 +2,12 @@ const textbook='https://openstax.org/books/anatomy-and-physiology-2e/pages/';
 const axial='11-3-axial-muscles-of-the-head-neck-and-back';
 const upper='11-5-muscles-of-the-pectoral-girdle-and-upper-limbs';
 const lower='11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs';
+const curlFingers=Object.fromEntries(['index','middle','ring','little'].flatMap(digit=>[
+ ['right-'+digit+'-pip',{flexion:55}],['right-'+digit+'-dip',{flexion:32}],
+ ...(digit==='index'?[]:[['right-'+digit+'-mcp',{flexion:43}]]),
+]));
+curlFingers['right-thumb-cmc']={opposition:54};
+curlFingers['right-thumb-mcp']={flexion:18};
 const guide=(id,label,joint,axis,scope,view,note,section,options={})=>({
  id,label,joint,axis,scope,view,note,source:textbook+section,...options,
 });
@@ -29,6 +35,20 @@ export const motionStudyGuides=[
  guide('thoracic-turn','Turn the rib cage','thoracic-turn','rotation','trunk','lesson','Watch the rib-bearing thoracic spine rotate with the lumbar angles held still. Compare it with the trunk-turn lesson.','11-4-axial-muscles-of-the-abdominal-wall-and-thorax',{range:[9,-9]}),
  guide('thumb-opposition','Sweep the thumb across','right-thumb-cmc','opposition','right-arm','front','Watch the first metacarpal roll as the thumb sweeps across the palm. Opponens pollicis contributes to this movement.',upper,{range:[0,80],radius:.08}),
  guide('knee-unlock','Unlock the knee','right-knee','flexion','right-leg','lesson','Watch the tibia rotate slightly inward as the free leg begins to bend. Find popliteus behind the knee.',lower,{range:[0,25],radius:.18,rear:true}),
+ guide('arm-across','Bring the raised arm across','right-shoulder','horizontal','right-arm','front','Play with the arm lifted. Pectoralis major and anterior deltoid draw it across the chest; posterior deltoid helps open it back out.',upper,{
+  range:[-16,42],setup:{'right-shoulder':{flexion:0,abduction:65,rotation:0,scaption:0,horizontal:0},'right-elbow':{flexion:15}},
+ }),
+ guide('cuff-rotation','Compare the rotator cuff','right-shoulder','rotation','right-arm','lesson','With the elbow bent, watch the upper arm turn. Compare subscapularis with infraspinatus and teres minor. Use Related only to expose the cuff.',upper,{
+  range:[-19,19],setup:{'right-shoulder':{flexion:0,abduction:16,scaption:0,horizontal:0,rotation:0},'right-elbow':{flexion:80}},
+ }),
+ guide('pinch','Approach a precision pinch','right-thumb-cmc','opposition','right-arm','lesson','Watch the thumb and index finger approach each other. Compare thenar action with the long index flexors. The demonstration stops before contact.',upper,{
+  range:[0,80],radius:.085,follow:{'right-thumb-cmc':{flexion:9,abduction:16},'right-thumb-ip':{flexion:8},'right-index-mcp':{flexion:56},'right-index-pip':{flexion:36},'right-index-dip':{flexion:1}},
+  compoundLabels:['Thumb and index approach','Thumb and index open'],
+ }),
+ guide('power-grip','Curl into a power grip','right-index-mcp','flexion','right-arm','lesson','Watch several finger joints bend together and the thumb come across. Compare the long finger flexors and the thenar muscles.',upper,{
+  range:[0,43],radius:.085,follow:curlFingers,compoundLabels:['Fingers curl into a grip','Fingers open from the grip'],
+ }),
+ guide('lesser-toe','Lift the second toe','right-toe-2','extension','right-leg','right','Watch the second toe hinge while the neighboring toes stay still. Several long and short toe extensors share their muscle surfaces.',lower,{range:[0,18],radius:.09}),
 ];
 
 export function findMotionStudyGuide(id){

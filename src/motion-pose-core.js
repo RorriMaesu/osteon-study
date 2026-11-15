@@ -194,6 +194,7 @@ const directions={
  'shoulder:flexion':pair('Shoulder flexion','Shoulder extension',shoulderFlex,shoulderExt,poseSources.upper,'Shoulder roles depend on arm position; the sternocostal pectoralis can extend an already flexed shoulder.'),
  'shoulder:abduction':pair('Shoulder abduction','Shoulder adduction',shoulderAbd,shoulderAdd,poseSources.upper,'Arm elevation includes coordinated shoulder-girdle movement. Serratus anterior and the upper and lower trapezius can contribute to scapular upward rotation alongside glenohumeral abductors.'),
  'shoulder:scaption':pair('Scapular-plane elevation','Lower from scapular-plane elevation',both(shoulderAbd,anteriorDeltoid),shoulderAdd,poseSources.upper,'Raise the arm diagonally forward. Mid and anterior deltoid and supraspinatus contribute at the humerus, with the scapular upward rotators helping the blade.'),
+ 'shoulder:horizontal':pair('Horizontal adduction','Horizontal abduction',both(anteriorDeltoid,names('pectoralis major')),both(posteriorDeltoid,names('infraspinatus','teres minor')),poseSources.upper,'With the arm elevated, the humerus sweeps toward or away from the chest. Use the raised-arm study to set up this position.'),
  'shoulder:rotation':pair('Shoulder internal rotation','Shoulder external rotation',shoulderInternal,shoulderExternal,poseSources.upper),
  'elbow:flexion':pair('Elbow flexion','Elbow extension',elbowFlex,elbowExt,poseSources.upper),
  'forearm:pronation':pair('Forearm pronation','Forearm supination',names('pronator teres','pronator quadratus'),names('supinator','biceps brachii'),poseSources.upper,'Biceps also crosses the elbow. Brachioradialis assists return toward a neutral forearm position.'),
@@ -310,6 +311,11 @@ export function poseRoles(joint,axisId,delta,parts=[],pose={}){
  const axial=axialRoles(kind,axisId,positive,parts);
  if(axial)return {...empty,...axial,note:roleNote+' '+axial.note};
  let direction=directions[kind+':'+axisId]||fingerDirection(kind,axisId);
+ if(/^toe-[2-5]$/.test(kind)&&axisId==='extension'){
+  const ext=kind==='toe-5'?names('extensor digitorum longus'):names('extensor digitorum (?:longus|brevis)');
+  const flex=kind==='toe-5'?names('flexor digitorum (?:longus|brevis)','flexor digiti minimi of foot'):names('flexor digitorum (?:longus|brevis)');
+  direction=pair('Toe extension','Toe flexion',ext,flex,poseSources.lower,'The selected toe bends separately at its base. Shared extensor and flexor surfaces also serve other toes.');
+ }
  if(!direction)return {...empty,label:'Joint adjustment',note:roleNote+' Muscle roles have not been mapped for this axis.'};
  if(kind==='hip'&&axisId==='rotation'&&pose[joint.id]?.flexion>25){
   const deepFlexion=pose[joint.id].flexion>=80;
