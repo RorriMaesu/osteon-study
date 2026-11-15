@@ -21,6 +21,18 @@ export function curlFrame(seconds){
  return {angle,phase,name:curlPhases[phase].name,contraction:curlPhases[phase].type,detail:curlPhases[phase].detail};
 }
 
+export function heelFrame(seconds){
+ const frame=curlFrame(seconds);
+ const {phase,contraction}=frame;
+ return {phase,contraction,angle:frame.angle/elbowLimits[1]*23,
+  name:['Rise onto the forefeet','Hold at the top','Lower the heels'][phase],
+  detail:[
+   'The calf plantar flexors shorten as the heels rise and the body moves upward.',
+   'The calf plantar flexors hold the raised position as the body stays still.',
+   'The calf plantar flexors lengthen under tension to control the heels as they return to the floor.',
+  ][phase]};
+}
+
 export function elbowAngle(rest,target,normal,limits=elbowLimits){
  const dot=(a,b)=>a.reduce((total,value,index)=>total+value*b[index],0);
  const cross=[rest[1]*target[2]-rest[2]*target[1],rest[2]*target[0]-rest[0]*target[2],rest[0]*target[1]-rest[1]*target[0]];

@@ -13,6 +13,25 @@ const muscleMuted = new THREE.Color('#604f4e');
 const muscleActive = new THREE.Color('#eb8d57');
 const muscleSelected = new THREE.Color('#9fe6ca');
 
+function jointState(node){
+ if(!node)throw new Error('A required joint is missing from the model.');
+ return {node,rest:node.quaternion.clone(),position:node.position.clone()};
+}
+function musclePart(mesh){
+ const material=new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
+ mesh.material=material;
+ return {mesh,material,id:mesh.userData.motionMuscle,side:mesh.userData.motionSide||'right'};
+}
+async function readRig(name){
+ const version=modelAssets[name];
+ if(!version)throw new Error('This motion specimen is unavailable.');
+ const url=ext=>new URL('assets/'+name+ext+'?v='+version,document.baseURI).href;
+ const decoder=new DRACOLoader().setDecoderPath(new URL('vendor/draco/',document.baseURI).href).setWorkerLimit(2);
+ try{return await Promise.all([new GLTFLoader().setDRACOLoader(decoder).loadAsync(url('.glb')),fetch(url('.json')).then(response=>{
+  if(!response.ok)throw new Error('Could not read the motion rig.');return response.json();
+ })]);}finally{decoder.dispose();}
+}
+
 export class MotionViewer {
  constructor(stage,{onFrame,onTarget,onMuscle}){
   this.stage=stage;
@@ -67,6 +86,8 @@ export class MotionViewer {
   this.resize.disconnect();
   this.controls.dispose();
   this.renderer.domElement.remove();
+  this.grid.geometry.dispose();
+  this.grid.material.dispose();
   this.renderer.dispose();
   this.renderer.forceContextLoss();
   this.renderer=null;
@@ -76,22 +97,10 @@ export class MotionViewer {
  async load(kind){
   if(this.cache.has(kind))return this.cache.get(kind);
   const name=kind==='arm'?'motion-arm':'motion-legs';
-  const version=modelAssets[name];
-  if(!version)throw new Error('This motion specimen is unavailable.');
-  const decoder=new DRACOLoader().setDecoderPath(new URL('vendor/draco/',document.baseURI).href).setWorkerLimit(2);
-  const asset=path=>new URL('assets/'+name+path+'?v='+version,document.baseURI).href;
   const loading=(async()=>{
-   try{
-    const [modelFile,meta]=await Promise.all([
-     new GLTFLoader().setDRACOLoader(decoder).loadAsync(asset('.glb')),
-     fetch(asset('.json')).then(response=>{if(!response.ok)throw new Error('Could not read the motion rig.');return response.json();}),
-    ]);
+    const [modelFile,meta]=await readRig(name);
     const model=modelFile.scene;
-    const attach=name=>{
-     const node=model.getObjectByName(name);
-     if(!node)throw new Error('A required joint is missing from the model.');
-     return {node,rest:node.quaternion.clone(),position:node.position.clone()};
-    };
+    const attach=name=>jointState(model.getObjectByName(name));
     const joints=kind==='arm'?Object.fromEntries(Object.entries(meta.joints).map(([key,name])=>[key,attach(name)])):{
      pelvis:attach(meta.joints.pelvis),
      ...Object.fromEntries(['right','left'].map(side=>[side,Object.fromEntries(Object.entries(meta.joints[side]).map(([key,name])=>[key,attach(name)]))])),
@@ -101,9 +110,7 @@ export class MotionViewer {
      if(!mesh.isMesh)return;
      if(mesh.isSkinnedMesh)mesh.frustumCulled=false;
      if(!mesh.userData.motionMuscle)return;
-     const material=new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
-     mesh.material=material;
-     parts.push({mesh,material,id:mesh.userData.motionMuscle,side:mesh.userData.motionSide||'right'});
+     parts.push(musclePart(mesh));
     });
     const clip=modelFile.animations.find(animation=>animation.name===meta.animation?.name);
     const mixer=clip?new THREE.AnimationMixer(model):null;
@@ -111,11 +118,42 @@ export class MotionViewer {
     if(action)action.clampWhenFinished=true;
     const contacts=kind==='legs'?Object.fromEntries(Object.entries(meta.contact).map(([side,points])=>[side,Object.values(points).map(point=>({node:model.getObjectByName(point.node),offset:new THREE.Vector3(...point.local)}))])):null;
     return {model,meta,joints,parts,kind,mixer,action,contacts};
-   }finally{decoder.dispose();}
   })();
   this.cache.set(kind,loading);
   loading.catch(()=>this.cache.delete(kind));
   return loading;
+ }
+ async addUpper(specimen){
+  if(specimen.upper)return;
+  const [file,meta]=await readRig('motion-walk-context');
+  if(specimen.upper)return;
+  const root=file.scene.getObjectByName(meta.root);
+  const attach=name=>jointState(root.getObjectByName(name));
+  const torso=attach(meta.torso),head=attach(meta.head);
+  const arms=Object.fromEntries(Object.entries(meta.joints).map(([side,chain])=>[side,Object.fromEntries(Object.entries(chain).map(([joint,name])=>[joint,attach(name)]))]));
+  specimen.joints.pelvis.node.add(root);
+  root.position.set(0,0,0);
+  root.visible=false;
+  specimen.upper={root,torso,head,arms,meta};
+ }
+ async addCalves(specimen){
+  if(specimen.calves)return;
+  const [file,meta]=await readRig('motion-leg-actions');
+  if(specimen.calves)return;
+  const skeleton=specimen.parts[0].mesh.skeleton;
+  if(!meta.skinCompatible||!skeleton||skeleton.bones.some((bone,index)=>bone.name!==meta.jointOrder[index]))throw new Error('The calf muscles could not be matched to the leg rig.');
+  const calves=[];
+  file.scene.traverse(mesh=>{if(mesh.isSkinnedMesh&&mesh.userData.motionMuscle)calves.push(mesh);});
+  for(const mesh of calves){
+   const bind=mesh.bindMatrix.clone();
+   specimen.model.add(mesh);
+   mesh.bind(skeleton,bind);
+   mesh.frustumCulled=false;
+   const part=musclePart(mesh);
+   part.lessonOnly=true;
+   specimen.parts.push(part);
+  }
+  specimen.calves=true;
  }
  use(specimen){
   if(this.current!==specimen){
@@ -160,7 +198,46 @@ export class MotionViewer {
   this.rotate(joints[side].patella,meta.axes[side].patella,Math.max(0,pose.knee)*.55);
   this.dirty=true;
  }
- showGround(visible){if(this.grid)this.grid.visible=visible;}
+ showGround(visible){if(this.grid){this.grid.visible=visible;if(!visible)this.grid.position.z=0;}}
+ showUpper(visible){
+  if(this.current?.upper){this.current.upper.root.visible=visible;this.dirty=true;}
+ }
+ animateUpper(percent,rightContact){
+  const upper=this.current.upper;
+  if(!upper?.root.visible)return;
+  const {meta,torso,head,arms}=upper;
+  const phase=percent<rightContact ? .5+.5*percent/rightContact : .5*(percent-rightContact)/(100-rightContact);
+  const frames=meta.previewFrames;
+  const last=frames.length-1,index=Math.min(last-1,Math.floor(phase*last));
+  const [before,from,to,after]=[-1,0,1,2].map(offset=>frames[(index+offset+last)%last]);
+  const t=phase*last-index;
+  const at=column=>{
+   const a=before[column],b=from[column],c=to[column],d=after[column];
+   return b+.5*t*(c-a+t*(2*a-5*b+4*c-d+t*(3*b-3*c+d-a)));
+  };
+  this.rotate(torso,meta.axes.torso,at(1));
+  this.rotate(head,meta.axes.head,at(2));
+  for(const [side,start] of [['right',3],['left',5]]){
+   this.rotate(arms[side].shoulder,meta.axes[side].shoulder,at(start));
+   this.rotate(arms[side].elbow,meta.axes[side].elbow,at(start+1));
+  }
+ }
+ heelRise(angle){
+  const {joints,contacts,model,meta}=this.current;
+  joints.pelvis.node.position.copy(joints.pelvis.position);
+  for(const side of ['left','right']){
+   this.poseLeg(side,{hip:0,knee:0,ankle:-angle});
+   this.rotate(joints[side].toe,meta.axes[side].toe,angle);
+  }
+  model.updateMatrixWorld(true);
+  const position=point=>point.node.localToWorld(point.offset.clone());
+  const toe=position(contacts.right[2]).lerp(position(contacts.left[2]),.5);
+  if(!this.heelRest)this.heelRest=toe.clone();
+  // Keep the same forefoot contact while the heel and body rise together.
+  joints.pelvis.node.position.add(this.heelRest.clone().sub(toe));
+  if(this.grid){this.grid.position.y=this.heelRest.y-.004;this.grid.position.z=0;}
+  this.dirty=true;
+ }
  setWalkTracks(samples){
   const {joints,contacts,model}=this.current;
   joints.pelvis.node.position.copy(joints.pelvis.position);
@@ -175,7 +252,8 @@ export class MotionViewer {
   this.walkOffsets=raw.map((_,index)=>filter.reduce((sum,weight,j)=>sum+weight*raw[clamp(index+j-2,0,raw.length-1)],0)/16);
   this.reset();
  }
- walk(frame,distance){
+ walk(frame,distance,rightContact){
+  this.animateUpper(frame.percent,rightContact);
   const {joints}=this.current;
   const clock=frame.percent/100;
   const index=clock*(this.walkOffsets.length-1);
@@ -184,25 +262,25 @@ export class MotionViewer {
   const {forwardMeters,rightMeters}=frame.pelvis;
   joints.pelvis.node.position.copy(joints.pelvis.position).add(new THREE.Vector3(-rightMeters,-floorCorrection,forwardMeters-distance*clock));
   for(const side of ['left','right'])this.poseLeg(side,frame[side]);
-  if(this.grid)this.grid.position.z=-distance*clock%.1;
+  if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,showMuscles,onlyActive}){
+ highlight({strengths,selected,showMuscles,onlyActive,showCalves=false}){
   if(!this.current)return;
   for(const p of this.current.parts){
    const key=p.side+':'+p.id, strength=strengths[key];
    const focused=selected===key;
-   p.mesh.visible=showMuscles&&(!onlyActive||focused||strength>0);
+   p.mesh.visible=showMuscles&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||strength>0);
    p.material.color.copy(strengths.active?muscleMuted:muscleBase);
    if(strength>0)p.material.color.lerp(muscleActive,.25+.75*clamp(strength,0,1));
    if(focused)p.material.color.copy(muscleSelected);
-   p.material.emissive.copy(p.material.color).multiplyScalar(focused?.24:strength>0?.16:0);
+   p.material.emissive.copy(p.material.color).multiplyScalar(focused ? .24 : strength>0 ? .16 : 0);
   }
   this.dirty=true;
  }
  frame(view='lesson'){
   if(!this.current||!this.controls)return;
-  const bounds=new THREE.Box3().setFromObject(this.current.model);
+  const bounds=new THREE.Box3().setFromObject(this.current.model,true);
   if(bounds.isEmpty())return;
   const size=bounds.getSize(new THREE.Vector3()),center=bounds.getCenter(new THREE.Vector3());
   if(this.current.kind==='arm'){
@@ -210,7 +288,10 @@ export class MotionViewer {
    const elbow=joints.elbow.node.getWorldPosition(new THREE.Vector3());
    center.set(elbow.x-.018,elbow.y-.020,elbow.z+.164);
   }
-  const diagonal=this.current.kind==='arm'?.91:Math.max(size.y,size.x)*1.12;
+  if(this.current.kind==='legs'&&!this.current.upper?.root.visible){
+   size.y=.94;center.y=.46;
+  }
+  const diagonal=this.current.kind==='arm'?.91:Math.max(size.y,size.x)*1.15;
   const direction=({
    lesson:this.current.kind==='arm'?[-1,.11,.24]:[1,.13,1.25],
    front:[0,.08,1],side:this.current.kind==='arm'?[-1,.05,0]:[1,.05,0],

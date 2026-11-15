@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "baseRig": "motion-legs",
+  "skinCompatible": true,
+  "jointOrder": [
+    "MotionPelvis",
+    "MotionHipR",
+    "MotionKneeR",
+    "MotionAnkleR",
+    "MotionToeR",
+    "MotionPatellaR",
+    "MotionHipL",
+    "MotionKneeL",
+    "MotionAnkleL",
+    "MotionToeL",
+    "MotionPatellaL"
+  ],
+  "muscles": {
+    "left": {
+      "gastrocnemius-medial": "MotionLeftMedialHeadOfGastrocnemius",
+      "soleus": "MotionLeftSoleusMuscle"
+    },
+    "right": {
+      "gastrocnemius-medial": "MotionRightMedialHeadOfGastrocnemius",
+      "soleus": "MotionRightSoleusMuscle"
+    }
+  },
+  "notes": "These are textbook heel-raise teaching surfaces. Soleus joins the calcaneal tendon, which is supplied by the base rig. These meshes are outside the measured walking highlight set."
+}

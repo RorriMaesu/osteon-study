@@ -1,0 +1,115 @@
+{
+  "root": "MotionWalkContextRig",
+  "torso": "MotionTorso",
+  "head": "MotionWalkHead",
+  "pelvisRest": [
+    0,
+    0.85985,
+    -0.004835
+  ],
+  "joints": {
+    "right": {
+      "shoulder": "MotionWalkShoulderRight",
+      "elbow": "MotionWalkElbowRight"
+    },
+    "left": {
+      "shoulder": "MotionWalkShoulderLeft",
+      "elbow": "MotionWalkElbowLeft"
+    }
+  },
+  "axes": {
+    "torso": [
+      0,
+      1,
+      0
+    ],
+    "head": [
+      0,
+      1,
+      0
+    ],
+    "right": {
+      "shoulder": [
+        -1,
+        0,
+        0
+      ],
+      "elbow": [
+        -0.9917079210281372,
+        0.048194050788879395,
+        -0.11913353204727173
+      ]
+    },
+    "left": {
+      "shoulder": [
+        -1,
+        0,
+        0
+      ],
+      "elbow": [
+        -0.9917079210281372,
+        -0.048194050788879395,
+        0.11913353204727173
+      ]
+    }
+  },
+  "columns": [
+    "phase",
+    "torso",
+    "head",
+    "shoulderRight",
+    "elbowRight",
+    "shoulderLeft",
+    "elbowLeft"
+  ],
+  "phaseZeroEvent": "right-initial-contact",
+  "previewFrames": [
+    [
+      0.0,
+      -2.5,
+      2.5,
+      -11,
+      12,
+      15,
+      21
+    ],
+    [
+      0.25,
+      0.0,
+      0.0,
+      2,
+      18,
+      2,
+      16
+    ],
+    [
+      0.5,
+      2.5,
+      -2.5,
+      15,
+      21,
+      -11,
+      12
+    ],
+    [
+      0.75,
+      0.0,
+      0.0,
+      2,
+      16,
+      2,
+      18
+    ],
+    [
+      1.0,
+      -2.5,
+      2.5,
+      -11,
+      12,
+      15,
+      21
+    ]
+  ],
+  "meshCount": 205,
+  "provenance": "Authored upper-body motion. The walking study recorded lower-limb motion and EMG."
+}

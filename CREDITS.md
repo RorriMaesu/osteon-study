@@ -99,6 +99,12 @@ The complete Chapter 10 source reader (PDF pages 385–424), 85 glossary entries
 
 The 60 figure images under `assets/muscle-textbook/` come from the supplied OpenStax Anatomy and Physiology 2e, © 2026 Rice University, CC BY-NC-SA 4.0. [Access for free at openstax.org](https://openstax.org/details/books/anatomy-and-physiology-2e). Figure numbers, source pages, and individual image credits appear in the viewer or reader. Osteon adds panel framing, location markers, and label covers for retrieval. Chapter 11 cards and the combined exam use independently written, reviewed explanations and questions. The F24 BI 231 muscle checklist informs the course card scope.
 
+## Motion Lab
+
+The motion assets adapt the Osteon atlas’s Z-Anatomy (CC BY-SA 4.0) and BodyParts3D surfaces. See [model licenses and attributions](assets/MODEL-LICENSE.md). Blender authoring and export scripts are in `scripts/blender`. The elbow and heel-raise lessons use simplified muscle deformation and the contraction types explained in [OpenStax §10.4](https://openstax.org/books/anatomy-and-physiology-2e/pages/10-4-nervous-system-control-of-muscle-tension).
+
+Walk cycle uses trial 1 at 4 km/h from participant 1 in the [Moreira et al. dataset (CC0 1.0)](https://doi.org/10.6084/m9.figshare.13169240.v1). Each side’s sagittal joint angles and the four surface EMG traces are synchronized to the source force-plate contacts. The model’s vertical position is adjusted for the floor display. Upper-body motion is illustrative. Optional replay restarts the recorded stride at its original beginning. Extraction and provenance are documented in `scripts/process-motion-gait.py` and `src/motion-gait-data.json`.
+
 ## Regional muscle atlas
 
 The optional regional muscle GLBs are exported from the preserved Z-Anatomy / BodyParts3D Blender atlas using Blender 4.5.1 LTS. Individual source identities, anatomical sides and world transforms are retained. Compression changes storage, not the intended anatomy. Named component geometry and model-derived metadata retain CC BY-SA 4.0 with the original Z-Anatomy and BodyParts3D attribution above. This is a static anatomical reference, not a validated motion or attachment-footprint simulation. Backups of every changed model destination and the original source remain outside the public repository.

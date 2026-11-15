@@ -1,7 +1,7 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {curlDuration,curlFrame,elbowAngle,elbowLimits,planarLimbPose} from '../src/motion-core.js';
+import {curlDuration,curlFrame,heelFrame,elbowAngle,elbowLimits,planarLimbPose} from '../src/motion-core.js';
 
 test('arm lesson has continuous lift, stationary hold, and controlled lowering',()=>{
  assert.equal(curlFrame(0).angle,curlFrame(curlDuration).angle);
@@ -9,6 +9,14 @@ test('arm lesson has continuous lift, stationary hold, and controlled lowering',
  assert.equal(curlFrame(2).contraction,'Isometric');
  assert.equal(curlFrame(3).contraction,'Eccentric');
  assert.match(curlFrame(3).detail,/elbow flexors lengthen/);
+});
+
+test('the heel raise holds the same plantar-flexion angle before controlled lowering',()=>{
+ assert.equal(heelFrame(0).angle,0);
+ assert.equal(heelFrame(2).angle,23);
+ assert.equal(heelFrame(2.4).angle,23);
+ assert.equal(heelFrame(4).angle,0);
+ assert.match(heelFrame(3).detail,/lengthen under tension/);
 });
 
 test('target direction resolves to bounded elbow flexion without an unstable on-axis result',()=>{
