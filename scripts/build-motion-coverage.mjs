@@ -390,19 +390,24 @@ async function motionParts(byID){
     .map(node=>node.extras?.motionHeelReplacement).filter(Boolean)
   );
   for(const {file,doc,bin} of rigs){
+   const wholePose=file==='motion-pose-body.glb';
+   const poseMeta=wholePose?sourceJSON('assets/motion-pose-body.json'):null;
    const regional=Object.entries(regionalLessons).find(([,entry])=>entry.asset+'.glb'===file);
    const study=regional?sourceJSON('assets/'+regional[1].asset+'.json'):null;
-   const trackNames=study?new Set(study.clips.flatMap(clip=>Object.keys(clip.morphTracks))):null;
+   const trackNames=study?new Set(study.clips.flatMap(clip=>Object.keys(clip.morphTracks))):poseMeta?new Set(poseMeta.joints.flatMap(joint=>Object.values(joint.morphs||{}).flatMap(Object.keys))):null;
    for(const node of doc.nodes||[]){
     const info=node.extras;
-    if(node.mesh===undefined||!(info?.motionMuscle||info?.walkRegion))continue;
+    if(node.mesh===undefined||!(info?.motionMuscle||info?.walkRegion||info?.poseMuscle))continue;
     const atlas=byID.get(info.muscleId);
     const side=info.motionSide||info.anatomicalSide||atlas?.side;
     const region=info.walkRegion||info.muscleRegion||atlas?.region;
     if(!side||!region)throw Error(file+' motion mesh lacks side or region: '+node.name);
     const context=!!info.walkRegion;
     const inspection=inspectSkin(node,doc,bin,lib,decoder,trackNames);
-    const evidence=context?{
+    const evidence=wholePose?{
+     modes:['whole-body-pose'],evidence:['pose-teaching-envelope'],
+     qualification:'Attached to the whole-body teaching rig. Joint or shape control does not establish muscle recruitment or validated tissue mechanics.',
+    }:context?{
      modes:['walk'],
      evidence:['walk-anatomical-context'],
      qualification:info.walkDeformation==='guided-blend'?'Follows the pose with a guided skin blend. No activity was recorded for this part.':'Follows one moving body segment. No activity was recorded for this part.',
@@ -552,10 +557,17 @@ export async function buildCoverage(){
  }
 
  // Keep newly recovered surfaces visible in the inventory even before their reference-name mapping is reviewed.
+ const unmatched=new Map();
  for(const part of motion)if(!foundMotion.has(part)){
+  const key=part.region+'|'+part.side+'|'+slug(part.name);
+  if(!unmatched.has(key))unmatched.set(key,[]);
+  unmatched.get(key).push(part);
+ }
+ for(const related of unmatched.values()){
+  const part=related[0];
   rowFor({id:'motion-'+part.region+'-'+part.side+'-'+slug(part.name),name:part.name,region:part.region,origin:'motion',
    atlasStatus:'no-named-mesh',entryType:'motion-inventory',note:'Motion mesh present. Atlas/reference identity still needs review.',
-   groups:[],directMotion:[part]});
+   groups:[],directMotion:related});
  }
 
  const census={};
@@ -569,6 +581,7 @@ export async function buildCoverage(){
   courseTargets:rows.reduce((n,row)=>n+(row.courseTargets?.length||0),0),
   atlasMuscleParts:staticParts.length,motionMuscleParts:motion.length,
   walkMuscleParts:motion.filter(part=>part.modes.includes('walk')).length,
+  poseMuscleParts:motion.filter(part=>part.modes.includes('whole-body-pose')).length,
   census,
   referenceConfirmed:rows.filter(row=>row.origin==='reference'&&atlasConfirmed.includes(row.atlasStatus)).length,
   referenceOpen:rows.filter(row=>row.origin==='reference'&&!atlasConfirmed.includes(row.atlasStatus)).length,

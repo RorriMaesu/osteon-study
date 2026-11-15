@@ -5,6 +5,14 @@ import coverage from '../src/motion-coverage-data.json' with {type:'json'};
 const rows = new Map(coverage.rows.map(row => [row.id, row]));
 const allParts = sides => Object.values(sides).flat();
 
+test('whole-body pose surfaces have their own evidence and do not create recorded EMG',()=>{
+ const parts=[...new Map(coverage.rows.flatMap(row=>allParts(row.motion)).filter(part=>part.asset==='motion-pose-body.glb').map(part=>[part.node,part])).values()];
+ assert.equal(parts.length,476);
+ assert.equal(coverage.counts.poseMuscleParts,476);
+ assert(parts.every(part=>part.modes.includes('whole-body-pose')&&part.evidence.includes('pose-teaching-envelope')));
+ assert(parts.every(part=>!part.evidence.includes('recorded-surface-emg')&&!part.modes.includes('walk')));
+});
+
 test('coverage counts reference entries, named atlas surfaces and motion surfaces separately', () => {
   const reference = coverage.rows.filter(row => row.origin === 'reference');
   const atlas = new Set(coverage.rows.flatMap(row => allParts(row.atlas).map(part => part.id)));
