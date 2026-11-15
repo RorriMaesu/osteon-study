@@ -1,0 +1,2388 @@
+{
+  "schema": 1,
+  "asset": "motion-pose-body.glb",
+  "sha256": "2a5af901f7bcd416c16a13a371cc22a76ef73a2348e5f357c30b44589c447cd8",
+  "bytes": 15978216,
+  "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
+  "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
+  "scope": "Conservative joint ranges, distributed lumbar and cervical motion, coupled shoulder girdle, radius-led forearm turn, wrists and finger hinges. Toes move together. Existing reviewed blink, smile, jaw and breathing shapes are retained. Ligaments, tissue contact, independent carpal glides, individual toe joints, eye rotations and tongue control are not simulated.",
+  "joints": [
+    {
+      "id": "trunk",
+      "label": "Trunk",
+      "region": "trunk",
+      "side": "midline",
+      "node": "Pose_trunk",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Forward / backward bend",
+          "min": -12,
+          "max": 25,
+          "neutral": 0,
+          "vector": [
+            1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "lateral",
+          "label": "Left / right bend",
+          "min": -15,
+          "max": 15,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "rotation",
+          "label": "Left / right turn",
+          "min": -15,
+          "max": 15,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "distribute": [
+        "lumbar-5",
+        "lumbar-4",
+        "lumbar-3",
+        "lumbar-2",
+        "lumbar-1"
+      ],
+      "virtual": true,
+      "marker": [
+        0,
+        1.12,
+        0.11
+      ]
+    },
+    {
+      "id": "neck",
+      "label": "Neck",
+      "region": "head-neck",
+      "side": "midline",
+      "node": "Pose_neck",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Look down / up",
+          "min": -20,
+          "max": 25,
+          "neutral": 0,
+          "vector": [
+            1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "lateral",
+          "label": "Tilt left / right",
+          "min": -20,
+          "max": 20,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "rotation",
+          "label": "Turn left / right",
+          "min": -45,
+          "max": 45,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "distribute": [
+        "cervical-7",
+        "cervical-6",
+        "cervical-5",
+        "cervical-4",
+        "cervical-3",
+        "cervical-2",
+        "cervical-1"
+      ],
+      "virtual": true,
+      "marker": [
+        0,
+        1.51,
+        0.02
+      ]
+    },
+    {
+      "id": "jaw",
+      "label": "Jaw",
+      "region": "head-neck",
+      "side": "midline",
+      "node": "Pose_jaw",
+      "axes": [
+        {
+          "id": "opening",
+          "label": "Open / close",
+          "min": 0,
+          "max": 15,
+          "neutral": 0,
+          "vector": [
+            1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "marker": [
+        0,
+        1.5,
+        0.077
+      ],
+      "morphs": {
+        "opening": {
+          "JawOpen": 0.06666666666666667
+        }
+      },
+      "translation": [
+        0,
+        -0.0048,
+        0.0075
+      ],
+      "morphBones": true
+    },
+    {
+      "id": "face-blink",
+      "label": "Eyelids",
+      "region": "head-neck",
+      "side": "bilateral",
+      "node": "Pose_face-blink",
+      "axes": [
+        {
+          "id": "closure",
+          "label": "Eyelids",
+          "min": 0,
+          "max": 100,
+          "neutral": 0,
+          "vector": null,
+          "unit": "percent"
+        }
+      ],
+      "morphs": {
+        "closure": {
+          "Blink": 0.01
+        }
+      },
+      "virtual": true
+    },
+    {
+      "id": "face-smile",
+      "label": "Smile",
+      "region": "head-neck",
+      "side": "bilateral",
+      "node": "Pose_face-smile",
+      "axes": [
+        {
+          "id": "smile",
+          "label": "Smile",
+          "min": 0,
+          "max": 100,
+          "neutral": 0,
+          "vector": null,
+          "unit": "percent"
+        }
+      ],
+      "morphs": {
+        "smile": {
+          "Smile": 0.01
+        }
+      },
+      "virtual": true
+    },
+    {
+      "id": "breathing",
+      "label": "Breathing",
+      "region": "trunk",
+      "side": "midline",
+      "node": "Pose_breathing",
+      "axes": [
+        {
+          "id": "inhale",
+          "label": "Inhale",
+          "min": 0,
+          "max": 100,
+          "neutral": 0,
+          "vector": null,
+          "unit": "percent"
+        },
+        {
+          "id": "exhale",
+          "label": "Forced exhale",
+          "min": 0,
+          "max": 100,
+          "neutral": 0,
+          "vector": null,
+          "unit": "percent"
+        }
+      ],
+      "morphs": {
+        "inhale": {
+          "Inhale": 0.01
+        },
+        "exhale": {
+          "ForcedExhale": 0.01
+        }
+      },
+      "virtual": true
+    },
+    {
+      "id": "right-scapula",
+      "label": "Right shoulder girdle",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-scapula",
+      "axes": [
+        {
+          "id": "elevation",
+          "label": "Shoulder elevation",
+          "min": -6,
+          "max": 10,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "protraction",
+          "label": "Reach forward / back",
+          "min": -10,
+          "max": 10,
+          "neutral": 0,
+          "vector": [
+            0,
+            1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "marker": [
+        -0.1274006962776184,
+        1.3842270374298096,
+        -0.058217331767082214
+      ],
+      "coupling": "Clavicle and scapula move together as a teaching approximation."
+    },
+    {
+      "id": "right-shoulder",
+      "label": "Right shoulder",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-shoulder",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Forward / backward",
+          "min": -20,
+          "max": 90,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Arm out / in",
+          "min": 0,
+          "max": 90,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees",
+          "requiresUnlocked": [
+            "right-scapula"
+          ]
+        },
+        {
+          "id": "rotation",
+          "label": "Internal / external rotation",
+          "min": -30,
+          "max": 30,
+          "neutral": 0,
+          "vector": [
+            0,
+            1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "right-wrist"
+    },
+    {
+      "id": "right-elbow",
+      "label": "Right elbow",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-elbow",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 115,
+          "neutral": 0,
+          "vector": [
+            -0.9917079210281372,
+            0.048194050788879395,
+            -0.11913353204727173
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "right-wrist"
+    },
+    {
+      "id": "right-forearm",
+      "label": "Right forearm",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-forearm",
+      "axes": [
+        {
+          "id": "pronation",
+          "label": "Pronate / supinate",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            0.026370573788881302,
+            0.9836136698722839,
+            -0.17835012078285217
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "marker": [
+        -0.2446279227733612,
+        0.931144654750824,
+        -0.0005956795066595078
+      ],
+      "endpoint": "right-wrist",
+      "forearmClearance": {
+        "distalUlna": [
+          -0.24643805623054504,
+          0.8636274337768555,
+          0.011646631173789501
+        ],
+        "distalRadius": [
+          -0.2716673016548157,
+          0.8636360168457031,
+          0.013309143483638763
+        ],
+        "millimeters": 1.5
+      }
+    },
+    {
+      "id": "right-wrist",
+      "label": "Right wrist",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-wrist",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Palm / back bend",
+          "min": -35,
+          "max": 45,
+          "neutral": 0,
+          "vector": [
+            -0.9917079210281372,
+            0.048194050788879395,
+            -0.11913353204727173
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "deviation",
+          "label": "Radial / ulnar deviation",
+          "min": -12,
+          "max": 18,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
+        }
+      ]
+    },
+    {
+      "id": "right-thumb-cmc",
+      "label": "Right thumb base",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-thumb-cmc",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Move across palm",
+          "min": 0,
+          "max": 25,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Lift away from palm",
+          "min": 0,
+          "max": 25,
+          "neutral": 0,
+          "vector": [
+            -0.8552535176277161,
+            0.5182097554206848,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "Limited thumb-base teaching range; opposition is a coupled motion."
+    },
+    {
+      "id": "right-thumb-mcp",
+      "label": "Right thumb MCP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-thumb-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.0,
+            0.5296200513839722,
+            0.8482350707054138
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-thumb-ip",
+      "label": "Right thumb IP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-thumb-ip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.0,
+            0.6471695303916931,
+            0.762346088886261
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-index-mcp",
+      "label": "Right index MCP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-index-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9275320172309875,
+            0.37374356389045715,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-index-pip",
+      "label": "Right index PIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-index-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.945434033870697,
+            0.3258135914802551,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-index-dip",
+      "label": "Right index DIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-index-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9597647786140442,
+            0.28080520033836365,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-middle-mcp",
+      "label": "Right middle MCP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-middle-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9859510064125061,
+            0.16703440248966217,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-middle-pip",
+      "label": "Right middle PIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-middle-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9916298389434814,
+            0.12911319732666016,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-middle-dip",
+      "label": "Right middle DIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-middle-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.993154764175415,
+            0.11680618673563004,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-ring-mcp",
+      "label": "Right ring MCP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-ring-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9998750686645508,
+            -0.015808045864105225,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-ring-pip",
+      "label": "Right ring PIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-ring-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9991327524185181,
+            -0.041639626026153564,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-ring-dip",
+      "label": "Right ring DIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-ring-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9900151491165161,
+            0.14096087217330933,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-little-mcp",
+      "label": "Right little MCP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-little-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9339529275894165,
+            -0.3573962152004242,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-little-pip",
+      "label": "Right little PIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-little-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9951239824295044,
+            -0.09863175451755524,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-little-dip",
+      "label": "Right little DIP",
+      "region": "right-arm",
+      "side": "right",
+      "node": "Pose_right-little-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9966070055961609,
+            -0.08230747282505035,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "right-hip",
+      "label": "Right hip",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-hip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Forward / backward",
+          "min": -20,
+          "max": 85,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Leg out / in",
+          "min": 0,
+          "max": 35,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "rotation",
+          "label": "Internal / external rotation",
+          "min": -20,
+          "max": 20,
+          "neutral": 0,
+          "vector": [
+            0,
+            1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "right-ankle"
+    },
+    {
+      "id": "right-knee",
+      "label": "Right knee",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-knee",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 85,
+          "neutral": 0,
+          "vector": [
+            1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "right-ankle"
+    },
+    {
+      "id": "right-ankle",
+      "label": "Right ankle",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-ankle",
+      "axes": [
+        {
+          "id": "dorsiflexion",
+          "label": "Toes up / down",
+          "min": -35,
+          "max": 23,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ]
+    },
+    {
+      "id": "right-toes",
+      "label": "Right toes",
+      "region": "right-leg",
+      "side": "right",
+      "node": "Pose_right-toes",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toes",
+          "min": -15,
+          "max": 35,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "The five toe rays move together in this teaching control."
+    },
+    {
+      "id": "left-scapula",
+      "label": "Left shoulder girdle",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-scapula",
+      "axes": [
+        {
+          "id": "elevation",
+          "label": "Shoulder elevation",
+          "min": -6,
+          "max": 10,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "protraction",
+          "label": "Reach forward / back",
+          "min": -10,
+          "max": 10,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "marker": [
+        0.12739184498786926,
+        1.3841969966888428,
+        -0.05822731927037239
+      ],
+      "coupling": "Clavicle and scapula move together as a teaching approximation."
+    },
+    {
+      "id": "left-shoulder",
+      "label": "Left shoulder",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-shoulder",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Forward / backward",
+          "min": -20,
+          "max": 90,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Arm out / in",
+          "min": 0,
+          "max": 90,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees",
+          "requiresUnlocked": [
+            "left-scapula"
+          ]
+        },
+        {
+          "id": "rotation",
+          "label": "Internal / external rotation",
+          "min": -30,
+          "max": 30,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "left-wrist"
+    },
+    {
+      "id": "left-elbow",
+      "label": "Left elbow",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-elbow",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 115,
+          "neutral": 0,
+          "vector": [
+            -0.9917079210281372,
+            -0.048194050788879395,
+            0.11913353204727173
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "left-wrist"
+    },
+    {
+      "id": "left-forearm",
+      "label": "Left forearm",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-forearm",
+      "axes": [
+        {
+          "id": "pronation",
+          "label": "Pronate / supinate",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            0.026376107707619667,
+            -0.9836135506629944,
+            0.17835010588169098
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "marker": [
+        0.24462738633155823,
+        0.931144654750824,
+        -0.0005956795066595078
+      ],
+      "endpoint": "left-wrist",
+      "forearmClearance": {
+        "distalUlna": [
+          0.2464379072189331,
+          0.8636274337768555,
+          0.011646631173789501
+        ],
+        "distalRadius": [
+          0.2716730833053589,
+          0.8636360168457031,
+          0.013309143483638763
+        ],
+        "millimeters": 1.5
+      }
+    },
+    {
+      "id": "left-wrist",
+      "label": "Left wrist",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-wrist",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Palm / back bend",
+          "min": -35,
+          "max": 45,
+          "neutral": 0,
+          "vector": [
+            -0.9917079210281372,
+            -0.048194050788879395,
+            0.11913353204727173
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "deviation",
+          "label": "Radial / ulnar deviation",
+          "min": -12,
+          "max": 18,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
+        }
+      ]
+    },
+    {
+      "id": "left-thumb-cmc",
+      "label": "Left thumb base",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-thumb-cmc",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Move across palm",
+          "min": 0,
+          "max": 25,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            -1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Lift away from palm",
+          "min": 0,
+          "max": 25,
+          "neutral": 0,
+          "vector": [
+            -0.855275571346283,
+            -0.5181733965873718,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "Limited thumb-base teaching range; opposition is a coupled motion."
+    },
+    {
+      "id": "left-thumb-mcp",
+      "label": "Left thumb MCP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-thumb-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.0,
+            -0.5296199917793274,
+            -0.8482350707054138
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-thumb-ip",
+      "label": "Left thumb IP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-thumb-ip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.0,
+            -0.6471694707870483,
+            -0.762346088886261
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-index-mcp",
+      "label": "Left index MCP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-index-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9275315999984741,
+            -0.3737447261810303,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-index-pip",
+      "label": "Left index PIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-index-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9429479837417603,
+            -0.3329400420188904,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-index-dip",
+      "label": "Left index DIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-index-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9639951586723328,
+            -0.2659200131893158,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-middle-mcp",
+      "label": "Left middle MCP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-middle-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9859441518783569,
+            -0.167075052857399,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-middle-pip",
+      "label": "Left middle PIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-middle-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9916285276412964,
+            -0.129123717546463,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-middle-dip",
+      "label": "Left middle DIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-middle-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9931511878967285,
+            -0.11683585494756699,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-ring-mcp",
+      "label": "Left ring MCP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-ring-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9998744130134583,
+            0.015844952315092087,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-ring-pip",
+      "label": "Left ring PIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-ring-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.999135434627533,
+            0.041572295129299164,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-ring-dip",
+      "label": "Left ring DIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-ring-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9900286197662354,
+            -0.14086654782295227,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-little-mcp",
+      "label": "Left little MCP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-little-mcp",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 60,
+          "neutral": 0,
+          "vector": [
+            -0.9339840412139893,
+            0.35731467604637146,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-little-pip",
+      "label": "Left little PIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-little-pip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9951242804527283,
+            0.09862878918647766,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-little-dip",
+      "label": "Left little DIP",
+      "region": "left-arm",
+      "side": "left",
+      "node": "Pose_left-little-dip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 70,
+          "neutral": 0,
+          "vector": [
+            -0.9966042637825012,
+            0.08234039694070816,
+            0.0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "An atlas-fitted hinge approximation; joint surface sliding is not simulated."
+    },
+    {
+      "id": "left-hip",
+      "label": "Left hip",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-hip",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Forward / backward",
+          "min": -20,
+          "max": 85,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "abduction",
+          "label": "Leg out / in",
+          "min": 0,
+          "max": 35,
+          "neutral": 0,
+          "vector": [
+            0,
+            0,
+            1
+          ],
+          "unit": "degrees"
+        },
+        {
+          "id": "rotation",
+          "label": "Internal / external rotation",
+          "min": -20,
+          "max": 20,
+          "neutral": 0,
+          "vector": [
+            0,
+            -1,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "left-ankle"
+    },
+    {
+      "id": "left-knee",
+      "label": "Left knee",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-knee",
+      "axes": [
+        {
+          "id": "flexion",
+          "label": "Bend / straighten",
+          "min": 0,
+          "max": 85,
+          "neutral": 0,
+          "vector": [
+            1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "endpoint": "left-ankle"
+    },
+    {
+      "id": "left-ankle",
+      "label": "Left ankle",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-ankle",
+      "axes": [
+        {
+          "id": "dorsiflexion",
+          "label": "Toes up / down",
+          "min": -35,
+          "max": 23,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ]
+    },
+    {
+      "id": "left-toes",
+      "label": "Left toes",
+      "region": "left-leg",
+      "side": "left",
+      "node": "Pose_left-toes",
+      "axes": [
+        {
+          "id": "extension",
+          "label": "Lift / curl toes",
+          "min": -15,
+          "max": 35,
+          "neutral": 0,
+          "vector": [
+            -1,
+            0,
+            0
+          ],
+          "unit": "degrees"
+        }
+      ],
+      "detail": "The five toe rays move together in this teaching control."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "pelvis",
+      "name": "Pose_pelvis",
+      "pivot": [
+        0,
+        0.85985,
+        -0.004835
+      ],
+      "parent": null
+    },
+    {
+      "id": "lumbar-5",
+      "name": "Pose_lumbar-5",
+      "pivot": [
+        -2.1089179426780902e-05,
+        0.9641010165214539,
+        -0.018320204690098763
+      ],
+      "parent": "pelvis"
+    },
+    {
+      "id": "lumbar-4",
+      "name": "Pose_lumbar-4",
+      "pivot": [
+        6.334528006846085e-05,
+        0.9976906776428223,
+        -0.028484618291258812
+      ],
+      "parent": "lumbar-5"
+    },
+    {
+      "id": "lumbar-3",
+      "name": "Pose_lumbar-3",
+      "pivot": [
+        2.925981425505597e-05,
+        1.0248897075653076,
+        -0.04575496166944504
+      ],
+      "parent": "lumbar-4"
+    },
+    {
+      "id": "lumbar-2",
+      "name": "Pose_lumbar-2",
+      "pivot": [
+        -0.00016330499784089625,
+        1.05305814743042,
+        -0.04512690380215645
+      ],
+      "parent": "lumbar-3"
+    },
+    {
+      "id": "lumbar-1",
+      "name": "Pose_lumbar-1",
+      "pivot": [
+        3.710733653861098e-05,
+        1.0829265117645264,
+        -0.04820605367422104
+      ],
+      "parent": "lumbar-2"
+    },
+    {
+      "id": "trunk",
+      "name": "Pose_trunk",
+      "pivot": [
+        0,
+        0.85985,
+        -0.004835
+      ],
+      "parent": null
+    },
+    {
+      "id": "thorax",
+      "name": "Pose_thorax",
+      "pivot": [
+        0,
+        1.16,
+        -0.035
+      ],
+      "parent": "lumbar-1"
+    },
+    {
+      "id": "cervical-7",
+      "name": "Pose_cervical-7",
+      "pivot": [
+        9.102995682042092e-05,
+        1.441336989402771,
+        -0.0399128794670105
+      ],
+      "parent": "thorax"
+    },
+    {
+      "id": "cervical-6",
+      "name": "Pose_cervical-6",
+      "pivot": [
+        2.362703344260808e-05,
+        1.4562110900878906,
+        -0.02220417931675911
+      ],
+      "parent": "cervical-7"
+    },
+    {
+      "id": "cervical-5",
+      "name": "Pose_cervical-5",
+      "pivot": [
+        4.757312126457691e-06,
+        1.4706299304962158,
+        -0.035617683082818985
+      ],
+      "parent": "cervical-6"
+    },
+    {
+      "id": "cervical-4",
+      "name": "Pose_cervical-4",
+      "pivot": [
+        -0.00015367446758318692,
+        1.4839231967926025,
+        -0.039077773690223694
+      ],
+      "parent": "cervical-5"
+    },
+    {
+      "id": "cervical-3",
+      "name": "Pose_cervical-3",
+      "pivot": [
+        -1.7571113858139142e-05,
+        1.4978643655776978,
+        -0.04151640832424164
+      ],
+      "parent": "cervical-4"
+    },
+    {
+      "id": "cervical-2",
+      "name": "Pose_cervical-2",
+      "pivot": [
+        0.00019950777641497552,
+        1.5117582082748413,
+        -0.043150823563337326
+      ],
+      "parent": "cervical-3"
+    },
+    {
+      "id": "cervical-1",
+      "name": "Pose_cervical-1",
+      "pivot": [
+        -7.313142123166472e-05,
+        1.5351908206939697,
+        -0.02257729135453701
+      ],
+      "parent": "cervical-2"
+    },
+    {
+      "id": "head",
+      "name": "Pose_head",
+      "pivot": [
+        0,
+        1.52,
+        -0.035
+      ],
+      "parent": "cervical-1"
+    },
+    {
+      "id": "neck",
+      "name": "Pose_neck",
+      "pivot": [
+        0,
+        1.48,
+        -0.045
+      ],
+      "parent": null
+    },
+    {
+      "id": "jaw",
+      "name": "Pose_jaw",
+      "pivot": [
+        0,
+        1.5743760999999998,
+        0.0074324000000000005
+      ],
+      "parent": "head"
+    },
+    {
+      "id": "face-blink",
+      "name": "Pose_face-blink",
+      "pivot": [
+        0,
+        1.594,
+        0.084
+      ],
+      "parent": "head"
+    },
+    {
+      "id": "face-smile",
+      "name": "Pose_face-smile",
+      "pivot": [
+        0,
+        1.54,
+        0.08
+      ],
+      "parent": "head"
+    },
+    {
+      "id": "breathing",
+      "name": "Pose_breathing",
+      "pivot": [
+        0,
+        1.22,
+        0.12
+      ],
+      "parent": "thorax"
+    },
+    {
+      "id": "right-scapula",
+      "name": "Pose_right-scapula",
+      "pivot": [
+        -0.0141755361109972,
+        1.398555040359497,
+        0.03187009319663048
+      ],
+      "parent": "thorax"
+    },
+    {
+      "id": "right-shoulder",
+      "name": "Pose_right-shoulder",
+      "pivot": [
+        -0.16699999570846558,
+        1.38100004196167,
+        -0.029999999329447746
+      ],
+      "parent": "right-scapula"
+    },
+    {
+      "id": "right-elbow",
+      "name": "Pose_right-elbow",
+      "pivot": [
+        -0.21899999678134918,
+        1.0989999771118164,
+        -0.03400000184774399
+      ],
+      "parent": "right-shoulder"
+    },
+    {
+      "id": "right-forearm",
+      "name": "Pose_right-forearm",
+      "pivot": [
+        -0.24040429294109344,
+        1.0886847972869873,
+        -0.02916106767952442
+      ],
+      "parent": "right-elbow"
+    },
+    {
+      "id": "right-wrist",
+      "name": "Pose_right-wrist",
+      "pivot": [
+        -0.2635549306869507,
+        0.8591440916061401,
+        0.015219064429402351
+      ],
+      "parent": "right-forearm"
+    },
+    {
+      "id": "right-thumb-cmc",
+      "name": "Pose_right-thumb-cmc",
+      "pivot": [
+        -0.28516441583633423,
+        0.8411955833435059,
+        0.028131235390901566
+      ],
+      "parent": "right-wrist"
+    },
+    {
+      "id": "right-thumb-mcp",
+      "name": "Pose_right-thumb-mcp",
+      "pivot": [
+        -0.3125857710838318,
+        0.8124836683273315,
+        0.04850681871175766
+      ],
+      "parent": "right-thumb-cmc"
+    },
+    {
+      "id": "right-thumb-ip",
+      "name": "Pose_right-thumb-ip",
+      "pivot": [
+        -0.3246755003929138,
+        0.7882831692695618,
+        0.061889976263046265
+      ],
+      "parent": "right-thumb-mcp"
+    },
+    {
+      "id": "right-index-mcp",
+      "name": "Pose_right-index-mcp",
+      "pivot": [
+        -0.2956743836402893,
+        0.7690274715423584,
+        0.038062721490859985
+      ],
+      "parent": "right-wrist"
+    },
+    {
+      "id": "right-index-pip",
+      "name": "Pose_right-index-pip",
+      "pivot": [
+        -0.3087526857852936,
+        0.7348524332046509,
+        0.055133238434791565
+      ],
+      "parent": "right-index-mcp"
+    },
+    {
+      "id": "right-index-dip",
+      "name": "Pose_right-index-dip",
+      "pivot": [
+        -0.3157268166542053,
+        0.7203673124313354,
+        0.07262913882732391
+      ],
+      "parent": "right-index-pip"
+    },
+    {
+      "id": "right-middle-mcp",
+      "name": "Pose_right-middle-mcp",
+      "pivot": [
+        -0.2748296856880188,
+        0.7708418369293213,
+        0.039124734699726105
+      ],
+      "parent": "right-wrist"
+    },
+    {
+      "id": "right-middle-pip",
+      "name": "Pose_right-middle-pip",
+      "pivot": [
+        -0.2807331681251526,
+        0.7314296960830688,
+        0.06049812585115433
+      ],
+      "parent": "right-middle-mcp"
+    },
+    {
+      "id": "right-middle-dip",
+      "name": "Pose_right-middle-dip",
+      "pivot": [
+        -0.28466498851776123,
+        0.7108189463615417,
+        0.08119477331638336
+      ],
+      "parent": "right-middle-pip"
+    },
+    {
+      "id": "right-ring-mcp",
+      "name": "Pose_right-ring-mcp",
+      "pivot": [
+        -0.2558148503303528,
+        0.7758521437644958,
+        0.039451196789741516
+      ],
+      "parent": "right-wrist"
+    },
+    {
+      "id": "right-ring-pip",
+      "name": "Pose_right-ring-pip",
+      "pivot": [
+        -0.2573730945587158,
+        0.7376665472984314,
+        0.05932129919528961
+      ],
+      "parent": "right-ring-mcp"
+    },
+    {
+      "id": "right-ring-dip",
+      "name": "Pose_right-ring-dip",
+      "pivot": [
+        -0.2571500837802887,
+        0.7177028656005859,
+        0.08089190721511841
+      ],
+      "parent": "right-ring-pip"
+    },
+    {
+      "id": "right-little-mcp",
+      "name": "Pose_right-little-mcp",
+      "pivot": [
+        -0.23852568864822388,
+        0.782218337059021,
+        0.04172109439969063
+      ],
+      "parent": "right-wrist"
+    },
+    {
+      "id": "right-little-pip",
+      "name": "Pose_right-little-pip",
+      "pivot": [
+        -0.23316821455955505,
+        0.7521809339523315,
+        0.058256179094314575
+      ],
+      "parent": "right-little-mcp"
+    },
+    {
+      "id": "right-little-dip",
+      "name": "Pose_right-little-dip",
+      "pivot": [
+        -0.23053070902824402,
+        0.7349673509597778,
+        0.07066783308982849
+      ],
+      "parent": "right-little-pip"
+    },
+    {
+      "id": "right-hip",
+      "name": "Pose_right-hip",
+      "pivot": [
+        -0.0842,
+        0.85985,
+        -0.004835
+      ],
+      "parent": "pelvis"
+    },
+    {
+      "id": "right-knee",
+      "name": "Pose_right-knee",
+      "pivot": [
+        -0.0757,
+        0.4569,
+        -0.0274
+      ],
+      "parent": "right-hip"
+    },
+    {
+      "id": "right-patella",
+      "name": "Pose_right-patella",
+      "pivot": [
+        -0.0757,
+        0.4569,
+        -0.0274
+      ],
+      "parent": "right-hip"
+    },
+    {
+      "id": "right-ankle",
+      "name": "Pose_right-ankle",
+      "pivot": [
+        -0.075,
+        0.071,
+        -0.035
+      ],
+      "parent": "right-knee"
+    },
+    {
+      "id": "right-toes",
+      "name": "Pose_right-toes",
+      "pivot": [
+        -0.087,
+        0.019,
+        0.077
+      ],
+      "parent": "right-ankle"
+    },
+    {
+      "id": "left-scapula",
+      "name": "Pose_left-scapula",
+      "pivot": [
+        0.014175514690577984,
+        1.398555040359497,
+        0.031870078295469284
+      ],
+      "parent": "thorax"
+    },
+    {
+      "id": "left-shoulder",
+      "name": "Pose_left-shoulder",
+      "pivot": [
+        0.16699999570846558,
+        1.38100004196167,
+        -0.029999999329447746
+      ],
+      "parent": "left-scapula"
+    },
+    {
+      "id": "left-elbow",
+      "name": "Pose_left-elbow",
+      "pivot": [
+        0.21899999678134918,
+        1.0989999771118164,
+        -0.03400000184774399
+      ],
+      "parent": "left-shoulder"
+    },
+    {
+      "id": "left-forearm",
+      "name": "Pose_left-forearm",
+      "pivot": [
+        0.24040287733078003,
+        1.0886847972869873,
+        -0.02916106767952442
+      ],
+      "parent": "left-elbow"
+    },
+    {
+      "id": "left-wrist",
+      "name": "Pose_left-wrist",
+      "pivot": [
+        0.26362988352775574,
+        0.8591598868370056,
+        0.015235278755426407
+      ],
+      "parent": "left-forearm"
+    },
+    {
+      "id": "left-thumb-cmc",
+      "name": "Pose_left-thumb-cmc",
+      "pivot": [
+        0.28516441583633423,
+        0.8411955833435059,
+        0.028131239116191864
+      ],
+      "parent": "left-wrist"
+    },
+    {
+      "id": "left-thumb-mcp",
+      "name": "Pose_left-thumb-mcp",
+      "pivot": [
+        0.31258589029312134,
+        0.8124836683273315,
+        0.04850681871175766
+      ],
+      "parent": "left-thumb-cmc"
+    },
+    {
+      "id": "left-thumb-ip",
+      "name": "Pose_left-thumb-ip",
+      "pivot": [
+        0.32467541098594666,
+        0.7882831692695618,
+        0.061889976263046265
+      ],
+      "parent": "left-thumb-mcp"
+    },
+    {
+      "id": "left-index-mcp",
+      "name": "Pose_left-index-mcp",
+      "pivot": [
+        0.29567450284957886,
+        0.7690274715423584,
+        0.03806271776556969
+      ],
+      "parent": "left-wrist"
+    },
+    {
+      "id": "left-index-pip",
+      "name": "Pose_left-index-pip",
+      "pivot": [
+        0.3088592290878296,
+        0.7349489331245422,
+        0.05522720515727997
+      ],
+      "parent": "left-index-mcp"
+    },
+    {
+      "id": "left-index-dip",
+      "name": "Pose_left-index-dip",
+      "pivot": [
+        0.31572669744491577,
+        0.7203673124313354,
+        0.07262913882732391
+      ],
+      "parent": "left-index-pip"
+    },
+    {
+      "id": "left-middle-mcp",
+      "name": "Pose_left-middle-mcp",
+      "pivot": [
+        0.27482977509498596,
+        0.7708418369293213,
+        0.039124734699726105
+      ],
+      "parent": "left-wrist"
+    },
+    {
+      "id": "left-middle-pip",
+      "name": "Pose_left-middle-pip",
+      "pivot": [
+        0.280733197927475,
+        0.7314296960830688,
+        0.06049812585115433
+      ],
+      "parent": "left-middle-mcp"
+    },
+    {
+      "id": "left-middle-dip",
+      "name": "Pose_left-middle-dip",
+      "pivot": [
+        0.284665048122406,
+        0.7108189463615417,
+        0.08119477331638336
+      ],
+      "parent": "left-middle-pip"
+    },
+    {
+      "id": "left-ring-mcp",
+      "name": "Pose_left-ring-mcp",
+      "pivot": [
+        0.2558148503303528,
+        0.7758522033691406,
+        0.039451196789741516
+      ],
+      "parent": "left-wrist"
+    },
+    {
+      "id": "left-ring-pip",
+      "name": "Pose_left-ring-pip",
+      "pivot": [
+        0.2573731243610382,
+        0.7376665472984314,
+        0.059321314096450806
+      ],
+      "parent": "left-ring-mcp"
+    },
+    {
+      "id": "left-ring-dip",
+      "name": "Pose_left-ring-dip",
+      "pivot": [
+        0.2571501135826111,
+        0.7177028656005859,
+        0.08089185506105423
+      ],
+      "parent": "left-ring-pip"
+    },
+    {
+      "id": "left-little-mcp",
+      "name": "Pose_left-little-mcp",
+      "pivot": [
+        0.238525390625,
+        0.782218337059021,
+        0.041721098124980927
+      ],
+      "parent": "left-wrist"
+    },
+    {
+      "id": "left-little-pip",
+      "name": "Pose_left-little-pip",
+      "pivot": [
+        0.23316800594329834,
+        0.7521809339523315,
+        0.058256179094314575
+      ],
+      "parent": "left-little-mcp"
+    },
+    {
+      "id": "left-little-dip",
+      "name": "Pose_left-little-dip",
+      "pivot": [
+        0.23053064942359924,
+        0.7349673509597778,
+        0.07066783308982849
+      ],
+      "parent": "left-little-pip"
+    },
+    {
+      "id": "left-hip",
+      "name": "Pose_left-hip",
+      "pivot": [
+        0.0842,
+        0.85985,
+        -0.004835
+      ],
+      "parent": "pelvis"
+    },
+    {
+      "id": "left-knee",
+      "name": "Pose_left-knee",
+      "pivot": [
+        0.0757,
+        0.4569,
+        -0.0274
+      ],
+      "parent": "left-hip"
+    },
+    {
+      "id": "left-patella",
+      "name": "Pose_left-patella",
+      "pivot": [
+        0.0757,
+        0.4569,
+        -0.0274
+      ],
+      "parent": "left-hip"
+    },
+    {
+      "id": "left-ankle",
+      "name": "Pose_left-ankle",
+      "pivot": [
+        0.075,
+        0.071,
+        -0.035
+      ],
+      "parent": "left-knee"
+    },
+    {
+      "id": "left-toes",
+      "name": "Pose_left-toes",
+      "pivot": [
+        0.087,
+        0.019,
+        0.077
+      ],
+      "parent": "left-ankle"
+    }
+  ],
+  "totalMuscleSurfaces": 476,
+  "boneSurfaces": 296,
+  "regionalMorphReplacements": [
+    "muscle-anterior-belly-of-digastric-muscle-l",
+    "muscle-anterior-belly-of-digastric-muscle-r",
+    "muscle-bucinator-l",
+    "muscle-bucinator-r",
+    "muscle-deep-part-of-masseter-l",
+    "muscle-deep-part-of-masseter-r",
+    "muscle-depressor-anguli-oris-l",
+    "muscle-depressor-anguli-oris-r",
+    "muscle-diaphragm",
+    "muscle-external-abdominal-oblique-muscle-l",
+    "muscle-external-abdominal-oblique-muscle-r",
+    "muscle-external-intercostal-muscles-l",
+    "muscle-external-intercostal-muscles-r",
+    "muscle-geniohyoid-muscle-l",
+    "muscle-geniohyoid-muscle-r",
+    "muscle-inferior-head-of-lateral-pterygoid-muscle-l",
+    "muscle-inferior-head-of-lateral-pterygoid-muscle-r",
+    "muscle-innermost-intercostal-muscles-l",
+    "muscle-innermost-intercostal-muscles-r",
+    "muscle-internal-abdominal-oblique-muscle-l",
+    "muscle-internal-abdominal-oblique-muscle-r",
+    "muscle-internal-intercostal-muscles-l",
+    "muscle-internal-intercostal-muscles-r",
+    "muscle-levator-anguli-oris-l",
+    "muscle-levator-anguli-oris-r",
+    "muscle-levator-palpebrae-superioris-l",
+    "muscle-levator-palpebrae-superioris-r",
+    "muscle-medial-pterygoid-muscle-l",
+    "muscle-medial-pterygoid-muscle-r",
+    "muscle-mylohyoid-muscle-l",
+    "muscle-mylohyoid-muscle-r",
+    "muscle-orbicularis-oris-muscle-l",
+    "muscle-orbicularis-oris-muscle-r",
+    "muscle-palpebral-part-of-orbicularis-oculi-l",
+    "muscle-palpebral-part-of-orbicularis-oculi-r",
+    "muscle-rectus-abdominis-muscle-l",
+    "muscle-rectus-abdominis-muscle-r",
+    "muscle-risorius-muscle-l",
+    "muscle-risorius-muscle-r",
+    "muscle-superficial-part-of-masseter-l",
+    "muscle-superficial-part-of-masseter-r",
+    "muscle-temporalis-muscle-l",
+    "muscle-temporalis-muscle-r",
+    "muscle-transversus-abdominis-muscle-l",
+    "muscle-transversus-abdominis-muscle-r",
+    "muscle-zygomaticus-major-muscle-l",
+    "muscle-zygomaticus-major-muscle-r",
+    "muscle-zygomaticus-minor-muscle-l",
+    "muscle-zygomaticus-minor-muscle-r"
+  ],
+  "backup": "motion-pose-body-20261115-183622-428129",
+  "sources": {
+    "openstax": "https://openstax.org/books/anatomy-and-physiology-2e/pages/9-5-types-of-body-movements",
+    "sourceModel": "https://github.com/Z-Anatomy/Models-of-human-anatomy",
+    "upperLimb": "https://pubmed.ncbi.nlm.nih.gov/16078622/",
+    "validation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4321112/"
+  },
+  "inputs": {
+    "assets\\skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",
+    "assets\\course-tissues.glb": "1c21915e10455a58c72c860ef9a85eee6e92793c65865fe8ae20f7f4c9823d83",
+    "assets\\motion-legs.glb": "47366d17eb652e68013f35ff4adbf8ce91ccedfb7231915b1828afe713a56055",
+    "assets\\motion-legs.json": "b4699b5ec2be5733f07635185d7fbfcb48eb17826966cfbbe6fa3b3995d42740",
+    "assets\\motion-walk-context.json": "20b6df6905b8a46dbc7c585170bdc62fc812bb14cf5ab49fc93636c9aeaa6131",
+    "assets\\motion-walk-muscles.json": "fe4ef3f072445378b49ad5b0cbaa9d34c950d04042a44ce82f5cdee67fb02dc0",
+    "assets\\motion-forearm.json": "ed1222aca9036f5a9f8906f425ba5d89e4cd700cabc7b0b5233889456f3ee711",
+    "src\\muscle-models.json": "7b4ccec6bbab8c7d1b06e9784ee837fa16616a3237337435fcc688df7b03f6b7",
+    "src\\three-d-landmarks.json": "aa336cfbaa55cb3ef0a2ac4fc9f1914c5998abf1f69a3856a3ac8c8ecb177bd5",
+    "assets\\MODEL-LICENSE.md": "5b492502cbd78fb08fb056ddb92818bddc773a29e513ae970cd422b570bbef57",
+    "assets\\motion-walk-muscles-forearm-hand.glb": "e5f1d17baaeb4d6afc6b70591f6d7296f9a4d3545be56c2c667c663097e15b79",
+    "assets\\motion-walk-muscles-head-neck.glb": "1d9199c10a9dd43d1b45374da7d0d50f1ec595991557472b12212042ebce429d",
+    "assets\\motion-walk-muscles-pelvis-leg-foot.glb": "0d09f349d686e1c194dc83ada8a5ac527699030ac295846350f8769231a7c863",
+    "assets\\motion-walk-muscles-shoulder-arm.glb": "f207aeef484ab013f5d2a216d337495b9605d6656949d4aa1b88948427e44f89",
+    "assets\\motion-walk-muscles-trunk-back.glb": "7d5b1de338a7cff0401fda83f5e178379bca2ccab6b02cc72398fc9f40801a9c",
+    "assets\\motion-blink.glb": "d6bac359fe643c9c21419125ef7886b4daf9be2506e2c5b76e942d8e762d69b0",
+    "assets\\motion-smile.glb": "a4cdb127c2087301dc232e93289f2464c41844875a8d6857d8fa2ea9e9698002",
+    "assets\\motion-jaw.glb": "8763ce67092eb61b1b2c1a041ce2c0c7b476302ec7ee68b8827e4b911ff666d1",
+    "assets\\motion-breath.glb": "4eb5571bb28c0abbc76f60a470a2390ef9bc28c01a1045c052b05794c5e7cd83"
+  },
+  "knownLimitations": [
+    "Muscle envelopes can stretch or overlap at large combined joint angles. These shapes do not predict physiological muscle shortening or tissue contact.",
+    "Shoulder girdle coupling and joint hinges are teaching approximations. Individual anatomy and dynamic recruitment vary."
+  ]
+}

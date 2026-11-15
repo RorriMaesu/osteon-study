@@ -1,5 +1,6 @@
 
 import {MotionViewer} from './motion-viewer.js';
+import {initPoseLab} from './motion-pose-lab.js';
 import {armRoles,clamp,curlDuration,curlFrame,heelFrame,pressFrame,compareElbowTime,elbowLimits,contractionCues} from './motion-core.js';
 import {sampleWalk,gaitEventName,gaitChannel} from './motion-walk.js';
 import {walkScopes,walkScopeMatches} from './motion-walk-model.js';
@@ -66,7 +67,7 @@ export function initMotionLab({setView}){
  root.innerHTML=`
  <header class="motion-heading"><div><a href="#atlas" class="motion-back">← 3D Atlas</a><h1 tabindex="-1">Motion <em>Lab</em></h1><a class="motion-coverage" href="muscle-coverage.html">Coverage ↗</a></div>
  <div class="motion-modes" role="group" aria-label="Motion mode">
- <button type="button" data-motion-mode="pose">Pose</button>
+ <button type="button" data-motion-mode="pose">Pose skeleton</button>
  <button type="button" data-motion-mode="actions">Muscle actions</button>
  ${walking?'<button type="button" data-motion-mode="walk">Walk cycle</button>':''}
  <button class="motion-notes-toggle" type="button" aria-controls="motion-notes" aria-pressed="false"><span>Muscles &amp; notes</span><span class="motion-notes-short" aria-hidden="true">Muscles</span></button>
@@ -108,7 +109,7 @@ export function initMotionLab({setView}){
 
  const $=selector=>root.querySelector(selector);
  const controls=$('.motion-controls'), phase=$('.motion-phase'), names=$('.motion-muscle-list'), status=$('.motion-status');
- const state={mode:'actions',lesson:'curl',armSide:'right',limb:'arm',elbow:{right:25,left:25},leg:{right:emptyPose(),left:emptyPose()},time:0,speed:1,playing:false,loop:true,showMuscles:true,onlyActive:false,selected:null,selectedGroup:false,isolateSelection:false,showAntagonists:true,showContext:true,regionalClip:'',breathLayer:'',action:'flex',side:'left',walkScope:'all',walkList:'recorded',walkQuery:'',walkPage:0,poseChanges:[],poseDelta:0};
+ const state={mode:'pose',lesson:'curl',armSide:'right',limb:'arm',elbow:{right:25,left:25},leg:{right:emptyPose(),left:emptyPose()},time:0,speed:1,playing:false,loop:true,showMuscles:true,onlyActive:false,selected:null,selectedGroup:false,isolateSelection:false,showAntagonists:true,showContext:true,regionalClip:'',breathLayer:'',action:'flex',side:'left',walkScope:'all',walkList:'recorded',walkQuery:'',walkPage:0,poseChanges:[],poseDelta:0};
  let active=false,revision=0,specimen=null,gait=null,lastInfo='',lastListKey='',lastContext='';
  let gaitPromise,recallKey='',shownAngle=null,pendingPart=null,routeRead=false;
  let partCache={},walkCache={};
@@ -122,6 +123,8 @@ export function initMotionLab({setView}){
  const shape=()=>regionalLesson()?state.lesson:state.mode==='walk'||heelLesson()||(state.mode==='pose'&&!isArmPose())?'legs':armSide()==='left'?'arm-left':'arm';
  const duration=()=>state.mode==='walk'?gait?.durationSeconds||1:regionalLesson()?currentRegionalClip()?.duration||1:curlDuration;
  const motion=new MotionViewer($('.motion-stage'),{onFrame:advance,onTarget:target,onMuscle:selectMuscle,onLimb:selectLeg});
+ const poseHost=document.createElement('div');poseHost.hidden=true;root.append(poseHost);
+ const poseLab=initPoseLab(poseHost,{onLesson:id=>{state.mode='actions';state.lesson=id;state.regionalClip='';clearSelection();state.time=0;load();}});
  function partsInMode(){
   if(!specimen)return [];
   const mode=state.mode+':'+state.lesson,count=specimen.parts.length;
@@ -340,6 +343,13 @@ export function initMotionLab({setView}){
   const run=++revision;
   state.playing=false;
   specimen=null;
+  const posing=state.mode==='pose';
+  root.toggleAttribute('data-pose-workspace',posing);
+  $('.motion-workspace').hidden=posing;
+  $('.motion-notes-toggle').hidden=posing;
+  for(const button of root.querySelectorAll('[data-motion-mode]'))button.setAttribute('aria-pressed',String(button.dataset.motionMode===state.mode));
+  if(posing){motion.close();await poseLab.open();return;}
+  poseLab.close();
   motion.target=null;
   if(motion.current){motion.current.model.visible=false;motion.dirty=true;}
   renderControls();
@@ -705,6 +715,6 @@ export function initMotionLab({setView}){
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&active&&state.playing){state.playing=false;draw();}});
  document.addEventListener('viewchange',event=>{
   if(event.detail==='motion'){if(!active){active=true;readRoute();load();}}
-  else if(active){active=false;state.playing=false;revision++;motion.close();}
+  else if(active){active=false;state.playing=false;revision++;motion.close();poseLab.close();}
  });
 }

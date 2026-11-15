@@ -1,0 +1,175 @@
+.motion-pose-workspace{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,285px);gap:10px;position:relative;min-height:0;min-width:0;color:#e7f0e9;font-size:12px;isolation:isolate}
+.motion-pose-workspace[hidden],.motion-pose-workspace [hidden]{display:none!important}
+.motion-pose-workspace button,.motion-pose-workspace select,.motion-pose-workspace input[type=search]{font:inherit;color:inherit;border:1px solid #45635e;background:#162b30;border-radius:7px;min-height:40px;min-width:0;padding:6px 9px}
+.motion-pose-workspace button{cursor:pointer}
+.motion-pose-workspace button:hover:not(:disabled){background:#29453f;border-color:#91b5a4}
+.motion-pose-workspace button:focus-visible,.motion-pose-workspace select:focus-visible,.motion-pose-workspace input:focus-visible,.pose-details-panel:focus-visible{outline:2px solid #f4bc8a;outline-offset:2px}
+.motion-pose-workspace button:disabled,.motion-pose-workspace select:disabled{opacity:.43;cursor:default}
+.motion-pose-workspace button[aria-pressed=true]{background:#bcdcc9;color:#142921;border-color:#c6e4d2}
+.pose-model{min-width:0;min-height:0;display:flex;flex-direction:column;border:1px solid #3a5652;border-radius:12px;overflow:hidden;background:#13262c}
+.motion-pose-workspace .pose-stage{min-height:0;flex:1;overflow:hidden;border-radius:0}
+.pose-stage-hint{position:absolute;z-index:1;top:9px;left:10px;right:10px;pointer-events:none;display:grid;gap:2px;width:max-content;max-width:calc(100% - 20px);font-size:11px;padding:5px 8px;color:#cce1d4;background:#132b2bda;border:1px solid #3f5a54;border-radius:6px;line-height:1.35}
+.pose-stage-hint small{font-size:10px;line-height:1.25;color:#bacebd}
+.pose-stage:has(.motion-status:not([hidden])) .pose-stage-hint{display:none}
+.pose-joint-markers{position:absolute;inset:0;pointer-events:none}
+.motion-pose-workspace .pose-joint-marker{position:absolute;z-index:2;display:grid;place-items:center;pointer-events:auto;transform:translate(-50%,-50%);width:44px;height:44px;min-height:44px;padding:0;border:0;background:transparent!important;touch-action:none;border-radius:50%}
+.pose-joint-marker i{width:12px;height:12px;border-radius:50%;background:#19332de6;border:2px solid #d8dfba;box-shadow:0 0 0 4px #d8dfba20;pointer-events:none}
+.pose-joint-marker:hover i,.pose-joint-marker:focus-visible i{background:#f1ca95;box-shadow:0 0 0 7px #f1ca953a}
+.pose-joint-marker.is-selected i{width:16px;height:16px;background:#f0ba82;border-color:#fff6d9;box-shadow:0 0 0 5px #f0ba8230}
+.pose-joint-marker.is-locked i{border-style:dashed}
+.pose-joint-marker span{position:absolute;left:50%;bottom:calc(100% - 3px);transform:translateX(-50%);display:none;pointer-events:none;white-space:nowrap;border:1px solid #698b77;border-radius:5px;background:#132b2bf0;color:#f1f4e3;font-size:10px;line-height:1.2;padding:4px 6px;max-width:190px;overflow:hidden;text-overflow:ellipsis}
+.pose-joint-marker.is-selected span,.pose-joint-marker:focus-visible span,.pose-joint-marker:hover span{display:block}
+.pose-joint-marker.is-selected{z-index:3}
+.pose-view-actions{position:absolute;z-index:3;bottom:7px;left:7px;right:7px;display:flex;justify-content:center;gap:5px;pointer-events:none}
+.pose-view-actions button{background:#14272ce8;pointer-events:auto;font-size:11px;min-height:36px;padding:4px 9px}
+.pose-controls{flex:none;padding:8px 10px 6px;border-top:1px solid #3a5652;display:grid;gap:5px;min-width:0}
+.pose-choose-row{display:grid;grid-template-columns:minmax(115px,1fr) minmax(115px,1fr) auto;gap:8px;align-items:end}
+.pose-choose-row label{display:grid;gap:3px;min-width:0;font-size:10px;color:#b7cec3}
+.pose-choose-row select{width:100%;font-size:12px;min-height:36px;padding-block:4px}
+.pose-choose-row:has([data-pose-endpoint][hidden]){grid-template-columns:minmax(115px,1fr) minmax(115px,1fr)}
+.pose-angle-row{display:grid;grid-template-columns:40px minmax(45px,1fr) 48px 40px;align-items:center;gap:6px}
+.pose-angle-row button{font-size:20px;padding:0;min-height:36px;line-height:1}
+.pose-angle-row input{accent-color:#e9b082;width:100%;min-width:0;min-height:34px;margin:0;cursor:pointer}
+.pose-angle-row output{font-size:13px;text-align:center;font-variant-numeric:tabular-nums;color:#f0dfbd}
+.pose-action-row{display:flex;gap:5px;min-width:0}
+.pose-action-row button{font-size:11px;min-height:36px;padding:4px 9px;white-space:nowrap}
+.pose-action-row [data-pose-muscles]{margin-left:auto}
+.pose-action-row [data-pose-notes]{display:none}
+.pose-feedback{margin:0;color:#b8cfc5;font-size:10px;line-height:1.25;min-height:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pose-details{display:flex;flex-direction:column;min-width:0;min-height:0;background:#14282d;border:1px solid #3a5652;border-radius:12px;padding:10px;overflow:hidden}
+.pose-details-heading{display:flex;align-items:center;justify-content:space-between;gap:7px;flex:none;min-height:28px}
+.pose-details-heading strong{font-size:12px;letter-spacing:.03em;font-weight:650}
+.pose-details-heading [data-pose-close]{display:none;min-height:36px;width:36px;font-size:22px;line-height:1;padding:0}
+.pose-details-tabs{display:flex;gap:4px;flex:none;margin:4px 0 8px}
+.pose-details-tabs button{flex:1;min-height:36px;padding:4px;font-size:11px}
+.pose-details-tabs button[aria-selected=true]{background:#304d42;color:#e5f4e8;border-color:#7ca58b}
+.pose-details-panel{min-height:0;display:flex;flex-direction:column;gap:6px;flex:1;outline-offset:-2px}
+.pose-detail-tools{display:grid;gap:5px;flex:none}
+.pose-detail-tools input{width:100%;min-height:35px!important}
+.pose-detail-tools label{display:flex;align-items:center;gap:7px;color:#bbd2c5;font-size:11px}
+.pose-detail-tools select{width:100%;min-height:32px;padding:3px;font-size:11px}
+.pose-role-key{display:flex;flex-wrap:wrap;gap:3px 9px;font-size:10px;line-height:1.4;flex:none}
+.pose-contributor-key{color:#b6e9c9}
+.pose-opponent-key{color:#c6cfff}
+.pose-role-key:has([data-pose-related]:not([hidden])){display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 5px;align-items:center}
+.pose-role-key:has([data-pose-related]:not([hidden]))>span{grid-column:1}
+.pose-role-key [data-pose-related]{grid-column:2;grid-row:1/span 2;min-height:31px;padding:4px 6px;font-size:10px}
+.pose-list-summary{margin:0;font-size:10px;color:#b9cfc4;line-height:1.3;flex:none}
+.pose-detail-list{display:grid;align-content:start;gap:5px;min-height:0;flex:1;overflow:hidden}
+.pose-detail-list button{min-height:44px;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:5px 7px;line-height:1.2;overflow:hidden}
+.pose-detail-list button span{font-size:11px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pose-detail-list button small{font-size:9px;color:#acc4b8}
+.pose-detail-list [data-kind=contributor]>span{color:#b6e9c9}
+.pose-detail-list [data-kind=opponent]>span{color:#c6cfff}
+.pose-detail-list button[aria-pressed=true]>span,.pose-detail-list button[aria-pressed=true]>small{color:#172c23}
+.pose-empty{font-size:12px;color:#b9cfc4;line-height:1.45;margin:9px 2px}
+.pose-list-pager{display:flex;align-items:center;justify-content:center;gap:10px;flex:none;font-size:11px;font-variant-numeric:tabular-nums;padding-top:3px}
+.pose-list-pager button{min-height:32px;width:39px;padding:2px}
+.pose-help-page{min-height:0;flex:1;overflow:hidden;font-size:11px;line-height:1.38;color:#c5d9cd}
+.pose-help-page h3{font-family:inherit;font-size:14px;margin:1px 0 7px;color:#eff2de}
+.pose-help-page p{margin:0 0 9px}
+.pose-help-page a{color:#c9e4ce;font-size:10px;text-underline-offset:3px}
+.pose-lesson-links{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px}
+.pose-lesson-links button{min-height:32px;padding:3px 6px;font-size:10px}
+.motion-pose-workspace .pose-error{border-color:#e7a47e;color:#ffdfcd}
+@media(min-width:1000px) and (min-height:481px){
+ .pose-controls{grid-template-columns:minmax(325px,1.2fr) minmax(190px,.8fr);column-gap:12px}
+ .pose-controls>.pose-choose-row{grid-column:1;grid-row:1}
+ .pose-controls>.pose-angle-row{grid-column:2;grid-row:1;align-self:end}
+ .pose-controls>.pose-action-row{grid-column:1/-1;grid-row:2}
+ .pose-controls>.pose-feedback{grid-column:1/-1;grid-row:3}
+}
+@media(min-width:761px){
+ #motion-view.active:has(.motion-pose-workspace:not([hidden])) .motion-heading{align-items:center}
+ #motion-view.active:has(.motion-pose-workspace:not([hidden])) .motion-heading>div:first-child{display:flex;align-items:baseline;gap:10px}
+ #motion-view.active:has(.motion-pose-workspace:not([hidden])) .motion-heading h1{font-size:clamp(27px,2.6vw,37px);margin:0}
+ #motion-view.active:has(.motion-pose-workspace:not([hidden])) .motion-heading .motion-back{font-size:11px}
+}
+@media(max-width:999px){
+ body:has(#motion-view.active .motion-pose-workspace:not([hidden])){height:100dvh;overflow:hidden;display:flex;flex-direction:column}
+ body:has(#motion-view.active .motion-pose-workspace:not([hidden]))>.topbar{flex:none}
+ body:has(#motion-view.active .motion-pose-workspace:not([hidden]))>main{flex:1;min-height:0;overflow:hidden}
+ body:has(#motion-view.active .motion-pose-workspace:not([hidden]))>footer{flex:none;margin-top:0}
+ #motion-view.active:has(.motion-pose-workspace:not([hidden])){height:100%;min-height:0;overflow:hidden}
+}
+@media(max-width:959px){
+ .motion-pose-workspace{grid-template-columns:minmax(0,1fr)}
+ .pose-details{position:absolute;z-index:6;right:8px;top:8px;bottom:168px;width:min(310px,calc(100% - 16px));display:none;box-shadow:0 4px 22px #0006}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details{display:flex}
+ .pose-action-row [data-pose-notes]{display:block}
+ .pose-details-heading [data-pose-close]{display:block}
+}
+@media(max-width:600px) and (orientation:portrait){
+ .pose-controls{padding:5px 7px;gap:3px}
+ .pose-choose-row{gap:5px;grid-template-columns:minmax(105px,1fr) minmax(105px,1fr) auto}
+ .pose-choose-row select{font-size:11px;min-height:35px}
+ .pose-choose-row [data-pose-endpoint]{font-size:10px;padding:3px 5px;min-height:35px}
+ .pose-action-row{gap:3px}
+ .pose-action-row button{flex:1;font-size:10px;min-height:36px;padding:3px 5px}
+ .pose-action-row [data-pose-muscles]{margin-left:0}
+ .pose-action-row [data-pose-lock]{min-width:62px}
+ .pose-angle-row{grid-template-columns:38px minmax(25px,1fr) 40px 38px;gap:4px}
+ .pose-feedback{font-size:9px}
+ .pose-stage-hint{font-size:10px;top:6px;left:6px;max-width:calc(100% - 12px);padding:4px 6px}
+ .pose-view-actions{gap:4px;bottom:5px}
+ .pose-view-actions button{font-size:10px;min-height:34px;padding:4px 8px}
+ .pose-details{top:auto;bottom:158px;height:min(380px,calc(100% - 166px));padding:8px;width:min(305px,calc(100% - 16px))}
+ .motion-pose-workspace[data-pose-notes-open]{grid-template-rows:minmax(0,1fr) clamp(180px,28dvh,250px) auto;gap:4px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-model{display:contents}
+ .motion-pose-workspace[data-pose-notes-open] .pose-stage{grid-row:1;grid-column:1;border:1px solid #3a5652;border-radius:9px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-controls{grid-row:3;grid-column:1;border:1px solid #3a5652;border-radius:9px;background:#13262c}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details{position:relative;inset:auto;grid-row:2;grid-column:1;height:auto;width:auto;padding:6px;box-shadow:none;border-radius:9px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details-heading{display:contents}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details-heading strong{display:none}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details-heading [data-pose-close]{position:absolute;right:6px;top:6px;min-height:32px;height:32px;width:32px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details-tabs{margin:0 38px 5px 0}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details-tabs button{min-height:32px;font-size:10px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-details-panel{gap:4px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-detail-tools{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:5px;align-items:center}
+ .motion-pose-workspace[data-pose-notes-open] .pose-detail-tools input{min-height:31px!important}
+ .motion-pose-workspace[data-pose-notes-open] .pose-detail-tools label{font-size:9px;gap:4px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-detail-tools select{min-height:31px;font-size:10px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-detail-list button{min-height:40px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-help-page{font-size:10px;line-height:1.3}
+ .motion-pose-workspace[data-pose-notes-open] .pose-help-page h3{font-size:12px;margin-bottom:4px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-help-page p{margin-bottom:5px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-help-page a{font-size:9px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-list-pager button{min-height:28px}
+ .motion-pose-workspace[data-pose-notes-open] .pose-list-pager{padding-top:0}
+ .motion-pose-workspace[data-pose-notes-open] .pose-lesson-links button{min-height:27px}
+}
+@media(max-height:480px) and (orientation:landscape){
+ .motion-pose-workspace{grid-template-columns:minmax(0,1fr) minmax(190px,30%);gap:6px}
+ .pose-details{position:static;display:flex;width:auto;padding:6px;box-shadow:none}
+ .pose-details-heading{min-height:20px}
+ .pose-details-heading strong{font-size:11px}
+ .pose-details-heading [data-pose-close],.pose-action-row [data-pose-notes]{display:none}
+ .pose-details-tabs{margin:2px 0 5px}
+ .pose-details-tabs button{min-height:30px;font-size:9px}
+ .pose-controls{padding:3px 6px;gap:2px}
+ .pose-choose-row{gap:5px}
+ .pose-choose-row label{font-size:9px;gap:1px}
+ .pose-choose-row select,.pose-choose-row [data-pose-endpoint]{min-height:30px;font-size:10px;padding:2px 4px}
+ .pose-angle-row{grid-template-columns:31px minmax(24px,1fr) 37px 31px;gap:4px}
+ .pose-angle-row button,.pose-angle-row input{min-height:27px}
+ .pose-action-row button{min-height:29px;font-size:9px;padding:2px 6px}
+ .pose-feedback{font-size:9px;min-height:11px}
+ .pose-view-actions button{min-height:29px;font-size:9px;padding:3px 6px}
+ .pose-stage-hint{font-size:9px;top:4px;left:5px;padding:3px 5px;max-width:calc(100% - 10px)}
+ .pose-details-panel{gap:4px}
+ .pose-role-key,.pose-list-summary{font-size:9px}
+ .pose-detail-tools input{min-height:29px!important}
+ .pose-detail-tools select{min-height:27px}
+ .pose-detail-list button{min-height:38px}
+ .pose-detail-list button span{font-size:10px}
+ .pose-help-page{font-size:10px;line-height:1.3}
+ .pose-help-page h3{font-size:12px;margin-bottom:4px}
+ .pose-help-page p{margin-bottom:5px}
+ .pose-list-pager{gap:7px;padding-top:0}
+ .pose-list-pager button{min-height:27px;width:32px}
+}
+@media(max-width:600px) and (max-height:650px) and (orientation:portrait){
+ body:has(#motion-view.active .motion-pose-workspace[data-pose-notes-open])>.topbar{display:none}
+ #motion-view.active:has(.motion-pose-workspace[data-pose-notes-open]) .motion-heading>div:first-child{display:none}
+ .motion-pose-workspace[data-pose-notes-open] .pose-stage-hint{display:none}
+}

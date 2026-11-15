@@ -1,0 +1,193 @@
+import {createPoseUI} from './motion-pose-ui.js';
+import {PoseViewer} from './motion-pose-viewer.js';
+import {PoseHistory,combinedPoseRoles} from './motion-pose-core.js';
+import {poseScopeMatches} from './motion-pose-ik.js';
+import {setLearningContext} from './learning-context.js';
+
+const savedKey='osteon-whole-body-pose-v1';
+
+export function initPoseLab(host,{onLesson}={}){
+ let active=false,revision=0,specimen=null,history=null,descriptors=[],selectedJoint=null,selectedAxis=null;
+ let scope='all',interaction='joint',selectedMuscle=null,showMuscles=true,onlyRelated=false,message='',saveTimer=null,lastContext='';
+ const descriptor=()=>descriptors.find(joint=>joint.id===selectedJoint);
+ const ui=createPoseUI(host,{
+  selectJoint,selectAxis:id=>{stopGesture();selectedAxis=id;history?.clearChanges();message='';draw();},
+  changeAngle:(value,{phase})=>{
+   if(!history)return;
+   if(phase==='start'){viewer.cancelPoseDrag();history.begin();}
+   if(phase==='input'){setAngle(selectedJoint,selectedAxis,value);draw();}
+   if(phase==='end')endGesture();
+   if(phase==='cancel'){history.cancel();draw();}
+  },
+  stepAngle:step,
+  undo:()=>{if(!history)return;viewer.cancelPoseDrag();endGesture();history.undo();message='Last pose change undone.';draw();save();},
+  redo:()=>{if(!history)return;stopGesture();history.redo();message='Pose change restored.';draw();save();},
+  reset:()=>{
+   if(!history)return;
+   viewer.cancelPoseDrag();endGesture();history.begin();
+   for(const id of history.locks)history.setLocked(id,false);
+   history.reset();history.commit();history.clearChanges();
+   message='Starting pose restored. Undo brings your pose back.';draw();save();
+  },
+  setLock:locked=>{if(!history)return;stopGesture();history.setLocked(selectedJoint,locked);message=locked?'Joint angles locked. The limb still follows its parent joint.':'Joint angles unlocked.';draw();save();},
+  setScope:changeScope,focus:()=>{stopGesture();viewer.focusJoint();},camera:view=>{stopGesture();viewer.frame(view);},
+  setMuscles:show=>{showMuscles=show;draw();},selectMuscle,
+  setRelated:show=>{onlyRelated=show;draw();},
+  setInteraction:mode=>{
+   stopGesture();
+   if(mode==='endpoint'){
+    const endpoint=viewer.endpointChain(selectedJoint);
+    if(endpoint)selectJoint(endpoint.id,{pointer:true});
+   }
+   interaction=mode;message=mode==='endpoint'?'Drag the wrist or ankle target to move its linked joints.':'Drag the ring to adjust one movement.';draw();
+  },
+  markerPointerDown:(event,id)=>viewer.startPoseDrag(event,id),
+  openLesson:id=>onLesson?.(id),
+  notesChange:()=>{viewer.dirty=true;},
+ });
+ const viewer=new PoseViewer(ui.stage,{
+  selectJoint,selectMuscle,stepAngle:step,
+  markers:markers=>ui.setMarkers(markers),begin:()=>history?.begin(),
+  angle:(value,joint,axis)=>{if(setAngle(joint||selectedJoint,axis||selectedAxis,value))draw();},
+  patch:values=>{history?.patch(values);draw();},
+  finish:cancel=>{if(!history)return;if(cancel){history.cancel();message='Adjustment cancelled.';}else history.commit();draw();save();},
+  message:text=>{message=text;updateUI();},
+ });
+ function endGesture(){if(history?.inTransaction){history.commit();draw();save();}}
+ function stopGesture(){viewer.cancelPoseDrag();endGesture();}
+ function setAngle(joint,axis,value){
+  if(!history)return false;
+  if(joint==='breathing'&&value>0)return history.patch({breathing:{[axis]:value,[axis==='inhale'?'exhale':'inhale']:0}});
+  return history.set(joint,axis,value);
+ }
+ function step(delta){
+  if(!history)return;
+  stopGesture();
+  setAngle(selectedJoint,selectedAxis,history.values[selectedJoint][selectedAxis]+delta);
+  message='';draw();save();
+ }
+ function selectJoint(id,{pointer=false}={}){
+  const joint=descriptors.find(item=>item.id===id);
+  if(!joint||id===selectedJoint)return;
+  viewer.cancelPoseDrag();endGesture();
+  selectedJoint=id;selectedAxis=joint.axes[0].id;selectedMuscle=null;
+  history?.clearChanges();
+  if(!viewer.endpointChain(id))interaction='joint';
+  if(scope!=='all'&&!poseScopeMatches(scope,joint)){scope='all';viewer.setScope(scope);}
+  message=joint.note||'';
+  const detail=!pointer&&/thumb|index|middle|ring|little|toe|face-/.test(id);
+  if(detail){scope=joint.region;viewer.setScope(scope);message='Detail view. Full body returns to your complete pose.';}
+  draw();save();
+  if(detail)viewer.focusJoint();
+  if(!pointer&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes();
+ }
+ function selectMuscle(key){
+  if(!specimen)return;
+  stopGesture();
+  const part=specimen.parts.find(part=>part.key===key);
+  if(!part)return;
+  selectedMuscle=selectedMuscle===key?null:key;
+  if(selectedMuscle)message=part.name+' · '+part.side;
+  draw();
+  if(matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes();
+ }
+ function changeScope(next){
+  if(!history)return;
+  viewer.cancelPoseDrag();endGesture();scope=next;viewer.setScope(scope);
+  const joint=descriptor();
+  if(next!=='all'&&!poseScopeMatches(next,joint)){
+   const candidate=descriptors.find(item=>poseScopeMatches(next,item))
+   if(candidate){selectedJoint=candidate.id;selectedAxis=candidate.axes[0].id;history.clearChanges();}
+  }
+  if(!viewer.endpointChain(selectedJoint))interaction='joint';
+  selectedMuscle=null;message=next==='all'?'Whole body shown. Your pose is kept.':'Region isolated. Your pose is kept.';
+  draw();viewer.frame();save();
+ }
+ function roles(){return history&&specimen?combinedPoseRoles(descriptors,history.changes,specimen.parts):{contributors:[],opposing:[],note:''};}
+ function shapeNotice(){
+  if(!history)return '';
+  const values=history.values;
+  const large=['right','left'].some(side=>{
+   const shoulder=values[side+'-shoulder'],elbow=values[side+'-elbow'];
+   return shoulder?.abduction>=70||shoulder?.flexion>=75||elbow?.flexion>=95||values[side+'-hip']?.flexion>=70&&values[side+'-knee']?.flexion>=65;
+  });
+  return large?'Large teaching pose: muscle shapes may stretch or overlap.':'';
+ }
+ function updateUI(role=roles()){
+  const byId=new Map(specimen?.parts.map(part=>[part.key,part])||[]);
+  const parts=keys=>keys.map(key=>byId.get(key)).filter(Boolean).map(part=>({key:part.key,name:part.name+' · '+part.side}));
+  ui.update({ready:!!history&&active,descriptors,selectedJoint,selectedAxis,pose:history?.values||{},canUndo:!!history?.canUndo,canRedo:!!history?.canRedo,scope,locked:history?.locks||[],
+   message:history?.isAxisLocked(selectedJoint,selectedAxis)&&!history.isLocked(selectedJoint)?'Unlock the shoulder girdle to raise this arm.':shapeNotice()||message,
+   movementLocked:!!history?.isAxisLocked(selectedJoint,selectedAxis),contributors:parts(role.contributors),opponents:parts(role.opposing),selectedMuscle,
+   selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
+   evidence:role.note,movementLabel:role.label,movementNote:[descriptor()?.detail,descriptor()?.coupling,specimen?.meta.scope].filter(Boolean).join(' ')});
+ }
+ function draw(){
+  if(!history||!specimen||!active)return;
+  viewer.apply(history.values);
+  viewer.setPoseSelection(selectedJoint,selectedAxis,{locks:history.locks,interaction});
+  const role=roles();
+  viewer.color({contributors:role.contributors,opposing:role.opposing,selectedMuscle,showMuscles,onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||selectedMuscle)});
+  updateUI(role);
+  const context=[selectedJoint,role.label,selectedMuscle].join('|');
+  if(context!==lastContext){setLearningContext({type:'study',label:'Pose skeleton · '+descriptor()?.label,reference:'9.5',text:role.note+' '+(role.label||'')});lastContext=context;}
+ }
+ function save(){
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(()=>{
+   if(!history)return;
+   try{localStorage.setItem(savedKey,JSON.stringify({values:history.values,locks:history.locks,selectedJoint,selectedAxis,scope}));}catch{/* Pose remains usable when browser storage is unavailable. */}
+  },200);
+ }
+ function restore(){
+  try{
+   const stored=JSON.parse(localStorage.getItem(savedKey)||'null');
+   if(!stored||typeof stored!=='object')return;
+   history.patch(stored.values);
+   for(const id of Array.isArray(stored.locks)?stored.locks:[])history.setLocked(id,true);
+   if(descriptors.some(joint=>joint.id===stored.selectedJoint)){
+    selectedJoint=stored.selectedJoint;
+    selectedAxis=descriptor().axes.some(axis=>axis.id===stored.selectedAxis)?stored.selectedAxis:descriptor().axes[0].id;
+   }
+   history.past=[];history.future=[];history.clearChanges();
+   message='Your last pose is restored on this device.';
+  }catch{/* A stale saved pose never blocks a new session. */}
+ }
+ async function open(){
+  active=true;const run=++revision;host.hidden=false;ui.setStatus('Loading the whole-body pose model…');
+  try{
+   viewer.open();
+   const loaded=await viewer.loadBody();
+   if(!active||run!==revision)return;
+   specimen=loaded;viewer.use(specimen);
+   if(!history){
+    descriptors=specimen.descriptors||specimen.meta.descriptors;
+    if(!descriptors?.length)throw new Error('The pose model is missing its joint controls.');
+    history=new PoseHistory(descriptors);
+    selectedJoint=descriptors.find(joint=>joint.id==='right-elbow')?.id||descriptors[0].id;
+    selectedAxis=descriptor().axes[0].id;restore();
+    const linked=specimen.parts.find(part=>part.key===new URLSearchParams(location.search).get('motionPart'));
+    if(linked){
+     selectedMuscle=linked.key;
+     scope=linked.region==='head-neck'?'head-neck':linked.region==='trunk-back'?'trunk':linked.side+'-'+(linked.region==='pelvis-leg-foot'?'leg':'arm');
+     const joint=descriptors.find(entry=>poseScopeMatches(scope,entry));
+     if(joint){selectedJoint=joint.id;selectedAxis=joint.axes[0].id;}
+     message=linked.name+' · '+linked.side;
+    }
+   }
+   viewer.setScope(scope);draw();viewer.frame('front');ui.setStatus('');
+  }catch(error){
+   if(!active||run!==revision)return;
+   ui.setStatus(error.message||'The pose model could not load.',{error:true,retry:open});
+   updateUI();
+  }
+ }
+ function close(){ui.cancelGesture?.();history?.cancel();active=false;revision++;viewer.close();host.hidden=true;}
+ host.addEventListener('keydown',event=>{
+  if(!active||!history||event.target.matches('input,select,textarea'))return;
+  if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){
+   event.preventDefault();stopGesture();if(event.shiftKey)history.redo();else history.undo();draw();save();
+  }
+ });
+ return {open,close,viewer,ui,get history(){return history;}};
+}

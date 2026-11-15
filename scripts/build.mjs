@@ -8,7 +8,7 @@ const root=fileURLToPath(new URL('../',import.meta.url));
 const nerveAssets=Object.keys(JSON.parse(fs.readFileSync(path.join(root,'src/nerve-models.json'),'utf8')).files).map(key=>'nerves-'+key);
 const nodeAssets=Object.keys(JSON.parse(fs.readFileSync(path.join(root,'src/lymph-node-models.json'),'utf8')).files).map(key=>'lymph-nodes-'+key);
 const modelAssets=Object.fromEntries(['skeleton','course-tissues','landmark-details','fetal-skull','ligaments',...nerveAssets,...nodeAssets].map(n=>[n,createHash('sha256').update(fs.readFileSync(path.join(root,'assets',n+'.glb'))).digest('hex').slice(0,12)]));
-for(const name of ['motion-arm','motion-arm-left','motion-legs','motion-gait','motion-walk-context','motion-leg-actions','motion-blink','motion-breath','motion-jaw','motion-smile','motion-forearm','motion-pectoral']){
+for(const name of ['motion-arm','motion-arm-left','motion-legs','motion-gait','motion-walk-context','motion-leg-actions','motion-blink','motion-breath','motion-jaw','motion-smile','motion-forearm','motion-pectoral','motion-pose-body']){
  const files=name==='motion-gait'?['src/motion-gait-data.json']:[`assets/${name}.glb`,`assets/${name}.json`];
  if(files.every(file=>fs.existsSync(path.join(root,file)))){
   const digest=createHash('sha256');
@@ -45,7 +45,7 @@ html=html.replace(/href="cell-labs\.css(?:\?v=[a-z0-9]+)?"/,`href="cell-labs.css
 html=html.replace(/href="quality\.css(?:\?v=[a-z0-9]+)?"/,`href="quality.css?v=${hash('quality.css')}"`);
 html=html.replace(/href="workspace\.css(?:\?v=[a-z0-9]+)?"/,`href="workspace.css?v=${hash('workspace.css')}"`);
 html=html.replace(/href="style\.css(?:\?v=[a-z0-9]+)?"/,`href="style.css?v=${hash('style.css')}"`).replace(/src="app\.js(?:\?v=[a-z0-9]+)?"/,`src="app.js?v=${hash('app.js')}"`);
-for(const sheet of ['worksheet.css','muscle-spatial.css','motion-lab.css']){
+for(const sheet of ['worksheet.css','muscle-spatial.css','motion-lab.css','motion-pose.css']){
  const expression=new RegExp('href="'+sheet.replace('.','\\.')+'(?:\\?v=[a-z0-9]+)?"');
  html=html.replace(expression,`href="${sheet}?v=${hash(sheet)}"`);
 }
