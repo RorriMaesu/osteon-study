@@ -47,11 +47,10 @@ MUSCLE_PARTS_RIGHT = {
     'muscle-medial-head-of-triceps-brachii-r': ('triceps-brachii', 'Triceps brachii', 'Medial head of triceps brachii'),
     'muscle-lateral-head-of-triceps-brachii-r': ('triceps-brachii', 'Triceps brachii', 'Lateral head of triceps brachii'),
     'muscle-long-head-of-triceps-brachii-r': ('triceps-brachii', 'Triceps brachii', 'Long head of triceps brachii'),
+    'muscle-anconeus-muscle-r': ('anconeus', 'Anconeus', 'Anconeus'),
 }
 
 MUSCLE_PARTS = {identity[:-1] + SIDE[0]: part for identity, part in MUSCLE_PARTS_RIGHT.items()}
-if SIDE == 'left':
-    MUSCLE_PARTS['muscle-anconeus-muscle-l'] = ('anconeus', 'Anconeus', 'Anconeus')
 
 
 def side_point(point):
@@ -68,6 +67,9 @@ ELBOW = side_point((-0.219, 1.099, -0.034))
 WRIST = side_point((-0.260, 0.857, 0.017))
 ELBOW_LIMIT = 115
 FPS = 30
+CURL_KEYS = ((0, 10), (48, 100), (72, 100), (120, 10))
+ANCONEUS_SOURCE = 'https://pubmed.ncbi.nlm.nih.gov/24060388/'
+ANCONEUS_ATLAS_REFERENCE = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC13398567/'
 
 
 def digest(path):
@@ -245,7 +247,7 @@ def author_lesson(rig, axis):
     context.frame_start, context.frame_end = 0, 120
     elbow = rig.pose.bones['MotionElbow']
     elbow.rotation_mode = 'QUATERNION'
-    for frame, angle in ((0, 10), (48, 100), (72, 100), (120, 10)):
+    for frame, angle in CURL_KEYS:
         elbow.rotation_quaternion = Quaternion(axis, math.radians(angle))
         elbow.keyframe_insert('rotation_quaternion', frame=frame, group=elbow.name)
     action = rig.animation_data.action
@@ -286,13 +288,27 @@ def export_metadata(world_axis, bones, muscles):
         'elbowLimit': [0, ELBOW_LIMIT],
         'muscles': [dict(id=identity, name=name) for identity, name in sorted(
             {(identity, name) for identity, name, part in MUSCLE_PARTS.values()})],
-        'animation': {'name': data['animations'][0]['name'], 'duration': 4, 'liftEnd': 1.6, 'holdEnd': 2.4},
+        'animation': {
+            'name': data['animations'][0]['name'],
+            'duration': CURL_KEYS[-1][0] / FPS,
+            'liftEnd': CURL_KEYS[1][0] / FPS,
+            'holdEnd': CURL_KEYS[2][0] / FPS,
+            'startAngle': CURL_KEYS[0][1],
+            'peakAngle': CURL_KEYS[1][1],
+        },
+        'anconeus': {
+            'meshSource': f'Anconeus muscle.{SIDE[0]} from the Osteon static atlas',
+            'attachmentContext': 'Posterior lateral humeral epicondyle to lateral olecranon and proximal posterior ulna.',
+            'role': 'Accessory elbow extensor and stabilizer.',
+            'attachmentReference': ANCONEUS_ATLAS_REFERENCE,
+            'roleReference': ANCONEUS_SOURCE,
+            'deformation': 'Skinned teaching approximation with bone-bound proximal and distal regions.',
+        },
         'source': 'Osteon atlas anatomy from Z-Anatomy and BodyParts3D',
-        'status': f'{SIDE.capitalize()} arm teaching rig; elbow motion and approximated muscle deformation.',
+        'status': f'{SIDE.capitalize()} arm teaching rig with source anconeus and approximate muscle deformation.',
+        'side': SIDE,
         'counts': {'bones': len(bones), 'muscleMeshes': len(muscles)},
     }
-    if SIDE == 'left':
-        meta['side'] = SIDE
     META.write_text(json.dumps(meta, indent=2) + '\n', encoding='utf-8')
 
 
@@ -320,8 +336,7 @@ def main():
         group, _, part = MUSCLE_PARTS[identity]
         obj.name = part
         obj['motionMuscle'], obj['motionPart'] = group, part
-        if SIDE == 'left':
-            obj['motionSide'] = SIDE
+        obj['motionSide'] = SIDE
         style(obj, muscle_mat)
         apply_muscle_weights(obj, rig, identity)
     world_axis, local_axis = elbow_axes(rig)

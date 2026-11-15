@@ -1,5 +1,5 @@
 {
-  "schema": 1,
+  "schema": 2,
   "baseRig": "motion-legs",
   "skinCompatible": true,
   "jointOrder": [
@@ -17,13 +17,90 @@
   ],
   "muscles": {
     "left": {
+      "gastrocnemius-lateral": "MotionHeelLeftLateralHeadOfGastrocnemius",
       "gastrocnemius-medial": "MotionLeftMedialHeadOfGastrocnemius",
+      "plantaris": "MotionLeftPlantarisMuscle",
       "soleus": "MotionLeftSoleusMuscle"
     },
     "right": {
+      "gastrocnemius-lateral": "MotionHeelRightLateralHeadOfGastrocnemius",
       "gastrocnemius-medial": "MotionRightMedialHeadOfGastrocnemius",
+      "plantaris": "MotionRightPlantarisMuscle",
       "soleus": "MotionRightSoleusMuscle"
     }
   },
-  "notes": "These are textbook heel-raise teaching surfaces. Soleus joins the calcaneal tendon, which is supplied by the base rig. These meshes are outside the measured walking highlight set."
+  "replacements": {
+    "MotionHeelLeftCalcanealTendon": "MotionLeftCalcanealTendon",
+    "MotionHeelRightCalcanealTendon": "MotionRightCalcanealTendon",
+    "MotionHeelLeftLateralHeadOfGastrocnemius": "MotionLeftLateralHeadOfGastrocnemius",
+    "MotionHeelRightLateralHeadOfGastrocnemius": "MotionRightLateralHeadOfGastrocnemius"
+  },
+  "deformation": {
+    "target": "HeelRise23",
+    "anklePlantarflexionDegrees": [
+      0,
+      23
+    ],
+    "validatedAngles": [
+      0,
+      11.5,
+      23
+    ],
+    "checks": {
+      "right": {
+        "soleusOriginDriftMm": 0.0,
+        "soleusDistalRiseMm": 8.0,
+        "achillesInsertionErrorMm": 0.0,
+        "nearestTendonJoinVerticesMm": {
+          "soleus": [
+            0.093,
+            0.093,
+            0.093
+          ],
+          "gastrocnemius-medial": [
+            0.175,
+            0.267,
+            0.267
+          ],
+          "gastrocnemius-lateral": [
+            0.259,
+            0.214,
+            0.141
+          ]
+        }
+      },
+      "left": {
+        "soleusOriginDriftMm": 0.0,
+        "soleusDistalRiseMm": 8.0,
+        "achillesInsertionErrorMm": 0.0,
+        "nearestTendonJoinVerticesMm": {
+          "soleus": [
+            0.095,
+            0.095,
+            0.095
+          ],
+          "gastrocnemius-medial": [
+            0.174,
+            0.266,
+            0.266
+          ],
+          "gastrocnemius-lateral": [
+            0.259,
+            0.216,
+            0.142
+          ]
+        }
+      }
+    }
+  },
+  "notes": {
+    "movement": "Pose-dependent Blender corrective shapes depict the posterior calf shortening during a straight-knee heel raise. Shared aponeurosis motion is a teaching approximation, not measured individual fascicle strain.",
+    "attachments": "Upper soleus stays bound to the shank. The calcaneal insertion tracks the ankle. Tendon-join nearest-vertex separation is a mesh diagnostic.",
+    "plantaris": "Source-aligned plantaris and its tendon are an anatomical context layer. Distal insertion varies. No activation was assigned.",
+    "sources": [
+      "assets/muscles-pelvis-leg-foot.glb",
+      "https://doi.org/10.1152/japplphysiol.00596.2003",
+      "https://pubmed.ncbi.nlm.nih.gov/35627332/"
+    ]
+  }
 }

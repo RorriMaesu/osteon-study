@@ -10,12 +10,22 @@ const radians = Math.PI / 180;
 const axis = values => new THREE.Vector3(...values).normalize();
 const muscleBase = new THREE.Color('#9d7261');
 const muscleMuted = new THREE.Color('#604f4e');
-const muscleActive = new THREE.Color('#eb8d57');
-const muscleSelected = new THREE.Color('#9fe6ca');
+const cueColors=Object.fromEntries(Object.entries({concentric:'#ff9855',isometric:'#d7a1ff',eccentric:'#68d8ff',role:'#9cdec0',emg:'#ffd8a0'}).map(([key,value])=>[key,new THREE.Color(value)]));
 
 function jointState(node){
  if(!node)throw new Error('A required joint is missing from the model.');
  return {node,rest:node.quaternion.clone(),position:node.position.clone()};
+}
+const outlineMaterial=new THREE.MeshBasicMaterial({color:0xf7f5dd,side:THREE.BackSide,depthWrite:false});
+outlineMaterial.onBeforeCompile=shader=>{shader.vertexShader=shader.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\ntransformed += normal * 0.0014;');};
+function outlinePart(part){
+ if(part.outline)return part.outline;
+ const outline=part.mesh.clone(false);
+ outline.material=outlineMaterial;
+ outline.name=part.mesh.name+' selection';
+ if(part.mesh.morphTargetInfluences)outline.morphTargetInfluences=part.mesh.morphTargetInfluences;
+ part.mesh.parent.add(outline);
+ return part.outline=outline;
 }
 function musclePart(mesh){
  const material=new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
@@ -147,17 +157,28 @@ export class MotionViewer {
   const skeleton=specimen.parts[0].mesh.skeleton;
   if(!meta.skinCompatible||!skeleton||skeleton.bones.some((bone,index)=>bone.name!==meta.jointOrder[index]))throw new Error('The calf muscles could not be matched to the leg rig.');
   const calves=[];
-  file.scene.traverse(mesh=>{if(mesh.isSkinnedMesh&&mesh.userData.motionMuscle)calves.push(mesh);});
-  for(const mesh of calves){
+  file.scene.traverse(mesh=>{if(mesh.isSkinnedMesh&&(mesh.userData.motionMuscle||mesh.userData.motionHeelReplacement))calves.push(mesh);});
+  const replacements=calves.map(mesh=>{
+   const {motionHeelReplacement:replace,motionHeelDeformation:shape}=mesh.userData;
+   const base=replace?specimen.model.getObjectByName(replace):null;
+   if(replace&&!base)throw new Error('A calf surface could not be matched to the leg rig.');
+   const slot=shape?mesh.morphTargetDictionary?.[shape]:null;
+   if(shape&&!Number.isInteger(slot))throw new Error('A calf deformation is missing from the model.');
+   return {mesh,base,slot};
+  });
+  for(const entry of replacements){
+   const {mesh}=entry;
    const bind=mesh.bindMatrix.clone();
    specimen.model.add(mesh);
    mesh.bind(skeleton,bind);
    mesh.frustumCulled=false;
-   const part=musclePart(mesh);
-   part.lessonOnly=true;
-   specimen.parts.push(part);
+   if(mesh.userData.motionMuscle){
+    const part=musclePart(mesh);
+    part.lessonOnly=true;
+    specimen.parts.push(part);
+   }
   }
-  specimen.calves=true;
+  specimen.calves=replacements;
  }
  use(specimen){
   if(this.current!==specimen){
@@ -183,10 +204,12 @@ export class MotionViewer {
  }
  sampleCurl(seconds,angle){
   const {mixer,action}=this.current;
-  if(!mixer){this.poseArm(angle);return;}
+  if(!mixer){this.poseArm(angle);return angle;}
   action.reset().play();
   mixer.setTime(seconds);
   this.dirty=true;
+  const {node,rest}=this.current.joints.elbow;
+  return node.quaternion.angleTo(rest)/radians+(this.current.meta.neutralFlexionDegrees||0);
  }
  poseArm(angle){
   const {joints,meta}=this.current;
@@ -227,7 +250,8 @@ export class MotionViewer {
   }
  }
  heelRise(angle){
-  const {joints,contacts,model,meta}=this.current;
+  const {joints,contacts,model,meta,calves}=this.current;
+  for(const {mesh,slot} of calves||[])if(slot!=null)mesh.morphTargetInfluences[slot]=clamp(angle/23,0,1);
   joints.pelvis.node.position.copy(joints.pelvis.position);
   for(const side of ['left','right']){
    this.poseLeg(side,{hip:0,knee:0,ankle:-angle});
@@ -269,16 +293,23 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,showMuscles,onlyActive,showCalves=false}){
+ highlight({strengths,selected,showMuscles,onlyActive,showCalves=false,cue,displayThreshold=0}){
   if(!this.current)return;
+  const replaced=new Set();
+  for(const {mesh,base} of this.current.calves||[]){
+   if(base){base.visible=!showCalves;if(showCalves)replaced.add(base);}
+   mesh.visible=showCalves;
+  }
   for(const p of this.current.parts){
    const key=p.side+':'+p.id, strength=strengths[key];
    const focused=selected===key;
-   p.mesh.visible=showMuscles&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||strength>0);
-   p.material.color.copy(strengths.active?muscleMuted:muscleBase);
-   if(strength>0)p.material.color.lerp(muscleActive,.25+.75*clamp(strength,0,1));
-   if(focused)p.material.color.copy(muscleSelected);
-   p.material.emissive.copy(p.material.color).multiplyScalar(focused ? .24 : strength>0 ? .16 : 0);
+   const visibleSignal=strength>0&&strength>=displayThreshold;
+   p.mesh.visible=showMuscles&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal);
+   p.material.color.copy(cue?muscleMuted:muscleBase);
+   const intensity=visibleSignal?clamp(strength,0,1):0;
+   if(cueColors[cue]&&intensity)p.material.color.lerp(cueColors[cue],intensity);
+   p.material.emissive.copy(p.material.color).multiplyScalar(intensity*.23);
+   if(p.outline||focused)outlinePart(p).visible=focused&&p.mesh.visible;
   }
   this.dirty=true;
  }
@@ -299,7 +330,7 @@ export class MotionViewer {
   const diagonal=this.current.kind==='arm'?.91:Math.max(size.y,size.x)*1.15;
   const direction=({
    lesson:this.current.kind==='arm'?[left?1:-1,.11,.24]:[1,.13,1.25],
-   front:[0,.08,1],side:this.current.kind==='arm'?[left?1:-1,.05,0]:[1,.05,0],
+   front:[0,.08,1],back:[0,.08,-1],side:this.current.kind==='arm'?[left?1:-1,.05,0]:[1,.05,0],
   }[view]||[1,.1,1]);
   const limiting=Math.min(1,Math.max(.20,this.camera.aspect));
   const distance=diagonal/(2*Math.tan(this.camera.fov*radians/2)*limiting);

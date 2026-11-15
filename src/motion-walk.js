@@ -7,6 +7,7 @@ const channelById={
  'biceps-femoris':'bicepsFemoris',
  'vastus-lateralis':'vastusLateralis',
 };
+export const gaitChannel=(sample,side,id)=>sample?.[side]?.emg?.[channelById[id]]??null;
 export const gaitEventName=event=>event.phase==='toe-off'?'Toe-off':'Initial contact';
 
 function interpolate(a,b,fraction){

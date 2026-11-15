@@ -1,6 +1,7 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {curlDuration,curlFrame,heelFrame,pressFrame,elbowAngle,elbowLimits,planarLimbPose} from '../src/motion-core.js';
 
 test('arm lesson has continuous lift, stationary hold, and controlled lowering',()=>{
@@ -20,11 +21,41 @@ test('the heel raise holds the same plantar-flexion angle before controlled lowe
 });
 
 test('triceps press reverses the elbow movement while retaining the extension muscle group',()=>{
- assert.equal(pressFrame(0).angle,115);
- assert.equal(pressFrame(2).angle,0);
- assert.equal(pressFrame(4).angle,115);
+ assert.equal(pressFrame(0).angle,100);
+ assert.equal(pressFrame(2).angle,10);
+ assert.equal(pressFrame(4).angle,100);
+ assert.equal(pressFrame(.8).joint,curlFrame(3.2).joint);
+ assert.equal(pressFrame(.8).clipTime,3.2);
+ assert.ok(Math.abs(pressFrame(.8).angle-curlFrame(3.2).angle)<1e-8);
  assert.equal(pressFrame(0).clipTime,2.4);
  assert.match(pressFrame(3).detail,/extensors lengthen/);
+});
+
+test('both shipped elbow clips agree with lesson joint angles at their boundaries',()=>{
+ for(const file of ['motion-arm','motion-arm-left']){
+  const asset=ext=>new URL('../assets/'+file+ext,import.meta.url);
+  const meta=JSON.parse(readFileSync(asset('.json'),'utf8')),glb=readFileSync(asset('.glb'));
+  const jsonLength=glb.readUInt32LE(12);
+  const doc=JSON.parse(glb.subarray(20,20+jsonLength)),bufferStart=28+jsonLength;
+  const clip=doc.animations.find(item=>item.name===meta.animation.name);
+  const track=clip.channels.find(channel=>doc.nodes[channel.target.node].name===meta.joints.elbow&&channel.target.path==='rotation');
+  const sampler=clip.samplers[track.sampler];
+  const values=(index,components)=>{
+   const accessor=doc.accessors[index],view=doc.bufferViews[accessor.bufferView];
+   const first=bufferStart+(view.byteOffset||0)+(accessor.byteOffset||0),stride=view.byteStride||4*components;
+   assert.equal(accessor.componentType,5126);
+   return Array.from({length:accessor.count},(_,row)=>Array.from({length:components},(_,col)=>glb.readFloatLE(first+row*stride+col*4)));
+  };
+  const times=values(sampler.input,1).flat(),rotations=values(sampler.output,4);
+  const neutral=doc.nodes[track.target.node].rotation||[0,0,0,1];
+  for(const t of [0,1.6,2.4,4]){
+   const index=times.findIndex(sample=>Math.abs(sample-t)<1e-4);
+   assert.ok(index>=0,file+' has the authored boundary '+t);
+   const dot=rotations[index].reduce((sum,value,i)=>sum+value*neutral[i],0);
+   const measured=2*Math.acos(Math.min(1,Math.abs(dot)))*180/Math.PI;
+   assert.ok(Math.abs(measured-curlFrame(t).angle)<.02,file+' '+t+' s renders '+measured+'°');
+  }
+ }
 });
 
 test('target direction resolves to bounded elbow flexion without an unstable on-axis result',()=>{

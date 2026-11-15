@@ -15,17 +15,31 @@ export const armRoles = {
  anconeus:{name:'Anconeus',role:'Assists elbow extension and helps stabilize the elbow.'},
 };
 
-export function curlFrame(seconds){
- const time=clamp(seconds,0,curlDuration);
- const phase=time<1.6?0:time<2.4?1:2;
- const angle=phase===0?115*smooth(time/1.6):phase===1?115:115-115*smooth((time-2.4)/1.6);
- return {angle,phase,name:curlPhases[phase].name,contraction:curlPhases[phase].type,detail:curlPhases[phase].detail};
+const activity=(seconds)=>{
+ const time=clamp(seconds,0,curlDuration),phase=time<1.6?0:time<2.4?1:2;
+ const travel=phase===0?smooth(time/1.6):phase===1?1:1-smooth((time-2.4)/1.6);
+ return {time,phase,travel};
+};
+const lessonAngle=(value,limits)=>limits[0]+(limits[1]-limits[0])*value;
+export const contractionCues={
+ concentric:{label:'Shortening',symbol:'→←'},
+ isometric:{label:'Holding tension',symbol:'='},
+ eccentric:{label:'Lengthening under tension',symbol:'←→'},
+ role:{label:'Possible contributors',symbol:'◇'},
+ emg:{label:'Recorded surface EMG',symbol:'▂▅'},
+};
+const bakedRange=[10,100];
+
+export function curlFrame(seconds,limits=bakedRange){
+ const {phase,travel}=activity(seconds);
+ return {angle:lessonAngle(travel,limits),phase,joint:['Elbow flexion','Elbow held','Elbow extension'][phase],
+  name:curlPhases[phase].name,contraction:curlPhases[phase].type,detail:curlPhases[phase].detail};
 }
 
-export function pressFrame(seconds){
- const frame=curlFrame(seconds), time=clamp(seconds,0,curlDuration);
- const {phase,contraction}=frame;
- return {phase,contraction,angle:elbowLimits[1]-frame.angle,clipTime:[2.4+time,4,time-2.4][phase],
+export function pressFrame(seconds,limits=bakedRange){
+ const {phase,time,travel}=activity(seconds),contraction=curlPhases[phase].type;
+ return {phase,contraction,angle:lessonAngle(1-travel,limits),clipTime:[2.4+time,4,time-2.4][phase],
+  joint:['Elbow extension','Elbow held','Elbow flexion'][phase],
   name:['Press down','Hold the extension','Return under control'][phase],
   detail:[
    'The elbow extensors shorten as the hand moves down against the cable’s pull.',
@@ -35,9 +49,8 @@ export function pressFrame(seconds){
 }
 
 export function heelFrame(seconds){
- const frame=curlFrame(seconds);
- const {phase,contraction}=frame;
- return {phase,contraction,angle:frame.angle/elbowLimits[1]*23,
+ const {phase,travel}=activity(seconds),contraction=curlPhases[phase].type;
+ return {phase,contraction,angle:travel*23,joint:['Ankle plantarflexion','Ankles held','Ankle dorsiflexion'][phase],
   name:['Rise onto the forefeet','Hold at the top','Lower the heels'][phase],
   detail:[
    'The calf plantar flexors shorten as the heels rise and the body moves upward.',

@@ -103,6 +103,8 @@ The 60 figure images under `assets/muscle-textbook/` come from the supplied Open
 
 The motion assets adapt the Osteon atlas’s Z-Anatomy (CC BY-SA 4.0) and BodyParts3D surfaces. See [model licenses and attributions](assets/MODEL-LICENSE.md). Blender authoring and export scripts are in `scripts/blender`. The elbow and heel-raise lessons use simplified muscle deformation and the contraction types explained in [OpenStax §10.4](https://openstax.org/books/anatomy-and-physiology-2e/pages/10-4-nervous-system-control-of-muscle-tension).
 
+The bilateral anconeus and calf surfaces were checked against their registered atlas placement. Soleus and the lateral gastrocnemius heads use authored heel-rise deformation. Plantaris is available as anatomical context. The lesson colors describe modeled muscle roles for each exercise.
+
 Walk cycle uses trial 1 at 4 km/h from participant 1 in the [Moreira et al. dataset (CC0 1.0)](https://doi.org/10.6084/m9.figshare.13169240.v1). Each side’s sagittal joint angles and the four surface EMG traces are synchronized to the source force-plate contacts. The model’s vertical position is adjusted for the floor display. Upper-body motion is illustrative. Optional replay restarts the recorded stride at its original beginning. Extraction and provenance are documented in `scripts/process-motion-gait.py` and `src/motion-gait-data.json`.
 
 ## Regional muscle atlas

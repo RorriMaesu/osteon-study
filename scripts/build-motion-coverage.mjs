@@ -144,13 +144,13 @@ function inspectSkin(node,doc,bin,lib,decoder){
   deformation,joints:bound?[...joints].map(index=>doc.nodes[skin.joints[index]]?.name||String(index)).sort():[]};
 }
 
-function motionEvidence(file,id){
+function motionEvidence(file,id,heelReplacement){
  if(/^motion-arm(?:-left)?\.glb$/.test(file)){
   return {modes:['pose','elbow-lessons'],evidence:[elbowIDs.has(id)?'textbook-contraction':'pose-context']};
  }
  if(file==='motion-legs.glb'){
   const measured=gaitIDs.has(id);
-  const inHeel=heelIDs.has(id);
+  const inHeel=heelIDs.has(id)&&!heelReplacement;
   const scope=id==='biceps-femoris'?'The long-head mesh marks the sampled biceps femoris region. The recording does not distinguish its two heads.':'';
   return {modes:['pose','walk',...(inHeel?['heel-raise']:[])],
    evidence:[...(measured?['recorded-surface-emg']:['pose-context']),...(inHeel?['textbook-contraction']:[])],qualification:scope||undefined};
@@ -162,8 +162,12 @@ function motionEvidence(file,id){
 async function motionParts(byID){
  const lib=await loadDraco(), decoder=new lib.Decoder(), parts=[];
  try{
-  for(const file of motionFiles().filter(name=>/^motion-[a-z0-9-]+\.glb$/.test(name)).sort()){
-   const {doc,bin}=glb(file);
+  const rigs=motionFiles().filter(name=>/^motion-[a-z0-9-]+\.glb$/.test(name)).sort().map(file=>({file,...glb(file)}));
+  const heelReplacements=new Set(
+   (rigs.find(rig=>rig.file==='motion-leg-actions.glb')?.doc.nodes||[])
+    .map(node=>node.extras?.motionHeelReplacement).filter(Boolean)
+  );
+  for(const {file,doc,bin} of rigs){
    for(const node of doc.nodes||[]){
     const info=node.extras;
     if(node.mesh===undefined||!info?.motionMuscle)continue;
@@ -172,7 +176,8 @@ async function motionParts(byID){
     const region=info.muscleRegion||atlas?.region;
     if(!side||!region)throw Error(file+' motion mesh lacks side or region: '+node.name);
     parts.push({id:info.motionMuscle,atlasId:atlas?.id||null,name:atlas?.name||info.motionPart||node.name,
-     node:node.name,side,region,asset:file,...inspectSkin(node,doc,bin,lib,decoder),...motionEvidence(file,info.motionMuscle)});
+     node:node.name,side,region,asset:file,...inspectSkin(node,doc,bin,lib,decoder),
+     ...motionEvidence(file,info.motionMuscle,heelReplacements.has(node.name))});
    }
   }
  }finally{lib.destroy(decoder);}

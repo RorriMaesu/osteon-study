@@ -37,6 +37,10 @@
   ],
   "muscles": [
     {
+      "id": "anconeus",
+      "name": "Anconeus"
+    },
+    {
       "id": "biceps-brachii",
       "name": "Biceps brachii"
     },
@@ -55,14 +59,25 @@
   ],
   "animation": {
     "name": "lift-hold-lower",
-    "duration": 4,
+    "duration": 4.0,
     "liftEnd": 1.6,
-    "holdEnd": 2.4
+    "holdEnd": 2.4,
+    "startAngle": 10,
+    "peakAngle": 100
+  },
+  "anconeus": {
+    "meshSource": "Anconeus muscle.r from the Osteon static atlas",
+    "attachmentContext": "Posterior lateral humeral epicondyle to lateral olecranon and proximal posterior ulna.",
+    "role": "Accessory elbow extensor and stabilizer.",
+    "attachmentReference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC13398567/",
+    "roleReference": "https://pubmed.ncbi.nlm.nih.gov/24060388/",
+    "deformation": "Skinned teaching approximation with bone-bound proximal and distal regions."
   },
   "source": "Osteon atlas anatomy from Z-Anatomy and BodyParts3D",
-  "status": "Right arm teaching rig; elbow motion and approximated muscle deformation.",
+  "status": "Right arm teaching rig with source anconeus and approximate muscle deformation.",
+  "side": "right",
   "counts": {
     "bones": 32,
-    "muscleMeshes": 7
+    "muscleMeshes": 8
   }
 }
