@@ -1,0 +1,68 @@
+{
+  "joints": {
+    "shoulder": "MotionShoulder",
+    "elbow": "MotionElbow",
+    "wrist": "MotionWrist"
+  },
+  "jointPositions": {
+    "shoulder": [
+      -0.167,
+      1.381,
+      -0.03
+    ],
+    "elbow": [
+      -0.219,
+      1.099,
+      -0.034
+    ],
+    "wrist": [
+      -0.26,
+      0.857,
+      0.017
+    ]
+  },
+  "elbowAxis": [
+    -0.9484753,
+    0.09143227,
+    0.30337298
+  ],
+  "elbowWorldAxis": [
+    -0.99170792,
+    0.04819405,
+    -0.11913353
+  ],
+  "elbowLimit": [
+    0,
+    115
+  ],
+  "muscles": [
+    {
+      "id": "biceps-brachii",
+      "name": "Biceps brachii"
+    },
+    {
+      "id": "brachialis",
+      "name": "Brachialis"
+    },
+    {
+      "id": "brachioradialis",
+      "name": "Brachioradialis"
+    },
+    {
+      "id": "triceps-brachii",
+      "name": "Triceps brachii"
+    }
+  ],
+  "animation": {
+    "name": "lift-hold-lower",
+    "duration": 4,
+    "liftEnd": 1.6,
+    "holdEnd": 2.4
+  },
+  "source": "Osteon atlas anatomy from Z-Anatomy and BodyParts3D",
+  "status": "Right arm teaching rig; elbow motion and approximated muscle deformation.",
+  "counts": {
+    "bones": 32,
+    "muscleMeshes": 7
+  }
+}

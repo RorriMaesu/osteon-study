@@ -1,0 +1,79 @@
+
+#motion-view.active{display:flex;flex-direction:column;gap:10px;min-height:0}
+.motion-heading{display:flex;align-items:end;justify-content:space-between;gap:12px}
+.motion-heading h1{font-size:clamp(30px,4vw,53px);line-height:1;margin:4px 0;font-weight:400}
+.motion-heading em{color:#c8ead9}
+.motion-back,.motion-source{color:#c5e4d6;text-underline-offset:4px;font-size:12px}
+.motion-modes,.motion-camera,.motion-settings,.motion-steps,.motion-angles,.motion-filter{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.motion-modes button,.motion-camera button,.motion-settings button,.motion-steps button,.motion-settings select{
+ border:1px solid #45625e;background:#15282d;color:#e6f1eb;border-radius:8px;
+ font:inherit;font-size:12px;min-height:38px;padding:5px 10px;
+}
+.motion-modes button[aria-pressed=true]{background:#bcdbc9;border-color:#bcdbc9;color:#152923;font-weight:700}
+.motion-workspace{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,315px);gap:12px}
+.motion-model-panel,.motion-info{border:1px solid #364e4d;border-radius:15px;background:#14252b;min-width:0;min-height:0}
+.motion-model-panel{display:flex;flex-direction:column;overflow:hidden}
+.motion-stage{
+ position:relative;flex:1;min-height:260px;overflow:hidden;isolation:isolate;
+ background:radial-gradient(ellipse at 50% 43%,#2c464a 0%,#183036 50%,#111e25 100%);
+}
+.motion-stage>[hidden]{display:none!important}
+.motion-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.motion-status{position:absolute;top:14px;left:14px;right:14px;max-width:max-content;padding:10px;background:#152927;border:1px solid #4b6c62;border-radius:7px;font-size:13px;z-index:3}
+.motion-status button{display:block;margin-top:7px}
+.motion-camera{position:absolute;right:8px;bottom:8px}
+.motion-camera button{background:#122527e6}
+.motion-controls{flex:none;padding:9px 12px 10px;display:flex;flex-direction:column;gap:6px}
+.motion-controls[inert]{opacity:.54}
+.motion-settings label{display:inline-flex;gap:5px;align-items:center;white-space:nowrap;font-size:12px;color:#c2d3ce}
+.motion-settings select{max-width:100%;min-height:34px}
+.motion-settings .primary{background:#ecaa82;border-color:#ecaa82;color:#1f2422;padding-inline:14px;min-width:65px}
+.motion-check,.motion-filter label{padding:6px 4px}
+.motion-range{display:grid;grid-template-columns:max-content minmax(45px,1fr) minmax(37px,max-content);align-items:center;gap:8px;width:100%;font-size:12px;color:#dce9e1;min-height:34px}
+.motion-range input{width:100%;accent-color:#e7ae8a;margin:0;min-height:32px}
+.motion-range output{text-align:right;font-variant-numeric:tabular-nums}
+.motion-angles .motion-range{flex:1 1 145px}
+.motion-steps button{min-height:36px;color:#cde2d8}
+.motion-handle,.motion-load-tag{position:absolute;z-index:2;transform:translate(-50%,-50%);color:#eff8ec;font-size:11px;white-space:nowrap}
+.motion-handle{display:grid;justify-items:center;align-content:center;width:46px;height:48px;gap:1px;cursor:grab;touch-action:none}
+.motion-handle:active{cursor:grabbing}
+.motion-handle i{display:block;width:26px;height:26px;border:2px solid #e8c391;border-radius:100%;background:#172a2c66;box-shadow:0 0 0 4px #e8c3913a}
+.motion-handle span,.motion-load-tag{background:#142924e8;padding:3px 5px;border-radius:5px}
+.motion-load-tag{pointer-events:none;transform:translate(-28%,13px);border:1px solid #b89769;color:#ffe0aa}
+.motion-info{padding:12px 14px;overflow:auto}
+.motion-phase h2{margin:4px 0 5px;font-size:clamp(22px,2.6vw,36px);line-height:1.05;font-weight:400}
+.motion-phase p,.motion-note{font-size:13px;line-height:1.42;color:#c1d4cd;margin:4px 0 7px}
+.motion-phase .motion-evidence{font-size:10px;font-weight:700;color:#e2bc97;text-transform:uppercase;letter-spacing:.11em}
+.motion-filter{font-size:12px;border-block:1px solid #ffffff17;margin:7px 0}
+.motion-filter label{display:inline-flex;align-items:center;gap:3px}
+.motion-muscle-list{display:grid;gap:4px}
+.motion-muscle-list button{border:1px solid #3b5452;padding:5px 8px;border-radius:7px;color:#eef3ef;background:#17292e;text-align:left;display:grid;grid-template-columns:1fr max-content;column-gap:5px;min-height:42px;align-items:center}
+.motion-muscle-list button[aria-pressed=true]{border-color:#9fe6ca;background:#24423c}
+.motion-muscle-list button[data-contributing=true]>span:first-child{color:#f2b792}
+.motion-muscle-list button small{color:#b8cbc4;font-size:10px;grid-column:1/-1;grid-row:2}
+.motion-measure{font-size:10px;grid-column:2;grid-row:1;color:#efc4a9}
+.motion-signal{width:100%;height:2px;margin-top:3px;background:linear-gradient(to right,#eaad89 var(--signal),transparent var(--signal));grid-column:1/-1}
+.motion-note{font-size:11px;margin-top:9px}
+[data-open-motion]{white-space:nowrap}
+@media(min-width:1000px){
+ body:has(#motion-view.active) main{padding-top:5px;padding-bottom:5px}
+}
+@media(max-width:999px){
+ #motion-view.active{padding:10px 0}
+ .motion-stage{min-height:clamp(285px,61dvh,610px)}
+}
+@media(max-width:680px){
+ .motion-heading{align-items:start;flex-direction:column;gap:4px}
+ .motion-workspace{grid-template-columns:1fr;gap:6px}
+ .motion-modes button,.motion-settings button,.motion-camera button{min-height:42px}
+ .motion-stage{min-height:clamp(250px,51dvh,420px)}
+ .motion-controls{padding:6px 8px}
+ .motion-info{padding:8px 10px}
+ .motion-muscle-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .motion-angles .motion-range{flex:1 1 120px}
+}
+@media(max-height:480px) and (orientation:landscape){
+ .motion-workspace{grid-template-columns:minmax(0,1fr) minmax(170px,32%)}
+ .motion-heading{align-items:end;flex-direction:row}
+ .motion-stage{min-height:220px}
+}

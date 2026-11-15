@@ -25,6 +25,7 @@ import {divisions,inDivision,termDivision,regionAvailable,meshDivision} from './
 import {boneFamily,boneId} from './exploration.js';
 import {terms,allTerms,textbookTerms,regions} from './data.js';
 import {AnatomyViewer} from './viewer.js';
+import {initMotionLab} from './motion-lab.js';
 import {initPractice} from './practice.js';
 import {initStudy} from './study.js';
 import {initExams} from './exam-ui.js';
@@ -42,7 +43,7 @@ export function toast(s){$('#toast').textContent=s;$('#toast').hidden=false;clea
 export function dialog(html){$('#dialog-content').innerHTML=html;$('#info-dialog').showModal();}
 $('#close-dialog').onclick=()=>$('#info-dialog').close();
 $('#info-dialog').addEventListener('click',e=>{if(e.target===$('#info-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
-const appViews=['atlas','study','practice','progress'];
+const appViews=['atlas','study','practice','progress','motion'];
 let currentRoute,restoringRoute=false;
 export function setView(view,{route,historyMode='push'}={}){if(!appViews.includes(view))view='atlas';route||=view;const from=currentRoute;currentRoute=route;$$('.view').forEach(e=>e.classList.toggle('active',e.id===view+'-view'));$$('[data-view]').forEach(e=>{e.classList.toggle('active',e.dataset.view===view);e.setAttribute('aria-current',e.dataset.view===view?'page':'false');});if(location.hash!=='#'+route){if(historyMode==='replace')history.replaceState(null,'','#'+route);else if(historyMode==='push'){if(restoringRoute)history.replaceState(history.state,'','#'+route);else history.pushState({osteonFrom:from},'','#'+route);}}if(view==='atlas'){
  viewer?.resize();
@@ -321,6 +322,8 @@ initMockExam4({setView,dialog,toast,escape});
 initReader({setView,escape});
 initIssueReporter({dialog,escape});
 initTutor({escape,toast});
+initMotionLab({setView});
+for(const link of document.querySelectorAll('[data-open-motion]'))link.addEventListener('click',event=>{event.preventDefault();setView('motion');document.querySelector('#motion-view h1').focus({preventScroll:true});});
 attachFetalSpecimen({viewer,toast});
 landmarkUI=initLandmarks({viewer,selectTerm,setView,dialog,escape});
 document.addEventListener('landmarksource',syncFocusControls);

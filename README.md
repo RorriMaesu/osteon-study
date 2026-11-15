@@ -181,6 +181,8 @@ The study studio now includes all nine Chapter 10 sections, complete source read
 
 ### Optional 3D muscle layer
 
+[Open Motion Lab](https://rorrimaesu.github.io/osteon-study/#motion) to pose the right elbow or play the lift, hold, and controlled-lowering lesson. The moving specimen uses Osteon’s atlas anatomy and has a separately authored Blender 4.5 rig. Use the wrist handle or the angle slider, compare elbow flexor and extensor roles, and select individual muscles by name.
+
 [Open the muscle atlas](https://rorrimaesu.github.io/osteon-study/?muscles=1#atlas). Use the large **Muscles: Off / On** toggle beside Practice Lab to add muscles to the view you are already looking at. It preserves the camera, matches the viewed region and side, and restores the bone selection when switched off. You can then choose a muscle region and side, search by name, or focus a whole muscle and inspect its heads. Labels and regional colors can be switched off. The five regional downloads total about 8.3 MB and display 474 muscle parts plus 207 supporting components. Z-Anatomy is supplemented by original BodyParts3D 4.3 surfaces. [Muscle coverage](MUSCLE-COVERAGE.csv) records every source component and its review status. This is source-aligned static reference anatomy; precise attachment footprints and movement remain excluded from spatial scoring. It does not certify that every anatomical variant or every human muscle is modeled.
 
 ### Muscle completeness review
