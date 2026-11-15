@@ -432,7 +432,7 @@ function staticInventory(){
 function bucketFor(side){return sides.includes(side)?side:'other';}
 
 function atlasDetail(part,role){
- return {id:part.id,name:part.name,side:part.side,asset:part.asset,role,
+ return {id:part.id,name:part.geometryReview?.displayName||part.name,side:part.side,asset:part.asset,role,
   group:part.muscleName===part.name?undefined:part.muscleName,
   depth:part.depth!=='unassigned'?part.depth:undefined,
   note:part.geometryReview?.note||undefined};
@@ -492,7 +492,7 @@ export async function buildCoverage(){
  }
  const reference=auditMuscleCoverage(staticParts,referenceTerms());
  for(const item of reference.rows){
-  const groups=(item.requiredGroups||[item.name]).map(findName);
+  const groups=(item.requiredGroups||[item.name]).map(name=>findName(name).filter(part=>part.geometryReview?.status!=='regional-reference'));
   rowFor({...item,origin:'reference',variant:item.inconstantInTA2,atlasStatus:referenceStatus(item,groups),
    note:item.note||item.variationNote,groups,
    candidates:(item.candidateNames||[]).flatMap(findName)});

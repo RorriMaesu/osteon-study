@@ -16,8 +16,10 @@
       "note": "The source provides one localized mesh per foot. It does not separately demonstrate all four usual lumbricals. Further members require reference-based reconstruction and verification."
     },
     "Spinalis capitis muscle": {
-      "status": "naming-review",
-      "note": "The source has no separately named semispinalis capitis mesh. Review the attachment relationships of this spinalis capitis mesh before deciding whether semispinalis is omitted, fused, or mislabeled."
+      "status": "regional-reference",
+      "displayName": "Semispinalis capitis region",
+      "sourceURL": "https://doi.org/10.1111/joa.13853",
+      "note": "The original Z-Anatomy label is Spinalis capitis. The existing surface closely matches the BodyParts3D semispinalis capitis reference at the back of the head and neck. This surface only represents the region. Lower thoracic attachments and any distinct spinalis capitis fibers are unresolved."
     },
     "Pubo-analis muscle": {
       "status": "naming-review",
@@ -29,6 +31,8 @@
     "https://ta2viewer.openanatomy.org/",
     "https://pmc.ncbi.nlm.nih.gov/articles/PMC1415268/",
     "https://anatomy.ttuhscep.edu/musculoskeletal_system/hand_tables.html",
-    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/"
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10508328/",
+    "https://doi.org/10.1111/joa.13853",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC1166828/"
   ]
 }

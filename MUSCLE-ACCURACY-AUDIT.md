@@ -15,12 +15,12 @@ The atlas displays 683 active components (4 superseded objects are retained for 
 
 | Checklist result | Entries |
 |---|---:|
-| Named geometry found | 162 |
+| Named geometry found | 161 |
 | Group represented by named components | 8 |
 | No named source mesh | 49 |
 | Not separately resolved | 4 |
 | Partial model | 1 |
-| Anatomical naming/attachment review | 2 |
+| Anatomical naming/attachment review | 3 |
 
 “No named source mesh” does not prove that all corresponding tissue is physically absent: it establishes that the learner cannot reliably select and identify that named structure in this atlas. Inconstant and sex-specific entries are included in this count; they must not all be called omissions from one normal specimen. All attachment certification fields remain No.
 
@@ -38,7 +38,7 @@ The atlas displays 683 active components (4 superseded objects are retained for 
 - **Foot lumbricals, repaired:** all four named source surfaces per foot are separately selectable. Individual origins, insertions and actions are provided. Regional registration is checked against corresponding metatarsals and held-out proximal phalanges; this is not a certificate of attachment anatomy.
 - **Vocalis, added on both sides:** original BodyParts3D 4.3 shapes were aligned to matching laryngeal cartilages. The exported surfaces and their relationships to the arytenoid vocal processes and inner thyroid cartilage were checked in Blender. [Registration and validation](model-sources/REGISTRATION.md#vocalis).
 - **Oblique arytenoid:** only its ary-epiglottic extension is named.
-- **Semispinalis capitis:** no separately named mesh. The nearby source spinalis capitis needs attachment-based review before deciding between omission, fusion and mislabeling.
+- **Semispinalis capitis:** the existing bilateral surfaces are available as a qualified regional reference. Neither semispinalis capitis nor spinalis capitis is counted as independently identified. [Source comparison](model-sources/REGISTRATION.md#semispinalis-capitis).
 - **Pelvic floor:** the puboanalis source must not automatically be relabeled puborectalis. The sling and attachment relationships need independent review.
 - **Chondroglossus, ceratoglossus, articularis cubiti and articularis genus:** not separately resolved. Neighboring larger muscles do not establish their individual identity.
 
@@ -79,7 +79,8 @@ The atlas displays 683 active components (4 superseded objects are retained for 
 | (Transversus nuchae muscle) | trunk-back | No named source mesh | Listed inconstant in TA2 |
 | Anterior intertransversarii colli muscles | trunk-back | No named source mesh |  |
 | Lateral posterior intertransversarii colli muscles | trunk-back | No named source mesh |  |
-| Semispinalis capitis muscle | trunk-back | Anatomical naming/attachment review | No separately named semispinalis capitis mesh. The source spinalis capitis mesh needs attachment-based review before deciding whether this is omission, fusion, or mislabeling. |
+| Spinalis capitis muscle | trunk-back | Anatomical naming/attachment review | Spinalis capitis is the original mesh label. The bilateral surfaces overlap a separately named semispinalis capitis reference. Distinct spinalis capitis fibers cannot be identified in this model. |
+| Semispinalis capitis muscle | trunk-back | Anatomical naming/attachment review | The same bilateral surfaces serve as a regional semispinalis capitis reference. The lower thoracic attachment extent and the separation from possible spinalis capitis fibers remain unresolved. |
 | Medial intertransversarii lumborum muscles | trunk-back | No named source mesh |  |
 | Thoracic intertransversarii muscles | trunk-back | No named source mesh |  |
 | Medial posterior intertransversarii colli muscles | trunk-back | No named source mesh |  |
@@ -109,7 +110,7 @@ The [complete flat checklist](MUSCLE-REFERENCE-AUDIT.csv) includes both open fin
 
 1. Completed the hand/foot group recovery in Blender 4.5 with hash-verified backups before every model save/export. [Reproducible repair recipe and source hashes](model-sources/muscle-repairs.json) preserve the original surfaces, transforms and segmentation. Subsequent original-only rebuilds are blocked to prevent wiping these repairs.
 2. Add absent high-priority course anatomy: intrinsic tongue and styloglossus; soft-palate muscles; perineal muscles and male/female urethral-sphincter anatomy. Provide sex-specific views instead of superimposing incompatible anatomy.
-3. Resolve semispinalis/spinalis capitis and pelvic-floor attachment relationships. Review articularis muscles, subcostales, intertransversarii, auricular/middle-ear muscles and remaining open entries. Document variants instead of implying that all variants coexist in one specimen.
+3. Resolve the distal semispinalis capitis attachments, possible separate spinalis capitis fibers and pelvic-floor attachment relationships. Review articularis muscles, subcostales, intertransversarii, auricular/middle-ear muscles and remaining open entries. Document variants instead of implying that all variants coexist in one specimen.
 4. For each muscle verify origin area, insertion area, tendon route, muscle belly, neighboring structures, side, relevant group members, selectable identity and uncluttered default view. Use independent anatomical review before marking a feature certified.
 5. Validate multiple views, desktop and touch selection, exports and backups. Moving muscle rigs and precision attachment scoring stay disabled until their mapping is reviewed.
 

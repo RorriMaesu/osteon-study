@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import manifest from '../src/muscle-models.json' with {type:'json'};
-import {componentVisible,muscleBoneContext,muscleFacts,muscleLabelPosition} from '../src/muscle-data.js';
+import {componentVisible,muscleBoneContext,muscleFacts,muscleDisplayName,matchesMuscleQuery,muscleLabelPosition} from '../src/muscle-data.js';
 import {muscleKind,muscleGroup} from '../src/muscle-taxonomy.js';
 import {muscleCoverage,auditMuscleCoverage} from '../src/muscle-coverage.js';
 
@@ -38,6 +38,24 @@ test('coverage separates missing names, partial geometry and unresolved neighbor
  const fewer=auditMuscleCoverage(manifest.components.filter(c=>c.sourceName!=='Tensor fasciae latae.l'));assert.equal(fewer.rows.find(r=>r.ta2===2602).status,'side-review');
  const missingPart=auditMuscleCoverage(manifest.components.filter(c=>!c.sourceName.startsWith('Vastus medialis')));assert.equal(missingPart.rows.find(r=>r.ta2===2613).status,'no-named-mesh');
 });
+test('both capitis surfaces are searchable under the regional and original source labels',()=>{
+ const ids=['muscle-spinalis-capitis-muscle-l','muscle-spinalis-capitis-muscle-r'];
+ const parts=ids.map(id=>manifest.components.find(c=>c.id===id));
+ assert.deepEqual(parts.map(c=>c.side),['left','right']);
+ for(const c of parts){
+  assert.match(c.sourceName,/^Spinalis capitis muscle\.[lr]$/);
+  assert.equal(muscleDisplayName(c),'Semispinalis capitis region');
+  assert.equal(matchesMuscleQuery(c,'semispinalis capitis'),true);
+  assert.equal(matchesMuscleQuery(c,'  spinalis capitis muscle '),true);
+  assert.match(c.geometryReview.note,/Lower thoracic attachments.*unresolved/);
+ }
+ for(const id of ['ta2-2270','ta2-2283']){
+  const row=muscleCoverage.rows.find(r=>r.id===id);
+  assert.equal(row.status,'needs-anatomical-review');
+  assert.deepEqual(new Set(row.componentIds),new Set(ids));
+ }
+});
+
 test('muscle captions avoid an open details drawer and stay above narrow viewers',()=>{
  const p=muscleLabelPosition({width:1028,height:500,ax:510,ay:240,rightEdge:690,labelWidth:250});assert.ok(p.x+125<690);assert.ok(Math.abs(p.x-510)>=125);
  assert.equal(muscleLabelPosition({width:1028,height:500,ax:760,ay:240,rightEdge:690}),null);

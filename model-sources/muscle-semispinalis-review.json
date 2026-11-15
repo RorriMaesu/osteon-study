@@ -1,0 +1,503 @@
+{
+  "schema": 1,
+  "blender": "4.5.1",
+  "modelSHA256": {
+    "skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",
+    "muscles-trunk-back.glb": "71b4ac3a7a7686f6ff211c74c49635aba6c6354cfa15b55d43ba588a7ef7763b"
+  },
+  "source": {
+    "source": "BodyParts3D / Anatomography 4.3",
+    "sourceURL": "https://lifesciencedb.jp/bp3d/",
+    "downloadEndpoint": "https://lifesciencedb.jp/bp3d/download.cgi",
+    "license": "CC BY 4.0",
+    "licenseURL": "https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html",
+    "attribution": "BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International"
+  },
+  "sourceFiles": [
+    {
+      "file": "FJ1538_BP22515_FMA22876_Right semispinalis capitis.obj",
+      "fj": "FJ1538",
+      "fma": "22876",
+      "bytes": 218638,
+      "sha256": "ea696516215ea9930d97e1358da65f1503b41fcebae26ff0d7bc245853638e3f"
+    },
+    {
+      "file": "FJ1538M_BP20362_FMA22877_Left semispinalis capitis.obj",
+      "fj": "FJ1538M",
+      "fma": "22877",
+      "bytes": 214741,
+      "sha256": "94e02657440228b267cbbc9c29fe6b537851f14321f223b1e2fe2d97b83d6eee"
+    },
+    {
+      "file": "FJ3158_BP23701_FMA9165_First thoracic vertebra.obj",
+      "fj": "FJ3158",
+      "fma": "9165",
+      "bytes": 113811,
+      "sha256": "decdbc71af9e3ed2ec870ec51cb13074293ad95365e11d51a0429fcde4e7be86"
+    },
+    {
+      "file": "FJ3161_BP23693_FMA12521_Third cervical vertebra.obj",
+      "fj": "FJ3161",
+      "fma": "12521",
+      "bytes": 139208,
+      "sha256": "1fc32d22fd860e4fab228e2063a8a167ea2e85b14ad7570ac5c3a1d693df67e3"
+    },
+    {
+      "file": "FJ3163_BP23513_FMA9209_Third thoracic vertebra.obj",
+      "fj": "FJ3163",
+      "fma": "9209",
+      "bytes": 130173,
+      "sha256": "8e53609cdd7c5a49a1cbb9abd5e97a43e0a21a16708dcb71f085555010d190f8"
+    },
+    {
+      "file": "FJ3167_BP23524_FMA12523_Fifth cervical vertebra.obj",
+      "fj": "FJ3167",
+      "fma": "12523",
+      "bytes": 158493,
+      "sha256": "b5e0cb9386110c82189b036d56d8be640a29c7f56fa88cf922bce80c93a33825"
+    },
+    {
+      "file": "FJ3169_BP23466_FMA9922_Fifth thoracic vertebra.obj",
+      "fj": "FJ3169",
+      "fma": "9922",
+      "bytes": 147550,
+      "sha256": "2a06234c1a3837b3b643f0dd3af11843c85f6bd2a8ed29a011da31fea08d0682"
+    },
+    {
+      "file": "FJ3172_BP23626_FMA12525_Seventh cervical vertebra.obj",
+      "fj": "FJ3172",
+      "fma": "12525",
+      "bytes": 132995,
+      "sha256": "20df76505e5d21ad9eac99e1dd241576a4411a3fa0d2c1d3dda7aa69a9f79f32"
+    },
+    {
+      "file": "FJ3173_BP23615_FMA9968_Seventh thoracic vertebra.obj",
+      "fj": "FJ3173",
+      "fma": "9968",
+      "bytes": 167251,
+      "sha256": "9f20e518e1a27a7c4be01a829bef7afda1a032cedf45c0fe165539a7df2edc8e"
+    },
+    {
+      "file": "FJ3309_BP23972_FMA52735_Occipital bone.obj",
+      "fj": "FJ3309",
+      "fma": "52735",
+      "bytes": 843312,
+      "sha256": "4447f4d6d6bb111465598b29fba900931226757a538df3c4d3ad6e66ef973577"
+    }
+  ],
+  "boneCorrespondences": {
+    "Occipital bone": "FJ3309",
+    "Vertebra C3": "FJ3161",
+    "Vertebra C5": "FJ3167",
+    "Vertebra C7": "FJ3172",
+    "Vertebra T1": "FJ3158",
+    "Vertebra T3": "FJ3163",
+    "Vertebra T5": "FJ3169",
+    "Vertebra T7": "FJ3173"
+  },
+  "muscleCorrespondences": {
+    "Spinalis capitis muscle.l": "FJ1538M",
+    "Spinalis capitis muscle.r": "FJ1538"
+  },
+  "method": {
+    "units": "native Blender Z up millimeters",
+    "transform": "a = R(r) @ ((d - pivot) * exp(s)) + pivot + shift, with p = [shiftX, shiftY, shiftZ, rX, rY, rZ, s]. R interprets its vector as a rotation axis with length in radians.",
+    "fit": "SciPy least_squares on bidirectional nearest-vertex distances for each training bone. Distances within each bone/sampling direction are weighted by 1/sqrt(vertexCount). Muscle surfaces were excluded from fitting.",
+    "validation": "Exact nearest target triangle per source vertex and vice versa in Blender BVHTree. Values are 50th and 95th percentile vertex-to-triangle distances in mm. Proximity is not a certified attachment or volume overlap.",
+    "leftRight": "Mesh identity from the source label was used, and every comparison used the same side."
+  },
+  "pivotMM": [
+    0.0,
+    -35.0,
+    1420.0
+  ],
+  "fits": {
+    "train": {
+      "translationRotationScale": [
+        0.6053250527896059,
+        93.36214170417843,
+        74.62718833548479,
+        0.04858079363010368,
+        -0.000374189688287648,
+        0.0009944864473315415,
+        -0.01366404965248241
+      ],
+      "trainingBones": [
+        "Occipital bone",
+        "Vertebra C5",
+        "Vertebra T1",
+        "Vertebra T5"
+      ],
+      "heldOutBones": [
+        "Vertebra C3",
+        "Vertebra C7",
+        "Vertebra T3",
+        "Vertebra T7"
+      ],
+      "surfacePercentilesMM": {
+        "Occipital bone": {
+          "sourceToAtlasMM": [
+            1.369,
+            3.13
+          ],
+          "atlasToSourceMM": [
+            1.089,
+            2.701
+          ]
+        },
+        "Vertebra C3": {
+          "sourceToAtlasMM": [
+            2.259,
+            4.487
+          ],
+          "atlasToSourceMM": [
+            2.233,
+            5.81
+          ]
+        },
+        "Vertebra C5": {
+          "sourceToAtlasMM": [
+            0.778,
+            1.967
+          ],
+          "atlasToSourceMM": [
+            0.857,
+            2.399
+          ]
+        },
+        "Vertebra C7": {
+          "sourceToAtlasMM": [
+            0.88,
+            2.353
+          ],
+          "atlasToSourceMM": [
+            1.306,
+            3.439
+          ]
+        },
+        "Vertebra T1": {
+          "sourceToAtlasMM": [
+            1.429,
+            3.074
+          ],
+          "atlasToSourceMM": [
+            2.082,
+            4.07
+          ]
+        },
+        "Vertebra T3": {
+          "sourceToAtlasMM": [
+            1.178,
+            2.839
+          ],
+          "atlasToSourceMM": [
+            1.788,
+            3.799
+          ]
+        },
+        "Vertebra T5": {
+          "sourceToAtlasMM": [
+            0.826,
+            1.823
+          ],
+          "atlasToSourceMM": [
+            1.117,
+            2.62
+          ]
+        },
+        "Vertebra T7": {
+          "sourceToAtlasMM": [
+            2.0,
+            4.429
+          ],
+          "atlasToSourceMM": [
+            2.537,
+            5.642
+          ]
+        },
+        "Spinalis capitis muscle.l": {
+          "sourceToAtlasMM": [
+            0.441,
+            2.157
+          ],
+          "atlasToSourceMM": [
+            1.125,
+            5.906
+          ]
+        },
+        "Spinalis capitis muscle.r": {
+          "sourceToAtlasMM": [
+            0.501,
+            3.085
+          ],
+          "atlasToSourceMM": [
+            1.794,
+            6.432
+          ]
+        }
+      }
+    },
+    "withoutOccipital": {
+      "translationRotationScale": [
+        0.6648636060883896,
+        93.92398109160125,
+        75.98848600382699,
+        0.04117581816111829,
+        0.00015979833370910476,
+        0.0013371008096314664,
+        0.005794382231682898
+      ],
+      "trainingBones": [
+        "Vertebra C3",
+        "Vertebra C5",
+        "Vertebra C7",
+        "Vertebra T1",
+        "Vertebra T3",
+        "Vertebra T5",
+        "Vertebra T7"
+      ],
+      "heldOutBones": [
+        "Occipital bone"
+      ],
+      "surfacePercentilesMM": {
+        "Occipital bone": {
+          "sourceToAtlasMM": [
+            2.715,
+            6.865
+          ],
+          "atlasToSourceMM": [
+            1.579,
+            3.863
+          ]
+        },
+        "Vertebra C3": {
+          "sourceToAtlasMM": [
+            2.396,
+            4.949
+          ],
+          "atlasToSourceMM": [
+            2.402,
+            5.803
+          ]
+        },
+        "Vertebra C5": {
+          "sourceToAtlasMM": [
+            0.819,
+            2.045
+          ],
+          "atlasToSourceMM": [
+            0.904,
+            2.199
+          ]
+        },
+        "Vertebra C7": {
+          "sourceToAtlasMM": [
+            1.19,
+            2.277
+          ],
+          "atlasToSourceMM": [
+            1.319,
+            3.276
+          ]
+        },
+        "Vertebra T1": {
+          "sourceToAtlasMM": [
+            1.424,
+            3.151
+          ],
+          "atlasToSourceMM": [
+            2.009,
+            3.727
+          ]
+        },
+        "Vertebra T3": {
+          "sourceToAtlasMM": [
+            1.319,
+            3.22
+          ],
+          "atlasToSourceMM": [
+            1.804,
+            4.015
+          ]
+        },
+        "Vertebra T5": {
+          "sourceToAtlasMM": [
+            0.563,
+            1.628
+          ],
+          "atlasToSourceMM": [
+            0.82,
+            2.116
+          ]
+        },
+        "Vertebra T7": {
+          "sourceToAtlasMM": [
+            1.286,
+            3.296
+          ],
+          "atlasToSourceMM": [
+            1.652,
+            3.51
+          ]
+        },
+        "Spinalis capitis muscle.l": {
+          "sourceToAtlasMM": [
+            0.593,
+            1.728
+          ],
+          "atlasToSourceMM": [
+            1.067,
+            4.827
+          ]
+        },
+        "Spinalis capitis muscle.r": {
+          "sourceToAtlasMM": [
+            1.079,
+            2.701
+          ],
+          "atlasToSourceMM": [
+            1.722,
+            6.065
+          ]
+        }
+      }
+    },
+    "all": {
+      "translationRotationScale": [
+        0.6037425061276236,
+        93.33785603176008,
+        74.94361088412569,
+        0.04387749797167184,
+        -0.0002576400884310676,
+        0.0022882802792151095,
+        -0.0045861398901198055
+      ],
+      "trainingBones": [
+        "Occipital bone",
+        "Vertebra C3",
+        "Vertebra C5",
+        "Vertebra C7",
+        "Vertebra T1",
+        "Vertebra T3",
+        "Vertebra T5",
+        "Vertebra T7"
+      ],
+      "heldOutBones": [],
+      "surfacePercentilesMM": {
+        "Occipital bone": {
+          "sourceToAtlasMM": [
+            1.715,
+            4.39
+          ],
+          "atlasToSourceMM": [
+            1.348,
+            2.861
+          ]
+        },
+        "Vertebra C3": {
+          "sourceToAtlasMM": [
+            2.248,
+            4.328
+          ],
+          "atlasToSourceMM": [
+            2.155,
+            5.47
+          ]
+        },
+        "Vertebra C5": {
+          "sourceToAtlasMM": [
+            0.632,
+            1.711
+          ],
+          "atlasToSourceMM": [
+            0.728,
+            1.932
+          ]
+        },
+        "Vertebra C7": {
+          "sourceToAtlasMM": [
+            1.074,
+            2.55
+          ],
+          "atlasToSourceMM": [
+            1.441,
+            3.548
+          ]
+        },
+        "Vertebra T1": {
+          "sourceToAtlasMM": [
+            1.581,
+            3.431
+          ],
+          "atlasToSourceMM": [
+            2.241,
+            4.261
+          ]
+        },
+        "Vertebra T3": {
+          "sourceToAtlasMM": [
+            1.436,
+            3.367
+          ],
+          "atlasToSourceMM": [
+            1.979,
+            4.368
+          ]
+        },
+        "Vertebra T5": {
+          "sourceToAtlasMM": [
+            0.622,
+            1.648
+          ],
+          "atlasToSourceMM": [
+            0.91,
+            2.232
+          ]
+        },
+        "Vertebra T7": {
+          "sourceToAtlasMM": [
+            1.462,
+            3.322
+          ],
+          "atlasToSourceMM": [
+            1.86,
+            4.001
+          ]
+        },
+        "Spinalis capitis muscle.l": {
+          "sourceToAtlasMM": [
+            0.419,
+            2.077
+          ],
+          "atlasToSourceMM": [
+            1.113,
+            5.161
+          ]
+        },
+        "Spinalis capitis muscle.r": {
+          "sourceToAtlasMM": [
+            0.66,
+            3.117
+          ],
+          "atlasToSourceMM": [
+            1.761,
+            6.38
+          ]
+        }
+      }
+    }
+  },
+  "donorVertexShareWithin2MM": {
+    "left": 0.947,
+    "right": 0.911
+  },
+  "donorVertexShareWithin4MM": {
+    "left": 0.989,
+    "right": 0.974
+  },
+  "interpretation": "Regional semispinalis capitis reference. Lower thoracic attachments and the independent identity of both named muscles are unresolved.",
+  "anatomyReferences": [
+    "https://doi.org/10.1111/joa.13853",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC1166828/"
+  ]
+}

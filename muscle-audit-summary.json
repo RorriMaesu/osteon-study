@@ -4,12 +4,12 @@
   "muscleParts": 476,
   "supportParts": 207,
   "counts": {
-    "named-geometry": 162,
+    "named-geometry": 161,
     "represented-by-components": 8,
     "no-named-mesh": 49,
     "not-separately-resolved": 4,
     "partial-model": 1,
-    "needs-anatomical-review": 2
+    "needs-anatomical-review": 3
   },
   "geometryCertified": false,
   "sourceSHA256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd"

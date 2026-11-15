@@ -25,4 +25,7 @@ const pilotFacts=[
  [/Teres minor/i,'Teres minor','Lateral scapular border.','Inferior facet of the greater tubercle and adjacent capsule.','Laterally rotates the humerus and contributes to cuff stabilization.'],
  [/Subscapularis/i,'Subscapularis','Subscapular fossa.','Lesser tubercle and adjacent capsule.','Medially rotates the humerus and stabilizes the shoulder.']
 ];
+export function muscleDisplayName(c,grouped=false){return c.geometryReview?.displayName||(grouped?c.muscleName:c.name);}
+export function matchesMuscleQuery(c,query){return [muscleDisplayName(c),c.name,c.muscleName,c.side].join(' ').toLowerCase().includes(query.trim().toLowerCase());}
+
 export function muscleFacts(c){if(c.teaching)return c.teaching;const row=pilotFacts.find(([rx])=>rx.test(c.sourceName));return row?{name:row[1],origin:row[2],insertion:row[3],action:row[4],reference:'11.5'}:null;}

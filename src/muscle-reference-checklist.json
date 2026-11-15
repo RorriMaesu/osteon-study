@@ -953,7 +953,12 @@
       "region": "trunk-back",
       "inconstantInTA2": false,
       "entryType": "named-muscle-or-serial-group",
-      "expectedSides": "left-and-right"
+      "expectedSides": "left-and-right",
+      "reviewStatus": "needs-anatomical-review",
+      "candidateNames": [
+        "Spinalis capitis muscle"
+      ],
+      "note": "Spinalis capitis is the original mesh label. The bilateral surfaces overlap a separately named semispinalis capitis reference. Distinct spinalis capitis fibers cannot be identified in this model."
     },
     {
       "id": "ta2-2273",
@@ -1030,7 +1035,7 @@
       "candidateNames": [
         "Spinalis capitis muscle"
       ],
-      "note": "No separately named semispinalis capitis mesh. The source spinalis capitis mesh needs attachment-based review before deciding whether this is omission, fusion, or mislabeling."
+      "note": "The same bilateral surfaces serve as a regional semispinalis capitis reference. The lower thoracic attachment extent and the separation from possible spinalis capitis fibers remain unresolved."
     },
     {
       "id": "ta2-2284",

@@ -41,6 +41,21 @@ test('unresolved candidate surfaces do not pass as anatomically identified motio
   }
 });
 
+test('the regional capitis surface is a candidate on both sides under both reference names', () => {
+  for (const id of ['ta2-2270', 'ta2-2283']) {
+    const row = rows.get(id);
+    assert.equal(row.atlasStatus, 'needs-anatomical-review');
+    for (const side of ['left', 'right']) {
+      assert.equal(row.atlasSides[side], 'candidate');
+      assert.equal(row.atlas[side].length, 1);
+      assert.equal(row.atlas[side][0].role, 'candidate');
+      assert.equal(row.atlas[side][0].name, 'Semispinalis capitis region');
+      assert.equal(row.atlas[side][0].id, 'muscle-spinalis-capitis-muscle-' + side[0]);
+      assert.deepEqual(row.motion[side], []);
+    }
+  }
+});
+
 test('verified reference rows distinguish whole muscles, named subdivisions and serial parts', () => {
   const buccinator = rows.get('ta2-2086');
   const constrictor = rows.get('ta2-2179');

@@ -5872,8 +5872,10 @@
       "assessment": "learn-only",
       "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring.",
       "geometryReview": {
-        "status": "naming-review",
-        "note": "The source has no separately named semispinalis capitis mesh. Review the attachment relationships of this spinalis capitis mesh before deciding whether semispinalis is omitted, fused, or mislabeled."
+        "status": "regional-reference",
+        "displayName": "Semispinalis capitis region",
+        "sourceURL": "https://doi.org/10.1111/joa.13853",
+        "note": "The original Z-Anatomy label is Spinalis capitis. The existing surface closely matches the BodyParts3D semispinalis capitis reference at the back of the head and neck. This surface only represents the region. Lower thoracic attachments and any distinct spinalis capitis fibers are unresolved."
       }
     },
     {
@@ -5978,8 +5980,10 @@
       "assessment": "learn-only",
       "reviewNotice": "Named source geometry with original position retained. Attachment extents and movement are not independently certified; not enabled for precise spatial scoring.",
       "geometryReview": {
-        "status": "naming-review",
-        "note": "The source has no separately named semispinalis capitis mesh. Review the attachment relationships of this spinalis capitis mesh before deciding whether semispinalis is omitted, fused, or mislabeled."
+        "status": "regional-reference",
+        "displayName": "Semispinalis capitis region",
+        "sourceURL": "https://doi.org/10.1111/joa.13853",
+        "note": "The original Z-Anatomy label is Spinalis capitis. The existing surface closely matches the BodyParts3D semispinalis capitis reference at the back of the head and neck. This surface only represents the region. Lower thoracic attachments and any distinct spinalis capitis fibers are unresolved."
       }
     },
     {
