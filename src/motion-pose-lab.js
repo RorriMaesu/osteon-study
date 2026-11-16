@@ -142,7 +142,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   setAngle(selectedJoint,selectedAxis,history.values[selectedJoint][selectedAxis]+delta);
   message='';draw();save();
  }
- function selectJoint(id,{pointer=false}={}){
+ function selectJoint(id,{pointer=false,focus=false}={}){
   const joint=descriptors.find(item=>item.id===id);
   if(!joint||id===selectedJoint)return;
   stopGesture();
@@ -155,8 +155,11 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   const detail=!pointer&&/thumb|index|middle|ring|little|toe|hallux|subtalar|upper-nod|face-/.test(id);
   if(detail){scope=joint.region;viewer.setScope(scope);message='Detail view. Full body returns to your complete pose.';}
   draw();save();
-  if(detail)viewer.focusJoint();
   if(!pointer&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes();
+  if(focus||detail){
+   viewer.fitCanvas();
+   viewer.focusJoint();
+  }
  }
  function selectMuscle(key,{closeNotes=true}={}){
   if(!specimen)return;

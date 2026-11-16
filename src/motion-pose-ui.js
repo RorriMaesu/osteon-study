@@ -128,7 +128,7 @@ export function createPoseUI(host,callbacks={}){
   ['Make a pose','Choose a joint and movement. Use the named direction buttons, drag the slider, or drag the ring on the model.'],
   ['Watch one movement','Play motion demonstrates the selected movement and returns to your pose. Pause keeps the current position.'],
   ['Return one joint','The angle button marked Neutral resets only the selected joint. Reset returns the whole body. Both can be undone.'],
-  ['Turn the view','Drag to rotate. Tap Zoom + or Zoom − to change magnification. Focus joint centers the selected joint.'],
+  ['Turn the view','Choose a joint from the dropdown to focus it. Drag to rotate or use Zoom + and Zoom −. Focus joint brings the selected joint back into view.'],
   ['Keep your pose','Full body returns to the overview while keeping your pose. Reset returns all joints to their starting position.'],
   ['Keep a joint fixed','Lock angles fixes a joint’s settings. It still moves with its parent. Undo reverses one completed adjustment.'],
   ['Read the colors','Green marks possible contributors. Violet marks opposing actions. Gold identifies muscles or grouped surfaces with mixed roles.'],
@@ -339,7 +339,7 @@ export function createPoseUI(host,callbacks={}){
  on(window,'pointercancel',event=>{if(Number.isFinite(rangeGesture?.id)&&rangeGesture.id===event.pointerId)finishRange(true);});
  on(window,'blur',()=>finishRange(true));
  on(document,'visibilitychange',()=>{if(document.hidden)finishRange(true);});
- on($('[data-pose-joint]'),'change',event=>{finishRange();call('selectJoint',event.currentTarget.value);});
+ on($('[data-pose-joint]'),'change',event=>{finishRange();call('selectJoint',event.currentTarget.value,{focus:true});});
  on($('[data-pose-axis]'),'change',event=>{finishRange();call('selectAxis',event.currentTarget.value);});
  const buttonStep=()=>['%','percent'].includes(axis()?.unit)?10:5;
  button('[data-pose-minus]',()=>call('stepAngle',-buttonStep()));
