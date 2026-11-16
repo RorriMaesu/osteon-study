@@ -149,10 +149,19 @@ test('phases cover the timeline without holes and every role resolves to muscle 
         const resolved = poseRoles(joint, role.axis, role.direction, parts, sample.pose);
         assert(resolved.contributors.length > 0, `${activity.id}: ${phase.label}: no muscle surfaces for ${role.joint}:${role.axis}`);
       }
+      for (const entry of phase.namedRoles || []) {
+        assert(['prime', 'support', 'opponent'].includes(entry.role), activity.id + ' named role kind');
+        assert(['concentric', 'eccentric', 'isometric', 'contributor'].includes(entry.contraction));
+        for (const name of entry.names || []) {
+          const matches = parts.filter(part => part.kind === 'muscle' && part.name.toLowerCase() === name.toLowerCase() && (!entry.side || part.side === entry.side));
+          assert(matches.length > 0, `${activity.id}: ${phase.label}: unresolved named muscle ${name} (${entry.side || 'both'})`);
+        }
+        assert((entry.names?.length || 0) + (entry.keys?.length || 0) > 0, 'Empty named selection');
+      }
     }
     assert.equal(end, activity.duration);
     for (const phase of activity.phases.slice(1)) assert.equal(sampleActivity(activity, phase.start).phase, phase);
-    assert.equal(sampleActivity(activity, activity.duration).phase, activity.phases.at(-1));
+    assert.equal(sampleActivity(activity, activity.duration).phase, activity.phases[activity.endpointPhaseIndex ?? activity.phases.length - 1]);
   }
 });
 
@@ -161,16 +170,18 @@ test('controlled lowering retains the load-resisting muscles instead of inferrin
   const down = sampleActivity(squat, 1).phase;
   const hold = sampleActivity(squat, 3.5).phase;
   const up = sampleActivity(squat, 5).phase;
-  const identities = phase => phase.roles.map(({joint, axis, direction}) => joint + ':' + axis + ':' + direction).sort();
-  assert.deepEqual(identities(down), identities(up));
-  assert.deepEqual(identities(hold), identities(up));
-  assert(down.roles.every(role => role.contraction === 'eccentric' && role.direction === -1));
-  assert(hold.roles.every(role => role.contraction === 'isometric'));
-  assert(up.roles.every(role => role.contraction === 'concentric'));
+  const namedRole = (phase, name) => phase.namedRoles.find(entry => entry.names.includes(name));
+  for (const name of ['Gluteus maximus muscle', 'Vastus lateralis muscle']) {
+    assert.equal(namedRole(down, name).contraction, 'eccentric');
+    assert.equal(namedRole(hold, name).contraction, 'isometric');
+    assert.equal(namedRole(up, name).contraction, 'concentric');
+  }
+  assert.equal(namedRole(down, 'Clavicular part of deltoid muscle').contraction, 'concentric');
+  assert.equal(namedRole(up, 'Clavicular part of deltoid muscle').contraction, 'eccentric');
   assert(sampleActivity(squat, 2).pose['right-knee'].flexion > sampleActivity(squat, 1).pose['right-knee'].flexion);
   assert(sampleActivity(squat, 6).pose['right-knee'].flexion < sampleActivity(squat, 5).pose['right-knee'].flexion);
   const heel = byId('heel-raise');
-  assert(sampleActivity(heel, 5).phase.roles.every(role => role.direction === -1 && role.contraction === 'eccentric'));
+  assert.equal(namedRole(sampleActivity(heel, 5).phase, 'Soleus muscle').contraction, 'eccentric');
   const raise = byId('reach-up');
   assert(sampleActivity(raise, 5).phase.roles.every(role => role.direction === 1 && role.contraction === 'eccentric'));
 });
@@ -179,16 +190,18 @@ test('jump flight distinguishes limb positioning from ground support and landing
   const jump = byId('jumping');
   const flight = sampleActivity(jump, 2.7);
   assert(flight.root[1] > .15);
-  assert(flight.phase.roles.every(role => role.contraction === 'contributor'));
+  assert.deepEqual(flight.contacts, {left: 'air', right: 'air'});
+  assert(!flight.phase.namedRoles.some(entry => entry.names.includes('Soleus muscle')));
   assert.match(flight.phase.explanation, /No ground reaction/);
   const landing = sampleActivity(jump, 3.5);
   assert.equal(landing.root[1], 0);
-  assert(landing.phase.roles.every(role => role.contraction === 'eccentric'));
-  assert(sampleActivity(jump, 1.8).phase.roles.every(role => role.contraction === 'concentric'));
+  const vastus = phase => phase.namedRoles.find(entry => entry.names.includes('Vastus lateralis muscle'));
+  assert.equal(vastus(landing.phase).contraction, 'eccentric');
+  assert.equal(vastus(sampleActivity(jump, 1.8).phase).contraction, 'concentric');
   const tuck = sampleActivity(jump, 2.4).phase;
   const prepare = sampleActivity(jump, 2.9).phase;
-  assert(tuck.roles.filter(role => role.joint.endsWith('-knee')).every(role => role.direction === 1));
-  assert(prepare.roles.filter(role => role.joint.endsWith('-knee')).every(role => role.direction === -1));
+  assert(tuck.namedRoles.some(entry => entry.names.includes('Short head of biceps femoris')));
+  assert(vastus(prepare));
 });
 
 test('neck labels and dance shifts agree with the rig’s anatomical right and left', () => {
@@ -260,11 +273,12 @@ test('sampling handles invalid time, seeking and caller edits without changing t
   for (const invalid of [NaN, Infinity, -Infinity, undefined, '2']) assert.deepEqual(sampleActivity(movement, invalid), sampleActivity(movement, 0));
   assert.deepEqual(sampleActivity(movement, 100), sampleActivity(movement, movement.duration));
   const mid = sampleActivity(movement, 2);
+  const originalFinger = mid.pose['right-index-mcp'].flexion;
   sampleActivity(movement, 6);
   assert.deepEqual(sampleActivity(movement, 2), mid);
   mid.pose['right-index-mcp'].flexion = 999;
   mid.root[1] = 999;
-  assert(sampleActivity(movement, 2).pose['right-index-mcp'].flexion < 60);
+  assert.equal(sampleActivity(movement, 2).pose['right-index-mcp'].flexion, originalFinger);
   assert.equal(sampleActivity(movement, 2).root[1], 0);
   assert(Object.isFrozen(movement.keyframes[0].pose));
   assert.throws(() => sampleActivity(null, 0), TypeError);

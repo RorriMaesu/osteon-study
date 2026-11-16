@@ -122,3 +122,17 @@ test('the resolver accepts atlas IDs or viewer keys, ignores unavailable joints 
   assert(first.labels instanceof Map);
   for (const item of first.rows) assert.equal(first.labels.get(item.key), item.role);
 });
+
+test('phase-specific muscle assignments resolve the specified side, role, and timing', () => {
+  const flexor = byName('Flexor pollicis longus', 'right');
+  const support = {names: ['Infraspinatus muscle'], side: 'right', role: 'support',
+    label: 'Possible shoulder stabilizer', contraction: 'isometric'};
+  const mover = {keys: [flexor.key], role: 'prime', contraction: 'concentric', action: 'Thumb IP flexion'};
+  const result = resolveActivityRoles({}, {namedRoles: [mover, support]}, descriptors, parts);
+  assert.deepEqual(result.rows.map(item => [item.key, item.cue]), [
+    [flexor.key, 'concentric'], [byName('Infraspinatus muscle').key, 'support'],
+  ]);
+  assert.equal(result.rows[0].action, 'Thumb IP flexion');
+  assert.equal(result.rows[1].role, 'Possible shoulder stabilizer');
+  assert.deepEqual(resolveActivityRoles({}, {roles: []}, descriptors, parts).rows, []);
+});

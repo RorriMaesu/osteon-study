@@ -8,6 +8,7 @@ import {ankleMorphBinding,poseAnkleMorphs} from './motion-ankle.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 import muscleModels from './muscle-models.json' with {type:'json'};
 import {walkScopeMatches,walkBoneRegion,captureWalkDrivers,mountWalkPack,updateWalkPacks,walkScopeBounds} from './motion-walk-model.js';
+import {walkTeachingComponentKeys} from './motion-walk.js';
 import {regionalLessons} from './motion-regional.js';
 import {overlapsPoseRect,placePoseLabel,poseRect} from './motion-pose-overlays.js';
 import {MotionReveal,visibleInTree} from './motion-reveal.js';
@@ -21,7 +22,7 @@ const mixedRoleColor=new THREE.Color('#f3c479');
 const walkContextMaterial=new THREE.MeshStandardMaterial({color:'#8f6559',roughness:.78});
 const atlasParts=new Map(muscleModels.components.map(part=>[part.id,part]));
 const svgNamespace='http://www.w3.org/2000/svg';
-const cueColors=Object.fromEntries(Object.entries({concentric:'#ff9855',isometric:'#d7a1ff',eccentric:'#68d8ff',role:'#9cdec0',authored:'#ff9e61',emg:'#ffd8a0'}).map(([key,value])=>[key,new THREE.Color(value)]));
+const cueColors=Object.fromEntries(Object.entries({concentric:'#ff9855',isometric:'#d7a1ff',eccentric:'#68d8ff',role:'#9cdec0',support:'#52c7a0',authored:'#ff9e61',emg:'#ffd8a0'}).map(([key,value])=>[key,new THREE.Color(value)]));
 
 function jointState(node){
  if(!node)throw new Error('A required joint is missing from the model.');
@@ -40,7 +41,9 @@ function outlinePart(part){
 }
 function musclePart(mesh){
  const data=mesh.userData,key=data.muscleId;
- const material=data.walkRegion?walkContextMaterial:new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
+ const material=data.walkRegion
+  ?walkTeachingComponentKeys.has(key)?walkContextMaterial.clone():walkContextMaterial
+  :new THREE.MeshStandardMaterial({color:muscleBase,roughness:.78});
  mesh.material=material;
  const atlas=atlasParts.get(key);
  return {mesh,material,key,id:data.motionMuscle||data.walkMuscleGroup||key,side:data.motionSide||atlas?.side||'right',
@@ -427,7 +430,7 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,selectionRoles,regionalRoles,reveal=false,revealThreshold=0,revealBones=false}){
+ highlight({strengths,walkTeaching,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,roleCues,selectionRoles,regionalRoles,reveal=false,revealThreshold=0,revealBones=false}){
   if(!this.current)return;
   const replaced=new Set();
   for(const {mesh,base} of this.current.calves||[]){
@@ -439,8 +442,10 @@ export class MotionViewer {
   const revealTargets=[];
   const previousRevealTargets=reveal&&revealThreshold?new Set(this.reveal?.targets):null;
   const isolate=isolateSelection&&!!(selected||selectedGroup);
+  const teaching=this.walkActive&&walkTeaching;
   for(const p of this.current.parts){
-   const key=p.side+':'+p.id, strength=this.walkActive&&p.walkOnly?0:strengths[key];
+   const key=p.side+':'+p.id;
+   const strength=teaching?Number(teaching.has(p.key)):this.walkActive&&p.walkOnly?0:strengths[key];
    const exact=selected===p.key;
    const focused=exact||selectedGroup===key;
    const visibleSignal=strength>0&&strength>=displayThreshold;
@@ -452,11 +457,15 @@ export class MotionViewer {
    if(exact&&p.mesh.visible)this.selectedPart=p;
    const revealFloor=previousRevealTargets?.has(p)?revealThreshold*.7:revealThreshold;
    if(reveal&&p.mesh.visible&&(mixed||visibleSignal&&strength>=revealFloor))revealTargets.push(p);
-   if(!p.walkOnly){
+   if(p.walkOnly&&p.material!==walkContextMaterial){
+    p.material.color.copy(teaching&&visibleSignal?cueColors.role:walkContextMaterial.color);
+    p.material.emissive.copy(p.material.color).multiplyScalar(teaching&&visibleSignal ? .23 : 0);
+   }else if(!p.walkOnly){
     p.material.color.copy(cue?muscleMuted:muscleBase);
     const intensity=visibleSignal?clamp(strength,0,1):0;
+    const color=cueColors[roleCues?.get(p.key)] || cueColors[cue];
     if(mixed)p.material.color.copy(mixedRoleColor);
-    else if(cueColors[cue]&&intensity)p.material.color.lerp(cueColors[cue],intensity);
+    else if(color&&intensity)p.material.color.lerp(color,intensity);
     else if(opposing)p.material.color.lerp(opposingRoleColor,.78);
     p.material.emissive.copy(p.material.color).multiplyScalar(intensity*.23);
    }

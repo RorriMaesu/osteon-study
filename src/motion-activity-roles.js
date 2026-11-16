@@ -46,10 +46,39 @@ export function resolveActivityRoles(activity, phase, descriptors, parts, pose =
     }
   }
 
+  const namedEntries = [
+    ...(phase?.namedRoles || []),
+    ...(activity?.supportMuscles || []).map(entry => ({...entry, role: 'support'})),
+  ];
+  for (const [index, entry] of namedEntries.entries()) {
+    const names = new Set((entry.names || []).map(normalizedName).filter(Boolean));
+    const keys = new Set(entry.keys || []);
+    const contraction = Object.hasOwn(contractions, entry.contraction) ? entry.contraction : 'contributor';
+    const label = entry.label?.trim() || 'Possible stabilizer';
+    for (const part of parts) {
+      if (!isMuscle(part) || (entry.side && part.side !== entry.side)) continue;
+      const name = normalizedName(part.name || part.muscleName || part.sourceName);
+      const key = muscleKey(part);
+      if (!key || (!keys.has(key) && !names.has(name))) continue;
+      if (!priority.has(key)) priority.set(key, entries.length + index);
+      if (entry.action) add(jointRoles, key, entry.action);
+      if (entry.role === 'support') {
+        add(namedSupport, key, label);
+        add(jointRoles, key, label);
+        if (entry.contraction) add(stabilizers, key, contraction);
+      } else if (entry.role === 'opponent') {
+        if (!contributors.has(key)) opposing.add(key);
+      } else {
+        contributors.add(key);
+        opposing.delete(key);
+        add(types, key, contraction);
+      }
+    }
+  }
+
   const dynamicKeys = new Set(contributors);
-  // Only directional action evidence can establish mixed joint actions.
-  // Being listed as a possible stabilizer does not turn an opposing action into
-  // a contradictory shortening/lengthening claim.
+  // Directional roles from different joints can conflict. Support alone
+  // never establishes opposing torque or a change in muscle length.
   for (const key of contributors) {
     if (opposing.has(key)) {
       shared.add(key);
@@ -57,22 +86,6 @@ export function resolveActivityRoles(activity, phase, descriptors, parts, pose =
     }
   }
   for (const key of shared) contributors.delete(key);
-
-  for (const [index, support] of (activity?.supportMuscles || []).entries()) {
-    const names = new Set((support.names || []).map(normalizedName).filter(Boolean));
-    if (!names.size) continue;
-    const label = typeof support.label === 'string' && support.label.trim() ? support.label.trim() : 'Possible stabilizer';
-    for (const part of parts) {
-      if (!isMuscle(part)) continue;
-      const name = normalizedName(part.name || part.muscleName || part.sourceName);
-      if (!names.has(name)) continue;
-      const key = muscleKey(part);
-      if (!key) continue;
-      add(namedSupport, key, label);
-      add(jointRoles, key, label);
-      if (!priority.has(key)) priority.set(key, entries.length + index);
-    }
-  }
 
   const supportedOpponents = new Set();
   for (const key of new Set([...stabilizers.keys(), ...namedSupport.keys()])) {
@@ -94,7 +107,8 @@ export function resolveActivityRoles(activity, phase, descriptors, parts, pose =
     if (!kind) continue;
     const type = kind === 'mixed' ? [] : [...(types.get(key) || [])];
     const action = [...(jointRoles.get(key) || [])];
-    const onlyNamedSupport = namedSupport.has(key) && !stabilizers.has(key) && !dynamicKeys.has(key);
+    const supporting = kind === 'contributor' && !dynamicKeys.has(key);
+    const onlyNamedSupport = supporting && namedSupport.has(key);
     let label;
     if (kind === 'mixed') label = 'Mixed joint actions · net length change not inferred';
     else if (kind === 'opponent') label = 'Opposing action · not necessarily inactive';
@@ -102,11 +116,12 @@ export function resolveActivityRoles(activity, phase, descriptors, parts, pose =
     else label = type.map(item => contractions[item]).join(' / ');
     if (supportedOpponents.has(key)) label += ' · also opposes this action';
     labels.set(key, label);
-    rows.push({key, name: part.name || part.muscleName || key, side: part.side, part, kind, types: type,
+    const cue = supporting ? 'support' : type.length === 1 ? type[0] : 'contributor';
+    rows.push({key, name: part.name || part.muscleName || key, side: part.side, part, kind, supporting, cue, types: type,
       role: label, action: action.join(' · '), priority: priority.get(key) ?? 1000});
   }
-  const order = {contributor: 0, mixed: 0, opponent: 1};
-  rows.sort((a, b) => order[a.kind] - order[b.kind] || a.priority - b.priority
+  const rank = row => row.kind === 'opponent' ? 2 : row.supporting ? 1 : 0;
+  rows.sort((a, b) => rank(a) - rank(b) || a.priority - b.priority
     || a.name.localeCompare(b.name) || String(a.side).localeCompare(String(b.side)));
   return {contributors: [...contributors], opposing: [...opposing], shared: [...shared], labels, rows};
 }

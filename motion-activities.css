@@ -47,7 +47,6 @@
 .activities-panel{flex:1;display:flex;flex-direction:column;gap:7px;min-width:0;min-height:0}
 .activities-role-tools{flex:none;display:grid;gap:6px}
 .activities-role-key{display:flex;flex-wrap:wrap;gap:2px 9px;font-size:10px}
-.activities-contributor{color:#b6e9c9}.activities-opponent{color:#c6cfff}.activities-mixed{color:#ffda9b}
 .activities-role-tools select{width:100%;min-height:32px;padding:3px 6px;font-size:11px}
 .activities-options{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
 .activities-options button{min-height:31px;padding:3px 6px;font-size:10px}
@@ -59,7 +58,6 @@
 .activities-muscle-list button>span{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .activities-muscle-list button small{font-size:9px;color:#b6cabf;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .activities-muscle-list button>span small{display:inline;font-size:9px}
-.activities-muscle-list [data-kind=contributor]>span{color:#b6e9c9}.activities-muscle-list [data-kind=opponent]>span{color:#c6cfff}.activities-muscle-list [data-kind=mixed]>span{color:#ffda9b}
 .activities-muscle-list button[aria-pressed=true]>span,.activities-muscle-list button[aria-pressed=true] small{color:#172c23}
 .activities-empty{font-size:11px;line-height:1.5;color:#bdcfc4;margin:6px 0}
 .activities-guide{flex:1;min-height:0;overflow:hidden;font-size:12px;line-height:1.5;color:#cadbd1}
@@ -106,5 +104,15 @@ body:has(#motion-view.active .motion-activities-workspace:not([hidden]))>main{fl
 @media(prefers-reduced-motion:reduce){.motion-activities-workspace *{scroll-behavior:auto!important}}
 
 .activities-role-tools input[type=search]{width:100%;min-height:32px;padding:3px 6px;font-size:11px}
-.activities-panel [data-activity-clear-muscle]{align-self:flex-start;min-height:28px;padding:3px 7px;font-size:10px}
+.activities-inspect{display:flex;align-items:center;gap:6px;flex:none}
+.activities-inspect p{flex:1;min-width:0;margin:0;font-size:10px;line-height:1.2;color:#d4e5db;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.activities-inspect button{flex:none;min-height:28px;padding:3px 7px;font-size:10px}
 @media(max-height:580px){.activities-role-tools input[type=search],.activities-role-tools select{min-height:28px}}
+
+.activities-role-key [data-cue],.activities-muscle-list [data-cue]>span{color:var(--cue-color,#b6e9c9)}
+.activities-role-key [data-cue=concentric],.activities-muscle-list [data-cue=concentric]{--cue-color:#ffb485}
+.activities-role-key [data-cue=eccentric],.activities-muscle-list [data-cue=eccentric]{--cue-color:#8ee2ff}
+.activities-role-key [data-cue=isometric],.activities-muscle-list [data-cue=isometric]{--cue-color:#dfb3ff}
+.activities-role-key [data-cue=support],.activities-muscle-list [data-cue=support]{--cue-color:#80dcbf}
+.activities-role-key [data-cue=mixed],.activities-muscle-list [data-cue=mixed]{--cue-color:#ffda9b}
+.activities-role-key [data-cue=opponent],.activities-muscle-list [data-cue=opponent]{--cue-color:#c6cfff}

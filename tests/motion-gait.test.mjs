@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
-import {sampleWalk} from '../src/motion-walk.js';
+import {sampleWalk,walkTeachingComponentKeys,walkTeachingRoles} from '../src/motion-walk.js';
 
 const walk = JSON.parse(readFileSync(new URL('../src/motion-gait-data.json', import.meta.url)));
 
@@ -71,4 +71,31 @@ test('playback uses both recorded contacts and exact per-muscle MVC channels',()
  const end=sampleWalk(walk,1.055);
  assert.equal(end.pelvis.forwardMeters,1.20621);
  assert.notEqual(end.right.knee,sampleWalk(walk,0).right.knee);
+});
+
+test('qualitative roles follow each recorded leg contact without changing or imitating the EMG channels',()=>{
+ const first=sampleWalk(walk,0);
+ const snapshot=structuredClone(first);
+ const atStart=walkTeachingRoles(walk,first);
+ assert.deepEqual(first,snapshot);
+ assert.deepEqual(atStart.phases,{left:'Accept weight',right:'Prepare to lift the foot'});
+ assert.ok(atStart.byKey.has('muscle-gluteus-maximus-muscle-l'));
+ assert.ok(atStart.byKey.has('muscle-soleus-muscle-r'));
+ assert.ok(!atStart.byKey.has('muscle-gluteus-maximus-muscle-r'));
+ assert.ok([...atStart.byKey.values()].every(detail=>typeof detail==='string'&&!/%|MVC|recorded/i.test(detail)));
+ const atToeOff=walkTeachingRoles(walk,sampleWalk(walk,.11));
+ assert.equal(atToeOff.phases.right,'Clear and advance the leg');
+ assert.ok(atToeOff.byKey.has('muscle-iliacus-muscle-r'));
+ assert.ok(!atToeOff.byKey.has('muscle-soleus-muscle-r'));
+ assert.equal(walkTeachingRoles(walk,sampleWalk(walk,.54)).phases.right,'Accept weight');
+ assert.equal(walkTeachingRoles(walk,sampleWalk(walk,.66)).phases.left,'Clear and advance the leg');
+ assert.deepEqual(walkTeachingRoles(walk,sampleWalk(walk,walk.durationSeconds)),atStart);
+});
+
+test('every qualitative role points to an actual shipped walking muscle',()=>{
+ const manifest=JSON.parse(readFileSync(new URL('../assets/motion-walk-muscles.json',import.meta.url)));
+ const glb=readFileSync(new URL('../assets/'+manifest.regions['pelvis-leg-foot'].file,import.meta.url));
+ const document=JSON.parse(glb.subarray(20,20+glb.readUInt32LE(12)).toString('utf8'));
+ const keys=new Set([...manifest.baseMuscleIds,...document.nodes.map(node=>node.extras?.muscleId)]);
+ for(const key of walkTeachingComponentKeys)assert.ok(keys.has(key),'Missing gait muscle '+key);
 });

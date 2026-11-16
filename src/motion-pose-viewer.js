@@ -115,7 +115,7 @@ export class PoseViewer extends MotionViewer{
  }
  inScope(entry){return poseScopeMatches(this.poseScope,entry);}
  setScope(scope){this.poseScope=scope;this.dirty=true;}
- color({contributors=[],opposing=[],shared=[],selectedMuscle=null,showMuscles=true,onlyRelated=false,visibleAnatomy,selectionRoles,reveal,revealBones}){
+ color({contributors=[],opposing=[],shared=[],selectedMuscle=null,showMuscles=true,onlyRelated=false,visibleAnatomy,selectionRoles,roleCues,reveal,revealBones}){
   if(!this.current)return;
   const up=new Set(contributors),down=new Set(opposing),mixed=new Set(shared);
   const strengths={},antagonists=new Set(),mixedRoles=new Set();
@@ -127,7 +127,7 @@ export class PoseViewer extends MotionViewer{
    if(down.has(part.key))antagonists.add(part.side+':'+part.key);
    if(mixed.has(part.key))mixedRoles.add(part.side+':'+part.key);
   }
-  super.highlight({strengths,antagonists,mixedRoles,selectionRoles,selected:selectedMuscle,showMuscles,onlyActive:onlyRelated,cue:up.size||down.size||mixed.size?'role':null,reveal,revealBones});
+  super.highlight({strengths,antagonists,mixedRoles,roleCues,selectionRoles,selected:selectedMuscle,showMuscles,onlyActive:onlyRelated,cue:up.size||down.size||mixed.size?'role':null,reveal,revealBones});
   this.visibleAnatomy=visibleAnatomy;
   for(const part of this.current.parts){
    part.mesh.visible=part.mesh.visible&&(visibleAnatomy?.muscleKeys.has(part.key)??this.inScope(part));

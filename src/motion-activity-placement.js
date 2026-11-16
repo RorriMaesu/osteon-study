@@ -17,12 +17,14 @@ export function createActivityPlacement(specimen){
   const box=bone.mesh.userData.poseNeutralBounds;
   const node=nodes.get(bone.poseDrivers?.[0])?.node;
   if(!box||!node)continue;
+  const side=bone.side||bone.mesh.userData.poseSide||(/\.l$/.test(bone.name)?'left':/\.r$/.test(bone.name)?'right':null);
+  const site=/calcaneus/i.test(bone.name)?'heel':'toe';
   for(const x of [box[0],box[3]])for(const z of [box[2],box[5]]){
-   probes.push({node,point:node.worldToLocal(new THREE.Vector3(x,box[1],z))});
+   probes.push({node,side,site,point:node.worldToLocal(new THREE.Vector3(x,box[1],z))});
   }
  }
  const ankles=['left-ankle','right-ankle'].map(id=>nodes.get(id)?.node).filter(Boolean);
- if(!probes.length)for(const node of ankles)probes.push({node,point:new THREE.Vector3(0,-.071,0)});
+ if(!probes.length)for(const node of ankles)probes.push({node,side:node===nodes.get('left-ankle')?.node?'left':'right',site:'flat',point:new THREE.Vector3(0,-.071,0)});
  const center=new THREE.Vector3();
  for(const node of ankles)center.add(node.getWorldPosition(new THREE.Vector3()));
  if(ankles.length)center.divideScalar(ankles.length);
@@ -30,7 +32,7 @@ export function createActivityPlacement(specimen){
  return {rest,probes,ankles,center,pivot};
 }
 
-export function applyActivityPose(specimen,values,root=[],{ground='none',rootRotation=[]}={}){
+export function applyActivityPose(specimen,values,root=[],{ground='none',rootRotation=[],contacts}={}){
  const placement=specimen.activityPlacement||=createActivityPlacement(specimen);
  const {model}=specimen,{rest,probes,ankles,center,pivot}=placement;
  model.position.copy(rest.position);model.quaternion.copy(rest.quaternion);
@@ -42,9 +44,22 @@ export function applyActivityPose(specimen,values,root=[],{ground='none',rootRot
  model.updateMatrixWorld(true);
  const shift=vector(root);
  if(ground!=='none'&&probes.length){
+  // Explicit support prevents a lower swing foot from silently becoming the
+  // stance foot. Authored gait tests must keep the other foot above the floor.
+  // In flight the lowest probe is the reference for the authored lift, and no
+  // support is implied. These probes are placement guides, not contact forces.
+  const modes=['flat','heel','toe'];
+  const support=['left','right'].filter(side=>modes.includes(contacts?.[side]));
+  const selected=[];
+  for(const side of support){
+   const foot=probes.filter(probe=>probe.side===side);
+   const site=contacts[side]==='flat'?foot:foot.filter(probe=>probe.site===contacts[side]);
+   selected.push(...(site.length?site:foot));
+  }
+  const floorProbes=selected.length?selected:probes;
   let bottom=Infinity;
   const point=new THREE.Vector3();
-  for(const probe of probes)bottom=Math.min(bottom,point.copy(probe.point).applyMatrix4(probe.node.matrixWorld).y);
+  for(const probe of floorProbes)bottom=Math.min(bottom,point.copy(probe.point).applyMatrix4(probe.node.matrixWorld).y);
   shift.y-=bottom;
   if(ground==='both'&&ankles.length){
    const current=new THREE.Vector3();
