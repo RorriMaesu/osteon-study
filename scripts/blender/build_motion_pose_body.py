@@ -271,7 +271,11 @@ def add_rig():
                 direction=(center(obj)-center(previous)).normalized()
                 bend_axis=direction.cross(Vector((-sign,0,0)) if digit=='thumb' else Vector((0,0,1))).normalized()
                 identifier=side+'-'+digit+'-'+level
-                channels=[axis('flexion','Bend / straighten',0,60 if level=='mcp' else 70,bend_axis)]
+                # Supported atlas closure, checked in both hands at 80/90/45.
+                # These are model limits, not a claim of clinical full ROM.
+                # https://sportsmedref.amssm.org/physical-examination/wrist-hand/
+                limit=(80 if level=='mcp' else 90 if level=='pip' else 70) if digit!='thumb' else (60 if level=='mcp' else 70)
+                channels=[axis('flexion','Bend / straighten',0,limit,bend_axis)]
                 detail='An atlas-fitted hinge approximation; joint surface sliding is not simulated.'
                 if level=='mcp' and digit!='thumb':
                     # The middle finger defines the digital midline. Its radial

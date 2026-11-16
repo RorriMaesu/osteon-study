@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {PoseViewer} from './motion-pose-viewer.js';
-import {neutralPose,poseRoles} from './motion-pose-core.js';
+import {neutralPose} from './motion-pose-core.js';
+import {resolveActivityRoles} from './motion-activity-roles.js';
 import {poseScopeMatches} from './motion-pose-ik.js';
 import {activities,sampleActivity} from './motion-activities.js';
 import {createMotionRevealPreference,observeMotionReveal} from './motion-reveal-preference.js';
@@ -108,31 +109,7 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
  function completePose(partial){
   return Object.fromEntries(Object.entries(neutral).map(([joint,axes])=>[joint,{...axes,...partial[joint]}]));
  }
- function resolveRoles(){
-  const contributors=new Set(),opposing=new Set(),shared=new Set(),types=new Map(),jointRoles=new Map(),priority=new Map();
-  for(const [index,entry] of (sample?.phase?.roles||[]).entries()){
-   const joint=descriptors.find(item=>item.id===entry.joint);if(!joint)continue;
-   const roles=poseRoles(joint,entry.axis,entry.direction,specimen.parts,pose);
-   const contraction=contractions[entry.contraction]?entry.contraction:'contributor';
-   for(const key of roles.contributors||[]){contributors.add(key);if(!priority.has(key))priority.set(key,index);if(!types.has(key))types.set(key,new Set());types.get(key).add(contraction);if(!jointRoles.has(key))jointRoles.set(key,new Set());jointRoles.get(key).add(roles.label||joint.label);}
-   for(const key of roles.opposing||[])opposing.add(key);
-   for(const key of roles.shared||[])shared.add(key);
-  }
-  for(const key of contributors)if(opposing.has(key)){shared.add(key);opposing.delete(key);}
-  for(const key of shared)contributors.delete(key);
-  const labels=new Map(),rows=[];
-  for(const part of specimen.parts){
-   const kind=shared.has(part.key)?'mixed':contributors.has(part.key)?'contributor':opposing.has(part.key)?'opponent':null;
-   if(!kind)continue;
-   // A biarticular muscle may help at one joint and oppose at another. Those
-   // torque roles do not establish its net fiber shortening or lengthening.
-   const type=kind==='mixed'?[]:[...(types.get(part.key)||[])],action=[...(jointRoles.get(part.key)||[])];
-   const role=kind==='mixed'?'Mixed joint actions · net length change not inferred':kind==='opponent'?'Opposing action · not necessarily inactive':type.map(item=>contractions[item]).join(' / ');
-   labels.set(part.key,role);rows.push({key:part.key,name:part.name,side:part.side,part,kind,types:type,role,action:action.join(' · '),priority:priority.get(part.key)??1000});
-  }
-  const order={contributor:0,mixed:0,opponent:1};rows.sort((a,b)=>order[a.kind]-order[b.kind]||a.priority-b.priority||a.name.localeCompare(b.name)||String(a.side).localeCompare(String(b.side)));
-  return {contributors:[...contributors],opposing:[...opposing],shared:[...shared],labels,rows};
- }
+ function resolveRoles(){return resolveActivityRoles(activity,sample?.phase,descriptors,specimen.parts,pose);}
  function color(force=false){
   if(!specimen)return;
   const next=resolveRoles();

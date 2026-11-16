@@ -1,3 +1,4 @@
+import {boxingActivity} from './motion-boxing.js';
 // Authored, slowed teaching sequences. These are not captured performances or
 // measured EMG. A role describes a plausible muscle action under the stated load;
 // angle velocity alone never determines whether a muscle is active.
@@ -243,30 +244,7 @@ export const activities = freeze([
       phase(6, 8, 'Return through center', 'The right leg and left arm return with controlled lowering.', [role('right-hip', 'abduction', 1, 'eccentric'), role('left-shoulder', 'scaption', 1, 'eccentric'), role('thoracic-turn', 'rotation', 1)]),
     ],
   }),
-  activity({
-    id: 'shadowbox', label: 'Shadowbox · alternating punches', category: 'Sport and expression', duration: 7, view: 'front',
-    description: 'An unloaded, non-contact combination shows elbow extension, shoulder motion and trunk rotation. The returning arm illustrates active recovery.',
-    sources: source('upper', 'trunk'),
-    keyframes: [
-      ...[[0, null], [1.4, 'right'], [3, null], [4.4, 'left'], [6, null], [7, null]].map(([time, striking]) => {
-        const pose = {...both('shoulder', {flexion: 35, abduction: 12}), ...both('elbow', {flexion: 100}), ...handPose('right', .65), ...handPose('left', .65)};
-        if (striking) {
-          pose[striking + '-shoulder'] = {flexion: 72, abduction: 12, horizontal: 12};
-          pose[striking + '-elbow'] = {flexion: 18};
-          pose[striking + '-scapula'] = {protraction: 7};
-          pose['thoracic-turn'] = {rotation: striking === 'right' ? -8 : 8};
-        }
-        return frame(time, pose);
-      }),
-    ],
-    phases: [
-      phase(0, 1.4, 'Right punch', 'Triceps extends the elbow; anterior shoulder and scapular muscles advance the arm. The punch stops short of elbow lockout.', [role('right-elbow', 'flexion', -1, 'concentric'), role('right-shoulder', 'flexion', 1), role('right-shoulder', 'horizontal', 1), role('right-scapula', 'protraction', 1), role('thoracic-turn', 'rotation', -1)]),
-      phase(1.4, 3, 'Recover the right arm', 'Elbow flexors bring the hand back. Shoulder extensors and scapular retractors can assist active recovery; this is not a gravity-only descent.', [role('right-elbow', 'flexion', 1, 'concentric'), role('right-shoulder', 'flexion', -1), role('right-scapula', 'protraction', -1), role('thoracic-turn', 'rotation', 1)]),
-      phase(3, 4.4, 'Left punch', 'The combination repeats on the left with coordinated trunk rotation.', [role('left-elbow', 'flexion', -1, 'concentric'), role('left-shoulder', 'flexion', 1), role('left-shoulder', 'horizontal', 1), role('left-scapula', 'protraction', 1), role('thoracic-turn', 'rotation', 1)]),
-      phase(4.4, 6, 'Recover the left arm', 'Left elbow flexors and the shoulder recovery muscles return the hand to its starting position.', [role('left-elbow', 'flexion', 1, 'concentric'), role('left-shoulder', 'flexion', -1), role('left-scapula', 'protraction', -1), role('thoracic-turn', 'rotation', -1)]),
-      phase(6, 7, 'Hold the guard', 'Shoulder and elbow flexors contribute to holding the arms raised. Co-contraction and impact forces are not simulated.', [...bilateral('shoulder', 'flexion', 1, 'isometric'), ...bilateral('elbow', 'flexion', 1, 'isometric')]),
-    ],
-  }),
+  activity(boxingActivity),
   activity({
     id: 'heel-raise', label: 'Rise onto the toes', category: 'Everyday movements', duration: 7, view: 'side',
     description: 'Watch the calf muscles lift the heels, hold the position and control the return. The feet stay aligned with the ground reference.',

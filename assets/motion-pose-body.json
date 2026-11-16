@@ -769,7 +769,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9275320172309875,
@@ -805,7 +805,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.945434033870697,
@@ -851,7 +851,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9859510064125061,
@@ -887,7 +887,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.9916298389434814,
@@ -933,7 +933,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9998750686645508,
@@ -969,7 +969,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.9991327524185181,
@@ -1015,7 +1015,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9339529275894165,
@@ -1051,7 +1051,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.9951239824295044,
@@ -1711,7 +1711,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9275315999984741,
@@ -1747,7 +1747,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.9429479837417603,
@@ -1793,7 +1793,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9859441518783569,
@@ -1829,7 +1829,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.9916285276412964,
@@ -1875,7 +1875,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9998744130134583,
@@ -1911,7 +1911,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.999135434627533,
@@ -1957,7 +1957,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 60,
+          "max": 80,
           "neutral": 0,
           "vector": [
             -0.9339840412139893,
@@ -1993,7 +1993,7 @@
           "id": "flexion",
           "label": "Bend / straighten",
           "min": 0,
-          "max": 70,
+          "max": 90,
           "neutral": 0,
           "vector": [
             -0.9951242804527283,

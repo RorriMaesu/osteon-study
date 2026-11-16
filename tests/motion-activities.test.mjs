@@ -191,7 +191,7 @@ test('jump flight distinguishes limb positioning from ground support and landing
   assert(prepare.roles.filter(role => role.joint.endsWith('-knee')).every(role => role.direction === -1));
 });
 
-test('neck labels and punch rotations agree with the rig’s anatomical right and left', () => {
+test('neck labels and dance shifts agree with the rig’s anatomical right and left', () => {
   const head = byId('head-turn');
   for (const [time, side, direction] of [[1, 'right', 1], [5, 'left', -1]]) {
     const sample = sampleActivity(head, time);
@@ -200,12 +200,38 @@ test('neck labels and punch rotations agree with the rig’s anatomical right an
     const resolved = poseRoles(joints.get('neck'), 'rotation', direction, parts, sample.pose);
     assert.match(resolved.label, new RegExp(side));
   }
-  // Positive rig rotation turns anatomically right. A right punch rotates the
-  // chest left to advance its right shoulder, and vice versa.
-  assert(sampleActivity(byId('shadowbox'), 1.4).pose['thoracic-turn'].rotation < 0);
-  assert(sampleActivity(byId('shadowbox'), 4.4).pose['thoracic-turn'].rotation > 0);
   assert(sampleActivity(byId('dance'), 2).root[0] < 0);
   assert(sampleActivity(byId('dance'), 6).root[0] > 0);
+});
+
+test('shadowboxing coordinates a guarded jab and cross through the legs and trunk',()=>{
+  const boxing=byId('shadowbox'),guard=sampleActivity(boxing,0),jab=sampleActivity(boxing,1.25),cross=sampleActivity(boxing,3.45);
+  assert(jab.pose['left-elbow'].flexion<20&&jab.pose['right-elbow'].flexion>=110);
+  assert(cross.pose['right-elbow'].flexion<20&&cross.pose['left-elbow'].flexion>=110);
+  assert(jab.pose['thoracic-turn'].rotation>0&&cross.pose['thoracic-turn'].rotation<0);
+  assert(cross.rootRotation[1]-guard.rootRotation[1]>15);
+  assert(guard.pose['right-knee'].flexion-cross.pose['right-knee'].flexion>=10);
+  assert(guard.pose['right-ankle'].dorsiflexion-cross.pose['right-ankle'].dorsiflexion>=12);
+  const rig=jointRig();
+  for(let time=0;time<=boxing.duration;time+=.1){
+    const sample=sampleActivity(boxing,time);
+    applyActivityPose(rig,sample.pose,sample.root,{ground:boxing.ground,rootRotation:sample.rootRotation});
+    const left=poseJointWorld(rig,'left-ankle'),right=poseJointWorld(rig,'right-ankle');
+    assert(left.z-right.z>.12,'Lead foot must remain in front of the rear foot');
+    assert(left.x-right.x>.2,'The stance must retain a lateral base');
+    for(const side of ['left','right']){
+      assert.equal(sample.pose[side+'-wrist'].flexion,0);
+      assert.equal(sample.pose[side+'-wrist'].deviation,0);
+      for(const digit of ['index','middle','ring','little']){
+        assert(sample.pose[side+'-'+digit+'-mcp'].flexion>=60);
+        assert(sample.pose[side+'-'+digit+'-pip'].flexion>=70);
+      }
+    }
+  }
+  assert(boxing.phases.some(phase=>phase.roles.some(role=>role.joint==='right-ankle'&&!role.stabilizer)));
+  assert(boxing.phases.every(phase=>phase.roles.some(role=>role.joint==='left-index-pip'&&role.stabilizer)));
+  assert(boxing.supportMuscles.some(group=>group.names.includes('Transversus abdominis muscle')));
+  assert(boxing.supportMuscles.some(group=>group.names.includes('Infraspinatus muscle')));
 });
 
 test('the arms hang downward in world space throughout a hip hinge instead of sweeping behind the back', () => {
