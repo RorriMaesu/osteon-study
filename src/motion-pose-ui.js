@@ -1,5 +1,6 @@
 import {viewerZoomControls} from './viewer-guidance.js';
 import {motionStudyGuides} from './motion-study-guides.js';
+import {observeMotionReveal} from './motion-reveal-preference.js';
 
 const scopes={all:'Whole body','head-neck':'Head & neck',trunk:'Chest, abdomen & back','right-arm':'Right arm','left-arm':'Left arm','right-leg':'Right leg','left-leg':'Left leg'};
 const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -19,6 +20,10 @@ export function createPoseUI(host,callbacks={}){
   <div class="motion-stage pose-stage" aria-label="Interactive whole-body pose">
    <div class="motion-status" role="status">Loading the whole-body model…</div>
    <div class="pose-stage-hint"><span>Choose a joint. Drag its ring or try Play motion.</span><small>Teaching pose · muscle shapes are approximate</small></div>
+   <div class="motion-reveal-controls">
+    <button type="button" data-pose-reveal aria-label="Reveal muscles" aria-pressed="false" title="Fade muscles that cover a highlighted or selected muscle" disabled>Reveal muscles</button>
+    <p class="motion-reveal-status" hidden></p>
+   </div>
    <div class="pose-joint-markers" role="group" aria-label="Joints in this view"></div>
    <span class="motion-handle" aria-hidden="true" hidden><i></i><span>Drag</span></span>
    <span class="motion-load-tag" aria-hidden="true" hidden></span>
@@ -71,6 +76,11 @@ export function createPoseUI(host,callbacks={}){
     <label>Show<select data-pose-scope aria-label="Show body region">${Object.entries(scopes).map(([key,value])=>`<option value="${key}">${value}</option>`).join('')}</select></label>
    </div>
    <div class="pose-role-key"><span class="pose-contributor-key" data-pose-contributor-key>◇ Possible contributors</span><span class="pose-opponent-key" data-pose-opponent-key>○ Opposing action</span><span class="pose-mixed-key" data-pose-mixed-key hidden>◆ Mixed joint roles</span><button type="button" data-pose-related aria-pressed="false" title="Show only related muscles and the selected muscle" hidden>Related only</button></div>
+   <div class="pose-reveal-options" hidden>
+    <label hidden><input type="checkbox" data-pose-reveal-bones> Fade covering bones</label>
+    <button type="button" class="motion-reveal-option" data-pose-muscle-focus hidden>Focus muscle</button>
+    <button type="button" class="motion-reveal-option" data-pose-explore-contributors hidden>Explore contributors</button>
+   </div>
    <p class="pose-list-summary"></p>
    <p class="pose-role-note" hidden></p>
    <div class="pose-detail-list"></div>
@@ -79,6 +89,7 @@ export function createPoseUI(host,callbacks={}){
   </div>
  </aside>`;
  const $=selector=>host.querySelector(selector),stage=$('.pose-stage'),markerLayer=$('.pose-joint-markers');
+ observeMotionReveal(stage);
  let state={ready:false,descriptors:[],selectedJoint:null,selectedAxis:null,pose:{},canUndo:false,canRedo:false,scope:'all',locked:false,showMuscles:true,contributors:[],opponents:[],message:''};
  let tab='muscles',page=0,query='',notesOpen=false,rangeGesture=null,renderedDescriptorKey='',renderedAxisKey='',renderedListKey='',pageSize=5;
  const markers=new Map();
@@ -121,6 +132,7 @@ export function createPoseUI(host,callbacks={}){
   ['Keep your pose','Full body returns to the overview while keeping your pose. Reset returns all joints to their starting position.'],
   ['Keep a joint fixed','Lock angles fixes a joint’s settings. It still moves with its parent. Undo reverses one completed adjustment.'],
   ['Read the colors','Green marks possible contributors. Violet marks opposing actions. Gold identifies muscles or grouped surfaces with mixed roles.'],
+  ['See deeper muscles','Turn on Reveal muscles and choose a muscle to see it through the muscles covering it. Faded muscles keep their role colors. Focus muscle moves the camera closer.'],
   ['Understand activity','A fixed pose cannot tell us which muscles are active. Task, load and coordination affect recruitment.'],
   ['Compare muscle activity','Muscle actions offers guided contraction examples. Walk cycle shows recorded EMG for measured muscles.'],
   ['Find an articulation','Find joint searches supported articulations and lets you isolate a region. Facial and breathing controls guide surface shapes.'],
@@ -150,6 +162,12 @@ export function createPoseUI(host,callbacks={}){
   if(roleNote.textContent!==state.roleNote){roleNote.textContent=state.roleNote||'';roleNote.title=state.roleNote||'';}
   $('[data-pose-related]').hidden=!list.length&&!state.selectedMuscle&&!state.onlyRelated;
   $('[data-pose-related]').setAttribute('aria-pressed',String(!!state.onlyRelated));
+  const bones=$('[data-pose-reveal-bones]'),focus=$('[data-pose-muscle-focus]'),explore=$('[data-pose-explore-contributors]');
+  bones.parentElement.hidden=!state.reveal;
+  bones.checked=!!state.revealBones;
+  focus.hidden=!state.canFocusMuscle;
+  explore.hidden=!state.reveal||!state.revealGroup||state.contributors.length<2;
+  $('.pose-reveal-options').hidden=tab!=='muscles'||!state.ready||!state.showMuscles||(bones.parentElement.hidden&&focus.hidden&&explore.hidden);
   const visible=list.slice(page*pageSize,(page+1)*pageSize),key=JSON.stringify([tab,page,pageSize,visible.map(entry=>[listId(entry),listName(entry),entry.kind,entry.note,entry.roleLabel]),state.selectedJoint,state.selectedMuscle,state.studyGuide?.id,movementNote]);
   if(key!==renderedListKey){
    renderedListKey=key;
@@ -237,6 +255,9 @@ export function createPoseUI(host,callbacks={}){
   $('[data-pose-undo]').disabled=!state.canUndo||!state.ready;
   $('[data-pose-redo]').disabled=!state.canRedo||!state.ready;
   $('[data-pose-muscles]').setAttribute('aria-pressed',String(state.showMuscles!==false));
+  const revealToggle=$('[data-pose-reveal]');
+  if(revealToggle.getAttribute('aria-pressed')!==String(!!state.reveal))revealToggle.setAttribute('aria-pressed',String(!!state.reveal));
+  revealToggle.disabled=!state.ready||!state.showMuscles;
   $('[data-pose-scope]').value=state.scope||'all';
   const endpoint=$('[data-pose-endpoint]');
   endpoint.hidden=!state.endpointAvailable;
@@ -334,6 +355,10 @@ export function createPoseUI(host,callbacks={}){
  button('[data-pose-focus]',()=>call('focus'));
  button('[data-pose-endpoint]',()=>call('setInteraction',state.interaction==='endpoint'?'joint':'endpoint'));
  button('[data-pose-muscles]',()=>call('setMuscles',state.showMuscles===false));
+ button('[data-pose-reveal]',()=>call('setReveal',!state.reveal));
+ button('[data-pose-muscle-focus]',()=>call('focusMuscle'));
+ button('[data-pose-explore-contributors]',()=>call('exploreContributors'));
+ on($('[data-pose-reveal-bones]'),'change',event=>call('setFadeBones',event.currentTarget.checked));
  button('[data-pose-related]',()=>call('setRelated',!state.onlyRelated));
  button('[data-pose-notes]',()=>toggleNotes(!notesOpen));
  button('[data-pose-close]',()=>toggleNotes(false,true));
@@ -366,6 +391,6 @@ export function createPoseUI(host,callbacks={}){
  });
  const resize=new ResizeObserver(measureList);resize.observe($('.pose-details-panel'));
  update();
- return {stage,update,setMarkers,setStatus,cancelGesture:()=>finishRange(true),suspend:()=>finishRange(true),openNotes:()=>toggleNotes(true),closeNotes:()=>toggleNotes(false),
+ return {stage,update,setMarkers,setStatus,cancelGesture:()=>finishRange(true),suspend:()=>finishRange(true),openNotes:()=>toggleNotes(true),closeNotes:(focus=false)=>toggleNotes(false,focus&&notesOpen),
   destroy(){finishRange(true);controller.abort();resize.disconnect();markers.clear();host.replaceChildren();host.classList.remove('motion-pose-workspace');host.removeAttribute('data-pose-notes-open');}};
 }

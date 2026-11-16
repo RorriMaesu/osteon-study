@@ -148,6 +148,28 @@
 @media(max-width:760px) and (orientation:portrait){.motion-heading h1{display:inline-block;margin-left:7px}.motion-heading h1+.motion-coverage{margin-left:7px}}
 .motion-phase-tag{display:grid;gap:2px;max-width:min(94%,295px);font-size:12px;border-color:#68887e}
 .motion-phase-tag>[data-motion-cue]{font-size:10px;color:var(--motion-cue,#c8e1d8);text-transform:uppercase;letter-spacing:.04em}
+.motion-stage:has(.motion-reveal-controls) :is(.motion-phase-tag,.pose-stage-hint){max-width:calc(100% - 132px)}
+.motion-stage:has(.motion-reveal-controls) .motion-phase-tag{max-width:min(295px,calc(100% - 132px))}
+.motion-reveal-controls{position:absolute;z-index:3;top:8px;right:8px;display:grid;justify-items:end;gap:4px;width:110px;pointer-events:none}
+.motion-stage:has(.motion-status:not([hidden])) .motion-reveal-controls{visibility:hidden}
+.motion-stage .motion-reveal-controls>button,.motion-filter .motion-reveal-option,.pose-details .motion-reveal-option{
+ color:#e6f1eb;border:1px solid #45625e;background:#15282ded;border-radius:7px;font:inherit;
+ font-size:11px;line-height:1.15;padding:4px 8px;min-height:36px;cursor:pointer;white-space:nowrap;
+}
+.motion-stage .motion-reveal-controls>button{pointer-events:auto}
+.motion-stage .motion-reveal-controls>button[aria-pressed=true]{color:#152923;background:#bcdbc9;border-color:#bcdbc9;font-weight:700}
+.motion-stage .motion-reveal-controls>button:disabled{opacity:.48;cursor:default}
+.motion-reveal-controls button:focus-visible,.motion-filter .motion-reveal-option:focus-visible{outline:2px solid #f4bc8a;outline-offset:2px}
+.motion-stage .motion-reveal-status{
+ margin:0;padding:3px 5px;border-radius:5px;background:#13282beb;color:#d6e6d8;border:1px solid #55736a;
+ font-size:10px;text-align:right;line-height:1.22;
+}
+.pose-reveal-options{display:flex;align-items:center;flex-wrap:wrap;gap:4px;flex:none}
+.pose-reveal-options label{display:inline-flex;align-items:center;gap:3px;font-size:10px}
+.pose-details .motion-reveal-option{min-height:31px}
+@media(max-width:760px) and (orientation:portrait){
+ .motion-stage .motion-reveal-controls>button{min-height:42px}
+}
 [data-cue=concentric]{--motion-cue:#ffb485}
 [data-cue=isometric]{--motion-cue:#e4b3ff}
 [data-cue=eccentric]{--motion-cue:#9be5ff}

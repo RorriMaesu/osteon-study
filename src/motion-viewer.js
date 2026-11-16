@@ -10,6 +10,7 @@ import muscleModels from './muscle-models.json' with {type:'json'};
 import {walkScopeMatches,walkBoneRegion,captureWalkDrivers,mountWalkPack,updateWalkPacks,walkScopeBounds} from './motion-walk-model.js';
 import {regionalLessons} from './motion-regional.js';
 import {overlapsPoseRect,placePoseLabel,poseRect} from './motion-pose-overlays.js';
+import {MotionReveal,visibleInTree} from './motion-reveal.js';
 
 const radians = Math.PI / 180;
 const axis = values => new THREE.Vector3(...values).normalize();
@@ -76,6 +77,8 @@ export class MotionViewer {
   this.selectionDot.setAttribute('r','3');
   this.selectionGuide.append(this.selectionLine,this.selectionDot);
   this.stage.append(this.selectionGuide);
+  this.reveal=new MotionReveal(stage);
+  this.reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   this.labelAnchor=new THREE.Vector3();
   this.cache=new Map();
   this.walkScope='all';
@@ -133,6 +136,7 @@ export class MotionViewer {
   this.drag=null;
   this.lastTime=undefined;
   this.selectedPart=null;
+  this.reveal.reset();
   this.showSelectionLabel(false);
  }
  async load(kind){
@@ -291,10 +295,17 @@ export class MotionViewer {
  }
  use(specimen){
   if(this.current!==specimen){
+   this.reveal.reset();
    this.current?.model.removeFromParent();
    this.current=specimen;
    this.scene?.add(specimen.model);
   }
+  specimen.revealBones=[];
+  specimen.model.traverse(mesh=>{
+   const info=mesh.userData;
+   const skeleton=info.poseBone||info.motionBone||info.motionKind==='bone'||info.motionContext&&info.zlayer==='skeleton';
+   if(mesh.isMesh&&skeleton)specimen.revealBones.push(mesh);
+  });
   specimen.model.visible=true;
   this.dirty=true;
  }
@@ -416,7 +427,7 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,selectionRoles,regionalRoles}){
+ highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,selectionRoles,regionalRoles,reveal=false,revealThreshold=0,revealGroup=false,revealBones=false}){
   if(!this.current)return;
   const replaced=new Set();
   for(const {mesh,base} of this.current.calves||[]){
@@ -425,6 +436,7 @@ export class MotionViewer {
   }
   this.selectedPart=null;
   this.selectionRoles=selectionRoles;
+  const revealTargets=[];
   const isolate=isolateSelection&&!!(selected||selectedGroup);
   for(const p of this.current.parts){
    const key=p.side+':'+p.id, strength=this.walkActive&&p.walkOnly?0:strengths[key];
@@ -437,6 +449,7 @@ export class MotionViewer {
     !regionalRoles||focused||regionalRoles.includes(p.id);
    p.mesh.visible=showMuscles&&inScope&&(!p.walkOnly||this.walkActive)&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing||mixed)&&(!isolate||focused);
    if(exact&&p.mesh.visible)this.selectedPart=p;
+   if(reveal&&p.mesh.visible&&(mixed||visibleSignal&&strength>=revealThreshold))revealTargets.push(p);
    if(!p.walkOnly){
     p.material.color.copy(cue?muscleMuted:muscleBase);
     const intensity=visibleSignal?clamp(strength,0,1):0;
@@ -447,6 +460,29 @@ export class MotionViewer {
    }
    if(p.outline||focused)outlinePart(p).visible=focused&&p.mesh.visible;
   }
+  if(reveal&&showMuscles)this.reveal?.configure({
+   selected:this.selectedPart,targets:revealGroup?revealTargets:[],bones:revealBones,
+   contributors:new Set(cue==='emg'?[]:revealTargets.map(part=>part.mesh)),
+  });
+  else if(this.reveal?.targets.length||this.reveal?.selected||this.reveal?.faded.size)this.reveal.reset();
+  this.dirty=true;
+ }
+ focusMuscle(){
+  const mesh=this.selectedPart?.mesh;
+  if(!mesh||!this.controls?.enabled||!visibleInTree(mesh))return;
+  this.current.model.updateMatrixWorld(true);
+  const bounds=new THREE.Box3().setFromObject(mesh,true);
+  if(bounds.isEmpty())return;
+  const center=bounds.getCenter(new THREE.Vector3());
+  const radius=bounds.getBoundingSphere(new THREE.Sphere()).radius;
+  const fitting=Math.min(1,Math.max(.25,this.camera.aspect));
+  const distance=Math.max(.045,radius/Math.sin(this.camera.fov*radians/2)*1.35/fitting);
+  const direction=this.camera.position.clone().sub(this.controls.target).normalize();
+  this.controls.target.copy(center);
+  this.controls.minDistance=Math.min(this.controls.minDistance,distance*.42);
+  this.controls.maxDistance=Math.max(this.controls.maxDistance,distance*2);
+  this.camera.position.copy(center).addScaledVector(direction,distance);
+  this.controls.update();
   this.dirty=true;
  }
  zoom(direction){
@@ -585,12 +621,21 @@ export class MotionViewer {
   if(!this.current||!this.pickStart||Math.hypot(event.clientX-this.pickStart.x,event.clientY-this.pickStart.y)>6)return;
   this.rayAt(event);
   this.scene.updateMatrixWorld(true);
-  const candidates=this.current.parts.filter(part=>part.mesh.visible);
+  const candidates=this.current.parts.filter(part=>visibleInTree(part.mesh));
   if(this.target&&this.current.kind==='legs')candidates.push(...this.current.legBones);
   const byMesh=new Map(candidates.map(part=>[part.mesh,part]));
-  for(const mesh of byMesh.keys())if(mesh.isSkinnedMesh)mesh.computeBoundingSphere();
-  const hit=this.ray.intersectObjects([...byMesh.keys()],false)[0];
-  if(hit){const p=byMesh.get(hit.object);if(p.key)this.onMuscle(p.key);else this.onLimb(p.side);}
+  const pickingThrough=this.reveal.faded.size>0;
+  if(pickingThrough)for(const mesh of this.current.revealBones||[]){
+   if(visibleInTree(mesh)&&(!mesh.material.transparent||mesh.material.opacity>=.65)&&!byMesh.has(mesh))byMesh.set(mesh,null);
+  }
+  for(const mesh of byMesh.keys())if(mesh.isSkinnedMesh){
+   mesh.computeBoundingSphere();
+   if(mesh.boundingBox)mesh.computeBoundingBox();
+  }
+  const hits=this.ray.intersectObjects([...byMesh.keys()],false);
+  const hit=pickingThrough?(hits.find(({object})=>!this.reveal.isFaded(object))||hits[0]):hits[0];
+  const part=hit&&byMesh.get(hit.object);
+  if(part){if(part.key)this.onMuscle(part.key);else this.onLimb(part.side);}
  }
  showSelectionLabel(visible){
   if(this.selectionLabel)this.selectionLabel.hidden=!visible;
@@ -611,7 +656,10 @@ export class MotionViewer {
     if(distance<closest){part.anchorIndex=index;closest=distance;}
    }
   }
-  mesh.getVertexPosition(part.anchorIndex,this.labelAnchor);
+  const usingReveal=this.reveal.selected===part;
+  const anchor=usingReveal?this.reveal.anchor:part.anchorIndex;
+  if(anchor===undefined){this.showSelectionLabel(false);return;}
+  mesh.getVertexPosition(anchor,this.labelAnchor);
   const {x,y,z}=mesh.localToWorld(this.labelAnchor).project(this.camera);
   if(Math.abs(x)>.98||Math.abs(y)>.98||Math.abs(z)>1){this.showSelectionLabel(false);return;}
   const {clientWidth:width,clientHeight:height}=this.stage;
@@ -629,14 +677,14 @@ export class MotionViewer {
   const halfWidth=label.offsetWidth/2;
   let top=clamp(anchorY-38,notesCover?95:48,Math.max(notesCover?95:48,lowerEdge-label.offsetHeight/2-8));
   let left=clamp(anchorX+(anchorX<width*.58?42:-42),halfWidth+8,width-halfWidth-8);
-  const toolbar=this.stage.querySelector('.motion-camera')?.getBoundingClientRect();
-  if(toolbar?.height){
-   const obstacle={left:toolbar.left-stageBounds.left,right:toolbar.right-stageBounds.left,top:toolbar.top-stageBounds.top,bottom:toolbar.bottom-stageBounds.top};
-   if(overlapsPoseRect(poseRect(left,top,label.offsetWidth,label.offsetHeight),obstacle,7)){
-    const point=placePoseLabel({anchor:{x:anchorX,y:anchorY},width,height:lowerEdge,labelWidth:label.offsetWidth,labelHeight:label.offsetHeight,obstacles:[obstacle]});
+  const obstacles=[...this.stage.querySelectorAll('.motion-camera,.motion-reveal-controls')]
+   .map(element=>element.getBoundingClientRect()).filter(rect=>rect.height).map(rect=>({
+    left:rect.left-stageBounds.left,right:rect.right-stageBounds.left,top:rect.top-stageBounds.top,bottom:rect.bottom-stageBounds.top,
+   }));
+  if(obstacles.some(obstacle=>overlapsPoseRect(poseRect(left,top,label.offsetWidth,label.offsetHeight),obstacle,7))){
+    const point=placePoseLabel({anchor:{x:anchorX,y:anchorY},width,height:lowerEdge,labelWidth:label.offsetWidth,labelHeight:label.offsetHeight,obstacles});
     if(!point){this.showSelectionLabel(false);return;}
     left=point.x;top=point.y;
-   }
   }
   label.style.left=left+'px';
   label.style.top=top+'px';
@@ -651,10 +699,12 @@ export class MotionViewer {
   if(!this.renderer)return;
   this.token=requestAnimationFrame(time=>this.tick(time));
   if(document.hidden)return;
-  this.onFrame(Math.min(.1,(now-(this.lastTime??now))/1000));
+  const dt=Math.min(100,now-(this.lastTime??now));
+  this.onFrame(dt/1000);
   this.lastTime=now;
   this.controls.update();
-  if(this.dirty&&this.stage.clientHeight){
+  const updatedReveal=this.reveal.tick(now,dt,this.current,this.camera,this.dirty,this.reducedMotion.matches);
+  if((this.dirty||updatedReveal)&&this.stage.clientHeight){
    this.renderer.render(this.scene,this.camera);
    this.updateMarker();
    this.updateSelectionLabel();

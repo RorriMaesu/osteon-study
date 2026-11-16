@@ -6,10 +6,11 @@ import {describePoseAxis,poseMotionCycle} from './motion-pose-motions.js';
 import {createPosePreview,samplePosePreview} from './motion-pose-playback.js';
 import {setLearningContext} from './learning-context.js';
 import {findMotionStudyGuide} from './motion-study-guides.js';
+import {createMotionRevealPreference,revealGroup} from './motion-reveal-preference.js';
 
 const savedKey='osteon-whole-body-pose-v1';
 
-export function initPoseLab(host,{onLesson}={}){
+export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPreference()}={}){
  let active=false,revision=0,specimen=null,history=null,descriptors=[],selectedJoint=null,selectedAxis=null;
  let scope='all',interaction='joint',selectedMuscle=null,showMuscles=true,onlyRelated=false,message='',saveTimer=null,lastContext='';
  let playback=null,playbackStarted=0,studyGuide=null,guidedDirection=0,guideRouteRead=false;
@@ -41,6 +42,13 @@ export function initPoseLab(host,{onLesson}={}){
   zoom:direction=>viewer.zoom(direction),
   setMuscles:show=>{showMuscles=show;draw();},selectMuscle,
   setRelated:show=>{onlyRelated=show;draw();},
+  setReveal:enabled=>{revealPreference.setEnabled(enabled);draw();},
+  setFadeBones:enabled=>{revealPreference.setFadeBones(enabled);draw();},
+  focusMuscle:()=>{
+   viewer.focusMuscle();
+   if(matchMedia('(max-width:959px) and (min-height:481px), (max-width:600px) and (orientation:portrait)').matches)ui.closeNotes(true);
+  },
+  exploreContributors,
   setInteraction:mode=>{
    stopGesture();
    if(mode==='endpoint'){
@@ -150,15 +158,24 @@ export function initPoseLab(host,{onLesson}={}){
   if(detail)viewer.focusJoint();
   if(!pointer&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes();
  }
- function selectMuscle(key){
+ function selectMuscle(key,{closeNotes=true}={}){
   if(!specimen)return;
-  stopGesture();
+  if(!playback)stopGesture();
   const part=specimen.parts.find(part=>part.key===key);
   if(!part)return;
   selectedMuscle=selectedMuscle===key?null:key;
   if(selectedMuscle)message=part.name+' · '+part.side;
   draw();
-  if(matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes();
+  if(closeNotes&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes(true);
+ }
+ function exploreContributors(){
+  if(!specimen)return;
+  const role=roles();
+  const {muscleKeys}=poseMotionScope(scope,descriptor(),role,specimen.parts,specimen.bones,selectedMuscle);
+  const candidates=role.contributors.filter(key=>muscleKeys.has(key));
+  if(candidates.length<2)return;
+  const index=candidates.indexOf(selectedMuscle);
+  selectMuscle(candidates[(index+1)%candidates.length],{closeNotes:false});
  }
  function changeScope(next){
   if(!history)return;
@@ -253,6 +270,7 @@ export function initPoseLab(host,{onLesson}={}){
    contributorLabel:role.contributorLabel||(role.movements?.length===1?role.movements[0].contributorLabel:null),
    opposingLabel:role.opposingLabel||(role.movements?.length===1?role.movements[0].opposingLabel:null),selectedMuscle,
    selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
+   reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones(),revealGroup,canFocusMuscle:!!viewer.selectedPart,
    evidence:role.note,movementLabel:role.label,studyGuide,roleNote:role.movementNotes?.[0]||studyGuide?.note||'',
    movementNote:[studyGuide?.note,...(role.movementNotes||[]),joint?.detail,joint?.coupling].filter(Boolean).join(' ')});
  }
@@ -265,7 +283,8 @@ export function initPoseLab(host,{onLesson}={}){
   const labels=actionLabels(role);
   for(const key of role.shared||[])if(!labels.has(key))labels.set(key,'Mixed joint roles');
   viewer.color({contributors:role.contributors,opposing:role.opposing,shared:role.shared,selectionRoles:labels,selectedMuscle,showMuscles,visibleAnatomy,
-   onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||role.shared?.length||selectedMuscle)});
+   onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||role.shared?.length||selectedMuscle),
+   reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones(),revealGroup});
   updateUI(role,visibleAnatomy,labels);
   const context=[selectedJoint,role.label,selectedMuscle].join('|');
   if(context!==lastContext){setLearningContext({type:'study',label:'Pose skeleton · '+descriptor()?.label,reference:'9.5',text:role.note+' '+(role.label||'')});lastContext=context;}

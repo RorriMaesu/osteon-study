@@ -7,6 +7,7 @@ import {walkScopes,walkScopeMatches} from './motion-walk-model.js';
 import {regionalLessons,regionalFrame,breathingLayers} from './motion-regional.js';
 import {setLearningContext} from './learning-context.js';
 import {viewerZoomControls} from './viewer-guidance.js';
+import {createMotionRevealPreference,observeMotionReveal,revealGroup} from './motion-reveal-preference.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 
 const sources={
@@ -78,6 +79,10 @@ export function initMotionLab({setView}){
  <div class="motion-stage" aria-label="Interactive motion specimen">
  <div class="motion-status" role="status"></div>
  <div class="motion-phase-tag"><span data-motion-heading></span><span data-motion-cue></span><small data-motion-opposing-cue hidden>○ Antagonist roles</small></div>
+ <div class="motion-reveal-controls">
+  <button type="button" data-motion-muscle-reveal aria-label="Reveal muscles" aria-pressed="false" title="Fade muscles that cover the highlighted or selected muscle" disabled>Reveal muscles</button>
+  <p class="motion-reveal-status" hidden></p>
+ </div>
  <span data-motion-selection-label aria-hidden="true" hidden></span>
  <span class="motion-handle" aria-hidden="true" hidden><i></i><span>Drag</span></span>
  <span class="motion-load-tag" aria-hidden="true" hidden>↓ Hand load</span>
@@ -94,6 +99,9 @@ export function initMotionLab({setView}){
   <label hidden>Breathing layer <select data-motion-breath-layer><option value="thorax">Diaphragm &amp; ribs</option><option value="front">Rectus abdominis</option><option value="outer">External obliques</option><option value="deep">Deep wall &amp; intercostals</option><option value="all">All breathing muscles</option></select></label>
   <label hidden><input type="checkbox" data-motion-isolate> Isolate selected</label>
   <label hidden><input type="checkbox" data-motion-group> Whole muscle</label>
+  <label hidden><input type="checkbox" data-motion-reveal-bones> Fade covering bones</label>
+  <button type="button" class="motion-reveal-option" data-motion-muscle-focus hidden>Focus muscle</button>
+  <button type="button" class="motion-reveal-option" data-motion-explore-contributors hidden>Explore contributors</button>
  </div>
  <div class="motion-walk-explorer" hidden>
   <label>Find a muscle <input type="search" data-motion-search placeholder="Name or side" autocomplete="off"></label>
@@ -110,10 +118,12 @@ export function initMotionLab({setView}){
 
  const $=selector=>root.querySelector(selector);
  const controls=$('.motion-controls'), phase=$('.motion-phase'), names=$('.motion-muscle-list'), status=$('.motion-status');
+ const revealPreference=createMotionRevealPreference();
  const state={mode:'pose',lesson:'curl',armSide:'right',limb:'arm',elbow:{right:25,left:25},leg:{right:emptyPose(),left:emptyPose()},time:0,speed:1,playing:false,loop:true,showMuscles:true,onlyActive:false,selected:null,selectedGroup:false,isolateSelection:false,showAntagonists:true,showContext:true,regionalClip:'',breathLayer:'',action:'flex',side:'left',walkScope:'all',walkList:'recorded',walkQuery:'',walkPage:0,poseChanges:[],poseDelta:0};
  let active=false,revision=0,specimen=null,gait=null,lastInfo='',lastListKey='',lastContext='';
  let gaitPromise,recallKey='',shownAngle=null,pendingPart=null,routeRead=false;
  let partCache={},walkCache={};
+ let revealCandidates=[];
  const ready=()=>active&&!!specimen;
  const heelLesson=()=>state.mode==='actions'&&state.lesson==='heel';
  const pressLesson=()=>state.mode==='actions'&&state.lesson==='press';
@@ -124,8 +134,9 @@ export function initMotionLab({setView}){
  const shape=()=>regionalLesson()?state.lesson:state.mode==='walk'||heelLesson()||(state.mode==='pose'&&!isArmPose())?'legs':armSide()==='left'?'arm-left':'arm';
  const duration=()=>state.mode==='walk'?gait?.durationSeconds||1:regionalLesson()?currentRegionalClip()?.duration||1:curlDuration;
  const motion=new MotionViewer($('.motion-stage'),{onFrame:advance,onTarget:target,onMuscle:selectMuscle,onLimb:selectLeg});
+ observeMotionReveal(motion.stage);
  const poseHost=document.createElement('div');poseHost.hidden=true;root.append(poseHost);
- const poseLab=initPoseLab(poseHost,{onLesson:id=>{state.mode='actions';state.lesson=id;state.regionalClip='';clearSelection();state.time=0;load();}});
+ const poseLab=initPoseLab(poseHost,{revealPreference,onLesson:id=>{state.mode='actions';state.lesson=id;state.regionalClip='';clearSelection();state.time=0;load();}});
  function partsInMode(){
   if(!specimen)return [];
   const mode=state.mode+':'+state.lesson,count=specimen.parts.length;
@@ -231,6 +242,7 @@ export function initMotionLab({setView}){
   status.textContent=text;
   status.hidden=!text;
   for(const button of zoomButtons)button.disabled=!!text;
+  $('[data-motion-muscle-reveal]').disabled=!!text||!state.showMuscles;
   if(retry){
    const button=document.createElement('button');
    button.type='button';button.textContent='Retry loading';button.onclick=load;status.append(button);
@@ -579,12 +591,30 @@ export function initMotionLab({setView}){
   const layerControl=$('[data-motion-breath-layer]');
   layerControl.parentElement.hidden=!breathing;
   if(breathing&&layerControl.value!==layer)layerControl.value=layer;
+  const reveal=revealPreference.enabled(state.mode);
+  const revealBones=revealPreference.fadeBones();
+  const revealThreshold=state.mode==='walk'?.05:0;
   motion.highlight({
    strengths,selected:state.selected,selectedGroup,isolateSelection:state.isolateSelection&&!!selected,
    antagonists:shownOpposing,selectionRoles,showMuscles:state.showMuscles,
    onlyActive:state.onlyActive,showCalves:heelLesson(),cue,displayThreshold:threshold,
-   regionalRoles:breathingLayers[layer],
+   regionalRoles:breathingLayers[layer],reveal,revealGroup,revealBones,revealThreshold,
   });
+  const revealToggle=$('[data-motion-muscle-reveal]');
+  if(revealToggle.getAttribute('aria-pressed')!==String(reveal))revealToggle.setAttribute('aria-pressed',String(reveal));
+  revealToggle.disabled=!state.showMuscles;
+  const boneControl=$('[data-motion-reveal-bones]');
+  boneControl.parentElement.hidden=!reveal||!state.showMuscles;
+  boneControl.checked=revealBones;
+  $('[data-motion-muscle-focus]').hidden=!state.showMuscles||!motion.selectedPart;
+  revealCandidates=reveal&&revealGroup&&state.showMuscles&&!state.isolateSelection?parts.filter(part=>{
+   const strength=strengths[roleKey(part)];
+   return part.mesh.visible&&!part.walkOnly&&!part.contextOnly&&strength>0&&strength>=revealThreshold;
+  }):[];
+  const explore=$('[data-motion-explore-contributors]');
+  const exploreLabel=state.mode==='walk'?'Explore recorded muscles':'Explore contributors';
+  if(explore.textContent!==exploreLabel)explore.textContent=exploreLabel;
+  explore.hidden=revealCandidates.length<2;
   const isolate=$('[data-motion-isolate]'),group=$('[data-motion-group]'),antagonists=$('[data-motion-antagonists]');
   isolate.parentElement.hidden=!selected;
   isolate.checked=state.isolateSelection;
@@ -695,6 +725,17 @@ export function initMotionLab({setView}){
  for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{const mode=button.dataset.motionMode;if(state.mode!==mode){state.mode=mode;clearSelection();state.time=0;state.loop=mode!=='walk';load();}};
  for(const button of root.querySelectorAll('[data-motion-camera]'))button.onclick=()=>motion.frame(button.dataset.motionCamera);
  for(const button of zoomButtons)button.onclick=()=>motion.zoom(button.dataset.viewerZoom);
+ $('[data-motion-muscle-reveal]').onclick=()=>{revealPreference.setEnabled(!revealPreference.enabled(state.mode));draw();};
+ $('[data-motion-reveal-bones]').onchange=event=>{revealPreference.setFadeBones(event.target.checked);draw();};
+ $('[data-motion-muscle-focus]').onclick=()=>{
+  motion.focusMuscle();
+  if(root.hasAttribute('data-motion-notes')){notesToggle.click();$('[data-motion-muscle-reveal]').focus();}
+ };
+ $('[data-motion-explore-contributors]').onclick=()=>{
+  if(revealCandidates.length<2)return;
+  const index=revealCandidates.findIndex(part=>part.key===state.selected);
+  selectMuscle(revealCandidates[(index+1)%revealCandidates.length].key);
+ };
  $('[data-motion-muscles]').onchange=event=>{state.showMuscles=event.target.checked;draw();};
  $('[data-motion-context]').onchange=event=>{state.showContext=event.target.checked;draw();};
  $('[data-motion-breath-layer]').onchange=event=>{state.breathLayer=event.target.value;draw();};
