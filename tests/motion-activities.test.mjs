@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import * as THREE from 'three';
 import {activities, sampleActivity} from '../src/motion-activities.js';
 import {poseRoles} from '../src/motion-pose-core.js';
+import {resolveActivityRoles} from '../src/motion-activity-roles.js';
 import {preparePoseRig, poseJointWorld} from '../src/motion-pose-rig.js';
 import {applyActivityPose} from '../src/motion-activity-placement.js';
 
@@ -245,6 +246,46 @@ test('shadowboxing coordinates a guarded jab and cross through the legs and trun
   assert(boxing.phases.every(phase=>phase.roles.some(role=>role.joint==='left-index-pip'&&role.stabilizer)));
   assert(boxing.supportMuscles.some(group=>group.names.includes('Transversus abdominis muscle')));
   assert(boxing.supportMuscles.some(group=>group.names.includes('Infraspinatus muscle')));
+});
+
+test('the shadowboxing uppercut has a rising bent arm, a closed fist and a guarded return', () => {
+  const activity = byId('shadowbox');
+  const arc = activity.phases.find(phase => phase.label === 'Left uppercut');
+  const recovery = activity.phases.find(phase => phase.label === 'Recover the uppercut');
+  assert(arc.start > 3.45 && recovery.start === arc.end);
+  const rig = jointRig();
+  const landmarks = sample => {
+    applyActivityPose(rig, sample.pose, sample.root, {ground: activity.ground, rootRotation: sample.rootRotation});
+    return {
+      leftFist: poseJointWorld(rig, 'left-index-mcp'),
+      rightFist: poseJointWorld(rig, 'right-index-mcp'),
+      jaw: poseJointWorld(rig, 'jaw'),
+    };
+  };
+  const low = sampleActivity(activity, arc.start);
+  const rising = Array.from({length: 9}, (_, i) => sampleActivity(activity, arc.start + (arc.end - arc.start) * i / 9));
+  let lastHeight = -Infinity;
+  for (const sample of rising) {
+    const {leftFist, rightFist, jaw} = landmarks(sample);
+    const height = leftFist.y - jaw.y;
+    assert(height > lastHeight, 'The fist rises relative to the torso through the arc');
+    lastHeight = height;
+    assert(sample.pose['left-elbow'].flexion > 65, 'The working elbow stays visibly bent');
+    assert(sample.pose['right-elbow'].flexion >= 110, 'The other arm maintains guard');
+    assert(rightFist.distanceTo(jaw) < .2, 'The other fist stays near the face');
+    assert.equal(sample.pose['left-index-mcp'].flexion, 80);
+    assert.equal(sample.pose['left-wrist'].flexion, 0);
+  }
+  const peak = rising.at(-1);
+  assert(landmarks(peak).leftFist.y - landmarks(low).leftFist.y > .3);
+  assert.deepEqual(sampleActivity(activity, recovery.end).pose, sampleActivity(activity, 0).pose);
+
+  const result = resolveActivityRoles(activity, arc, metadata.joints, parts, peak.pose);
+  const working = (name, side) => result.rows.some(row => row.name === name && row.side === side && row.kind !== 'opponent');
+  assert(working('Clavicular part of deltoid muscle', 'left'));
+  assert(working('Brachialis muscle', 'left'));
+  assert(working('Vastus lateralis muscle', 'left'));
+  assert(!working('Lateral head of triceps brachii', 'left'));
 });
 
 test('the arms hang downward in world space throughout a hip hinge instead of sweeping behind the back', () => {

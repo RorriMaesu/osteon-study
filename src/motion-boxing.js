@@ -17,11 +17,17 @@ const punchRoles=side=>[
  role(side+'-shoulder','horizontal',1),role(side+'-scapula','protraction',1),
  role(side+'-forearm','pronation',1),
 ];
+const uppercutRoles=[
+ role('left-shoulder','flexion',1),role('left-elbow','flexion',1),
+ role('left-scapula','protraction',1),role('left-forearm','pronation',-1),
+ role('thoracic-turn','rotation',1),role('trunk','flexion',-1),
+ ...['left','right'].flatMap(side=>[role(side+'-hip','flexion',-1),role(side+'-knee','flexion',-1)]),
+];
 const returnRoles=side=>[role(side+'-elbow','flexion',1),role(side+'-shoulder','flexion',-1),role(side+'-scapula','protraction',-1)];
 const driveRoles=[role('right-hip','flexion',-1),role('right-knee','flexion',-1),role('right-ankle','dorsiflexion',-1),role('left-knee','flexion',-1,'eccentric')];
 const withSupport=(roles,guard=['left','right'])=>[...roles,...guard.flatMap(guardRoles),...hands,...baseRoles];
 
-/** Deliberately slowed orthodox jab/cross. The rear leg and pelvis lead the
+/** Deliberately slowed shadowboxing. The rear leg and pelvis lead the
  * cross; the opposite hand stays high instead of both arms alternating from rest.
  * Vertical fists respect the verified pronation range of the current rig. */
 function posture({left=0,right=0,sink=0,drive=0,turn=6,lean=0,yaw=-12}={}){
@@ -55,9 +61,23 @@ const key=(time,settings={},yaw=-12)=>{
  return {time,pose,root:[0,0,0],rootRotation:[0,yaw,0]};
 };
 
+// The rising arc uses a bent arm throughout. Override only the arm that moves;
+// the existing closed hand, wrist alignment and opposite guard are retained.
+function uppercutKey(time, settings, yaw, arm) {
+ const frame=key(time,settings,yaw);
+ const pose=frame.pose;
+ Object.assign(pose['left-shoulder'],{
+  flexion:arm.shoulder,abduction:arm.abduction,horizontal:arm.horizontal,rotation:arm.rotation,
+ });
+ pose['left-elbow'].flexion=arm.elbow;
+ pose['left-forearm'].pronation=arm.pronation;
+ pose['left-scapula'].protraction=arm.protraction;
+ return frame;
+}
+
 export const boxingActivity={
- id:'shadowbox',label:'Shadowbox · guarded jab–cross',category:'Sport and expression',duration:8,view:'side',scope:'all',ground:'both',
- description:'An orthodox left jab and rear-right cross with closed, near-vertical fists, a staggered stance, body turn and prompt recovery to guard. This non-contact teaching sequence is slowed for inspection; muscle roles are illustrative and foot contact is approximate.',
+ id:'shadowbox',label:'Shadowbox + uppercut',category:'Sport and expression',duration:8,view:'side',scope:'all',ground:'both',
+ description:'A left jab and right cross are followed by a dip and a left uppercut. Compare the straight arm paths with the bent-arm rise. Both hands stay closed throughout. This non-contact teaching sequence is slowed for inspection; muscle roles are illustrative and foot contact is approximate.',
  sources:[
   {title:'Jin et al. — Boxing punch sequence and neutral wrist alignment',url:'https://pmc.ncbi.nlm.nih.gov/articles/PMC12313678/'},
   {title:'Liu et al. — Lead straight punch and lower-limb biomechanics',url:'https://pmc.ncbi.nlm.nih.gov/articles/PMC9798280/'},
@@ -77,7 +97,13 @@ export const boxingActivity={
   key(2.85,{right:.18,drive:.45,turn:8},-6),
   key(3.15,{right:.55,drive:.8,turn:-6},0),key(3.45,{right:1,drive:1,turn:-10},5),
   key(3.85,{right:.35,drive:.6,turn:-4},0),key(4.35),
-  key(5.1,{sink:8,lean:-5,turn:7}),key(5.85),key(6.55,{sink:3}),key(7.2),key(8),
+  uppercutKey(4.8,{sink:6,lean:-3,turn:5},-13,{shoulder:32,abduction:10,horizontal:2,rotation:15,elbow:95,pronation:30,protraction:2}),
+  uppercutKey(5.2,{sink:10,lean:-5,turn:3},-14,{shoulder:18,abduction:15,horizontal:-5,rotation:5,elbow:76,pronation:22,protraction:1}),
+  uppercutKey(5.65,{sink:5,lean:-2,turn:7},-12,{shoulder:46,abduction:13,horizontal:3,rotation:10,elbow:83,pronation:16,protraction:4}),
+  uppercutKey(6.12,{sink:0,turn:11},-10,{shoulder:70,abduction:12,horizontal:9,rotation:15,elbow:90,pronation:10,protraction:6}),
+  uppercutKey(6.25,{sink:1,turn:10},-10,{shoulder:69,abduction:11,horizontal:8,rotation:15,elbow:92,pronation:11,protraction:6}),
+  uppercutKey(6.62,{sink:2,turn:8},-11,{shoulder:58,abduction:7,horizontal:1,rotation:21,elbow:105,pronation:23,protraction:4}),
+  key(7.15),key(8),
  ],
  phases:[
   phase(0,.55,'Set the guard','Keep both fists closed beside the face, elbows bent and knees soft. Forearm muscles hold the fist while wrist extensors help maintain alignment.',withSupport([])),
@@ -87,8 +113,17 @@ export const boxingActivity={
   phase(2.5,2.85,'Drive from the rear leg','Rear hip and knee extensors and plantar flexors contribute to the drive. The pelvis begins turning before the chest and punching arm complete their movement.',withSupport(driveRoles)),
   phase(2.85,3.45,'Turn and deliver the cross','The pelvis, trunk and right arm coordinate the cross. Obliques turn the chest; the shoulder, serratus, triceps and pronators deliver the arm while the left fist stays near the face.',withSupport([...driveRoles,role('thoracic-turn','rotation',-1),...punchRoles('right')],['left'])),
   phase(3.45,4.35,'Recover the cross','Bring the right fist back and restore the staggered guard. Elbow flexors, scapular retractors and the opposite trunk-turning action contribute to recovery.',withSupport([...returnRoles('right'),role('thoracic-turn','rotation',1)],['left'])),
-  phase(4.35,5.1,'Small defensive dip','Knee and hip extensors control a small lowering of the body while the trunk bends slightly to the left. Both hands continue protecting the face.',withSupport([role('left-knee','flexion',-1,'eccentric'),role('right-knee','flexion',-1,'eccentric'),role('trunk','lateral',-1)])),
-  phase(5.1,5.85,'Rise back to guard','Leg extensors restore the stance. The fists remain closed and the shoulders and trunk continue to stabilize the guard.',withSupport([role('left-knee','flexion',-1),role('right-knee','flexion',-1),role('trunk','lateral',1)])),
-  phase(5.85,8,'Reset in stance','A small weight-ready settling motion returns to the same guard for the next combination. Highlights describe selected contributors and stabilizers, not measured activation intensity.',withSupport([])),
+  phase(4.35,5.2,'Dip into the uppercut','The knees and hips bend as the left fist lowers. Hip and knee extensors can control the descent, while the right arm stays in guard.',withSupport([
+   role('left-knee','flexion',-1,'eccentric'),role('right-knee','flexion',-1,'eccentric'),
+   role('left-hip','flexion',-1),role('right-hip','flexion',-1),role('trunk','lateral',-1),
+   role('left-shoulder','flexion',1,'eccentric'),role('left-elbow','flexion',1),
+   role('left-scapula','protraction',-1),role('left-forearm','pronation',-1),
+  ],['right'])),
+  phase(5.2,6.25,'Left uppercut','The bent left arm follows an upward arc as the legs straighten and the torso turns. Shoulder and elbow flexors contribute to the rise. The right fist stays up.',withSupport(uppercutRoles,['right'])),
+  phase(6.25,7.15,'Recover the uppercut','The left arm folds back toward guard. Elbow flexors, scapular retractors and shoulder muscles guide the return while both wrists stay straight.',withSupport([
+   role('left-elbow','flexion',1),role('left-shoulder','flexion',1,'eccentric'),
+   role('left-scapula','protraction',-1),role('left-forearm','pronation',1),role('thoracic-turn','rotation',-1),
+  ],['right'])),
+  phase(7.15,8,'Reset in stance','The animation returns to its starting guard. Forearm and postural muscles show possible holding roles.',withSupport([])),
  ],
 };
