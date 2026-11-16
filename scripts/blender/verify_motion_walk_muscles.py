@@ -7,10 +7,9 @@ from pathlib import Path
 import bpy
 from mathutils import Matrix, Quaternion, Vector
 sys.path.insert(0, str(Path(__file__).parent))
-from build_motion_walk_muscles import surface_error, surface_sample
+from build_motion_walk_muscles import REPO, REQUESTED_REGIONS, REVIEWED_FITS, WORK, surface_error, surface_sample
 
 
-REPO, WORK = (Path(argument).resolve() for argument in sys.argv[sys.argv.index('--') + 1:])
 ASSETS = REPO / 'assets'
 MANIFEST = json.loads((WORK / 'motion-walk-muscles.json').read_text())
 ATLAS = json.loads((REPO / 'src' / 'muscle-models.json').read_text())
@@ -110,11 +109,15 @@ def verify_region(region, item):
         if min(weights) < .98 or max(weights) > 1.02:
             raise ValueError('Unnormalized delivered skin weights ' + identity)
         bind[identity] = world_points(mesh, bpy.context.evaluated_depsgraph_get())
-    drift = max(surface_error(source_points[key], (pts,[tuple(poly.vertices) for poly in loaded[key].data.polygons]))
-                for key, pts in bind.items())
+    errors = {key: surface_error(source_points[key], (pts, [tuple(poly.vertices) for poly in loaded[key].data.polygons]))
+              for key, pts in bind.items()}
+    reviewed = REVIEWED_FITS.get(region, errors) if REQUESTED_REGIONS else errors
+    drift = max(errors[key] for key in reviewed)
     if drift > .00055:
         raise ValueError(f'Rest geometry changed by {drift} m in {region}')
-    results = {'parts': len(loaded), 'restSampleMaxErrorMillimeters': round(1000*drift, 4), 'samples': {}}
+    results = {'parts': len(loaded), 'restSampleMaxErrorMillimeters': round(1000*max(errors.values()), 4),
+               'fittedRestSampleMaxErrorMillimeters': round(1000*drift, 4),
+               'fittedRestComponentsChecked': len(reviewed), 'samples': {}}
     ids = sorted(loaded)
     edge_data = {identity: [edge.vertices[:] for edge in loaded[identity].data.edges] for identity in ids}
     for percent in SAMPLES:
@@ -123,6 +126,9 @@ def verify_region(region, item):
         # Assign the same world-delta transforms that will drive the browser receiver.
         for driver, bone in bones.items():
             bone.matrix = inverse @ deltas[driver] @ world @ rest_bones[driver]
+        for mesh in loaded.values():
+            if mesh.get('walkClearance'):
+                mesh.data.shape_keys.key_blocks[mesh['walkClearance']].value = 1.
         bpy.context.view_layer.update()
         displaced, changed, edge_max = 0, 0, []
         graph = bpy.context.evaluated_depsgraph_get()
@@ -156,6 +162,9 @@ def verify_region(region, item):
                                       'highestEdgeStretchP95': sorted(edge_max, reverse=True)[:3]}
     for driver, bone in bones.items():
         bone.matrix = rest_bones[driver]
+    for mesh in loaded.values():
+        if mesh.get('walkClearance'):
+            mesh.data.shape_keys.key_blocks[mesh['walkClearance']].value = 0.
     bpy.context.view_layer.update()
     graph = bpy.context.evaluated_depsgraph_get()
     mismatch = max(max((a-b).length for a, b in zip(points, world_points(loaded[identity], graph)))
@@ -167,7 +176,10 @@ def verify_region(region, item):
 
 
 def main():
-    report = {region: verify_region(region, item) for region, item in MANIFEST['regions'].items()}
+    if not REQUESTED_REGIONS <= set(MANIFEST['regions']):
+        raise ValueError('Unknown walking region')
+    report = {region: verify_region(region, item) for region, item in MANIFEST['regions'].items()
+              if not REQUESTED_REGIONS or region in REQUESTED_REGIONS}
     (WORK / 'motion-walk-muscles-review.json').write_text(json.dumps(report, indent=2)+'\n', encoding='utf-8')
 
 

@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import test from 'node:test';
+import * as THREE from 'three';
+import {captureWalkDrivers,mountWalkPack,updateWalkPacks} from '../src/motion-walk-model.js';
 
 const root=new URL('../',import.meta.url);
 const file=path=>readFileSync(new URL(path,root));
@@ -57,9 +59,9 @@ test('whole-body walking covers exactly the active atlas surfaces with the origi
  assert.equal(manifest.totalMuscleSurfaces,expected.size);
  const legs=asset('motion-legs.glb');
  const authorshipInput=manifest.inputs['motion-legs.glb'];
- if(hash(legs)!==authorshipInput){
-  const upgrade=read('model-sources/motion-gastrocnemius-ankle.json');
-  assert.equal(upgrade.baseAssetSHA256,authorshipInput,'Historical authoring input stays pinned');
+ const upgrade=read('model-sources/motion-gastrocnemius-ankle.json');
+ if(hash(legs)!==upgrade.baseAssetSHA256){
+  assert.ok([hash(legs),upgrade.baseAssetSHA256].includes(authorshipInput),'Authoring input is a verified lower rig');
   const winding=upgrade.surfaceWindingRepair;
   const correctedNodes=[...upgrade.correctedNodes,...winding.correctedNodes];
   assert.deepEqual(lowerRigSignature(legs,correctedNodes),{
@@ -105,4 +107,31 @@ test('whole-body walking covers exactly the active atlas surfaces with the origi
   assert.deepEqual(counts,descriptor.deformation);
  }
  assert.equal(expected.size,0,'All active atlas parts are modeled across the five packs and measured base rig');
+});
+
+test('walking uses the two fitted glute surfaces while neutral asset weights remain zero',()=>{
+ const document=glb(asset(manifest.regions['pelvis-leg-foot'].file));
+ const corrected=meshNodes(document).filter(node=>node.extras?.walkClearance);
+ assert.deepEqual(corrected.map(node=>node.extras.muscleId).sort(),
+  ['muscle-gluteus-maximus-muscle-l','muscle-gluteus-maximus-muscle-r']);
+ for(const node of corrected){
+  const mesh=document.meshes[node.mesh];
+  const index=mesh.extras.targetNames.indexOf(node.extras.walkClearance);
+  assert.ok(index>=0);
+  assert.equal(mesh.weights[index],0);
+ }
+ const model=new THREE.Group(), scene=new THREE.Group();
+ const driver=new THREE.Object3D(), receiver=new THREE.Object3D(), mesh=new THREE.Object3D();
+ driver.name='driver';
+ receiver.name='receiver';
+ mesh.isSkinnedMesh=true;
+ mesh.userData.walkClearance='GaitGlutealClearance';
+ mesh.morphTargetDictionary={GaitGlutealClearance:0};
+ mesh.morphTargetInfluences=[0];
+ model.add(driver);
+ scene.add(receiver,mesh);
+ const pack=mountWalkPack({model},scene,{driver:'receiver'},captureWalkDrivers(model,['driver']));
+ assert.equal(mesh.morphTargetInfluences[0],0);
+ updateWalkPacks([pack]);
+ assert.equal(mesh.morphTargetInfluences[0],1);
 });

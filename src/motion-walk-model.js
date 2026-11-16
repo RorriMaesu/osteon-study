@@ -59,7 +59,15 @@ export function mountWalkPack(specimen,scene,driverNames,drivers){
   node.matrixAutoUpdate=false;
  }
  if(!bindings.length)throw new Error('The walking muscle pack has no joint bindings.');
- return {scene,bindings};
+ const clearance=[];
+ scene.traverse(mesh=>{
+  const target=mesh.userData.walkClearance;
+  if(!mesh.isSkinnedMesh||!target)return;
+  const index=mesh.morphTargetDictionary?.[target];
+  if(!Number.isInteger(index))throw new Error('A walking muscle correction is missing from the model.');
+  clearance.push({mesh,index});
+ });
+ return {scene,bindings,clearance};
 }
 
 export function captureWalkDrivers(model,names){
@@ -75,6 +83,7 @@ export function updateWalkPacks(packs){
  const drivers=new Set(packs.flatMap(pack=>pack.bindings.map(binding=>binding.driver)));
  for(const driver of drivers)driver.updateWorldMatrix(true,false);
  for(const pack of packs){
+  for(const {mesh,index} of pack.clearance||[])mesh.morphTargetInfluences[index]=1;
   for(const {node,driver,relative,parentInverse} of pack.bindings){
    node.matrix.copy(parentInverse).multiply(driver.matrixWorld).multiply(relative);
    node.matrixWorldNeedsUpdate=true;

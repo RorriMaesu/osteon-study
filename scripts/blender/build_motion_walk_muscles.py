@@ -3,12 +3,13 @@
 blender -b --factory-startup --disable-autoexec --python-exit-code 1 \
   --python scripts/blender/build_motion_walk_muscles.py -- REPO OUTPUT_DIRECTORY
 
-The five staged GLBs reuse the unmodified regional atlas surfaces. The browser
-retargets motion from its existing lower and upper rigs. Regional blending is a
-first-pass teaching deformation. The model does not infer activity or force.
+The staged GLBs reuse regional Atlas surfaces. The browser retargets motion
+from the existing lower and upper rigs. Add shoulder-arm pelvis-leg-foot to
+stage the reviewed local fits while keeping other delivered surfaces intact.
 """
 import hashlib
 import json
+import math
 import shutil
 import struct
 import subprocess
@@ -21,8 +22,13 @@ import bpy
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from splice_walk_clearance import replace_walk_parts
 
-REPO, WORK = (Path(argument).resolve() for argument in sys.argv[sys.argv.index('--') + 1:])
+
+arguments = sys.argv[sys.argv.index('--') + 1:]
+REPO, WORK = (Path(argument).resolve() for argument in arguments[:2])
+REQUESTED_REGIONS = set(arguments[2:])
 if WORK.is_relative_to(REPO):
     raise ValueError('Store editable files and snapshots outside the repository.')
 ASSETS = REPO / 'assets'
@@ -35,6 +41,10 @@ TORSO = 'MotionTorso'
 HEAD = 'MotionWalkHead'
 TARGET_TRIANGLES = 3200
 SIMPLIFICATION_ERROR = .00045
+REVIEWED_FITS = {
+    'shoulder-arm': [f'muscle-scapular-spinal-part-of-deltoid-muscle-{side}' for side in ('l', 'r')],
+    'pelvis-leg-foot': [f'muscle-gluteus-maximus-muscle-{side}' for side in ('l', 'r')],
+}
 
 
 def digest(path):
@@ -373,6 +383,35 @@ def simplify(obj):
         ratio *= 1.4
     return None
 
+def fit_gluteal_clearance(obj):
+    """Compress the deep side of gluteus maximus behind proximal hamstrings."""
+    identity = obj['muscleId']
+    if identity not in REVIEWED_FITS['pelvis-leg-foot']:
+        return
+    sign = 1 if identity.endswith('-l') else -1
+    world = obj.matrix_world
+    rest = [world @ vertex.co for vertex in obj.data.vertices]
+    obj.data.calc_loop_triangles()
+    triangles = [tuple(triangle.vertices) for triangle in obj.data.loop_triangles]
+    shell = BVHTree.FromPolygons(rest, triangles, all_triangles=True)
+    posterior = Vector((0., 1., 0.))
+    local_posterior = world.inverted().to_3x3() @ posterior
+    center, spread = Vector((sign * .068, .055, .797)), Vector((.035, .04, .049))
+    obj.shape_key_add(name='Basis', from_mix=False)
+    name = 'GaitGlutealClearance'
+    key = obj.shape_key_add(name=name, from_mix=False)
+    for vertex, point in zip(obj.data.vertices, rest):
+        # Retain a thin margin inside the existing posterior contour.
+        outer, _, _, _ = shell.ray_cast(point + posterior * .09, -posterior, .09)
+        if outer is None:
+            continue
+        room = max(0., outer.y - point.y - .002)
+        radius_squared = sum(((p - c) / w)**2 for p, c, w in zip(point, center, spread))
+        offset = min(room, .021 * math.exp(-.5 * radius_squared))
+        key.data[vertex.index].co = vertex.co + local_posterior * offset
+    obj['walkClearance'] = name
+
+
 def build_region(region, source, parts, pivots, lower, upper):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     meshes = import_meshes(source)
@@ -394,6 +433,9 @@ def build_region(region, source, parts, pivots, lower, upper):
     simplified = [error for obj in chosen.values() if (error := simplify(obj)) is not None]
     receiver = make_receiver(pivots)
     results = Counter(bind(chosen[identity], part, receiver, lower, upper) for identity, part in parts.items())
+    if region == 'pelvis-leg-foot':
+        for mesh in chosen.values():
+            fit_gluteal_clearance(mesh)
     file = WORK / f'{MODEL_NAME}-{region}.glb'
     blend_path = WORK / f'{MODEL_NAME}-{region}.blend'
     bpy.context.preferences.filepaths.save_version = 0
@@ -418,6 +460,8 @@ def build_region(region, source, parts, pivots, lower, upper):
 
 def main():
     atlas = read_json(ATLAS_PATH)
+    if not REQUESTED_REGIONS <= set(atlas['assets']):
+        raise ValueError('Unknown walking region')
     lower_meta, upper_meta = LOWER_PATH.with_suffix('.json'), UPPER_PATH.with_suffix('.json')
     lower, upper = read_json(lower_meta), read_json(upper_meta)
     inputs = [ATLAS_PATH, LOWER_PATH, UPPER_PATH, lower_meta, upper_meta, ASSETS / 'MODEL-LICENSE.md',
@@ -436,12 +480,46 @@ def main():
         raise RuntimeError('An exact set of eight recorded gait surfaces must remain available in the base rig.')
     pivots = driver_pivots(lower, upper)
     regions = {}
+    previous = read_json(ASSETS / f'{MODEL_NAME}.json') if REQUESTED_REGIONS else None
+    if previous:
+        # The base lower mesh has independently shipped surface edits.
+        # Its joint definitions and recorded parts define the pack interface.
+        for name in (UPPER_PATH.name, lower_meta.name, upper_meta.name):
+            if previous['inputs'][name] != source_hashes[name]:
+                raise RuntimeError('Changed walking drivers require rebuilding every region.')
+        if sorted(previous['baseMuscleIds']) != list(retained):
+            raise RuntimeError('Changed recorded gait surfaces require rebuilding every region.')
     for region, source in atlas['assets'].items():
         parts = {identity: part for identity, part in atlas_muscles.items()
                  if part['region'] == region and identity not in retained}
         if digest(ASSETS / source['file']) != source['sha256']:
             raise RuntimeError('Source atlas hash disagrees with its manifest.')
-        regions[region] = build_region(region, ASSETS / source['file'], parts, pivots, lower, upper)
+        if previous and region not in REQUESTED_REGIONS:
+            old = previous['regions'][region]
+            path = ASSETS / old['file']
+            if digest(path) != old['sha256'] or previous['inputs'][source['file']] != source['sha256']:
+                raise RuntimeError('Changed source requires rebuilding ' + region)
+            shutil.copy2(path, WORK / path.name)
+            regions[region] = old
+            continue
+        authored = build_region(region, ASSETS / source['file'], parts, pivots, lower, upper)
+        if previous and region in REVIEWED_FITS:
+            old = previous['regions'][region]
+            path = ASSETS / old['file']
+            if digest(path) != old['sha256'] or old['parts'] != authored['parts']:
+                raise RuntimeError('Existing walking region no longer matches ' + region)
+            fitted = WORK / authored['file']
+            replace_walk_parts(path, fitted, REVIEWED_FITS[region])
+            document = glb_json(fitted)
+            triangles = sum(document['accessors'][primitive['indices']]['count'] // 3
+                            for mesh in document['meshes'] for primitive in mesh['primitives'])
+            if triangles != old['triangles']:
+                raise RuntimeError('Local fit changed the region triangle count')
+            authored = {**old, 'sha256': digest(fitted), 'bytes': fitted.stat().st_size,
+                        'maximumSampledSimplificationErrorMillimeters':
+                            max(old['maximumSampledSimplificationErrorMillimeters'],
+                                authored['maximumSampledSimplificationErrorMillimeters'])}
+        regions[region] = authored
     if source_hashes != {path.name: digest(path) for path in inputs}:
         raise RuntimeError('A source model changed while exporting.')
     manifest = {

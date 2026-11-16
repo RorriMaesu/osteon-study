@@ -1,0 +1,530 @@
+{
+  "before": {
+    "muscles": 476,
+    "context": 271,
+    "snapshots": [
+      "neutral",
+      "stride-0%",
+      "stride-10%",
+      "stride-22%",
+      "stride-35%",
+      "stride-51%",
+      "stride-65%",
+      "stride-85%",
+      "stride-95%"
+    ]
+  },
+  "after": {
+    "muscles": 476,
+    "context": 271,
+    "snapshots": [
+      "neutral",
+      "stride-0%",
+      "stride-10%",
+      "stride-22%",
+      "stride-35%",
+      "stride-51%",
+      "stride-65%",
+      "stride-85%",
+      "stride-95%"
+    ]
+  },
+  "targetPairs": [
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "Humerus.l",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "Scapula.l",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "muscle-lateral-head-of-triceps-brachii-l",
+      "peakBeforeMm": 6.49,
+      "peakAfterMm": 2.13,
+      "maximumGrowthMm": -4.3,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "muscle-long-head-of-triceps-brachii-l",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "muscle-acromial-part-of-deltoid-muscle-l",
+      "peakBeforeMm": 0.78,
+      "peakAfterMm": 1.53,
+      "maximumGrowthMm": 0.75,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "muscle-infraspinatus-muscle-l",
+      "peakBeforeMm": 6.3,
+      "peakAfterMm": 6.3,
+      "maximumGrowthMm": 0.73,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "muscle-descending-part-of-trapezius-muscle-l",
+      "peakBeforeMm": 5.52,
+      "peakAfterMm": 5.53,
+      "maximumGrowthMm": 0.01,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "partner": "muscle-brachialis-muscle-l",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "Hip bone.l",
+      "peakBeforeMm": 0.96,
+      "peakAfterMm": 0.96,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "Femur.l",
+      "peakBeforeMm": 1.38,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": -0.4,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "muscle-long-head-of-biceps-femoris-l",
+      "peakBeforeMm": 10.81,
+      "peakAfterMm": 2.03,
+      "maximumGrowthMm": -1.01,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "muscle-semimembranosus-muscle-l",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "muscle-semitendinosus-muscle-l",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "muscle-quadratus-femoris-muscle-l",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "muscle-gluteus-medius-muscle-l",
+      "peakBeforeMm": 3.05,
+      "peakAfterMm": 2.71,
+      "maximumGrowthMm": 0.44,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "muscle-vastus-lateralis-muscle-l",
+      "peakBeforeMm": 5.96,
+      "peakAfterMm": 5.94,
+      "maximumGrowthMm": 0.5,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-l",
+      "partner": "muscle-coccygeus-muscle-l",
+      "peakBeforeMm": 2.88,
+      "peakAfterMm": 0.52,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "Humerus.r",
+      "peakBeforeMm": 8.05,
+      "peakAfterMm": 5.65,
+      "maximumGrowthMm": 0.42,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "Scapula.r",
+      "peakBeforeMm": 3.12,
+      "peakAfterMm": 3.13,
+      "maximumGrowthMm": 0.01,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "muscle-lateral-head-of-triceps-brachii-r",
+      "peakBeforeMm": 6.5,
+      "peakAfterMm": 2.13,
+      "maximumGrowthMm": -3.69,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "muscle-long-head-of-triceps-brachii-r",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "muscle-acromial-part-of-deltoid-muscle-r",
+      "peakBeforeMm": 0.78,
+      "peakAfterMm": 1.53,
+      "maximumGrowthMm": 0.75,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "muscle-infraspinatus-muscle-r",
+      "peakBeforeMm": 6.28,
+      "peakAfterMm": 6.29,
+      "maximumGrowthMm": 0.43,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "muscle-descending-part-of-trapezius-muscle-r",
+      "peakBeforeMm": 5.52,
+      "peakAfterMm": 5.52,
+      "maximumGrowthMm": 0.01,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-scapular-spinal-part-of-deltoid-muscle-r",
+      "partner": "muscle-brachialis-muscle-r",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "Hip bone.r",
+      "peakBeforeMm": 0.97,
+      "peakAfterMm": 0.97,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "Femur.r",
+      "peakBeforeMm": 1.17,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": -0.4,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "muscle-long-head-of-biceps-femoris-r",
+      "peakBeforeMm": 10.79,
+      "peakAfterMm": 2.15,
+      "maximumGrowthMm": -1.13,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "muscle-semimembranosus-muscle-r",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "muscle-semitendinosus-muscle-r",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "muscle-quadratus-femoris-muscle-r",
+      "peakBeforeMm": 0.0,
+      "peakAfterMm": 0.0,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "muscle-gluteus-medius-muscle-r",
+      "peakBeforeMm": 3.11,
+      "peakAfterMm": 2.79,
+      "maximumGrowthMm": 0.62,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "muscle-vastus-lateralis-muscle-r",
+      "peakBeforeMm": 5.95,
+      "peakAfterMm": 4.82,
+      "maximumGrowthMm": -0.38,
+      "newOverTwoMm": 0
+    },
+    {
+      "muscle": "muscle-gluteus-maximus-muscle-r",
+      "partner": "muscle-coccygeus-muscle-r",
+      "peakBeforeMm": 2.49,
+      "peakAfterMm": 0.56,
+      "maximumGrowthMm": 0.0,
+      "newOverTwoMm": 0
+    }
+  ],
+  "samplesPerPair": 101,
+  "modifiedParts": {
+    "forearm-hand": [],
+    "head-neck": [],
+    "pelvis-leg-foot": [
+      "muscle-gluteus-maximus-muscle-l",
+      "muscle-gluteus-maximus-muscle-r"
+    ],
+    "shoulder-arm": [
+      "muscle-scapular-spinal-part-of-deltoid-muscle-l",
+      "muscle-scapular-spinal-part-of-deltoid-muscle-r"
+    ],
+    "trunk-back": []
+  },
+  "modelHashes": {
+    "forearm-hand": "d7d1b2b0200597b839bf79141ba9bc89a267422bfa325de2352a67c902509bee",
+    "head-neck": "a3e37364e7401c50ba9785818727f9844d810696ab5c948441ba91eb5fd60363",
+    "pelvis-leg-foot": "534fc8db7e247df34d2154b1813192d147027abcc503d962656fca518d844f93",
+    "shoulder-arm": "b0e1eb1169b35a3b2caf7a080fa5a00901c9c9ba0fb6fb3826c82a36e2419be1",
+    "trunk-back": "e3528ed1b4e18f28778dabed0be9c0ee1618b058cf8c0fc33ca32c38fd000c16"
+  },
+  "sourceVerification": {
+    "pelvis-leg-foot": {
+      "parts": 120,
+      "restSampleMaxErrorMillimeters": 0.7414,
+      "fittedRestSampleMaxErrorMillimeters": 0.2724,
+      "fittedRestComponentsChecked": 2,
+      "samples": {
+        "0": {
+          "partsMovedOver1mm": 120,
+          "partsWithSampledEdgeChange": 52,
+          "highestEdgeStretchP95": [
+            [
+              1.2,
+              "muscle-gluteus-maximus-muscle-l"
+            ],
+            [
+              1.182,
+              "muscle-semitendinosus-muscle-l"
+            ],
+            [
+              1.17,
+              "muscle-vastus-intermedius-muscle-r"
+            ]
+          ]
+        },
+        "22": {
+          "partsMovedOver1mm": 120,
+          "partsWithSampledEdgeChange": 46,
+          "highestEdgeStretchP95": [
+            [
+              1.387,
+              "muscle-vastus-intermedius-muscle-r"
+            ],
+            [
+              1.367,
+              "muscle-vastus-medialis-muscle-r"
+            ],
+            [
+              1.349,
+              "muscle-rectus-femoris-muscle-r"
+            ]
+          ]
+        },
+        "51": {
+          "partsMovedOver1mm": 120,
+          "partsWithSampledEdgeChange": 52,
+          "highestEdgeStretchP95": [
+            [
+              1.246,
+              "muscle-quadratus-femoris-muscle-l"
+            ],
+            [
+              1.214,
+              "muscle-gluteus-maximus-muscle-r"
+            ],
+            [
+              1.181,
+              "muscle-semitendinosus-muscle-r"
+            ]
+          ]
+        },
+        "85": {
+          "partsMovedOver1mm": 120,
+          "partsWithSampledEdgeChange": 53,
+          "highestEdgeStretchP95": [
+            [
+              1.219,
+              "muscle-gluteus-maximus-muscle-l"
+            ],
+            [
+              1.202,
+              "muscle-semitendinosus-muscle-l"
+            ],
+            [
+              1.16,
+              "muscle-vastus-intermedius-muscle-l"
+            ]
+          ]
+        },
+        "100": {
+          "partsMovedOver1mm": 120,
+          "partsWithSampledEdgeChange": 51,
+          "highestEdgeStretchP95": [
+            [
+              1.183,
+              "muscle-fibularis-brevis-muscle-r"
+            ],
+            [
+              1.181,
+              "muscle-gluteus-maximus-muscle-l"
+            ],
+            [
+              1.173,
+              "muscle-quadratus-femoris-muscle-r"
+            ]
+          ]
+        }
+      }
+    },
+    "shoulder-arm": {
+      "parts": 30,
+      "restSampleMaxErrorMillimeters": 0.2351,
+      "fittedRestSampleMaxErrorMillimeters": 0.2244,
+      "fittedRestComponentsChecked": 2,
+      "samples": {
+        "0": {
+          "partsMovedOver1mm": 30,
+          "partsWithSampledEdgeChange": 28,
+          "highestEdgeStretchP95": [
+            [
+              1.2,
+              "muscle-teres-major-muscle-r"
+            ],
+            [
+              1.186,
+              "muscle-long-head-of-triceps-brachii-r"
+            ],
+            [
+              1.173,
+              "muscle-lateral-head-of-triceps-brachii-r"
+            ]
+          ]
+        },
+        "22": {
+          "partsMovedOver1mm": 30,
+          "partsWithSampledEdgeChange": 19,
+          "highestEdgeStretchP95": [
+            [
+              1.147,
+              "muscle-medial-head-of-triceps-brachii-l"
+            ],
+            [
+              1.147,
+              "muscle-lateral-head-of-triceps-brachii-l"
+            ],
+            [
+              1.142,
+              "muscle-long-head-of-triceps-brachii-r"
+            ]
+          ]
+        },
+        "51": {
+          "partsMovedOver1mm": 30,
+          "partsWithSampledEdgeChange": 28,
+          "highestEdgeStretchP95": [
+            [
+              1.192,
+              "muscle-teres-major-muscle-l"
+            ],
+            [
+              1.183,
+              "muscle-lateral-head-of-triceps-brachii-l"
+            ],
+            [
+              1.181,
+              "muscle-medial-head-of-triceps-brachii-l"
+            ]
+          ]
+        },
+        "85": {
+          "partsMovedOver1mm": 30,
+          "partsWithSampledEdgeChange": 27,
+          "highestEdgeStretchP95": [
+            [
+              1.173,
+              "muscle-long-head-of-triceps-brachii-r"
+            ],
+            [
+              1.161,
+              "muscle-lateral-head-of-triceps-brachii-r"
+            ],
+            [
+              1.14,
+              "muscle-medial-head-of-triceps-brachii-r"
+            ]
+          ]
+        },
+        "100": {
+          "partsMovedOver1mm": 30,
+          "partsWithSampledEdgeChange": 28,
+          "highestEdgeStretchP95": [
+            [
+              1.2,
+              "muscle-teres-major-muscle-r"
+            ],
+            [
+              1.186,
+              "muscle-long-head-of-triceps-brachii-r"
+            ],
+            [
+              1.173,
+              "muscle-lateral-head-of-triceps-brachii-r"
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "evidence": "Mesh overlap measurements of the modeled gait. These values do not measure contact force or certify anatomical clearance.",
+  "sampledContactsOver2mm": {
+    "before": 5244,
+    "after": 5214
+  }
+}
