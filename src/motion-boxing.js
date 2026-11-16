@@ -56,7 +56,7 @@ const key=(time,settings={},yaw=-12)=>{
 };
 
 export const boxingActivity={
- id:'shadowbox',label:'Shadowbox · guarded jab–cross',category:'Sport and expression',duration:8,view:'lesson',scope:'all',ground:'both',
+ id:'shadowbox',label:'Shadowbox · guarded jab–cross',category:'Sport and expression',duration:8,view:'side',scope:'all',ground:'both',
  description:'An orthodox left jab and rear-right cross with closed, near-vertical fists, a staggered stance, body turn and prompt recovery to guard. This non-contact teaching sequence is slowed for inspection; muscle roles are illustrative and foot contact is approximate.',
  sources:[
   {title:'Jin et al. — Boxing punch sequence and neutral wrist alignment',url:'https://pmc.ncbi.nlm.nih.gov/articles/PMC12313678/'},
