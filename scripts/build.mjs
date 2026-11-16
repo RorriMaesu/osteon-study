@@ -45,7 +45,7 @@ html=html.replace(/href="cell-labs\.css(?:\?v=[a-z0-9]+)?"/,`href="cell-labs.css
 html=html.replace(/href="quality\.css(?:\?v=[a-z0-9]+)?"/,`href="quality.css?v=${hash('quality.css')}"`);
 html=html.replace(/href="workspace\.css(?:\?v=[a-z0-9]+)?"/,`href="workspace.css?v=${hash('workspace.css')}"`);
 html=html.replace(/href="style\.css(?:\?v=[a-z0-9]+)?"/,`href="style.css?v=${hash('style.css')}"`).replace(/src="app\.js(?:\?v=[a-z0-9]+)?"/,`src="app.js?v=${hash('app.js')}"`);
-for(const sheet of ['worksheet.css','muscle-spatial.css','motion-lab.css','motion-pose.css']){
+for(const sheet of ['worksheet.css','muscle-spatial.css','motion-lab.css','motion-pose.css','motion-activities.css']){
  const expression=new RegExp('href="'+sheet.replace('.','\\.')+'(?:\\?v=[a-z0-9]+)?"');
  html=html.replace(expression,`href="${sheet}?v=${hash(sheet)}"`);
 }

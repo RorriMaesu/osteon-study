@@ -1,6 +1,7 @@
 
 import {MotionViewer} from './motion-viewer.js';
 import {initPoseLab} from './motion-pose-lab.js';
+import {initActivitiesLab} from './motion-activities-lab.js';
 import {armRoles,clamp,curlDuration,curlFrame,heelFrame,pressFrame,compareElbowTime,elbowLimits,contractionCues} from './motion-core.js';
 import {sampleWalk,gaitEventName,gaitChannel} from './motion-walk.js';
 import {walkScopes,walkScopeMatches} from './motion-walk-model.js';
@@ -69,6 +70,7 @@ export function initMotionLab({setView}){
  root.innerHTML=`
  <header class="motion-heading"><div><a href="#atlas" class="motion-back">← 3D Atlas</a><h1 tabindex="-1">Motion <em>Lab</em></h1><a class="motion-coverage" href="muscle-coverage.html">Coverage ↗</a></div>
  <div class="motion-modes" role="group" aria-label="Motion mode">
+ <button type="button" data-motion-mode="activities">Movement library</button>
  <button type="button" data-motion-mode="pose">Pose skeleton</button>
  <button type="button" data-motion-mode="actions">Muscle actions</button>
  ${walking?'<button type="button" data-motion-mode="walk">Walk cycle</button>':''}
@@ -137,6 +139,8 @@ export function initMotionLab({setView}){
  observeMotionReveal(motion.stage);
  const poseHost=document.createElement('div');poseHost.hidden=true;root.append(poseHost);
  const poseLab=initPoseLab(poseHost,{revealPreference,onLesson:id=>{state.mode='actions';state.lesson=id;state.regionalClip='';clearSelection();state.time=0;load();}});
+ const activitiesHost=document.createElement('div');activitiesHost.hidden=true;root.append(activitiesHost);
+ const activitiesLab=initActivitiesLab(activitiesHost,{revealPreference});
  function partsInMode(){
   if(!specimen)return [];
   const mode=state.mode+':'+state.lesson,count=specimen.parts.length;
@@ -224,7 +228,7 @@ export function initMotionLab({setView}){
   if(!part&&!mode)return;
   const lesson=params.get('motionLesson'),requestedSide=params.get('motionSide');
   const side=['left','right'].includes(requestedSide)?requestedSide:part?(part.endsWith('-l')?'left':'right'):state.side;
-  if(mode==='pose'||mode==='actions'||mode==='walk'&&walking)state.mode=mode;
+  if(mode==='activities'||mode==='pose'||mode==='actions'||mode==='walk'&&walking)state.mode=mode;
   if(lesson==='heel'&&calfLesson||lesson==='curl'||lesson==='press'||availableRegional.some(([id])=>id===lesson))state.lesson=lesson;
   if(regionalLesson())state.regionalClip=params.get('motionClip')||'';
   state.armSide=side==='left'&&secondArm?'left':'right';
@@ -365,11 +369,14 @@ export function initMotionLab({setView}){
   const run=++revision;
   state.playing=false;
   specimen=null;
-  const posing=state.mode==='pose';
+  const posing=state.mode==='pose',activities=state.mode==='activities';
   root.toggleAttribute('data-pose-workspace',posing);
-  $('.motion-workspace').hidden=posing;
-  $('.motion-notes-toggle').hidden=posing;
+  root.toggleAttribute('data-activities-workspace',activities);
+  $('.motion-workspace').hidden=posing||activities;
+  $('.motion-notes-toggle').hidden=posing||activities;
   for(const button of root.querySelectorAll('[data-motion-mode]'))button.setAttribute('aria-pressed',String(button.dataset.motionMode===state.mode));
+  if(activities){motion.close();poseLab.close();await activitiesLab.open();return;}
+  activitiesLab.close();
   if(posing){motion.close();await poseLab.open();return;}
   poseLab.close();
   motion.target=null;
@@ -722,7 +729,12 @@ export function initMotionLab({setView}){
    lastContext=contextKey;
   }
  }
- for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{const mode=button.dataset.motionMode;if(state.mode!==mode){state.mode=mode;clearSelection();state.time=0;state.loop=mode!=='walk';load();}};
+ for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{
+  const mode=button.dataset.motionMode;if(state.mode===mode)return;
+  state.mode=mode;clearSelection();state.time=0;state.loop=mode!=='walk';
+  const url=new URL(location.href);url.searchParams.set('motionMode',mode);history.replaceState(history.state,'',url);
+  load();
+ };
  for(const button of root.querySelectorAll('[data-motion-camera]'))button.onclick=()=>motion.frame(button.dataset.motionCamera);
  for(const button of zoomButtons)button.onclick=()=>motion.zoom(button.dataset.viewerZoom);
  $('[data-motion-muscle-reveal]').onclick=()=>{revealPreference.setEnabled(!revealPreference.enabled(state.mode));draw();};
@@ -789,6 +801,6 @@ export function initMotionLab({setView}){
  document.addEventListener('visibilitychange',()=>{if(document.hidden&&active&&state.playing){state.playing=false;draw();}});
  document.addEventListener('viewchange',event=>{
   if(event.detail==='motion'){if(!active){active=true;readRoute();load();}}
-  else if(active){active=false;state.playing=false;revision++;motion.close();poseLab.close();}
+  else if(active){active=false;state.playing=false;revision++;motion.close();poseLab.close();activitiesLab.close();}
  });
 }

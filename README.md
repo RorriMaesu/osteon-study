@@ -12,6 +12,7 @@
 
 - **Explore:** rotate the skeleton, double-click into a region, toggle muscles or ligaments in your current view, and peel away covering surfaces.
 - **Pose:** [adjust the whole body](https://rorrimaesu.github.io/osteon-study/?motionMode=pose#motion) with joint handles, linked-limb movement, angle locks and undo. Inspect possible muscle contributors and opposing actions. [Controls, verification and current limits](WHOLE-BODY-POSING.md).
+- **Watch a movement:** [open the Movement library](https://rorrimaesu.github.io/osteon-study/?motionMode=activities&motionActivity=squat#motion) for 13 playable sequences: squatting, bending, walking, running, jumping, reaching, arm raises, fist closure, grasping, dancing, shadowboxing, heel raises and head turns. Pause, scrub, slow to ¼×, isolate a region, and reveal deeper muscles. Phase notes distinguish shortening, controlled lengthening and holding. These are authored teaching animations with illustrative muscle roles; timing and highlights are not measured motion capture or EMG.
 - **Locate:** inspect labeled landmarks, openings, and teaching reconstructions.
 - **Recall:** name numbered targets, check your answer, and return to missed material.
 - **Connect:** study chapter notes, concept questions, glossary terms, and source readings on desktop or phone.

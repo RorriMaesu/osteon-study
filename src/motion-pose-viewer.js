@@ -6,6 +6,7 @@ import {loadPoseRig,applyPose,poseJointWorld,poseMarkerWorld,poseAxisWorld} from
 import {visiblePoseMarkers,dialDelta,solvePoseTarget,poseScopeMatches} from './motion-pose-ik.js';
 import {placePoseLabel,placePoseGrip,poseRect,overlapsPoseRect} from './motion-pose-overlays.js';
 import modelAssets from './model-assets.json' with {type:'json'};
+import {applyActivityPose} from './motion-activity-placement.js';
 
 const svgNS='http://www.w3.org/2000/svg';
 const vector=value=>value?.isVector3?value.clone():new THREE.Vector3(...value);
@@ -92,6 +93,12 @@ export class PoseViewer extends MotionViewer{
   if(!this.current)return;
   this.poseValues=values;
   applyPose(this.current,values);
+  this.dirty=true;
+ }
+ applyActivity(values,root,options){
+  if(!this.current)return;
+  this.poseValues=values;
+  applyActivityPose(this.current,values,root,options);
   this.dirty=true;
  }
  setPoseSelection(jointId,axisId,{locks=[],interaction='joint'}={}){
@@ -196,6 +203,12 @@ export class PoseViewer extends MotionViewer{
  }
  updateMarker(){
   this.handle.hidden=true;this.loadTag.hidden=true;
+  if(this.activityMode){
+   this.guide.style.display='none';this.grip.hidden=true;
+   this.jointLabelGuide.replaceChildren();
+   this.overlayObstacles=this.fixedOverlayObstacles();
+   return;
+  }
   if(!this.current||!this.renderer){this.guide.hidden=true;this.grip.hidden=true;return;}
   const descriptors=this.current.descriptors||this.current.meta.descriptors||[];
   const pixelsPerMeter=this.stage.clientHeight/(2*Math.tan(this.camera.fov*radians/2)*this.camera.position.distanceTo(this.controls.target));
@@ -259,7 +272,7 @@ export class PoseViewer extends MotionViewer{
   this.selectionLine.setAttribute('x2',point.x);this.selectionLine.setAttribute('y2',point.y);
  }
  startPoseDrag(event,jointId,kind='joint'){
-  if(event.button!==0||!this.current||this.poseDrag)return;
+  if(this.activityMode||event.button!==0||!this.current||this.poseDrag)return;
   event.preventDefault();event.stopPropagation();
   this.callbacks.selectJoint(jointId,{pointer:true});
   if(this.poseLocks.includes(jointId)){this.callbacks.message('This joint angle is locked. Unlock it to adjust.');return;}
