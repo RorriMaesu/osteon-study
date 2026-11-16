@@ -11,7 +11,7 @@ function sampleVertices(geometry){
  if(samples)return samples;
  const positions=geometry.attributes.position;
  const candidates=[];
- const count=Math.min(128,positions.count);
+ const count=Math.min(96,positions.count);
  for(let i=0;i<count;i++){
   const index=Math.floor(i*positions.count/count);
   candidates.push({index,point:new THREE.Vector3().fromBufferAttribute(positions,index),distance:Infinity});
@@ -47,14 +47,16 @@ export function visibleInTree(mesh){
 function sampledBounds(mesh,viewProjection){
  projection.multiplyMatrices(viewProjection,mesh.matrixWorld);
  let left=Infinity,right=-Infinity,bottom=Infinity,top=-Infinity,near=Infinity;
- for(const index of sampleVertices(mesh.geometry)){
+ const vertices=sampleVertices(mesh.geometry);
+ for(let i=0;i<vertices.length;i+=2){
+  const index=vertices[i];
   const {x,y,z}=projectVertex(mesh,index,projection);
   if(z>1)continue;
   left=Math.min(left,x);right=Math.max(right,x);
   bottom=Math.min(bottom,y);top=Math.max(top,y);near=Math.min(near,z);
  }
  if(!Number.isFinite(near))return null;
- const padX=.012+(right-left)*.12,padY=.012+(top-bottom)*.12;
+ const padX=.014+(right-left)*.21,padY=.014+(top-bottom)*.21;
  return {mesh,left:left-padX,right:right+padX,bottom:bottom-padY,top:top+padY,near};
 }
 
@@ -142,6 +144,7 @@ export class MotionReveal{
   this.nextScan=0;
   this.sequence=0;
   this.roundsLeft=0;
+  this.hits=[];
   this.report(0,0,false,'',0);
  }
  configure({selected,targets,bones,contributors}){
@@ -149,6 +152,7 @@ export class MotionReveal{
    this.nextScan=0;
    this.pending=[];
    this.lastProbes=null;
+   this.hits=[];
    this.anchor=undefined;
    this.targetOffset=0;
   }
@@ -182,7 +186,9 @@ export class MotionReveal{
   const batch=targets.length<=windowSize?targets:Array.from({length:windowSize},(_,i)=>targets[(offset+i)%targets.length]);
   this.targetOffset=offset+batch.length;
   const protectedMeshes=new Set(targets.map(part=>part.mesh));
-  const probes=batch.flatMap(part=>targetProbes(part,this.viewProjection,camera,this.stage.clientWidth,this.stage.clientHeight));
+  const sampled=batch.map(part=>targetProbes(part,this.viewProjection,camera,this.stage.clientWidth,this.stage.clientHeight));
+  const probes=[];
+  for(let i=0;i<16;i++)for(const set of sampled)if(set[i])probes.push(set[i]);
   this.lastProbes=probes;
   const bones=specimen.revealBones||[];
   const candidate=(mesh,bone)=>{
@@ -190,14 +196,14 @@ export class MotionReveal{
    const bounds=sampledBounds(mesh,this.viewProjection);
    if(!bounds)return;
    const relevant=probes.filter(p=>p.x>=bounds.left&&p.x<=bounds.right&&p.y>=bounds.bottom&&p.y<=bounds.top&&p.depth>cameraDepth(bounds.near,camera)-.012);
-   if(relevant.length)this.pending.push({mesh,bone,probes:selected?relevant:relevant.slice(0,16)});
+   if(relevant.length)this.pending.push({mesh,bone,probes:relevant.slice(0,16)});
   };
   if(probes.length){
    for(const {mesh} of specimen.parts)candidate(mesh,false);
    for(const mesh of bones)candidate(mesh,true);
    this.pending.sort((a,b)=>b.probes.length-a.probes.length);
   }
-  this.coveredByBone=false;
+  this.hits=[];
   this.roundSize=Math.ceil(targets.length/windowSize);
   this.nextScan=now+110;
  }
@@ -210,7 +216,6 @@ export class MotionReveal{
   if(working&&this.roundsLeft>0&&!this.pending.length&&now>=this.nextScan){
    this.roundsLeft--;
    this.begin(now,specimen,camera);
-   rendered=true;
   }
   if(this.pending.length){
    // Cap work per frame when several deep tissues cover the same target.
@@ -222,27 +227,34 @@ export class MotionReveal{
     if(bone&&hit.length){
      const base=this.faded.get(mesh)?.base??mesh.material;
      if(!base.transparent||base.opacity>=.8){
-      this.coveredByBone=true;
       for(const probe of hit)probe.boneBlocked=true;
      }
     }
-    if(hit.length&&!bone)for(const probe of hit)probe.covers=(probe.covers||0)+1;
-    if(hit.length&&(!bone||this.bones))this.fade(mesh,bone);
+    if(hit.length&&(!bone||this.bones)){
+     for(const probe of hit)probe.covers=(probe.covers||0)+1;
+     this.hits.push({mesh,bone,hit});
+     this.fade(mesh,bone);
+    }
    }while(this.pending.length&&performance.now()<deadline);
-   rendered=true;
   }
   if(working&&!this.pending.length&&this.lastProbes){
-   this.boneBlocked=this.coveredByBone;
-   const anchors=this.bones?this.lastProbes:this.lastProbes.filter(p=>!p.boneBlocked);
+   const clearProbes=this.lastProbes.filter(probe=>!probe.boneBlocked);
+   this.boneBlocked=clearProbes.length<this.lastProbes.length/2;
+   const anchors=this.bones?this.lastProbes:clearProbes;
    this.anchor=this.selectedInView?anchors.reduce((best,p)=>!best||(p.covers||0)<(best.covers||0)?p:best,null)?.index:undefined;
+   for(const {mesh,bone,hit} of this.hits){
+    const coverCount=hit.reduce((max,p)=>Math.max(max,p.covers),1);
+    const entry=this.faded.get(mesh);
+    if(entry)entry.opacity=Math.max(.09,(bone?.18:.19)/Math.sqrt(coverCount));
+   }
    this.lastProbes=null;
-   rendered=true;
+   if(this.selectedInView)rendered=true;
   }
   let count=0,boneCount=0,contributorCount=0;
   for(const [mesh,entry] of this.faded){
    const protectedMuscle=this.selected?mesh===this.selected.mesh:this.targets.some(part=>part.mesh===mesh);
    const active=working&&this.sequence-entry.seen<=this.roundSize&&visibleInTree(mesh)&&!protectedMuscle&&(!entry.bone||this.bones);
-   const goal=active?(entry.bone?.18:.19):entry.base.opacity;
+   const goal=active?entry.opacity:entry.base.opacity;
    const difference=goal-entry.material.opacity;
    if(!active&&(!visibleInTree(mesh)||protectedMuscle||Math.abs(difference)<.015||reducedMotion)){
     mesh.material=entry.base;
@@ -282,7 +294,7 @@ export class MotionReveal{
   }
   material.opacity=base.opacity;
   mesh.material=material;
-  this.faded.set(mesh,{base,material,bone,seen:this.sequence});
+  this.faded.set(mesh,{base,material,bone,seen:this.sequence,opacity:bone?.18:.19});
  }
  isFaded(mesh){return (this.faded.get(mesh)?.material.opacity??1)<.65;}
 }

@@ -166,7 +166,7 @@ export function createPoseUI(host,callbacks={}){
   bones.parentElement.hidden=!state.reveal;
   bones.checked=!!state.revealBones;
   focus.hidden=!state.canFocusMuscle;
-  explore.hidden=!state.reveal||!state.revealGroup||state.contributors.length<2;
+  explore.hidden=!state.reveal||state.contributors.length<2;
   $('.pose-reveal-options').hidden=tab!=='muscles'||!state.ready||!state.showMuscles||(bones.parentElement.hidden&&focus.hidden&&explore.hidden);
   const visible=list.slice(page*pageSize,(page+1)*pageSize),key=JSON.stringify([tab,page,pageSize,visible.map(entry=>[listId(entry),listName(entry),entry.kind,entry.note,entry.roleLabel]),state.selectedJoint,state.selectedMuscle,state.studyGuide?.id,movementNote]);
   if(key!==renderedListKey){

@@ -7,7 +7,7 @@ import {walkScopes,walkScopeMatches} from './motion-walk-model.js';
 import {regionalLessons,regionalFrame,breathingLayers} from './motion-regional.js';
 import {setLearningContext} from './learning-context.js';
 import {viewerZoomControls} from './viewer-guidance.js';
-import {createMotionRevealPreference,observeMotionReveal,revealGroup} from './motion-reveal-preference.js';
+import {createMotionRevealPreference,observeMotionReveal} from './motion-reveal-preference.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 
 const sources={
@@ -598,7 +598,7 @@ export function initMotionLab({setView}){
    strengths,selected:state.selected,selectedGroup,isolateSelection:state.isolateSelection&&!!selected,
    antagonists:shownOpposing,selectionRoles,showMuscles:state.showMuscles,
    onlyActive:state.onlyActive,showCalves:heelLesson(),cue,displayThreshold:threshold,
-   regionalRoles:breathingLayers[layer],reveal,revealGroup,revealBones,revealThreshold,
+   regionalRoles:breathingLayers[layer],reveal,revealBones,revealThreshold,
   });
   const revealToggle=$('[data-motion-muscle-reveal]');
   if(revealToggle.getAttribute('aria-pressed')!==String(reveal))revealToggle.setAttribute('aria-pressed',String(reveal));
@@ -607,7 +607,7 @@ export function initMotionLab({setView}){
   boneControl.parentElement.hidden=!reveal||!state.showMuscles;
   boneControl.checked=revealBones;
   $('[data-motion-muscle-focus]').hidden=!state.showMuscles||!motion.selectedPart;
-  revealCandidates=reveal&&revealGroup&&state.showMuscles&&!state.isolateSelection?parts.filter(part=>{
+  revealCandidates=reveal&&state.showMuscles&&!state.isolateSelection?parts.filter(part=>{
    const strength=strengths[roleKey(part)];
    return part.mesh.visible&&!part.walkOnly&&!part.contextOnly&&strength>0&&strength>=revealThreshold;
   }):[];

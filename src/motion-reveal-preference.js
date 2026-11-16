@@ -1,8 +1,5 @@
 const storageKey = 'osteon-motion-reveal-v1';
 
-// Enable after verifying the selected-muscle control across the three modes.
-export const revealGroup = false;
-
 export function createMotionRevealPreference() {
  let enabled = null;
  let bones = false;
@@ -36,7 +33,7 @@ export function observeMotionReveal(stage) {
    count ? `${count} ${count === 1 ? 'muscle' : 'muscles'} faded` : '',
    contributorCount ? 'Includes a contributor' : '',
    boneCount ? `${boneCount} ${boneCount === 1 ? 'bone' : 'bones'} faded` : '',
-   boneBlocked ? 'Bone covers this view' : '',
+   boneBlocked ? 'Bone obstructs this view' : '',
   ].filter(Boolean).join(' · ');
   if (status.textContent !== text) status.textContent = text;
   status.title = target && text ? `Revealing ${target}. ${text}` : text;

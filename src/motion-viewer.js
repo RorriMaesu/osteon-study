@@ -427,7 +427,7 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,selectionRoles,regionalRoles,reveal=false,revealThreshold=0,revealGroup=false,revealBones=false}){
+ highlight({strengths,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,selectionRoles,regionalRoles,reveal=false,revealThreshold=0,revealBones=false}){
   if(!this.current)return;
   const replaced=new Set();
   for(const {mesh,base} of this.current.calves||[]){
@@ -437,6 +437,7 @@ export class MotionViewer {
   this.selectedPart=null;
   this.selectionRoles=selectionRoles;
   const revealTargets=[];
+  const previousRevealTargets=reveal&&revealThreshold?new Set(this.reveal?.targets):null;
   const isolate=isolateSelection&&!!(selected||selectedGroup);
   for(const p of this.current.parts){
    const key=p.side+':'+p.id, strength=this.walkActive&&p.walkOnly?0:strengths[key];
@@ -449,7 +450,8 @@ export class MotionViewer {
     !regionalRoles||focused||regionalRoles.includes(p.id);
    p.mesh.visible=showMuscles&&inScope&&(!p.walkOnly||this.walkActive)&&!replaced.has(p.mesh)&&(!p.lessonOnly||showCalves)&&(!onlyActive||focused||visibleSignal||opposing||mixed)&&(!isolate||focused);
    if(exact&&p.mesh.visible)this.selectedPart=p;
-   if(reveal&&p.mesh.visible&&(mixed||visibleSignal&&strength>=revealThreshold))revealTargets.push(p);
+   const revealFloor=previousRevealTargets?.has(p)?revealThreshold*.7:revealThreshold;
+   if(reveal&&p.mesh.visible&&(mixed||visibleSignal&&strength>=revealFloor))revealTargets.push(p);
    if(!p.walkOnly){
     p.material.color.copy(cue?muscleMuted:muscleBase);
     const intensity=visibleSignal?clamp(strength,0,1):0;
@@ -461,7 +463,7 @@ export class MotionViewer {
    if(p.outline||focused)outlinePart(p).visible=focused&&p.mesh.visible;
   }
   if(reveal&&showMuscles)this.reveal?.configure({
-   selected:this.selectedPart,targets:revealGroup?revealTargets:[],bones:revealBones,
+   selected:this.selectedPart,targets:revealTargets,bones:revealBones,
    contributors:new Set(cue==='emg'?[]:revealTargets.map(part=>part.mesh)),
   });
   else if(this.reveal?.targets.length||this.reveal?.selected||this.reveal?.faded.size)this.reveal.reset();

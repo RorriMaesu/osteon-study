@@ -6,7 +6,7 @@ import {describePoseAxis,poseMotionCycle} from './motion-pose-motions.js';
 import {createPosePreview,samplePosePreview} from './motion-pose-playback.js';
 import {setLearningContext} from './learning-context.js';
 import {findMotionStudyGuide} from './motion-study-guides.js';
-import {createMotionRevealPreference,revealGroup} from './motion-reveal-preference.js';
+import {createMotionRevealPreference} from './motion-reveal-preference.js';
 
 const savedKey='osteon-whole-body-pose-v1';
 
@@ -270,7 +270,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
    contributorLabel:role.contributorLabel||(role.movements?.length===1?role.movements[0].contributorLabel:null),
    opposingLabel:role.opposingLabel||(role.movements?.length===1?role.movements[0].opposingLabel:null),selectedMuscle,
    selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
-   reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones(),revealGroup,canFocusMuscle:!!viewer.selectedPart,
+   reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones(),canFocusMuscle:!!viewer.selectedPart,
    evidence:role.note,movementLabel:role.label,studyGuide,roleNote:role.movementNotes?.[0]||studyGuide?.note||'',
    movementNote:[studyGuide?.note,...(role.movementNotes||[]),joint?.detail,joint?.coupling].filter(Boolean).join(' ')});
  }
@@ -284,7 +284,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   for(const key of role.shared||[])if(!labels.has(key))labels.set(key,'Mixed joint roles');
   viewer.color({contributors:role.contributors,opposing:role.opposing,shared:role.shared,selectionRoles:labels,selectedMuscle,showMuscles,visibleAnatomy,
    onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||role.shared?.length||selectedMuscle),
-   reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones(),revealGroup});
+   reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones()});
   updateUI(role,visibleAnatomy,labels);
   const context=[selectedJoint,role.label,selectedMuscle].join('|');
   if(context!==lastContext){setLearningContext({type:'study',label:'Pose skeleton · '+descriptor()?.label,reference:'9.5',text:role.note+' '+(role.label||'')});lastContext=context;}

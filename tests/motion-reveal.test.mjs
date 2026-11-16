@@ -76,3 +76,26 @@ test('a fully bone-obscured muscle has no surface label until bone fading is ena
  assert.equal(typeof reveal.anchor,'number');
  assert.ok(cover.mesh.material.opacity<.3);
 });
+
+test('group reveal preserves contributors until one is selected for closer inspection',()=>{
+ const {stage,reveal,muscle,scan}=setup();
+ const deep=muscle('Deep contributor',0,0,0,.23);
+ const superficial=muscle('Superficial contributor',0,0,.55,.34);
+ const cover=muscle('Context cover',0,0,1.15,.44);
+ const contributors=new Set([deep.mesh,superficial.mesh]);
+ const targets=[deep,superficial];
+ const solid=superficial.mesh.material;
+ reveal.configure({selected:null,targets,bones:false,contributors});
+ scan();
+ assert.equal(superficial.mesh.material,solid);
+ assert.ok(cover.mesh.material.opacity<.3);
+
+ reveal.configure({selected:deep,targets,bones:false,contributors});
+ scan();
+ assert.ok(superficial.mesh.material.opacity<.3);
+ assert.equal(stage.dataset.revealTarget,'Deep contributor');
+ reveal.configure({selected:null,targets:[],bones:false,contributors:new Set()});
+ scan();
+ assert.equal(superficial.mesh.material,solid);
+ assert.equal(cover.mesh.material.opacity,1);
+});
