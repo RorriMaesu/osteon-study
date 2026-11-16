@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "asset": "motion-pose-body.glb",
-  "sha256": "9869f8995424252b3cf14fbf66d3892a08c99a6cad543e87970e8c115264eab7",
-  "bytes": 17829548,
+  "sha256": "f177597d25ae7537659a128dbd46e10fe55415f7b094bba748977f6a0e286df5",
+  "bytes": 17921928,
   "description": "Atlas-derived whole-body posing specimen with named articulation handles and approximate attached muscle envelopes.",
   "evidence": "Teaching geometry. Pose and muscle color do not measure activation or force.",
   "scope": "Conservative joint ranges include weighted cervical rotation, skull-on-atlas nod, coupled shoulder elevation and across-chest movement, thoracic turn, pelvic tilt, thumb opposition, finger hinges and spread, hindfoot roll, grouped and individual toe-base motion, jaw opening and small glides, blink, smile and breathing. The teaching rig omits tooth and tissue contact, independent carpal and midfoot glides, toe interphalangeal controls, gaze and tongue control.",
@@ -3336,7 +3336,7 @@
     "muscle-zygomaticus-minor-muscle-l",
     "muscle-zygomaticus-minor-muscle-r"
   ],
-  "backup": "gluteal-clearance-20261115-154643-7867",
+  "backup": "2026-11-15-latissimus-repair/backup",
   "clearanceCorrectives": [
     {
       "target": "ClearanceHipFlexionMidL",
@@ -5490,7 +5490,9 @@
     "shoulderElevation": "https://pubmed.ncbi.nlm.nih.gov/19181982/",
     "platysmaAttachments": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10702465/",
     "ischialRegion": "https://pubmed.ncbi.nlm.nih.gov/16998454/",
-    "mandibularTranslation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/"
+    "mandibularTranslation": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/",
+    "latissimusArchitecture": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3724205/",
+    "latissimusElevation": "https://pubmed.ncbi.nlm.nih.gov/38504340/"
   },
   "inputs": {
     "assets\\skeleton.glb": "2d159eddbc12de45d84195fc56957b274e7086b00224c245f22ea9d8ea6409eb",

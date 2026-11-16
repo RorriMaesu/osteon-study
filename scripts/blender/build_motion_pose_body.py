@@ -19,6 +19,7 @@ from mathutils import Vector
 from mathutils.bvhtree import BVHTree
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from latissimus_binding import latissimus_humeral_share
 from mouth_deformation import ORAL_FOLLOW, incisor_clearance, oral_jaw_weight
 from pose_clearance import bake_clearance
 REPO, WORK = [Path(p).resolve() for p in sys.argv[sys.argv.index('--')+1:]]
@@ -558,6 +559,8 @@ def bind_all(rig):
             if shoulder_attachment:
                 origin,direction,length=shoulder_attachment
                 t=smooth((p-origin).dot(direction)/length,0,1)
+                if name=='Latissimus dorsi muscle':
+                    t=latissimus_humeral_share(t, p.y, NODES[side+'-shoulder']['pivot'][1])
                 values={shoulder_origin:1-t,side+'-shoulder':t}
             if hamstring_ends:
                 origin,direction,length=hamstring_ends
@@ -673,7 +676,9 @@ def main():
                            shoulderElevation='https://pubmed.ncbi.nlm.nih.gov/19181982/',
                            platysmaAttachments='https://pmc.ncbi.nlm.nih.gov/articles/PMC10702465/',
                            ischialRegion='https://pubmed.ncbi.nlm.nih.gov/16998454/',
-                           mandibularTranslation='https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/')
+                           mandibularTranslation='https://pmc.ncbi.nlm.nih.gov/articles/PMC7860955/',
+                           latissimusArchitecture='https://pmc.ncbi.nlm.nih.gov/articles/PMC3724205/',
+                           latissimusElevation='https://pubmed.ncbi.nlm.nih.gov/38504340/')
     (ASSETS/(NAME+'.json')).write_text(json.dumps(meta,indent=2)+'\n')
     print('EXPORTED_POSE_BODY',len(JOINTS),len(NODES),len(MUSCLES),target.stat().st_size,flush=True)
 

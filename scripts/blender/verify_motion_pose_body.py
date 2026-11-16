@@ -203,7 +203,45 @@ def check_jaw_opening():
                         'upperCheekPeakMm':round(float(upper_cheek.max()),3)}
     return report
 
+def check_latissimus_binding():
+    report = {}
+    for side in ('left', 'right'):
+        obj = muscle_by_id[f'muscle-latissimus-dorsi-muscle-{side[0]}']
+        rest = neutral[obj.name]
+        shoulder_id = side + '-shoulder'
+        shoulder = rig.pose.bones[nodes[shoulder_id]['name']]
+        shoulder_height = nodes[shoulder_id]['pivot'][1]
+        belly = rest[:, 2] < shoulder_height - .20
+        tendon = rest[:, 2] > shoulder_height - .065
+        assert belly.sum() > 500 and tendon.sum() > 20, (side, 'attachment samples')
+        apply({})
+        to_bone = (rig.matrix_world @ shoulder.matrix).inverted()
+        tendon_local = [to_bone @ Vector(point) for point in rest[tendon]]
+        rows = {}
+        for axis, angle in (('scaption', 60), ('abduction', 90), ('flexion', 90)):
+            apply({shoulder_id: {axis: angle}})
+            posed = vertices(obj)
+            belly_motion = float(np.linalg.norm(posed[belly] - rest[belly], axis=1).max())
+            to_world = rig.matrix_world @ shoulder.matrix
+            follow_error = float(np.linalg.norm(posed[tendon] - [to_world @ point for point in tendon_local], axis=1).max())
+            tendon_travel = float(np.median(np.linalg.norm(posed[tendon] - rest[tendon], axis=1)))
+            assert belly_motion < .001, (side, axis, 'trunk anchor moves with the arm', belly_motion)
+            assert follow_error < .002 and tendon_travel > .03, (side, axis, 'humeral attachment detached', follow_error, tendon_travel)
+            rows[axis] = {'angle': angle, 'bellyDisplacementMm': round(belly_motion * 1000, 3),
+                          'maxTendonFollowErrorMm': round(follow_error * 1000, 3)}
+        report[side] = rows
+    apply({'trunk': {'flexion': 20}})
+    for side in ('l', 'r'):
+        obj = muscle_by_id[f'muscle-latissimus-dorsi-muscle-{side}']
+        rest = neutral[obj.name]
+        belly = (rest[:, 2] > 1.06) & (rest[:, 2] < 1.18)
+        assert np.median(np.linalg.norm(vertices(obj)[belly] - rest[belly], axis=1)) > .01, (side, 'trunk anchor froze')
+    apply({})
+    return report
+
+
 jaw_opening = check_jaw_opening()
+latissimus_binding = check_latissimus_binding()
 
 hand={j['id']:{a['id']:a['max'] for a in j['axes']} for j in META['joints'] if j['id'].startswith('right-') and any(d in j['id'] for d in ('thumb','index','middle','ring','little'))}
 scenarios={
@@ -261,6 +299,7 @@ report={
  'maximumNeutralBoundsErrorMillimeters':round(max_bounds_error*1000,6),'maximumSkinWeightSumError':max_weight_error,
  'jointControls':len(META['joints']),'rigNodes':len(rig.pose.bones),'exactNeutralReset':True,
  'jawOpening':jaw_opening,
+ 'latissimusBinding':latissimus_binding,
  'sampledPoses':results,
  'limits':'Numerical re-import and sampled skin-envelope checks. This does not validate tissue collision, dynamic forces, clinical range of motion, or activation.',
 }
