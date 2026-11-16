@@ -3,6 +3,7 @@ import {PoseViewer} from './motion-pose-viewer.js';
 import {neutralPose} from './motion-pose-core.js';
 import {resolveActivityRoles} from './motion-activity-roles.js';
 import {poseScopeMatches} from './motion-pose-ik.js';
+import {activityScope} from './motion-activity-scope.js';
 import {activities,sampleActivity} from './motion-activities.js';
 import {createMotionRevealPreference,observeMotionReveal} from './motion-reveal-preference.js';
 import {setLearningContext} from './learning-context.js';
@@ -21,6 +22,7 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
  let active=false,ready=false,revision=0,specimen=null,descriptors=[],neutral={},sample=null,pose={};
  let activity=activities[0],time=0,playing=false,loop=true,speed=1,scope='all',selectedMuscle=null;
  let showMuscles=true,onlyRelated=false,notesOpen=false,tab='muscles',page=0,pageSize=5,filter='all';
+ let visibleAnatomy=null;
  let cameraMode='cycle',cameraView='front',cameraControls=null;
  let lastFrame=0,lastUI=0,lastRoleKey='',lastListKey='',lastContext='',roleState={rows:[],contributors:[],opposing:[],shared:[],labels:new Map()};
  const cycleBounds=new Map();
@@ -64,11 +66,13 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
   <div class="activities-panel" id="${prefix}-panel" role="tabpanel" aria-labelledby="${prefix}-tab-muscles">
    <div class="activities-role-tools">
     <div class="activities-role-key"><span class="activities-contributor">◇ Contributors</span><span class="activities-opponent">○ Opposing actions</span><span class="activities-mixed">◆ Mixed joint roles</span></div>
+    <input type="search" data-activity-muscle-search aria-label="Search muscles in this phase" placeholder="Find a muscle…">
     <select data-activity-filter aria-label="Filter muscle roles"><option value="all">All roles in this view</option><option value="contributor">Contributors</option><option value="eccentric">Lengthening under tension</option><option value="isometric">Holding / stabilizing</option><option value="opponent">Opposing actions</option></select>
     <div class="activities-options"><button type="button" data-activity-related aria-pressed="false">Related only</button><button type="button" data-activity-muscles aria-pressed="true">Muscles</button><label><input type="checkbox" data-activity-bones> Fade covering bones</label></div>
    </div>
    <input type="search" data-activity-search aria-label="Find an everyday movement" placeholder="Search movements…" hidden>
    <p class="activities-list-caption" data-activity-caption></p>
+   <button type="button" data-activity-clear-muscle hidden>Clear selected muscle</button>
    <div class="activities-muscle-list"></div>
    <article class="activities-guide" hidden></article>
    <nav class="activities-pager" aria-label="Movement explorer pages"><button type="button" data-activity-page-previous aria-label="Previous page">←</button><output data-activity-page>1 / 1</output><button type="button" data-activity-page-next aria-label="Next page">→</button></nav>
@@ -116,7 +120,9 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
   const key=JSON.stringify([next.contributors,next.opposing,next.shared,[...next.labels],scope,selectedMuscle,showMuscles,onlyRelated,revealPreference.enabled('actions'),revealPreference.fadeBones()]);
   roleState=next;
   if(force||key!==lastRoleKey){
-   lastRoleKey=key;viewer.color({...next,selectionRoles:next.labels,selectedMuscle,showMuscles,onlyRelated,reveal:revealPreference.enabled('actions'),revealBones:revealPreference.fadeBones()});
+   lastRoleKey=key;
+   visibleAnatomy=activityScope(scope,activity,next,descriptors,specimen.parts,specimen.bones);
+   viewer.color({...next,selectionRoles:next.labels,visibleAnatomy,selectedMuscle,showMuscles,onlyRelated,reveal:revealPreference.enabled('actions'),revealBones:revealPreference.fadeBones()});
    lastListKey='';renderDetails();
   }
  }
@@ -148,7 +154,7 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
   $('[data-activity-time]').value=String(time);$('[data-activity-time]').setAttribute('aria-valuetext',clock(time)+' of '+clock(activity.duration)+(phase?' · '+phase.label:''));
   $('[data-activity-time-value]').textContent=clock(time)+' / '+clock(activity.duration);
   $('[data-activity-phase]').textContent=phase?.label||activity.label;
-  const count=roleState.rows.filter(row=>row.kind!=='opponent'&&poseScopeMatches(scope,row.part)).length;
+  const count=scopedRows().filter(row=>row.kind!=='opponent').length;
   $('[data-activity-summary]').textContent=(phase?.label||'Ready')+' · '+count+' possible contributors';
   $('[data-activity-summary]').title=phase?.explanation||'';
   $('[data-activity-scope]').value=scope;$('[data-activity-reveal]').setAttribute('aria-pressed',String(revealPreference.enabled('actions')));
@@ -158,7 +164,15 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
   $('[data-activity-phase-next]').disabled=!ready||!sample||sample.phaseIndex>=activity.phases.length-1;
   renderDetails();
  }
- function visibleRows(){return roleState.rows.filter(row=>poseScopeMatches(scope,row.part)).filter(row=>filter==='all'||filter==='contributor'&&row.kind!=='opponent'||filter==='opponent'&&row.kind==='opponent'||row.types.includes(filter));}
+ function scopedRows(){return roleState.rows.filter(row=>visibleAnatomy?.muscleKeys.has(row.key)??poseScopeMatches(scope,row.part));}
+ function visibleRows(){
+  const query=normalize($('[data-activity-muscle-search]').value).trim().split(/\s+/).filter(Boolean);
+  return scopedRows().filter(row=>{
+   const matchesRole=filter==='all'||filter==='contributor'&&row.kind!=='opponent'||filter==='opponent'&&row.kind==='opponent'||row.types.includes(filter);
+   const text=normalize(row.name+' '+row.side);
+   return matchesRole&&query.every(word=>text.includes(word));
+  });
+ }
  function guidePages(){
   const sources=(activity.sources||[]).filter(source=>/^https:\/\//.test(source.url||''));
   const pages=[
@@ -172,6 +186,7 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
   return [...pages.flatMap(item=>[{title:item.title,text:item.text},...(item.extra?[{title:item.title+' · continued',text:item.extra}]:[])]),...sources.map(source=>({title:'Read the source',text:'Opens the source in a new tab; your animation stays here.',sources:[source]}))];
  }
  function renderDetails(){
+  $('[data-activity-clear-muscle]').hidden=tab!=='muscles'||!selectedMuscle;
   if(tab==='guide'){
    const pages=guidePages();page=Math.max(0,Math.min(page,pages.length-1));const item=pages[page];
    const key=JSON.stringify([tab,page,item]);if(key!==lastListKey){lastListKey=key;$('.activities-guide').innerHTML=`<h3>${escape(item.title)}</h3><p>${escape(item.text)}</p>${item.extra?`<p>${escape(item.extra)}</p>`:''}${(item.sources||[]).map(source=>`<a href="${escape(source.url)}" target="_blank" rel="noopener">${escape(source.title)} ↗</a>`).join('')}`;}
@@ -184,9 +199,10 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
   const key=JSON.stringify([tab,page,scope,selectedMuscle,activity.id,shown.map(row=>[row.key||row.id,row.role])]);
   if(key!==lastListKey){
    lastListKey=key;
-   list.innerHTML=shown.length?shown.map(row=>tab==='muscles'?`<button type="button" data-activity-muscle="${escape(row.key)}" data-kind="${row.kind}" data-contraction="${row.types.join(' ')}" aria-pressed="${row.key===selectedMuscle}" title="${escape(row.name+' · '+row.role+' · '+row.action)}"><span>${escape(row.name)} <small>· ${escape(row.side)}</small></span><small>${escape(row.role)}</small></button>`:`<button type="button" data-activity-choice="${escape(row.id)}" aria-pressed="${row.id===activity.id}"><span>${escape(row.label)}</span><small>${escape(row.category)} · ${row.duration} s</small></button>`).join(''):'<p class="activities-empty">'+(tab==='library'?'No movements match. Try a shorter name.':'No matching muscle roles in this view. Choose Whole body or another role filter.')+'</p>';
+   list.innerHTML=shown.length?shown.map(row=>tab==='muscles'?`<button type="button" data-activity-muscle="${escape(row.key)}" data-kind="${row.kind}" data-contraction="${row.types.join(' ')}" aria-pressed="${row.key===selectedMuscle}" title="${escape(row.name+' · '+row.role+' · '+row.action)}"><span>${escape(row.name)} <small>· ${escape(row.side)}</small></span><small>${escape(row.role)}</small></button>`:`<button type="button" data-activity-choice="${escape(row.id)}" aria-pressed="${row.id===activity.id}"><span>${escape(row.label)}</span><small>${escape(row.category)} · ${row.duration} s</small></button>`).join(''):'<p class="activities-empty">'+(tab==='library'?'No movements match. Try a shorter name.':'No matching muscles. Clear the search or change the role filter.')+'</p>';
   }
-  $('[data-activity-caption]').textContent=tab==='library'?entries.length+' movements':entries.length+' muscle components · '+(sample?.phase?.label||'Ready');
+  const total=tab==='muscles'?scopedRows().length:0;
+  $('[data-activity-caption]').textContent=tab==='library'?entries.length+' movements':(entries.length===total?total+' muscle components':entries.length+' of '+total+' muscle components')+' · '+(sample?.phase?.label||'Ready');
   updatePager(count);
  }
  function updatePager(count){$('[data-activity-page]').textContent=(page+1)+' / '+count;$('[data-activity-page-previous]').disabled=page===0;$('[data-activity-page-next]').disabled=page>=count-1;}
@@ -239,7 +255,8 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
  }
  function choose(id,{updateRoute=true}={}){
   const next=activities.find(item=>item.id===id);if(!next)return false;
-  activity=next;time=0;playing=false;lastFrame=0;selectedMuscle=null;scope=activity.scope||'all';page=0;lastRoleKey='';lastListKey='';
+  activity=next;time=0;playing=false;lastFrame=0;selectedMuscle=null;scope=activity.scope||'all';page=0;lastRoleKey='';lastListKey='';visibleAnatomy=null;
+  filter='all';$('[data-activity-filter]').value=filter;$('[data-activity-muscle-search]').value='';
   $('[data-activity-select]').value=activity.id;viewer.setScope(scope);
   if(updateRoute){const url=new URL(location.href);url.searchParams.set('motionActivity',activity.id);url.searchParams.set('motionMode','activities');url.searchParams.delete('activity');history.replaceState(history.state,'',url);}
   if(ready){draw({force:true});if(activity.id==='grasp'||activity.id==='reach-forward')frameCycle(activity.view||'front');else focusActivity();}else updateUI();
@@ -273,6 +290,8 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
  button('[data-activity-page-previous]',()=>{page--;renderDetails();});button('[data-activity-page-next]',()=>{page++;renderDetails();});
  button('[data-activity-phase-previous]',()=>phaseStep(-1));button('[data-activity-phase-next]',()=>phaseStep(1));
  on('[data-activity-filter]','change',event=>{filter=event.target.value;page=0;lastListKey='';renderDetails();});
+ button('[data-activity-clear-muscle]',()=>{if(selectedMuscle)selectMuscle(selectedMuscle);});
+ on('[data-activity-muscle-search]','input',()=>{page=0;lastListKey='';renderDetails();});
  on('[data-activity-search]','input',()=>{page=0;lastListKey='';renderDetails();});
  host.addEventListener('click',event=>{
   const muscle=event.target.closest('[data-activity-muscle]'),choice=event.target.closest('[data-activity-choice]'),tabButton=event.target.closest('[data-activity-tab]'),camera=event.target.closest('[data-activity-camera]'),zoom=event.target.closest('[data-viewer-zoom]');

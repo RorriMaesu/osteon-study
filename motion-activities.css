@@ -104,3 +104,7 @@ body:has(#motion-view.active .motion-activities-workspace:not([hidden]))>main{fl
  .activities-notes-heading{min-height:23px}.activities-notes-heading strong{font-size:11px}.activities-tabs button{min-height:29px}.activities-guide{font-size:11px;line-height:1.35}
 }
 @media(prefers-reduced-motion:reduce){.motion-activities-workspace *{scroll-behavior:auto!important}}
+
+.activities-role-tools input[type=search]{width:100%;min-height:32px;padding:3px 6px;font-size:11px}
+.activities-panel [data-activity-clear-muscle]{align-self:flex-start;min-height:28px;padding:3px 7px;font-size:10px}
+@media(max-height:580px){.activities-role-tools input[type=search],.activities-role-tools select{min-height:28px}}
