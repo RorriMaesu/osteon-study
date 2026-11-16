@@ -24,7 +24,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  const quantity=(n,label)=>`${n} ${label}${n===1?'':'s'}`;
  let session=null,flash=null,savedQuick=readQuickPractice(localStorage,allTerms),draftWarning=false,quickSetupOpen=false;
  const ui={region:'All regions',count:10};
- const hasMuscleExercise=()=>/^#(?:muscle-labeling|muscle-worksheet|professor-muscle-(?:review|session|results))$/.test(location.hash);
+ const hasMuscleExercise=()=>/^#(?:muscle-list|muscle-labeling|muscle-worksheet|professor-muscle-(?:review|session|results))$/.test(location.hash);
  function checkpoint(run=session){
   savedQuick=run;
   try{writeQuickPractice(localStorage,run);}catch{if(!draftWarning){draftWarning=true;toast('Quick practice could not be saved on this device. Keep this tab open.');}}
@@ -37,7 +37,7 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
   <button class="mock-shortcut" data-exam4-open><strong>Exam 4 mock</strong><small>Chapters 10–11 · 44 questions · 60 points</small></button>
   <button class="mock-shortcut" data-mock-open><strong>Exam 3 mock</strong><small>44 questions · 60 points · course-grounded</small></button>
   <button class="primary" id="bone-list-test"><strong>Required bone-list test</strong><small>BI 231 checklist · saved progress</small></button>
-  <button id="practice-muscle-checklist"><strong>Muscle checklist practice</strong><small>BI 231 · identification and explanations</small></button>
+  <button id="practice-muscle-checklist"><strong>Required muscle list</strong><small>Learn and quiz all 67 entries · BI 231</small></button>
   <button id="practice-muscle-labeling"><strong>Muscle labeling</strong><small>Worksheet, source figures and 3D</small></button>
   <button id="practice-professor-muscles"><strong>Professor’s 21-question review</strong><small>Chapters 10–11 · written practice</small></button>
   <button id="practice-exams"><strong>Chapter exams</strong><small>50 per chapter · feedback at submission</small></button>
@@ -99,38 +99,8 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  }
  document.addEventListener('studyterm',ev=>startFlash([ev.detail]));
  function openMuscleChecklist(){
-  const cards=chapter11Muscles.filter(card=>card.courseChecklist);
-  const sections=[...new Set(cards.map(card=>card.section))];
-  const checklist=questions.filter(question=>question.checklistTargetId);
-  dialog(`<h2>BI 231 muscle checklist</h2><p>Practice all ${cards.length} course entries by region. Marked figures are available for selected structures.</p>
-   <div class="control-row"><label for="muscle-checklist-section">Section</label><select id="muscle-checklist-section"><option value="">All regions</option>${sections.map(id=>`<option value="${id}">${e(id+' · '+lessons.find(lesson=>lesson.id===id).short)}</option>`).join('')}</select></div>
-   <div class="control-row"><label for="muscle-checklist-type">Practice</label><select id="muscle-checklist-type"><option value="">Mixed</option><option value="identify">Figure identification</option><option value="written">Location, action and attachments</option></select></div>
-   <div class="control-row"><label for="muscle-checklist-count">Length</label><select id="muscle-checklist-count"><option value="5">5 prompts</option><option value="10" selected>10 prompts</option><option value="20">20 prompts</option><option value="all">Full selection</option></select></div>
-   <p id="muscle-checklist-count-note" role="status"></p><button class="primary" id="muscle-checklist-start">Start practice</button>`);
-  const section=$('#muscle-checklist-section'),type=$('#muscle-checklist-type'),count=$('#muscle-checklist-count'),start=$('#muscle-checklist-start');
-  function pool(){
-   const ids=new Set(cards.filter(card=>!section.value||card.section===section.value).map(card=>card.id));
-   return checklist.filter(question=>ids.has(question.checklistTargetId)&&(!type.value||question.type===type.value));
-  }
-  function showCount(){
-   const available=pool().length;
-   $('#muscle-checklist-count-note').textContent=quantity(available,'matching prompt');
-   start.disabled=!available;
-  }
-  section.onchange=type.onchange=showCount;
-  showCount();
-  start.onclick=()=>{
-   const items=shuffle(pool()),selected=count.value==='all'?items:items.slice(0,Number(count.value));
-   if(!selected.length)return;
-   if(!type.value&&selected.every(question=>question.type===selected[0].type)){
-    const other=items.find(question=>question.type!==selected[0].type);
-    if(other)selected[selected.length-1]=other;
-   }
-   $('#info-dialog').close();
-   document.dispatchEvent(new CustomEvent('exampractice',{detail:selected.map(question=>question.id)}));
-  };
+  document.dispatchEvent(new Event('openmusclechecklist'));
  }
- document.addEventListener('openmusclechecklist',openMuscleChecklist);
  document.addEventListener('studydeck',ev=>startFlash(ev.detail));
  document.addEventListener('practicehome',()=>{flash=null;practiceHome();});
  function progressPage(){

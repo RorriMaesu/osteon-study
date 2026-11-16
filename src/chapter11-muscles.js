@@ -2,7 +2,7 @@
 // anatomy references. General attachments are deliberately not mesh coordinates.
 export const chapter11MuscleSources = {
   checklist:'BI 231 Muscle List F24.doc',
-  checklistNote:'The F24 course list asks for name, location, main action, and general origin and insertion. It does not specify weighting for the November 20 exam. Group names remain groups; additional cards extend the chapter coverage.',
+  checklistNote:'The F24 course list names required muscles, groups and connective-tissue terms, and reminds learners to review ligaments. Location, action and general attachments are teaching support. The separate muscle lab identifies ten attachment rows for the test. Group names remain groups; additional cards extend the chapter coverage.',
   sourceURL:'https://openstax.org/books/anatomy-and-physiology-2e/pages/11-introduction',
   headNeck:'https://www.stritch.luc.edu/lumen/meded/grossanatomy/homepage/muscletables/head-neckmuscletable.pdf',
   upperLimb:'https://www.stritch.luc.edu/lumen/meded/grossanatomy/homepage/muscletables/upperextremitymuscletable.pdf',

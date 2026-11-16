@@ -1,0 +1,66 @@
+body[data-muscle-list-active]{height:var(--mock4-viewport,100dvh);min-height:0;overflow:hidden;display:flex;flex-direction:column}
+body[data-muscle-list-active]>.topbar{flex:none}
+body[data-muscle-list-active]>footer{display:none}
+body[data-muscle-list-active] #main{flex:1;min-height:0;overflow:hidden;padding:0 clamp(6px,2vw,22px)}
+body[data-muscle-list-active] #practice-view.active{height:100%;display:block;min-height:0;overflow:hidden;padding:0;scrollbar-gutter:auto}
+.muscle-list-shell{height:100%;min-height:0;max-width:1120px;margin:auto;padding:8px 0;display:flex;flex-direction:column;gap:7px;overflow-wrap:anywhere}
+.muscle-list-header{display:flex;align-items:center;gap:12px;justify-content:space-between;flex:none}
+.muscle-list-header h1{font-size:clamp(23px,3.2vw,37px);line-height:1.05;margin:3px 0}
+.muscle-list-header .eyebrow{font-size:9px;letter-spacing:.13em}
+.muscle-list-shell button,.muscle-list-shell select{min-height:42px;line-height:1.25}
+.muscle-list-shell button{font-size:12px;padding:8px 12px}
+.muscle-list-controls{display:flex;align-items:end;gap:14px;flex:none}
+.muscle-list-controls>label{display:flex;align-items:center;gap:9px;margin-left:auto;font-size:12px;min-width:0;white-space:nowrap}
+.muscle-list-controls select{width:min(310px,34vw);min-width:0;font-size:12px}
+.muscle-list-tabs{display:flex;gap:6px}
+.muscle-list-tabs button[aria-pressed=true]{background:var(--mint,#c7e1d0);color:#112829;border-color:var(--mint,#c7e1d0)}
+.muscle-list-progress{font-size:12px;line-height:1.3;color:var(--muted,#abc0c1);margin:0;flex:none}
+.muscle-list-resume{flex:none;align-self:flex-start;color:var(--mint,#c7e1d0);border-color:var(--mint,#c7e1d0)}
+.muscle-list-picker{display:flex;gap:7px;flex:none;align-items:center}
+.muscle-list-picker select{flex:1;min-width:0;width:0;font-size:14px}
+.muscle-list-picker button{min-width:44px}
+.muscle-list-panel{display:flex;flex:1;min-height:0;min-width:0;background:var(--panel,#182a2f);border:1px solid var(--line,#34494e);border-radius:14px;padding:clamp(10px,2vw,23px)}
+.muscle-list-frame h2{font-size:clamp(23px,3vw,34px);line-height:1.15}
+.muscle-list-frame h3{font-size:16px;font-family:inherit;margin:17px 0 5px;line-height:1.3}
+.muscle-list-frame p{font-size:14px;line-height:1.5;max-width:82ch}
+.muscle-list-frame .muscle-list-meta{color:var(--mint,#c7e1d0);font-size:12px}
+.muscle-list-frame .muscle-list-note{color:var(--muted,#abc0c1);font-size:12px}
+.muscle-list-notice{color:var(--mint,#c7e1d0)}
+.muscle-list-links{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.muscle-list-bottom{display:flex;align-items:center;gap:7px;flex:none}
+.muscle-list-bottom>.primary{margin-left:auto}
+.muscle-list-field{display:grid;gap:5px;max-width:560px;margin:12px 0;font-size:13px}
+.muscle-list-field select{width:100%;min-width:0;font-size:13px}
+.muscle-list-count{font-weight:600}
+.muscle-list-shell .mock4-page-nav{margin-top:4px;flex:none}
+@media(max-width:650px){
+ body[data-muscle-list-active] .main-nav{display:none}
+ body[data-muscle-list-active]>.topbar{padding:2px 9px}
+ .muscle-list-shell{gap:6px;padding:6px 0}
+ .muscle-list-header{gap:6px}
+ .muscle-list-header h1{font-size:25px}
+ .muscle-list-header button{font-size:11px;padding:7px 9px;white-space:nowrap}
+ .muscle-list-controls{gap:8px;flex-wrap:wrap}
+ .muscle-list-controls>label{width:100%;margin:0;justify-content:space-between}
+ .muscle-list-controls select{width:calc(100% - 55px)}
+ .muscle-list-tabs{width:100%;gap:7px}
+ .muscle-list-tabs button{flex:1}
+ .muscle-list-picker select{font-size:13px}
+ .muscle-list-panel{padding:10px}
+ .muscle-list-frame p{font-size:13px;line-height:1.45}
+ .muscle-list-bottom{gap:5px}
+ .muscle-list-bottom button{padding:6px 8px;font-size:11px}
+ .muscle-list-progress{font-size:11px}
+}
+@media(max-height:540px){
+ body[data-muscle-list-active]>.topbar{display:none}
+ .muscle-list-header h1{font-size:21px}
+ .muscle-list-header .eyebrow,.muscle-list-progress{display:none}
+ .muscle-list-shell{gap:4px;padding:3px 0}
+ .muscle-list-controls{flex-wrap:nowrap}
+ .muscle-list-tabs{width:auto}
+ .muscle-list-controls>label{width:auto;flex:1;margin-left:auto}
+ .muscle-list-controls select{width:0;flex:1;min-width:0}
+ .muscle-list-shell button,.muscle-list-shell select{min-height:36px;padding:5px 8px}
+ .muscle-list-panel{padding:7px}
+}

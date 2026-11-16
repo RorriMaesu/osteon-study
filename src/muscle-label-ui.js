@@ -14,7 +14,7 @@ export const worksheetSourcesByTerm=new Map(
 export function initMuscleLabeling({viewer,setView,dialog,toast,escape:e}){
  const root=document.getElementById('practice-view');
  let disposeWorksheet=null,spatialReturn='hub';
- const goBack=destination=>destination==='progress'?setView('progress'):hub();
+ const goBack=destination=>destination==='muscle-list'?document.dispatchEvent(new Event('openmusclechecklist')):destination==='progress'?setView('progress'):hub();
 
  function hub(){
   setView('practice',{route:'muscle-labeling'});
