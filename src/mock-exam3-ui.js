@@ -18,7 +18,8 @@ import {renderMockFigure,preloadMockFigures} from './mock-exam3-figures.js';
 import {blankMockState,readMockState,writeMockState,mockBackup,parseMockBackup,addCardCandidate,cardText} from './mock-exam3-store.js';
 
 import {mountMock4Screen,mountMock4Dialog,mock4Group,mock4Details} from './mock-exam4-pages.js';
-import {builtInStudyDraft,getWrittenSuggestion,hasConfirmedMiss,refineStudyDrafts,saveWrittenSuggestion,studyBasis,studyNoteValue,writtenSuggestionScore} from './mock-review-tools.js';
+import {STUDY_DRAFT_VERSION,builtInStudyDraft,getWrittenSuggestion,hasConfirmedMiss,missedStudyPriorities,priorityRecall,refineStudyDrafts,saveWrittenSuggestion,studyBasis,studyEvidence,studyNoteValue,studyRecallItems,writtenSuggestionScore} from './mock-review-tools.js';
+import {renderStudyNote,renderStudyRecall} from './mock-study-sheet.js';
 
 const exam3Sections=[['mc','01','Multiple choice','30 questions · one answer each',30],['diagram','02','Anatomy in view','9 packet targets · precise naming',18],['tf','03','True or false','3 statements · check the distinction',6],['written','04','Explain the mechanism','2 written responses · partial credit',6]];
 const chapterNames={6:'Bone tissue',7:'Axial skeleton',8:'Appendicular skeleton',9:'Joints',10:'Muscle tissue',11:'Muscular system'};
@@ -51,7 +52,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  const root=document.querySelector('#practice-view');
  let state,storageError='',unreadableRecord='',loadingFigures=false,session=null,screen='home',filter='missed',controller=null,gradingMessage='',autoGrade=!exam4,coachedFeedback=null;
  let lastTick=Date.now(),gradingEpoch=0,ownsView=false;
- let layout,paintedQuestion='',reviewIndex=null,notesOpen=false,operation='',reviewContinuation=null,reviewFailures=[];
+ let layout,paintedQuestion='',reviewIndex=null,notesOpen=false,operation='',reviewContinuation=null,reviewFailures=[],recallLayout=null;
  function dialog(html,decorate){
   openDialog(html);
   if(exam4)return mountMock4Dialog(document.querySelector('#dialog-content'),decorate);
@@ -222,7 +223,8 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   let changed=false;
   for(const row of mockResults(session).rows.filter(hasConfirmedMiss)){
    const note=noteFor(row.q),basis=studyBasis(row);
-   if(note.studyDraft?.basis===basis)continue;
+   const previous=note.studyDraft;
+   if(previous?.basis===basis&&(previous.kind==='local-ai'||previous.version===STUDY_DRAFT_VERSION))continue;
    state.notes[noteKey(row.q)]={...note,studyDraft:builtInStudyDraft(row),updatedAt:Date.now()};
    changed=true;
   }
@@ -236,30 +238,47 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   reviewFailures=[];
   report({title:'Study notes'});
  }
+ function startStudyRecall(rows){
+  if(!notesOpen||!rows.length)return;
+  let index=0,revealed=false;
+  const info=document.querySelector('#info-dialog');
+  function show(){
+   recallLayout?.close();
+   const item=rows[index],q=item.question;
+   const next=chooseMockPractice(q,state.history,{exclude:rows.map(r=>r.question.id),related:relatedQuestions});
+   const related=next?.kind==='repeat'?null:next?.question;
+   recallLayout=dialog(renderStudyRecall(item,{index,total:rows.length,revealed,related,escape:e,renderFigure}),
+    content=>[mock4Group('Recall',[...content.children].filter(node=>!node.matches('h2,.mock-study-recall-actions')))]);
+   const bind=(id,action)=>{const button=info.querySelector('#mock-study-recall-'+id);if(button)button.onclick=action;};
+   const move=offset=>{index+=offset;revealed=false;show();};
+   bind('prev',()=>move(-1));
+   bind('next',()=>move(1));
+   bind('reveal',()=>{revealed=true;show();const answer=info.querySelector('#mock-study-recall-answer');recallLayout?.reveal(answer);answer?.focus({preventScroll:true});});
+   bind('related',()=>{
+    rows.splice(index+1,0,...studyRecallItems({q:related,response:'',outcome:{components:[]}}));
+    move(1);
+   });
+   bind('close',()=>info.close());
+  }
+  show();
+ }
  function studySheet(result){
   const misses=result.rows.filter(hasConfirmedMiss);
   const canRefine=misses.some(row=>row.answered);
-  const cardInput=row=>{
-   const q=row.q,note=noteFor(q);
-   return `<div class="mock-note-candidate" data-mock4-split><input aria-label="Card line for question ${session.ids.indexOf(q.id)+1}" data-mock-candidate="${e(q.id)}" maxlength="180" value="${e(studyNoteValue(note,'cardDraft'))}">
-    <select aria-label="Study card side" data-mock-side="${e(q.id)}"><option value="front" ${note.cardSide!=='back'?'selected':''}>Front</option><option value="back" ${note.cardSide==='back'?'selected':''}>Back</option></select><button class="mock-btn" data-mock-add-note="${e(q.id)}">Add to card</button></div>`;
-  };
+  const priorities=missedStudyPriorities(misses,state.history,session.id);
   return `<section class="mock4-study-sheet">
-   <header data-study-summary><h1>Study notes</h1><p>${misses.length} ${misses.length===1?'question with':'questions with'} confirmed missed points. Edit any note and add useful lines to your study card.</p>
-   ${result.pendingPoints?'<p>Answers with only pending points will appear here after grading confirms a miss.</p>':''}
-   <p id="mock4-job-status" class="mock-note" role="status">${e(gradingMessage||(canRefine?'Notes start with the verified answer key. Local AI can refine them using your submitted answers.':'Notes are ready from the answer key.'))}</p>
+   <header data-study-summary><h1>Study notes</h1><p>${misses.length} ${misses.length===1?'question with':'questions with'} confirmed missed points. Browse all notes with the page selector.</p>
+   ${result.pendingPoints?'<p>Answers with only pending points will appear after review confirms a miss.</p>':''}
+   <p id="mock4-job-status" class="mock-note" role="status">${e(gradingMessage||(canRefine?'Ready from the answer key. Local AI can add coaching using your submitted answers.':'Notes are ready from the answer key.'))}</p>
    ${reviewFailures.map(message=>`<p class="mock-error">${e(message)}</p>`).join('')}</header>
-   ${misses.map(row=>{
-    const q=row.q,note=noteFor(q),number=session.ids.indexOf(q.id)+1;
-    return `<section data-study-question="${number}">
-     <h2>Q${number} · ${e(q.topic)}</h2><p>${e(q.source||'Textbook section '+q.lesson)} · ${note.studyDraft?.kind==='local-ai'?'Drafted with '+e(note.studyDraft.model):'Answer-key notes'}</p>
-     ${[['confusion','What to revisit'],['rule','Correct rule'],['retrieval','Recall question']].map(([field,title])=>
-      `<label class="mock-study-field">${title}<textarea data-mock-note="${field}" data-question="${e(q.id)}" maxlength="2000" rows="2">${e(studyNoteValue(note,field))}</textarea></label>`).join('')}
-     ${cardInput(row)}
-     <div class="mock-mini-actions"><button class="mock-btn" data-mock-lesson="${e(q.id)}">Open section ${e(q.lesson)} ↗</button></div></section>`;
-   }).join('')}
+   ${priorities.length?`<section data-study-priorities><h2>Start with these concepts</h2>
+    <button class="mock-btn primary" data-mock-action="priority-recall">Practice ${priorities.length} ${priorities.length===1?'concept':'concepts'} ↗</button>
+    ${priorities.map(group=>`<p><strong>${e(group.name)}</strong> · ${point(group.points)} missed ${group.points===1?'point':'points'}${group.earlierAttempts?` · missed on ${group.earlierAttempts} earlier ${group.earlierAttempts===1?'attempt':'attempts'}`:''}</p>`).join('')}</section>`:''}
+   ${misses.map(row=>renderStudyNote(row,{
+    number:session.ids.indexOf(row.q.id)+1,note:noteFor(row.q),escape:e,renderFigure,links:safeLinks(row.q)
+   })).join('')}
    <div class="mock-mini-actions mock4-review-actions" data-study-actions><button class="mock-btn" data-mock-action="back-score">← Score</button>
-   ${controller&&operation==='notes'?'<button class="mock-btn" data-mock-action="stop-review">Stop AI</button>':canRefine?`<button class="mock-btn mint" data-mock-action="refine-notes">${reviewContinuation?'Continue AI notes':'Refine with local AI'}</button>`:''}
+   ${controller&&operation==='notes'?'<button class="mock-btn" data-mock-action="stop-review">Stop AI</button>':canRefine?`<button class="mock-btn mint" data-mock-action="refine-notes">${reviewContinuation?'Continue AI notes':'Add local AI coaching'}</button>`:''}
    <button class="mock-btn" data-mock-action="download-sheet">Download notes</button></div></section>`;
  }
  async function refineNotes(){
@@ -278,7 +297,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   const {model,endpoint}=localAI.state;
   const remaining=candidates.filter(row=>{
    const draft=noteFor(row.q).studyDraft;
-   return draft?.kind!=='local-ai'||draft.model!==model||draft.basis!==studyBasis(row);
+   return draft?.kind!=='local-ai'||draft.version!==STUDY_DRAFT_VERSION||draft.model!==model||draft.basis!==studyBasis(row);
   });
   const rows=remaining.length?remaining:candidates;
   let saved=0;
@@ -313,7 +332,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
    if(reportEpoch!==gradingEpoch)return;
    controller=null;
    operation='';
-   gradingMessage=(signal.aborted?'Refinement stopped. ':'')+`${saved} AI ${saved===1?'note':'notes'} saved. Your edits are kept.`;
+   gradingMessage=(signal.aborted?'Coaching stopped. ':'')+`AI coaching saved for ${saved} ${saved===1?'question':'questions'}. Your edits are kept.`;
    if(reviewStatus(attemptId,reportEpoch))report();
   }
  }
@@ -321,9 +340,18 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   const lines=[session.title+' · Study notes',''];
   for(const row of mockResults(session).rows.filter(hasConfirmedMiss)){
    const q=row.q,note=noteFor(q);
+   const evidence=studyEvidence(row);
    lines.push(`Q${session.ids.indexOf(q.id)+1} · ${q.topic}`,q.source||'Textbook section '+q.lesson,
-    'What to revisit: '+studyNoteValue(note,'confusion'),'Correct rule: '+studyNoteValue(note,'rule'),
-    'Recall question: '+studyNoteValue(note,'retrieval'),'Study card: '+studyNoteValue(note,'cardDraft'),'');
+    'Your answer: '+(row.response||'No answer submitted.'),'Correct answer: '+evidence.correctAnswer);
+   if(evidence.orientation)lines.push('View: '+evidence.orientation+' (marked image in Osteon)');
+   if(evidence.earned.length)lines.push('Earned credit: '+evidence.earned.join(', '));
+   for(const criterion of evidence.missing)lines.push('Confirmed gap · '+criterion.label+': '+criterion.answer);
+   if(evidence.pending.length)lines.push('Still pending: '+evidence.pending.join(', '));
+   lines.push('What to revisit: '+studyNoteValue(note,'confusion'),'Correct rule: '+studyNoteValue(note,'rule'),
+    'Recall question: '+studyNoteValue(note,'retrieval'),'Study card: '+studyNoteValue(note,'cardDraft'));
+   if(note.studyDraft?.coaching)lines.push('AI coaching: '+note.studyDraft.coaching);
+   for(const link of q.sourceLinks||[])if(link.url?.startsWith('https://'))lines.push(link.label+' '+link.url);
+   lines.push('');
   }
   download(lines.join('\n'),'osteon-exam4-study-notes-'+session.id+'.txt','text/plain');
  }
@@ -560,6 +588,11 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  function handleKeys(event){if(!event.target.matches('[data-mock-option]')||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const options=[...root.querySelectorAll('[data-mock-option]')],i=options.indexOf(event.target),step=['ArrowUp','ArrowLeft'].includes(event.key)?-1:1,next=event.key==='Home'?0:event.key==='End'?options.length-1:(i+step+options.length)%options.length;options[next].click();focusItem(options[next]);}
  function handleClick(event){const b=event.target.closest('button');if(!b||b.disabled)return;
   const currentQ=id=>session?.questions.find(q=>q.id===id);
+  if(b.dataset.studyRecall&&notesOpen){
+   const row=mockResults(session).rows.find(item=>item.q.id===b.dataset.studyRecall);
+   if(row&&hasConfirmedMiss(row))startStudyRecall(studyRecallItems(row));
+   return;
+  }
   if(b.dataset.mockForm){const form=mockExam4Forms[b.dataset.mockForm];begin(form.questions,form,query('#mock4-mode').value);return;}
   if(b.dataset.mockExtended){document.dispatchEvent(new CustomEvent('openextendedexam',{detail:b.dataset.mockExtended}));return;}
   if(b.dataset.mockSpatial){document.dispatchEvent(new CustomEvent('openmusclespatial',{detail:{termId:b.dataset.mockSpatial}}));return;}
@@ -597,6 +630,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
    case'grade':resumeOrStart(grade);break;
    case'suggestions':showSuggestions();break;
    case'create-notes':openStudySheet();break;
+   case'priority-recall':if(notesOpen)startStudyRecall(priorityRecall(missedStudyPriorities(mockResults(session).rows,state.history,session.id)));break;
    case'refine-notes':resumeOrStart(refineNotes);break;
    case'download-sheet':downloadStudySheet();break;
    case'stop-review':controller?.abort();updateReviewProgress('Stopping. Completed work is saved.');break;

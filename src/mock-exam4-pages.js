@@ -258,7 +258,7 @@ export function mountMock4Screen(shell,screen,start){
   if(head){top.after(head);pinned=[shell.querySelector('.mock4-result-step')];}
   if(sheet){
    pinned=[sheet.querySelector('[data-study-actions]')];
-   groups=[group('Study notes',children(sheet.querySelector('[data-study-summary]'))),
+   groups=[group('Study notes',children(sheet.querySelector('[data-study-summary]')),children(sheet.querySelector('[data-study-priorities]'))),
     ...[...sheet.querySelectorAll('[data-study-question]')].map(note=>group('Question '+note.dataset.studyQuestion,children(note).map(split)))];
   }else if(summary){
    const actions=summary.querySelector('.mock4-review-actions');

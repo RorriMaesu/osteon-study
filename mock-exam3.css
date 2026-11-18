@@ -129,6 +129,10 @@ body[data-mock-exam-active=exam4] #practice-view.active:has(>.mock-exam4){
 .mock4-review-actions .mock-btn{padding:6px 10px}
 .mock-study-field{display:grid;gap:4px;margin:10px 0;color:var(--mx-muted);font-size:13px}
 .mock-study-field textarea{min-height:60px;resize:vertical}
+.mock-study-comparison,.mock-study-rubric{padding:8px 12px;border-left:2px solid #88ad9b;background:#8bbfa00a}
+.mock-study-comparison strong,.mock-study-rubric strong{display:block;color:var(--mx-ink)}
+.mock-study-figure svg:not(svg svg){max-height:clamp(55px,calc(var(--mock4-page-height) - 92px),290px)}
+.mock-study-source,.mock-study-orientation{font-size:12px}
 .mock-exam4 .mock4-pinned .mock-mini-actions{margin:0}
 .mock-exam4 .mock4-page h1{font-size:clamp(24px,4vw,46px);margin:3px 0 8px}
 .mock-exam4 .mock4-page h2{font-size:clamp(20px,3vw,30px)}
