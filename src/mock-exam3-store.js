@@ -1,4 +1,5 @@
 import {validMockSession} from './mock-exam3-core.js';
+import {studyFields,validStudyDraft} from './mock-review-tools.js';
 
 export const MOCK_EXAM3_STORAGE_KEY='osteon-mock-exam3-v1';
 export const blankMockState=()=>({schema:1,active:null,history:[],notes:{},card:{front:Array(24).fill(''),back:Array(24).fill('')}});
@@ -12,7 +13,9 @@ export function validMockState(x,bank){
  if(!['front','back'].every(side=>Array.isArray(x.card[side])&&x.card[side].length===24&&x.card[side].every(t=>typeof t==='string'&&t.length<=180)))return false;
  return Object.entries(x.notes).every(([key,n])=>safeKey(key)&&record(n)&&['confusion','rule','retrieval'].every(k=>typeof n[k]==='string'&&n[k].length<=2000)&&Number.isFinite(n.updatedAt)&&n.updatedAt>=0&&
   (n.cardDraft===undefined||typeof n.cardDraft==='string'&&n.cardDraft.length<=180)&&
-  (n.cardSide===undefined||['front','back'].includes(n.cardSide)));
+  (n.cardSide===undefined||['front','back'].includes(n.cardSide))&&
+  (n.studyDraft===undefined||validStudyDraft(n.studyDraft))&&
+  (n.studyEdits===undefined||Array.isArray(n.studyEdits)&&n.studyEdits.length<=studyFields.length&&n.studyEdits.every(field=>studyFields.includes(field))));
 }
 export function readMockState(storage,{key=MOCK_EXAM3_STORAGE_KEY,bank}={}){
  const raw=storage.getItem(key);

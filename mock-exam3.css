@@ -126,6 +126,9 @@ body[data-mock-exam-active=exam4] #practice-view.active:has(>.mock-exam4){
 .mock4-page-nav button:disabled{opacity:.45}
 .mock4-page-nav select{width:min(235px,52%);text-overflow:ellipsis}
 .mock4-pinned{flex:none;border-top:1px solid #ffffff16;padding-top:4px}
+.mock4-review-actions .mock-btn{padding:6px 10px}
+.mock-study-field{display:grid;gap:4px;margin:10px 0;color:var(--mx-muted);font-size:13px}
+.mock-study-field textarea{min-height:60px;resize:vertical}
 .mock-exam4 .mock4-pinned .mock-mini-actions{margin:0}
 .mock-exam4 .mock4-page h1{font-size:clamp(24px,4vw,46px);margin:3px 0 8px}
 .mock-exam4 .mock4-page h2{font-size:clamp(20px,3vw,30px)}

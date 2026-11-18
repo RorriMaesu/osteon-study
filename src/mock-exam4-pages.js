@@ -217,7 +217,11 @@ function reviewGroups(shell){
   group('Explanation',children(compare?.lastElementChild),paragraph.slice(1))];
  const figure=body.querySelector('.mock-figure');
  if(figure)groups.push(group('Diagram',figure,body.querySelector('.mock-figure-controls')));
- if(rubric)groups.push(group('Rubric',children(rubric).map(split),split(actions[1])));
+ if(rubric){
+  const suggestion=rubric.querySelector('[data-written-suggestion]');
+  if(suggestion)groups.push(group('AI suggestion',children(suggestion)));
+  groups.push(group('Rubric',children(rubric).filter(node=>node!==suggestion).map(split),split(actions[1])));
+ }
  if(notes)groups.push(group('Study notes',children(notes.querySelector('.mock-note-fields')),split(notes.querySelector('.mock-note-candidate'))));
  groups.push(group('Study links',body.querySelector('div.mock-evidence'),split(actions[0])));
  if(evidence)groups.push(groupDetails(evidence));
@@ -250,8 +254,17 @@ export function mountMock4Screen(shell,screen,start){
   const summary=shell.querySelector('.mock4-summary');
   const tools=shell.querySelector('.mock4-result-tools');
   const head=shell.querySelector('.mock4-result-head');
+  const sheet=shell.querySelector('.mock4-study-sheet');
   if(head){top.after(head);pinned=[shell.querySelector('.mock4-result-step')];}
-  groups=summary?[group('Score',children(summary).map(split)),group('Review tools',children(tools).map(split))]:reviewGroups(shell);
+  if(sheet){
+   pinned=[sheet.querySelector('[data-study-actions]')];
+   groups=[group('Study notes',children(sheet.querySelector('[data-study-summary]'))),
+    ...[...sheet.querySelectorAll('[data-study-question]')].map(note=>group('Question '+note.dataset.studyQuestion,children(note).map(split)))];
+  }else if(summary){
+   const actions=summary.querySelector('.mock4-review-actions');
+   if(actions?.childElementCount)pinned=[actions];
+   groups=[group('Score',children(summary).filter(node=>node!==actions).map(split)),group('Review tools',children(tools).map(split))];
+  }else groups=reviewGroups(shell);
   if(!groups.length)groups=[group('Review',shell.querySelector('.mock4-empty'))];
  }else if(screen==='card'){
   const sides=shell.querySelectorAll('.mock-card-side');

@@ -18,6 +18,7 @@ import {renderMockFigure,preloadMockFigures} from './mock-exam3-figures.js';
 import {blankMockState,readMockState,writeMockState,mockBackup,parseMockBackup,addCardCandidate,cardText} from './mock-exam3-store.js';
 
 import {mountMock4Screen,mountMock4Dialog,mock4Group,mock4Details} from './mock-exam4-pages.js';
+import {builtInStudyDraft,getWrittenSuggestion,hasConfirmedMiss,refineStudyDrafts,saveWrittenSuggestion,studyBasis,studyNoteValue,writtenSuggestionScore} from './mock-review-tools.js';
 
 const exam3Sections=[['mc','01','Multiple choice','30 questions · one answer each',30],['diagram','02','Anatomy in view','9 packet targets · precise naming',18],['tf','03','True or false','3 statements · check the distinction',6],['written','04','Explain the mechanism','2 written responses · partial credit',6]];
 const chapterNames={6:'Bone tissue',7:'Axial skeleton',8:'Appendicular skeleton',9:'Joints',10:'Muscle tissue',11:'Muscular system'};
@@ -50,13 +51,13 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  const root=document.querySelector('#practice-view');
  let state,storageError='',unreadableRecord='',loadingFigures=false,session=null,screen='home',filter='missed',controller=null,gradingMessage='',autoGrade=!exam4,coachedFeedback=null;
  let lastTick=Date.now(),gradingEpoch=0,ownsView=false;
- let layout,paintedQuestion='',reviewIndex=null;
+ let layout,paintedQuestion='',reviewIndex=null,notesOpen=false,operation='',reviewContinuation=null,reviewFailures=[];
  function dialog(html,decorate){
   openDialog(html);
   if(exam4)return mountMock4Dialog(document.querySelector('#dialog-content'),decorate);
  }
  function focusItem(node){if(node){layout?.reveal(node);node.focus({preventScroll:exam4});}}
- function cancelJob(){if(controller){controller.abort();controller=null;gradingEpoch++;gradingMessage='Review stopped. Completed decisions are kept; unresolved points remain pending.';}}
+ function cancelJob(){if(controller){controller.abort();controller=null;operation='';gradingEpoch++;gradingMessage='Review stopped. Completed work is saved.';}}
  const writtenJudge=new WrittenAnswerJudge(),termJudge=new LocalAnswerJudge();
  let qualifications=exam4?[]:[...verifiedModels];
  try{const saved=JSON.parse(localStorage.getItem(WRITTEN_QUALIFICATION_KEY)||'[]');if(Array.isArray(saved))qualifications.push(...saved.slice(-30));}catch{}
@@ -71,8 +72,18 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  function checkpoint(){if(session?.status==='draft'&&screen==='exam'&&active()&&!document.hidden){const delta=Math.min(6000,Math.max(0,Date.now()-lastTick));session.elapsedMs+=delta;session.elapsedSeconds=Math.floor(session.elapsedMs/1000);}lastTick=Date.now();}
  function paint(html,route,start){const prior=route===screen?layout?.selection():null;layout?.close();checkpoint();if(route!=='results')cancelJob();screen=route;ownsView=true;document.body.dataset.mockExamActive=slug;document.body.dataset.conceptActive='true';delete document.body.dataset.examActive;delete document.body.dataset.precisionActive;setView('practice',{route:route==='home'?slug:route==='results'||route==='spelling'?mockReportRoute(session.id,slug):slug+'-'+route});root.innerHTML=`<div class="mock-shell${exam4?' mock-exam4':''}" data-mock-screen="${route}">${html}</div>`;root.scrollTop=0;layout=exam4?mountMock4Screen(root.firstElementChild,route,start||prior):null;setStatus();lastTick=Date.now();root.onclick=handleClick;root.oninput=handleInput;root.onchange=handleChange;root.onkeydown=handleKeys;if(exam4)setTutorAssessmentMode(route==='exam'?session.mode==='exam'?'exam':'practice':null);}
  function top(back='Exam center',action='center'){const ai=localAI.snapshot();return `<div class="mock-topline"><button data-mock-action="${action}">← ${e(back)}</button><div class="control-row"><span class="mock-save-state" data-mock-saved role="status"></span><button class="mock-chip ${ai.ready?'ready':''}" data-mock-action="ai"><i aria-hidden="true"></i>${ai.ready?'Local AI ready':'Local AI setup'}</button></div></div>`;}
- function aiSetup(){document.dispatchEvent(new CustomEvent('localaiopen',{detail:{returnToReview:true}}));}
- function home(){checkpoint();if(session?.status==='draft')putSession();session=null;filter='missed';reviewIndex=null;const draft=state.active;
+ function aiSetup(continuation){document.dispatchEvent(new CustomEvent('localaiopen',{detail:{returnToReview:true,continuation}}));}
+ function continueAfterSetup(label,run){
+  const attemptId=session?.id;
+  const request={label,run:()=>{
+   if(reviewContinuation!==request||screen!=='results'||!active()||session?.id!==attemptId)return;
+   reviewContinuation=null;
+   run();
+  }};
+  reviewContinuation=request;
+  aiSetup(request);
+ }
+ function home(){checkpoint();if(session?.status==='draft')putSession();session=null;filter='missed';reviewIndex=null;notesOpen=false;reviewContinuation=null;reviewFailures=[];gradingMessage='';const draft=state.active;
   if(exam4){home4(draft);return;}
   paint(`${top()}<section class="mock-hero"><div><span class="mock-kicker">EXAM 3 / CHAPTERS 6–9</span><h1>Know the structure.<br><em>Explain the why.</em></h1><p class="mock-lead">Your course, brought into focus. Work through the most strongly supported question families, then turn missed points into your next study session.</p><div class="mock-hero-actions"><button class="mock-btn primary" data-mock-action="${draft?'resume':'start'}">${draft?'Resume your mock':'Begin Form A'} <span aria-hidden="true">↗</span></button><button class="mock-btn" data-mock-action="card">Your notecard ↗</button></div><p class="mock-hero-foot">Built from the Quiz Show review, Bone Questions, labs and past-exam patterns. A practice estimate—not the instructor’s actual exam or official rubric.</p></div><div><div class="mock-orbit" aria-hidden="true"><strong>03</strong><span>A course-focused mock</span></div><div class="mock-stat-trio"><div><strong>44</strong><span>QUESTIONS</span></div><div><strong>60</strong><span>POINTS</span></div><div><strong>9</strong><span>LAB TARGETS</span></div></div></div></section>
   ${storageError?`<p class="mock-error" role="alert">${e(storageError)} Your current work can be exported below.</p>`:''}
@@ -90,7 +101,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   paint(`${top()}<section class="mock-panel mock4-home"><span class="mock-kicker">BI 231 / CHAPTERS 10–11</span><h1>Exam 4 mock</h1><p>44 questions · 60 points · Chapters 10–11</p>
    <div class="mock-settings"><label>Session<select id="mock4-mode"><option value="exam">Mock exam</option><option value="practice">Coached practice</option></select></label>
    <label>Optional time goal<select id="mock-time-goal"><option value="0">Untimed</option><option value="45">45 minutes</option><option value="60">60 minutes</option><option value="90">90 minutes</option></select></label>
-   <label class="check-line"><input id="mock-auto-grade" type="checkbox" ${autoGrade?'checked':''}> Review with qualified local AI after submission</label></div>
+   <label class="check-line"><input id="mock-auto-grade" type="checkbox" ${autoGrade?'checked':''}> Review with local AI after submission</label></div>
    <p>Practice based on Exams 1–3 and Weeks 9–11. The instructor’s questions and chapter weighting remain uncertain.</p><p>Mock exam opens tutor help and feedback after submission. Coached practice offers feedback during the attempt and records help used.</p>
    <div class="mock-mini-actions">${draft?'<button class="mock-btn primary" data-mock-action="resume">Resume saved attempt ↗</button>':''}<button class="mock-btn ${draft?'':'primary'}" data-mock-form="A">Start Form A</button><button class="mock-btn" data-mock-form="B">Start Form B</button><button class="mock-btn" data-mock-action="saved-results">Saved results</button></div>
    ${draft?`<p>${e(draft.title)} · ${Object.values(draft.responses).filter(x=>x.trim()).length}/${draft.ids.length} responses saved</p>`:''}
@@ -102,7 +113,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  }
  function ensureFresh(next){if(unreadableRecord){dialog('<h2>Preserve the earlier record first.</h2><p>This browser contains a mock record that this version cannot safely read. Nothing has been overwritten. Download the original record for recovery before replacing it with a new attempt.</p><div class="control-row"><button id="mock-recovery-cancel">Keep original record</button><button class="primary" id="mock-recovery-reset">Download original & start fresh</button></div>');document.querySelector('#mock-recovery-cancel').onclick=()=>document.querySelector('#info-dialog').close();document.querySelector('#mock-recovery-reset').onclick=()=>{download(unreadableRecord,'osteon-'+slug+'-original-recovery.json');unreadableRecord='';state=storage.blank();document.querySelector('#info-dialog').close();next();};return;}if(!state.active){next();return;}dialog('<h2>Keep your saved attempt?</h2><p>You already have a mock in progress. Export it first if you want to keep it. Starting fresh replaces only this unfinished attempt.</p><div class="control-row"><button id="mock-keep-draft">Keep my saved attempt</button><button class="primary" id="mock-replace-draft">Start a new attempt</button></div>');document.querySelector('#mock-keep-draft').onclick=()=>document.querySelector('#info-dialog').close();document.querySelector('#mock-replace-draft').onclick=()=>{document.querySelector('#info-dialog').close();next();};}
  async function begin(items=mockExam3Questions,form=mockExam3Form,mode=form.id===mockExam3Form.id?'exam':'practice'){if(loadingFigures)return;const cardMode=query('#mock-card-mode')?.value||'closed',timeGoalMinutes=Number(query('#mock-time-goal')?.value||0);autoGrade=query('#mock-auto-grade')?.checked??autoGrade;const startingRoute=location.hash;loadingFigures=true;try{if(items.some(q=>q.type==='identify')){const status=query('[data-mock-saved]');if(exam4&&status)status.textContent='Preparing diagrams…';else toast('Preparing exam diagrams…');const assets=await (exam4?preloadMockExam4Figures(items):preloadMockFigures());if(location.hash!==startingRoute)return;if(!assets.ready){toast('Some diagrams could not load. Check your connection and try again.');return;}}ensureFresh(()=>{cancelJob();session=createMockSession(items,{form,cardMode,timeGoalMinutes,autoGrade,mode});coachedFeedback=null;state.active=session;putSession();exam();});}catch(error){toast(error.message||'The mock could not start. Your saved work is unchanged.');}finally{loadingFigures=false;if(exam4)setStatus();}}
- function resume(){session=state.active;if(session)exam();else if(state.history.length){session=state.history.at(-1);report();}else home();}
+ function resume(){session=state.active;if(session)exam();else if(state.history.length)selectReport(state.history.at(-1).id);else home();}
  function exam(start){if(!session||session.status!=='draft'){home();return;}checkpoint();putSession();const q=session.questions[session.index],answer=session.responses[q.id]||'',count=Object.values(session.responses).filter(s=>s.trim()).length;
   if(exam4&&paintedQuestion!==session.id+':'+q.id){start={title:''};paintedQuestion=session.id+':'+q.id;}
   const sideBySide=exam4&&q.type==='identify';
@@ -158,8 +169,8 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
    if(trigger&&head)trigger.onclick=()=>{pages.reveal(head);head.focus({preventScroll:true});};
   }
  }
- function reviewSubmit(){checkpoint();putSession();const unanswered=session.questions.filter(q=>!session.responses[q.id]?.trim()),flags=session.questions.filter(q=>session.flags[q.id]);if(exam4)submitDialog4(unanswered,flags);else dialog(`<h2>Ready to <em>submit?</em></h2><p>${session.ids.length-unanswered.length} of ${session.ids.length} questions answered. ${flags.length} flagged. Submission locks your exact answers before grading starts.</p>${unanswered.length?`<p class="mock-error">${unanswered.length} blank ${unanswered.length===1?'answer will':'answers will'} receive zero points.</p><div class="control-row">${unanswered.map(q=>`<button data-mock-dialog-index="${session.ids.indexOf(q.id)}">Q${session.ids.indexOf(q.id)+1}</button>`).join('')}</div>`:'<p>Your responses are complete. You can still return and check them.</p>'}${flags.length?`<h3>Flagged for review</h3><div class="control-row">${flags.map(q=>`<button data-mock-dialog-index="${session.ids.indexOf(q.id)}">Flagged Q${session.ids.indexOf(q.id)+1}</button>`).join('')}</div>`:''}<p>Written responses and ambiguous labels can remain pending until local review succeeds. No connection error is counted as a wrong answer.</p><div class="control-row"><button id="mock-return-exam">Keep working</button><button id="mock-submit-final" class="primary">Submit ${session.maxPoints}-point ${session.mode==='practice'?'practice':'mock'} ↗</button></div>`);document.querySelector('#mock-return-exam').onclick=()=>document.querySelector('#info-dialog').close();bindQuestionRows();document.querySelector('#mock-submit-final').onclick=()=>{if(session.status!=='draft')return;document.querySelector('#mock-submit-final').disabled=true;checkpoint();session=submitMockSession(session,{bank:questions});if(exam4)recordSpellings();state.active=null;state.history.push(session);state.history=state.history.slice(-20);const saved=save();if(!saved)gradingMessage='Your submission is locked in this tab but could not be saved. Keep this tab open and export a recovery backup before reloading.';document.querySelector('#info-dialog').close();filter='missed';reviewIndex=null;report();if(saved&&session.autoGrade===true&&localAI.state.ready)grade();};}
- function selectReport(id){cancelJob();const found=state.history.find(s=>s.id===id);if(!found){home();toast('That report is not stored in this browser. Restore its backup to open it.');return;}session=found;filter='missed';reviewIndex=null;gradingMessage='';report();}
+ function reviewSubmit(){checkpoint();putSession();const unanswered=session.questions.filter(q=>!session.responses[q.id]?.trim()),flags=session.questions.filter(q=>session.flags[q.id]);if(exam4)submitDialog4(unanswered,flags);else dialog(`<h2>Ready to <em>submit?</em></h2><p>${session.ids.length-unanswered.length} of ${session.ids.length} questions answered. ${flags.length} flagged. Submission locks your exact answers before grading starts.</p>${unanswered.length?`<p class="mock-error">${unanswered.length} blank ${unanswered.length===1?'answer will':'answers will'} receive zero points.</p><div class="control-row">${unanswered.map(q=>`<button data-mock-dialog-index="${session.ids.indexOf(q.id)}">Q${session.ids.indexOf(q.id)+1}</button>`).join('')}</div>`:'<p>Your responses are complete. You can still return and check them.</p>'}${flags.length?`<h3>Flagged for review</h3><div class="control-row">${flags.map(q=>`<button data-mock-dialog-index="${session.ids.indexOf(q.id)}">Flagged Q${session.ids.indexOf(q.id)+1}</button>`).join('')}</div>`:''}<p>Written responses and ambiguous labels can remain pending until local review succeeds. No connection error is counted as a wrong answer.</p><div class="control-row"><button id="mock-return-exam">Keep working</button><button id="mock-submit-final" class="primary">Submit ${session.maxPoints}-point ${session.mode==='practice'?'practice':'mock'} ↗</button></div>`);document.querySelector('#mock-return-exam').onclick=()=>document.querySelector('#info-dialog').close();bindQuestionRows();document.querySelector('#mock-submit-final').onclick=()=>{if(session.status!=='draft')return;document.querySelector('#mock-submit-final').disabled=true;checkpoint();session=submitMockSession(session,{bank:questions});if(exam4)recordSpellings();state.active=null;state.history.push(session);state.history=state.history.slice(-20);const saved=save();if(!saved)gradingMessage='Your submission is locked in this tab but could not be saved. Keep this tab open and export a recovery backup before reloading.';document.querySelector('#info-dialog').close();filter='missed';reviewIndex=null;report();if(saved&&session.autoGrade===true&&(exam4||localAI.state.ready))grade();};}
+ function selectReport(id){cancelJob();const found=state.history.find(s=>s.id===id);if(!found){home();toast('That report is not stored in this browser. Restore its backup to open it.');return;}session=found;filter='missed';reviewIndex=null;notesOpen=false;reviewContinuation=null;reviewFailures=[];gradingMessage='';report();}
  function recordSpellings(){
   for(const row of mockResults(session).rows)if(row.outcome.status==='spelling'&&row.outcome.correction){
    addSpellingNote({term:row.outcome.correction,sourceId:row.q.id,reference:row.q.lesson,response:row.response,attemptKey:session.id+':'+row.q.id});
@@ -167,22 +178,173 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  }
  function safeLinks(q){return (q.sourceLinks||[]).filter(s=>typeof s.url==='string'&&s.url.startsWith('https://openstax.org/')).map(s=>`<a href="${e(s.url)}" target="_blank" rel="noreferrer">${e(s.label)} ↗</a>`).join(' · ');}
  const noteKey=q=>`${session.id}:${q.id}`;
+ function resumeOrStart(action){
+  if(!reviewContinuation){action();return;}
+  if(localAI.state.ready)reviewContinuation.run();
+  else aiSetup(reviewContinuation);
+ }
  const noteFor=q=>state.notes[noteKey(q)]||{confusion:'',rule:'',retrieval:'',updatedAt:0};
+ const suggestionFor=q=>exam4?getWrittenSuggestion(state,session,q):null;
+ const unconfirmedSuggestion=row=>{
+  const suggestion=suggestionFor(row.q);
+  return !!suggestion&&(!row.review||suggestion.at>row.review.at);
+ };
+ function showSuggestions(){
+  notesOpen=false;
+  filter='suggestions';
+  reviewIndex=0;
+  report({title:'AI suggestion'});
+ }
+ function reportActions(result){
+  const pending=result.rows.filter(row=>row.pending&&mockRubricResponse(row.q,row.response).trim()).length;
+  const suggestions=result.rows.filter(unconfirmedSuggestion).length;
+  const notes=result.rows.filter(hasConfirmedMiss).length;
+  return `<div class="mock-mini-actions mock4-review-actions">${controller?'<button class="mock-btn" data-mock-action="stop-review">Stop AI</button>':pending?`<button class="mock-btn mint" data-mock-action="grade">${reviewContinuation?'Continue AI review':'Review with AI'}</button>`:''}
+   ${suggestions?`<button class="mock-btn primary" data-mock-action="suggestions" ${controller?'disabled':''}>AI suggestions (${suggestions})</button>`:''}
+   ${notes?`<button class="mock-btn" data-mock-action="create-notes" ${controller?'disabled':''}>${result.rows.some(row=>noteFor(row.q).studyDraft)?'Open study notes':'Create study notes'}</button>`:''}</div>`;
+ }
+ function renderSuggestion(row){
+  const suggestion=suggestionFor(row.q);
+  if(!suggestion)return '';
+  const score=writtenSuggestionScore(session,row.q,suggestion);
+  if(!score)return '';
+  const staged=unconfirmedSuggestion(row);
+  const suggestedPoints=score.earnedPoints+(row.q.claim?(row.outcome.components[0]?.earnedPoints||0):0);
+  return `<section class="mock4-suggestion" data-written-suggestion>
+   <h3>AI suggested ${point(suggestedPoints)} / ${row.maxPoints} points</h3>
+   <p>${e(suggestion.model)} · ${score.pendingPoints?point(score.pendingPoints)+' suggested points still uncertain · ':''}${staged?'Confirm or adjust each criterion to apply the score.':'Saved as evidence for your review.'}</p>
+   ${staged?`<button class="mock-btn primary" data-mock-confirm="${e(row.q.id)}" ${controller?'disabled':''}>Confirm or adjust AI suggestions</button>`:''}
+   <p>${e(suggestion.feedback)}</p>
+   ${score.components.map(c=>`<div class="mock-criterion"><div><strong>${e(c.label)}</strong><span>${c.pendingPoints?'Unsure':point(c.earnedPoints)+' / '+point(c.maxPoints)}</span></div><p>${e(c.reason)}</p>${c.evidence.map(quote=>`<blockquote>${e(quote)}</blockquote>`).join('')}</div>`).join('')}
+  </section>`;
+ }
+ function prepareStudySheet(){
+  let changed=false;
+  for(const row of mockResults(session).rows.filter(hasConfirmedMiss)){
+   const note=noteFor(row.q),basis=studyBasis(row);
+   if(note.studyDraft?.basis===basis)continue;
+   state.notes[noteKey(row.q)]={...note,studyDraft:builtInStudyDraft(row),updatedAt:Date.now()};
+   changed=true;
+  }
+  if(changed&&!save())toast('These study notes are only in this tab. Download them before leaving.');
+ }
+ function openStudySheet(){
+  if(!exam4||controller||session?.status!=='submitted')return;
+  prepareStudySheet();
+  notesOpen=true;
+  gradingMessage='';
+  reviewFailures=[];
+  report({title:'Study notes'});
+ }
+ function studySheet(result){
+  const misses=result.rows.filter(hasConfirmedMiss);
+  const canRefine=misses.some(row=>row.answered);
+  const cardInput=row=>{
+   const q=row.q,note=noteFor(q);
+   return `<div class="mock-note-candidate" data-mock4-split><input aria-label="Card line for question ${session.ids.indexOf(q.id)+1}" data-mock-candidate="${e(q.id)}" maxlength="180" value="${e(studyNoteValue(note,'cardDraft'))}">
+    <select aria-label="Study card side" data-mock-side="${e(q.id)}"><option value="front" ${note.cardSide!=='back'?'selected':''}>Front</option><option value="back" ${note.cardSide==='back'?'selected':''}>Back</option></select><button class="mock-btn" data-mock-add-note="${e(q.id)}">Add to card</button></div>`;
+  };
+  return `<section class="mock4-study-sheet">
+   <header data-study-summary><h1>Study notes</h1><p>${misses.length} ${misses.length===1?'question with':'questions with'} confirmed missed points. Edit any note and add useful lines to your study card.</p>
+   ${result.pendingPoints?'<p>Answers with only pending points will appear here after grading confirms a miss.</p>':''}
+   <p id="mock4-job-status" class="mock-note" role="status">${e(gradingMessage||(canRefine?'Notes start with the verified answer key. Local AI can refine them using your submitted answers.':'Notes are ready from the answer key.'))}</p>
+   ${reviewFailures.map(message=>`<p class="mock-error">${e(message)}</p>`).join('')}</header>
+   ${misses.map(row=>{
+    const q=row.q,note=noteFor(q),number=session.ids.indexOf(q.id)+1;
+    return `<section data-study-question="${number}">
+     <h2>Q${number} · ${e(q.topic)}</h2><p>${e(q.source||'Textbook section '+q.lesson)} · ${note.studyDraft?.kind==='local-ai'?'Drafted with '+e(note.studyDraft.model):'Answer-key notes'}</p>
+     ${[['confusion','What to revisit'],['rule','Correct rule'],['retrieval','Recall question']].map(([field,title])=>
+      `<label class="mock-study-field">${title}<textarea data-mock-note="${field}" data-question="${e(q.id)}" maxlength="2000" rows="2">${e(studyNoteValue(note,field))}</textarea></label>`).join('')}
+     ${cardInput(row)}
+     <div class="mock-mini-actions"><button class="mock-btn" data-mock-lesson="${e(q.id)}">Open section ${e(q.lesson)} ↗</button></div></section>`;
+   }).join('')}
+   <div class="mock-mini-actions mock4-review-actions" data-study-actions><button class="mock-btn" data-mock-action="back-score">← Score</button>
+   ${controller&&operation==='notes'?'<button class="mock-btn" data-mock-action="stop-review">Stop AI</button>':canRefine?`<button class="mock-btn mint" data-mock-action="refine-notes">${reviewContinuation?'Continue AI notes':'Refine with local AI'}</button>`:''}
+   <button class="mock-btn" data-mock-action="download-sheet">Download notes</button></div></section>`;
+ }
+ async function refineNotes(){
+  if(controller||!notesOpen||session?.status!=='submitted')return;
+  const candidates=mockResults(session).rows.filter(row=>row.answered&&hasConfirmedMiss(row));
+  if(!candidates.length)return;
+  if(!localAI.state.ready){
+   continueAfterSetup('Refine my study notes',refineNotes);
+   updateReviewProgress('Finish connecting to Ollama to refine these notes.');
+   return;
+  }
+  controller=new AbortController();
+  operation='notes';
+  reviewFailures=[];
+  const reportEpoch=++gradingEpoch,signal=controller.signal,attemptId=session.id;
+  const {model,endpoint}=localAI.state;
+  const remaining=candidates.filter(row=>{
+   const draft=noteFor(row.q).studyDraft;
+   return draft?.kind!=='local-ai'||draft.model!==model||draft.basis!==studyBasis(row);
+  });
+  const rows=remaining.length?remaining:candidates;
+  let saved=0;
+  gradingMessage='Preparing your notes for local AI refinement…';
+  report();
+  try{
+   for(let i=0;i<rows.length;i+=3){
+    if(signal.aborted||!reviewStatus(attemptId,reportEpoch))break;
+    if(localAI.state.model!==model||localAI.state.endpoint!==endpoint){
+     reviewFailures.push('The selected model changed. Try again with the current model.');
+     break;
+    }
+    const batch=rows.slice(i,i+3);
+    updateReviewProgress(`Refining notes ${i+1}–${i+batch.length} of ${rows.length}`);
+    try{
+     const drafts=await refineStudyDrafts(batch,{signal,model,endpoint});
+     if(signal.aborted||!reviewStatus(attemptId,reportEpoch))break;
+     for(const row of batch){
+      const note=noteFor(row.q);
+      state.notes[noteKey(row.q)]={...note,studyDraft:drafts[row.q.id],updatedAt:Date.now()};
+     }
+     if(!save())throw new Error('Notes could not be saved on this device. Download them before leaving.');
+     saved+=batch.length;
+    }catch(error){
+     if(signal.aborted)break;
+     reviewFailures.push(`Notes ${i+1}–${i+batch.length}: ${error.message}`);
+     // Keep any completed work and let the learner retry from the sheet.
+     break;
+    }
+   }
+  }finally{
+   if(reportEpoch!==gradingEpoch)return;
+   controller=null;
+   operation='';
+   gradingMessage=(signal.aborted?'Refinement stopped. ':'')+`${saved} AI ${saved===1?'note':'notes'} saved. Your edits are kept.`;
+   if(reviewStatus(attemptId,reportEpoch))report();
+  }
+ }
+ function downloadStudySheet(){
+  const lines=[session.title+' · Study notes',''];
+  for(const row of mockResults(session).rows.filter(hasConfirmedMiss)){
+   const q=row.q,note=noteFor(q);
+   lines.push(`Q${session.ids.indexOf(q.id)+1} · ${q.topic}`,q.source||'Textbook section '+q.lesson,
+    'What to revisit: '+studyNoteValue(note,'confusion'),'Correct rule: '+studyNoteValue(note,'rule'),
+    'Recall question: '+studyNoteValue(note,'retrieval'),'Study card: '+studyNoteValue(note,'cardDraft'),'');
+  }
+  download(lines.join('\n'),'osteon-exam4-study-notes-'+session.id+'.txt','text/plain');
+ }
  function renderResult(row,index){const {q,response,outcome:o,assisted}=row,note=noteFor(q),unresolved=o.pendingPoints>0,missed=o.maxPoints-o.earnedPoints-o.pendingPoints,open=filter!=='all';
   const status=unresolved?'Awaiting review':o.correct?o.status==='spelling'?'Full credit · spelling to practice':'Full credit':o.status==='partial'?'Partial credit':response?'Review this concept':'No response';
   return `<details class="mock-result-card" data-result-id="${e(q.id)}" ${open?'open':''}><summary><span class="mock-result-index">${String(index+1).padStart(2,'0')}</span><div><strong>${e(q.topic)}</strong><small>${e(status)}${assisted?' · assisted':''} · ${e(sectionName(q.section))}</small></div><span class="mock-result-points">${point(o.earnedPoints)} / ${o.maxPoints}${unresolved?' + ?':''}</span></summary><div class="mock-result-body"><p>${e(q.prompt)}</p>${q.type==='identify'?`<div class="mock-figure">${renderFigure(q,{reveal:true,marker:q.target||q.number})}</div><div class="mock-figure-controls"><button class="mock-btn" data-mock-zoom="${e(q.id)}">Enlarge corrected target ⤢</button></div>`:''}<div class="mock-answer-compare"><div><small>YOUR SUBMITTED ANSWER</small><p>${e(response||'No answer submitted.')}</p></div><div><small>${q.type==='written'?'MODEL EXPLANATION':'ACCEPTED ANSWER'}</small><p>${e(q.answer)}</p></div></div><p>${e(q.explanation)}</p>${o.reason?`<p class="mock-note">${e(o.reason)}</p>`:''}
-  ${q.type==='written'?`<div class="mock-rubric"><span class="mock-kicker">WHERE THE POINTS COME FROM</span>${(o.components||[]).map(c=>`<div class="mock-criterion"><div><strong>${e(c.label)}</strong><span>${point(c.earnedPoints||0)} / ${point(c.maxPoints??c.points)}${c.pendingPoints?' · pending':''}</span></div><p>${e(c.reason||c.description||'')}</p>${c.evidence?.length?`<blockquote>${c.evidence.map(x=>e(typeof x==='string'?x:x.quote||'')).join('<br>')}</blockquote>`:''}</div>`).join('')}</div>`:''}
+  ${q.type==='written'?`<div class="mock-rubric">${renderSuggestion(row)}<span class="mock-kicker">WHERE THE POINTS COME FROM</span>${(o.components||[]).map(c=>`<div class="mock-criterion"><div><strong>${e(c.label)}</strong><span>${point(c.earnedPoints||0)} / ${point(c.maxPoints??c.points)}${c.pendingPoints?' · pending':''}</span></div><p>${e(c.reason||c.description||'')}</p>${c.evidence?.length?`<blockquote>${c.evidence.map(x=>e(typeof x==='string'?x:x.quote||'')).join('<br>')}</blockquote>`:''}</div>`).join('')}</div>`:''}
   <div class="mock-evidence">${e(q.source)}<br>${safeLinks(q)}</div><div class="mock-mini-actions"><button class="mock-btn" data-mock-lesson="${e(q.id)}">Read this section ↗</button><button class="mock-btn" data-mock-tutor="${e(q.id)}">Work through it with tutor ↗</button><button class="mock-btn" data-mock-related="${e(q.id)}">Try a related question ↗</button>${exam4&&q.termId&&courseMuscleTargetById.get(q.termId)?.componentIds.length?`<button class="mock-btn" data-mock-spatial="${e(q.termId)}">Review on the 3D model ↗</button>`:''}${q.type!=='choice'&&mockRubricResponse(q,response).trim()?`<button class="mock-btn" data-mock-grade="${e(q.id)}" ${controller?'disabled':''}>${row.review?'Request re-review':'Review original answer'}</button>`:''}</div>
-  <div class="mock-note-editor"><span class="mock-kicker">MAKE THE CORRECTION YOURS</span><h3>Your next recall starts here.</h3><div class="mock-note-fields"><label>What I confused<textarea data-mock-note="confusion" data-question="${e(q.id)}" maxlength="2000" placeholder="Name the distinction you missed…">${e(note.confusion)}</textarea></label><label>The rule or mechanism<textarea data-mock-note="rule" data-question="${e(q.id)}" maxlength="2000" placeholder="Write the reason in your own words…">${e(note.rule)}</textarea></label><label>A question to ask myself later<textarea data-mock-note="retrieval" data-question="${e(q.id)}" maxlength="2000" placeholder="Turn the correction into a retrieval question…">${e(note.retrieval)}</textarea></label></div><div class="mock-note-candidate"><input aria-label="Notecard candidate for ${e(q.topic)}" data-mock-candidate="${e(q.id)}" maxlength="180" value="${e(note.cardDraft??(o.studyNote||q.noteSuggestion))}"><select aria-label="Notecard side" data-mock-side="${e(q.id)}"><option value="front" ${note.cardSide!=='back'?'selected':''}>Front</option><option value="back" ${note.cardSide==='back'?'selected':''}>Back</option></select><button class="mock-btn mint" data-mock-add-note="${e(q.id)}">Add to card +</button></div><p class="mock-question-hint">Your suggestion and chosen side save as you edit. Add to card copies it into a free line; your exam answer stays unchanged.</p></div>
+  <div class="mock-note-editor"><span class="mock-kicker">MAKE THE CORRECTION YOURS</span><h3>Your next recall starts here.</h3><div class="mock-note-fields"><label>What I confused<textarea data-mock-note="confusion" data-question="${e(q.id)}" maxlength="2000" placeholder="Name the distinction you missed…">${e(studyNoteValue(note,'confusion'))}</textarea></label><label>The rule or mechanism<textarea data-mock-note="rule" data-question="${e(q.id)}" maxlength="2000" placeholder="Write the reason in your own words…">${e(studyNoteValue(note,'rule'))}</textarea></label><label>A question to ask myself later<textarea data-mock-note="retrieval" data-question="${e(q.id)}" maxlength="2000" placeholder="Turn the correction into a retrieval question…">${e(studyNoteValue(note,'retrieval'))}</textarea></label></div><div class="mock-note-candidate"><input aria-label="Notecard candidate for ${e(q.topic)}" data-mock-candidate="${e(q.id)}" maxlength="180" value="${e(studyNoteValue(note,'cardDraft',o.studyNote||q.noteSuggestion||''))}"><select aria-label="Notecard side" data-mock-side="${e(q.id)}"><option value="front" ${note.cardSide!=='back'?'selected':''}>Front</option><option value="back" ${note.cardSide==='back'?'selected':''}>Back</option></select><button class="mock-btn mint" data-mock-add-note="${e(q.id)}">Add to card +</button></div><p class="mock-question-hint">Your suggestion and chosen side save as you edit. Add to card copies it into a free line; your exam answer stays unchanged.</p></div>
   ${q.type==='written'&&mockRubricResponse(q,response).trim()?`<div class="mock-mini-actions"><button class="mock-btn" data-mock-confirm="${e(q.id)}" ${controller?'disabled':''}>Compare & confirm rubric myself</button><span class="mock-save-state">${qualified(q)?'Selected model passed this rubric check':'Selected model needs this rubric check'}</span></div>`:''}${row.review?`<details class="mock-evidence"><summary>Grade evidence & history</summary><p>${row.review.source==='learner'?'Learner-confirmed rubric':'Local model: '+e(row.review.model||'local review')} · ${date(row.review.at||session.submitted)} · ${session.reviewHistory.filter(r=>r.questionId===q.id).length} saved review(s). ${row.review.source==='learner'?'You confirmed these criteria; this is not an AI or instructor grade.':'This is an AI practice estimate; compare each criterion with your response.'}</p><p>${e(row.review.feedback||row.review.explanation||'')}</p><ol class="mock-review-history">${session.reviewHistory.filter(entry=>entry.questionId===q.id).map(entry=>{const review=entry.review;return `<li><b>${review.source==='learner'?'Learner confirmation':e(review.model||'Local model')}</b> · ${e(new Date(entry.at).toLocaleString())}${review.components?`<ul>${review.components.map(c=>`<li>${e(q.rubric.criteria.find(r=>r.id===c.id)?.label||c.id)}: ${e(c.decision==='met'?'earned':['missing','contradicted'].includes(c.decision)?'not earned':'pending')}</li>`).join('')}</ul>`:`<p>${e(review.verdict||review.status)}</p>`}</li>`;}).join('')}</ol></details>`:''}</div></details>`;
  }
  function report4(result,rows,priorities,spellingCount,start){
   const score=point(result.earnedPoints)+' / '+result.maxPoints;
   const filters=[['missed','Missed & assisted'],['pending',`Awaiting review (${result.pending})`],['written','Written reasoning'],['notes','My notes'],['all','All questions']];
+  if(result.rows.some(unconfirmedSuggestion)||filter==='suggestions')filters.push(['suggestions','AI suggestions to confirm']);
   if(filter.startsWith('lesson:'))filters.push([filter,'Section '+filter.slice(7)]);
   const selectFilter=`<select id="mock4-review-filter" aria-label="Filter review">${filters.map(([id,name])=>`<option value="${e(id)}" ${id===filter?'selected':''}>${e(name)}</option>`).join('')}</select>`;
   let body;
-  if(reviewIndex!==null){
+  if(notesOpen){
+   body=studySheet(result);
+  }else if(reviewIndex!==null){
    reviewIndex=Math.max(0,Math.min(reviewIndex,rows.length-1));
    const row=rows[reviewIndex];
    body=`<div class="mock4-result-head"><button class="mock-btn" data-mock-action="back-score">← Score</button>
@@ -194,18 +356,20 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   }else{
    body=`<section class="mock4-summary"><h1>${e(session.title)} results</h1>
     <div class="mock4-score"><strong>${score}</strong><span>${result.pendingPoints?`${point(result.pendingPoints)} points pending`:`${Math.round(result.percentage)}%`} · ${result.assisted} assisted · ${duration(session.elapsedSeconds||0)} active</span></div>
+    ${(result.pendingPoints||controller||gradingMessage)?`<p class="mock-note" id="mock4-job-status" role="status">${e(gradingMessage||'Review with AI can evaluate submitted written answers and uncertain terms.')}</p>`:''}
     <div class="mock4-summary-actions">${selectFilter}<button class="mock-btn primary" data-mock-action="open-review">Review ${rows.length} ${rows.length===1?'question':'questions'} ↗</button></div>
     <div class="mock-chapter-bars">${Object.entries(result.chapters).map(([ch,r])=>`<div><p>CH. ${ch} / ${chapterNames[ch].toUpperCase()}</p><strong>${point(r.earnedPoints)} / ${r.maxPoints}</strong>${r.pendingPoints?`<span class="tiny"> · ${point(r.pendingPoints)} pending</span>`:''}</div>`).join('')}</div>
     ${storageError?`<div class="mock-grade-banner" role="alert"><div><strong>Submission is locked but unsaved.</strong><p>Keep this tab open and export a backup before reloading.</p></div><div class="control-row"><button class="mock-btn primary" data-mock-action="backup">Export backup</button><button class="mock-btn" data-mock-action="retry-save">Retry save</button></div></div>`:''}
-    ${(result.pendingPoints||controller||gradingMessage)?`<div class="mock-grade-banner" role="status"><div><strong>${controller?'Reviewing with local Ollama…':result.pendingPoints?'Review pending points':'Local review'}</strong><p>${e(gradingMessage||'Use the shared local model to review written reasoning and uncertain terms.')}</p></div><button class="mock-btn" data-mock-action="${controller?'cancel-grade':'grade'}">${controller?'Stop review':'Review with Ollama ↗'}</button></div>`:''}</section>
+    ${reviewFailures.map(message=>`<p class="mock-error">${e(message)}</p>`).join('')}
+    ${reportActions(result)}</section>
     <section class="mock4-result-tools"><h2>Review tools</h2>${priorities.map(group=>`<div class="mock4-priority"><p>Section ${e(group.lesson)} · ${point(group.missedPoints)} missed points</p><button class="mock-btn" data-mock-priority="${e(group.lesson)}">Review section ${e(group.lesson)} ↗</button></div>`).join('')}
-    <div class="mock-mini-actions"><button class="mock-btn" data-mock-action="retry">Retest missed concepts</button>${spellingCount?`<button class="mock-btn" data-mock-action="spellings">Practice ${spellingCount} spelling ${spellingCount===1?'term':'terms'}</button>`:''}<button class="mock-btn" data-mock-action="professor">Professor’s 21 questions</button><button class="mock-btn" data-mock-action="card">Study card</button><button class="mock-btn" data-mock-action="coverage">Remaining coverage</button><button class="mock-btn" data-mock-action="qualify" ${controller?'disabled':''}>Check grading model</button><button class="mock-btn" data-mock-action="export-report">Export score &amp; evidence</button><button class="mock-btn" data-mock-action="export-text">Download study notes</button></div></section>`;
+    <div class="mock-mini-actions"><button class="mock-btn" data-mock-action="retry">Retest missed concepts</button>${spellingCount?`<button class="mock-btn" data-mock-action="spellings">Practice ${spellingCount} spelling ${spellingCount===1?'term':'terms'}</button>`:''}<button class="mock-btn" data-mock-action="professor">Professor’s 21 questions</button><button class="mock-btn" data-mock-action="card">Study card</button><button class="mock-btn" data-mock-action="coverage">Remaining coverage</button><button class="mock-btn" data-mock-action="qualify" ${controller?'disabled':''}>Verify model for automatic scoring</button><button class="mock-btn" data-mock-action="export-report">Export score &amp; evidence</button><button class="mock-btn" data-mock-action="export-text">Download study notes</button></div></section>`;
   }
   paint(top(label+' home','home')+body,'results',start);
   setLearningContext({type:'study',label:label+' results',text:`Practice score ${score}, ${result.pendingPoints} points pending. The submitted answers are locked.`});
  }
  function report(start){const priorScroll=screen==='results'?root.scrollTop:0;if(!session||session.status!=='submitted'){home();return;}const result=mockResults(session);let rows=result.rows;
-  if(filter==='missed')rows=rows.filter(r=>r.outcome.maxPoints-r.outcome.earnedPoints-r.outcome.pendingPoints>0||r.assisted);else if(filter==='pending')rows=rows.filter(r=>r.pending);else if(filter==='written')rows=rows.filter(r=>r.q.type==='written');else if(filter.startsWith('lesson:'))rows=rows.filter(r=>r.q.lesson===filter.slice(7)&&(r.outcome.maxPoints-r.outcome.earnedPoints-r.outcome.pendingPoints>0||r.assisted));else if(filter==='notes')rows=rows.filter(r=>['confusion','rule','retrieval','cardDraft'].some(k=>noteFor(r.q)[k]?.trim()));
+  if(filter==='missed')rows=rows.filter(r=>hasConfirmedMiss(r)||r.assisted);else if(filter==='pending')rows=rows.filter(r=>r.pending);else if(filter==='written')rows=rows.filter(r=>r.q.type==='written');else if(filter==='suggestions')rows=rows.filter(unconfirmedSuggestion);else if(filter.startsWith('lesson:'))rows=rows.filter(r=>r.q.lesson===filter.slice(7)&&(hasConfirmedMiss(r)||r.assisted));else if(filter==='notes')rows=rows.filter(r=>['confusion','rule','retrieval','cardDraft'].some(k=>studyNoteValue(noteFor(r.q),k).trim()));
   const reviewed=result.pendingPoints===0,priorities=mockStudyPriorities(result).slice(0,3);
   const spellingCount=exam4?spellingDeck(result.rows).length:0;
   if(exam4){report4(result,rows,priorities,spellingCount,start);return;}
@@ -215,57 +379,121 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   root.scrollTop=priorScroll;
   setLearningContext({type:'study',label:label+' results',text:`Practice results: ${result.earnedPoints}/${result.maxPoints}, ${result.pendingPoints} pending. The learner is correcting missed concepts, not changing submitted answers.`});
  }
+ function updateReviewProgress(message){
+  gradingMessage=message;
+  const progress=query('#mock4-job-status')||query('.mock-grade-banner p');
+  if(progress)progress.textContent=message;
+ }
+ function reviewStatus(attemptId,reportEpoch){
+  return active()&&screen==='results'&&session?.id===attemptId&&gradingEpoch===reportEpoch;
+ }
  async function grade(onlyId){
   if(controller||!session||session.status!=='submitted')return;
-  if(!putSession()){gradingMessage='The locked submission could not be saved. Keep this tab open, export a backup, then free storage and retry saving before AI review.';report();return;}
-  if(!localAI.state.ready){gradingMessage='Finish the shared local AI connection test, then return here and choose Review with Ollama.';report();aiSetup();return;}
-  const requested=mockResults(session).rows.filter(r=>mockRubricResponse(r.q,r.response).trim()&&r.q.type!=='choice'&&(onlyId?r.q.id===onlyId:r.pending));
-  const blocked=requested.filter(r=>r.q.type==='written'&&!qualified(r.q));
-  const rows=requested.filter(r=>r.q.type!=='written'||qualified(r.q));
-  if(!rows.length){gradingMessage=blocked.length?'This model needs to pass the grading checks for these questions. Choose Check grading model or confirm the rubric yourself.':'No responses need review.';report();return;}
-  controller=new AbortController();const job=++gradingEpoch,signal=controller.signal,attemptId=session.id,model=localAI.state.model,endpoint=localAI.state.endpoint;let completed=0,failed=0;
-  gradingMessage='Starting a review of your locked responses…';report();
-  try{for(const row of rows){
-   if(signal.aborted)break;
-   gradingMessage=`${completed+failed+1} of ${rows.length} · ${row.q.topic}. Your submitted response stays locked.`;
-   const status=query('.mock-grade-banner p');if(status)status.textContent=gradingMessage;
-   try{
-    const review=row.q.type==='written'?await writtenJudge.review({question:mockRubricQuestion(row.q),response:mockRubricResponse(row.q,row.response),submissionId:session.submission.id},{signal,model,endpoint}):await termJudge.review({target:mockTermReviewTarget(row.q,row.response,{scoringVersion:session.scoringVersion??1}),response:row.response,strictCorrect:row.outcome.strictCorrect,allowOverride:true},{signal,model,endpoint});
-    if(signal.aborted||session?.id!==attemptId||localAI.state.model!==model||localAI.state.endpoint!==endpoint)break;
-    if(row.q.type==='written'&&!qualified(row.q))throw new Error('This model no longer matches its verified rubric check.');
-    session=applyMockReview(session,row.q.id,review);if(exam4)recordSpellings();if(!putSession()){failed++;break;}completed++;
-   }catch(error){if(signal.aborted)break;failed++;gradingMessage=`${row.q.topic}: ${error.message||'Review could not finish.'} The original response remains available.`;}
-  }}finally{
-   if(job!==gradingEpoch)return;const canceled=signal.aborted;controller=null;
-   gradingMessage=canceled?'Review stopped. Completed decisions are saved; unresolved points remain pending.':`${completed} review${completed===1?'':'s'} saved${failed?`; ${failed} could not finish and can be retried`:''}.${blocked.length?' Some written rubrics still need a model check or learner confirmation.':' Compare each decision with your response.'}`;
-   if(session?.id===attemptId&&active()&&screen==='results')report();
+  if(!putSession()){
+   gradingMessage='Export a backup or retry saving the submission before using AI review.';
+   report();
+   return;
+  }
+  const requested=mockResults(session).rows.filter(row=>
+   mockRubricResponse(row.q,row.response).trim()&&row.q.type!=='choice'&&(onlyId?row.q.id===onlyId:row.pending));
+  if(!requested.length){
+   gradingMessage='There are no submitted answers awaiting AI review.';
+   report();
+   return;
+  }
+  if(!localAI.state.ready){
+   gradingMessage='Finish connecting to Ollama to continue reviewing these answers.';
+   report({title:'Score'});
+   continueAfterSetup('Start grading my answers',()=>grade(onlyId));
+   return;
+  }
+  const rows=exam4?requested:requested.filter(row=>row.q.type!=='written'||qualified(row.q));
+  if(!rows.length){
+   gradingMessage='Use Check grading model or confirm the written rubric yourself.';
+   report();
+   return;
+  }
+  controller=new AbortController();
+  operation='grade';
+  reviewFailures=[];
+  const reportEpoch=++gradingEpoch,signal=controller.signal,attemptId=session.id;
+  const {model,endpoint}=localAI.state;
+  let savedGrades=0,savedSuggestions=0,needsConfirmation=0;
+  const sameModel=()=>localAI.state.model===model&&localAI.state.endpoint===endpoint;
+  if(exam4){notesOpen=false;reviewIndex=null;}
+  gradingMessage='Starting review of your submitted answers…';
+  report({title:'Score'});
+  try{
+   for(const [index,row] of rows.entries()){
+    if(signal.aborted||!reviewStatus(attemptId,reportEpoch))break;
+    const q=row.q;
+    updateReviewProgress(`Reviewing answer ${index+1} of ${rows.length} · ${q.topic}`);
+    if(!sameModel()){
+     reviewFailures.push(q.topic+': The selected model changed. Retry the remaining answers.');
+     break;
+    }
+    try{
+     const review=q.type==='written'
+      ?await writtenJudge.review({question:mockRubricQuestion(q),response:mockRubricResponse(q,row.response),submissionId:session.submission.id},{signal,model,endpoint})
+      :await termJudge.review({target:mockTermReviewTarget(q,row.response,{scoringVersion:session.scoringVersion??1}),response:row.response,strictCorrect:row.outcome.strictCorrect,allowOverride:true},{signal,model,endpoint});
+     if(signal.aborted||!reviewStatus(attemptId,reportEpoch))break;
+     if(!sameModel())throw new Error('The selected model changed. This result was not applied.');
+     if(q.type==='written'&&!qualified(q)){
+      if(!exam4)throw new Error('The model no longer matches its rubric check.');
+      saveWrittenSuggestion(state,session,review);
+      if(!save())throw new Error('The suggestion could not be saved on this device.');
+      savedSuggestions++;
+     }else{
+      session=applyMockReview(session,q.id,review);
+      if(exam4)recordSpellings();
+      if(!putSession())throw new Error('The review is only in this tab. Export a backup before leaving.');
+      savedGrades++;
+     }
+    }catch(error){
+     if(signal.aborted)break;
+     reviewFailures.push(q.topic+': '+(error.message||'Review failed. Retry this answer.'));
+     if(storageError||!sameModel())break;
+    }
+   }
+  }finally{
+   if(reportEpoch!==gradingEpoch)return;
+   controller=null;
+   operation='';
+   needsConfirmation=mockResults(session).rows.filter(unconfirmedSuggestion).length;
+   const counts=[`${savedGrades} ${savedGrades===1?'review':'reviews'} saved`,savedSuggestions?`${savedSuggestions} AI ${savedSuggestions===1?'suggestion':'suggestions'} saved`:''].filter(Boolean).join(' · ');
+   gradingMessage=(signal.aborted?'Review stopped. ':'')+counts+'.'+
+    (needsConfirmation?` Open AI suggestions to confirm or adjust ${needsConfirmation} ${needsConfirmation===1?'answer':'answers'}.`:'')+
+    (reviewFailures.length?` ${reviewFailures.length} ${reviewFailures.length===1?'item needs':'items need'} attention.`:'');
+   if(reviewStatus(attemptId,reportEpoch))report({title:'Score'});
   }
  }
  async function qualifyModel(){
   if(controller)return;
-  if(!localAI.state.ready){aiSetup();return;}
+  if(!localAI.state.ready){continueAfterSetup('Check model for automatic scoring',qualifyModel);return;}
   const candidates=session?.status==='submitted'?session.questions.filter(q=>q.type==='written'&&mockRubricResponse(q,session.responses[q.id]||'').trim()&&!qualified(q)):mockExam3Questions.filter(q=>q.type==='written'&&!qualified(q));
   if(!candidates.length){toast('The selected model has passed the checks for these written questions.');return;}
   const selectedFixtures=calibration.filter(f=>candidates.some(q=>q.id===f.questionId));
   if(!selectedFixtures.length){toast('This rubric has no model check yet. Use the learner confirmation after comparing your answer.');return;}
   const isReport=screen==='results',attemptId=session?.id;
   controller=new AbortController();const job=++gradingEpoch,signal=controller.signal,model=localAI.state.model,endpoint=localAI.state.endpoint;
+  operation='qualification';reviewFailures=[];
   gradingMessage=`Checking ${model} with ${selectedFixtures.length} prepared answers. This may take several minutes; your own responses are not used.`;
   if(isReport)report();else toast(gradingMessage);
   try{
-   const result=await writtenJudge.calibrate(selectedFixtures,gradingQuestions,{signal,model,endpoint,onProgress:p=>{gradingMessage=`Checking rubric scoring: ${p.completed}/${p.total} prepared answers. Your exam stays saved.`;const status=query('.mock-grade-banner p');if(status)status.textContent=gradingMessage;}});
+   const result=await writtenJudge.calibrate(selectedFixtures,gradingQuestions,{signal,model,endpoint,onProgress:p=>{gradingMessage=`Checking rubric scoring: ${p.completed}/${p.total} prepared answers. Your exam stays saved.`;updateReviewProgress(gradingMessage);}});
    if(signal.aborted||model!==localAI.state.model||endpoint!==localAI.state.endpoint)return;
    let passed=0;
    for(const q of candidates){const fixtures=selectedFixtures.filter(f=>f.questionId===q.id),ids=new Set(fixtures.map(f=>f.id));if(!fixtures.length)continue;const record=compactWrittenQualification({...result,cases:result.cases.filter(c=>ids.has(c.id))},fixtures,gradingQuestions);qualifications.push(record);if(record.passed)passed++;}
    try{localStorage.setItem(WRITTEN_QUALIFICATION_KEY,JSON.stringify(qualifications.slice(-30)));}catch{toast('The model check is available for this session, but could not be saved.');}
-   gradingMessage=passed===candidates.length?'The selected model passed these rubric checks. Choose Review with Ollama to grade your original responses.':`${passed}/${candidates.length} rubrics passed. Unverified written points stay pending. Select another model or use learner rubric confirmation.`;
+   gradingMessage=passed===candidates.length?'The selected model passed these rubric checks. Choose Review with AI to grade your original responses.':`${passed}/${candidates.length} rubrics passed. Unverified written points stay pending. Select another model or use learner rubric confirmation.`;
   }catch(error){gradingMessage=signal.aborted?'Model check stopped. No unfinished check qualifies a model.':`Model check could not finish: ${error.message}. Written points stay pending.`;}
-  finally{if(job!==gradingEpoch)return;controller=null;if(isReport&&session?.id===attemptId&&active()&&screen==='results')report();else if(active())toast(gradingMessage);}
+  finally{if(job!==gradingEpoch)return;controller=null;operation='';if(isReport&&session?.id===attemptId&&active()&&screen==='results')report();else if(active())toast(gradingMessage);}
  }
  function confirmRubric(q){
   if(controller){toast('Stop the current review before confirming a rubric.');return;}
   const question=mockRubricQuestion(q),response=mockRubricResponse(q,session.responses[q.id]),row=mockResults(session).rows.find(r=>r.q.id===q.id),criteria=rubricCriteria(question);
-  dialog(`<h2>Compare each part of your answer.</h2><p>This saves a <b>learner-confirmed</b> practice review. Award only what your original answer says. Choose <b>Not sure</b> to keep a component pending for later review.</p><div class="mock-answer-compare"><div><small>YOUR LOCKED RESPONSE</small><p>${e(response)}</p></div><div><small>VERIFIED EXPLANATION</small><p>${e(q.answer)}</p></div></div>${criteria.map(c=>{const priorDecision=row.outcome.components.find(x=>x.id===c.id)?.decision||'uncertain',decision=priorDecision==='contradicted'?'missing':priorDecision;return `<label class="mock-manual-criterion"><span><b>${e(c.label)} · ${point(c.points)} points</b><small>${e(c.description)}</small></span><select data-manual-criterion="${e(c.id)}">${[['uncertain','Not sure — keep pending'],['met','Present in my answer — award points'],['missing','Missing or incorrect — no points']].map(([value,label])=>`<option value="${value}" ${decision===value?'selected':''}>${label}</option>`).join('')}</select></label>`;}).join('')}<label class="mock-answer-label" for="mock-confirmation-reason">Your reason or correction note (optional)</label><textarea id="mock-confirmation-reason" class="mock-answer" maxlength="1000" rows="2"></textarea><div class="control-row"><button id="mock-manual-cancel">Keep current grade</button><button id="mock-manual-apply" class="primary">Save learner-confirmed review</button></div>`,exam4?content=>{
+  const suggestion=unconfirmedSuggestion(row)?suggestionFor(q):null;
+  dialog(`<h2>Compare each part of your answer.</h2><p>This saves a <b>learner-confirmed</b> practice review. ${suggestion?'The selected values come from the AI suggestion. Check them against your original answer.':'Award only what your original answer says.'} Choose <b>Not sure</b> to keep a component pending for later review.</p><div class="mock-answer-compare"><div><small>YOUR LOCKED RESPONSE</small><p>${e(response)}</p></div><div><small>VERIFIED EXPLANATION</small><p>${e(q.answer)}</p></div></div>${criteria.map(c=>{const priorDecision=(suggestion?.components||row.outcome.components).find(x=>x.id===c.id)?.decision||'uncertain',decision=priorDecision==='contradicted'?'missing':priorDecision;return `<label class="mock-manual-criterion"><span><b>${e(c.label)} · ${point(c.points)} points</b><small>${e(c.description)}</small></span><select data-manual-criterion="${e(c.id)}">${[['uncertain','Not sure — keep pending'],['met','Present in my answer — award points'],['missing','Missing or incorrect — no points']].map(([value,label])=>`<option value="${value}" ${decision===value?'selected':''}>${label}</option>`).join('')}</select></label>`;}).join('')}<label class="mock-answer-label" for="mock-confirmation-reason">Your reason or correction note (optional)</label><textarea id="mock-confirmation-reason" class="mock-answer" maxlength="1000" rows="2"></textarea><div class="control-row"><button id="mock-manual-cancel">Keep current grade</button><button id="mock-manual-apply" class="primary">Save learner-confirmed review</button></div>`,exam4?content=>{
    const compare=content.querySelector('.mock-answer-compare'),reason=content.querySelector('#mock-confirmation-reason');
    return [mock4Group('Instructions',content.querySelector('p')),
     mock4Group('Locked response',[...compare.firstElementChild.children]),
@@ -274,7 +502,14 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
     mock4Group('Review note',reason.previousElementSibling,reason)];
   }:undefined);
   document.querySelector('#mock-manual-cancel').onclick=()=>document.querySelector('#info-dialog').close();
-  document.querySelector('#mock-manual-apply').onclick=()=>{try{const decisions=Object.fromEntries([...document.querySelectorAll('[data-manual-criterion]')].map(input=>[input.dataset.manualCriterion,input.value]));const review=createLearnerWrittenReview({question,response,submissionId:session.submission.id,decisions,reason:document.querySelector('#mock-confirmation-reason').value});session=applyMockReview(session,q.id,review);const stored=putSession();document.querySelector('#info-dialog').close();report();toast(stored?'Learner review saved, including any pending points. Your original response is unchanged.':'The confirmation is in this tab only. Export a recovery backup and retry saving.');}catch(error){toast(error.message);}};
+  document.querySelector('#mock-manual-apply').onclick=()=>{try{const decisions=Object.fromEntries([...document.querySelectorAll('[data-manual-criterion]')].map(input=>[input.dataset.manualCriterion,input.value]));const review=createLearnerWrittenReview({question,response,submissionId:session.submission.id,decisions:Object.entries(decisions).map(([id,decision])=>{
+   const proposed=suggestion?.components.find(c=>c.id===id);
+   return {id,decision,...(proposed?.decision===decision?{evidence:proposed.evidence}:{})};
+  }),reason:document.querySelector('#mock-confirmation-reason').value});session=applyMockReview(session,q.id,review);const stored=putSession();document.querySelector('#info-dialog').close();
+   if(filter==='suggestions'&&!mockResults(session).rows.some(unconfirmedSuggestion)){
+    filter='missed';reviewIndex=null;gradingMessage='Your confirmed written score is included in the report.';
+   }
+   report();toast(stored?'Learner review saved, including any pending points. Your original response is unchanged.':'The confirmation is in this tab only. Export a recovery backup and retry saving.');}catch(error){toast(error.message);}};
  }
  function help(){dialog('<h2>A little help changes the attempt.</h2><p>Opening a source or tutor before submission marks this item assisted. Your points are still shown separately from that assistance status.</p><div class="control-row"><button id="mock-help-cancel">Return to question</button><button id="mock-help-source">Open course section</button><button class="primary" id="mock-help-tutor">Ask the tutor</button></div>');document.querySelector('#mock-help-cancel').onclick=()=>document.querySelector('#info-dialog').close();for(const kind of ['source','tutor'])document.querySelector('#mock-help-'+kind).onclick=()=>{const q=session.questions[session.index];session.assisted[q.id]=true;putSession();document.querySelector('#info-dialog').close();if(kind==='source')document.dispatchEvent(new CustomEvent('openreader',{detail:q.lesson}));else document.querySelector('#tutor-launch')?.click();};}
  function tutorFor(q){const row=mockResults(session).rows.find(r=>r.q.id===q.id),missing=row.outcome.components.filter(c=>!c.earnedPoints).map(c=>c.label).join('; ');setLearningContext({type:'study',label:label+' correction · '+q.topic,reference:q.lesson,text:`Prompt: ${q.prompt}\nSubmitted: ${row.response}\nVerified answer: ${q.answer}\nMissing criteria: ${missing}\nCourse explanation: ${q.explanation}`.slice(0,1800)});document.querySelector('#tutor-launch')?.click();}
@@ -308,7 +543,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  function download(data,name,type='application/json'){const url=URL.createObjectURL(new Blob([typeof data==='string'?data:JSON.stringify(data,null,2)],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  function backup(){if(unreadableRecord){download(unreadableRecord,'osteon-'+slug+'-original-recovery.json');toast('Original unreadable record downloaded for recovery.');return;}checkpoint();if(session?.status==='draft')putSession();download(storage.backup(state),`osteon-${slug}-backup-${new Date().toISOString().slice(0,10)}.json`);toast(label+' backup downloaded.');}
  function restore(){const input=document.createElement('input');input.type='file';input.accept='.json,application/json';input.onchange=async()=>{const file=input.files[0];if(!file)return;try{if(file.size>15e6)throw new Error('Choose a mock backup smaller than 15 MB.');const imported=storage.restore(JSON.parse(await file.text()));dialog(`<h2>Restore this ${label} backup?</h2><p>${imported.history.length} completed reports, ${imported.active?'one saved attempt':'no unfinished attempt'}, ${Object.keys(imported.notes).length} personal notes and both card sides. This replaces saved ${label} records on this device.</p><p>Export your current mock work first to keep both copies.</p><div class="control-row"><button id="mock-import-cancel">Cancel</button><button class="primary" id="mock-import-confirm">Restore mock work</button></div>`);document.querySelector('#mock-import-cancel').onclick=()=>document.querySelector('#info-dialog').close();document.querySelector('#mock-import-confirm').onclick=()=>{try{storage.write(localStorage,imported);cancelJob();state=imported;unreadableRecord='';session=null;document.querySelector('#info-dialog').close();home();toast(label+' work restored.');}catch(error){toast(error.message);}};}catch(error){toast(error.message);}};input.click();}
- function exportText(){const result=mockResults(session);const lines=[session.title,`Score ${result.earnedPoints}/${result.maxPoints}; ${result.pendingPoints} points pending.`,''];for(const row of result.rows){const n=noteFor(row.q);lines.push(`Q${session.ids.indexOf(row.q.id)+1}. ${row.q.prompt}`,`Your answer: ${row.response||'(blank)'}`,`Points: ${row.outcome.earnedPoints}/${row.maxPoints}; pending ${row.outcome.pendingPoints}`,`Answer: ${row.q.answer}`,`Why: ${row.q.explanation}`,`Source: ${row.q.source}`,`What I confused: ${n.confusion}`,`Rule: ${n.rule}`,`Ask myself: ${n.retrieval}`,'');}lines.push(cardText(state.card,label));download(lines.join('\n'),`osteon-${slug}-study-${date(session.submitted).replace(/\W+/g,'-')}.txt`,'text/plain');}
+ function exportText(){const result=mockResults(session);const lines=[session.title,`Score ${result.earnedPoints}/${result.maxPoints}; ${result.pendingPoints} points pending.`,''];for(const row of result.rows){const n=noteFor(row.q);lines.push(`Q${session.ids.indexOf(row.q.id)+1}. ${row.q.prompt}`,`Your answer: ${row.response||'(blank)'}`,`Points: ${row.outcome.earnedPoints}/${row.maxPoints}; pending ${row.outcome.pendingPoints}`,`Answer: ${row.q.answer}`,`Why: ${row.q.explanation}`,`Source: ${row.q.source}`,`What I confused: ${studyNoteValue(n,'confusion')}`,`Rule: ${studyNoteValue(n,'rule')}`,`Ask myself: ${studyNoteValue(n,'retrieval')}`,'');}lines.push(cardText(state.card,label));download(lines.join('\n'),`osteon-${slug}-study-${date(session.submitted).replace(/\W+/g,'-')}.txt`,'text/plain');}
  function card(){checkpoint();if(session?.status==='draft')putSession();const used=state.card.front.concat(state.card.back).filter(t=>t.trim()).length;paint(`${top(label+' home','home')}<div class="mock-exam-head"><div><span class="mock-kicker">YOUR 3 × 5 MEMORY CARD</span><h1>Small card.<br><em>Sharper recall.</em></h1><p><span data-card-count>${used}</span> / 48 lines · 24 on each side · your earlier saved notecard files stay unchanged</p></div><div class="mock-mini-actions"><button class="mock-btn" data-mock-action="card-download">Download copy text</button><button class="mock-btn primary" data-mock-action="card-preview">Actual-size preview ↗</button></div></div><p class="mock-note">Build from the mistakes you actually make. Edit any line, move it up or down, and leave room for your handwriting. Amber lines are long enough to check by hand; character count alone cannot guarantee fit.</p><div class="mock-card-grid">${['front','back'].map(side=>`<section class="mock-card-side"><h2>${side==='front'?'Front':'Back'}.</h2><p>24 lines · abbreviate only after the idea is clear</p>${state.card[side].map((line,i)=>`<div class="mock-card-row ${line.length>88?'overlong':''}"><span>${String(i+1).padStart(2,'0')}</span><input aria-label="${side} line ${i+1}" data-card-side="${side}" data-card-line="${i}" maxlength="180" value="${e(line)}"><span><button aria-label="Move ${side} line ${i+1} up" data-card-move="${side}:${i}:-1" ${i===0?'disabled':''}>↑</button><button aria-label="Move ${side} line ${i+1} down" data-card-move="${side}:${i}:1" ${i===23?'disabled':''}>↓</button></span></div>`).join('')}</section>`).join('')}</div><div class="mock-mini-actions"><button class="mock-btn" data-mock-action="backup">Back up card & exam work</button></div>`,'card');}
  function cardPreview(){
   const markup=['front','back'].map(side=>`<p class="mock-print-label">${side==='front'?'Front':'Back'} · 3 × 5 inches · 24 writing lines</p><div class="mock-card-preview" data-card-preview-side="${side}">${state.card[side].map((line,i)=>`<div data-preview-line="${i}">${e(line)||'&nbsp;'}</div>`).join('')}</div>`).join('');
@@ -319,7 +554,7 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
   document.querySelector('#mock-card-edit').onclick=()=>{document.querySelector('#info-dialog').close();card();const first=overflow[0];if(first)focusItem(query(`[data-card-side="${first.side}"][data-card-line="${first.line}"]`));};
   document.querySelector('#mock-print-card').onclick=()=>{if(overflow.length)return;const sheet=document.createElement('div');sheet.className='mock-print-only';sheet.innerHTML=markup;document.body.append(sheet);document.body.classList.add('mock-print-card');window.addEventListener('afterprint',()=>{sheet.remove();document.body.classList.remove('mock-print-card');},{once:true});window.print();};
  }
- function handleInput(event){const t=event.target;if(t.dataset.mockCandidate){const q=session?.questions.find(q=>q.id===t.dataset.mockCandidate);if(q){state.notes[noteKey(q)]={...noteFor(q),cardDraft:t.value.slice(0,180),updatedAt:Date.now()};save();}}if(t.id==='mock-answer')updateResponse(t.value);if(t.id==='mock-claim-reason')saveClaim();if(t.dataset.mockNote){const q=session?.questions.find(q=>q.id===t.dataset.question);if(!q)return;const n={...noteFor(q),[t.dataset.mockNote]:t.value.slice(0,2000),updatedAt:Date.now()};state.notes[noteKey(q)]=n;save();}if(t.dataset.cardSide){state.card[t.dataset.cardSide][Number(t.dataset.cardLine)]=t.value.slice(0,180);t.closest('.mock-card-row').classList.toggle('overlong',t.value.length>88);query('[data-card-count]').textContent=state.card.front.concat(state.card.back).filter(s=>s.trim()).length;save();}}
+ function handleInput(event){const t=event.target;if(t.dataset.mockCandidate){const q=session?.questions.find(q=>q.id===t.dataset.mockCandidate);if(q){state.notes[noteKey(q)]={...noteFor(q),cardDraft:t.value.slice(0,180),updatedAt:Date.now()};save();}}if(t.id==='mock-answer')updateResponse(t.value);if(t.id==='mock-claim-reason')saveClaim();if(t.dataset.mockNote){const q=session?.questions.find(q=>q.id===t.dataset.question);if(!q)return;const prior=noteFor(q),field=t.dataset.mockNote;const n={...prior,[field]:t.value.slice(0,2000),updatedAt:Date.now()};if(exam4)n.studyEdits=[...new Set([...(prior.studyEdits||[]),field])];state.notes[noteKey(q)]=n;save();}if(t.dataset.cardSide){state.card[t.dataset.cardSide][Number(t.dataset.cardLine)]=t.value.slice(0,180);t.closest('.mock-card-row').classList.toggle('overlong',t.value.length>88);query('[data-card-count]').textContent=state.card.front.concat(state.card.back).filter(s=>s.trim()).length;save();}}
  function saveClaim(){const judgment=query('[name="mock-claim-judgment"]:checked')?.value||'',reason=query('#mock-claim-reason').value;updateResponse(judgment||reason?judgment+'\n'+reason:'');}
  function handleChange(event){const t=event.target;if(t.id==='mock-word-bank'){query('#mock-answer').value=t.value;updateResponse(t.value);return;}if(t.id==='mock4-review-filter'){filter=t.value;report({title:'Score'});focusItem(query('#mock4-review-filter'));return;}if(t.id==='mock4-result-number'){reviewIndex=Number(t.value);report({title:'Question'});focusItem(query('#mock4-result-number'));return;}if(t.name==='mock-claim-judgment')saveClaim();if(t.id==='mock-auto-grade')autoGrade=t.checked;if(t.dataset.mockSide){const q=session?.questions.find(q=>q.id===t.dataset.mockSide);if(q){state.notes[noteKey(q)]={...noteFor(q),cardSide:t.value,updatedAt:Date.now()};save();}}}
  function handleKeys(event){if(!event.target.matches('[data-mock-option]')||!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const options=[...root.querySelectorAll('[data-mock-option]')],i=options.indexOf(event.target),step=['ArrowUp','ArrowLeft'].includes(event.key)?-1:1,next=event.key==='Home'?0:event.key==='End'?options.length-1:(i+step+options.length)%options.length;options[next].click();focusItem(options[next]);}
@@ -359,13 +594,18 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
    case'muscle-labeling':document.dispatchEvent(new Event('openmusclelabeling'));break;
    case'checklist':document.dispatchEvent(new Event('openmusclechecklist'));break;
    case'ai':aiSetup();break;
-   case'grade':grade();break;
+   case'grade':resumeOrStart(grade);break;
+   case'suggestions':showSuggestions();break;
+   case'create-notes':openStudySheet();break;
+   case'refine-notes':resumeOrStart(refineNotes);break;
+   case'download-sheet':downloadStudySheet();break;
+   case'stop-review':controller?.abort();updateReviewProgress('Stopping. Completed work is saved.');break;
    case'qualify':qualifyModel();break;
    case'cancel-grade':cancelJob();report();break;
    case'retry-save':putSession();report();break;
    case'focus-missed':filter='missed';if(exam4)reviewIndex=0;report();query('#mock-review-list')?.scrollIntoView({block:'start'});break;
    case'open-review':reviewIndex=0;report();break;
-   case'back-score':reviewIndex=null;report();break;
+   case'back-score':if(operation==='notes')cancelJob();reviewIndex=null;notesOpen=false;reviewContinuation=null;report({title:'Score'});break;
    case'previous-result':reviewIndex--;report({title:'Question'});break;
    case'next-result':reviewIndex++;report({title:'Question'});break;
    case'retry':retry();break;
@@ -385,12 +625,12 @@ function initMockExam({setView,dialog:openDialog,toast,escape:e},number){
  document.addEventListener('open'+slug,home);
  if(exam4)document.addEventListener('openexam4attachments',()=>begin(mockExam4AttachmentQuestions,mockExam4AttachmentForm,'practice'));
  document.addEventListener('resume'+slug,resume);
- document.addEventListener(slug+'results',event=>{const id=event.detail?.id;if(id){selectReport(id);return;}cancelJob();session=state.history.at(-1);reviewIndex=null;session?.status==='submitted'?report():home();});
+ document.addEventListener(slug+'results',event=>{const id=event.detail?.id||state.history.at(-1)?.id;if(id)selectReport(id);else home();});
  document.addEventListener(slug+'card',card);
  document.addEventListener('studyassistance',()=>{if((!exam4||coaching())&&active()&&screen==='exam'&&session?.status==='draft'){session.assisted[session.ids[session.index]]=true;putSession();}});
  document.addEventListener('viewchange',()=>{
   if(!ownsView||active())return;
-  ownsView=false;layout?.close();layout=null;checkpoint();if(session?.status==='draft')putSession();cancelJob();
+  ownsView=false;layout?.close();layout=null;checkpoint();if(session?.status==='draft')putSession();cancelJob();reviewContinuation=null;
   if(document.body.dataset.mockExamActive===slug)delete document.body.dataset.mockExamActive;
   if(exam4)setTutorAssessmentMode(null);
  });

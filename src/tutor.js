@@ -14,7 +14,7 @@ function initTutor({escape:e,toast}) {
   let client=localAI.client, connected=false, choice=localAI.state.model, models=[], tab='guide', busy=false, controller=null, job=null;
   let context=getLearningContext(), hardware={}, os=detectOS(), chat=[], draft='', lastFocus=null;
   let guided=null,guideSection='',guidePrompt='recall',guideReveal='',useDiagramGuide=true;
-  let setupPage='auto', sample='', returnToReview=false, assistantFinished=false, opening=false, pollTimer=null, pollRun=0;
+  let setupPage='auto', sample='', returnToReview=false, setupContinuation=null, assistantFinished=false, opening=false, pollTimer=null, pollRun=0;
   let benchmarkText='', generationText='', downloadState={model:downloadModels[0].name,text:'',progress:null};
   try {
     chat=sanitizeConversation(JSON.parse(localStorage.getItem(CHAT_KEY)||'[]'));
@@ -38,9 +38,9 @@ function initTutor({escape:e,toast}) {
   const compactTutor=matchMedia('(max-width:999px)');
   function showPanel(){if(compactTutor.matches)panel.showModal();else panel.show();}
   function stopWaiting(){clearTimeout(pollTimer);pollRun++;opening=false;}
-  function closePanel(){captureDraft();stopWaiting();if(job?.kind==='connect')controller?.abort();panel.close();launcher.setAttribute('aria-expanded','false');lastFocus?.focus();}
-  function openPanel({setup=false,review=false,autoCheck=true}={}) {
-    lastFocus=document.activeElement;returnToReview=review;
+  function closePanel(){captureDraft();stopWaiting();if(job?.kind==='connect'||job?.kind==='benchmark')controller?.abort();panel.close();launcher.setAttribute('aria-expanded','false');lastFocus?.focus();setupContinuation=null;}
+  function openPanel({setup=false,review=false,continuation=null,autoCheck=true}={}) {
+    lastFocus=document.activeElement;returnToReview=review;setupContinuation=continuation;
     if(!panel.open)showPanel();launcher.setAttribute('aria-expanded','true');
     if(!busy){
      tab=setup?'setup':localAI.state.ready?'chat':'guide';
@@ -75,7 +75,7 @@ function initTutor({escape:e,toast}) {
     document.dispatchEvent(new CustomEvent('localaistatechange',{detail:{ready:state.ready,connected,model:choice}}));
   }
   localAI.subscribe(syncConnection);syncConnection(localAI.snapshot());
-  document.addEventListener('localaiopen',ev=>openPanel({setup:true,review:ev.detail?.returnToReview===true}));
+  document.addEventListener('localaiopen',ev=>openPanel({setup:true,review:ev.detail?.returnToReview===true,continuation:ev.detail?.continuation}));
   window.addEventListener('storage',ev=>{if(ev.key===HARDWARE_KEY&&ev.newValue){try{hardware=validateHardware(JSON.parse(ev.newValue));hardware.source='setup assistant / another study tab';if(panel.open&&tab==='setup')render();}catch{}}});
   document.addEventListener('visibilitychange',()=>{if(!opening)return;if(document.hidden)clearTimeout(pollTimer);else if(panel.open)waitForOllama();});
   function save(){try{localStorage.setItem(CHAT_KEY,JSON.stringify(chat.slice(-CHAT_LIMIT)));}catch{toast('Tutor history could not be saved. Study progress is separate.');}}
@@ -113,7 +113,14 @@ function initTutor({escape:e,toast}) {
   function beginJob(kind){busy=true;controller=new AbortController();job={kind,model:choice};render();}
   function endJob(){busy=false;controller=null;job=null;render();}
   function go(page){setupPage=page;render();$('#tutor-body .ai-setup-content')?.focus({preventScroll:true});}
-  function finish(){if(returnToReview||os==='other'){closePanel();if(localAI.state.ready)toast('Local AI is ready for optional answer review.');}else{tab='chat';render();$('#tutor-input')?.focus();}}
+  function finish(){
+    const continuation=localAI.state.ready?setupContinuation:null;
+    if(returnToReview||os==='other'){
+      closePanel();
+      if(continuation)continuation.run();
+      else if(localAI.state.ready)toast('Local AI is ready for optional answer review.');
+    }else{tab='chat';render();$('#tutor-input')?.focus();}
+  }
   function renderTextbookGuide(){
     if(useDiagramGuide&&context.diagram?.question){renderDiagramGuide();return;}
     const lesson=lessons.find(l=>l.id===guideSection)||lessons[0],prompt=lesson[guidePrompt];
@@ -141,7 +148,7 @@ function initTutor({escape:e,toast}) {
     $('#tutor-diagram-return').onclick=closePanel;$('#tutor-diagram-other').onclick=()=>{useDiagramGuide=false;guideReveal='';render();};
   }
   function renderSetup(){
-    $('#tutor-body').innerHTML=setupScreen({state:localAI.snapshot(),page:setupPage,busy,job:job?.kind,os,hardware,download:downloadState,sample,testText:benchmarkText,returnToReview,assistantFinished,opening});
+    $('#tutor-body').innerHTML=setupScreen({state:localAI.snapshot(),page:setupPage,busy,job:job?.kind,os,hardware,download:downloadState,sample,testText:benchmarkText,returnToReview,continueLabel:setupContinuation?.label,assistantFinished,opening});
     // Keep the next action visible even on short laptop screens or with the
     // phone keyboard open. Technical instructions may scroll independently.
     const primary=panel.querySelector('.ai-setup-content .primary'),footer=panel.querySelector('.ai-setup-footer');
