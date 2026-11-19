@@ -5,11 +5,14 @@
 .motion-heading em{color:#c8ead9}
 .motion-back,.motion-source{color:#c5e4d6;text-underline-offset:4px;font-size:12px}
 .motion-modes,.motion-camera,.motion-settings,.motion-steps,.motion-angles,.motion-filter{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
-.motion-modes button,.motion-camera button,.motion-settings button,.motion-steps button,.motion-settings select{
+.motion-modes button,.motion-title button,.motion-camera button,.motion-settings button,.motion-steps button,.motion-settings select{
  border:1px solid #45625e;background:#15282d;color:#e6f1eb;border-radius:8px;
  font:inherit;font-size:12px;min-height:38px;padding:5px 10px;
 }
 .motion-modes button[aria-pressed=true]{background:#bcdbc9;border-color:#bcdbc9;color:#152923;font-weight:700}
+.motion-heading .motion-title{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.motion-title [data-motion-find-muscle]{border-color:#b48f67;color:#f6dfc3;min-height:33px;white-space:nowrap}
+.motion-info [data-motion-locate-muscle]{align-self:start}
 .motion-workspace{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,315px);gap:12px}
 .motion-model-panel,.motion-info{border:1px solid #364e4d;border-radius:15px;background:#14252b;min-width:0;min-height:0}
 .motion-model-panel{display:flex;flex-direction:column;overflow:hidden}
@@ -146,6 +149,14 @@
 .motion-coverage{color:#c5e4d6;text-underline-offset:3px;font-size:11px;white-space:nowrap}
 .motion-heading h1+.motion-coverage{display:inline-block;margin-left:2px}
 @media(max-width:760px) and (orientation:portrait){.motion-heading h1{display:inline-block;margin-left:7px}.motion-heading h1+.motion-coverage{margin-left:7px}}
+@media(max-width:760px) and (orientation:portrait){
+ .motion-heading .motion-title{width:100%;gap:6px}
+ .motion-title h1,.motion-title h1+.motion-coverage{margin-left:0}
+ .motion-title [data-motion-find-muscle]{margin-left:auto;font-size:11px;padding-inline:7px}
+}
+@media(max-height:480px) and (orientation:landscape){
+ .motion-title [data-motion-find-muscle]{min-height:30px;padding:3px 6px}
+}
 .motion-phase-tag{display:grid;gap:2px;max-width:min(94%,295px);font-size:12px;border-color:#68887e}
 .motion-phase-tag>[data-motion-cue]{font-size:10px;color:var(--motion-cue,#c8e1d8);text-transform:uppercase;letter-spacing:.04em}
 .motion-stage:has(.motion-reveal-controls) :is(.motion-phase-tag,.pose-stage-hint){max-width:calc(100% - 132px)}

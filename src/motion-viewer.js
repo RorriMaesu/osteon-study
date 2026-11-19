@@ -430,7 +430,7 @@ export class MotionViewer {
   if(this.grid){this.grid.position.z=-distance*clock%.1;this.grid.position.y=0;}
   this.dirty=true;
  }
- highlight({strengths,walkTeaching,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,roleCues,selectionRoles,regionalRoles,reveal=false,revealThreshold=0,revealBones=false}){
+ highlight({strengths,walkTeaching,selected,selectedGroup,showMuscles,onlyActive,isolateSelection=false,showCalves=false,cue,displayThreshold=0,antagonists,mixedRoles,roleCues,selectionRoles,regionalRoles,reveal=false,revealThreshold=0,revealBones=false,revealSelection=true,emphasizeSelection=false}){
   if(!this.current)return;
   const replaced=new Set();
   for(const {mesh,base} of this.current.calves||[]){
@@ -467,12 +467,13 @@ export class MotionViewer {
     if(mixed)p.material.color.copy(mixedRoleColor);
     else if(color&&intensity)p.material.color.lerp(color,intensity);
     else if(opposing)p.material.color.lerp(opposingRoleColor,.78);
-    p.material.emissive.copy(p.material.color).multiplyScalar(intensity*.23);
+    if(exact&&emphasizeSelection&&!mixed&&!opposing&&!visibleSignal)p.material.color.set('#da9f77');
+    p.material.emissive.copy(p.material.color).multiplyScalar(exact&&emphasizeSelection?.30:intensity*.23);
    }
    if(p.outline||focused)outlinePart(p).visible=focused&&p.mesh.visible;
   }
   if(reveal&&showMuscles)this.reveal?.configure({
-   selected:this.selectedPart,targets:revealTargets,bones:revealBones,
+   selected:revealSelection?this.selectedPart:null,targets:revealSelection||!this.selectedPart?revealTargets:[],bones:revealBones,
    contributors:new Set(cue==='emg'?[]:revealTargets.map(part=>part.mesh)),
   });
   else if(this.reveal?.targets.length||this.reveal?.selected||this.reveal?.faded.size)this.reveal.reset();
@@ -668,7 +669,7 @@ export class MotionViewer {
    }
   }
   const usingReveal=this.reveal.selected===part;
-  const anchor=usingReveal?this.reveal.anchor:part.anchorIndex;
+  const anchor=(usingReveal?this.reveal.anchor:undefined)??part.anchorIndex;
   if(anchor===undefined){this.showSelectionLabel(false);return;}
   mesh.getVertexPosition(anchor,this.labelAnchor);
   const {x,y,z}=mesh.localToWorld(this.labelAnchor).project(this.camera);

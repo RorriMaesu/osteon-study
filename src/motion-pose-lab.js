@@ -7,6 +7,7 @@ import {createPosePreview,samplePosePreview} from './motion-pose-playback.js';
 import {setLearningContext} from './learning-context.js';
 import {findMotionStudyGuide} from './motion-study-guides.js';
 import {createMotionRevealPreference} from './motion-reveal-preference.js';
+import {indexMotionMuscles} from './motion-muscle-search.js';
 
 const savedKey='osteon-whole-body-pose-v1';
 
@@ -14,6 +15,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
  let active=false,revision=0,specimen=null,history=null,descriptors=[],selectedJoint=null,selectedAxis=null;
  let scope='all',interaction='joint',selectedMuscle=null,showMuscles=true,onlyRelated=false,message='',saveTimer=null,lastContext='';
  let playback=null,playbackStarted=0,studyGuide=null,guidedDirection=0,guideRouteRead=false;
+ let muscleIndex=[],selectionReveal=true,locatedSelection=false;
  const descriptor=()=>descriptors.find(joint=>joint.id===selectedJoint);
  const ui=createPoseUI(host,{
   selectJoint,selectAxis:id=>{stopGesture();studyGuide=null;selectedAxis=id;history?.clearChanges();message='';draw();},
@@ -37,10 +39,17 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
    message='Starting pose restored. Undo brings your pose back.';draw();save();
   },
   setLock:locked=>{if(!history)return;stopGesture();history.setLocked(selectedJoint,locked);message=locked?'Joint angles locked. The limb still follows its parent joint.':'Joint angles unlocked.';draw();save();},
-  setScope:changeScope,focus:()=>{stopGesture();viewer.focusJoint(studyGuide?.view,studyGuide?.radius);},
+  setScope:changeScope,focus:()=>{
+   stopGesture();
+   if(interaction==='endpoint')viewer.frameLimb(selectedJoint);
+   else viewer.focusJoint(studyGuide?.view,studyGuide?.radius);
+  },
   camera:view=>{stopGesture();if(studyGuide&&!studyGuide.fullFrame)viewer.focusJoint(view,studyGuide.radius);else viewer.frame(view);},
   zoom:direction=>viewer.zoom(direction),
   setMuscles:show=>{showMuscles=show;draw();},selectMuscle,
+  locateMuscle:key=>selectMuscle(key,{locate:true}),
+  clearMuscle:()=>{selectedMuscle=null;message='';draw();},
+  setSelectionReveal:enabled=>{selectionReveal=enabled;draw();},
   setRelated:show=>{onlyRelated=show;draw();},
   setReveal:enabled=>{revealPreference.setEnabled(enabled);draw();},
   setFadeBones:enabled=>{revealPreference.setFadeBones(enabled);draw();},
@@ -49,21 +58,15 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
    if(matchMedia('(max-width:959px) and (min-height:481px), (max-width:600px) and (orientation:portrait)').matches)ui.closeNotes(true);
   },
   exploreContributors,
-  setInteraction:mode=>{
-   stopGesture();
-   if(mode==='endpoint'){
-    const endpoint=viewer.endpointChain(selectedJoint);
-    if(endpoint)selectJoint(endpoint.id,{pointer:true});
-   }
-   interaction=mode;message=mode==='endpoint'?'Drag the wrist or ankle target to move its linked joints.':'Drag the ring to adjust one movement.';draw();
-  },
+  grabLimb:id=>grabLimb(id,{frame:true}),
+  raiseArm,presetAngle,
   markerPointerDown:(event,id)=>viewer.startPoseDrag(event,id),
   selectGuide:chooseGuide,
   openLesson:id=>onLesson?.(id),
   notesChange:()=>{viewer.dirty=true;},
  });
  const viewer=new PoseViewer(ui.stage,{
-  selectJoint,selectMuscle,stepAngle:step,
+  selectJoint,selectMuscle,grabLimb,stepAngle:step,
   frame:previewFrame,
   markers:markers=>ui.setMarkers(markers),begin:()=>{stopPlayback();history?.begin();},
   angle:(value,joint,axis)=>{if(setAngle(joint||selectedJoint,axis||selectedAxis,value))draw();},
@@ -142,9 +145,43 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   setAngle(selectedJoint,selectedAxis,history.values[selectedJoint][selectedAxis]+delta);
   message='';draw();save();
  }
- function selectJoint(id,{pointer=false,focus=false}={}){
+ function raiseArm(side){
+  const id=side+'-shoulder';
+  if(!history||!descriptors.some(joint=>joint.id===id))return;
+  stopGesture();
+  selectedJoint=id;selectedAxis='abduction';selectedMuscle=null;
+  interaction='joint';studyGuide=null;guidedDirection=0;showMuscles=true;
+  if(scope!=='all'&&scope!==side+'-arm'){scope='all';viewer.setScope(scope);}
+  history.clearChanges();
+  message='Choose an angle or drag the slider to raise the arm sideways.';
+  ui.showMuscleRoles();ui.closeNotes();draw();viewer.fitCanvas();viewer.frameLimb(id,{raise:true});save();
+ }
+ function presetAngle(value){
+  if(!history||!selectedJoint?.endsWith('-shoulder')||selectedAxis!=='abduction')return;
+  stopGesture();setAngle(selectedJoint,selectedAxis,value);message='';draw();save();
+ }
+ function grabLimb(id,{frame=false}={}){
+  if(!history)return false;
+  const endpoint=id&&viewer.endpointChain(id);
+  if(id&&!endpoint)return false;
+  if(!frame&&interaction==='endpoint'&&selectedJoint===endpoint?.id)return true;
+  stopGesture();
+  interaction=endpoint?'endpoint':'joint';
+  if(endpoint){
+   selectJoint(endpoint.id,{pointer:true,preserveGrab:true});
+   selectedMuscle=null;
+   if(frame){ui.showMuscleRoles();ui.closeNotes();}
+   message=viewer.canGrabLimb(endpoint)?'Drag the limb or the handle. Use arrow keys when the handle is focused.':'Unlock the shoulder and elbow or the hip and knee to move this limb.';
+  }else message='';
+  draw();
+  if(endpoint&&frame){viewer.fitCanvas();viewer.frameLimb(endpoint.id);}
+  return !!endpoint;
+ }
+ function selectJoint(id,{pointer=false,focus=false,preserveGrab=false}={}){
   const joint=descriptors.find(item=>item.id===id);
-  if(!joint||id===selectedJoint)return;
+  if(!joint)return;
+  if(!preserveGrab&&interaction==='endpoint')interaction='joint';
+  if(id===selectedJoint){draw();if(focus)viewer.focusJoint();return;}
   stopGesture();
   studyGuide=null;
   selectedJoint=id;selectedAxis=joint.axes[0].id;selectedMuscle=null;
@@ -161,15 +198,21 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
    viewer.focusJoint();
   }
  }
- function selectMuscle(key,{closeNotes=true}={}){
+ function selectMuscle(key,{closeNotes=true,locate=false}={}){
   if(!specimen)return;
   if(!playback)stopGesture();
   const part=specimen.parts.find(part=>part.key===key);
   if(!part)return;
-  selectedMuscle=selectedMuscle===key?null:key;
-  if(selectedMuscle)message=part.name+' · '+part.side;
-  draw();
+  selectedMuscle=!locate&&selectedMuscle===key?null:key;
+  selectionReveal=true;locatedSelection=locate;
+  if(locate){
+   showMuscles=true;onlyRelated=false;interaction='joint';
+   if(!poseScopeMatches(scope,part)){scope='all';viewer.setScope(scope);}
+  }
+  message='';
   if(closeNotes&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes(true);
+  draw();
+  if(locate){viewer.fitCanvas();viewer.focusLocatedMuscle();}
  }
  function exploreContributors(){
   if(!specimen)return;
@@ -272,7 +315,8 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
    contributors:parts(role.contributors,true),opponents:parts(role.opposing,false),mixedRoles:parts(role.shared||[],false),
    contributorLabel:role.contributorLabel||(role.movements?.length===1?role.movements[0].contributorLabel:null),
    opposingLabel:role.opposingLabel||(role.movements?.length===1?role.movements[0].opposingLabel:null),selectedMuscle,
-   selectedMuscleName:byId.get(selectedMuscle)?.name,showMuscles,onlyRelated,interaction,endpointAvailable:!!viewer.current&&!!viewer.endpointChain(selectedJoint),
+   selectedMuscleName:selectedMuscle?[byId.get(selectedMuscle)?.name,byId.get(selectedMuscle)?.side].filter(Boolean).join(' · '):'',
+   muscleIndex,selectionReveal,showMuscles,onlyRelated,interaction,inspectingMuscle:!!selectedMuscle&&locatedSelection,
    reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones(),canFocusMuscle:!!viewer.selectedPart,
    evidence:role.note,movementLabel:role.label,studyGuide,roleNote:role.movementNotes?.[0]||studyGuide?.note||'',
    movementNote:[studyGuide?.note,...(role.movementNotes||[]),joint?.detail,joint?.coupling].filter(Boolean).join(' ')});
@@ -280,14 +324,15 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
  function draw(){
   if(!history||!specimen||!active)return;
   viewer.apply(history.values);
-  viewer.setPoseSelection(selectedJoint,selectedAxis,{locks:history.locks,interaction});
+  viewer.setPoseSelection(selectedJoint,selectedAxis,{locks:history.locks,interaction,inspectingMuscle:showMuscles&&!!selectedMuscle&&locatedSelection});
   const role=roles();
   const visibleAnatomy=poseMotionScope(scope,descriptor(),role,specimen.parts,specimen.bones,selectedMuscle);
   const labels=actionLabels(role);
   for(const key of role.shared||[])if(!labels.has(key))labels.set(key,'Mixed joint roles');
   viewer.color({contributors:role.contributors,opposing:role.opposing,shared:role.shared,selectionRoles:labels,selectedMuscle,showMuscles,visibleAnatomy,
    onlyRelated:onlyRelated&&!!(role.contributors.length||role.opposing.length||role.shared?.length||selectedMuscle),
-   reveal:revealPreference.enabled('pose'),revealBones:revealPreference.fadeBones()});
+   reveal:revealPreference.enabled('pose')||!!selectedMuscle&&selectionReveal,
+   revealSelection:selectionReveal,revealBones:revealPreference.fadeBones()||!!selectedMuscle&&locatedSelection&&selectionReveal});
   updateUI(role,visibleAnatomy,labels);
   const context=[selectedJoint,role.label,selectedMuscle].join('|');
   if(context!==lastContext){setLearningContext({type:'study',label:'Pose skeleton · '+descriptor()?.label,reference:'9.5',text:role.note+' '+(role.label||'')});lastContext=context;}
@@ -321,6 +366,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
    if(!active||run!==revision)return;
    specimen=loaded;viewer.use(specimen);
    if(!history){
+    muscleIndex=indexMotionMuscles(specimen.parts);
     descriptors=specimen.descriptors||specimen.meta.descriptors;
     if(!descriptors?.length)throw new Error('The pose model is missing its joint controls.');
     history=new PoseHistory(descriptors);
@@ -354,5 +400,5 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
    event.preventDefault();stopGesture();guidedDirection=0;if(event.shiftKey)history.redo();else history.undo();draw();save();
   }
  });
- return {open,close,viewer,ui,get history(){return history;}};
+ return {open,close,viewer,ui,findMuscle:ui.openMuscleSearch,get history(){return history;}};
 }

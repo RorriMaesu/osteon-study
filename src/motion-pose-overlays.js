@@ -22,12 +22,24 @@ export function placePoseLabel({anchor,width,height,labelWidth,labelHeight,obsta
  return free[0]||null;
 }
 
-export function placePoseGrip({anchor,width,height,obstacles=[],endpoint=false}){
- const offsets=endpoint?[[0,0]]:[[43,0],[-43,0],[0,-43],[0,43]];
+export function placePoseGrip({anchor,width,height,obstacles=[],endpoint=false,allowOffset=false}){
+ const ring=[[43,0],[-43,0],[0,-43],[0,43]];
+ const offsets=endpoint?[[0,0],...(allowOffset?[...ring,[62,0],[-62,0],[0,-62],[0,62]]:[])]:ring;
+ const size=allowOffset?48:40;
+ const free=({x,y})=>{
+  const rect=poseRect(x,y,size);
+  return rect.left>=4&&rect.right<=width-4&&rect.top>=4&&rect.bottom<=height-4
+   &&!obstacles.some(obstacle=>overlapsPoseRect(rect,obstacle,4));
+ };
  for(const [dx,dy]of offsets){
-  const point={x:anchor.x+dx,y:anchor.y+dy},rect=poseRect(point.x,point.y,40);
-  if(rect.left<4||rect.right>width-4||rect.top<4||rect.bottom>height-4)continue;
-  if(!obstacles.some(obstacle=>overlapsPoseRect(rect,obstacle,4)))return point;
+  const point={x:anchor.x+dx,y:anchor.y+dy};
+  if(free(point))return point;
  }
- return null;
+ if(!allowOffset)return null;
+ const edge=size/2+4;
+ const xs=[anchor.x,edge,width-edge,...obstacles.flatMap(rect=>[rect.left-edge,rect.right+edge])];
+ const ys=[anchor.y,edge,height-edge,...obstacles.flatMap(rect=>[rect.top-edge,rect.bottom+edge])];
+ const candidates=xs.flatMap(x=>ys.map(y=>({x,y}))).filter(free);
+ candidates.sort((a,b)=>Math.hypot(a.x-anchor.x,a.y-anchor.y)-Math.hypot(b.x-anchor.x,b.y-anchor.y));
+ return candidates[0]||null;
 }

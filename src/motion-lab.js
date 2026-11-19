@@ -9,6 +9,7 @@ import {regionalLessons,regionalFrame,breathingLayers} from './motion-regional.j
 import {setLearningContext} from './learning-context.js';
 import {viewerZoomControls} from './viewer-guidance.js';
 import {createMotionRevealPreference,observeMotionReveal} from './motion-reveal-preference.js';
+import {indexMotionMuscles,searchMotionMuscles} from './motion-muscle-search.js';
 import modelAssets from './model-assets.json' with {type:'json'};
 
 const sources={
@@ -52,8 +53,6 @@ const sideName=side=>({left:'Left',right:'Right',bilateral:'Bilateral',midline:'
 const roleKey=part=>part.side+':'+part.id;
 const hasRecording=part=>!!part&&!part.contextOnly&&!part.walkOnly&&Object.hasOwn(gaitMuscles,part.id);
 const walkPageSize=8;
-const searchText=text=>text.normalize('NFKD').replace(/\p{M}/gu,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-const walkSearchName=part=>searchText(sideName(part.side)+' '+part.name);
 const emptyPose=()=>({hip:0,knee:0,ankle:0});
 const gaitFile=()=>new URL('src/motion-gait-data.json?v='+modelAssets['motion-gait'],document.baseURI).href;
 
@@ -69,7 +68,7 @@ export function initMotionLab({setView}){
  const fullWalk=!!(fullBody&&modelAssets['motion-walk-muscles']);
  const availableRegional=Object.entries(regionalLessons).filter(([,entry])=>modelAssets[entry.asset]);
  root.innerHTML=`
- <header class="motion-heading"><div><a href="#atlas" class="motion-back">← 3D Atlas</a><h1 tabindex="-1">Motion <em>Lab</em></h1><a class="motion-coverage" href="muscle-coverage.html">Coverage ↗</a></div>
+ <header class="motion-heading"><div class="motion-title"><a href="#atlas" class="motion-back">← 3D Atlas</a><h1 tabindex="-1">Motion <em>Lab</em></h1><a class="motion-coverage" href="muscle-coverage.html">Coverage ↗</a><button type="button" data-motion-find-muscle>Find muscle</button></div>
  <div class="motion-modes" role="group" aria-label="Motion mode">
  <button type="button" data-motion-mode="activities">Movement library</button>
  <button type="button" data-motion-mode="pose">Pose skeleton</button>
@@ -111,6 +110,7 @@ export function initMotionLab({setView}){
   <label>Find a muscle <input type="search" data-motion-search placeholder="Name or side" autocomplete="off"></label>
   <label>Muscle list <select data-motion-walk-list><option value="recorded">Recorded EMG</option><option value="all">All anatomy</option></select></label>
  </div>
+ <button type="button" class="motion-reveal-option" data-motion-locate-muscle hidden>Locate in Pose ↗</button>
  <p class="motion-walk-list-info" role="status" hidden></p>
  <div class="motion-muscle-list"></div>
  <nav class="motion-walk-pages" aria-label="Muscle results pages" hidden><button type="button" data-motion-previous>Previous</button><span data-motion-page></span><button type="button" data-motion-next>Next</button></nav>
@@ -143,7 +143,7 @@ export function initMotionLab({setView}){
  const poseHost=document.createElement('div');poseHost.hidden=true;root.append(poseHost);
  const poseLab=initPoseLab(poseHost,{revealPreference,onLesson:id=>{state.mode='actions';state.lesson=id;state.regionalClip='';clearSelection();state.time=0;load();}});
  const activitiesHost=document.createElement('div');activitiesHost.hidden=true;root.append(activitiesHost);
- const activitiesLab=initActivitiesLab(activitiesHost,{revealPreference});
+ const activitiesLab=initActivitiesLab(activitiesHost,{revealPreference,onFindMuscle:findMuscleInPose});
  function partsInMode(){
   if(!specimen)return [];
   const mode=state.mode+':'+state.lesson,count=specimen.parts.length;
@@ -162,12 +162,12 @@ export function initMotionLab({setView}){
   const teaching=teachingWalk();
   const key=[state.walkScope,state.walkList,state.side,state.walkQuery,teaching&&walkTeaching?.signature,teaching&&state.selected].join('|');
   if(walkCache.parts===parts&&walkCache.key===key)return walkCache.hits;
-  const terms=state.walkQuery.split(' ').filter(Boolean);
-  const hits=parts.filter(part=>inWalkScope(part)
+  const eligible=parts.filter(part=>inWalkScope(part)
    &&(state.walkList==='all'||(teaching?walkTeaching?.byKey.has(part.key)||part.key===state.selected:part.side===state.side&&hasRecording(part)))
-   &&(!terms.length||terms.every(term=>walkSearchName(part).includes(term))));
-  hits.sort((a,b)=>a.name.localeCompare(b.name)||a.side.localeCompare(b.side));
-  walkCache={parts,key,hits};
+  );
+  const results=searchMotionMuscles(indexMotionMuscles(eligible),state.walkQuery);
+  const hits=results.map(result=>result.entry);
+  walkCache={parts,key,hits,close:results.some(result=>result.close)};
   return hits;
  }
  function updateWalkList(list){
@@ -683,6 +683,7 @@ export function initMotionLab({setView}){
   state.walkPage=Math.min(state.walkPage,pageCount-1);
   const entries=results?results.slice(state.walkPage*walkPageSize,(state.walkPage+1)*walkPageSize):regionalLesson()?parts:parts.filter(part=>part.side===side);
   $('.motion-walk-explorer').hidden=!walkExplorer;
+  $('[data-motion-locate-muscle]').hidden=!walkExplorer||!state.walkQuery;
   const recordedOption=$('[data-motion-walk-list] option[value="recorded"]');
   const listLabel=teaching?'Current roles':'Recorded EMG';
   if(walkExplorer&&recordedOption.textContent!==listLabel)recordedOption.textContent=listLabel;
@@ -691,7 +692,7 @@ export function initMotionLab({setView}){
   pages.hidden=!walkExplorer||pageCount<2;
   if(walkExplorer){
    const total=results.length;
-   const summary=total?(total===1?'1 named part':total+' named parts')+' · '+(state.walkList==='recorded'?(teaching?'Teaching roles':sideName(side)+' EMG'):walkScopes[state.walkScope]):
+   const summary=total?(walkCache.close?(total===1?'1 close match':total+' close matches'):(total===1?'1 named part':total+' named parts'))+' · '+(state.walkList==='recorded'?(teaching?'Teaching roles':sideName(side)+' EMG'):walkScopes[state.walkScope]):
     teaching?'No teaching roles match this view. Choose All anatomy to browse the region.':
     state.walkList==='recorded'?'No recorded channels in this view for '+sideName(side).toLowerCase()+' leg. Choose All anatomy to inspect this region.':'No matching muscle in this view.';
    if(listInfo.textContent!==summary)listInfo.textContent=summary;
@@ -767,12 +768,19 @@ export function initMotionLab({setView}){
    lastContext=contextKey;
   }
  }
- for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>{
-  const mode=button.dataset.motionMode;if(state.mode===mode)return;
+ function switchMode(mode){
+  if(state.mode===mode)return;
   state.mode=mode;clearSelection();state.time=0;state.loop=mode!=='walk';
   const url=new URL(location.href);url.searchParams.set('motionMode',mode);history.replaceState(history.state,'',url);
   load();
- };
+ }
+ function findMuscleInPose(query){
+  switchMode('pose');
+  poseLab.findMuscle(query);
+ }
+ for(const button of root.querySelectorAll('[data-motion-mode]'))button.onclick=()=>switchMode(button.dataset.motionMode);
+ $('[data-motion-find-muscle]').onclick=()=>findMuscleInPose();
+ $('[data-motion-locate-muscle]').onclick=()=>findMuscleInPose(state.walkQuery);
  for(const button of root.querySelectorAll('[data-motion-camera]'))button.onclick=()=>motion.frame(button.dataset.motionCamera);
  for(const button of zoomButtons)button.onclick=()=>motion.zoom(button.dataset.viewerZoom);
  $('[data-motion-muscle-reveal]').onclick=()=>{revealPreference.setEnabled(!revealPreference.enabled(state.mode));draw();};
@@ -808,7 +816,7 @@ export function initMotionLab({setView}){
   draw();
  };
  $('[data-motion-search]').oninput=event=>{
-  const query=searchText(event.target.value);
+  const query=event.target.value.trim();
   if(query&&state.walkList!=='all')updateWalkList('all');
   state.walkQuery=query;
   state.walkPage=0;

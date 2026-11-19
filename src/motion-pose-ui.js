@@ -1,6 +1,7 @@
 import {viewerZoomControls} from './viewer-guidance.js';
 import {motionStudyGuides} from './motion-study-guides.js';
 import {observeMotionReveal} from './motion-reveal-preference.js';
+import {searchMotionMuscles} from './motion-muscle-search.js';
 
 const scopes={all:'Whole body','head-neck':'Head & neck',trunk:'Chest, abdomen & back','right-arm':'Right arm','left-arm':'Left arm','right-leg':'Right leg','left-leg':'Left leg'};
 const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -19,7 +20,7 @@ export function createPoseUI(host,callbacks={}){
  <section class="pose-model" aria-label="Whole-body posing workspace">
   <div class="motion-stage pose-stage" aria-label="Interactive whole-body pose">
    <div class="motion-status" role="status">Loading the whole-body model…</div>
-   <div class="pose-stage-hint"><span>Choose a joint. Drag its ring or try Play motion.</span><small>Teaching pose · muscle shapes are approximate</small></div>
+   <div class="pose-stage-hint"><span data-pose-hint>Choose a joint. Drag its ring or try Play motion.</span><small>Teaching pose · muscle shapes are approximate</small></div>
    <div class="motion-reveal-controls">
     <button type="button" data-pose-reveal aria-label="Reveal muscles" aria-pressed="false" title="Fade muscles that cover a highlighted or selected muscle" disabled>Reveal muscles</button>
     <p class="motion-reveal-status" hidden></p>
@@ -41,13 +42,26 @@ export function createPoseUI(host,callbacks={}){
    <div class="pose-choose-row">
     <label>Joint<select data-pose-joint aria-label="Select a joint"></select></label>
     <label>Movement<select data-pose-axis aria-label="Select a joint movement"></select></label>
-    <button type="button" data-pose-endpoint hidden aria-pressed="false" title="Move the end of this limb using linked joints">Move limb</button>
+   </div>
+   <div class="pose-task-row">
+    <select data-pose-raise aria-label="Raise arm sideways"><option value="">Raise arm sideways…</option><option value="right">Right arm</option><option value="left">Left arm</option></select>
+    <select data-pose-limb aria-label="Grab a limb"><option value="">Grab limb…</option><option value="right-wrist">Right arm</option><option value="left-wrist">Left arm</option><option value="right-ankle">Right leg</option><option value="left-ankle">Left leg</option></select>
+    <div class="pose-abduction-presets" role="group" aria-label="Arm raise angles" hidden>
+     <button type="button" data-pose-preset="0" aria-label="Set arm raise to 0 degrees">0°</button>
+     <button type="button" data-pose-preset="45" aria-label="Set arm raise to 45 degrees">45°</button>
+     <button type="button" data-pose-preset="90" aria-label="Set arm raise to 90 degrees">90°</button>
+    </div>
    </div>
    <div class="pose-angle-row">
     <button type="button" data-pose-minus aria-label="Decrease joint angle">Back</button>
     <input type="range" data-pose-angle min="0" max="100" step="1" value="0" aria-label="Joint angle">
     <button type="button" data-pose-neutral title="Return this joint to its starting position"><output data-pose-angle-value aria-hidden="true">0°</output><small>Neutral</small></button>
     <button type="button" data-pose-plus aria-label="Increase joint angle">Forward</button>
+   </div>
+   <div class="pose-selection" hidden>
+    <span data-pose-selection-name></span>
+    <button type="button" data-pose-surroundings>Show surroundings</button>
+    <button type="button" data-pose-clear aria-label="Clear selected muscle">Clear</button>
    </div>
    <div class="pose-action-row">
     <button type="button" data-pose-play aria-pressed="false" title="Play this movement once, then return to your pose">Play motion</button>
@@ -71,6 +85,7 @@ export function createPoseUI(host,callbacks={}){
    <button type="button" role="tab" data-pose-tab="help" aria-selected="false" tabindex="-1" id="${prefix}-tab-help" aria-controls="${prefix}-panel">How it works</button>
   </div>
   <div class="pose-details-panel" id="${prefix}-panel" role="tabpanel" aria-labelledby="${prefix}-tab-muscles" tabindex="0">
+   <label class="pose-muscle-search"><span class="sr-only">Find a muscle in the whole body</span><input type="search" data-pose-muscle-search placeholder="Find a muscle…" autocomplete="off"></label>
    <div class="pose-detail-tools" data-pose-find-tools hidden>
     <input type="search" data-pose-search aria-label="Find a joint by name" placeholder="Find a joint…" autocomplete="off">
     <label>Show<select data-pose-scope aria-label="Show body region">${Object.entries(scopes).map(([key,value])=>`<option value="${key}">${value}</option>`).join('')}</select></label>
@@ -92,6 +107,7 @@ export function createPoseUI(host,callbacks={}){
  observeMotionReveal(stage);
  let state={ready:false,descriptors:[],selectedJoint:null,selectedAxis:null,pose:{},canUndo:false,canRedo:false,scope:'all',locked:false,showMuscles:true,contributors:[],opponents:[],message:''};
  let tab='muscles',page=0,query='',notesOpen=false,rangeGesture=null,renderedDescriptorKey='',renderedAxisKey='',renderedListKey='',pageSize=5;
+ let muscleQuery='',browsingMuscles=false,searchCache={};
  const markers=new Map();
  const on=(element,event,handler)=>element.addEventListener(event,handler,{signal});
  const button=(selector,handler)=>on($(selector),'click',handler);
@@ -119,6 +135,7 @@ export function createPoseUI(host,callbacks={}){
   }
   $('.pose-details-panel').setAttribute('aria-labelledby',prefix+'-tab-'+tab);
   $('[data-pose-find-tools]').hidden=tab!=='joints';
+  $('.pose-muscle-search').hidden=tab!=='muscles';
   $('.pose-role-key').hidden=tab!=='muscles';
   $('.pose-help-page').hidden=tab!=='help';
   $('.pose-detail-list').hidden=tab==='help';
@@ -136,9 +153,22 @@ export function createPoseUI(host,callbacks={}){
   ['Understand activity','A fixed pose cannot tell us which muscles are active. Task, load and coordination affect recruitment.'],
   ['Compare muscle activity','Muscle actions offers guided contraction examples. Walk cycle shows recorded EMG for measured muscles.'],
   ['Find an articulation','Find joint searches supported articulations and lets you isolate a region. Facial and breathing controls guide surface shapes.'],
+  ['Grab a limb','Choose an arm or leg under Grab limb. Drag the highlighted wrist or ankle handle, or the limb itself. Drag the background to rotate the view.'],
   ['Face and breathing','Try a timed lesson.'],
  ];
+ const isMuscleSearch=()=>tab==='muscles'&&browsingMuscles;
  function rows(){
+  if(isMuscleSearch()){
+   const index=state.muscleIndex||[];
+   if(searchCache.index!==index||searchCache.query!==muscleQuery){
+    const entries=searchMotionMuscles(index,muscleQuery).map(({entry,close})=>({
+     key:entry.key,name:entry.name,kind:'find-muscle',
+     roleLabel:[entry.side,close?'Close match':'View on model'].filter(Boolean).join(' · '),
+    }));
+    searchCache={index,query:muscleQuery,entries};
+   }
+   return searchCache.entries;
+  }
   if(tab==='guides')return motionStudyGuides.map(guide=>({...guide,name:guide.label,kind:'guide'}));
   if(tab==='joints')return state.descriptors.filter(entry=>!query||normalize(entry.label+' '+entry.region+' '+entry.side).includes(query)).map(entry=>({...entry,name:entry.label,kind:'joint'}));
   const entries=[],seen=new Set();
@@ -155,10 +185,12 @@ export function createPoseUI(host,callbacks={}){
   const currentHelp=[...helpPages,...notePages];
   const list=rows(),pages=tab==='help'?currentHelp.length:Math.max(1,Math.ceil(list.length/pageSize));
   page=Math.max(0,Math.min(page,pages-1));
-  const summary=tab==='guides'?'Choose a movement to study':tab==='joints'?`${list.length} ${list.length===1?'joint':'joints'} · choose one to pose`:tab==='help'?'Pose, inspect and compare':list.length?state.movementLabel||`${joint()?.label||'Joint'} · last adjustment`:state.selectedMuscleName?state.selectedMuscleName+' · selected muscle':'Move a joint to explore possible muscle roles.';
+  const searching=isMuscleSearch();
+  const summary=searching?`${list.length} ${list.length===1?'match':'matches'} across the body`:tab==='guides'?'Choose a movement to study':tab==='joints'?`${list.length} ${list.length===1?'joint':'joints'} · choose one to pose`:tab==='help'?'Pose, inspect and compare':list.length?state.movementLabel||`${joint()?.label||'Joint'} · last adjustment`:state.selectedMuscleName?state.selectedMuscleName+' · selected muscle':'Move a joint to explore possible muscle roles.';
   $('.pose-list-summary').textContent=summary;
+  $('.pose-role-key').hidden=tab!=='muscles'||searching;
   const roleNote=$('.pose-role-note');
-  roleNote.hidden=tab!=='muscles'||!state.roleNote;
+  roleNote.hidden=tab!=='muscles'||searching||!state.roleNote;
   if(roleNote.textContent!==state.roleNote){roleNote.textContent=state.roleNote||'';roleNote.title=state.roleNote||'';}
   $('[data-pose-related]').hidden=!list.length&&!state.selectedMuscle&&!state.onlyRelated;
   $('[data-pose-related]').setAttribute('aria-pressed',String(!!state.onlyRelated));
@@ -167,7 +199,7 @@ export function createPoseUI(host,callbacks={}){
   bones.checked=!!state.revealBones;
   focus.hidden=!state.canFocusMuscle;
   explore.hidden=!state.reveal||state.contributors.length<2;
-  $('.pose-reveal-options').hidden=tab!=='muscles'||!state.ready||!state.showMuscles||(bones.parentElement.hidden&&focus.hidden&&explore.hidden);
+  $('.pose-reveal-options').hidden=tab!=='muscles'||searching||!state.ready||!state.showMuscles||(bones.parentElement.hidden&&focus.hidden&&explore.hidden);
   const visible=list.slice(page*pageSize,(page+1)*pageSize),key=JSON.stringify([tab,page,pageSize,visible.map(entry=>[listId(entry),listName(entry),entry.kind,entry.note,entry.roleLabel]),state.selectedJoint,state.selectedMuscle,state.studyGuide?.id,movementNote]);
   if(key!==renderedListKey){
    renderedListKey=key;
@@ -180,7 +212,7 @@ export function createPoseUI(host,callbacks={}){
      const subtitle=entry.kind==='guide'?(scopes[entry.scope]||'Guided movement'):entry.kind==='joint'?entry.regionLabel||scopes[entry.region]||entry.region||'Joint':entry.roleLabel||(entry.kind==='contributor'?'Possible contributor':entry.kind==='mixed'?'Mixed joint roles':'Opposing action');
      const symbol={contributor:'◇ ',opponent:'○ ',mixed:'◆ '}[entry.kind]||'';
      return `<button type="button" data-pose-row="${escape(id)}" data-kind="${entry.kind}" aria-pressed="${selected}" title="${escape(entry.note||name+' · '+subtitle)}"><span>${symbol}${escape(name)}</span><small>${escape(subtitle)}</small></button>`;
-    }).join('')||`<p class="pose-empty">${tab==='joints'?'No matching joint. Try a shorter name.':state.ready?'The model will highlight supported muscle roles when you adjust a joint.':'The model is loading.'}</p>`;
+    }).join('')||`<p class="pose-empty">${!state.ready?'The model is loading.':searching?'No matching muscle. Try part of its name or remove the side.':tab==='joints'?'No matching joint. Try a shorter name.':'The model will highlight supported muscle roles when you adjust a joint.'}</p>`;
    }
   }
   $('[data-pose-previous]').disabled=page===0;
@@ -259,11 +291,27 @@ export function createPoseUI(host,callbacks={}){
   if(revealToggle.getAttribute('aria-pressed')!==String(!!state.reveal))revealToggle.setAttribute('aria-pressed',String(!!state.reveal));
   revealToggle.disabled=!state.ready||!state.showMuscles;
   $('[data-pose-scope]').value=state.scope||'all';
-  const endpoint=$('[data-pose-endpoint]');
-  endpoint.hidden=!state.endpointAvailable;
-  endpoint.disabled=!state.ready||locked;
-  endpoint.setAttribute('aria-pressed',String(state.interaction==='endpoint'));
-  endpoint.textContent=state.interaction==='endpoint'?'Move joint':'Move limb';
+  const limb=$('[data-pose-limb]'),raise=$('[data-pose-raise]');
+  const grabbing=state.interaction==='endpoint';
+  const focus=$('[data-pose-focus]');
+  focus.textContent=grabbing?'Focus limb':'Focus joint';
+  focus.title=grabbing?'Bring the limb and its handle into view':'Move the camera closer to this joint';
+  limb.disabled=raise.disabled=!state.ready;
+  limb.value=grabbing?state.selectedJoint:'';
+  limb.options[0].textContent=grabbing?'Stop grabbing':'Grab limb…';
+  raise.value='';
+  const raisingArm=state.selectedAxis==='abduction'&&state.selectedJoint?.endsWith('-shoulder')&&!grabbing;
+  $('[data-pose-hint]').textContent=grabbing?'Drag the limb or its handle. Drag empty space to rotate.':state.inspectingMuscle?'Drag to rotate. Full body returns to the overview.':raisingArm?'Raise the arm with the slider or an angle button.':'Choose a joint. Drag its ring or try Play motion.';
+  const presets=$('.pose-abduction-presets');
+  presets.hidden=!raisingArm;
+  for(const button of presets.querySelectorAll('button')){
+   const degrees=Number(button.dataset.posePreset);
+   button.disabled=!state.ready||locked||state.movementLocked||degrees<Number(range.min)||degrees>Number(range.max);
+   button.setAttribute('aria-pressed',String(value===degrees));
+  }
+  $('.pose-selection').hidden=!state.selectedMuscle||!state.showMuscles;
+  $('[data-pose-selection-name]').textContent=state.selectedMuscleName||'';
+  $('[data-pose-surroundings]').textContent=state.selectionReveal?'Show surroundings':'Reveal muscle';
   const contributorNames=(state.contributors||[]).map(listName),opponentNames=(state.opponents||[]).map(listName),mixedNames=(state.mixedRoles||[]).map(listName);
   const compact=names=>names.length?names[0].replace(/ · (right|left|midline)$/i,'')+(names.length>1?' + '+(names.length-1):''):'';
   const movementName=state.movementLabel&&state.movementLabel!=='Pose held'?state.movementLabel:currentAxis?.label||'Explore a movement';
@@ -346,14 +394,18 @@ export function createPoseUI(host,callbacks={}){
  button('[data-pose-plus]',()=>call('stepAngle',buttonStep()));
  button('[data-pose-neutral]',()=>{finishRange();call('neutralJoint');});
  button('[data-pose-play]',()=>{finishRange();call('togglePlayback');});
- button('[data-pose-muscle-summary]',()=>{changeTab('muscles');toggleNotes(true,true);});
+ button('[data-pose-muscle-summary]',()=>{showMuscleRoles();toggleNotes(true,true);});
  button('[data-pose-undo]',()=>call('undo'));
  button('[data-pose-redo]',()=>call('redo'));
  button('[data-pose-reset]',()=>call('reset'));
  button('[data-pose-lock]',()=>call('setLock',!isLocked()));
  button('[data-pose-full]',()=>call('setScope','all'));
  button('[data-pose-focus]',()=>call('focus'));
- button('[data-pose-endpoint]',()=>call('setInteraction',state.interaction==='endpoint'?'joint':'endpoint'));
+ on($('[data-pose-limb]'),'change',event=>call('grabLimb',event.currentTarget.value));
+ on($('[data-pose-raise]'),'change',event=>{if(event.currentTarget.value)call('raiseArm',event.currentTarget.value);});
+ for(const item of host.querySelectorAll('[data-pose-preset]'))on(item,'click',()=>call('presetAngle',Number(item.dataset.posePreset)));
+ button('[data-pose-clear]',()=>{call('clearMuscle');host.closest('#motion-view')?.querySelector('[data-motion-find-muscle]')?.focus();});
+ button('[data-pose-surroundings]',()=>call('setSelectionReveal',!state.selectionReveal));
  button('[data-pose-muscles]',()=>call('setMuscles',state.showMuscles===false));
  button('[data-pose-reveal]',()=>call('setReveal',!state.reveal));
  button('[data-pose-muscle-focus]',()=>call('focusMuscle'));
@@ -366,6 +418,18 @@ export function createPoseUI(host,callbacks={}){
  button('[data-pose-next]',()=>{page++;renderDetails();});
  on($('[data-pose-scope]'),'change',event=>call('setScope',event.currentTarget.value));
  on($('[data-pose-search]'),'input',event=>{query=normalize(event.currentTarget.value).trim();page=0;renderDetails();});
+ const muscleInput=$('[data-pose-muscle-search]');
+ function showMuscleRoles(){browsingMuscles=false;muscleInput.value='';changeTab('muscles');}
+ function openMuscleSearch(query=muscleQuery){
+  muscleQuery=query;muscleInput.value=query;browsingMuscles=true;
+  changeTab('muscles');toggleNotes(true);muscleInput.focus();
+ }
+ on(muscleInput,'input',()=>{muscleQuery=muscleInput.value;browsingMuscles=!!muscleQuery.trim();page=0;renderDetails();measureList();});
+ on(muscleInput,'keydown',event=>{
+  if(event.key!=='ArrowDown'&&event.key!=='Enter')return;
+  const first=$('[data-kind="find-muscle"]');
+  if(first){event.preventDefault();if(event.key==='Enter')first.click();else first.focus();}
+ });
  for(const item of host.querySelectorAll('[data-pose-camera]'))on(item,'click',()=>call('camera',item.dataset.poseCamera));
  const zoomButtons=host.querySelectorAll('[data-viewer-zoom]');
  for(const item of zoomButtons)on(item,'click',()=>call('zoom',item.dataset.viewerZoom));
@@ -374,12 +438,13 @@ export function createPoseUI(host,callbacks={}){
   on(item,'keydown',event=>{
    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
    event.preventDefault();const tabs=['muscles','guides','joints','help'],index=tabs.indexOf(tab);
-   changeTab(tabs[event.key==='Home'?0:event.key==='End'?2:(index+(event.key==='ArrowRight'?1:2))%3],true);
+   changeTab(tabs[event.key==='Home'?0:event.key==='End'?tabs.length-1:(index+(event.key==='ArrowRight'?1:tabs.length-1))%tabs.length],true);
   });
  }
  on($('.pose-details-panel'),'click',event=>{
   const item=event.target.closest('[data-pose-row]');
   if(item?.dataset.kind==='guide'){call('selectGuide',item.dataset.poseRow);changeTab('muscles');}
+  else if(item?.dataset.kind==='find-muscle')call('locateMuscle',item.dataset.poseRow);
   else if(item)call(item.dataset.kind==='joint'?'selectJoint':'selectMuscle',item.dataset.poseRow);
   const lesson=event.target.closest('[data-pose-lesson]');if(lesson)call('openLesson',lesson.dataset.poseLesson);
  });
@@ -391,6 +456,6 @@ export function createPoseUI(host,callbacks={}){
  });
  const resize=new ResizeObserver(measureList);resize.observe($('.pose-details-panel'));
  update();
- return {stage,update,setMarkers,setStatus,cancelGesture:()=>finishRange(true),suspend:()=>finishRange(true),openNotes:()=>toggleNotes(true),closeNotes:(focus=false)=>toggleNotes(false,focus&&notesOpen),
+ return {stage,update,setMarkers,setStatus,openMuscleSearch,showMuscleRoles,cancelGesture:()=>finishRange(true),suspend:()=>finishRange(true),openNotes:()=>toggleNotes(true),closeNotes:(focus=false)=>toggleNotes(false,focus&&notesOpen),
   destroy(){finishRange(true);controller.abort();resize.disconnect();markers.clear();host.replaceChildren();host.classList.remove('motion-pose-workspace');host.removeAttribute('data-pose-notes-open');}};
 }

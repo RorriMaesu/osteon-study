@@ -8,6 +8,7 @@ import {activities,sampleActivity} from './motion-activities.js';
 import {createMotionRevealPreference,observeMotionReveal} from './motion-reveal-preference.js';
 import {setLearningContext} from './learning-context.js';
 import {viewerZoomControls} from './viewer-guidance.js';
+import {indexMotionMuscles,searchMotionMuscles} from './motion-muscle-search.js';
 
 const scopes={all:'Whole body','head-neck':'Head & neck',trunk:'Chest, abdomen & back','right-arm':'Right arm & hand','left-arm':'Left arm & hand','right-leg':'Right leg & foot','left-leg':'Left leg & foot'};
 const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -23,7 +24,7 @@ function describeContacts(contacts){
 let instances=0;
 
 /** Coordinated, authored teaching animations. Posing and playback have separate state. */
-export function initActivitiesLab(host,{revealPreference=createMotionRevealPreference()}={}){
+export function initActivitiesLab(host,{revealPreference=createMotionRevealPreference(),onFindMuscle}={}){
  const prefix='activities-'+(++instances);
  let active=false,ready=false,revision=0,specimen=null,descriptors=[],neutral={},sample=null,pose={};
  let activity=activities[0],time=0,playing=false,loop=true,speed=1,scope='all',selectedMuscle=null;
@@ -81,6 +82,7 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
    </div>
    <input type="search" data-activity-search aria-label="Find an everyday movement" placeholder="Search movements…" hidden>
    <p class="activities-list-caption" data-activity-caption></p>
+   <button type="button" data-activity-locate-muscle hidden>Locate in Pose ↗</button>
    <div class="activities-inspect" data-activity-inspect hidden><p data-activity-inspect-note></p><button type="button" data-activity-focus-muscle>Focus</button><button type="button" data-activity-clear-muscle>Clear</button></div>
    <div class="activities-muscle-list"></div>
    <article class="activities-guide" hidden></article>
@@ -182,12 +184,11 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
  }
  function scopedRows(){return roleState.rows.filter(row=>visibleAnatomy?.muscleKeys.has(row.key)??poseScopeMatches(scope,row.part));}
  function visibleRows(){
-  const query=normalize($('[data-activity-muscle-search]').value).trim().split(/\s+/).filter(Boolean);
-  return scopedRows().filter(row=>{
-   const matchesRole=filter==='all'||filter==='contributor'&&row.kind!=='opponent'||filter==='opponent'&&row.kind==='opponent'||filter==='mixed'&&row.kind==='mixed'||filter==='support'&&row.supporting||row.types.includes(filter);
-   const text=normalize(row.name+' '+row.side);
-   return matchesRole&&query.every(word=>text.includes(word));
-  });
+  const query=$('[data-activity-muscle-search]').value.trim();
+  const rows=scopedRows().filter(row=>filter==='all'||filter==='contributor'&&row.kind!=='opponent'||filter==='opponent'&&row.kind==='opponent'||filter==='mixed'&&row.kind==='mixed'||filter==='support'&&row.supporting||row.types.includes(filter));
+  if(!query)return rows;
+  const index=indexMotionMuscles(rows,row=>({...row.part,name:row.name,side:row.side}));
+  return searchMotionMuscles(index,query).map(({entry,close})=>close?{...entry,role:'Close match · '+entry.role}:entry);
  }
  function guidePages(){
   const sources=(activity.sources||[]).filter(source=>/^https:\/\//.test(source.url||''));
@@ -202,6 +203,7 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
   return [...pages.flatMap(item=>[{title:item.title,text:item.text},...(item.extra?[{title:item.title+' · continued',text:item.extra}]:[])]),...sources.map(source=>({title:'Read the source',text:'Opens the source in a new tab; your animation stays here.',sources:[source]}))];
  }
  function renderDetails(){
+  $('[data-activity-locate-muscle]').hidden=tab!=='muscles'||!$('[data-activity-muscle-search]').value.trim();
   const selected=scopedRows().find(row=>row.key===selectedMuscle);
   $('[data-activity-inspect]').hidden=tab!=='muscles'||!selectedMuscle;
   $('[data-activity-focus-muscle]').disabled=!viewer.selectedPart;
@@ -319,6 +321,7 @@ export function initActivitiesLab(host,{revealPreference=createMotionRevealPrefe
  });
  button('[data-activity-clear-muscle]',()=>{if(selectedMuscle)selectMuscle(selectedMuscle);});
  on('[data-activity-muscle-search]','input',()=>{page=0;lastListKey='';renderDetails();});
+ button('[data-activity-locate-muscle]',()=>onFindMuscle?.($('[data-activity-muscle-search]').value.trim()));
  on('[data-activity-search]','input',()=>{page=0;lastListKey='';renderDetails();});
  host.addEventListener('click',event=>{
   const muscle=event.target.closest('[data-activity-muscle]'),choice=event.target.closest('[data-activity-choice]'),tabButton=event.target.closest('[data-activity-tab]'),camera=event.target.closest('[data-activity-camera]'),zoom=event.target.closest('[data-viewer-zoom]');

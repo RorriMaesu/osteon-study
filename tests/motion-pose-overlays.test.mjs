@@ -27,3 +27,13 @@ test('endpoint grip stays on the anatomical target and yields to fixed controls'
  assert.deepEqual(placePoseGrip(config),config.anchor);
  assert.equal(placePoseGrip({...config,obstacles:[poseRect(100,100,44)]}),null);
 });
+test('limb mode can move a 48-pixel grip beside a toolbar while keeping the anchor',()=>{
+ const grip=placePoseGrip({anchor:{x:130,y:177},width:260,height:200,endpoint:true,allowOffset:true,
+  obstacles:[{left:0,right:260,top:160,bottom:200}]});
+ assert.deepEqual(grip,{x:130,y:115});
+});
+test('limb mode adapts to a narrow slot between compact overlays',()=>{
+ const grip=placePoseGrip({anchor:{x:130,y:72},width:260,height:128,endpoint:true,allowOffset:true,
+  obstacles:[{left:0,right:260,top:0,bottom:20},{left:0,right:260,top:78,bottom:128}]});
+ assert.deepEqual(grip,{x:130,y:50});
+});
