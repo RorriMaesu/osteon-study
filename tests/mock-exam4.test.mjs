@@ -1,7 +1,8 @@
 import test from 'node:test';
 import {mockExam4Forms as legacyForms,mockExam4Calibration as legacyCalibration} from '../src/mock-exam4-legacy.js';
 import assert from 'node:assert/strict';
-import {mockExam4Forms,mockExam4Questions,mockExam4Calibration,mockExam4Related,mockExam4AllQuestions,mockExam4AttachmentQuestions,mockExam4AttachmentForm} from '../src/mock-exam4-bank.js';
+import {mockExam4Forms,mockExam4PreviousForms,mockExam4Questions,mockExam4Calibration,mockExam4Related,mockExam4AllQuestions,mockExam4AttachmentQuestions,mockExam4AttachmentForm} from '../src/mock-exam4-bank.js';
+import {mockExam4QuizShowForm} from '../src/mock-exam4-quiz-show.js';
 import {createMockSession,setMockResponse,submitMockSession,applyMockReview,mockResults,mockRubricQuestion,mockRubricResponse,validMockSession,assessMockQuestion} from '../src/mock-exam3-core.js';
 import {mockExam4Storage,validMockExam4State} from '../src/mock-exam4-store.js';
 import {createStudyBackup,restoreStudyBackup} from '../src/study-backup.js';
@@ -97,4 +98,49 @@ test('new true-or-false questions grade as two-point choices and lab drill saves
  const local=storage();
  mockExam4Storage.write(local,state);
  assert.deepEqual(mockExam4Storage.read(local),state);
+});
+
+test('Quiz Show Review covers every prompt once and grades using the mock engine',()=>{
+ const form=mockExam4QuizShowForm,items=form.questions;
+ assert.deepEqual(items.map(q=>q.reviewSlide),Array.from({length:21},(_,i)=>2+i*2));
+ assert.equal(new Set(items.map(q=>q.quizCategory)).size,6);
+ const visuals=items.filter(q=>q.type==='identify');
+ assert.deepEqual(visuals.map(q=>q.answer),['Masseter','Extensor digitorum']);
+ assert(visuals.every(q=>!q.wordBank&&renderMockExam4Figure(q).includes('<svg')));
+ let attempt=sessionFor(form);
+ for(const q of items)attempt=setMockResponse(attempt,q.id,q.answer);
+ assert.equal(mockResults(submit(attempt)).earnedPoints,23);
+ const edc=visuals[1],zDisc=mockExam4Forms.A.questions[32],calf=mockExam4Forms.B.questions[38];
+ assert.equal(assessMockQuestion(edc,'extensor digitorum communis').earnedPoints,2);
+ assert.equal(assessMockQuestion(edc,'extensor digitorum longus').earnedPoints,0);
+ assert.equal(assessMockQuestion(zDisc,'Z line').earnedPoints,2);
+ assert.equal(assessMockQuestion(zDisc,'M line').earnedPoints,0);
+ assert.equal(assessMockQuestion(calf,'gastrocnemus').status,'spelling');
+ assert.equal(assessMockQuestion(calf,'medial head of gastrocnemius').earnedPoints,2);
+});
+
+test('only the planned positions change and earlier scores and drafts coexist with Quiz Show progress',()=>{
+ for(const [letter,positions] of [['A',[17,28,33,38]],['B',[2,4,39,41]]]){
+  const old=mockExam4PreviousForms[letter],updated=mockExam4Forms[letter];
+  assert.deepEqual(updated.questions.filter((q,i)=>q.id!==old.questions[i].id).map(q=>q.number),positions);
+  for(const number of positions){
+   const before=old.questions[number-1],after=updated.questions[number-1];
+   assert.equal(after.section,before.section);
+   assert.equal(after.points,before.points);
+   assert(validMockSession(sessionFor(old),mockExam4AllQuestions));
+  }
+ }
+ assert.equal(new Set(mockExam4AllQuestions.map(q=>q.id)).size,mockExam4AllQuestions.length);
+ const local=storage(),restored=storage(),state=mockExam4Storage.blank();
+ const previous=mockExam4PreviousForms.A,priorQuestion=previous.questions[32];
+ state.history=[submit(setMockResponse(sessionFor(previous),priorQuestion.id,priorQuestion.answer))];
+ state.active=sessionFor(mockExam4PreviousForms.B);
+ const drill=createMockSession(mockExam4QuizShowForm.questions,{form:mockExam4QuizShowForm,mode:'practice'});
+ const first=drill.questions[0];
+ state.quizShowDraft=setMockResponse(drill,first.id,first.answer);
+ mockExam4Storage.write(local,state);
+ assert.equal(mockResults(mockExam4Storage.read(local).history[0]).earnedPoints,2);
+ assert.deepEqual(mockExam4Storage.restore(mockExam4Storage.backup(state)),state);
+ restoreStudyBackup(restored,createStudyBackup(local));
+ assert.deepEqual(mockExam4Storage.read(restored),state);
 });

@@ -9,6 +9,9 @@ export function validMockState(x,bank){
  if(!record(x)||x.schema!==1||!Array.isArray(x.history)||x.history.length>20||!x.history.every(s=>validMockSession(s,bank)&&s.status==='submitted'))return false;
  if(new Set(x.history.map(s=>s.id)).size!==x.history.length)return false;
  if(x.active!==null&&(!validMockSession(x.active,bank)||x.active.status!=='draft'))return false;
+ if(x.quizShowDraft!=null&&(!validMockSession(x.quizShowDraft,bank)||x.quizShowDraft.status!=='draft'||
+  x.quizShowDraft.mode!=='practice'||x.quizShowDraft.formId!=='exam4-quiz-show-v1'||
+  x.quizShowDraft.id===x.active?.id||x.history.some(session=>session.id===x.quizShowDraft.id)))return false;
  if(!record(x.notes)||Object.keys(x.notes).length>1200||!record(x.card))return false;
  if(!['front','back'].every(side=>Array.isArray(x.card[side])&&x.card[side].length===24&&x.card[side].every(t=>typeof t==='string'&&t.length<=180)))return false;
  return Object.entries(x.notes).every(([key,n])=>safeKey(key)&&record(n)&&['confusion','rule','retrieval'].every(k=>typeof n[k]==='string'&&n[k].length<=2000)&&Number.isFinite(n.updatedAt)&&n.updatedAt>=0&&

@@ -302,11 +302,23 @@ body[data-mock4-keyboard] .mock-exam4 .mock-question textarea#mock-claim-reason{
 
 .mock-exam4 .mock-option-list.mock4-single-option{grid-template-columns:minmax(0,1fr)}
 
-.mock-exam4 .mock4-diagram-stage .mock-figure>.exam-figure,.mock4-dialog .mock4-enlarged>.exam-figure{
- justify-content:center;
+.mock-exam4 .mock4-diagram-stage .mock-figure>.exam-figure{
+ display:grid;grid-template-rows:minmax(0,1fr) auto;align-items:stretch;
 }
-.mock-exam4 .mock-question .mock4-diagram-stage .mock-figure svg:not(svg svg),
+.mock-exam4 .mock-question .mock4-diagram-stage .mock-figure svg:not(svg svg){
+ height:100%;max-height:none;
+}
+.mock4-dialog .mock4-enlarged>.exam-figure{justify-content:center}
 #info-dialog.mock4-dialog .mock4-enlarged svg:not(svg svg){
  flex:0 1 auto;height:auto;max-height:calc(100% - 34px);
 }
 .mock-exam4 .mock4-diagram-stage .mock-figure figcaption,.mock4-dialog .mock4-enlarged figcaption{flex:none}
+@media(max-width:440px) and (max-height:630px){
+ .mock-exam4:has(.mock4-diagram-stage) .mock-exam-head p:has([data-mock-count]){display:none}
+ .mock-exam4:has(.mock4-diagram-stage) .mock-exam-head p:has([data-mock-time]){font-size:10px}
+ .mock-exam4 .mock4-diagram-stage h2{font-size:18px;margin:2px 0 6px}
+ .mock-exam4 .mock4-diagram-stage .mock-figure figcaption{font-size:9px;padding:2px 6px;line-height:1.15}
+}
+@media(max-width:360px) and (max-height:630px){
+ body[data-mock-exam-active=exam4]:has(.mock-exam4[data-mock-screen=exam])>.topbar{display:none}
+}

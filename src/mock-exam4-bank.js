@@ -2,8 +2,10 @@ import {muscleFigureTargets} from './muscle-figure-targets.js';
 import {chapter11Muscles} from './chapter11-muscles.js';
 
 import {mockExam4Questions as legacyQuestions,mockExam4Calibration as legacyCalibration} from './mock-exam4-legacy.js';
+import {QUIZ_SHOW_VERSION,mockExam4QuizShowForm,quizShowReplacements} from './mock-exam4-quiz-show.js';
 
-export const MOCK_EXAM4_VERSION='2026-11-16.1';
+const revisionTwoVersion='2026-11-16.1';
+export const MOCK_EXAM4_VERSION=QUIZ_SHOW_VERSION;
 const sectionFor={mc:0,diagram:1,tf:2,written:3};
 const bank={A:[],B:[]};
 const figures=muscleFigureTargets;
@@ -21,7 +23,7 @@ function add(form,lesson,objectives,topic,type,section,points,prompt,answer,expl
  const url='https://openstax.org/books/anatomy-and-physiology-2e/pages/'+lesson.replace('.','-')+'-'+sectionSlugs[lesson];
  bank[form].push({
   id,chapter:Number(lesson.split('.')[0]),lesson,topic,type,section,points,prompt,answer,explanation,
-  contentVersion:MOCK_EXAM4_VERSION,objectives:objectives.map(n=>lesson+'.'+n),
+  contentVersion:revisionTwoVersion,objectives:objectives.map(n=>lesson+'.'+n),
   source:'OpenStax Anatomy and Physiology 2e §'+lesson,
   sourceLinks:[{url,label:'OpenStax §'+lesson}],
   noteSuggestion:explanation.slice(0,180),...extra
@@ -44,7 +46,7 @@ function anatomy(form,lesson,objectives,target){
 }
 function written(form,lesson,objectives,topic,prompt,answer,criteria,{claim,fixtures}={}){
  const id='exam4-'+form.toLowerCase()+'-r2-'+(bank[form].length+1);
- const rubric={id:id+'-rubric',version:MOCK_EXAM4_VERSION,criteria:criteria.map(([label,description,points],i)=>({id:'criterion-'+(i+1),label,description,points}))};
+ const rubric={id:id+'-rubric',version:revisionTwoVersion,criteria:criteria.map(([label,description,points],i)=>({id:'criterion-'+(i+1),label,description,points}))};
  add(form,lesson,objectives,topic,'written',claim?'tf':'written',claim?2:3,prompt,answer,answer,{rubric,...(claim?{claim}:{}),fixtures});
 }
 mc("A","10.2",[
@@ -333,7 +335,7 @@ for(const rows of Object.values(bank))for(const question of rows){
 }
 
 export const mockExam4Calibration=[];
-export const mockExam4Forms=Object.fromEntries(Object.entries(bank).map(([letter,rows])=>{
+export const mockExam4PreviousForms=Object.fromEntries(Object.entries(bank).map(([letter,rows])=>{
  const questions=rows.sort((a,b)=>sectionFor[a.section]-sectionFor[b.section]).map(({fixtures,...question},i)=>{
   for(const [j,[response,points]] of (fixtures||[]).entries())mockExam4Calibration.push({
    id:question.id+'-sample-'+(j+1),questionId:question.id,response,
@@ -341,10 +343,25 @@ export const mockExam4Forms=Object.fromEntries(Object.entries(bank).map(([letter
   });
   return {...question,number:i+1};
  });
- return [letter,{id:'exam4-form-'+letter.toLowerCase()+'-r2',version:MOCK_EXAM4_VERSION,title:'Exam 4 · Form '+letter,questions}];
+ return [letter,{id:'exam4-form-'+letter.toLowerCase()+'-r2',version:revisionTwoVersion,title:'Exam 4 · Form '+letter,questions}];
+}));
+const previousQuestions=Object.values(mockExam4PreviousForms).flatMap(form=>form.questions);
+const publishedReplacements=[];
+export const mockExam4Forms=Object.fromEntries(Object.entries(mockExam4PreviousForms).map(([letter,form])=>{
+ const questions=form.questions.map(prior=>{
+  const replacement=quizShowReplacements[letter][prior.number];
+  if(!replacement)return prior;
+  const {quizCategory,number,...item}=replacement;
+  const question={...item,id:'exam4-'+letter.toLowerCase()+'-r3-'+prior.number,
+   number:prior.number,section:prior.section,points:prior.points};
+  if(item.type==='identify')question.wordBank=[...new Set([...wordBanks[item.lesson],item.answer])].sort();
+  publishedReplacements.push(question);
+  return question;
+ });
+ return [letter,{...form,id:'exam4-form-'+letter.toLowerCase()+'-r3',version:MOCK_EXAM4_VERSION,questions}];
 }));
 export const mockExam4Questions=Object.values(mockExam4Forms).flatMap(form=>form.questions);
-export const mockExam4AttachmentQuestions=mockExam4Questions.filter(q=>q.attachmentKey).map((q,index)=>({
+export const mockExam4AttachmentQuestions=previousQuestions.filter(q=>q.attachmentKey).map((q,index)=>({
  ...q,id:'exam4-attachments-r2-'+(index+1),number:index+1,
 }));
 for(const [index,[answer,prompt,explanation]] of [
@@ -357,16 +374,19 @@ for(const [index,[answer,prompt,explanation]] of [
   id:'exam4-shoulder-r2-'+(index+1),number:11+index,chapter:11,lesson:'11.5',objectives:['11.5.1','11.5.2'],
   topic:answer,type:'choice',section:'mc',points:1,prompt,answer,explanation,
   distractors:['Coracoclavicular ligament','Acromioclavicular ligament','Glenohumeral ligaments','Coracohumeral ligament'].filter(name=>name!==answer),
-  contentVersion:MOCK_EXAM4_VERSION,noteSuggestion:explanation,
+  contentVersion:revisionTwoVersion,noteSuggestion:explanation,
   source:'OpenStax Anatomy and Physiology 2e §9.6 · shoulder joint',
   sourceLinks:[{url:'https://openstax.org/books/anatomy-and-physiology-2e/pages/9-6-anatomy-of-selected-synovial-joints',label:'OpenStax §9.6 · shoulder joint'}],
   courseEvidence:['BI 231 bone list · Shoulder — on Muscle Test'],
  });
 }
 export const mockExam4AttachmentForm={
- id:'exam4-attachments-r2',version:MOCK_EXAM4_VERSION,title:'Exam 4 · Lab attachments and shoulder ligaments',questions:mockExam4AttachmentQuestions,
+ id:'exam4-attachments-r2',version:revisionTwoVersion,title:'Exam 4 · Lab attachments and shoulder ligaments',questions:mockExam4AttachmentQuestions,
 };
-export const mockExam4AllQuestions=[...legacyQuestions,...mockExam4Questions,...mockExam4AttachmentQuestions];
+// Saved sessions validate their entire question snapshots. Keep the published
+// versions of replaced items, alongside the new scored and drill questions.
+export const mockExam4AllQuestions=[...legacyQuestions,...previousQuestions,...mockExam4AttachmentQuestions,
+ ...publishedReplacements,...mockExam4QuizShowForm.questions];
 export const mockExam4AllCalibration=[...legacyCalibration,...mockExam4Calibration];
 export function mockExam4Related(id){
  const item=mockExam4AllQuestions.find(q=>q.id===id);
