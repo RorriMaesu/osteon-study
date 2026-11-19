@@ -229,6 +229,9 @@
  .motion-pose-workspace .pose-stage.is-raising-arm .pose-stage-hint{display:none}
  .motion-pose-workspace .pose-stage.is-grabbing-limb .pose-stage-hint small{display:none}
 }
+@media(max-width:360px) and (max-height:650px) and (orientation:portrait){
+ .motion-pose-workspace .pose-stage-hint small{display:none}
+}
 @media(max-width:360px) and (orientation:portrait){
  #motion-view[data-pose-workspace] .motion-modes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
  #motion-view[data-pose-workspace] .motion-modes button{font-size:10px;padding:3px 2px}

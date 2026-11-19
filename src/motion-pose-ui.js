@@ -20,7 +20,7 @@ export function createPoseUI(host,callbacks={}){
  <section class="pose-model" aria-label="Whole-body posing workspace">
   <div class="motion-stage pose-stage" aria-label="Interactive whole-body pose">
    <div class="motion-status" role="status">Loading the whole-body model…</div>
-   <div class="pose-stage-hint"><span data-pose-hint>Choose a joint. Drag its ring or try Play motion.</span><small>Teaching pose · muscle shapes are approximate</small></div>
+   <div class="pose-stage-hint"><span data-pose-hint>Select a joint or drag its ring.</span><small>Teaching pose · muscle shapes are approximate</small></div>
    <div class="motion-reveal-controls">
     <button type="button" data-pose-reveal aria-label="Reveal muscles" aria-pressed="false" title="Fade muscles that cover a highlighted or selected muscle" disabled>Reveal muscles</button>
     <p class="motion-reveal-status" hidden></p>
@@ -30,8 +30,8 @@ export function createPoseUI(host,callbacks={}){
    <span class="motion-load-tag" aria-hidden="true" hidden></span>
    <span data-motion-selection-label aria-hidden="true" hidden></span>
    <div class="pose-view-actions" role="group" aria-label="View controls">
-    <button type="button" data-pose-full title="Show the whole body and keep your pose">Full body</button>
-    <button type="button" data-pose-focus title="Move the camera closer to this joint">Focus joint</button>
+    <button type="button" data-pose-full title="Show the whole body from your current angle">Full body</button>
+    <button type="button" data-pose-focus title="Center and zoom in on this joint from your current angle">Focus joint</button>
     <button type="button" data-pose-camera="front">Front</button>
     <button type="button" data-pose-camera="side">Side</button>
     <button type="button" data-pose-camera="back" hidden>Back</button>
@@ -145,8 +145,8 @@ export function createPoseUI(host,callbacks={}){
   ['Make a pose','Choose a joint and movement. Use the named direction buttons, drag the slider, or drag the ring on the model.'],
   ['Watch one movement','Play motion demonstrates the selected movement and returns to your pose. Pause keeps the current position.'],
   ['Return one joint','The angle button marked Neutral resets only the selected joint. Reset returns the whole body. Both can be undone.'],
-  ['Turn the view','Choose a joint from the dropdown to focus it. Drag to rotate or use Zoom + and Zoom −. Focus joint brings the selected joint back into view.'],
-  ['Keep your pose','Full body returns to the overview while keeping your pose. Reset returns all joints to their starting position.'],
+  ['Turn the view','Drag empty space to orbit, or use Zoom + and Zoom −. Select a joint to pose it. The picker brings off-screen joints into view at your current angle and zoom. Focus joint gives you a close-up.'],
+  ['Keep your pose','Full body shows the whole pose from your current angle. Front and Side turn the model to those views. Reset returns all joints to their starting position.'],
   ['Keep a joint fixed','Lock angles fixes a joint’s settings. It still moves with its parent. Undo reverses one completed adjustment.'],
   ['Read the colors','Green marks possible contributors. Violet marks opposing actions. Gold identifies muscles or grouped surfaces with mixed roles.'],
   ['See deeper muscles','Turn on Reveal muscles and choose a muscle to see it through the muscles covering it. Faded muscles keep their role colors. Focus muscle moves the camera closer.'],
@@ -295,13 +295,13 @@ export function createPoseUI(host,callbacks={}){
   const grabbing=state.interaction==='endpoint';
   const focus=$('[data-pose-focus]');
   focus.textContent=grabbing?'Focus limb':'Focus joint';
-  focus.title=grabbing?'Bring the limb and its handle into view':'Move the camera closer to this joint';
+  focus.title=grabbing?'Bring the limb into view from your current angle':'Center and zoom in on this joint from your current angle';
   limb.disabled=raise.disabled=!state.ready;
   limb.value=grabbing?state.selectedJoint:'';
   limb.options[0].textContent=grabbing?'Stop grabbing':'Grab limb…';
   raise.value='';
   const raisingArm=state.selectedAxis==='abduction'&&state.selectedJoint?.endsWith('-shoulder')&&!grabbing;
-  $('[data-pose-hint]').textContent=grabbing?'Drag the limb or its handle. Drag empty space to rotate.':state.inspectingMuscle?'Drag to rotate. Full body returns to the overview.':raisingArm?'Raise the arm with the slider or an angle button.':'Choose a joint. Drag its ring or try Play motion.';
+  $('[data-pose-hint]').textContent=grabbing?'Drag the limb or its handle. Drag empty space to rotate.':state.inspectingMuscle?'Drag to rotate. Full body returns to the overview.':raisingArm?'Raise the arm with the slider or an angle button.':'Select a joint or drag its ring.';
   const presets=$('.pose-abduction-presets');
   presets.hidden=!raisingArm;
   for(const button of presets.querySelectorAll('button')){
@@ -331,7 +331,6 @@ export function createPoseUI(host,callbacks={}){
   roleSummary.title=[movementName,contributorKey+': '+(contributorNames.join(', ')||'none mapped for this adjustment'),opponentKey+': '+(opponentNames.join(', ')||'none mapped'),mixedNames.length?'Mixed joint roles: '+mixedNames.join(', '):'', 'Colors show possible muscle roles'].filter(Boolean).join('. ');
   roleSummary.setAttribute('aria-label',roleSummary.title+' Open muscle roles.');
   $('.pose-feedback').textContent=state.message||(locked?'This joint’s angles are fixed. Unlock to adjust them.':'');
-  $('.pose-feedback').hidden=!$('.pose-feedback').textContent;
   $('.pose-feedback').title=$('.pose-feedback').textContent;
   for(const [id,item] of markers){item.button.setAttribute('aria-pressed',String(id===state.selectedJoint));item.button.classList.toggle('is-selected',id===state.selectedJoint);}
   if(previousJoint!==state.selectedJoint){page=0;renderedListKey='';}
@@ -353,7 +352,7 @@ export function createPoseUI(host,callbacks={}){
     const dot=document.createElement('i'),label=document.createElement('span');button.append(dot,label);markerLayer.append(button);
     item={button,label};markers.set(point.id,item);
     on(button,'pointerdown',event=>{if(event.button===0&&state.ready)call('markerPointerDown',event,point.id);});
-    on(button,'click',event=>{if(state.ready)call('selectJoint',point.id,event);});
+    on(button,'click',()=>{if(state.ready)call('selectJoint',point.id,{source:'marker'});});
    }
    const descriptor=state.descriptors.find(entry=>entry.id===point.id),name=point.label||descriptor?.label||point.id;
    item.button.hidden=point.visible===false||!state.ready;
@@ -387,7 +386,7 @@ export function createPoseUI(host,callbacks={}){
  on(window,'pointercancel',event=>{if(Number.isFinite(rangeGesture?.id)&&rangeGesture.id===event.pointerId)finishRange(true);});
  on(window,'blur',()=>finishRange(true));
  on(document,'visibilitychange',()=>{if(document.hidden)finishRange(true);});
- on($('[data-pose-joint]'),'change',event=>{finishRange();call('selectJoint',event.currentTarget.value,{focus:true});});
+ on($('[data-pose-joint]'),'change',event=>{finishRange();call('selectJoint',event.currentTarget.value);});
  on($('[data-pose-axis]'),'change',event=>{finishRange();call('selectAxis',event.currentTarget.value);});
  const buttonStep=()=>['%','percent'].includes(axis()?.unit)?10:5;
  button('[data-pose-minus]',()=>call('stepAngle',-buttonStep()));
@@ -445,7 +444,8 @@ export function createPoseUI(host,callbacks={}){
   const item=event.target.closest('[data-pose-row]');
   if(item?.dataset.kind==='guide'){call('selectGuide',item.dataset.poseRow);changeTab('muscles');}
   else if(item?.dataset.kind==='find-muscle')call('locateMuscle',item.dataset.poseRow);
-  else if(item)call(item.dataset.kind==='joint'?'selectJoint':'selectMuscle',item.dataset.poseRow);
+  else if(item?.dataset.kind==='joint')call('selectJoint',item.dataset.poseRow,{source:'explorer'});
+  else if(item)call('selectMuscle',item.dataset.poseRow);
   const lesson=event.target.closest('[data-pose-lesson]');if(lesson)call('openLesson',lesson.dataset.poseLesson);
  });
  on(host,'keydown',event=>{

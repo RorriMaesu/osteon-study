@@ -8,6 +8,7 @@ import {placePoseLabel,placePoseGrip,poseRect,overlapsPoseRect} from './motion-p
 import modelAssets from './model-assets.json' with {type:'json'};
 import {applyActivityPose} from './motion-activity-placement.js';
 import {visibleInTree} from './motion-reveal.js';
+import {poseCameraMove,samplePoseCamera} from './motion-pose-camera.js';
 
 const svgNS='http://www.w3.org/2000/svg';
 const vector=value=>value?.isVector3?value.clone():new THREE.Vector3(...value);
@@ -56,6 +57,7 @@ export class PoseViewer extends MotionViewer{
  open(){
   if(this.renderer)return;
   super.open();
+  this.controls.addEventListener('start',()=>this.stopCameraMotion());
   window.addEventListener('pointermove',this.movePointer);
   window.addEventListener('pointerup',this.finishPointer);
   window.addEventListener('pointercancel',this.finishPointer);
@@ -64,6 +66,7 @@ export class PoseViewer extends MotionViewer{
   document.addEventListener('visibilitychange',this.visibility);
  }
  close(){
+  this.stopCameraMotion();
   this.cancelPoseDrag();
   window.removeEventListener('pointermove',this.movePointer);
   window.removeEventListener('pointerup',this.finishPointer);
@@ -160,13 +163,61 @@ export class PoseViewer extends MotionViewer{
   }
   return bounds;
  }
- fitBounds(bounds,view='front'){
+ viewDirection(){
+  const direction=this.camera.position.clone().sub(this.controls.target);
+  return direction.lengthSq()?direction.normalize():direction.set(0,0,1);
+ }
+ stopCameraMotion({settle=false}={}){
+  this.cameraMove=null;
+  if(!settle||!this.renderer||!this.controls.enableDamping)return;
+  // Flush orbit inertia while retaining the exact view the user just saw.
+  const target=this.controls.target.clone(),position=this.camera.position.clone();
+  this.controls.enableDamping=false;
+  this.controls.update();
+  this.controls.target.copy(target);
+  this.camera.position.copy(position);
+  this.controls.enableDamping=true;
+  this.controls.update();
+ }
+ moveView(target,direction,distance,{animate=!this.activityMode}={}){
+  this.stopCameraMotion({settle:true});
+  const offset=this.camera.position.clone().sub(this.controls.target);
+  const destination=direction.clone().setLength(distance);
+  if(!animate||this.reducedMotion.matches||!offset.lengthSq()){
+   this.controls.target.copy(target);
+   this.camera.position.copy(target).add(destination);
+   this.controls.update();
+  }else if(this.controls.target.distanceToSquared(target)>1e-8||offset.distanceToSquared(destination)>1e-8){
+   this.cameraMove={started:performance.now(),path:poseCameraMove(this.controls.target,offset,target,destination)};
+  }
+  this.dirty=true;
+ }
+ tick(now){
+  if(this.renderer&&!document.hidden&&this.cameraMove){
+   const progress=this.reducedMotion.matches?1:(now-this.cameraMove.started)/320;
+   samplePoseCamera(this.cameraMove.path,progress,this.controls.target,this.camera.position);
+   if(progress>=1)this.cameraMove=null;
+   this.dirty=true;
+  }
+  super.tick(now);
+ }
+ zoom(direction){
+  if(this.activityMode){super.zoom(direction);return;}
+  if(!this.renderer||!this.controls.enabled||!this.current?.model.visible)return;
+  const {target,minDistance,maxDistance}=this.controls,goal=this.cameraMove?.path;
+  const distance=(goal?.to.radius??this.camera.position.distanceTo(target))*(direction==='in'?1/1.22:1.22);
+  const orbit=goal?new THREE.Vector3().setFromSpherical(goal.to).normalize():this.viewDirection();
+  this.moveView(goal?.toTarget??target,orbit,THREE.MathUtils.clamp(distance,minDistance,maxDistance));
+ }
+ fitBounds(bounds,view,options){
   if(bounds.isEmpty()||!this.controls)return;
   const center=bounds.getCenter(new THREE.Vector3());
-  const direction=(view?.isVector3?view.clone():new THREE.Vector3(...({front:[0,.03,1],back:[0,.03,-1],side:[1,.04,0],right:[-1,.04,0],lesson:[.6,.06,1]}[view]||[0,.03,1]))).normalize();
+  const preset={front:[0,.03,1],back:[0,.03,-1],side:[1,.04,0],right:[-1,.04,0],lesson:[.6,.06,1]}[view];
+  const direction=preset?new THREE.Vector3(...preset).normalize():this.viewDirection();
   const right=new THREE.Vector3().crossVectors(new THREE.Vector3(0,1,0),direction).normalize();
   const up=new THREE.Vector3().crossVectors(direction,right).normalize();
   const height=this.stage.clientHeight,width=this.stage.clientWidth;
+  if(!height||!width)return;
   const hint=this.stage.querySelector('.pose-stage-hint'),toolbar=this.stage.querySelector('.pose-view-actions');
   const top=hint?.offsetHeight?hint.offsetTop+hint.offsetHeight+8:8;
   const bottom=toolbar?.offsetHeight?height-toolbar.offsetTop+8:8;
@@ -179,12 +230,10 @@ export class PoseViewer extends MotionViewer{
    distance=Math.max(distance,depth+Math.abs(delta.dot(right))/tanX,depth+Math.abs(delta.dot(up))/tanY);
   }
   const target=center.clone().addScaledVector(up,(safeCenter-height/2)*(2*distance*baseTan/height));
-  this.controls.target.copy(target);
-  this.camera.position.copy(target).addScaledVector(direction,distance);
   this.controls.minDistance=.035;this.controls.maxDistance=8;
-  this.controls.update();this.dirty=true;
+  this.moveView(target,direction,distance,options);
  }
- frame(view='front'){if(this.current&&this.renderer)this.fitBounds(this.bounds(),view);}
+ frame(view,options){if(this.current&&this.renderer)this.fitBounds(this.bounds(),view,options);}
  frameLimb(id,{raise=false}={}){
   const limb=this.endpointChain(id);
   if(!limb||!this.renderer)return;
@@ -201,33 +250,30 @@ export class PoseViewer extends MotionViewer{
    }finally{applyPose(this.current,this.poseValues,{jointsOnly:true});}
   }
   bounds.expandByScalar(limb.id.endsWith('wrist')?.15:.18);
-  this.fitBounds(bounds,raise?'front':this.camera.position.clone().sub(this.controls.target).normalize());
+  this.fitBounds(bounds);
  }
- focusLocatedMuscle(){
+ focusLocatedMuscle({preserveAngle=false}={}){
   if(!this.selectedPart)return;
   const {mesh,name}=this.selectedPart;
   this.current.model.updateMatrixWorld(true);
   const bounds=new THREE.Box3().setFromObject(mesh,true);
   bounds.expandByScalar(Math.max(.027,bounds.getSize(new THREE.Vector3()).length()*.12));
   const posterior=/gastrocnemius|soleus|hamstring|semitendinosus|semimembranosus|biceps femoris|gluteus|trapezius|latissimus|infraspinatus|rhomboid|posterior/i.test(name);
-  this.fitBounds(bounds,posterior?'back':'front');
+  this.fitBounds(bounds,preserveAngle?undefined:posterior?'back':'front');
  }
- fitCanvas(){
-  if(!this.renderer)return;
-  const oldHeight=this.lastStageHeight;
-  super.fitCanvas();
-  this.lastStageHeight=this.stage.clientHeight;
-  const open=!!this.stage.closest('.motion-pose-workspace')?.hasAttribute('data-pose-notes-open');
-  const changed=open!==this.notesWereOpen;
-  this.notesWereOpen=open;
-  if(!this.current||!oldHeight||oldHeight===this.lastStageHeight||!(open||changed))return;
-  // Opening or closing the explorer can change the actual usable canvas.
-  // Keep the thing already under inspection framed during that reflow.
-  if(this.inspectingMuscle&&this.selectedPart)this.focusLocatedMuscle();
-  else if(this.interaction==='endpoint')this.frameLimb(this.selectedJoint);
-  else this.fitBounds(this.bounds(),this.camera.position.clone().sub(this.controls.target).normalize());
+ revealOffscreenJoint(){
+  if(!this.current||!this.selectedJoint)return;
+  const marker=vector(poseMarkerWorld(this.current,this.selectedJoint));
+  this.camera.updateMatrixWorld(true);
+  const point=this.project(marker);
+  const width=this.stage.clientWidth,height=this.stage.clientHeight;
+  if(!width||!height)return;
+  const clear=point.visible&&point.x>=24&&point.x<=width-24&&point.y>=24&&point.y<=height-24;
+  const covered=this.fixedOverlayObstacles().some(rect=>overlapsPoseRect(poseRect(point.x,point.y,44),rect,3));
+  if(clear&&!covered)return;
+  this.moveView(marker,this.viewDirection(),this.camera.position.distanceTo(this.controls.target));
  }
- focusJoint(view='front',radiusOverride){
+ focusJoint(view,radiusOverride){
   if(!this.current||!this.selectedJoint)return;
   const descriptor=this.descriptor(),position=this.jointPosition(this.selectedJoint);
   const radius=radiusOverride||descriptor.focusRadius||(/finger|thumb|index|middle|ring|little|toe|hallux/.test(descriptor.id)?.085:/jaw|blink|smile|wrist|forearm|ankle|subtalar/.test(descriptor.id)?.16:.3);
@@ -253,14 +299,14 @@ export class PoseViewer extends MotionViewer{
   });
   const fixed=this.fixedOverlayObstacles(),endpoint=this.interaction==='endpoint';
   const width=this.stage.clientWidth,height=this.stage.clientHeight;
-  let visible=endpoint?[]:visiblePoseMarkers(raw,{width,height,selectedId:this.selectedJoint});
+  const uncovered=raw.filter(marker=>!fixed.some(rect=>overlapsPoseRect(poseRect(marker.x,marker.y,44),rect,3)));
+  let visible=endpoint?[]:visiblePoseMarkers(uncovered,{width,height,selectedId:this.selectedJoint,top:24,bottom:24});
   const selected=endpoint?raw.find(marker=>marker.id===this.selectedJoint&&marker.visible&&marker.x>=0&&marker.x<=width&&marker.y>=0&&marker.y<=height):visible.find(marker=>marker.id===this.selectedJoint);
   const axes=this.axisDescriptor();
   const locked=endpoint?!this.canGrabLimb(this.endpointChain(this.selectedJoint)):this.poseLocks.includes(this.selectedJoint)||(axes?.requiresUnlocked||[]).some(id=>this.poseLocks.includes(id));
   const grip=selected&&!locked&&axes?placePoseGrip({anchor:selected,width,height,obstacles:fixed,endpoint,allowOffset:endpoint}):null;
   const show=!!grip;
-  if(show)visible=visible.filter(marker=>marker.id===this.selectedJoint||!overlapsPoseRect(poseRect(marker.x,marker.y,44),poseRect(selected.x,selected.y,126),2));
-  visible=visible.filter(marker=>!fixed.some(rect=>overlapsPoseRect(poseRect(marker.x,marker.y,44),rect,3)));
+  if(show&&!endpoint)visible=visible.filter(marker=>marker.id===this.selectedJoint||!overlapsPoseRect(poseRect(marker.x,marker.y,44),poseRect(grip.x,grip.y,40),2));
   this.callbacks.markers(visible);
   this.guide.style.display=show?'':'none';this.grip.hidden=!show;
   this.overlayObstacles=[...fixed,...visible.map(marker=>poseRect(marker.x,marker.y,44))];
@@ -331,9 +377,10 @@ export class PoseViewer extends MotionViewer{
  startPoseDrag(event,jointId,kind='joint',element=event.currentTarget||event.target){
   if(this.activityMode||event.button!==0||!this.current||this.poseDrag)return;
   event.preventDefault();event.stopPropagation();
+  this.stopCameraMotion({settle:true});
   const endpoint=this.interaction==='endpoint'&&this.endpointChain(jointId);
   if(endpoint&&!this.canGrabLimb(endpoint)){this.callbacks.message('Unlock the linked joints to move this limb.');return;}
-  if(!endpoint&&jointId!==this.selectedJoint)this.callbacks.selectJoint(jointId,{pointer:true});
+  if(!endpoint&&jointId!==this.selectedJoint)this.callbacks.selectJoint(jointId,{source:'marker'});
   if(!endpoint&&this.poseLocks.includes(jointId)){this.callbacks.message('This joint angle is locked. Unlock it to adjust.');return;}
   const axis=this.axisDescriptor();
   if(!axis)return;
@@ -385,6 +432,11 @@ export class PoseViewer extends MotionViewer{
   const drag=this.poseDrag;if(!drag||drag.id!==event.pointerId)return;
   if(!(event.buttons&1)&&event.pointerType!=='touch'){this.finishPoseDrag(event,true);return;}
   event.preventDefault();
+  const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
+  if(drag.kind==='joint'&&!drag.moved){
+   if(Math.hypot(dx,dy)<(event.pointerType==='touch'?7:4))return;
+   drag.moved=true;
+  }
   if(drag.kind==='endpoint'){
    this.rayAt(event);
    const point=this.ray.ray.intersectPlane(this.dragPlane,new THREE.Vector3());
@@ -399,7 +451,7 @@ export class PoseViewer extends MotionViewer{
    const rect=this.stage.getBoundingClientRect();
    const theta=Math.atan2(event.clientY-rect.top-drag.center.y,event.clientX-rect.left-drag.center.x)/radians;
    drag.total+=dialDelta(drag.theta,theta);drag.theta=theta;delta=drag.total;
-  }else delta=((event.clientX-drag.startX)-(event.clientY-drag.startY))*.45;
+  }else delta=(dx-dy)*.45;
   const axis=this.axisDescriptor();
   this.callbacks.angle(drag.value+delta*(axis?.unit==='percent'?.7:1),drag.jointId,drag.axisId);
  }

@@ -42,7 +42,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   setScope:changeScope,focus:()=>{
    stopGesture();
    if(interaction==='endpoint')viewer.frameLimb(selectedJoint);
-   else viewer.focusJoint(studyGuide?.view,studyGuide?.radius);
+   else viewer.focusJoint(undefined,studyGuide?.radius);
   },
   camera:view=>{stopGesture();if(studyGuide&&!studyGuide.fullFrame)viewer.focusJoint(view,studyGuide.radius);else viewer.frame(view);},
   zoom:direction=>viewer.zoom(direction),
@@ -54,8 +54,8 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   setReveal:enabled=>{revealPreference.setEnabled(enabled);draw();},
   setFadeBones:enabled=>{revealPreference.setFadeBones(enabled);draw();},
   focusMuscle:()=>{
-   viewer.focusMuscle();
    if(matchMedia('(max-width:959px) and (min-height:481px), (max-width:600px) and (orientation:portrait)').matches)ui.closeNotes(true);
+   viewer.fitCanvas();viewer.focusLocatedMuscle({preserveAngle:true});
   },
   exploreContributors,
   grabLimb:id=>grabLimb(id,{frame:true}),
@@ -168,7 +168,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   stopGesture();
   interaction=endpoint?'endpoint':'joint';
   if(endpoint){
-   selectJoint(endpoint.id,{pointer:true,preserveGrab:true});
+   selectJoint(endpoint.id,{source:'grab',preserveGrab:true});
    selectedMuscle=null;
    if(frame){ui.showMuscleRoles();ui.closeNotes();}
    message=viewer.canGrabLimb(endpoint)?'Drag the limb or the handle. Use arrow keys when the handle is focused.':'Unlock the shoulder and elbow or the hip and knee to move this limb.';
@@ -177,25 +177,27 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
   if(endpoint&&frame){viewer.fitCanvas();viewer.frameLimb(endpoint.id);}
   return !!endpoint;
  }
- function selectJoint(id,{pointer=false,focus=false,preserveGrab=false}={}){
+ function selectJoint(id,{source='picker',preserveGrab=false}={}){
   const joint=descriptors.find(item=>item.id===id);
   if(!joint)return;
+  viewer.stopCameraMotion({settle:true});
   if(!preserveGrab&&interaction==='endpoint')interaction='joint';
-  if(id===selectedJoint){draw();if(focus)viewer.focusJoint();return;}
-  stopGesture();
-  studyGuide=null;
-  selectedJoint=id;selectedAxis=joint.axes[0].id;selectedMuscle=null;
-  history?.clearChanges();
-  if(!viewer.endpointChain(id))interaction='joint';
-  if(scope!=='all'&&!poseScopeMatches(scope,joint)){scope='all';viewer.setScope(scope);}
-  message=joint.note||'';
-  const detail=!pointer&&/thumb|index|middle|ring|little|toe|hallux|subtalar|upper-nod|face-/.test(id);
-  if(detail){scope=joint.region;viewer.setScope(scope);message='Detail view. Full body returns to your complete pose.';}
-  draw();save();
-  if(!pointer&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes();
-  if(focus||detail){
+  const changed=id!==selectedJoint;
+  if(changed){
+   stopGesture();
+   studyGuide=null;
+   selectedJoint=id;selectedAxis=joint.axes[0].id;selectedMuscle=null;
+   history?.clearChanges();
+   if(!viewer.endpointChain(id))interaction='joint';
+   if(scope!=='all'&&!poseScopeMatches(scope,joint)){scope='all';viewer.setScope(scope);}
+   message=joint.note||'';
+  }
+  if(source==='explorer'&&matchMedia('(max-width:760px) and (orientation:portrait)').matches)ui.closeNotes(true);
+  draw();
+  if(changed)save();
+  if(source==='picker'||source==='explorer'){
    viewer.fitCanvas();
-   viewer.focusJoint();
+   viewer.revealOffscreenJoint();
   }
  }
  function selectMuscle(key,{closeNotes=true,locate=false}={}){
@@ -381,7 +383,7 @@ export function initPoseLab(host,{onLesson,revealPreference=createMotionRevealPr
      message=linked.name+' · '+linked.side;
     }
    }
-   viewer.setScope(scope);draw();viewer.frame('front');ui.setStatus('');
+   viewer.setScope(scope);draw();viewer.frame('front',{animate:false});ui.setStatus('');
    if(!guideRouteRead){guideRouteRead=true;applyMotionRoute(new URLSearchParams(location.search));}
   }catch(error){
    if(!active||run!==revision)return;
