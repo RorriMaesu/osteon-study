@@ -2,6 +2,7 @@ import {muscleChecklistTargets,muscleChecklistQuestionsFor,muscleChecklistBank} 
 import {validSession} from './exam-core.js';
 import {muscleRegions} from './muscle-data.js';
 import {courseMuscleTargetById} from './muscle-spatial-data.js';
+import {muscleListPreviewTarget} from './muscle-list-preview-targets.js';
 import {muscleWorksheetTargets} from './muscle-worksheet-data.js';
 import {getProgress,shuffle} from './storage.js';
 import {saveCardReview} from './muscle-study-state.js';
@@ -21,7 +22,7 @@ function savedDrill(){
  }catch{return null;}
 }
 
-export function initMuscleList({setView,toast,escape:e}){
+export function initMuscleList({setView,dialog,toast,escape:e}){
  const root=document.getElementById('practice-view');
  const state={mode:'learn',region:'',card:cards[0].id,kind:'name',length:'10',scope:'all'};
  let layout=null,notice='';
@@ -40,6 +41,19 @@ export function initMuscleList({setView,toast,escape:e}){
   return muscleChecklistQuestionsFor(targets.map(card=>card.id),{kind:state.kind});
  }
  function open(){render();}
+ function previewImage(card,preview){
+  return `<img src="${e(preview.src)}" alt="${e(card.name+' · '+preview.caption)}" decoding="async">`;
+ }
+ function previewCaption(preview){
+  const source=preview.sourceUrl?` · <a href="${e(preview.sourceUrl)}" target="_blank" rel="noreferrer">${e(preview.sourceLabel)}</a>`:'';
+  return `<figcaption>${e(preview.caption)}${source}</figcaption>`;
+ }
+ function previewFigure(card,preview){
+  return `<figure class="muscle-list-preview">
+   <button type="button" data-list-action="preview" aria-haspopup="dialog" aria-label="Enlarge preview of ${e(card.name)}" title="Enlarge preview">
+    ${previewImage(card,preview)}<span class="muscle-list-expand" aria-hidden="true">⛶</span>
+   </button>${previewCaption(preview)}</figure>`;
+ }
  function render(){
   const prior=layout?.selection();layout?.close();layout=null;
   delete document.body.dataset.examActive;
@@ -71,7 +85,8 @@ export function initMuscleList({setView,toast,escape:e}){
    const tissue=card.kind==='connective tissue',spatial=courseMuscleTargetById.get(card.id);
    const members=Array.isArray(card.members)?cards.filter(item=>card.members.includes(item.name)).map(item=>item.id):[];
    const diagram=diagramIds.has(card.id)||members.some(id=>diagramIds.has(id));
-   frame.innerHTML=`<h2>${e(card.name)}</h2><p class="muscle-list-meta">${e(regionName(card.region))} · ${e(card.kind)}${card.courseLabel?' · List wording: '+e(card.courseLabel):''}</p>
+   const preview=muscleListPreviewTarget(card.id);
+   frame.innerHTML=`${previewFigure(card,preview)}<h2>${e(card.name)}</h2><p class="muscle-list-meta">${e(regionName(card.region))} · ${e(card.kind)}${card.courseLabel?' · List wording: '+e(card.courseLabel):''}</p>
     <h3>Where to find it</h3><p>${e(card.location)}</p><h3>${tissue?'What it supports or connects':'Main action'}</h3><p>${e(card.action)}</p>
     ${card.members?.length?`<h3>Members of this group</h3><p>${e(Array.isArray(card.members)?card.members.join(', '):card.members)}</p>`:''}
     <h3>${tissue?'Attachment relationship':'General origin'}</h3><p>${e(card.origin)}</p><h3>${tissue?'Related attachment':'General insertion'}</h3><p>${e(card.insertion)}</p>
@@ -120,6 +135,11 @@ export function initMuscleList({setView,toast,escape:e}){
   if(button.dataset.listMode){state.mode=button.dataset.listMode;notice='';layout?.close();layout=null;render();return;}
   const items=selected(),card=items.find(item=>item.id===state.card),index=items.indexOf(card);
   switch(button.dataset.listAction){
+   case'preview':{
+    const preview=muscleListPreviewTarget(card.id);
+    dialog(`<div class="muscle-list-enlarged"><h2>${e(card.name)}</h2><figure>${previewImage(card,preview)}${previewCaption(preview)}</figure>${preview.note?`<p>${e(preview.note)}</p>`:''}</div>`);
+    break;
+   }
    case'exit':setView('practice',{route:'practice'});document.dispatchEvent(new Event('practicehome'));break;
    case'learn':state.mode='learn';layout?.close();layout=null;render();break;
    case'previous':case'next':state.card=items[index+(button.dataset.listAction==='next'?1:-1)]?.id||state.card;notice='';layout?.close();layout=null;render();root.querySelector('#required-muscle-entry')?.focus({preventScroll:true});break;

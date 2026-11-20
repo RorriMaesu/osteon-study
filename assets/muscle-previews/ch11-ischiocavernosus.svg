@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="22 -5 465 395" role="img" aria-labelledby="title desc">
+  <title id="title">Paired ischiocavernosus muscles, female inferior view</title>
+  <desc id="desc">The two slender muscles follow the crura of the clitoris. Their narrow anterior ends approach one another and they diverge posterolaterally. Isolated redrawing of OpenStax Anatomy and Physiology 2e, figure 11.20.</desc>
+  <defs>
+    <linearGradient id="belly" x1="0" y1="0" x2="1" y2=".45" gradientUnits="objectBoundingBox">
+      <stop stop-color="#945446"/><stop offset=".3" stop-color="#c97f69"/><stop offset=".56" stop-color="#e5a48a"/><stop offset=".85" stop-color="#bf7564"/><stop offset="1" stop-color="#985d50"/>
+    </linearGradient>
+    <path id="outline" d="M209 21 Q219 17 232 19 C210 49 188 93 173 134 C149 193 127 263 94 319 Q84 337 75 347 Q65 340 57 326 C47 311 64 284 75 263 C99 212 123 165 147 121 Q181 56 209 21Z"/>
+    <clipPath id="isolate"><use href="#outline"/></clipPath>
+    <g id="muscle">
+      <use href="#outline" fill="url(#belly)" stroke="#9a5f50" stroke-width="1.7" stroke-linejoin="round"/>
+      <g clip-path="url(#isolate)" fill="none" stroke-linecap="round">
+        <g stroke="#ebae8f" stroke-width="2.7">
+          <path d="M217 18 C179 77 148 160 123 211 Q85 288 54 316"/>
+          <path d="M224 18 C180 92 164 160 129 225 Q94 296 59 327"/>
+          <path d="M231 21 C190 92 171 169 137 236 Q107 297 66 339"/>
+        </g>
+        <g stroke="#a96150" stroke-width="2">
+          <path d="M212 18 C171 76 146 153 113 218 Q83 273 55 308"/>
+          <path d="M228 21 C189 88 165 163 134 229 Q98 296 63 333"/>
+        </g>
+      </g>
+    </g>
+  </defs>
+  <use href="#muscle"/><use href="#muscle" transform="translate(510 0) scale(-1 1)"/>
+</svg>

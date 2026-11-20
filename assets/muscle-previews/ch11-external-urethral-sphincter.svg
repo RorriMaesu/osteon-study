@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 264" role="img" aria-labelledby="title desc">
+  <title id="title">Female external urethral sphincter proper in transverse section</title>
+  <desc id="desc">Diagram of the striated muscle at one mid-urethral level, anterior at the top. Its thicker anterior wall sweeps down both sides, with a posterior opening. Based on the labeled tissue boundary in Liu and colleagues (2025), figure 2f.</desc>
+  <defs>
+    <linearGradient id="section" x1=".18" y1=".1" x2=".8" y2=".9" gradientUnits="objectBoundingBox">
+      <stop stop-color="#f2b395"/><stop offset=".38" stop-color="#d99178"/><stop offset=".7" stop-color="#c17a67"/><stop offset="1" stop-color="#a15e50"/>
+    </linearGradient>
+    <path id="outline" d="M28 45 Q59 29 96 31 C126 17 153 16 188 22 Q218 22 245 35 Q258 39 279 34 Q276 44 258 49 C276 51 280 64 282 76 Q268 64 257 64 Q246 64 243 72 Q251 87 244 106 Q240 116 243 126 Q247 144 235 163 Q226 182 219 203 Q215 220 199 232 Q205 212 206 195 C207 177 206 163 212 144 C220 123 211 106 203 93 Q195 80 176 77 C153 71 134 75 122 81 C109 89 104 108 96 128 C90 144 89 168 93 191 Q97 210 111 222 Q91 227 80 211 C66 190 65 171 62 150 C58 128 62 110 64 98 Q67 76 78 65 Q67 57 53 60 Q42 67 28 68 Q33 56 51 51 Q40 47 28 45Z"/>
+    <clipPath id="isolate"><use href="#outline"/></clipPath>
+    <pattern id="section-grain" width="9" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-19)">
+      <path d="M1 2h2.2M5 6h1.7" stroke="#854c46" stroke-width=".95" stroke-linecap="round" opacity=".35"/>
+    </pattern>
+  </defs>
+  <use href="#outline" fill="url(#section)" stroke="#aa6a59" stroke-width="1.5" stroke-linejoin="round"/>
+  <g clip-path="url(#isolate)">
+    <path fill="url(#section-grain)" d="M0 0h320v264H0z"/>
+    <g fill="none" stroke="#f1b49a" stroke-width="2" opacity=".6">
+      <path d="M75 154 Q63 93 97 62 T185 43 Q233 49 235 94"/>
+      <path d="M78 191 Q59 124 89 85 Q109 48 162 51 Q211 49 230 89 Q238 117 225 146"/>
+      <path d="M85 199 Q69 143 89 99 Q108 56 159 61 Q211 55 223 102 Q227 122 217 158"/>
+    </g>
+  </g>
+</svg>

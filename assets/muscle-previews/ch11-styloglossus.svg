@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 -14 730 285" role="img" aria-labelledby="title desc">
+  <title id="title">Styloglossus in lateral view</title>
+  <desc id="desc">The visible fibers run from a narrow styloid attachment down and forward, then fan into the side of the tongue. Isolated redrawing of the superficial portion in OpenStax Anatomy and Physiology 2e, figure 11.11a.</desc>
+  <defs>
+    <linearGradient id="belly" x1=".15" y1="0" x2=".66" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#fcc4a5"/><stop offset=".38" stop-color="#da9079"/><stop offset=".76" stop-color="#c17465"/><stop offset="1" stop-color="#955446"/>
+    </linearGradient>
+    <path id="outline" d="M59 174 C111 166 155 171 193 170 C267 183 363 186 431 164 C505 139 575 81 635 44 Q654 32 665 18 Q683 8 704 21 Q695 36 675 53 C621 97 576 160 528 207 Q487 243 423 241 C381 232 338 210 294 201 C220 187 150 179 59 174Z"/>
+    <clipPath id="isolate"><use href="#outline"/></clipPath>
+  </defs>
+  <use href="#outline" fill="url(#belly)" stroke="#975f53" stroke-width="2" stroke-linejoin="round"/>
+  <g clip-path="url(#isolate)" fill="none" stroke-linecap="round">
+    <g stroke="#e7ac91" stroke-width="4.2">
+      <path d="M92 174 C218 166 302 210 421 178 C505 156 564 94 657 36"/>
+      <path d="M157 178 C282 190 363 213 438 188 C519 160 586 86 663 37"/>
+      <path d="M240 191 C334 207 399 222 460 198 C535 168 599 77 669 38"/>
+      <path d="M314 201 C399 223 441 236 498 203 C550 171 613 76 675 40"/>
+      <path d="M379 225 C442 245 489 226 521 200 C571 157 623 80 679 43"/>
+    </g>
+    <g stroke="#a85e4f" stroke-width="2">
+      <path d="M95 176 C212 174 335 208 428 182 C511 159 562 102 651 45"/>
+      <path d="M223 187 C324 207 390 217 450 195 C533 165 594 84 664 38"/>
+      <path d="M341 211 C421 235 463 235 507 204 C560 164 612 79 675 42"/>
+    </g>
+    <path fill="#dddbca" d="M641 39 Q663 25 674 11 L711 11 L705 31 L674 58 L683 43 L668 54 L677 38 L661 50 L670 34 L652 45 L662 31Z"/>
+  </g>
+</svg>
