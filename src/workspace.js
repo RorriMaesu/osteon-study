@@ -120,7 +120,7 @@ export function initWorkspace() {
       mount(document.querySelector('#detail-content'),'Structure details');
       for(const id of ['study-view','practice-view','progress-view']){
         const root=document.getElementById(id);if(!root.classList.contains('active'))continue;
-        if(root.querySelector('.mock-shell')){root.classList.add('workspace-special');continue;}
+        if(root.querySelector('.mock-shell,.muscle-list-shell')){root.classList.add('workspace-special');continue;}
         const specialized=root.querySelector('.reader-layout,.lesson-layout,.course-layout,#study-body,.landmark-bank-layout,.lab-list-layout,.exam-layout,.exam-hub-layout,.muscle-labeling-layout,.muscle-worksheet-shell,.professor-muscle-layout');
         if(specialized){
           root.classList.add('workspace-special');

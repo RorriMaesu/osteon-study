@@ -83,9 +83,9 @@ def load_meshes(targets):
     return meshes
 
 
-def frame_camera(scene, objects, view):
+def frame_camera(scene, objects, direction):
     camera = scene.camera
-    direction = Vector(VIEWS[view])
+    direction = Vector(direction).normalized()
     # A consistent azimuth keeps top and underside views from flipping between cards.
     camera.rotation_euler = (-direction).to_track_quat("-Z", "Y").to_euler()
     basis = camera.rotation_euler.to_matrix()
@@ -123,7 +123,12 @@ def main():
             shade = MUSCLE_COLORS[names.index(part["muscleName"]) % len(MUSCLE_COLORS)]
             obj.color = (.74, .59, .42, 1) if part["kind"] == "support" else shade
             visible.append(obj)
-        frame_camera(scene, visible, target["view"])
+        if target.get("direction"):
+            x, y, z = target["direction"]
+            direction = (x, -z, y)
+        else:
+            direction = VIEWS[target["view"]]
+        frame_camera(scene, visible, direction)
         scene.render.filepath = str(OUT / (target["id"] + ".webp"))
         bpy.ops.render.render(write_still=True)
         for obj in visible:

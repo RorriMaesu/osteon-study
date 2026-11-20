@@ -39,7 +39,7 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
 .muscle-list-preview{
  float:right;width:clamp(155px,30%,300px);margin:3px 2px 10px clamp(10px,2vw,24px);
 }
-.muscle-list-preview button,.muscle-list-enlarged img{
+.muscle-list-preview button,.muscle-list-enlarged-stage{
  background:radial-gradient(ellipse at 50% 42%,#2d4144 0%,#1e3036 62%,#18282d 100%);
  border:1px solid var(--line);border-radius:10px;
 }
@@ -61,11 +61,13 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
 }
 #info-dialog:has(.muscle-list-enlarged)>.dialog-top{flex:none;margin-bottom:8px}
 #dialog-content:has(>.muscle-list-enlarged){display:flex;flex:1;min-height:0;flex-direction:column}
-.muscle-list-enlarged{display:grid;flex:1;min-height:0;grid-template-rows:auto minmax(0,1fr) auto}
+.muscle-list-enlarged{display:grid;flex:1;min-height:0;grid-template-rows:auto minmax(0,1fr) auto auto}
 #info-dialog .muscle-list-enlarged h2{font-size:clamp(22px,3vw,36px);line-height:1.12;margin:0 0 8px}
 .muscle-list-enlarged figure{display:grid;min-height:0;grid-template-rows:minmax(0,1fr) auto;margin:0}
+.muscle-list-enlarged-stage{position:relative;min-height:0}
 #info-dialog .muscle-list-enlarged img{min-height:0;max-height:none;padding:8px}
-.muscle-list-enlarged p{font-size:13px;line-height:1.4;margin:8px 0 0}
+.muscle-list-enlarged img[hidden]{display:none}
+.muscle-list-enlarged p{font-size:13px;line-height:1.4;margin:0;max-height:22dvh;overflow:auto}
 .muscle-list-textbook{grid-template-rows:auto auto minmax(0,1fr) auto}
 .muscle-list-textbook-plate{
  width:100%;height:100%;min-height:0;overflow:hidden;background:#102024;border-radius:8px;
@@ -75,7 +77,7 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
 }
 .muscle-list-textbook-plate.magnified{overflow:auto}
 #dialog-content .muscle-list-textbook-plate.magnified svg{width:max(160%,900px);height:auto;object-fit:initial}
-.muscle-list-textbook .control-row,.muscle-list-model .control-row{margin:0}
+.muscle-list-enlarged .control-row,.muscle-list-textbook .control-row,.muscle-list-model .control-row{margin:0}
 .muscle-list-model{grid-template-rows:auto auto minmax(0,1fr) auto auto}
 .muscle-list-model-stage{
  position:relative;min-height:0;overflow:hidden;border:1px solid var(--line);border-radius:8px;
@@ -84,11 +86,11 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
 #dialog-content .muscle-list-model-stage img,.muscle-list-model-stage canvas{
  display:block;width:100%;height:100%;max-height:none;object-fit:contain;
 }
-.muscle-list-model-stage span[role=status]{
+:is(.muscle-list-enlarged-stage,.muscle-list-model-stage) span[role=status]{
  position:absolute;left:50%;bottom:10px;transform:translateX(-50%);max-width:90%;
  width:max-content;text-align:center;padding:4px 8px;background:#102024;color:var(--mint);border-radius:6px;
 }
-.muscle-list-model-stage span[hidden]{display:none}
+:is(.muscle-list-enlarged-stage,.muscle-list-model-stage) span[hidden]{display:none}
 .muscle-list-model-note{font-size:12px;line-height:1.4;margin:0;max-height:18dvh;overflow:auto}
 @media(max-width:650px){
  body[data-muscle-list-active] .main-nav{display:none}

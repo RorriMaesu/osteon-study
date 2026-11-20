@@ -57,6 +57,36 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
     ${previewImage(card,preview)}<span class="muscle-list-expand" aria-hidden="true">⛶</span>
    </button>${previewCaption(preview)}</figure>`;
  }
+ function openEnlargedPreview(card){
+  const preview=muscleListPreviewTarget(card.id);
+  dialog(`<div class="figure-zoom muscle-list-enlarged">
+   <h2>${e(card.name)}</h2>
+   <figure>
+    <div class="muscle-list-enlarged-stage">${previewImage(card,preview)}<span role="status">Loading preview…</span></div>
+    ${previewCaption(preview)}
+   </figure>
+   ${preview.note?`<p>${e(preview.note)}</p>`:''}
+   <div class="control-row"><button type="button" data-preview-3d>Rotate in 3D</button></div>
+  </div>`);
+  const panel=document.querySelector('.muscle-list-enlarged');
+  const image=panel.querySelector('img'),status=panel.querySelector('[role="status"]');
+  function showImageStatus(){
+   if(!image.complete)return;
+   if(image.naturalWidth)status.hidden=true;
+   else{
+    image.hidden=true;
+    status.textContent='Preview image unavailable. Use Rotate in 3D to see this structure.';
+   }
+  }
+  image.addEventListener('load',showImageStatus,{once:true});
+  image.addEventListener('error',showImageStatus,{once:true});
+  showImageStatus();
+  panel.querySelector('[data-preview-3d]').onclick=()=>{
+   const box=panel.closest('dialog');
+   box.addEventListener('close',()=>openStudyModel(card),{once:true});
+   box.close();
+  };
+ }
  function openTextbookFigure(card){
   const figure=muscleListOpenStaxFigure(card.id);
   const id='muscle-list-textbook-image';
@@ -214,11 +244,7 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
   switch(button.dataset.listAction){
    case'textbook':openTextbookFigure(card);break;
    case'study-model':openStudyModel(card);break;
-   case'preview':{
-    const preview=muscleListPreviewTarget(card.id);
-    dialog(`<div class="muscle-list-enlarged"><h2>${e(card.name)}</h2><figure>${previewImage(card,preview)}${previewCaption(preview)}</figure>${preview.note?`<p>${e(preview.note)}</p>`:''}</div>`);
-    break;
-   }
+   case'preview':openEnlargedPreview(card);break;
    case'exit':setView('practice',{route:'practice'});document.dispatchEvent(new Event('practicehome'));break;
    case'learn':state.mode='learn';layout?.close();layout=null;render();break;
    case'previous':case'next':state.card=items[index+(button.dataset.listAction==='next'?1:-1)]?.id||state.card;notice='';layout?.close();layout=null;render();root.querySelector('#required-muscle-entry')?.focus({preventScroll:true});break;
