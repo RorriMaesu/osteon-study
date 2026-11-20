@@ -54,7 +54,7 @@ const deepDorsalForearm = [1095,1934,1286,1004];
 const anteriorThigh = [0,0,925,1055];
 const posteriorThigh = [806,1118,907,1057];
 const anteriorCalf = [0,0,720,1358];
-const posteriorCalf = [840,0,695,1358];
+const gastrocnemiusPlate = {file:'figure-11-32-posterior.jpg',width:695,height:800};
 const deepPosteriorCalf = [1580,0,699,1358];
 
 // The anatomy and labels below were checked on the illustrations, independent of
@@ -139,7 +139,10 @@ const rows = {
   'biceps-femoris':figure('11.29','Biceps femoris'),
   'semitendinosus':figure('11.29','Semitendinosus',{panel:posteriorThigh}),
   'semimembranosus':figure('11.29','Semimembranosus',{panel:posteriorThigh}),
-  'gastrocnemius':figure('11.32','Gastrocnemius, lateral and medial heads',{panel:posteriorCalf,note:'Both cut heads are labeled above soleus.'}),
+  'gastrocnemius':figure('11.32','Gastrocnemius, lateral and medial heads',{
+    image:gastrocnemiusPlate,
+    note:'Posterior view cropped to show both labeled heads and the soleus below them.',
+  }),
   'soleus':figure('11.32','Soleus'),
   'tibialis-anterior':figure('11.32','Tibialis anterior'),
   'calcaneal-tendon':figure('11.32','Calcaneal (Achilles) tendon'),
@@ -162,12 +165,12 @@ export function muscleListOpenStaxFigure(cardId) {
   const slug = cardId.replace(/^ch11-/, '');
   if (!Object.hasOwn(rows, slug)) return null;
   const row = rows[slug];
-  const {number} = row;
-  const asset = extraAssets[number] || assets[number];
+  const {number,image,...details} = row;
+  const asset = image || extraAssets[number] || assets[number];
   const [region,anchor] = figures[number];
   const reviewedTarget = muscleFigureTargets[slug];
   const targetId = reviewedTarget?.figure === number ? slug : undefined;
-  return {...row, targetId, panel:row.panel || (targetId ? reviewedTarget.panel : undefined),
+  return {number,...details, directImage:!!image, targetId, panel:row.panel || (targetId ? reviewedTarget.panel : undefined),
     src:'assets/muscle-textbook/'+asset.file, width:asset.width, height:asset.height,
     sourceUrl:openStax+section[region]+'#'+anchor,
   };

@@ -44,3 +44,14 @@ test('the figure metadata identifies author labels, tissue examples and suppleme
     assert.match(view.supplement.label, /Gray’s Anatomy/);
   }
 });
+
+test('gastrocnemius loads the dedicated OpenStax posterior crop with both head labels', () => {
+  const view = muscleListOpenStaxFigure('ch11-gastrocnemius');
+  assert.equal(view.number, '11.32');
+  assert.equal(view.directImage, true);
+  assert.match(view.label, /lateral and medial heads/);
+  assert.match(view.src, /figure-11-32-posterior\.jpg$/);
+  assert.deepEqual([view.width,view.height], [695,800]);
+  assert.equal(view.panel, undefined);
+  assert.match(view.sourceUrl, /#fig-ch11_06_04$/);
+});

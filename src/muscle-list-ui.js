@@ -99,6 +99,12 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
    const marker=annotation
     ?`<circle cx="${annotation.point[0]}" cy="${annotation.point[1]}" r="${Math.max(6,bounds[2]*.012)}" fill="none" stroke="#85500e" stroke-width="3" vector-effect="non-scaling-stroke"/>`
     :'';
+   const picture=plate.directImage
+    ?`<img id="${id}" src="${e(src)}" width="${width}" height="${height}" alt="${e(heading)}">
+     <p class="muscle-list-textbook-status" role="status">Loading diagram…</p>`
+    :`<svg id="${id}" viewBox="${bounds.join(' ')}" role="img" aria-label="${e(heading)}">
+      <image href="${e(src)}" width="${width}" height="${height}"/>${marker}
+     </svg>`;
    const credit=supplementOpen
     ?`<a href="${e(plate.url)}" target="_blank" rel="noreferrer">Original illustration ↗</a> · ${e(plate.license||'Public domain')}`
     :`<a href="${e(figure.sourceUrl)}" target="_blank" rel="noreferrer">Access for free at OpenStax ↗</a> · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a>`;
@@ -107,22 +113,34 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
    <p class="figure-zoom-prompt">${e(heading)}</p>
    <figure class="exam-figure">
     <div class="muscle-list-textbook-plate" tabindex="0" aria-label="Textbook image. When enlarged, scroll to read the labels.">
-     <svg id="${id}" viewBox="${bounds.join(' ')}" role="img" aria-label="${e(heading)}">
-      <image href="${e(src)}" width="${width}" height="${height}"/>${marker}
-     </svg>
+     ${picture}
     </div>
     <figcaption>${annotation?`<strong>Osteon marker · ${e(annotation.label)}.</strong> `:''}${plate.note?`${e(plate.note)} `:''}
      ${supplement&&!supplement.src?`<a href="${e(supplement.url)}" target="_blank" rel="noreferrer">${e(supplement.label)} ↗</a> · `:''}${credit}
     </figcaption>
    </figure>
-   <div class="control-row"><button type="button" id="muscle-list-textbook-zoom" aria-controls="${id}" aria-pressed="false">Magnify labels</button>
+   <div class="control-row"><button type="button" id="muscle-list-textbook-zoom" aria-controls="${id}" aria-pressed="false" ${plate.directImage?'disabled':''}>Magnify labels</button>
     ${supplement?.src?`<button type="button" id="muscle-list-textbook-switch">${supplementOpen?'Show OpenStax figure':'Show labeled supplement'}</button>`:''}
    </div>
   </div>`;
   }
   function wire(supplementOpen){
    const zoom=document.getElementById('muscle-list-textbook-zoom');
-   const plate=document.getElementById(id).parentElement;
+   const picture=document.getElementById(id),plate=picture.parentElement;
+   const status=plate.querySelector('[role="status"]');
+   if(status){
+    const update=()=>{
+     if(!picture.complete)return;
+     const loaded=picture.naturalWidth>0;
+     zoom.disabled=!loaded;
+     picture.hidden=!loaded;
+     status.hidden=loaded;
+     if(!loaded)status.textContent='The diagram could not load. Open the linked OpenStax figure below.';
+    };
+    picture.addEventListener('load',update,{once:true});
+    picture.addEventListener('error',update,{once:true});
+    update();
+   }
    zoom.onclick=()=>{
     const enlarged=plate.classList.toggle('magnified');
     zoom.setAttribute('aria-pressed',String(enlarged));zoom.textContent=enlarged?'Fit diagram':'Magnify labels';
