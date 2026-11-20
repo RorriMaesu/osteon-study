@@ -26,6 +26,7 @@
 .muscle-spatial-markers { position:absolute;inset:0;z-index:10;pointer-events:none; }
 .muscle-spatial-dot { position:absolute;display:grid;place-items:center;width:36px;height:36px;padding:0;transform:translate(-50%,-50%);border:2px solid #182e30;border-radius:50%;background:#d5eddf;color:#162c30;font-weight:700;box-shadow:0 2px 9px #0008;pointer-events:auto; }
 .muscle-spatial-dot:focus-visible { outline:3px solid #f7c28a;outline-offset:2px; }
+.muscle-spatial-dot:active:not(:disabled) { transform:translate(-50%,-50%); }
 .muscle-spatial-dot:disabled { opacity:1;pointer-events:none; }
 .muscle-spatial-dot--focus { width:13px!important;height:13px!important;background:#fff4da;border-color:#573e23;box-shadow:0 0 0 2px #ffc972; }
 .muscle-spatial-dot--label { width:max-content!important;height:auto!important;max-width:min(200px,70vw);padding:4px 7px;border-radius:9px;background:#f4d19d;line-height:1.2;font-size:11px;transform:translate(-50%,calc(-100% - 4px)); }
