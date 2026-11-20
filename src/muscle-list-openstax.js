@@ -88,7 +88,7 @@ const rows = {
   'diaphragm':figure('11.17','Diaphragm'),
   'ischiocavernosus':figure('11.20','Ischiocavernosus',{note:'The label points to the paired muscles in both inferior views.'}),
   'pelvic-diaphragm':figure('11.19','Pelvic diaphragm',{
-    status:'members',note:'This superior female view labels the pelvic diaphragm and two parts of levator ani. It simplifies some components, including puborectalis.',
+    status:'members',note:'This superior view shows the pelvic diaphragm and labels two parts of levator ani, pubococcygeus and iliococcygeus.',
   }),
   'external-urethral-sphincter':figure('25.4','External urethral sphincter',{
     note:'Panel (a) labels the external sphincter below the internal sphincter.',
@@ -146,7 +146,10 @@ const rows = {
   'soleus':figure('11.32','Soleus'),
   'tibialis-anterior':figure('11.32','Tibialis anterior'),
   'calcaneal-tendon':figure('11.32','Calcaneal (Achilles) tendon'),
-  'flexor-digitorum-longus':figure('11.32','Flexor digitorum longus',{panel:deepPosteriorCalf}),
+  'flexor-digitorum-longus':figure('11.32','Flexor digitorum longus',{
+    panel:deepPosteriorCalf,
+    note:'In this deep posterior view, find the label between tibialis posterior and flexor hallucis longus.',
+  }),
   'extensor-digitorum-longus':figure('11.32','Extensor digitorum longus',{panel:anteriorCalf}),
   'aponeurosis':figure('11.7','Epicranial aponeurosis',{
     status:'example',note:'This broad sheet between the forehead and occipital muscle bellies is one example of an aponeurosis.',
@@ -170,8 +173,12 @@ export function muscleListOpenStaxFigure(cardId) {
   const [region,anchor] = figures[number];
   const reviewedTarget = muscleFigureTargets[slug];
   const targetId = reviewedTarget?.figure === number ? slug : undefined;
-  return {number,...details, directImage:!!image, targetId, panel:row.panel || (targetId ? reviewedTarget.panel : undefined),
-    src:'assets/muscle-textbook/'+asset.file, width:asset.width, height:asset.height,
+  const panel = row.panel || (targetId ? reviewedTarget.panel : undefined);
+  const src = 'assets/muscle-textbook/'+asset.file;
+  const displayImage = panel
+    ? {src:'assets/muscle-textbook/panels/'+number.replace('.','-')+'-'+panel.join('-')+'.webp',width:panel[2],height:panel[3]}
+    : {src,width:asset.width,height:asset.height};
+  return {number,...details,targetId,panel,src,width:asset.width,height:asset.height,displayImage,
     sourceUrl:openStax+section[region]+'#'+anchor,
   };
 }

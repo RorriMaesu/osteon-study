@@ -11,11 +11,13 @@ test('all required muscle cards resolve to local OpenStax artwork and a section 
     const view = muscleListOpenStaxFigure(card.id);
     assert.ok(view?.label, card.id);
     assert.ok(sourceAsset(view.src).size > 1000, view.src);
+    assert.ok(sourceAsset(view.displayImage.src).size > 1000, view.displayImage.src);
     assert.equal(new URL(view.sourceUrl).hostname, 'openstax.org');
     if (view.panel) {
       const [x,y,width,height] = view.panel;
       assert.ok(x >= 0 && y >= 0 && width > 0 && height > 0, card.id);
       assert.ok(x + width <= view.width && y + height <= view.height, card.id);
+      assert.deepEqual([view.displayImage.width,view.displayImage.height], [width,height], card.id);
       if (view.annotation) {
         const [targetX,targetY] = view.annotation.point;
         assert.ok(targetX > x && targetY > y && targetX < x + width && targetY < y + height, card.id);
@@ -48,10 +50,19 @@ test('the figure metadata identifies author labels, tissue examples and suppleme
 test('gastrocnemius loads the dedicated OpenStax posterior crop with both head labels', () => {
   const view = muscleListOpenStaxFigure('ch11-gastrocnemius');
   assert.equal(view.number, '11.32');
-  assert.equal(view.directImage, true);
   assert.match(view.label, /lateral and medial heads/);
   assert.match(view.src, /figure-11-32-posterior\.jpg$/);
-  assert.deepEqual([view.width,view.height], [695,800]);
+  assert.equal(view.displayImage.src, view.src);
+  assert.deepEqual([view.displayImage.width,view.displayImage.height], [695,800]);
   assert.equal(view.panel, undefined);
+  assert.match(view.sourceUrl, /#fig-ch11_06_04$/);
+});
+
+test('flexor digitorum longus opens the labeled deep posterior panel as a standalone image', () => {
+  const view = muscleListOpenStaxFigure('ch11-flexor-digitorum-longus');
+  assert.equal(view.number, '11.32');
+  assert.equal(view.label, 'Flexor digitorum longus');
+  assert.match(view.displayImage.src, /panels\/11-32-1580-0-699-1358\.webp$/);
+  assert.deepEqual([view.displayImage.width,view.displayImage.height], [699,1358]);
   assert.match(view.sourceUrl, /#fig-ch11_06_04$/);
 });
