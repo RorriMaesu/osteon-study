@@ -16,7 +16,8 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
 .muscle-list-tabs button[aria-pressed=true]{background:var(--mint,#c7e1d0);color:#112829;border-color:var(--mint,#c7e1d0)}
 .muscle-list-progress{font-size:12px;line-height:1.3;color:var(--muted,#abc0c1);margin:0;flex:none}
 .muscle-list-resume{flex:none;align-self:flex-start;color:var(--mint,#c7e1d0);border-color:var(--mint,#c7e1d0)}
-.muscle-list-picker{display:flex;gap:7px;flex:none;align-items:center}
+.muscle-list-card-tools{display:flex;gap:7px;flex:none;min-width:0}
+.muscle-list-picker{display:flex;gap:7px;flex:1;min-width:0;align-items:center}
 .muscle-list-picker select{flex:1;min-width:0;width:0;font-size:14px}
 .muscle-list-picker button{min-width:44px}
 .muscle-list-panel{display:flex;flex:1;min-height:0;min-width:0;background:var(--panel,#182a2f);border:1px solid var(--line,#34494e);border-radius:14px;padding:clamp(10px,2vw,23px)}
@@ -27,6 +28,8 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
 .muscle-list-frame .muscle-list-note{color:var(--muted,#abc0c1);font-size:12px}
 .muscle-list-notice{color:var(--mint,#c7e1d0)}
 .muscle-list-links{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.muscle-list-reference-actions{display:flex;flex:none;gap:6px}
+.muscle-list-reference-actions button{background:#223b3c;border-color:#4e6965;color:var(--mint)}
 .muscle-list-bottom{display:flex;align-items:center;gap:7px;flex:none}
 .muscle-list-bottom>.primary{margin-left:auto}
 .muscle-list-field{display:grid;gap:5px;max-width:560px;margin:12px 0;font-size:13px}
@@ -63,6 +66,30 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
 .muscle-list-enlarged figure{display:grid;min-height:0;grid-template-rows:minmax(0,1fr) auto;margin:0}
 #info-dialog .muscle-list-enlarged img{min-height:0;max-height:none;padding:8px}
 .muscle-list-enlarged p{font-size:13px;line-height:1.4;margin:8px 0 0}
+.muscle-list-textbook{grid-template-rows:auto auto minmax(0,1fr) auto}
+.muscle-list-textbook-plate{
+ width:100%;height:100%;min-height:0;overflow:hidden;background:#102024;border-radius:8px;
+}
+#dialog-content .muscle-list-textbook-plate svg{
+ display:block;width:100%;height:100%;max-height:none;object-fit:contain;
+}
+.muscle-list-textbook-plate.magnified{overflow:auto}
+#dialog-content .muscle-list-textbook-plate.magnified svg{width:max(160%,900px);height:auto;object-fit:initial}
+.muscle-list-textbook .control-row,.muscle-list-model .control-row{margin:0}
+.muscle-list-model{grid-template-rows:auto auto minmax(0,1fr) auto auto}
+.muscle-list-model-stage{
+ position:relative;min-height:0;overflow:hidden;border:1px solid var(--line);border-radius:8px;
+ background:radial-gradient(ellipse at 50% 42%,#2d4144,#18282d);
+}
+#dialog-content .muscle-list-model-stage img,.muscle-list-model-stage canvas{
+ display:block;width:100%;height:100%;max-height:none;object-fit:contain;
+}
+.muscle-list-model-stage span[role=status]{
+ position:absolute;left:50%;bottom:10px;transform:translateX(-50%);max-width:90%;
+ width:max-content;text-align:center;padding:4px 8px;background:#102024;color:var(--mint);border-radius:6px;
+}
+.muscle-list-model-stage span[hidden]{display:none}
+.muscle-list-model-note{font-size:12px;line-height:1.4;margin:0;max-height:18dvh;overflow:auto}
 @media(max-width:650px){
  body[data-muscle-list-active] .main-nav{display:none}
  body[data-muscle-list-active]>.topbar{padding:2px 9px}
@@ -76,6 +103,10 @@ body[data-muscle-list-active] #practice-view.active{height:100%;display:block;mi
  .muscle-list-tabs{width:100%;gap:7px}
  .muscle-list-tabs button{flex:1}
  .muscle-list-picker select{font-size:13px}
+ .muscle-list-card-tools{flex-wrap:wrap}
+ .muscle-list-picker{flex-basis:100%}
+ .muscle-list-reference-actions{width:100%}
+ .muscle-list-reference-actions button{flex:1;min-height:36px;padding:6px 8px}
  .muscle-list-panel{padding:10px}
  .muscle-list-frame p{font-size:13px;line-height:1.45}
  .muscle-list-bottom{gap:5px}

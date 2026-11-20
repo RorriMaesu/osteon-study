@@ -58,9 +58,9 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   const opening=round?.phase==='loading'||round?.phase==='waiting';
   const unavailableText=round?.phase==='error'?round.message:null;
   const study=round?.phase==='study';
-  const prompt=!target?'No targets in this set':opening?'Preparing the specimen…':unavailableText?'3D practice unavailable':feedback?target.name:study?target.courseName:mode==='name'?'Name the highlighted structure.':'Find '+target.name+'.';
+  const prompt=!target?'No targets in this set':opening?'Preparing the specimen…':unavailableText?'3D view unavailable':feedback?target.name:study?target.courseName:mode==='name'?'Name the highlighted structure.':'Find '+target.name+'.';
   const retry=round?.phase==='error'&&round.retry;
-  panel.innerHTML=`<div class="muscle-spatial-heading"><div><span class="eyebrow">BI 231 / ${e(courseSpatialModes[mode])}${session.queue.length?` · ${session.index+1} / ${session.queue.length}`:''}</span><h2 tabindex="-1">${e(prompt)}</h2></div><button type="button" data-ms-exit>Exit practice</button></div>
+  panel.innerHTML=`<div class="muscle-spatial-heading"><div><span class="eyebrow">BI 231 / ${e(courseSpatialModes[mode])}${mode!=='study'&&session.queue.length?` · ${session.index+1} / ${session.queue.length}`:''}</span><h2 tabindex="-1">${e(prompt)}</h2></div><button type="button" data-ms-exit>${mode==='study'?'Back to study card':'Exit practice'}</button></div>
    ${active&&mode==='name'?'<form class="muscle-spatial-answer"><label class="sr-only" for="muscle-spatial-answer">Anatomical name</label><input id="muscle-spatial-answer" name="answer" maxlength="160" placeholder="Type the anatomical name" autocomplete="off" spellcheck="false" required><button class="primary" type="submit" disabled>Check name</button></form><p data-ms-clarify class="tiny" role="status" hidden></p>':''}
    ${active?`<div class="muscle-spatial-actions"><span data-ms-observation role="status">Checking visible surfaces…</span><button type="button" data-ms-reveal>Show answer</button></div>`:''}
    ${active?'<p data-ms-assisted class="tiny" role="status" hidden>Study assistance used. Your result will be marked assisted.</p>':''}
@@ -68,7 +68,7 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
    ${unavailableText?`<p class="tiny" role="status">${e(unavailableText)}</p>`:''}
    ${feedback?`<p class="muscle-spatial-feedback" role="status"><strong>${e(feedback.label)}.</strong> ${e(target.card.location)} ${e(target.card.action)}</p>`:''}
    ${study?`<p class="muscle-spatial-feedback" role="status">${e(coverageText(target))} ${e(target.card.location)}</p>${target.examples.length>1?`<label class="muscle-spatial-examples">3D example <select data-ms-example>${target.examples.map((x,i)=>`<option value="${i}" ${i===round.example?'selected':''}>${e(x.name)}</option>`).join('')}</select></label>`:''}`:''}
-   ${feedback||study||unavailableText?`<div class="muscle-spatial-actions">${retry?'<button type="button" data-ms-retry>Retry</button>':''}<button type="button" data-ms-source>Read source</button>${session.index+1<session.queue.length?'<button class="primary" type="button" data-ms-next>Next target ↗</button>':'<button class="primary" type="button" data-ms-finish>Finish ↗</button>'}</div>`:''}`;
+   ${feedback||study||unavailableText?`<div class="muscle-spatial-actions">${retry?'<button type="button" data-ms-retry>Retry</button>':''}<button type="button" data-ms-source>Read source</button>${mode==='study'?'':session.index+1<session.queue.length?'<button class="primary" type="button" data-ms-next>Next target ↗</button>':'<button class="primary" type="button" data-ms-finish>Finish ↗</button>'}</div>`:''}`;
   panel.querySelector('[data-ms-exit]').onclick=closeAndReturn;
   panel.querySelector('[data-ms-source]')?.addEventListener('click',openSource);
   panel.querySelector('[data-ms-next]')?.addEventListener('click',()=>startRound(session.index+1));
@@ -200,7 +200,7 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
    round.choices=current.mode==='find'&&target.spatialEligible
     ?shuffledCourseChoices([own,...courseComparisonGroups(target,{side:current.side,limit:3})])
     :[own];
-   round.phase=target.spatialEligible?'question':'study';render();refresh();
+   round.phase=current.mode!=='study'&&target.spatialEligible?'question':'study';render();refresh();
    await new Promise(resolve=>requestAnimationFrame(resolve));
    if(session!==current||rev!==revision)return;
    viewer.resize();
@@ -215,10 +215,14 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   close();const first=courseMuscleTargetById.get(termId);
   const ordered=Array.isArray(targetIds)?targetIds.map(id=>courseMuscleTargetById.get(id)).filter(Boolean):shuffledCourseChoices(filterCourseMuscleTargets({region:region||'all',scoredOnly:true}));
   const queue=[...new Map([...(first?[first]:[]),...ordered].map(t=>[t.id,t])).values()];
-  session={mode:mode==='find'?'find':'name',side:side==='left'?'left':'right',index:0,queue,route:location.hash};
+  session={mode:Object.hasOwn(courseSpatialModes,mode)?mode:'name',side:side==='left'?'left':'right',index:0,queue,route:location.hash};
   previousContext=getLearningContext();previousMode=getTutorAssessmentMode();previousARIA=viewer.el.getAttribute('aria-label');
-  if(previousMode!=='exam')setTutorAssessmentMode('practice');
-  setLearningContext({type:'assessment',label:'Independent 3D muscle identification',text:'The answer is withheld until feedback. Explain model controls if asked, without identifying the target.',reference:'11.1'});
+  if(mode==='study'&&first){
+   setLearningContext({type:'muscle',label:first.name,text:[first.card.location,first.card.action].join(' '),reference:first.card.section});
+  }else{
+   if(previousMode!=='exam')setTutorAssessmentMode('practice');
+   setLearningContext({type:'assessment',label:'Independent 3D muscle identification',text:'The answer is withheld until feedback. Explain model controls if asked, without identifying the target.',reference:'11.1'});
+  }
   atlas.dataset.muscleSpatial='true';stage.dataset.muscleSpatial='true';panel.hidden=false;
   viewer.el.setAttribute('aria-label',session.mode==='find'
    ?'3D muscle practice. Drag or use the arrow keys to rotate. Use the visible surface numbers to choose a target.'

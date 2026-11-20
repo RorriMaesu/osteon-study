@@ -96,7 +96,7 @@ for(const c of manifest.components){
  byName.get(c.muscleName).push(c);
 }
 
-export const courseSpatialModes={name:'Name it',find:'Find it'};
+export const courseSpatialModes={name:'Name it',find:'Find it',study:'Study in 3D'};
 export const courseMuscleTargets=rows.split('\n').map(row=>{
  const [key,names,zone,view='front']=row.split('|'),id='ch11-'+key,card=chapterCards.get(id);
  if(!card)throw new Error('Unknown BI 231 muscle card: '+id);

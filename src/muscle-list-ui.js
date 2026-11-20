@@ -3,6 +3,9 @@ import {validSession} from './exam-core.js';
 import {muscleRegions} from './muscle-data.js';
 import {courseMuscleTargetById} from './muscle-spatial-data.js';
 import {muscleListPreviewTarget} from './muscle-list-preview-targets.js';
+import {muscleListOpenStaxFigure} from './muscle-list-openstax.js';
+import {mountMuscleStudyModel} from './muscle-list-model.js';
+import {muscleStudyModels} from './muscle-list-model-data.js';
 import {muscleWorksheetTargets} from './muscle-worksheet-data.js';
 import {getProgress,shuffle} from './storage.js';
 import {saveCardReview} from './muscle-study-state.js';
@@ -54,6 +57,75 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
     ${previewImage(card,preview)}<span class="muscle-list-expand" aria-hidden="true">⛶</span>
    </button>${previewCaption(preview)}</figure>`;
  }
+ function openTextbookFigure(card){
+  const figure=muscleListOpenStaxFigure(card.id);
+  const id='muscle-list-textbook-image';
+  const {number,supplement}=figure;
+  function markup(supplementOpen){
+   const plate=supplementOpen?supplement:figure;
+   const {src,width,height,annotation}=plate;
+   const bounds=plate.panel||[0,0,width,height];
+   const heading=supplementOpen?plate.label:'OpenStax Figure '+number+' · '+plate.label;
+   const marker=annotation
+    ?`<circle cx="${annotation.point[0]}" cy="${annotation.point[1]}" r="${Math.max(6,bounds[2]*.012)}" fill="none" stroke="#85500e" stroke-width="3" vector-effect="non-scaling-stroke"/>`
+    :'';
+   const credit=supplementOpen
+    ?`<a href="${e(plate.url)}" target="_blank" rel="noreferrer">Original illustration ↗</a> · ${e(plate.license||'Public domain')}`
+    :`<a href="${e(figure.sourceUrl)}" target="_blank" rel="noreferrer">Access for free at OpenStax ↗</a> · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a>`;
+   return `<div class="figure-zoom muscle-list-textbook">
+   <h2>${e(card.name)}</h2>
+   <p class="figure-zoom-prompt">${e(heading)}</p>
+   <figure class="exam-figure">
+    <div class="muscle-list-textbook-plate" tabindex="0" aria-label="Textbook image. When enlarged, scroll to read the labels.">
+     <svg id="${id}" viewBox="${bounds.join(' ')}" role="img" aria-label="${e(heading)}">
+      <image href="${e(src)}" width="${width}" height="${height}"/>${marker}
+     </svg>
+    </div>
+    <figcaption>${annotation?`<strong>Osteon marker · ${e(annotation.label)}.</strong> `:''}${plate.note?`${e(plate.note)} `:''}
+     ${supplement&&!supplement.src?`<a href="${e(supplement.url)}" target="_blank" rel="noreferrer">${e(supplement.label)} ↗</a> · `:''}${credit}
+    </figcaption>
+   </figure>
+   <div class="control-row"><button type="button" id="muscle-list-textbook-zoom" aria-controls="${id}" aria-pressed="false">Magnify labels</button>
+    ${supplement?.src?`<button type="button" id="muscle-list-textbook-switch">${supplementOpen?'Show OpenStax figure':'Show labeled supplement'}</button>`:''}
+   </div>
+  </div>`;
+  }
+  function wire(supplementOpen){
+   const zoom=document.getElementById('muscle-list-textbook-zoom');
+   const plate=document.getElementById(id).parentElement;
+   zoom.onclick=()=>{
+    const enlarged=plate.classList.toggle('magnified');
+    zoom.setAttribute('aria-pressed',String(enlarged));zoom.textContent=enlarged?'Fit diagram':'Magnify labels';
+    if(enlarged)plate.focus({preventScroll:true});
+    else plate.scrollTo(0,0);
+   };
+   const alternate=document.getElementById('muscle-list-textbook-switch');
+   if(alternate)alternate.onclick=()=>{
+    document.getElementById('dialog-content').innerHTML=markup(!supplementOpen);
+    wire(!supplementOpen);
+    document.getElementById('muscle-list-textbook-switch').focus();
+   };
+  }
+  dialog(markup(false));
+  wire(false);
+ }
+ function openStudyModel(card){
+  const model=muscleStudyModels[card.id];
+  if(!model){
+   document.dispatchEvent(new CustomEvent('openmusclespatial',{detail:{termId:card.id,mode:'study',from:'muscle-list'}}));
+   return;
+  }
+  dialog(`<div class="figure-zoom muscle-list-model">
+   <h2>${e(card.name)}</h2><p class="figure-zoom-prompt">${e(model.kind)}</p>
+   <div class="muscle-list-model-stage" tabindex="0" aria-label="Use arrow keys to rotate this 3D model. Use plus and minus to zoom.">
+    <img src="${e(muscleListPreviewTarget(card.id).src)}" alt="${e(card.name)}">
+    <span role="status">Loading 3D model…</span>
+   </div>
+   <p class="muscle-list-model-note">${e(model.note)} <a href="${e(model.sourceUrl)}" target="_blank" rel="noreferrer">${e(model.sourceLabel)} ↗</a></p>
+   <div class="control-row"><button type="button" data-model-turn="-1" aria-label="Rotate left">←</button><button type="button" data-model-turn="1" aria-label="Rotate right">→</button><button type="button" data-model-zoom="1.2" aria-label="Zoom out">−</button><button type="button" data-model-zoom=".83" aria-label="Zoom in">+</button><button type="button" data-model-reset>Reset view</button></div>
+  </div>`);
+  mountMuscleStudyModel(document.querySelector('.muscle-list-model'),model);
+ }
  function render(){
   const prior=layout?.selection();layout?.close();layout=null;
   delete document.body.dataset.examActive;
@@ -66,6 +138,8 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
   const items=selected();
   if(!items.some(card=>card.id===state.card))state.card=items[0]?.id;
   const card=items.find(item=>item.id===state.card),index=items.indexOf(card);
+  const spatial=courseMuscleTargetById.get(card?.id);
+  const hasModel=muscleStudyModels[card?.id]||spatial?.componentIds.length;
   const latest=latestNames();
   const studied=new Set(getProgress().attempts.filter(a=>a.mode==='muscle-card'&&a.selfRated).map(a=>a.id));
   const recalled=items.filter(item=>{const a=latest.get(nameId(item));return a?.correct&&!a.assisted;}).length;
@@ -75,14 +149,17 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
    <div class="muscle-list-controls"><div class="muscle-list-tabs" aria-label="Study or quiz"><button data-list-mode="learn" aria-pressed="${state.mode==='learn'}">Learn the list</button><button data-list-mode="quiz" aria-pressed="${state.mode==='quiz'}">Quiz me</button></div><label for="required-muscle-region">Region<select id="required-muscle-region"><option value="">All ${cards.length} entries</option>${regions.map(region=>`<option value="${region}" ${state.region===region?'selected':''}>${e(regionName(region))}</option>`).join('')}</select></label></div>
    <p class="muscle-list-progress">${items.filter(item=>studied.has(item.id)).length}/${items.length} cards reviewed · ${recalled}/${items.length} names last recalled independently</p>
    ${draft?`<button class="muscle-list-resume" data-list-action="resume">Resume saved drill · question ${draft.index+1}/${draft.ids.length} ↗</button>`:''}
-   ${state.mode==='learn'?`<div class="muscle-list-picker"><button data-list-action="previous" aria-label="Previous entry" ${index<=0?'disabled':''}>←</button><label class="sr-only" for="required-muscle-entry">Choose required entry</label><select id="required-muscle-entry">${items.map((item,i)=>`<option value="${item.id}" ${item.id===state.card?'selected':''}>${i+1}. ${e(item.name)}</option>`).join('')}</select><button data-list-action="next" aria-label="Next entry" ${index>=items.length-1?'disabled':''}>→</button></div>`:''}
+   ${state.mode==='learn'?`<div class="muscle-list-card-tools">
+    <div class="muscle-list-picker"><button data-list-action="previous" aria-label="Previous entry" ${index<=0?'disabled':''}>←</button><label class="sr-only" for="required-muscle-entry">Choose required entry</label><select id="required-muscle-entry">${items.map((item,i)=>`<option value="${item.id}" ${item.id===state.card?'selected':''}>${i+1}. ${e(item.name)}</option>`).join('')}</select><button data-list-action="next" aria-label="Next entry" ${index>=items.length-1?'disabled':''}>→</button></div>
+    <div class="muscle-list-reference-actions">${hasModel?'<button type="button" data-list-action="study-model">View in 3D</button>':''}<button type="button" data-list-action="textbook">OpenStax diagram</button></div>
+   </div>`:''}
    <article class="muscle-list-panel"><div class="muscle-list-frame"></div></article>
    <div class="muscle-list-bottom">${state.mode==='learn'?`<button data-list-action="again">Review again</button><button data-list-action="reviewed">Card reviewed</button><button class="primary" data-list-action="quiz-one">Quiz this name ↗</button>`:'<button data-list-action="learn">Return to cards</button><button class="primary" data-list-action="start">Start name drill ↗</button>'}</div>
   </section>`;
   root.onclick=click;root.onchange=change;root.oninput=null;root.onkeydown=null;
   const frame=root.querySelector('.muscle-list-frame');
   if(state.mode==='learn'){
-   const tissue=card.kind==='connective tissue',spatial=courseMuscleTargetById.get(card.id);
+   const tissue=card.kind==='connective tissue';
    const members=Array.isArray(card.members)?cards.filter(item=>card.members.includes(item.name)).map(item=>item.id):[];
    const diagram=diagramIds.has(card.id)||members.some(id=>diagramIds.has(id));
    const preview=muscleListPreviewTarget(card.id);
@@ -91,8 +168,8 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
     ${card.members?.length?`<h3>Members of this group</h3><p>${e(Array.isArray(card.members)?card.members.join(', '):card.members)}</p>`:''}
     <h3>${tissue?'Attachment relationship':'General origin'}</h3><p>${e(card.origin)}</p><h3>${tissue?'Related attachment':'General insertion'}</h3><p>${e(card.insertion)}</p>
     ${card.sourceNotes&&!card.sourceNotes.startsWith('General attachment regions for study')?`<p class="muscle-list-note">${e(card.sourceNotes)}</p>`:''}
-    <h3>See and explain it</h3><div class="muscle-list-links" data-mock4-split>${diagram?'<button data-list-action="diagram">Locate on a diagram ↗</button>':''}${spatial?.spatialEligible?'<button data-list-action="spatial">Practice on the 3D model ↗</button>':''}<button data-list-action="tutor">Ask the Socratic tutor ↗</button><button data-list-action="explain-one">Practice explaining this entry ↗</button><button data-list-action="attachments">Lab attachments &amp; shoulder ligaments ↗</button></div>
-    ${!spatial?.spatialEligible?`<p class="muscle-list-note">${e(spatial?.note||'This entry has no reviewed, scored 3D target. Use its study card and available diagrams.')}</p>`:''}
+    <h3>Practice and review</h3><div class="muscle-list-links" data-mock4-split>${diagram?'<button data-list-action="diagram">Practice with diagram ↗</button>':''}${spatial?.spatialEligible?'<button data-list-action="spatial">Practice on the 3D model ↗</button>':''}<button data-list-action="tutor">Ask the Socratic tutor ↗</button><button data-list-action="explain-one">Practice explaining this entry ↗</button><button data-list-action="attachments">Lab attachments &amp; shoulder ligaments ↗</button></div>
+    ${!spatial?.spatialEligible&&!muscleStudyModels[card.id]?`<p class="muscle-list-note">${e(spatial?.note||'This entry has no reviewed, scored 3D target. Use its study card and available diagrams.')}</p>`:''}
     <p class="muscle-list-note">The list requires these names. Actions and general attachments help explain them; the separate lab packet identifies ten tested attachment rows. Card ratings are self-reported study, not a quiz score.</p><p class="muscle-list-notice" role="status">${e(notice)}</p>`;
    // Keep each heading with its explanation or controls when the group fits.
    // Very small screens may split a group only if it exceeds a whole page.
@@ -135,6 +212,8 @@ export function initMuscleList({setView,dialog,toast,escape:e}){
   if(button.dataset.listMode){state.mode=button.dataset.listMode;notice='';layout?.close();layout=null;render();return;}
   const items=selected(),card=items.find(item=>item.id===state.card),index=items.indexOf(card);
   switch(button.dataset.listAction){
+   case'textbook':openTextbookFigure(card);break;
+   case'study-model':openStudyModel(card);break;
    case'preview':{
     const preview=muscleListPreviewTarget(card.id);
     dialog(`<div class="muscle-list-enlarged"><h2>${e(card.name)}</h2><figure>${previewImage(card,preview)}${previewCaption(preview)}</figure>${preview.note?`<p>${e(preview.note)}</p>`:''}</div>`);
