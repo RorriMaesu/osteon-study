@@ -3,9 +3,11 @@ import {chapter11Muscles} from './chapter11-muscles.js';
 
 import {mockExam4Questions as legacyQuestions,mockExam4Calibration as legacyCalibration} from './mock-exam4-legacy.js';
 import {QUIZ_SHOW_VERSION,mockExam4QuizShowForm,quizShowReplacements} from './mock-exam4-quiz-show.js';
+import {mockExam4Alignment,mockExam4ReviewLinks} from './mock-exam4-alignment.js';
+import {mockExam4MatchingPlates} from './mock-exam4-figures.js';
 
 const revisionTwoVersion='2026-11-16.1';
-export const MOCK_EXAM4_VERSION=QUIZ_SHOW_VERSION;
+export const MOCK_EXAM4_VERSION='2026-11-19.2';
 const sectionFor={mc:0,diagram:1,tf:2,written:3};
 const bank={A:[],B:[]};
 const figures=muscleFigureTargets;
@@ -347,7 +349,7 @@ export const mockExam4PreviousForms=Object.fromEntries(Object.entries(bank).map(
 }));
 const previousQuestions=Object.values(mockExam4PreviousForms).flatMap(form=>form.questions);
 const publishedReplacements=[];
-export const mockExam4Forms=Object.fromEntries(Object.entries(mockExam4PreviousForms).map(([letter,form])=>{
+export const mockExam4QuizAlignedForms=Object.fromEntries(Object.entries(mockExam4PreviousForms).map(([letter,form])=>{
  const questions=form.questions.map(prior=>{
   const replacement=quizShowReplacements[letter][prior.number];
   if(!replacement)return prior;
@@ -358,7 +360,47 @@ export const mockExam4Forms=Object.fromEntries(Object.entries(mockExam4PreviousF
   publishedReplacements.push(question);
   return question;
  });
- return [letter,{...form,id:'exam4-form-'+letter.toLowerCase()+'-r3',version:MOCK_EXAM4_VERSION,questions}];
+ return [letter,{...form,id:'exam4-form-'+letter.toLowerCase()+'-r3',version:QUIZ_SHOW_VERSION,questions}];
+}));
+const alignedQuestions=[];
+export const mockExam4Forms=Object.fromEntries(Object.entries(mockExam4QuizAlignedForms).map(([letter,form])=>{
+ const questions=form.questions.map(prior=>{
+  const id='exam4-'+letter.toLowerCase()+'-r4-'+prior.number;
+  // Give the established dorsal forearm recall item a place on Form B.
+  if(letter==='B'&&prior.number===37){
+   const forearm=mockExam4QuizAlignedForms.A.questions[37];
+   const question={...forearm,id,number:prior.number,contentVersion:MOCK_EXAM4_VERSION};
+   alignedQuestions.push(question);
+   return question;
+  }
+  const replacement=mockExam4Alignment[letter][prior.number];
+  if(!replacement)return prior;
+  const {lesson,objectives,figure,topic,courseEvidence,explanation}=replacement;
+  const chapter=Number(lesson.split('.')[0]);
+  const url='https://openstax.org/books/anatomy-and-physiology-2e/pages/'+lesson.replace('.','-')+'-'+sectionSlugs[lesson];
+  const sourceLinks=[{url,label:'OpenStax §'+lesson}];
+  if(courseEvidence.includes('OpenStax end-of-chapter review questions'))
+   sourceLinks.push({url:mockExam4ReviewLinks[chapter],label:'OpenStax Chapter '+chapter+' review questions'});
+  let {prompt,answer,distractors}=replacement;
+  if(figure){
+   const markers=mockExam4MatchingPlates[figure].markers;
+   const correct=markers.find(marker=>marker.term===topic);
+   prompt='Which marker identifies '+topic+'?';
+   answer='Marker '+correct.number;
+   distractors=markers.filter(marker=>marker!==correct).map(marker=>'Marker '+marker.number);
+  }
+  const card=figure&&chapter===11?chapter11Muscles.find(card=>card.name===topic):null;
+  const question={
+   id,number:prior.number,section:prior.section,points:prior.points,type:'choice',
+   chapter,lesson,objectives:objectives.map(n=>lesson+'.'+n),topic,prompt,answer,distractors,explanation,
+   courseEvidence,source:'OpenStax Anatomy and Physiology 2e §'+lesson,sourceLinks,
+   noteSuggestion:explanation,contentVersion:MOCK_EXAM4_VERSION,
+   ...(figure?{figure,diagramMatch:true}:{}),...(card?{termId:card.id}:{}),
+  };
+  alignedQuestions.push(question);
+  return question;
+ });
+ return [letter,{...form,id:'exam4-form-'+letter.toLowerCase()+'-r4',version:MOCK_EXAM4_VERSION,questions}];
 }));
 export const mockExam4Questions=Object.values(mockExam4Forms).flatMap(form=>form.questions);
 export const mockExam4AttachmentQuestions=previousQuestions.filter(q=>q.attachmentKey).map((q,index)=>({
@@ -386,7 +428,7 @@ export const mockExam4AttachmentForm={
 // Saved sessions validate their entire question snapshots. Keep the published
 // versions of replaced items, alongside the new scored and drill questions.
 export const mockExam4AllQuestions=[...legacyQuestions,...previousQuestions,...mockExam4AttachmentQuestions,
- ...publishedReplacements,...mockExam4QuizShowForm.questions];
+ ...publishedReplacements,...mockExam4QuizShowForm.questions,...alignedQuestions];
 export const mockExam4AllCalibration=[...legacyCalibration,...mockExam4Calibration];
 export function mockExam4Related(id){
  const item=mockExam4AllQuestions.find(q=>q.id===id);

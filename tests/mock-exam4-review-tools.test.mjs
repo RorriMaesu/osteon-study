@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mockExam4AllQuestions,mockExam4Forms} from '../src/mock-exam4-bank.js';
+import {mockExam4AllQuestions,mockExam4Forms,mockExam4QuizAlignedForms} from '../src/mock-exam4-bank.js';
 import {mockExam4Storage} from '../src/mock-exam4-store.js';
 import {applyMockReview,createMockSession,setMockResponse,submitMockSession,mockResults} from '../src/mock-exam3-core.js';
 import {createLearnerWrittenReview,interpretWrittenReview} from '../src/written-answer-judge.js';
@@ -56,7 +56,7 @@ test('notes come from confirmed misses and preserve existing or deliberately cle
 });
 
 test('answer-key notes connect an actual wrong choice and visual answer to a specific contrast',()=>{
-  const form=mockExam4Forms.A;
+  const form=mockExam4QuizAlignedForms.A;
   const choice=form.questions.find(q=>q.topic==='Sodium and potassium channels');
   const visual=form.questions.find(q=>q.topic==='Infraspinatus');
   let attempt=createMockSession([choice,visual],{form,now:100});
@@ -87,12 +87,12 @@ test('partial written notes quiz only the confirmed gap while preserving earned 
 
 test('study priorities combine aligned concepts and count repeat misses once per earlier attempt',()=>{
   const choice=mockExam4Forms.B.questions.find(q=>q.topic==='Muscle packaging');
-  const visual=mockExam4Forms.A.questions.find(q=>q.topic==='Whole-muscle covering');
+  const visual=mockExam4Forms.A.questions.find(q=>q.topic==='Epimysium');
   const other=mockExam4Forms.A.questions.find(q=>q.topic==='Sodium and potassium channels');
   function wrongAttempt(time){
     let attempt=createMockSession([choice,visual,other],{now:time});
     attempt=setMockResponse(attempt,choice.id,choice.distractors[0]);
-    attempt=setMockResponse(attempt,visual.id,'Perimysium');
+    attempt=setMockResponse(attempt,visual.id,'Marker 2');
     attempt=setMockResponse(attempt,other.id,other.distractors[0]);
     return submitMockSession(attempt,{now:time+1,bank:mockExam4AllQuestions});
   }
@@ -102,6 +102,10 @@ test('study priorities combine aligned concepts and count repeat misses once per
   assert.equal(groups[0].points,3);
   assert.equal(groups[0].earlierAttempts,1);
   assert.equal(priorityRecall(groups).length,2);
+  const row=mockResults(current).rows.find(item=>item.q.id===visual.id);
+  assert.match(studyEvidence(row).contrast,/Marker 2 identifies Perimysium/);
+  assert.equal(studyRecallItems(row)[0].figure,true);
+  assert.match(studyRecallItems(row)[0].answer,/Marker 1 · Epimysium/);
 });
 
 test('study card suggestions fit the limit without cutting off any exam-bank sentences',()=>{

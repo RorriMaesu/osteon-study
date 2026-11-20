@@ -8,8 +8,8 @@ export function renderStudyNote(row,{number,note,escape:e,renderFigure,links}){
   const status=!row.answered?'Unanswered':outcome.earnedPoints>0?'Partial credit':'Missed';
   const currentDraft=note.studyDraft;
   const needsRubric=evidence.earned.length||evidence.missing.length||evidence.pending.length;
-  const picture=q.type==='identify'
-    ?`<div class="mock-figure mock-study-figure">${renderFigure(q)}</div>${evidence.orientation?`<p class="mock-study-orientation">View: ${e(evidence.orientation)}</p>`:''}`
+  const picture=q.type==='identify'||q.diagramMatch
+    ?`<div class="mock-figure mock-study-figure">${renderFigure(q,{reveal:true})}</div>${evidence.orientation?`<p class="mock-study-orientation">View: ${e(evidence.orientation)}</p>`:''}`
     :'';
   return `<section data-study-question="${number}">
     <h2>Q${number} · ${e(q.topic)}</h2>
@@ -45,7 +45,7 @@ export function renderStudyRecall(item,{index,total,revealed,related,escape:e,re
   const {question}=item;
   return `<h2>Recall practice</h2><p>Item ${index+1} of ${total}. Answer aloud or on paper, then reveal the key.</p>
     <p><strong>${e(item.prompt)}</strong></p>
-    ${item.figure?`<div class="mock-figure mock-study-figure">${renderFigure(question)}</div>`:''}
+    ${item.figure?`<div class="mock-figure mock-study-figure">${renderFigure(question,{reveal:revealed})}</div>`:''}
     ${revealed?`<h3>Answer</h3><p id="mock-study-recall-answer" tabindex="-1">${e(item.answer)}</p>
       <p>${e(question.source||'Textbook section '+question.lesson)}</p>
       ${related?`<button class="mock-btn" id="mock-study-recall-related">Try a related question</button>`:''}`:''}

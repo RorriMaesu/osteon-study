@@ -42,7 +42,9 @@ export function createMockSession(items, {form=mockExam3Form, rng=Math.random, n
   const questions=clone(items), id=nowId(now,rng);
   return {schema:MOCK_SESSION_VERSION,scoringVersion:MOCK_SCORING_VERSION,id,formId:form.id||'exam3-form-a',formVersion:String(form.version||'1'),
     title:form.title||'Exam 3 mock',mode,status:'draft',gradingState:'not-submitted',started:now,submitted:null,
-    ids:questions.map(q=>q.id),questions,options:Object.fromEntries(questions.map(q=>[q.id,shuffle(optionsFor(q),rng)])),
+    ids:questions.map(q=>q.id),questions,options:Object.fromEntries(questions.map(q=>[
+      q.id,q.diagramMatch?optionsFor(q).sort((a,b)=>Number(a.slice(7))-Number(b.slice(7))):shuffle(optionsFor(q),rng),
+    ])),
     responses:{},assisted:{},flags:{},reviews:{},reviewHistory:[],index:0,elapsedMs:0,elapsedSeconds:0,timeGoalMinutes,cardMode,
     autoGrade,maxPoints:questions.reduce((sum,q)=>sum+q.points,0)};
 }

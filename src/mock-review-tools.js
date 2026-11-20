@@ -2,6 +2,7 @@ import {localAI} from './local-ai.js';
 import {mockResults, mockRubricQuestion, mockRubricResponse} from './mock-exam3-core.js';
 import {localModelIdentity, scoreWrittenReview, validWrittenReview} from './written-answer-judge.js';
 import {muscleFigureTargets} from './muscle-figure-targets.js';
+import {mockExam4MatchingPlates} from './mock-exam4-figures.js';
 import {recallForCriterion, recallForQuestion, studyCardLine, studyConcept, studyContrast} from './mock-study-content.js';
 
 export function getWrittenSuggestion(state, session, question) {
@@ -53,14 +54,16 @@ export function studyEvidence(row) {
   const {q,outcome} = row;
   const response = row.response.trim();
   const target = q.figure?.startsWith('muscle-target:') ? muscleFigureTargets[q.figure.slice('muscle-target:'.length)] : null;
-  const contrast = response ? studyContrast(q,response) : '';
+  const marker=q.diagramMatch?mockExam4MatchingPlates[q.figure]?.markers.find(item=>'Marker '+item.number===response):null;
+  const contrast = response ? studyContrast(q,marker?.term||response) : '';
   const missing = missingCriteria(row).map(criterion => ({
     id:criterion.id,
     label:criterion.label,
     ...recallForCriterion(q,criterion)
   }));
   return {
-    response,correctAnswer:q.answer,rule:q.explanation||q.answer,contrast,
+    response,correctAnswer:q.diagramMatch?q.answer+' · '+q.topic:q.answer,rule:q.explanation||q.answer,
+    contrast:contrast||(marker&&marker.term!==q.topic?response+' identifies '+marker.term+'. '+q.explanation:''),
     orientation:target?.orientation||'',
     earned:outcome.components.filter(criterion=>criterion.decision==='met').map(criterion=>criterion.label),
     pending:outcome.components.filter(criterion=>criterion.decision==='uncertain').map(criterion=>criterion.label),
@@ -72,7 +75,7 @@ export function studyRecallItems(row) {
   const evidence=studyEvidence(row);
   if(evidence.missing.length)return evidence.missing.map(({id,prompt,answer})=>({id,prompt,answer,question:row.q}));
   const q=row.q;
-  const item=q.type==='identify'?{prompt:q.prompt,answer:q.answer,figure:true}:recallForQuestion(q);
+  const item=q.type==='identify'||q.diagramMatch?{prompt:q.prompt,answer:evidence.correctAnswer,figure:true}:recallForQuestion(q);
   return [{id:q.id,...item,question:q}];
 }
 

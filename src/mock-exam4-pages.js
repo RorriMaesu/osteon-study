@@ -182,7 +182,12 @@ function questionGroups(shell){
  const hint=body.querySelector('#mock-answer-hint');
  const groups=[];
  if(visual){
-  if(matchMedia('(min-width: 761px)').matches){
+  if(visual.classList.contains('mock4-matching-question')){
+   const stage=element('div','mock4-match-stage');
+   if(help)visual.querySelector('.mock4-visual-controls').append(help);
+   stage.append(prompt,visual);
+   groups.push(group('Question',stage));
+  }else if(matchMedia('(min-width: 761px)').matches){
    const controls=visual.querySelector('.mock4-visual-controls');
    split(controls);split(visual);
    groups.push(group('Question',prompt,visual,help));

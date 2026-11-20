@@ -1,14 +1,14 @@
 import test from 'node:test';
 import {mockExam4Forms as legacyForms,mockExam4Calibration as legacyCalibration} from '../src/mock-exam4-legacy.js';
 import assert from 'node:assert/strict';
-import {mockExam4Forms,mockExam4PreviousForms,mockExam4Questions,mockExam4Calibration,mockExam4Related,mockExam4AllQuestions,mockExam4AttachmentQuestions,mockExam4AttachmentForm} from '../src/mock-exam4-bank.js';
+import {mockExam4Forms,mockExam4PreviousForms,mockExam4QuizAlignedForms,mockExam4Questions,mockExam4Calibration,mockExam4Related,mockExam4AllQuestions,mockExam4AttachmentQuestions,mockExam4AttachmentForm} from '../src/mock-exam4-bank.js';
 import {mockExam4QuizShowForm} from '../src/mock-exam4-quiz-show.js';
 import {createMockSession,setMockResponse,submitMockSession,applyMockReview,mockResults,mockRubricQuestion,mockRubricResponse,validMockSession,assessMockQuestion} from '../src/mock-exam3-core.js';
 import {mockExam4Storage,validMockExam4State} from '../src/mock-exam4-store.js';
 import {createStudyBackup,restoreStudyBackup} from '../src/study-backup.js';
 import {syllabus} from '../src/course-catalog.js';
 import {createLearnerWrittenReview,validWrittenQuestion} from '../src/written-answer-judge.js';
-import {renderMockExam4Figure} from '../src/mock-exam4-figures.js';
+import {mockExam4MatchingPlates,renderMockExam4Figure} from '../src/mock-exam4-figures.js';
 
 const storage=()=>{
  const values=new Map();
@@ -68,12 +68,12 @@ test('claim judgment is deterministic and explanation review is bound to the ori
 });
 
 test('spelling, answer protection, and Exam 4 full-backup round trip',()=>{
- const form=mockExam4Forms.A,anatomy=form.questions.find(q=>q.answer==='Infraspinatus');
- assert.equal(assessMockQuestion(anatomy,'infrasspinatus').status,'spelling');
- assert.equal(assessMockQuestion(anatomy,'supraspinatus').earnedPoints,0);
+ const form=mockExam4Forms.B,anatomy=form.questions.find(q=>q.answer==='Gastrocnemius');
+ assert.equal(assessMockQuestion(anatomy,'gastrocnemus').status,'spelling');
+ assert.equal(assessMockQuestion(anatomy,'tibialis anterior').earnedPoints,0);
  const source=storage(),target=storage(),state=mockExam4Storage.blank();
- state.history=[submit(setMockResponse(sessionFor(form),anatomy.id,'infrasspinatus'))];
- state.active=sessionFor(mockExam4Forms.B);
+ state.history=[submit(setMockResponse(sessionFor(form),anatomy.id,'gastrocnemus'))];
+ state.active=sessionFor(mockExam4Forms.A);
  mockExam4Storage.write(source,state);
  const backup=createStudyBackup(source);
  assert.ok(validMockExam4State(backup.mockExam4));
@@ -110,7 +110,7 @@ test('Quiz Show Review covers every prompt once and grades using the mock engine
  let attempt=sessionFor(form);
  for(const q of items)attempt=setMockResponse(attempt,q.id,q.answer);
  assert.equal(mockResults(submit(attempt)).earnedPoints,23);
- const edc=visuals[1],zDisc=mockExam4Forms.A.questions[32],calf=mockExam4Forms.B.questions[38];
+ const edc=visuals[1],zDisc=mockExam4QuizAlignedForms.A.questions[32],calf=mockExam4Forms.B.questions[38];
  assert.equal(assessMockQuestion(edc,'extensor digitorum communis').earnedPoints,2);
  assert.equal(assessMockQuestion(edc,'extensor digitorum longus').earnedPoints,0);
  assert.equal(assessMockQuestion(zDisc,'Z line').earnedPoints,2);
@@ -119,9 +119,12 @@ test('Quiz Show Review covers every prompt once and grades using the mock engine
  assert.equal(assessMockQuestion(calf,'medial head of gastrocnemius').earnedPoints,2);
 });
 
-test('only the planned positions change and earlier scores and drafts coexist with Quiz Show progress',()=>{
- for(const [letter,positions] of [['A',[17,28,33,38]],['B',[2,4,39,41]]]){
-  const old=mockExam4PreviousForms[letter],updated=mockExam4Forms[letter];
+test('published replacements retain their points and section across revisions',()=>{
+ for(const [before,after,changed] of [
+  [mockExam4PreviousForms,mockExam4QuizAlignedForms,{A:[17,28,33,38],B:[2,4,39,41]}],
+  [mockExam4QuizAlignedForms,mockExam4Forms,{A:[16,25,28,31,32,33,34,35,36,37,38,39,40,41,42],B:[3,17,27,28,37,42]}],
+ ])for(const [letter,positions] of Object.entries(changed)){
+  const old=before[letter],updated=after[letter];
   assert.deepEqual(updated.questions.filter((q,i)=>q.id!==old.questions[i].id).map(q=>q.number),positions);
   for(const number of positions){
    const before=old.questions[number-1],after=updated.questions[number-1];
@@ -131,10 +134,37 @@ test('only the planned positions change and earlier scores and drafts coexist wi
   }
  }
  assert.equal(new Set(mockExam4AllQuestions.map(q=>q.id)).size,mockExam4AllQuestions.length);
+});
+
+test('Form A shares five numbered figures without revealing their keys before submission',()=>{
+ const form=mockExam4Forms.A,questions=form.questions.filter(q=>q.section==='diagram');
+ const groups=Object.groupBy(questions,q=>q.figure);
+ assert.deepEqual(Object.fromEntries(Object.entries(groups).map(([name,items])=>[name,items.length])),
+  {coverings:3,sarcomere:2,face:3,shoulder:2,leg:2});
+ let attempt=sessionFor(form);
+ for(const q of questions){
+  assert.equal(q.diagramMatch,true);
+  const markers=mockExam4MatchingPlates[q.figure].markers;
+  assert.equal(q.answer,'Marker '+markers.find(m=>m.term===q.topic).number);
+  assert.deepEqual(attempt.options[q.id],markers.map(m=>'Marker '+m.number));
+  assert.equal(assessMockQuestion(q,q.distractors[0]).earnedPoints,0);
+  const draft=renderMockExam4Figure(q);
+  assert.equal(draft,renderMockExam4Figure(groups[q.figure][0]));
+  assert.equal((draft.match(/data-matching-marker/g)||[]).length,markers.length);
+  assert.ok(!draft.includes('Correct location:'));
+  assert.ok(renderMockExam4Figure(q,{reveal:true}).includes('Correct location: '+q.answer));
+  attempt=setMockResponse(attempt,q.id,q.answer);
+ }
+ const score=mockResults(submit(attempt));
+ assert.equal(score.earnedPoints,24);
+ assert.equal(score.sections.diagram.correct,12);
+});
+
+test('scores and drafts from earlier revisions coexist with Quiz Show progress',()=>{
  const local=storage(),restored=storage(),state=mockExam4Storage.blank();
- const previous=mockExam4PreviousForms.A,priorQuestion=previous.questions[32];
+ const previous=mockExam4QuizAlignedForms.A,priorQuestion=previous.questions[32];
  state.history=[submit(setMockResponse(sessionFor(previous),priorQuestion.id,priorQuestion.answer))];
- state.active=sessionFor(mockExam4PreviousForms.B);
+ state.active=sessionFor(mockExam4QuizAlignedForms.B);
  const drill=createMockSession(mockExam4QuizShowForm.questions,{form:mockExam4QuizShowForm,mode:'practice'});
  const first=drill.questions[0];
  state.quizShowDraft=setMockResponse(drill,first.id,first.answer);

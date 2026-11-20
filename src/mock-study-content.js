@@ -17,6 +17,9 @@ const topics = {
   },
   'Whole-muscle covering': {concept:'Muscle connective tissue layers'},
   'Fascicle covering': {concept:'Muscle connective tissue layers'},
+  'Epimysium': {concept:'Muscle connective tissue layers'},
+  'Perimysium': {concept:'Muscle connective tissue layers'},
+  'Endomysium': {concept:'Muscle connective tissue layers'},
   'Neuromuscular junction': {
     concept:'Excitation of a skeletal fiber',
     cue:'What happens to the motor end-plate potential if its acetylcholine receptors are blocked?',
