@@ -42,7 +42,7 @@ export function saveNamedRecall(id,lessonId,result,assisted,mode='muscle-card-na
  if(result.status==='pending'||result.status==='unanswered')return;
  const correct=outcomeCorrect(result);
  const attemptKey=id+':'+crypto.randomUUID();
- recordAttempt({id,topic:'Chapter '+lessonId.split('.')[0],correct,assisted,mode,answerStatus:result.status,attemptKey});
+ recordAttempt({id,topic:'Chapter '+lessonId.split('.')[0],correct,assisted,mode,answerStatus:result.status,attemptKey,review:result.review});
  if(correct&&!assisted)scheduleCard(id,3);
  if(result.status==='spelling')addSpellingNote({term:result.correction,sourceId:id,reference:lessonId,response:result.response,attemptKey});
 }

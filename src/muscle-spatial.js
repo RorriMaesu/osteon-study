@@ -1,7 +1,19 @@
 import * as THREE from 'three';
 import {assessTyped,outcomeCorrect,outcomeLabel} from './typed-answer.js';
+import {assessQuestion} from './exam-core.js';
+import {reviewWithUI,reviewHTML} from './answer-review-ui.js';
 import {getLearningContext,getTutorAssessmentMode,setLearningContext,setTutorAssessmentMode} from './learning-context.js';
 import {courseMuscleTargetById,courseSpatialModes,courseTargetComponents,filterCourseMuscleTargets,courseComparisonGroups,courseChoiceCorrect,shuffledCourseChoices} from './muscle-spatial-data.js';
+
+export function muscleNameQuestion(target){
+ const {card,name,id,courseName}=target;
+ return {
+  id,type:'identify',prompt:'Name the highlighted structure.',answer:name,
+  aliases:[...card.aliases,courseName,...(card.kind==='muscle'?[name+' muscle']:[])],
+  answerPolicy:{kind:'structure',allowAnySide:true,allowMuscleWordOrder:card.kind!=='connective tissue'},
+  reference:card.section,explanation:[card.location,card.action].join(' '),
+ };
+}
 
 // Sample actual triangle centers. Bounds centers only provide an extra aim point;
 // they are never drawn unless a real, nearest visible triangle was hit.
@@ -62,11 +74,14 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   const retry=round?.phase==='error'&&round.retry;
   panel.innerHTML=`<div class="muscle-spatial-heading"><div><span class="eyebrow">BI 231 / ${e(courseSpatialModes[mode])}${mode!=='study'&&session.queue.length?` · ${session.index+1} / ${session.queue.length}`:''}</span><h2 tabindex="-1">${e(prompt)}</h2></div><button type="button" data-ms-exit>${mode==='study'?'Back to study card':'Exit practice'}</button></div>
    ${active&&mode==='name'?'<form class="muscle-spatial-answer"><label class="sr-only" for="muscle-spatial-answer">Anatomical name</label><input id="muscle-spatial-answer" name="answer" maxlength="160" placeholder="Type the anatomical name" autocomplete="off" spellcheck="false" required><button class="primary" type="submit" disabled>Check name</button></form><p data-ms-clarify class="tiny" role="status" hidden></p>':''}
-   ${active?`<div class="muscle-spatial-actions"><span data-ms-observation role="status">Checking visible surfaces…</span><button type="button" data-ms-reveal>Show answer</button></div>`:''}
+   ${active?`<div class="muscle-spatial-actions"><span data-ms-observation role="status">Checking visible surfaces…</span>${mode==='name'?'<button type="button" data-ms-review disabled>Review with Ollama</button><button type="button" data-ms-review-setup hidden>Ollama setup</button>':''}<button type="button" data-ms-reveal>Show answer</button></div>`:''}
+   ${active&&mode==='name'?'<div class="muscle-spatial-review" data-ms-review-state></div>':''}
    ${active?'<p data-ms-assisted class="tiny" role="status" hidden>Study assistance used. Your result will be marked assisted.</p>':''}
    ${opening?'<p class="tiny" role="status">The exercise loads only the region it needs.</p>':''}
    ${unavailableText?`<p class="tiny" role="status">${e(unavailableText)}</p>`:''}
    ${feedback?`<p class="muscle-spatial-feedback" role="status"><strong>${e(feedback.label)}.</strong> ${e(target.card.location)} ${e(target.card.action)}</p>`:''}
+   ${feedback?.spelling?'<p class="tiny">The standard spelling was saved for practice.</p>':''}
+   ${feedback?.review?`<div class="muscle-spatial-review">${reviewHTML(feedback.review,{compact:true})}</div>`:''}
    ${study?`<p class="muscle-spatial-feedback" role="status">${e(coverageText(target))} ${e(target.card.location)}</p>${target.examples.length>1?`<label class="muscle-spatial-examples">3D example <select data-ms-example>${target.examples.map((x,i)=>`<option value="${i}" ${i===round.example?'selected':''}>${e(x.name)}</option>`).join('')}</select></label>`:''}`:''}
    ${feedback||study||unavailableText?`<div class="muscle-spatial-actions">${retry?'<button type="button" data-ms-retry>Retry</button>':''}<button type="button" data-ms-source>Read source</button>${mode==='study'?'':session.index+1<session.queue.length?'<button class="primary" type="button" data-ms-next>Next target ↗</button>':'<button class="primary" type="button" data-ms-finish>Finish ↗</button>'}</div>`:''}`;
   panel.querySelector('[data-ms-exit]').onclick=closeAndReturn;
@@ -79,6 +94,12 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   });
   panel.querySelector('[data-ms-example]')?.addEventListener('change',ev=>startRound(session.index,Number(ev.target.value)));
   panel.querySelector('[data-ms-reveal]')?.addEventListener('click',()=>grade({assisted:true}));
+  panel.querySelector('[data-ms-review]')?.addEventListener('click',reviewName);
+  panel.querySelector('[data-ms-review-setup]')?.addEventListener('click',openReviewSetup);
+  panel.querySelector('#muscle-spatial-answer')?.addEventListener('input',()=>{
+   panel.querySelector('[data-ms-clarify]').hidden=true;
+   syncNameControls();
+  });
   panel.querySelector('.muscle-spatial-answer')?.addEventListener('submit',ev=>{
    ev.preventDefault();const response=String(new FormData(ev.currentTarget).get('answer')||'').trim();
    if(response&&canAnswer())grade({response});
@@ -110,11 +131,21 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   if(!session||round?.phase!=='question'||viewer.graphicsLost||viewer.referenceOpen||!viewer.el.clientWidth||!viewer.el.clientHeight)return false;
   updateSurfaces();return observed.has(round.target.id)&&(session.mode==='name'||observed.size>=2);
  }
+ function syncNameControls(){
+  const input=panel.querySelector('#muscle-spatial-answer');
+  if(!input||round?.phase!=='question')return;
+  const busy=!!round.reviewing,available=observed.has(round.target.id);
+  input.readOnly=busy;
+  panel.querySelector('button[type="submit"]').disabled=busy||!available;
+  panel.querySelector('[data-ms-review]').disabled=busy||!available||!input.value.trim();
+  panel.querySelector('[data-ms-review-setup]').disabled=busy;
+  panel.querySelector('[data-ms-reveal]').disabled=busy;
+ }
  function updateSurfaces(){
   if(!session||!round)return;
   const question=round.phase==='question',showName=round.phase==='feedback'||round.phase==='study';
   if((!question&&!showName)||viewer.graphicsLost||viewer.referenceOpen||!viewer.el.clientWidth||!viewer.el.clientHeight){
-   markerLayer.hidden=true;observed=new Map();lastProjection='';return;
+   markerLayer.hidden=true;observed=new Map();lastProjection='';syncNameControls();return;
   }
   const c=viewer.camera,key=[revision,round.phase,viewer.sceneRevision,viewer.el.clientWidth,viewer.el.clientHeight,...c.position.toArray(),...c.quaternion.toArray(),...c.projectionMatrix.elements].join('|');
   if(key===lastProjection)return;lastProjection=key;
@@ -133,7 +164,7 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   }
   if(question){
    const visible=observed.has(round.target.id)&&(session.mode==='name'||observed.size>=2);
-   const button=panel.querySelector('button[type="submit"]');if(button)button.disabled=!visible;
+   syncNameControls();
    const status=panel.querySelector('[data-ms-observation]');
    const message=visible?(session.mode==='find'?(round.target.status==='composite'?'Tap any member of the named group or choose its number.':'Tap a surface or choose its number. Drag to rotate.'):'The gold surface is your target. Drag to rotate.'):'Rotate to bring the practice surfaces into view, or show the answer.';
    if(status&&status.textContent!==message)status.textContent=message;
@@ -160,23 +191,66 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   frame(best||round.target.view);
  }
  function grade({response='',choice=null,assisted=false}={}){
-  if(!session||round?.phase!=='question'||(!assisted&&!canAnswer()))return;
-  const target=round.target;
-  const typed=!assisted&&session.mode==='name'?assessTyped({id:target.id,answer:target.name,aliases:[...target.card.aliases,target.courseName,...(target.card.kind==='muscle'?[target.name+' muscle']:[])],answerPolicy:{kind:'structure',allowAnySide:true}},response):null;
+  if(!session||round?.phase!=='question'||round.reviewing||(!assisted&&!canAnswer()))return;
+  const typed=!assisted&&session.mode==='name'?assessTyped(muscleNameQuestion(round.target),response):null;
   if(typed&&['pending','unanswered'].includes(typed.status)){
-   const clarify=panel.querySelector('[data-ms-clarify]');
-   if(clarify){clarify.hidden=false;clarify.textContent='That wording could not be confirmed. Try one specific anatomical name, or show the answer.';}
-   panel.querySelector('#muscle-spatial-answer')?.focus({preventScroll:true});return;
+   clarifyName(typed.status==='unanswered'?'Enter an anatomical name.':'That wording needs review. Edit it or choose Review with Ollama.');
+   return;
   }
+  finishAttempt({choice,assisted,typed});
+ }
+ function clarifyName(message){
+  const clarify=panel.querySelector('[data-ms-clarify]');
+  clarify.hidden=false;clarify.textContent=message;
+  panel.querySelector('#muscle-spatial-answer')?.focus({preventScroll:true});
+ }
+ function openReviewSetup(){
+  const current=session,activeRound=round;
+  document.dispatchEvent(new CustomEvent('localaiopen',{detail:{returnToReview:true,continuation:{
+   label:'Review my answer',
+   run:()=>{if(session===current&&round===activeRound)reviewName();},
+  }}}));
+ }
+ async function reviewName(){
+  if(session?.mode!=='name'||round?.reviewing||!canAnswer())return;
+  const response=panel.querySelector('#muscle-spatial-answer').value.trim();
+  if(!response)return;
+  const current=session,activeRound=round,controller=new AbortController();
+  const target=muscleNameQuestion(activeRound.target),built=assessTyped(target,response);
+  if(built.status==='unanswered'){clarifyName('Enter an anatomical name.');return;}
+  const job=panel.querySelector('[data-ms-review-state]'),setup=panel.querySelector('[data-ms-review-setup]');
+  activeRound.reviewing=controller;
+  setup.hidden=true;panel.querySelector('[data-ms-clarify]').hidden=true;syncNameControls();
+  const judged=await reviewWithUI({target,response,strictCorrect:outcomeCorrect(built),enabled:true,pending:built.status==='pending',root:job,signal:controller.signal});
+  if(session!==current||round!==activeRound||controller.signal.aborted)return;
+  activeRound.reviewing=null;job.replaceChildren();syncNameControls();
+  if(judged.canceled){
+   clarifyName('Review canceled. Your answer is ready to edit or check.');
+   return;
+  }
+  if(judged.review?.status==='unavailable'){
+   setup.hidden=false;
+   clarifyName('Ollama could not review this answer. Check Ollama setup or use Check name.');
+   return;
+  }
+  const typed=assessQuestion(target,response,judged.review);
+  if(['pending','unanswered'].includes(typed.status)){
+   clarifyName('Ollama could not confirm a single muscle. Edit your answer or try again.');
+   return;
+  }
+  finishAttempt({typed,review:judged.review});
+ }
+ function finishAttempt({choice=null,assisted=false,typed=null,review=null}){
+  const target=round.target;
   const correct=!assisted&&(typed?outcomeCorrect(typed):!!choice&&courseChoiceCorrect(round.targetIds,choice.componentIds));
   const answerStatus=assisted?'revealed':typed?.status||(correct?'correct':'incorrect'),usedHelp=assisted||!!round.helpUsed;
   const feedbackLabel=assisted?'Answer shown':typed?outcomeLabel(typed):correct?'Correct':'Review the highlighted answer';
-  round.phase='feedback';round.feedback={label:feedbackLabel+(correct&&usedHelp?' · with assistance':'')};
+  round.phase='feedback';round.feedback={label:feedbackLabel+(correct&&usedHelp?' · with assistance':''),spelling:answerStatus==='spelling',review};
   round.choices=round.choices.filter(option=>option.id===target.id);
   clearMarkers();render();refresh();
   if(!intersections().has(target.id))chooseInitialView();
   updateSurfaces();
-  document.dispatchEvent(new CustomEvent('musclespatialattempt',{detail:{mode:session.mode,termId:target.id,correct,assisted:usedHelp,answerStatus,correction:typed?.correction||target.name,response:typed?.response||choice?.name||'',attemptedAt:Date.now()}}));
+  document.dispatchEvent(new CustomEvent('musclespatialattempt',{detail:{mode:session.mode,termId:target.id,correct,assisted:usedHelp,answerStatus,correction:typed?.correction||target.name,response:typed?.response||choice?.name||'',review,attemptedAt:Date.now()}}));
   panel.querySelector('[data-ms-next],[data-ms-finish]')?.focus({preventScroll:true});
  }
  async function startRound(index,example=0){
@@ -233,6 +307,7 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
  }
  function close(){
   if(!session)return;
+  round?.reviewing?.abort();
   session=null;round=null;revision++;clearMarkers();markerLayer.hidden=true;panel.hidden=true;
   delete atlas.dataset.muscleSpatial;delete stage.dataset.muscleSpatial;stage.style.removeProperty('--muscle-spatial-head');
   if(previousARIA===null)viewer.el.removeAttribute('aria-label');else viewer.el.setAttribute('aria-label',previousARIA);

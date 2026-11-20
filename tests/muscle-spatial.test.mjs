@@ -7,10 +7,36 @@ import * as THREE from 'three';
 import {chapter11Muscles} from '../src/chapter11-muscles.js';
 import manifest from '../src/muscle-models.json' with {type:'json'};
 import {courseMuscleTargets,courseMuscleTargetById,courseTargetComponents,courseComparisonGroups,courseChoiceCorrect,filterCourseMuscleTargets} from '../src/muscle-spatial-data.js';
-import {createSurfaceProbe} from '../src/muscle-spatial.js';
+import {createSurfaceProbe,muscleNameQuestion} from '../src/muscle-spatial.js';
+import {assessQuestion} from '../src/exam-core.js';
+import {interpretReview} from '../src/answer-judge.js';
 
 const target=name=>courseMuscleTargetById.get('ch11-'+name);
 const componentId=mesh=>mesh.userData.muscleId;
+
+test('Name It accepts reversed words and clear spelling errors, retaining distinct forearm muscles',()=>{
+ const question=muscleNameQuestion(target('flexor-carpi-radialis'));
+ assert.equal(assessQuestion(question,'Carpi Flexor radialis').status,'equivalent');
+ assert.equal(assessQuestion(question,'Carpi Flexor radalis').status,'spelling');
+ assert.equal(assessQuestion(question,'Flexor carpi radalis').correction,'Flexor carpi radialis');
+ for(const response of ['Flexor carpi ulnaris','Carpi flexor ulnaris','Carpi flexor ulnariss','Carpi extensor radialis']){
+  assert.equal(assessQuestion(question,response).status,'incorrect',response);
+ }
+});
+
+test('Ollama can resolve unclear wording without replacing the canonical name or a known negative',()=>{
+ const question=muscleNameQuestion(target('flexor-carpi-radialis'));
+ const modelReply={verdict:'equivalent',confidence:'high',correctedAnswer:question.answer,explanation:'The radial wrist flexor identifies flexor carpi radialis.'};
+ const review=(response,details={})=>interpretReview({...modelReply,...details},{target:question,response,model:'test-local',strictCorrect:false,allowOverride:true}).review;
+ const response='radial wrist flexor';
+ assert.equal(assessQuestion(question,response).status,'pending');
+ const accepted=assessQuestion(question,response,review(response));
+ assert.equal(accepted.status,'equivalent');
+ assert.equal(accepted.response,response);
+ assert.equal(accepted.correction,question.answer);
+ assert.equal(assessQuestion(question,response,review(response,{confidence:'low'})).status,'pending');
+ assert.equal(assessQuestion(question,'Carpi flexor ulnariss',review('Carpi flexor ulnariss')).status,'incorrect');
+});
 function delivered(region){
  const buf=readFileSync(new URL('../assets/'+manifest.assets[region].file,import.meta.url));
  const end=20+buf.readUInt32LE(12),gltf=JSON.parse(buf.subarray(20,end));

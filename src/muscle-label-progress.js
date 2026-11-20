@@ -20,7 +20,7 @@ export function recordMuscleLabel(kind,attempt){
  const id=muscleLabelId(kind,attempt.mode,attempt.targetId||attempt.termId);
  if(!id)return;
  const status=attempt.correct&&['spelling','equivalent'].includes(attempt.answerStatus)?attempt.answerStatus:attempt.correct?'correct':'incorrect';
- saveNamedRecall(id,attempt.lesson||'11.1',{status,correction:attempt.correction,response:attempt.response},!!attempt.assisted,'muscle-label-'+kind);
+ saveNamedRecall(id,attempt.lesson||'11.1',{status,correction:attempt.correction,response:attempt.response,review:attempt.review},!!attempt.assisted,'muscle-label-'+kind);
 }
 
 export function dueMuscleLabels(kind,progress=getProgress(),now=Date.now()){

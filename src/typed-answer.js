@@ -14,9 +14,11 @@ const extra=['ileum','ilium','ischium','pubis','osteoblast','osteoclast','osteoc
 const foundationKeys=Object.values(objectiveChecks).flatMap(rows=>rows.flatMap(([,a,,b])=>[a,b]));
 const cellTissueKeys=cellTissue.filter(q=>q.type==='text'||q.type==='identify').flatMap(q=>[q.answer,...q.aliases||[]]);
 const muscleKeys=chapter11Muscles.flatMap(m=>[m.name,...m.aliases||[]]);
+const muscleWordKey=name=>fold(name).replace(/\bmuscles?\b/g,' ').trim().split(/\s+/).sort().join(' ');
+const muscleWordKeys=[...new Set(muscleKeys.map(muscleWordKey))];
 const known=new Set([...lexicon,...extra,...foundationKeys,...cellTissueKeys,...muscleKeys].flatMap(pluralForms));
 const words=['zero','one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen','twenty'];
-const opposed=[['left','right'],['anterior','posterior'],['superior','inferior'],['medial','lateral'],['proximal','distal'],['head','neck'],['condyle','epicondyle'],['foramen','fossa','canal'],['abduction','adduction'],['inversion','eversion'],['osteoblast','osteoclast','osteocyte'],['ilium','ileum','ischium'],['calcitonin','calcitriol'],['superficialis','profundus'],['major','minor'],['longus','brevis'],['medialis','lateralis','intermedius'],['brachii','femoris'],['flexor','extensor'],['abductor','adductor'],['supination','pronation'],['palmar','dorsal'],['hallucis','pollicis'],['unfused','fused']];
+const opposed=[['left','right'],['anterior','posterior'],['superior','inferior'],['medial','lateral'],['proximal','distal'],['head','neck'],['condyle','epicondyle'],['foramen','fossa','canal'],['abduction','adduction'],['inversion','eversion'],['osteoblast','osteoclast','osteocyte'],['ilium','ileum','ischium'],['calcitonin','calcitriol'],['superficialis','profundus'],['major','minor'],['longus','brevis'],['medialis','lateralis','intermedius'],['brachii','femoris'],['flexor','extensor'],['radialis','ulnaris'],['abductor','adductor'],['supination','pronation'],['palmar','dorsal'],['hallucis','pollicis'],['unfused','fused']];
 export function answerPolicy(q){return q.answerPolicy||answerPolicies[q.id]||{kind:'structure',bone:q.type==='bone'};}
 export function acceptedForms(q){const p=answerPolicy(q);return [...new Set([q.answer,...(q.aliases||[]),...(p.equivalents||[])].filter(Boolean))];}
 export function editDistance(a,b){
@@ -63,6 +65,15 @@ export function assessTyped(q,response){
  if(known.has(input))return result('incorrect','This names a different anatomical structure or concept.');
  if(forms.some(f=>protectedDifference(fold(f),input)))return result('incorrect','A side, anatomical direction, numbered level or protected term differs from the answer.');
  if(/\b(or|not|except|instead|ignore|correct answer|mark this)\b/.test(input))return result('incorrect','The response contains alternatives, a contradiction or instructions rather than one clear answer.');
+ if(p.allowMuscleWordOrder){
+  const key=muscleWordKey(input),expectedKeys=new Set(forms.map(muscleWordKey));
+  if(expectedKeys.has(key))return result('equivalent','All the anatomical words identify the same muscle. Use the standard word order shown.');
+  const limit=key.length<12?0:1;
+  const closeToExpected=[...expectedKeys].some(form=>editDistance(form,key)<=limit);
+  const nearerRival=muscleWordKeys.some(rival=>!expectedKeys.has(rival)&&Math.abs(rival.length-key.length)<=limit&&editDistance(rival,key)<=limit);
+  if(nearerRival&&!closeToExpected)return result('incorrect','The wording identifies a different muscle.');
+  if(closeToExpected&&!nearerRival)return result('spelling','The intended muscle is clear. Practice the standard spelling and word order.');
+ }
  // A known second structure must not disappear inside a spelling correction.
  const expectedWords=new Set(allowed.flatMap(a=>a.split(' '))),unexpected=input.split(' ').filter(w=>known.has(w)&&!expectedWords.has(w));
  const clean=s=>p.bone?s.replace(/ bones?$/,''):s;
