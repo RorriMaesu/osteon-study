@@ -117,6 +117,11 @@ test('compact qualification binds verified case scores to exact model, prompt, r
   assert.ok(!isWrittenModelQualified({...qualification,promptVersion:'old'},settings,[question],[fixture]));
   assert.ok(!isWrittenModelQualified(qualification,{...settings,questionId:question.id},[question],[fixture,{...fixture,id:'new-case'}]),'a new required case for the same rubric requires a fresh check');
   assert.ok(isWrittenModelQualified(qualification,{...settings,questionId:question.id},[question],[fixture,{...fixture,id:'unrelated-case',questionId:'unrelated'}]),'cases for an unrelated rubric do not invalidate this check');
+  const unrelated={...question,id:'unrelated'};
+  const formerRecord={...qualification,rubricIdentities:{...qualification.rubricIdentities,retired:'prior rubric identity'}};
+  assert.ok(isWrittenModelQualified(formerRecord,{...settings,questionId:question.id},[question,unrelated],[fixture]),'adding a form preserves earlier qualification for its covered rubric');
+  assert.ok(!isWrittenModelQualified(formerRecord,{...settings,questionId:unrelated.id},[question,unrelated],[fixture]),'an older qualification cannot score an untested rubric');
+  assert.ok(!isWrittenModelQualified(formerRecord,settings,[unrelated],[fixture]),'a removed rubric cannot qualify');
   assert.ok(!isWrittenModelQualified(qualification,{...settings,questionId:'untested'},[question],[fixture]));
   assert.ok(!JSON.stringify(qualification).includes(response));
 });

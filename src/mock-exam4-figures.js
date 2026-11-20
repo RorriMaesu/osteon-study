@@ -2,9 +2,11 @@ import {muscleAssessmentFigure} from './muscle-exam-figures.js';
 import {muscleFigureTargets} from './muscle-figure-targets.js';
 import assets from './muscle-textbook-assets.json' with {type:'json'};
 import {mockExam4MicroPlates} from './mock-exam4-micro-plates.js';
+import {mockExam4FormCPlates} from './mock-exam4-form-c-plates.js';
 
 export const mockExam4MatchingPlates={
  ...mockExam4MicroPlates,
+ ...mockExam4FormCPlates,
  'coverings-r5':{
   ...mockExam4MicroPlates.coverings,
   label:'Cutaway of a whole muscle and a bundle pulled out in cross section. Four numbered markers point to structures at different levels of organization.',
@@ -114,7 +116,10 @@ function renderMatchingPlate(plate,answer){
  const fontSize=Math.max(33,Math.ceil(width*12/320));
  const orientationSize=Math.min(37,fontSize);
  const viewportHeight=height+(plate.panels?orientationSize+16:0);
- const masks=(plate.masks||[]).map(([x,y,width,height])=>`<rect x="${x}" y="${y}" width="${width}" height="${height}" fill="#fff"/>`).join('');
+ const masks=[
+  ...(plate.masks||[]).map(([x,y,width,height])=>`<rect x="${x}" y="${y}" width="${width}" height="${height}" fill="#fff"/>`),
+  ...(plate.maskPolygons||[]).map(points=>`<polygon points="${points}" fill="#fff"/>`),
+ ].join('');
  let left=0;
  const artwork=panels.map(({bounds,label},i)=>{
   const [x,y,w,h]=bounds,panelWidth=widths[i];

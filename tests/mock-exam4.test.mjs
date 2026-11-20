@@ -18,9 +18,15 @@ const storage=()=>{
 const sessionFor=form=>createMockSession(form.questions,{form});
 const submit=session=>submitMockSession(session,{bank:mockExam4AllQuestions});
 
-test('both forms match the 44-question, 60-point blueprint and use real objectives',()=>{
+test('all three forms match their 44-question, 60-point blueprint and use real objectives',()=>{
  const objectives=new Set(syllabus.sections.flatMap(s=>s.objectives.map(o=>o.id)));
- assert.equal(new Set(mockExam4Questions.map(q=>q.id)).size,88);
+ const sections={
+  A:{mc:30,diagram:12,tf:0,written:2},
+  B:{mc:30,diagram:9,tf:3,written:2},
+  C:{mc:30,diagram:12,tf:0,written:2},
+ };
+ assert.deepEqual(Object.keys(mockExam4Forms),Object.keys(sections));
+ assert.equal(new Set(mockExam4Questions.map(q=>q.id)).size,132);
  for(const [letter,form] of Object.entries(mockExam4Forms)){
   const session=sessionFor(form);
   assert.equal(session.maxPoints,60);
@@ -29,8 +35,7 @@ test('both forms match the 44-question, 60-point blueprint and use real objectiv
   assert.equal(validMockSession(session),false);
   assert.equal(new Set(form.questions.map(q=>q.lesson)).size,15);
   assert.equal(form.questions.filter(q=>q.attachmentKey).length,5);
-  const counts=letter==='A'?{mc:30,diagram:12,tf:0,written:2}:{mc:30,diagram:9,tf:3,written:2};
-  for(const [kind,expected] of Object.entries(counts))
+  for(const [kind,expected] of Object.entries(sections[letter]))
    assert.equal(form.questions.filter(q=>q.section===kind).length,expected);
   for(const q of form.questions){
    assert.ok(q.objectives.length&&q.objectives.every(id=>objectives.has(id)&&id.startsWith(q.lesson+'.')),q.id);
@@ -150,6 +155,17 @@ test('the published regional forms preserve the complete question snapshots reco
  }
 });
 
+test('adding Form C preserves both published r5 forms exactly',()=>{
+ for(const [letter,hash] of Object.entries({
+  A:'6600070933fc8796788c0a2c119aa7386c5b52266e5d0a550f2ae0848c1e8014',
+  B:'76f6b1b34676c933a15b288e737a19cb453c44cee9084396649cb00be6dfb4f8',
+ })){
+  const form=mockExam4Forms[letter];
+  assert.equal(createHash('sha256').update(JSON.stringify(form)).digest('hex'),hash);
+  assert.ok(validMockSession(sessionFor(form),mockExam4AllQuestions));
+ }
+});
+
 test('Form A shares five numbered figures with a plausible fourth covering marker',()=>{
  const form=mockExam4Forms.A,questions=form.questions.filter(q=>q.section==='diagram');
  const groups=Object.groupBy(questions,q=>q.figure);
@@ -199,6 +215,59 @@ test('Form B combines function-to-marker matching and typed identification for 1
  const result=mockResults(submit(attempt));
  assert.equal(result.sections.diagram.correct,9);
  assert.equal(result.earnedPoints,18);
+});
+
+test('Form C uses five new shared plates and gives 30 points to each chapter',()=>{
+ const form=mockExam4Forms.C;
+ const groups=Object.groupBy(form.questions.filter(q=>q.diagramMatch),q=>q.figure);
+ assert.deepEqual(Object.keys(groups),['c-nmj','c-twitch','c-abdomen','c-forearm','c-thigh']);
+ assert.deepEqual(Object.values(groups).map(questions=>questions.length),[3,2,2,3,2]);
+ assert.deepEqual(form.questions.map(q=>q.number),Array.from({length:44},(_,i)=>i+1));
+ assert.equal(form.questions.filter(q=>q.section==='mc'&&q.chapter===10).length,17);
+ assert.equal(form.questions.filter(q=>q.section==='diagram'&&q.chapter===10).length,5);
+ const attempt=sessionFor(form);
+ assert.deepEqual(Object.values(mockResults(attempt).chapters).map(chapter=>chapter.maxPoints),[30,30]);
+ for(const [figure,questions] of Object.entries(groups)){
+  const plate=mockExam4MatchingPlates[figure];
+  const markers=plate.markers.map(marker=>'Marker '+marker.number);
+  const draft=renderMockExam4Figure(questions[0]);
+  assert.equal((draft.match(/data-matching-marker=/g)||[]).length,markers.length);
+  assert.ok(!draft.includes('Correct location:'));
+  for(const q of questions){
+   const target=plate.markers.find(marker=>marker.term.toLowerCase()===q.topic.toLowerCase());
+   assert.ok(target,q.topic);
+   assert.equal(q.answer,'Marker '+target.number);
+   assert.deepEqual(attempt.options[q.id],markers);
+   assert.equal(renderMockExam4Figure(q),draft);
+   assert.ok(!draft.toLowerCase().includes(q.topic.toLowerCase()),q.topic);
+   assert.ok(renderMockExam4Figure(q,{reveal:true}).includes('Correct location: '+q.answer));
+  }
+ }
+ const answered=form.questions.reduce((session,q)=>setMockResponse(session,q.id,q.answer),attempt);
+ const score=mockResults(submit(answered));
+ assert.equal(score.earnedPoints,54);
+ assert.equal(score.pendingPoints,6);
+});
+
+test('Form C written rubrics award their separately stated partial-credit components',()=>{
+ const form=mockExam4Forms.C;
+ const written=form.questions.filter(q=>q.section==='written');
+ assert.deepEqual(written.map(q=>q.rubric.criteria.map(c=>c.points)),[[1,.5,1,.5],[1,1,1]]);
+ for(const q of written){
+  const fixtures=mockExam4Calibration.filter(f=>f.questionId===q.id);
+  const totals=fixtures.map(f=>Object.values(f.expectedPoints).reduce((sum,value)=>sum+value,0));
+  assert.equal(totals[0],3);
+  assert.ok(totals[1]>0&&totals[1]<3);
+  assert.equal(totals[2],0);
+  for(const fixture of fixtures){
+   const report=submit(setMockResponse(sessionFor(form),q.id,fixture.response));
+   const decisions=Object.fromEntries(q.rubric.criteria.map(c=>[c.id,fixture.expectedPoints[c.id]?'met':'missing']));
+   const review=createLearnerWrittenReview({question:q,response:fixture.response,submissionId:report.submission.id,decisions});
+   const row=mockResults(applyMockReview(report,q.id,review)).rows.find(row=>row.q.id===q.id);
+   assert.deepEqual(Object.fromEntries(row.outcome.components.map(c=>[c.id,c.earnedPoints])),fixture.expectedPoints);
+   assert.equal(row.outcome.pendingPoints,0);
+  }
+ }
 });
 
 test('quadriceps short answer credits each named muscle and shared knee extension',()=>{

@@ -127,7 +127,7 @@ export function scoreWrittenReview(question, review, context) {
 }
 
 export const localModelIdentity=(entry,endpoint)=>entry&&endpoints.includes(endpoint)?[endpoint,entry.name,entry.digest||entry.modified_at||entry.size].join('|'):'';
-const rubricIdentities=questions=>Object.fromEntries(questions.filter(q=>q.type==='written').map(q=>[q.id,questionIdentity(q)]).sort(([a],[b])=>a.localeCompare(b)));
+const rubricIdentities=(questions,covered)=>Object.fromEntries(questions.filter(q=>q.type==='written'&&covered.includes(q.id)).map(q=>[q.id,questionIdentity(q)]));
 const fixtureIdentity=fixtures=>responseIdentity(fixtures.map(f=>({id:f.id,questionId:f.questionId,response:f.response,expectedPoints:f.expectedPoints})));
 
 // Persist this compact metadata, not the synthetic answers or generated text.
@@ -143,10 +143,10 @@ export function compactWrittenQualification(report,fixtures,questions) {
   }
   const passed=fixtures.length>0&&cases.length===fixtures.length&&failures.length===0&&identities.length===1&&report.promptVersion===WRITTEN_PROMPT_VERSION;
   const first=cases.find(c=>c.review)?.review;
+  const covered=[...new Set(fixtures.map(f=>f.questionId))].sort();
   return {schema:1,passed,at:Date.now(),model:first?.model||'',modelIdentity:identities.length===1?identities[0]:'',
-    promptVersion:WRITTEN_PROMPT_VERSION,fixtureIdentity:fixtureIdentity(fixtures),rubricIdentities:rubricIdentities(questions),
-    testedQuestionIds:[...new Set(fixtures.map(f=>f.questionId))].sort(),
-    coveredQuestionIds:[...new Set(fixtures.map(f=>f.questionId))].sort(),fixtureIds:fixtures.map(f=>f.id),
+    promptVersion:WRITTEN_PROMPT_VERSION,fixtureIdentity:fixtureIdentity(fixtures),rubricIdentities:rubricIdentities(questions,covered),
+    testedQuestionIds:covered,coveredQuestionIds:covered,fixtureIds:fixtures.map(f=>f.id),
     total:fixtures.length,matched:fixtures.length-failures.length,failedCases:failures};
 }
 
@@ -159,9 +159,12 @@ export function isWrittenModelQualified(record,{model,endpoint,models=[],modelEn
   // covered question invalidate its earlier check; unrelated rubrics do not.
   const required=fixtures.filter(f=>covered.includes(f.questionId));
   if(required.length!==selected.length||required.some(f=>!record.fixtureIds.includes(f.id)))return false;
+  // Older records include other rubrics. Compare only the ones the model actually passed.
+  const rubrics=rubricIdentities(questions,covered);
+  if(!object(record.rubricIdentities)||!covered.every(id=>Object.hasOwn(rubrics,id)&&record.rubricIdentities[id]===rubrics[id]))return false;
   return object(record)&&record.schema===1&&record.passed===true&&!!identity&&record.model===model&&
     record.modelIdentity===identity&&record.promptVersion===WRITTEN_PROMPT_VERSION&&
-    record.fixtureIdentity===fixtureIdentity(selected)&&JSON.stringify(record.rubricIdentities)===JSON.stringify(rubricIdentities(questions))&&
+    record.fixtureIdentity===fixtureIdentity(selected)&&
     JSON.stringify(record.coveredQuestionIds)===JSON.stringify(covered)&&(!questionId||covered.includes(questionId))&&
     record.total===selected.length&&record.matched===selected.length&&Array.isArray(record.failedCases)&&!record.failedCases.length;
 }

@@ -5,6 +5,7 @@ import {mockExam4Questions as legacyQuestions,mockExam4Calibration as legacyCali
 import {QUIZ_SHOW_VERSION,mockExam4QuizShowForm,quizShowReplacements} from './mock-exam4-quiz-show.js';
 import {mockExam4Alignment,mockExam4CourseRevision,mockExam4ReviewLinks} from './mock-exam4-alignment.js';
 import {mockExam4MatchingPlates} from './mock-exam4-figures.js';
+import {mockExam4FormC,mockExam4FormCCalibration} from './mock-exam4-form-c.js';
 
 const revisionTwoVersion='2026-11-16.1';
 const revisionFourVersion='2026-11-19.2';
@@ -425,10 +426,12 @@ const reuseQuestion=source=>(prior,id,version)=>({...source,id,number:prior.numb
 export const mockExam4RegionForms=reviseForms(mockExam4QuizAlignedForms,mockExam4Alignment,'r4',revisionFourVersion,{
  B:{37:reuseQuestion(mockExam4QuizAlignedForms.A.questions[37])},
 });
-export const mockExam4Forms=reviseForms(mockExam4RegionForms,mockExam4CourseRevision,'r5',MOCK_EXAM4_VERSION,{
+const revisedForms=reviseForms(mockExam4RegionForms,mockExam4CourseRevision,'r5',MOCK_EXAM4_VERSION,{
  A:{44:quadricepsQuestion},
  B:{36:reuseQuestion(mockExam4PreviousForms.A.questions[40])},
 });
+export const mockExam4Forms={...revisedForms,C:mockExam4FormC};
+mockExam4Calibration.push(...mockExam4FormCCalibration);
 export const mockExam4Questions=Object.values(mockExam4Forms).flatMap(form=>form.questions);
 export const mockExam4AttachmentQuestions=previousQuestions.filter(q=>q.attachmentKey).map((q,index)=>({
  ...q,id:'exam4-attachments-r2-'+(index+1),number:index+1,
@@ -455,7 +458,7 @@ export const mockExam4AttachmentForm={
 // Saved sessions validate their entire question snapshots. Keep the published
 // versions of replaced items, alongside the new scored and drill questions.
 export const mockExam4AllQuestions=[...legacyQuestions,...previousQuestions,...mockExam4AttachmentQuestions,
- ...publishedReplacements,...mockExam4QuizShowForm.questions,...alignedQuestions];
+ ...publishedReplacements,...mockExam4QuizShowForm.questions,...alignedQuestions,...mockExam4FormC.questions];
 export const mockExam4AllCalibration=[...legacyCalibration,...mockExam4Calibration];
 export function mockExam4Related(id){
  const item=mockExam4AllQuestions.find(q=>q.id===id);
