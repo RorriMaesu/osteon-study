@@ -121,6 +121,7 @@ body[data-mock-exam-active=exam4] #practice-view.active:has(>.mock-exam4){
 }
 @media(max-width:440px) and (max-height:630px){
  .mock-exam4 .mock4-page .mock4-match-stage h2{font-size:18px;margin:2px 0 6px}
+ .mock-exam4 .mock4-question-body:has(.mock4-match-stage) .mock4-page-nav:has(select option:only-child){display:none}
 }
 .mock-exam4 .mock-answer-label{margin:6px 0}
 .mock-exam4 .mock-answer{padding:9px 12px;line-height:1.42}

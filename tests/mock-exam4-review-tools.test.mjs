@@ -117,3 +117,25 @@ test('study card suggestions fit the limit without cutting off any exam-bank sen
   const q=mockExam4Forms.A.questions.find(item=>item.topic==='Complete ATP depletion');
   assert.equal(studyCardLine(q),'ATP binding is required for myosin detachment.');
 });
+
+test('missed functional markers explain the chosen structure and keep the figure for recall',()=>{
+  const form=mockExam4Forms.B;
+  const samples=[
+    {q:form.questions[30],wrong:'Marker 2',chosen:'Smooth muscle',correct:'Cardiac muscle'},
+    {q:form.questions[38],wrong:'Marker 3',chosen:'Soleus',correct:'Gastrocnemius'},
+  ];
+  let attempt=createMockSession(samples.map(item=>item.q),{form,now:100});
+  for(const {q,wrong} of samples)attempt=setMockResponse(attempt,q.id,wrong);
+  const rows=mockResults(submitMockSession(attempt,{now:200,bank:mockExam4AllQuestions})).rows;
+  for(const [index,row] of rows.entries()){
+    const {q,chosen,correct}=samples[index];
+    const evidence=studyEvidence(row),recall=studyRecallItems(row)[0];
+    assert.match(evidence.contrast,new RegExp(chosen,'i'));
+    assert.match(evidence.correctAnswer,new RegExp(correct,'i'));
+    assert.equal(recall.prompt,q.prompt);
+    assert.equal(recall.figure,true);
+    assert.equal(recall.answer,evidence.correctAnswer);
+    assert.equal(row.outcome.earnedPoints,0);
+    assert.ok(!recall.prompt.includes(q.topic));
+  }
+});

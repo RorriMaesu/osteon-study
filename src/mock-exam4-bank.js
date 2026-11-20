@@ -3,11 +3,12 @@ import {chapter11Muscles} from './chapter11-muscles.js';
 
 import {mockExam4Questions as legacyQuestions,mockExam4Calibration as legacyCalibration} from './mock-exam4-legacy.js';
 import {QUIZ_SHOW_VERSION,mockExam4QuizShowForm,quizShowReplacements} from './mock-exam4-quiz-show.js';
-import {mockExam4Alignment,mockExam4ReviewLinks} from './mock-exam4-alignment.js';
+import {mockExam4Alignment,mockExam4CourseRevision,mockExam4ReviewLinks} from './mock-exam4-alignment.js';
 import {mockExam4MatchingPlates} from './mock-exam4-figures.js';
 
 const revisionTwoVersion='2026-11-16.1';
-export const MOCK_EXAM4_VERSION='2026-11-19.2';
+const revisionFourVersion='2026-11-19.2';
+export const MOCK_EXAM4_VERSION='2026-11-19.3';
 const sectionFor={mc:0,diagram:1,tf:2,written:3};
 const bank={A:[],B:[]};
 const figures=muscleFigureTargets;
@@ -362,19 +363,7 @@ export const mockExam4QuizAlignedForms=Object.fromEntries(Object.entries(mockExa
  });
  return [letter,{...form,id:'exam4-form-'+letter.toLowerCase()+'-r3',version:QUIZ_SHOW_VERSION,questions}];
 }));
-const alignedQuestions=[];
-export const mockExam4Forms=Object.fromEntries(Object.entries(mockExam4QuizAlignedForms).map(([letter,form])=>{
- const questions=form.questions.map(prior=>{
-  const id='exam4-'+letter.toLowerCase()+'-r4-'+prior.number;
-  // Give the established dorsal forearm recall item a place on Form B.
-  if(letter==='B'&&prior.number===37){
-   const forearm=mockExam4QuizAlignedForms.A.questions[37];
-   const question={...forearm,id,number:prior.number,contentVersion:MOCK_EXAM4_VERSION};
-   alignedQuestions.push(question);
-   return question;
-  }
-  const replacement=mockExam4Alignment[letter][prior.number];
-  if(!replacement)return prior;
+function alignedQuestion(replacement,prior,id,version){
   const {lesson,objectives,figure,topic,courseEvidence,explanation}=replacement;
   const chapter=Number(lesson.split('.')[0]);
   const url='https://openstax.org/books/anatomy-and-physiology-2e/pages/'+lesson.replace('.','-')+'-'+sectionSlugs[lesson];
@@ -385,23 +374,61 @@ export const mockExam4Forms=Object.fromEntries(Object.entries(mockExam4QuizAlign
   if(figure){
    const markers=mockExam4MatchingPlates[figure].markers;
    const correct=markers.find(marker=>marker.term===topic);
-   prompt='Which marker identifies '+topic+'?';
+   prompt=prompt||'Which marker identifies '+topic+'?';
    answer='Marker '+correct.number;
    distractors=markers.filter(marker=>marker!==correct).map(marker=>'Marker '+marker.number);
   }
   const card=figure&&chapter===11?chapter11Muscles.find(card=>card.name===topic):null;
-  const question={
+  return {
    id,number:prior.number,section:prior.section,points:prior.points,type:'choice',
    chapter,lesson,objectives:objectives.map(n=>lesson+'.'+n),topic,prompt,answer,distractors,explanation,
    courseEvidence,source:'OpenStax Anatomy and Physiology 2e §'+lesson,sourceLinks,
-   noteSuggestion:explanation,contentVersion:MOCK_EXAM4_VERSION,
+   noteSuggestion:explanation,contentVersion:version,
    ...(figure?{figure,diagramMatch:true}:{}),...(card?{termId:card.id}:{}),
   };
-  alignedQuestions.push(question);
-  return question;
- });
- return [letter,{...form,id:'exam4-form-'+letter.toLowerCase()+'-r4',version:MOCK_EXAM4_VERSION,questions}];
-}));
+}
+
+function quadricepsQuestion(prior,id,version){
+ const answer='Rectus femoris, vastus lateralis, vastus medialis, and vastus intermedius act together to extend the leg at the knee.';
+ const criteria=[...prior.rubric.criteria.slice(0,4),{id:'criterion-5',label:'Shared action',
+  description:'State that the group extends or straightens the knee.',points:1}];
+ const examples=[
+  ['Rectus femoris and the vasti (lateralis, medialis and intermedius) all straighten the knee.',[0.5,0.5,0.5,0.5,1]],
+  ['Vastus medialis and vastus lateralis help extend the knee.',[0,0.5,0.5,0,1]],
+  ['Semimembranosus and semitendinosus flex the knee.',[0,0,0,0,0]],
+ ];
+ for(const [index,[response,points]] of examples.entries()){
+  mockExam4Calibration.push({id:id+'-sample-'+(index+1),questionId:id,response,
+   expectedPoints:Object.fromEntries(criteria.map((criterion,i)=>[criterion.id,points[i]]))});
+ }
+ return {...prior,id,contentVersion:version,topic:'Quadriceps membership and shared action',
+  prompt:'Name the four muscles of the quadriceps femoris and describe the movement they produce together at the knee.',
+  answer,explanation:answer,noteSuggestion:answer,rubric:{id:id+'-rubric',version,criteria}};
+}
+
+const alignedQuestions=[];
+function reviseForms(forms,items,revision,version,overrides){
+ return Object.fromEntries(Object.entries(forms).map(([letter,form])=>{
+  const questions=form.questions.map(prior=>{
+   const replacement=items[letter][prior.number];
+   const override=overrides[letter]?.[prior.number];
+   if(!replacement&&!override)return prior;
+   const id='exam4-'+letter.toLowerCase()+'-'+revision+'-'+prior.number;
+   const question=override?override(prior,id,version):alignedQuestion(replacement,prior,id,version);
+   alignedQuestions.push(question);
+   return question;
+  });
+  return [letter,{...form,id:'exam4-form-'+letter.toLowerCase()+'-'+revision,version,questions}];
+ }));
+}
+const reuseQuestion=source=>(prior,id,version)=>({...source,id,number:prior.number,contentVersion:version});
+export const mockExam4RegionForms=reviseForms(mockExam4QuizAlignedForms,mockExam4Alignment,'r4',revisionFourVersion,{
+ B:{37:reuseQuestion(mockExam4QuizAlignedForms.A.questions[37])},
+});
+export const mockExam4Forms=reviseForms(mockExam4RegionForms,mockExam4CourseRevision,'r5',MOCK_EXAM4_VERSION,{
+ A:{44:quadricepsQuestion},
+ B:{36:reuseQuestion(mockExam4PreviousForms.A.questions[40])},
+});
 export const mockExam4Questions=Object.values(mockExam4Forms).flatMap(form=>form.questions);
 export const mockExam4AttachmentQuestions=previousQuestions.filter(q=>q.attachmentKey).map((q,index)=>({
  ...q,id:'exam4-attachments-r2-'+(index+1),number:index+1,

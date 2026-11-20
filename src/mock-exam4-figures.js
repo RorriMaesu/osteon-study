@@ -5,6 +5,30 @@ import {mockExam4MicroPlates} from './mock-exam4-micro-plates.js';
 
 export const mockExam4MatchingPlates={
  ...mockExam4MicroPlates,
+ 'coverings-r5':{
+  ...mockExam4MicroPlates.coverings,
+  label:'Cutaway of a whole muscle and a bundle pulled out in cross section. Four numbered markers point to structures at different levels of organization.',
+  markerOffsets:{4:[-94,9]},
+  markers:[
+   ...mockExam4MicroPlates.coverings.markers,
+   {number:4,point:[850,155],term:'Skeletal muscle fiber'},
+  ],
+ },
+ 'muscle-tissues':{
+  figure:'10.2',
+  label:'Three numbered light micrographs. Panel 1 shows parallel fibers with transverse stripes and elongated peripheral nuclei. Panel 2 shows elongated central nuclei and no visible stripes. Panel 3 shows branching fibers with prominent central nuclei.',
+  panels:[
+   {bounds:[102,19,275,266]},
+   {bounds:[187,382,275,266]},
+   {bounds:[102,748,275,266]},
+  ],
+  markerOffsets:{1:[-78,-71],2:[-78,-71],3:[-78,-71]},
+  markers:[
+   {number:1,point:[155,70],term:'Skeletal muscle'},
+   {number:2,point:[238,435],term:'Smooth muscle'},
+   {number:3,point:[156,799],term:'Cardiac muscle'},
+  ],
+ },
  face:{
   figure:'11.10',bounds:[0,20,995,934],
   label:'Lateral view of the superficial face and jaw. Four numbered markers.',
