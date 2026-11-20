@@ -171,11 +171,10 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   const correct=!assisted&&(typed?outcomeCorrect(typed):!!choice&&courseChoiceCorrect(round.targetIds,choice.componentIds));
   const answerStatus=assisted?'revealed':typed?.status||(correct?'correct':'incorrect'),usedHelp=assisted||!!round.helpUsed;
   const feedbackLabel=assisted?'Answer shown':typed?outcomeLabel(typed):correct?'Correct':'Review the highlighted answer';
-  round.phase='feedback';round.feedback={label:feedbackLabel+(correct&&usedHelp?' · with assistance':''),choiceId:choice?.id};
+  round.phase='feedback';round.feedback={label:feedbackLabel+(correct&&usedHelp?' · with assistance':'')};
+  round.choices=round.choices.filter(option=>option.id===target.id);
   clearMarkers();render();refresh();
-  if(!intersections().has(target.id)){
-   round.choices=round.choices.filter(x=>x.id===target.id);refresh();chooseInitialView();
-  }
+  if(!intersections().has(target.id))chooseInitialView();
   updateSurfaces();
   document.dispatchEvent(new CustomEvent('musclespatialattempt',{detail:{mode:session.mode,termId:target.id,correct,assisted:usedHelp,answerStatus,correction:typed?.correction||target.name,response:typed?.response||choice?.name||'',attemptedAt:Date.now()}}));
   panel.querySelector('[data-ms-next],[data-ms-finish]')?.focus({preventScroll:true});
@@ -197,8 +196,10 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
    if(session!==current||rev!==revision)return;
    const targetIds=parts.map(c=>c.id);round.targetIds=targetIds;
    const own={id:target.id,name:target.name,componentIds:targetIds};
-   const alternatives=target.spatialEligible?courseComparisonGroups(target,{side:current.side,limit:current.mode==='find'?3:2}):[];
-   round.choices=current.mode==='find'?shuffledCourseChoices([own,...alternatives]):[own,...alternatives];
+   // Only a location question needs other muscles to choose from.
+   round.choices=current.mode==='find'&&target.spatialEligible
+    ?shuffledCourseChoices([own,...courseComparisonGroups(target,{side:current.side,limit:3})])
+    :[own];
    round.phase=target.spatialEligible?'question':'study';render();refresh();
    await new Promise(resolve=>requestAnimationFrame(resolve));
    if(session!==current||rev!==revision)return;
@@ -219,7 +220,9 @@ export function createMuscleSpatialPractice({viewer,escape:e,enter,loadRegion,ex
   if(previousMode!=='exam')setTutorAssessmentMode('practice');
   setLearningContext({type:'assessment',label:'Independent 3D muscle identification',text:'The answer is withheld until feedback. Explain model controls if asked, without identifying the target.',reference:'11.1'});
   atlas.dataset.muscleSpatial='true';stage.dataset.muscleSpatial='true';panel.hidden=false;
-  viewer.el.setAttribute('aria-label','3D muscle practice. Drag or use the arrow keys to rotate. Use the visible surface numbers to choose a target.');
+  viewer.el.setAttribute('aria-label',session.mode==='find'
+   ?'3D muscle practice. Drag or use the arrow keys to rotate. Use the visible surface numbers to choose a target.'
+   :'3D muscle practice. Drag or use the arrow keys to rotate the highlighted structure.');
   document.dispatchEvent(new Event('showspecimen'));
   if(!queue.length){round=null;render();refresh();}else await startRound(0);
   if(session)panel.querySelector('h2')?.focus({preventScroll:true});
