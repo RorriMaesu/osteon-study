@@ -90,7 +90,7 @@ Multiple choice, typed recall, anatomical schematic identification, matching and
 
 [Open Exam 3 mock ↗](https://rorrimaesu.github.io/osteon-study/#exam3) · [Format, grading and verification](MOCK-EXAM-3.md)
 
-**Practice lab → Exam center → Exam 3 mock** opens a course-grounded, **44-question / 60-point** form: 30 multiple choice, nine actual lab-packet targets, three true/false items and two written explanations. Save and resume, flag questions, choose closed notes or your permitted card, then submit to lock answers and review the points you missed. The format borrows from the complete Exam 2; it does not claim to predict the instructor's exact Exam 3.
+**Practice lab → Exam center → Exam 3 mock** opens a course-grounded, **44-question / 60-point** form: 30 multiple choice, nine actual lab-packet targets, three true/false items and two written explanations. Save and resume, flag questions, choose closed notes or your permitted card, then submit to lock answers and review the points you missed. This is an unofficial practice form, not a prediction of the instructor's questions, format or grading.
 
 Verified keys score objective answers. Written explanations use explicit half-point rubric components and the same local Ollama connection as the Socratic tutor. A model must pass checks for the specific rubric before automatic written grading; otherwise points remain pending and **Compare & confirm rubric myself** offers a separately labeled learner score. The bundled `gemma4:12b` qualification passed all 20 Form A cases; the BQ2 comparison rubric remains unqualified. These checks are bounded evidence, not a guarantee of teacher-equivalent judgment.
 

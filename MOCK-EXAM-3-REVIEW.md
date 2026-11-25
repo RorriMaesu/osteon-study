@@ -37,7 +37,7 @@ Versioned diagram scoring now accepts approved correct contextual wording for al
 
 ## Remaining limits
 
-- Form A remains a finite practice sample based on earlier exams and course evidence. It does not predict exact questions or provide the instructor’s official grading policy.
+- Form A remains a finite, unofficial practice sample for Chapters 6–9. It does not predict exact questions or provide the instructor’s official grading policy.
 - The 12-question extension samples disclosed gaps; it does not exhaust the required landmark list, every movement pair or every chapter objective.
 - Passing a model’s prepared grading cases is bounded evidence, not a guarantee that it will judge every future answer correctly. Pending points and explicit human review remain necessary.
 - Printed line measurements apply to the supplied card layout. They cannot guarantee the space required by an individual’s handwriting.

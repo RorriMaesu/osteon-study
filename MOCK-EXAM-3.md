@@ -14,7 +14,7 @@ The mock turns the supplied chapters 6–9 course evidence into a fixed practice
 | Written explanations | 2 | 6 |
 | **Total** | **44** | **60** |
 
-Chapter point totals are **6: 19; 7: 12; 8: 15; 9: 14**. Form A's written explanations compare ossification pathways and explain the course's traditional lateral-knee injury sequence. The counts and weights deliberately borrow from the complete Exam 2; they are an authored practice design, not a forecast of Exam 3's actual format.
+Chapter point totals are **6: 19; 7: 12; 8: 15; 9: 14**. Form A's written explanations compare ossification pathways and explain the course's traditional lateral-knee injury sequence. These point totals are for unofficial practice; they do not predict the instructor’s format or grading.
 
 The question bank cites the 21 distinct Quiz Show topics, seven Bone Questions, required bone/landmark material, labs, clinical scenarios and OpenStax sections. All 21 review topics are mapped, but two joint classifications share Q24. Q35 changes whole-scapula recognition into a glenoid target in a posterior view; Q32 does not separately assess parietal laterality. Those relationships are not advertised as exact repeats or independent probability estimates.
 

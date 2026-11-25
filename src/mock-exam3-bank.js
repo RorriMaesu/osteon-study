@@ -2922,9 +2922,9 @@ export const mockExam3Form = deepFreeze({
     "8": 15,
     "9": 14
   },
-  "description": "A fixed, source-grounded practice form built from your course review, lab packets and earlier exam patterns.",
+  "description": "An unofficial practice form for Chapters 6–9 covering bone tissue, skeletal anatomy and joints, with credited lab diagrams.",
   "gradingNotice": "Practice grading uses verified keys and authored component rubrics. It is an estimate, not your instructor’s official marking scheme.",
-  "formatNotice": "The 44-question, 60-point format mirrors the complete Exam 2 as a practice design; Exam 3’s actual format is unknown.",
+  "formatNotice": "This form has 44 questions worth 60 practice points. It does not establish the instructor’s format or scoring.",
   "defaultTiming": "untimed",
   "requiresDiagrams": true
 });

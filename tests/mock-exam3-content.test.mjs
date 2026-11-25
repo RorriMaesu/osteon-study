@@ -21,7 +21,7 @@ test('Form A preserves the independently established 44-item/60-point practice b
  assert.deepEqual(['mc','diagram','tf','written'].map(section=>total(questions.filter(q=>q.section===section).map(q=>q.points))),[30,18,6,6]);
  assert.deepEqual([6,7,8,9].map(chapter=>total(questions.filter(q=>q.chapter===chapter).map(q=>q.points))),[19,12,15,14]);
  assert.equal(new Set(mockExam3AllQuestions.map(q=>q.id)).size,mockExam3AllQuestions.length);
- assert.ok(form.formatNotice.includes('actual format is unknown'));
+ assert.match(form.formatNotice, /does not establish the instructor’s format or scoring/);
  assert.ok(form.gradingNotice.includes('not your instructor'));
  assert.ok(Object.isFrozen(questions)&&Object.isFrozen(question(43).rubric.criteria));
 });
