@@ -1,3 +1,4 @@
+import {initCourseHome,selectedCourse} from './course-home.js';
 import {isLessonId} from './chapters.js';
 import {atlasMatches,atlasSuggestions} from './atlas-search.js';
 import {initMuscleAtlas} from './muscle-atlas.js';
@@ -44,21 +45,23 @@ export function toast(s){$('#toast').textContent=s;$('#toast').hidden=false;clea
 export function dialog(html){$('#dialog-content').innerHTML=html;$('#info-dialog').showModal();}
 $('#close-dialog').onclick=()=>$('#info-dialog').close();
 $('#info-dialog').addEventListener('click',e=>{if(e.target===$('#info-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
-const appViews=['atlas','study','practice','progress','motion'];
+const appViews=['atlas','study','practice','progress','motion','courses'];
+let courseHome;
 let currentRoute,restoringRoute=false;
 export function setView(view,{route,historyMode='push'}={}){if(!appViews.includes(view))view='atlas';route||=view;const from=currentRoute;currentRoute=route;$$('.view').forEach(e=>e.classList.toggle('active',e.id===view+'-view'));$$('[data-view]').forEach(e=>{e.classList.toggle('active',e.dataset.view===view);e.setAttribute('aria-current',e.dataset.view===view?'page':'false');});if(location.hash!=='#'+route){if(historyMode==='replace')history.replaceState(null,'','#'+route);else if(historyMode==='push'){if(restoringRoute)history.replaceState(history.state,'','#'+route);else history.pushState({osteonFrom:from},'','#'+route);}}if(view==='atlas'){
  viewer?.resize();
  if(!viewer.quiz)viewer.ensureTissues().catch(()=>{if(viewer.loaded)toast('Extra tissues could not load. Reopen the atlas or use Tissues to retry.');});
-}document.dispatchEvent(new CustomEvent('viewchange',{detail:view}));window.scrollTo({top:0,behavior:'instant'});}
+}courseHome?.sync(view,route);document.dispatchEvent(new CustomEvent('viewchange',{detail:view}));window.scrollTo({top:0,behavior:'instant'});}
 function showHistoryRoute(initial=false){
- const route=location.hash.slice(1)||'atlas';
+ const route=location.hash.slice(1)||(location.search?'atlas':'courses');
  if(route===currentRoute&&!initial)return;
  const routeEvents={'exam4':'openexam4','exam4-exam':'resumeexam4','exam4-quiz-show':'resumeexam4quizshow','exam4-results':'exam4results','exam4-card':'exam4card','exam3':'openexam3','exam3-exam':'resumeexam3','exam3-results':'exam3results','exam3-card':'exam3card','exam-center':'openexams','exam-session':'resumeexam','bone-list':'lablist','bone-list-session':'lablist','study':'studyhome','muscle-list':'openmusclechecklist','muscle-labeling':'openmusclelabeling','muscle-worksheet':'openmuscleworksheet','muscle-label-3d':'openmusclespatial','professor-muscle-review':'openprofessormusclereview','professor-muscle-session':'resumeprofessormusclereview','professor-muscle-results':'professormuscleresults'};
  const mockReportId=parseMockReportRoute(route),exam4ReportId=parseMockReportRoute(route,'exam4');
  const lesson=route.startsWith('lesson-')?route.slice(7):null,reader=route.match(/^reader-(\d+)$/);
  restoringRoute=true;
  try{
-  if(exam4ReportId)document.dispatchEvent(new CustomEvent('exam4results',{detail:{id:exam4ReportId}}));
+  if(route==='courses'||route==='course-1'||route==='course-2'||route.startsWith('ap2-'))courseHome.open(route);
+  else if(exam4ReportId)document.dispatchEvent(new CustomEvent('exam4results',{detail:{id:exam4ReportId}}));
   else if(mockReportId)document.dispatchEvent(new CustomEvent('exam3results',{detail:{id:mockReportId}}));
   else if(Object.hasOwn(routeEvents,route))document.dispatchEvent(new Event(routeEvents[route]));
   else if(lesson&&isLessonId(lesson))document.dispatchEvent(new CustomEvent('openlesson',{detail:lesson}));
@@ -76,7 +79,7 @@ function openPracticeHome(historyMode='push'){
  setView('practice',{historyMode});
  document.dispatchEvent(new Event('practicehome'));
 }
-$$('[data-view]').forEach(b=>b.onclick=()=>{const view=b.dataset.view;if(view==='study')document.dispatchEvent(new Event('studyhome'));else if(view==='practice')openPracticeHome();else setView(view);const heading=$('#'+b.dataset.view+'-view h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}});$('.brand').onclick=e=>{e.preventDefault();setView('atlas');};
+$$('[data-view]').forEach(b=>b.onclick=()=>{const view=b.dataset.view;if(selectedCourse()==='2'&&['study','practice','progress'].includes(view)){courseHome.open({study:'course-2',practice:'ap2-exams',progress:'ap2-progress'}[view]);return;}if(view==='study')document.dispatchEvent(new Event('studyhome'));else if(view==='practice')openPracticeHome();else setView(view);const heading=$('#'+b.dataset.view+'-view h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}});$('.brand').onclick=e=>{e.preventDefault();courseHome.open('courses');};
 let selectionEpoch=0;
 export const viewer=new AnatomyViewer($('#viewer'),m=>{
  selectionEpoch++;
@@ -341,6 +344,7 @@ document.addEventListener('viewchange',ev=>{if(ev.detail==='atlas'&&!document.bo
 const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region=viewer.region;selected=viewer.selectedTerm;$$('[data-browse-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.browseMode===browseMode)));syncFilters();if(selected)detail(selected);else resetDetail();renderList();updateButtons();}});
 initMuscleLabeling({viewer,setView,dialog,toast,escape});
 initMuscleList({setView,dialog,toast,escape});
+courseHome=initCourseHome({setView,escape});
 showHistoryRoute(true);
 if(new URLSearchParams(location.search).get('lablist')==='1'&&['#atlas','#practice'].includes(location.hash))labList.home();
 initClarityPractical({viewer,setView});
