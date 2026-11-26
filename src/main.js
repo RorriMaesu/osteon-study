@@ -1,3 +1,4 @@
+import {initAP2} from './ap2-study.js';
 import {initCourseHome,selectedCourse} from './course-home.js';
 import {isLessonId} from './chapters.js';
 import {atlasMatches,atlasSuggestions} from './atlas-search.js';
@@ -345,6 +346,7 @@ const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region
 initMuscleLabeling({viewer,setView,dialog,toast,escape});
 initMuscleList({setView,dialog,toast,escape});
 courseHome=initCourseHome({setView,escape});
+initAP2({root:document.querySelector('#courses-view'),escape,toast,dialog});
 showHistoryRoute(true);
 if(new URLSearchParams(location.search).get('lablist')==='1'&&['#atlas','#practice'].includes(location.hash))labList.home();
 initClarityPractical({viewer,setView});

@@ -34,22 +34,22 @@ export function initCourseHome({setView, escape}) {
     <div class="course-actions">${resume && /^[\w./-]+$/.test(resume) ? link(resume,'Continue · ' + courseRouteLabel(resume)) : ''}${link('study','Study studio')}${link('exam-center','Chapter exams')}${link('exam4-results','Mock 4 results')}${link('progress','My progress & backups')}</div>
     <div class="course-grid"><article><h2>Chapters</h2><div class="course-links">${chapterCards}</div></article>
     <article><h2>Lab and exam practice</h2><div class="course-links">${[['practice','Practice lab'],['exam3','Mock Exam 3'],['exam4','Mock Exam 4'],['bone-list','Required bone list'],['muscle-list','Required muscle list'],['muscle-labeling','Muscle labeling'],['professor-muscle-review','Professor’s muscle review']].map(([r,t])=>link(r,t)).join('')}</div>
-    <h2>Neural signaling bridge</h2><p>Review nervous tissue and skeletal muscle excitation before starting Chapter 12.</p><div class="course-links">${link('lesson-4.5','4.5 · Nervous tissue')}${link('lesson-10.3','10.3 · Muscle contraction and excitation')}${link('course-2','Continue to A&P II')}</div></article></div>`;
+    <h2>Neural signaling bridge</h2><p>Review nervous tissue and skeletal muscle excitation before starting Chapter 12.</p><div class="course-links">${link('lesson-4.5','4.5 · Nervous tissue')}${link('lesson-10.3','10.3 · Muscle contraction and excitation')}${link('ap2-lesson-12.1','Continue to Chapter 12')}</div></article></div>`;
   }
   function open(route) {
     const isII = route === 'course-2' || route.startsWith('ap2-');
     if (route !== 'courses') choose(isII ? '2' : '1');
     setView('courses',{route});
-    if (isII && root.osteonAP2) { root.osteonAP2(route); return; }
+    if (isII) { root.osteonAP2(route); return; }
     setLearningContext({type:'study',label:route === 'course-1' ? 'A&P I course home' : 'Course selection',text:''});
-    root.innerHTML = `<div class="course-page">${route === 'courses' ? welcome() : isII ? '<div class="course-hero"><div class="eyebrow">CHAPTERS 12–20</div><h1>Anatomy &amp; Physiology II</h1><p>The chapter library is in preparation. The shared atlas and fall prerequisites are available now.</p></div><div class="course-actions">'+link('atlas','Open shared Atlas')+link('lesson-4.5','Review nervous tissue')+'</div>' : firstCourse()}</div>`;
+    root.innerHTML = `<div class="course-page">${route === 'courses' ? welcome() : firstCourse()}</div>`;
   }
   picker.onchange = () => { location.hash = picker.value === 'all' ? 'courses' : 'course-' + picker.value; };
   function sync(view, route) {
     if (view === 'atlas' || view === 'motion') {
       let ret = ''; try { ret = sessionStorage.getItem(returnKey) || ''; } catch {}
-      back.hidden = !(selected === '2' && /^ap2-lesson-[\d.]+$/.test(ret));
-      if (!back.hidden) { back.href = '#' + ret; back.textContent = '← Lesson ' + ret.slice(11); }
+      back.hidden = !(selected === '2' && /^ap2-lesson-[\d.]+(?:\/(?:activity|figures|check))?$/.test(ret));
+      if (!back.hidden) { back.href = '#' + ret; back.textContent = '← Lesson ' + ret.slice(11).split('/')[0]; }
       return;
     }
     back.hidden = true;
@@ -61,12 +61,12 @@ export function initCourseHome({setView, escape}) {
 }
 export function rememberAP2Route(route) {
   remember('osteon-course-resume-2',route);
-  if (/^ap2-lesson-[\d.]+$/.test(route)) {
+  if (/^ap2-lesson-[\d.]+(?:\/(?:activity|figures|check))?$/.test(route)) {
     try { sessionStorage.setItem(returnKey,route); } catch {}
   }
 }
 export function courseRouteLabel(route) {
-  if (route.includes('lesson-')) return 'Section ' + route.split('lesson-').pop();
+  if (route.includes('lesson-')) return 'Section ' + route.split('lesson-').pop().split('/')[0];
   if (route.startsWith('ap2-chapter-')) return 'Chapter ' + route.slice(12);
   if (route.includes('report') || route.includes('results')) return 'Exam results';
   if (route.includes('session') || route.endsWith('-exam')) return 'Saved exam';
