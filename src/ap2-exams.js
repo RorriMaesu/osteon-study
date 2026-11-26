@@ -1,3 +1,4 @@
+import {snapshotWriting,examWriting,writingResults} from './ap2-writing-ui.js';
 import {chapters,sectionById} from './ap2-library.js';
 import {bank,examScopes,examItems,submitDraft,score,correctGrade,expectedAnswer} from './ap2-exam-core.js';
 import {rememberAP2Route} from './course-home.js';
@@ -15,7 +16,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
   const navReport=r=>link('ap2-report-'+r.id,date(r.submitted)+' · '+r.title+' · '+score(r).correct+'/'+r.items.length);
   function begin(scope,title,items) {
     const data=store.update(r=>{if(r.draft)return;
-      r.draft={id:crypto.randomUUID(),scope,title,started:Date.now(),items,index:0,responses:{}};r.resume='ap2-session';});
+      r.draft={id:crypto.randomUUID(),scope,title,started:Date.now(),items,index:0,responses:{},writing:snapshotWriting(items)};r.resume='ap2-session';});
     if(data.draft)go('ap2-session');
   }
   function center(scope){
@@ -47,9 +48,10 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     page(`<div class="ap2-exam-header"><div><div class="eyebrow">A&P II · INDEPENDENT EXAM</div><h1>${e(s.title)}</h1></div>${link('ap2-exams','Save & exit')}</div>
     <section class="course-card ap2-test"><div class="ap2-question-meta"><label>Question <select aria-label="Jump to exam question" data-jump>${s.items.map((it,i)=>`<option value="${i}" ${s.index===i?'selected':''}>${i+1} / ${s.items.length}${s.responses[it.id]?.trim()?' · answered':''}</option>`).join('')}</select></label><span data-saved role="status">${savedCount()} answered</span></div>
     <h2>${e(q.prompt)}</h2>${stimulus(q)}${q.choices?`<div class="ap2-answers" role="group" aria-label="Answer choices">${q.choices.map((a,i)=>`<button data-answer="${i}" aria-pressed="${value===String(i)}">${e(a)}</button>`).join('')}</div>`:
-    `<label>${q.type==='number'?'Enter a number'+(q.unit?' in '+e(q.unit):''):'Anatomical term'}<input data-typed autocomplete="off" maxlength="500" ${q.type==='number'?'inputmode="decimal"':''} value="${e(value)}"></label>`}</section>
+    `<label>${q.type==='number'?'Enter a number'+(q.unit?' in '+e(q.unit):''):'Anatomical term'}<input data-typed autocomplete="off" maxlength="500" ${q.type==='number'?'inputmode="decimal"':''} value="${e(value)}"></label>`}<div data-writing-place></div></section>
     <div class="ap2-test-nav"><button data-prev ${s.index?'':'disabled'}>← Previous</button><button data-next ${s.index===s.items.length-1?'disabled':''}>Next →</button><button class="primary" data-submit>Review & submit</button></div>`);
     function update(fn){return store.update(r=>{if(r.draft?.id===s.id)fn(r.draft);});}
+    examWriting(root,s,update,e);
     function answer(v){update(d=>{d.responses[q.id]=v;});root.querySelector('[data-saved]').textContent=savedCount()+' answered'+(store.volatile?' · in this tab':' · saved');}
     for(const b of root.querySelectorAll('[data-answer]'))b.onclick=()=>{
       answer(b.dataset.answer);for(const a of root.querySelectorAll('[data-answer]'))a.setAttribute('aria-pressed',String(a===b));};
@@ -76,7 +78,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     `<div class="course-card ap2-report-head"><strong>${result.correct} / ${r.items.length} points earned</strong>${pending?`<p>${pending} response(s) need a meaning review. The original score is saved.</p>`:''}
     <div class="course-actions"><label class="ap2-choice"><input type="checkbox" data-missed ${onlyReview?'checked':''}> Review missed answers and spelling only</label>
     ${weak.length&&!data.draft?'<button data-retry>Practice these questions again</button>':''}${data.draft?link('ap2-session','Resume active draft'):''}</div></div>
-    <div class="ap2-report-list">${included.map(q=>{
+    ${writingResults(r.writing,e)}<div class="ap2-report-list">${included.map(q=>{
       const g=r.grades[q.id],v=r.responses[q.id]||'',given=q.choices&&v!==''?q.choices[Number(v)]:v;
       const reviewed=r.ai?.[q.id];
       return `<details class="course-card" ${onlyReview&&included.length===1?'open':''}><summary><b>${e(label(g))}</b> · §${e(q.section)} · ${e(q.prompt)}</summary>
@@ -112,7 +114,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     if(!output||!r)return;
     const b=root.querySelector('[data-ai="'+q.id+'"]');if(b)b.disabled=true;
     const target={id:q.id,answer:q.expected,aliases:q.aliases||[],prompt:q.prompt,explanation:q.why,reference:q.section};
-    const result=await reviewWithUI({target,response:r.responses[q.id],strictCorrect:correctGrade(r.grades[q.id]),root:output,allowOverride:true,enabled:true});
+    const result=await reviewWithUI({target,response:r.responses[q.id],strictCorrect:correctGrade(r.grades[q.id]),root:output,allowOverride:q.section!=='18.6',enabled:true});
     if(result.review&&!result.canceled){
       store.update(s=>{const report=s.reports.find(v=>v.id===id);if(report){report.ai||={};report.ai[q.id]=result.review;}});
     }
@@ -131,12 +133,16 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
       const ids=new Set(ch.sections.map(s=>s.id)),checked=answers.filter(a=>ids.has(a.section)),all=bank.filter(q=>ids.has(q.section)&&q.type==='choice');
       return `<a href="#ap2-chapter-${ch.id}"><b>${ch.id}</b><span>${e(ch.title)}<small>${ch.sections.filter(s=>r.studied[s.id]).length}/${ch.sections.length} studied · ${checked.filter(a=>a.correct).length}/${all.length} recall questions correct</small></span><span>→</span></a>`;
     }).join('')}</div></section>`);
-    bindStudyBackups(root,{dialog,toast,escape:e});context('A&P II progress');
+    bindStudyBackups(root,{dialog,toast,escape:e,getAP2Records:()=>store.read()});context('A&P II progress');
   }
   function sectionsToRevisit(r) {
-    const failed=Object.values(r.checks).filter(a=>!a.correct).sort((a,b)=>b.at-a.at)[0];
-    if(failed)return sectionById.get(failed.section);
-    for(const report of r.reports)for(const q of report.items)if(!correctGrade(report.grades[q.id])&&!r.checks[q.id]?.correct)return sectionById.get(q.section);
+    const latest=new Map();
+    for(const report of [...r.reports].sort((a,b)=>a.submitted-b.submitted)){
+      for(const q of report.items)latest.set(q.id,{section:q.section,correct:correctGrade(report.grades[q.id]),at:report.submitted});
+    }
+    for(const [id,check] of Object.entries(r.checks))if(check.at>=(latest.get(id)?.at||0))latest.set(id,check);
+    const missed=[...latest.values()].filter(a=>!a.correct).sort((a,b)=>b.at-a.at)[0];
+    if(missed)return sectionById.get(missed.section);
     return [...sectionById.values()].find(s=>s.questions.some((_,i)=>!r.checks['ap2-'+s.id+'-q'+(i+1)]?.correct));
   }
   function open(route){

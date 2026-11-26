@@ -239,7 +239,7 @@ function initTutor({escape:e,toast}) {
   }
   function messageHTML(m, index) {
     const references = m.role === "assistant" ? citationParts(m.content, m.sources) : { unknown: [] }, unavailable = references.unknown.length ? `<p class="tiny warning-text">Reference ${references.unknown.map(e).join(", ")} was not supplied for this reply. Use the readings below to check it.</p>` : "";
-    return `<article class="tutor-message ${m.role}"><span>${m.role === "user" ? "YOU" : m.pending ? "LOCAL AI / DRAFT" : "OSTEON / AI"}${m.model ? " \xB7 " + e(m.model) : ""}</span><div class="tutor-message-text">${m.role === "assistant" ? answerHTML(m) : e(m.content)}</div>${m.correction ? '<p class="tiny warning-text">Course note substituted: ' + e(m.correction) + "</p>" : ""}${m.reference ? '<button data-tutor-section="' + e(m.reference) + '" class="tutor-source">Read course section ' + e(m.reference) + " \u2197</button>" : ""}${m.error ? '<p class="tiny warning-text">Response incomplete. Check the source before using it.</p><button class="retry-question" data-tutor-retry="' + index + '">Edit question and retry \u2197</button>' : ""}${unavailable}${m.sources?.length ? '<details><summary>Read the source excerpts</summary><div class="tutor-sources">' + m.sources.map((source) => `<div class="tutor-excerpt"><button ${sourceAttribute(source)} class="tutor-source">[${e(source.id)}] ${e(source.title)} \u2197</button>${source.course === "ap2" ? `<a href="${e(source.url)}" target="_blank" rel="noopener noreferrer">OpenStax §${e(source.reference)} ↗</a>` : ""}${source.text ? "<blockquote>" + e(source.text) + "</blockquote>" : ""}</div>`).join("") + '</div><p class="tiny">These readings were supplied to the model; a matching reference does not certify every claim.</p></details>' : ""}</article>`;
+    return `<article class="tutor-message ${m.role}"><span>${m.role === "user" ? "YOU" : m.kind === "course-note" ? "OSTEON / COURSE NOTE" : m.pending ? "LOCAL AI / DRAFT" : "OSTEON / AI"}${m.model ? " \xB7 " + e(m.model) : ""}</span><div class="tutor-message-text">${m.role === "assistant" ? answerHTML(m) : e(m.content)}</div>${m.correction ? '<p class="tiny warning-text">Course note substituted: ' + e(m.correction) + "</p>" : ""}${m.reference ? '<button data-tutor-section="' + e(m.reference) + '" class="tutor-source">Read course section ' + e(m.reference) + " \u2197</button>" : ""}${m.error ? '<p class="tiny warning-text">Response incomplete. Check the source before using it.</p><button class="retry-question" data-tutor-retry="' + index + '">Edit question and retry \u2197</button>' : ""}${unavailable}${m.sources?.length ? '<details><summary>Read the source excerpts</summary><div class="tutor-sources">' + m.sources.map((source) => `<div class="tutor-excerpt"><button ${sourceAttribute(source)} class="tutor-source">[${e(source.id)}] ${e(source.title)} \u2197</button>${source.course === "ap2" ? `<a href="${e(source.url)}" target="_blank" rel="noopener noreferrer">OpenStax §${e(source.reference)} ↗</a>` : ""}${source.text ? "<blockquote>" + e(source.text) + "</blockquote>" : ""}</div>`).join("") + '</div><p class="tiny">Open the linked reading to check this explanation.</p></details>' : ""}</article>`;
   }
   function renderChat() {
     const assessed = context.type === "assessment";
@@ -300,8 +300,8 @@ function initTutor({escape:e,toast}) {
     document.dispatchEvent(new Event("studyassistance"));
     const course=isAP2Context(context)?'ap2':'ap1';
     const courseHistory=chat.filter(m=>(m.course||'ap1')===course);
-    const { sources, messages, retrievalTopic } = buildTutorMessages(query, courseHistory, guided&&guided.completed<guided.total?{...context,label:guided.topic}:context, mode);
-    const contract=tutorSessionInstruction(guided);if(contract)messages[0].content+="\n"+contract;
+    const { sources, messages, retrievalTopic, authoredReply } = buildTutorMessages(query, courseHistory, guided&&guided.completed<guided.total?{...context,label:guided.topic}:context, mode);
+    const contract=tutorSessionInstruction(guided);if(contract&&messages.length)messages[0].content+="\n"+contract;
     chat.push({ role: "user", content: query, course });
     const reply = { role: "assistant", content: "", model, course, pending: true, sources };
     chat.push(reply);
@@ -310,6 +310,16 @@ function initTutor({escape:e,toast}) {
     if ($("#tutor-input")) $("#tutor-input").value = "";
     saveDraft();
     save();
+    if(authoredReply){
+      reply.kind='course-note';
+      reply.model='';
+      reply.content=authoredReply;
+      reply.pending=false;
+      generationText='Course note · §19.3';
+      save();
+      render();
+      return;
+    }
     generationText = "Preparing a local reply. First use of a model can take longer.";
     beginJob("chat");
     $("#tutor-input")?.focus({ preventScroll: true });

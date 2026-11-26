@@ -57,6 +57,19 @@ function validGrade(item, response, grade) {
   return ['correct','incorrect','pending','spelling'].includes(grade);
 }
 
+function validWritingCases(cases) {
+  if (!Array.isArray(cases) || cases.length > counts.length) return false;
+  const chapters = new Set();
+  return cases.every(entry => {
+    if (!obj(entry) || !validSection(entry.section) || Number(entry.section.split('.')[0]) !== entry.chapter ||
+        chapters.has(entry.chapter) || !nonempty(entry.prompt,3000) || !nonempty(entry.example,5000) ||
+        !line(entry.answer,2500) || !Array.isArray(entry.rubric) || !entry.rubric.length ||
+        !entry.rubric.every(criterion => nonempty(criterion,2000))) return false;
+    chapters.add(entry.chapter);
+    return true;
+  });
+}
+
 function validSession(session, submitted) {
   if (!obj(session) || !nonempty(session.id,100) || !/^[a-zA-Z0-9-]+$/.test(session.id) ||
       !nonempty(session.scope,100) || !nonempty(session.title,250) || !when(session.started) ||
@@ -66,6 +79,7 @@ function validSession(session, submitted) {
   const items = new Map(session.items.map(item => [item.id,item]));
   if (items.size !== session.items.length || !Object.entries(session.responses).every(
     ([id,value]) => validResponse(items.get(id),value))) return false;
+  if (session.writing !== undefined && !validWritingCases(session.writing)) return false;
 
   if (!submitted) return session.submitted === undefined && session.grades === undefined && session.ai === undefined;
   if (!when(session.submitted) || !obj(session.grades) || Object.keys(session.grades).length !== items.size ||
@@ -85,7 +99,7 @@ function validResume(records) {
   if (!route) return true;
   if (route === 'ap2-session') return !!records.draft;
   if (route.startsWith('ap2-report-')) return records.reports.some(report => route === 'ap2-report-' + report.id);
-  if (/^ap2-chapter-(1[2-9]|20)$/.test(route)) return true;
+  if (/^ap2-(?:chapter|writing)-(1[2-9]|20)$/.test(route)) return true;
   const lesson = route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(?:activity|figures|check))?$/);
   return !!lesson && validSection(lesson[1]);
 }
@@ -95,6 +109,9 @@ export function validAP2Records(records) {
       !Array.isArray(records.reports) || !records.reports.every(report => validSession(report,true)) ||
       !(records.draft === null || validSession(records.draft,false))) return false;
   if (!Object.entries(records.studied).every(([id,date]) => validSection(id) && when(date))) return false;
+  if (records.writing !== undefined && !(obj(records.writing) && Object.entries(records.writing).every(
+    ([chapter,entry]) => /^(1[2-9]|20)$/.test(chapter) && obj(entry) && line(entry.answer,2500) &&
+      typeof entry.compared === 'boolean'))) return false;
   if (!Object.entries(records.checks).every(([id,check]) => obj(check) && validSection(check.section) &&
       validItemId(id) && /^ap2-(\d+\.\d+)-q[1-9]\d*$/.exec(id)?.[1] === check.section &&
       when(check.at) && typeof check.correct === 'boolean')) return false;

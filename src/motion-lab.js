@@ -68,7 +68,7 @@ export function initMotionLab({setView}){
  const fullWalk=!!(fullBody&&modelAssets['motion-walk-muscles']);
  const availableRegional=Object.entries(regionalLessons).filter(([,entry])=>modelAssets[entry.asset]);
  root.innerHTML=`
- <header class="motion-heading"><div class="motion-title"><a href="#atlas" class="motion-back">← 3D Atlas</a><h1 tabindex="-1">Motion <em>Lab</em></h1><a class="motion-coverage" href="muscle-coverage.html">Coverage ↗</a><button type="button" data-motion-find-muscle>Find muscle</button></div>
+ <header class="motion-heading"><div class="motion-title"><a href="#atlas" class="motion-back">← 3D Atlas</a><a id="course-motion-return" class="motion-coverage" hidden></a><h1 tabindex="-1">Motion <em>Lab</em></h1><a class="motion-coverage" href="muscle-coverage.html">Coverage ↗</a><button type="button" data-motion-find-muscle>Find muscle</button></div>
  <div class="motion-modes" role="group" aria-label="Motion mode">
  <button type="button" data-motion-mode="activities">Movement library</button>
  <button type="button" data-motion-mode="pose">Pose skeleton</button>

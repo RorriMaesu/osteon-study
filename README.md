@@ -1,6 +1,12 @@
 # Osteon
 
-**A&P study, in another dimension.** Explore the skeleton and muscles, locate landmarks, and put your recall to work. Built around OpenStax Anatomy and Physiology 2e chapters 1–11, alongside the dedicated BI 231 bone-list test.
+Osteon brings two Anatomy & Physiology courses into one study app with a shared 3D Atlas and Motion Lab. [Choose a course](https://rorrimaesu.github.io/osteon-study/#courses).
+
+- [Anatomy & Physiology I](https://rorrimaesu.github.io/osteon-study/#course-1) includes Chapters 1–11, the Chapter 12 bridge, BI 231 lab lists, and saved fall exams.
+- [Anatomy & Physiology II](https://rorrimaesu.github.io/osteon-study/#course-2) covers all 49 sections of OpenStax Chapters 12–20. Each lesson includes original explanations, guided practice, a diagram, recall questions, and a link to the textbook. Try the [action potential lab](https://rorrimaesu.github.io/osteon-study/#ap2-lesson-12.4/activity), [blood typing](https://rorrimaesu.github.io/osteon-study/#ap2-lesson-18.6/activity), or [cardiac cycle](https://rorrimaesu.github.io/osteon-study/#ap2-lesson-19.3/activity).
+- [A&P II exams and results](https://rorrimaesu.github.io/osteon-study/#ap2-exams) includes nine chapter exams, four unit scopes, a cumulative exam, and written reasoning stations. These are textbook-based practice assessments. Each course keeps its own exam draft. Scores and study work are saved in the current browser and can be exported from My progress.
+
+Figures reproduced from *Anatomy and Physiology 2e* credit OpenStax and Rice University in the lesson, with additional image credits where applicable. [Read the book and attribution terms](https://openstax.org/books/anatomy-and-physiology-2e/pages/preface).
 
 **Muscle review in progress:** the humerus/forearm layer now includes the forearm muscles correctly. The atlas still has missing and unresolved anatomy; [read the current review and individual component checks](MUSCLE-VIEW-REVIEW.md). Further promotional-video work is on hold for the muscle review.
 

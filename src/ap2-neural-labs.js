@@ -84,6 +84,61 @@ function voltage(state) {
   return [svg(`Voltage trace for a ${input} mV depolarizing input. ${heading}.`,drawing), heading, detail];
 }
 
+
+const synapticPatterns = [
+  ['One excitatory input', null, 'One excitatory synapse is active once.'],
+  ['Two synapses together', 0, 'Two different excitatory synapses fire together. Adding their graded potentials at the initial segment is spatial summation.'],
+  ['Same synapse twice · 5 ms apart', 5, 'The same excitatory synapse fires twice. Much of the first response persists when the second arrives, producing temporal summation.'],
+  ['Same synapse twice · 25 ms apart', 25, 'The same excitatory synapse fires twice. The longer interval leaves less of the first response available for temporal summation.']
+];
+
+// The simplified inputs rise over 3 ms and then decay with a 16 ms time constant.
+function synapticPulse(age) {
+  if (age < 0) return 0;
+  return age <= 3 ? age / 3 : Math.exp(-(age - 3) / 16);
+}
+
+function summation(state) {
+  const [pattern, interval, explanation] = synapticPatterns[Number(state.pattern)];
+  const strength = Number(state.strength);
+  const inhibition = [0,3,7][Number(state.inhibition)];
+  const first = 8;
+  const last = first + (interval ?? 0);
+  const resting = -70;
+  const threshold = -55;
+  const x = ms => 45 + ms * 4.45;
+  const y = mv => 26 + (-44 - mv) * 4.4;
+  let peak = resting;
+  let peakTime = 0;
+  let trace = '';
+  for (let time = 0; time <= 78; time += 0.5) {
+    let voltage = resting + strength * synapticPulse(time - first);
+    if (interval !== null) voltage += strength * synapticPulse(time - last);
+    voltage -= inhibition * synapticPulse(time - last);
+    trace += (time ? ' L' : 'M') + x(time).toFixed(1) + ' ' + y(voltage).toFixed(1);
+    if (voltage > peak) { peak = voltage; peakTime = time; }
+  }
+  const reaches = peak >= threshold;
+  const title = 'Peak ' + peak.toFixed(1).replace('-','−') + ' mV · ' + (reaches ? 'threshold reached' : 'below threshold');
+  const inhibitoryNote = inhibition ? ` A separate inhibitory synapse contributes a ${inhibition} mV hyperpolarization at the final input.` : '';
+  const detail = explanation + inhibitoryNote + (reaches ? ' The sum is sufficient to trigger a spike in this model.' : ' The sum stays below −55 mV, so this model predicts no spike.');
+  let drawing = text(12,18,'Summed graded voltage (mV)');
+  for (const mv of [-45,-55,-70,-75]) {
+    drawing += line(`M45 ${y(mv)} H392`,mv===threshold?amber:'#d9e1de',1,mv===threshold?'stroke-dasharray="5 3"':'');
+    drawing += text(37,y(mv)+4,String(mv).replace('-','−'),'end',ink,12);
+  }
+  drawing += text(391,y(threshold)-5,'Spike threshold','end',amber,12) + line('M45 28 V178 H392',ink,1.4);
+  for (const ms of [0,20,40,60]) {
+    drawing += line(`M${x(ms)} 178 v4`,ink,1.2) + text(x(ms),204,' '+ms,'middle',ink,12);
+  }
+  drawing += text(392,204,'Time (ms)','end',ink,12) + line(trace,teal,3) + dot(x(peakTime),y(peak),amber,4);
+  for (const ms of interval > 0 ? [first,last] : [first]) {
+    drawing += line(`M${x(ms)} 177 l-4 -5 h8 Z`,purple,1.3,'fill="'+purple+'"');
+  }
+  drawing += text(45,228,'▲ Input time','start',purple,12) + text(392,228,'● Peak of graded sum','end',amber,12);
+  return [svg(`${pattern}. ${title}. ${detail}`,drawing,242),title,detail];
+}
+
 const csfStops = [
   ['Lateral ventricles', 'Choroid plexuses secrete CSF within the ventricular system. Each cerebral hemisphere contains a lateral ventricle.'],
   ['Third ventricle', 'Each lateral ventricle communicates with this midline cavity through its own interventricular foramen.'],
@@ -192,6 +247,16 @@ function ear(state) {
 const pick = (key, label, values, initial = '0') => ({ key, label, values, initial });
 const allRoutes = bodyRoutes.map(item => item[0]);
 const labs = {
+  '12.5': {
+    title:'Will the postsynaptic neuron reach threshold?',
+    prompt:'Compare one input with two overlapping inputs. The graph shows their graded sum at the initial segment. The result below predicts whether an action potential begins.',
+    controls:[
+      pick('pattern','Excitatory input pattern',synapticPatterns.map(item=>item[0]),'1'),
+      {key:'strength',label:'Size of each EPSP',initial:'8',min:1,max:12,unit:'mV'},
+      pick('inhibition','Inhibitory input at the final event',['Off','3 mV hyperpolarization','7 mV hyperpolarization'])
+    ],
+    draw:summation
+  },
   '12.2': {title:'Explore a multipolar neuron', prompt:'Locate a structure, then follow how its work contributes to the signal.', controls:[pick('region','Structure',neuronParts.map(item=>item[0]))], draw:neuron},
   '12.4': {title:'Will the axon fire?', prompt:'Change the size of a single depolarizing input. Once the trace crosses threshold, inspect its phases.', controls:[{key:'input',label:'Depolarizing input',initial:'18',min:0,max:30,unit:'mV'},pick('phase','Phase to locate',phases.map(item=>item[0]),'2')], draw:voltage},
   '13.3': {title:'Follow cerebrospinal fluid', prompt:'Select a stop along the route, then block the aqueduct and identify the spaces upstream.', controls:[pick('flow','Flow condition',['Open aqueduct','Blocked aqueduct']),pick('stop','Site along the route',csfStops.map(item=>item[0]))], draw:csf},

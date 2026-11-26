@@ -1,3 +1,4 @@
+import {selectedCourse} from './course-home.js';
 import {activeChapters} from './chapters.js';
 import {chapter11Muscles} from './chapter11-muscles.js';
 import {worksheetTermIds,worksheetSourcesByTerm} from './muscle-label-ui.js';
@@ -151,6 +152,6 @@ export function initPractice({viewer,setDivision,setView,selectTerm,dialog,toast
  bindStudyBackups($('#progress-view'),{dialog,toast,escape:e});$('#reset-data').onclick=()=>{dialog('<h2>Reset your history?</h2><p>This clears attempts, card schedules and lesson read status on this device. Export a backup first if you want to keep them.</p><button id="confirm-reset">Reset local history</button>');$('#confirm-reset').onclick=()=>{resetProgress();localStorage.removeItem(PROFESSOR_MUSCLE_KEY);$('#info-dialog').close();progressPage();toast('Local study history reset.');};};
  }
  document.addEventListener('viewchange',ev=>{if(ev.detail!=='practice')flash=null;if(session&&(ev.detail!=='atlas'||location.hash!=='#quick-practice'))endSpatial(false);if(ev.detail==='practice'&&!hasMuscleExercise()&&!flash&&!document.body.dataset.conceptActive&&!document.body.dataset.precisionActive)practiceHome();if(ev.detail==='progress')progressPage();});document.addEventListener('anatomyready',()=>{if(!hasMuscleExercise()&&!$('#practice-view .landmark-bank-layout')&&!flash&&!session&&!document.body.dataset.conceptActive&&!document.body.dataset.precisionActive)practiceHome();if($('#progress-view').classList.contains('active'))progressPage();});document.addEventListener('storagefailed',()=>toast('Browser storage is full or unavailable. Export progress before leaving.'));
- $('#start-practice').disabled=false;$('#start-practice').onclick=()=>{flash=null;practiceHome();setView('practice');};$$('[data-view="practice"],[data-view="progress"]').forEach(b=>b.disabled=false);
+ $('#start-practice').disabled=false;$('#start-practice').onclick=()=>{if(selectedCourse()==='2'){location.hash='ap2-exams';return;}flash=null;practiceHome();setView('practice');};$$('[data-view="practice"],[data-view="progress"]').forEach(b=>b.disabled=false);
  practiceHome();progressPage();
 }

@@ -1,4 +1,6 @@
 // Original lessons and activities aligned with the linked OpenStax A&P 2e sections.
+import {renderRoutes,mountRoutes} from './ap2-cardio-routes.js';
+
 const book = 'https://openstax.org/books/anatomy-and-physiology-2e/pages/';
 
 function section(id, title, objectives, paragraphs, activity, questions) {
@@ -644,7 +646,9 @@ const labs = new Map([
   ['18.6', [renderTyping, mountTyping]],
   ['19.2', [renderHeartbeat, mountHeartbeat]],
   ['19.3', [renderHeartbeat, mountHeartbeat]],
-  ['20.2', [renderVessel, mountVessel]]
+  ['20.2', [renderVessel, mountVessel]],
+  ['20.5', [() => renderRoutes(false), lab => mountRoutes(lab,false)]],
+  ['20.6', [() => renderRoutes(true), lab => mountRoutes(lab,true)]]
 ]);
 
 export function renderLab(id) {

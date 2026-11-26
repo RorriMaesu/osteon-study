@@ -24,6 +24,7 @@ export function sanitizeConversation(value){
   error:!!(m.error||m.pending),model:typeof m.model==='string'?m.model.slice(0,100):'',
   correction:typeof m.correction==='string'?m.correction.slice(0,300):'',reference:validReference(m.reference)?m.reference:undefined,
   course:m.course==='ap2'?'ap2':'ap1',
+  kind:m.role==='assistant'&&m.kind==='course-note'?'course-note':undefined,
   sources:(Array.isArray(m.sources)?m.sources:[]).map(restoreSource).filter(Boolean).slice(0,4)
  })).filter(m=>m.content.trim());
 }

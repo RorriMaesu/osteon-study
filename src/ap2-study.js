@@ -1,6 +1,7 @@
 import {lessons as fallLessons} from './learning-data.js';
 import {chapters,sections,sectionById,labFor,units} from './ap2-library.js';
 import figures from './ap2-figures.json' with {type:'json'};
+import {openWritingPractice} from './ap2-writing-ui.js';
 import {plates} from './ap2-endocrine-plates.js';
 import {setLearningContext,setTutorAssessmentMode} from './learning-context.js';
 import {rememberAP2Route} from './course-home.js';
@@ -14,10 +15,14 @@ const atlasLinks = {
 };
 export function initAP2({root,escape:e,toast,dialog}) {
   let storage; try {storage=localStorage;} catch {}
-  const store=createRecordsStore(storage,toast);
+  const store=createRecordsStore(storage,message=>{
+    toast(message);
+    const notice=root.querySelector('[data-storage-notice]');
+    if(notice){notice.hidden=false;notice.textContent=message+' Use My progress to download a backup before closing this tab.';}
+  });
   const link=(route,label,primary=false)=>`<a class="course-link${primary?' course-primary':''}" href="#${e(route)}">${e(label)}</a>`;
   const scopeNav=()=>`<nav class="ap2-nav" aria-label="A&P II workspace">${link('course-2','Chapters')}${link('ap2-exams','Exams & results')}${link('ap2-progress','My progress')}</nav>`;
-  const page=(body)=>{root.innerHTML=`<div class="course-page ap2-page">${scopeNav()}${body}</div>`;root.scrollTop=0;};
+  const page=(body)=>{root.innerHTML=`<div class="course-page ap2-page">${scopeNav()}<p data-storage-notice role="status" ${store.volatile?'':'hidden'}>This tab is keeping your work in memory. Download a backup from My progress before closing it.</p>${body}</div>`;root.scrollTop=0;};
   const hero=(kicker,title,description='')=>`<header class="course-hero"><div class="eyebrow">${e(kicker)}</div><h1 tabindex="-1">${e(title)}</h1>${description?'<p>'+e(description)+'</p>':''}</header>`;
   const exams=createExamScreens({root,page,hero,link,store,e,dialog,toast});
   const chapterComplete=(ch,data)=>ch.sections.filter(s=>data.studied[s.id]).length;
@@ -27,6 +32,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
       const sec=sectionById.get(data.resume.split('lesson-')[1]?.split('/')[0]);
       if(sec) return link(data.resume,'Continue §'+sec.id+' · '+sec.title,true);
       if(data.resume.startsWith('ap2-report-'))return link(data.resume,'Reopen last exam result');
+      const writing=chapters.find(c=>'ap2-writing-'+c.id===data.resume); if(writing)return link(data.resume,'Continue written reasoning · Chapter '+writing.id,true);
       const ch=chapters.find(c=>'ap2-chapter-'+c.id===data.resume); if(ch)return link(data.resume,'Continue Chapter '+ch.id,true);
     }
     return link('ap2-lesson-12.1','Start Chapter 12',true);
@@ -37,6 +43,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
       `<div class="course-actions">${resume(data)} ${link('ap2-search','Search lessons')} ${link('atlas','Shared 3D Atlas')}</div><div class="ap2-unit-grid">${units.map(unit=>`<article class="course-card"><h2>${e(unit.title)}</h2><div class="ap2-chapter-list">${chapters.filter(ch=>unit.chapters.includes(ch.id)).map(ch=>`<a href="#ap2-chapter-${ch.id}"><b>${ch.id}</b><span>${e(ch.title)}<small>${chapterComplete(ch,data)} of ${ch.sections.length} sections studied</small></span><span aria-hidden="true">→</span></a>`).join('')}</div></article>`).join('')}</div>`);
     setLearningContext({course:'ap2',type:'study',label:'A&P II · Chapters 12–20',text:chapters.map(c=>c.title).join(', ')});
   }
+  function contextForSearch(){setLearningContext({course:'ap2',type:'study',label:'A&P II lesson search',text:''});}
   function search(){
     page(hero('A&P II · STUDY STUDIO','Search lessons')+`<div class="course-card"><label for="ap2-search-text">Topic or anatomical term</label><input type="search" id="ap2-search-text" autocomplete="off" placeholder="Try myelin, pupil, or blood pressure"><label class="ap2-choice"><input type="checkbox" id="ap2-search-both"> Search both courses</label><div class="ap2-search-results"></div></div>`);
     const field=root.querySelector('#ap2-search-text'),both=root.querySelector('#ap2-search-both'),out=root.querySelector('.ap2-search-results');
@@ -51,11 +58,15 @@ export function initAP2({root,escape:e,toast,dialog}) {
   }
   function chapter(ch){
     const data=store.read();
-    page(hero('A&P II · CHAPTER '+ch.id,ch.title,ch.summary)+`<div class="course-actions">${link('ap2-lesson-'+(ch.sections.find(x=>!data.studied[x.id])||ch.sections[0]).id,'Continue chapter',true)}${link('ap2-exams/'+ch.id,'Chapter exam')}</div>
+    page(hero('A&P II · CHAPTER '+ch.id,ch.title,ch.summary)+`<div class="course-actions">${link('ap2-lesson-'+(ch.sections.find(x=>!data.studied[x.id])||ch.sections[0]).id,'Continue chapter',true)}${link('ap2-exams/'+ch.id,'Chapter exam')}${link('ap2-writing-'+ch.id,'Written reasoning')}</div>
     <section class="course-card"><h2>Lessons</h2><div class="ap2-chapter-list">${ch.sections.map(s=>`<a href="#ap2-lesson-${s.id}"><b>${s.id}</b><span>${e(s.title)}<small>${e(s.objectives[0])}</small></span><span>${data.studied[s.id]?'Studied':'→'}</span></a>`).join('')}</div></section>`);
     setLearningContext({course:'ap2',type:'study',label:ch.title,reference:ch.sections[0].id,text:ch.summary});
   }
-  function lesson(s,tab,route) {
+  function rememberStudy(route){
+    rememberAP2Route(route);
+    if(store.read().resume!==route)store.update(r=>{r.resume=route;});
+  }
+  function lesson(s,tab) {
     const ch=chapters.find(c=>c.sections.includes(s)),base='ap2-lesson-'+s.id;
     const art=figures.filter(f=>f.section===s.id), plate=plates[s.id];
     const tabs=[['read','Learn'],['activity','Explore'],...(art.length||plate?[['figures','Figures']]:[]),['check','Check recall']];
@@ -111,7 +122,6 @@ export function initAP2({root,escape:e,toast,dialog}) {
       }check(first);
     }
     setLearningContext({course:'ap2',type:'lesson',reference:s.id,label:s.title,text:s.paragraphs.join(' ')});
-    if(route!==data.resume)store.update(r=>{r.resume=route;});
   }
   const isExam=()=>location.hash==='#ap2-session'&&!!store.read().draft;
   document.addEventListener('viewchange',()=>{if(!location.hash.startsWith('#ap2-')&&!location.hash.startsWith('#course-2')&&document.body.dataset.ap2Exam){delete document.body.dataset.ap2Exam;setTutorAssessmentMode(null);}});
@@ -122,9 +132,11 @@ export function initAP2({root,escape:e,toast,dialog}) {
     const chapterId=route.match(/^ap2-chapter-(\d+)$/)?.[1];
     const lessonId=route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(activity|figures|check))?$/);
     const ch=chapters.find(c=>String(c.id)===chapterId);
-    if(ch){rememberAP2Route(route);chapter(ch);return;}
-    if(lessonId&&sectionById.has(lessonId[1])){rememberAP2Route(route);lesson(sectionById.get(lessonId[1]),lessonId[2]||'read',route);return;}
-    if(route==='ap2-search'){search();return;}
+    if(ch){rememberStudy(route);chapter(ch);return;}
+    if(lessonId&&sectionById.has(lessonId[1])){rememberStudy(route);lesson(sectionById.get(lessonId[1]),lessonId[2]||'read');return;}
+    const writingId=route.match(/^ap2-writing-(1[2-9]|20)$/)?.[1];
+    if(writingId){rememberStudy(route);openWritingPractice(Number(writingId),{root,page,hero,link,store,e});return;}
+    if(route==='ap2-search'){contextForSearch();search();return;}
     if(exams.open(route)){
       if(isExam()){document.body.dataset.ap2Exam='true';setTutorAssessmentMode('exam');}
       return;

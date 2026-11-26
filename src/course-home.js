@@ -16,6 +16,7 @@ export function initCourseHome({setView, escape}) {
   const root = document.querySelector('#courses-view');
   const picker = document.querySelector('#course-picker');
   const back = document.querySelector('#course-atlas-return');
+  const motionBack = document.querySelector('#course-motion-return');
   selected = read(selectionKey) === '2' ? '2' : '1';
   picker.value = selected;
   const choose = course => { selected = course; picker.value = course; remember(selectionKey, course); };
@@ -49,11 +50,24 @@ export function initCourseHome({setView, escape}) {
     if (view === 'atlas' || view === 'motion') {
       let ret = ''; try { ret = sessionStorage.getItem(returnKey) || ''; } catch {}
       back.hidden = !(selected === '2' && /^ap2-lesson-[\d.]+(?:\/(?:activity|figures|check))?$/.test(ret));
-      if (!back.hidden) { back.href = '#' + ret; back.textContent = '← Lesson ' + ret.slice(11).split('/')[0]; }
+      const motionBack=document.querySelector('#course-motion-return');
+      if(motionBack)motionBack.hidden=back.hidden;
+      if (!back.hidden) {
+        for(const a of [back,motionBack].filter(Boolean)){a.href='#'+ret;a.textContent='← Lesson '+ret.slice(11).split('/')[0];}
+      }
+      if (motionBack) { motionBack.hidden=back.hidden; if(!back.hidden){motionBack.href='#'+ret;motionBack.textContent=back.textContent;} }
       return;
     }
     back.hidden = true;
-    if (view === 'courses') { if (route === 'courses') picker.value = 'all'; return; }
+    if(motionBack)motionBack.hidden=true;
+    if (view === 'courses') {
+      if (route === 'courses') { picker.value='all'; return; }
+      const active=route==='ap2-progress'?'progress':/^ap2-(exams|session|report)/.test(route)?'practice':'study';
+      for(const b of document.querySelectorAll('.main-nav [data-view]')){
+        b.classList.toggle('active',b.dataset.view===active);b.setAttribute('aria-current',b.dataset.view===active?'page':'false');
+      }
+      return;
+    }
     choose('1');
     if (/^(lesson-\d+\.\d+|exam[34](?:-results(?:\/[\w-]+)?|-exam)?|exam-session|bone-list|muscle-list)$/.test(route)) remember('osteon-course-resume-1',route);
   }
@@ -67,6 +81,7 @@ export function rememberAP2Route(route) {
 }
 export function courseRouteLabel(route) {
   if (route.includes('lesson-')) return 'Section ' + route.split('lesson-').pop().split('/')[0];
+  if (route.startsWith('ap2-writing-')) return 'Written reasoning · Chapter ' + route.slice(12);
   if (route.startsWith('ap2-chapter-')) return 'Chapter ' + route.slice(12);
   if (route.includes('report') || route.includes('results')) return 'Exam results';
   if (route.includes('session') || route.endsWith('-exam')) return 'Saved exam';

@@ -3,6 +3,7 @@
     "section": "12.1",
     "figure": "12.2",
     "title": "Central and peripheral divisions",
+    "alt": "The brain connects to the spinal cord along the body’s midline. Paired peripheral nerves branch away from the cord into the trunk and limbs, with ganglia along the peripheral pathways.",
     "width": 998,
     "height": 903
   },
@@ -10,6 +11,7 @@
     "section": "12.2",
     "figure": "12.8",
     "title": "Parts of a neuron",
+    "alt": "Dendrites branch from the soma. A single axon extends through myelin segments separated by nodes of Ranvier and divides into terminals that contact another neuron.",
     "width": 998,
     "height": 669
   },
@@ -17,6 +19,7 @@
     "section": "12.2",
     "figure": "12.11",
     "title": "Glial cells in the central nervous system",
+    "alt": "Astrocytes and microglia occupy the tissue around neurons. Oligodendrocyte processes wrap segments of several axons, while ependymal cells form a continuous lining.",
     "width": 1104,
     "height": 852
   },
@@ -24,6 +27,7 @@
     "section": "12.3",
     "figure": "12.16",
     "title": "The motor response",
+    "alt": "Successive hand positions show a person testing shower water and reaching for the faucet handle. Motor axons in the forearm end at neuromuscular junctions in skeletal muscle.",
     "width": 998,
     "height": 771
   },
@@ -31,6 +35,7 @@
     "section": "12.4",
     "figure": "12.24",
     "title": "Phases of an action potential",
+    "alt": "Voltage begins near −70 mV. After an input reaches the −55 mV threshold, voltage rises to about +30 mV, falls below resting level, and returns to baseline.",
     "width": 998,
     "height": 588
   },
@@ -38,6 +43,7 @@
     "section": "12.5",
     "figure": "12.26",
     "title": "Summation of postsynaptic potentials",
+    "alt": "A neuron receives excitatory and inhibitory inputs. The trace at its axon hillock rises and falls with those inputs, then produces a spike when their sum reaches threshold.",
     "width": 998,
     "height": 642
   },
@@ -45,6 +51,7 @@
     "section": "12.5",
     "figure": "12.27",
     "title": "Structure of a synapse",
+    "alt": "A magnified axon terminal contains vesicles. Transmitter leaves vesicles, crosses the cleft, and reaches ligand-gated channels embedded in the receiving neuron’s membrane.",
     "width": 1260,
     "height": 1167
   },
@@ -52,6 +59,7 @@
     "section": "13.1",
     "figure": "13.3",
     "title": "From embryonic brain vesicles to adult regions",
+    "alt": "Three early brain vesicles become five. The forebrain gives rise to telencephalon and diencephalon, the midbrain persists, and the hindbrain divides into the future pons and cerebellum region and the future medulla.",
     "width": 1361,
     "height": 488
   },
@@ -59,6 +67,7 @@
     "section": "13.2",
     "figure": "13.7",
     "title": "Lobes of the cerebral cortex",
+    "alt": "The lateral cerebral surface shows frontal, parietal, temporal, and occipital lobes. The central sulcus separates the precentral and postcentral gyri. The lateral sulcus borders the temporal lobe.",
     "width": 998,
     "height": 847
   },
@@ -66,6 +75,7 @@
     "section": "13.2",
     "figure": "13.14",
     "title": "Spinal cord cross-section",
+    "alt": "A thoracic cord diagram and matching micrograph show central, butterfly-shaped gray matter surrounding the canal. Posterior, lateral, and anterior white columns lie outside the gray horns.",
     "width": 998,
     "height": 1145,
     "credit": "(Micrograph provided by the Regents of University of Michigan Medical School © 2012)"
@@ -74,6 +84,7 @@
     "section": "13.3",
     "figure": "13.18",
     "title": "Cerebrospinal fluid circulation",
+    "alt": "Arrows trace CSF from a lateral ventricle through the third ventricle, cerebral aqueduct, and fourth ventricle. Apertures lead to the subarachnoid space, with return through arachnoid granulations into a venous sinus.",
     "width": 1361,
     "height": 886
   },
@@ -81,6 +92,7 @@
     "section": "13.4",
     "figure": "13.23",
     "title": "Cranial nerves at the base of the brain",
+    "alt": "An inferior view labels the twelve cranial nerve pairs. Olfactory and optic structures lie anteriorly, while the roots of most remaining nerves emerge around the brainstem.",
     "width": 1260,
     "height": 790
   },
@@ -88,6 +100,7 @@
     "section": "14.1",
     "figure": "14.3",
     "title": "Taste receptors of the tongue",
+    "alt": "Papillae on the tongue enlarge to show taste buds in their epithelium. A taste pore opens to the surface, where taste hairs of gustatory cells encounter dissolved chemicals.",
     "width": 1361,
     "height": 1145,
     "credit": "(Micrograph provided by the Regents of University of Michigan Medical School © 2012)"
@@ -96,6 +109,7 @@
     "section": "14.1",
     "figure": "14.4",
     "title": "Olfactory structures",
+    "alt": "An inhaled odorant reaches olfactory cilia high in the nasal cavity. Receptor neuron axons pass through the cribriform plate to the olfactory bulb. A micrograph shows the olfactory epithelium.",
     "width": 1314,
     "height": 1343,
     "credit": "(Micrograph provided by the Regents of University of Michigan Medical School © 2012)"
@@ -104,6 +118,7 @@
     "section": "14.1",
     "figure": "14.5",
     "title": "External, middle, and inner ear",
+    "alt": "The ear canal ends at the tympanic membrane. The malleus, incus, and stapes bridge the middle ear to the oval window. The vestibule and spiral cochlea occupy the inner ear.",
     "width": 1116,
     "height": 713
   },
@@ -111,6 +126,7 @@
     "section": "14.1",
     "figure": "14.12",
     "title": "Semicircular canals and rotation",
+    "alt": "With the head still, the cupula stands upright over sensory hair cells in an ampulla. When rotation starts, fluid moves relative to the canal and deflects the cupula and hair bundles.",
     "width": 1361,
     "height": 671
   },
@@ -118,6 +134,7 @@
     "section": "14.1",
     "figure": "14.15",
     "title": "Structures of the eye",
+    "alt": "An eye cross-section places cornea, iris, pupil, and lens anteriorly. The retina lines the posterior wall, the fovea sits near its center, and the optic nerve leaves at the optic disc.",
     "width": 1361,
     "height": 847
   },
@@ -125,6 +142,7 @@
     "section": "14.2",
     "figure": "14.19",
     "title": "Ascending sensory pathways",
+    "alt": "Fine touch and proprioception from the right body ascend the right dorsal column before crossing in the medulla. Pain and temperature cross in the spinal cord. Both routes reach the left thalamus and sensory cortex.",
     "width": 1325,
     "height": 1361
   },
@@ -132,6 +150,7 @@
     "section": "14.3",
     "figure": "14.28",
     "title": "The corticospinal tract",
+    "alt": "Upper motor axons descend from the precentral gyrus. The diagram distinguishes fibers crossing at the medullary pyramids into the lateral tract from fibers in the anterior tract. Lower motor axons leave for skeletal muscle.",
     "width": 622,
     "height": 1361
   },
@@ -139,6 +158,7 @@
     "section": "15.1",
     "figure": "15.2",
     "title": "Sympathetic pathways",
+    "alt": "Preganglionic fibers leave thoracic and upper lumbar cord for paired sympathetic chains or abdominal ganglia. Postganglionic fibers fan out to targets including the eye, heart, gut, and bladder.",
     "width": 924,
     "height": 1361
   },
@@ -146,6 +166,7 @@
     "section": "15.1",
     "figure": "15.4",
     "title": "Parasympathetic pathways",
+    "alt": "Parasympathetic pathways reach organs from brainstem cranial nerves and the sacral cord. Ganglia near their targets leave short postganglionic routes. The vagus extends to thoracic and abdominal organs.",
     "width": 885,
     "height": 1361
   },
@@ -153,6 +174,7 @@
     "section": "15.2",
     "figure": "15.6",
     "title": "Somatic and visceral reflex arcs",
+    "alt": "The somatic route runs from one motor neuron to skeletal muscle. In the autonomic route a preganglionic axon synapses in a ganglion, and a postganglionic axon extends to smooth muscle.",
     "width": 994,
     "height": 1361
   },
@@ -160,13 +182,15 @@
     "section": "15.3",
     "figure": "15.11",
     "title": "Central autonomic pathways",
+    "alt": "A medial brain section traces the medial forebrain bundle and dorsal longitudinal fasciculus from the hypothalamic region toward brainstem autonomic nuclei and the spinal cord.",
     "width": 1260,
     "height": 1128
   },
   {
     "section": "15.4",
     "figure": "15.13",
-    "title": "Autonomic input to the heart and vessels",
+    "title": "Autonomic input to the heart",
+    "alt": "A vagal pathway runs from the medulla to the heart. Sympathetic pathways reach the same organ from upper thoracic spinal levels through sympathetic chain ganglia.",
     "width": 1361,
     "height": 1179
   },
@@ -174,6 +198,7 @@
     "section": "16.1",
     "figure": "16.2",
     "title": "Anatomical basis of neurological examination",
+    "alt": "A side view links mental status to the cerebrum, cranial nerve testing to brain and brainstem structures, sensory and motor testing to spinal pathways, and coordination to the cerebellum.",
     "width": 840,
     "height": 1004
   },
@@ -181,6 +206,7 @@
     "section": "16.2",
     "figure": "16.6",
     "title": "Cortical language areas",
+    "alt": "On the lateral cerebral hemisphere, a white-matter pathway links Broca’s area in the frontal lobe with Wernicke’s area near the posterior temporal lobe.",
     "width": 1050,
     "height": 713
   },
@@ -188,6 +214,7 @@
     "section": "16.3",
     "figure": "16.10",
     "title": "Vestibulo-ocular reflex",
+    "alt": "Head rotation changes vestibular input to the brainstem. Excitation and inhibition pass through the abducens and oculomotor circuits so the eyes turn opposite the head and maintain fixation.",
     "width": 1130,
     "height": 1213
   },
@@ -195,6 +222,7 @@
     "section": "16.4",
     "figure": "16.12",
     "title": "Spinal tract positions and directions",
+    "alt": "In a spinal cord cross-section, dorsal column and spinothalamic arrows point up toward the brain. Lateral and anterior corticospinal arrows point down from the cortex.",
     "width": 1104,
     "height": 1112
   },
@@ -202,6 +230,7 @@
     "section": "16.5",
     "figure": "16.15",
     "title": "Functional regions of the cerebellum",
+    "alt": "A midline section and an unfolded superior view locate the vermis between the cerebellar hemispheres. The flocculonodular lobe includes the midline nodulus and lateral flocculi.",
     "width": 1314,
     "height": 682
   },
@@ -209,6 +238,7 @@
     "section": "17.1",
     "figure": "17.2",
     "title": "Major endocrine glands and tissues",
+    "alt": "A body outline locates brain endocrine structures, thyroid and parathyroids, thymus, adrenal glands above the kidneys, pancreas, ovaries, and testes. Insets enlarge the brain and neck glands.",
     "width": 1361,
     "height": 1270
   },
@@ -216,6 +246,7 @@
     "section": "17.2",
     "figure": "17.5",
     "title": "Water-soluble hormones and cell signaling",
+    "alt": "A hormone binds at the cell surface. A G protein activates adenylyl cyclase, which turns ATP into cyclic AMP. Cyclic AMP activates protein kinases that phosphorylate target proteins.",
     "width": 1260,
     "height": 956
   },
@@ -223,6 +254,7 @@
     "section": "17.3",
     "figure": "17.8",
     "title": "Hypothalamic axons and posterior pituitary",
+    "alt": "Neurosecretory axons descend from the hypothalamus through the infundibulum into the posterior pituitary. Their terminals release oxytocin and antidiuretic hormone into a capillary plexus.",
     "width": 1361,
     "height": 1097
   },
@@ -230,6 +262,7 @@
     "section": "17.3",
     "figure": "17.9",
     "title": "Portal vessels and anterior pituitary",
+    "alt": "Hypothalamic hormones enter a primary capillary plexus. Portal veins carry them to the anterior pituitary, where they regulate the release of pituitary hormones into a second capillary plexus.",
     "width": 1361,
     "height": 1175
   },
@@ -237,6 +270,7 @@
     "section": "17.4",
     "figure": "17.13",
     "title": "Thyroid feedback axis",
+    "alt": "Hypothalamic TRH promotes pituitary TSH release, and TSH stimulates thyroid T3 and T4 secretion. Feedback arrows show that elevated thyroid hormones suppress TRH and TSH.",
     "width": 1361,
     "height": 1331
   },
@@ -244,6 +278,7 @@
     "section": "17.5",
     "figure": "17.16",
     "title": "Parathyroid hormone and calcium regulation",
+    "alt": "The low-calcium branch follows PTH effects on bone and kidney and calcitriol-mediated intestinal uptake. The high-calcium branch shows calcitonin favoring calcium deposition in bone.",
     "width": 1133,
     "height": 1361
   },
@@ -251,6 +286,7 @@
     "section": "17.6",
     "figure": "17.17",
     "title": "Layers of the adrenal gland",
+    "alt": "A section through the adrenal gland and a micrograph locate three cortical zones outside the medulla. The zones are paired with mineralocorticoids, glucocorticoids, and androgens, and the medulla with catecholamines.",
     "width": 1361,
     "height": 391,
     "credit": "(Micrograph provided by the Regents of University of Michigan Medical School © 2012)"
@@ -259,6 +295,7 @@
     "section": "17.9",
     "figure": "17.19",
     "title": "Regulation of blood glucose",
+    "alt": "Two feedback loops return blood glucose toward its starting range. After a rise, beta cells secrete insulin to support uptake and storage. After a fall, alpha cells release glucagon to stimulate glucose release.",
     "width": 969,
     "height": 1361
   },
@@ -266,6 +303,7 @@
     "section": "18.1",
     "figure": "18.2",
     "title": "Components of a centrifuged blood sample",
+    "alt": "Separated blood forms a plasma layer above a thin buffy coat of leukocytes and platelets, with erythrocytes at the bottom. The red-cell layer is smaller in anemia and larger in polycythemia.",
     "width": 998,
     "height": 626
   },
@@ -273,6 +311,7 @@
     "section": "18.2",
     "figure": "18.4",
     "title": "Formation of blood cells in bone marrow",
+    "alt": "A blood stem cell branches into myeloid and lymphoid lineages. Myeloid descendants include red cells, megakaryocytes that shed platelets, granulocytes, and monocytes. Lymphoid descendants include NK, T, and B cells.",
     "width": 1361,
     "height": 1034
   },
@@ -280,6 +319,7 @@
     "section": "18.3",
     "figure": "18.8",
     "title": "Erythrocyte life cycle",
+    "alt": "An arrow cycle follows red cells from marrow through circulation to macrophage breakdown. Iron returns on transferrin, globin yields reusable amino acids, and heme pigment is converted to bilirubin.",
     "width": 1047,
     "height": 1361
   },
@@ -287,6 +327,7 @@
     "section": "18.4",
     "figure": "18.10",
     "title": "Leukocyte emigration from a blood vessel",
+    "alt": "Three panels show leukocytes responding to chemicals from an injury, squeezing between capillary cells, and moving through tissue toward the source. A monocyte becomes a macrophage that engulfs material.",
     "width": 1085,
     "height": 1361
   },
@@ -294,6 +335,7 @@
     "section": "18.5",
     "figure": "18.14",
     "title": "Stages of hemostasis",
+    "alt": "Vascular spasm is followed by a platelet plug and a fibrin-stabilized clot. Alongside these stages, intrinsic and extrinsic pathways converge on a common pathway that produces a cross-linked fibrin mesh.",
     "width": 1131,
     "height": 1361,
     "credit": "(credit a: Kevin MacKenzie)"
@@ -302,6 +344,7 @@
     "section": "18.6",
     "figure": "18.17",
     "title": "ABO antigens and antibodies",
+    "alt": "A table pairs A red cells with A antigen and anti-B plasma antibody, B cells with B antigen and anti-A, AB cells with both antigens and neither antibody, and O cells with neither antigen and both antibodies.",
     "width": 1104,
     "height": 848
   },
@@ -309,6 +352,7 @@
     "section": "19.1",
     "figure": "19.9",
     "title": "Internal structures of the heart",
+    "alt": "An anterior cutaway reveals the atria above the ventricles, the interventricular septum, and valves along the inflow and outflow routes. Chordae tendineae anchor atrioventricular valves to papillary muscles.",
     "width": 1260,
     "height": 883
   },
@@ -316,6 +360,7 @@
     "section": "19.1",
     "figure": "19.15",
     "title": "Coronary circulation",
+    "alt": "Anterior and posterior heart views trace coronary arteries over the myocardium and cardiac veins back toward the coronary sinus. Interventricular vessels follow grooves between the ventricles.",
     "width": 1361,
     "height": 1250
   },
@@ -323,6 +368,7 @@
     "section": "19.2",
     "figure": "19.18",
     "title": "Cardiac conduction system",
+    "alt": "Impulse flow begins at the sinoatrial node in the right atrium and reaches the atrioventricular node, bundle of His, right and left bundle branches, and ventricular Purkinje fibers.",
     "width": 1314,
     "height": 880
   },
@@ -330,6 +376,7 @@
     "section": "19.3",
     "figure": "19.28",
     "title": "Cardiac cycle and ECG timing",
+    "alt": "An ECG aligns with a timeline of chamber activity. Atrial systole follows the P wave. Ventricular systole follows the QRS complex and ends around the T wave, followed by ventricular diastole.",
     "width": 1260,
     "height": 600
   },
@@ -337,6 +384,7 @@
     "section": "19.4",
     "figure": "19.31",
     "title": "Factors that determine cardiac output",
+    "alt": "Arrows show that cardiac output equals heart rate times stroke volume. Stroke volume is end-diastolic volume minus end-systolic volume. Preload, afterload, and contractility appear among the factors affecting it.",
     "width": 1182,
     "height": 692
   },
@@ -344,6 +392,7 @@
     "section": "19.5",
     "figure": "19.36",
     "title": "Embryonic development of the heart",
+    "alt": "Paired early heart tubes fuse into a single tube that bends and loops. Later sections show atrial and ventricular partitions and developing valves forming the four-chamber arrangement.",
     "width": 1361,
     "height": 1173
   },
@@ -351,6 +400,7 @@
     "section": "20.1",
     "figure": "20.3",
     "title": "Vessel wall structure",
+    "alt": "Artery and vein cutaways show corresponding inner, middle, and outer tunics. The artery has a thicker muscular wall. A micrograph pairs its rounded lumen with the thinner-walled, irregular vein.",
     "width": 999,
     "height": 1361,
     "credit": "(Micrograph provided by the Regents of the University of Michigan Medical School © 2012)"
@@ -359,6 +409,7 @@
     "section": "20.2",
     "figure": "20.10",
     "title": "Pressure across the systemic circuit",
+    "alt": "Arterial pressure oscillates between systolic and diastolic values. Mean pressure drops sharply across arterioles, pulsations fade, and pressure approaches zero near the venae cavae.",
     "width": 1314,
     "height": 916
   },
@@ -366,6 +417,7 @@
     "section": "20.3",
     "figure": "20.16",
     "title": "Capillary exchange in the textbook model",
+    "alt": "In the illustrated textbook model, outward hydrostatic pressure exceeds inward colloid osmotic pressure at the arterial end. They balance near midcapillary, and the inward force dominates at the venous end.",
     "width": 1361,
     "height": 635
   },
@@ -373,6 +425,7 @@
     "section": "20.4",
     "figure": "20.18",
     "title": "Baroreceptor reflexes",
+    "alt": "A pressure rise increases baroreceptor firing and produces reduced cardiac output and vasodilation. A pressure fall decreases firing and produces increased cardiac output and vasoconstriction.",
     "width": 1361,
     "height": 1013
   },
@@ -380,6 +433,7 @@
     "section": "20.5",
     "figure": "20.23",
     "title": "Pulmonary circuit",
+    "alt": "Blood leaves the right ventricle through the pulmonary trunk and right and left pulmonary arteries, passes through lung capillaries, and returns to the left atrium through pulmonary veins.",
     "width": 1104,
     "height": 636
   },
@@ -387,6 +441,7 @@
     "section": "20.5",
     "figure": "20.43",
     "title": "Hepatic portal circulation",
+    "alt": "Veins from the intestine, stomach, and spleen converge in the portal system and carry blood to the liver. The superior and inferior mesenteric tributaries drain different regions of the gut.",
     "width": 1260,
     "height": 814
   },
@@ -394,6 +449,7 @@
     "section": "20.6",
     "figure": "20.44",
     "title": "Fetal circulation and shunts",
+    "alt": "The umbilical vein brings placental blood to the fetus. The ductus venosus bypasses much of the liver, the foramen ovale links the atria, and the ductus arteriosus links pulmonary trunk to aorta.",
     "width": 1300,
     "height": 1350
   }

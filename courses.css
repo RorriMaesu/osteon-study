@@ -37,3 +37,7 @@
 .ap2-table-wrap{max-width:100%;overflow-x:auto}.ap2-table-wrap table{border-collapse:collapse;margin:8px 0}.ap2-table-wrap th,.ap2-table-wrap td{border:1px solid var(--line);padding:6px 10px;text-align:start}
 @media(min-width:1000px){#courses-view{scrollbar-gutter:stable}.ap2-page:has(.ap2-test){height:100%;display:flex;flex-direction:column;box-sizing:border-box}.ap2-test{flex:1;min-height:0;overflow:auto}.ap2-test-nav,.ap2-exam-header,.ap2-page:has(.ap2-test)>.ap2-nav{flex:none}}
 @media(max-width:700px){.ap2-unit-grid,.ap2-lesson-text{grid-template-columns:1fr}.ap2-lesson-text{gap:8px}.ap2-lesson-text aside{border-inline-start:none;border-top:1px solid var(--line);padding:12px 0 0}.ap2-page button,.ap2-page select,.ap2-tabs a,.ap2-nav a{min-height:44px}.ap2-tabs a{display:flex;align-items:center;padding:4px 9px}.ap2-breadcrumb{gap:3px}.ap2-breadcrumb select{max-width:72vw}.ap2-simulation{min-width:0}.ap2-stimulus img{max-height:34dvh}}
+
+.ap2-writing-panel{margin-block:12px}.ap2-writing-panel summary{cursor:pointer;color:var(--mint);padding-block:6px}.ap2-writing-panel p,.ap2-writing-panel li{line-height:1.55}
+#course-motion-return[hidden]{display:none}
+@media(min-width:1000px){.ap2-page:has(.ap2-lesson-body){box-sizing:border-box;height:100%;display:flex;flex-direction:column}.ap2-page:has(.ap2-lesson-body)>.ap2-lesson-body{min-height:0;overflow:auto;flex:1}.ap2-page:has(.ap2-lesson-body)>:not(.ap2-lesson-body){flex:none}}

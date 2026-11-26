@@ -52,3 +52,39 @@ test('submitted question review reaches the model and a closed exam excludes all
   assert.ok(!blocked.messages[0].content.includes(review.expected));
 });
 
+test('valve timing explanations use the associated pressure pair at opening and closure',()=>{
+  const context={course:'ap2',reference:'19.3'};
+  const cases=[
+    ['Why does the aortic valve open during ventricular ejection?',/left ventricular pressure rises above aortic pressure/,/mitral valve closed earlier/,/left ventricular pressure falls below aortic pressure/],
+    ['When does the mitral valve reopen and shut?',/left atrial pressure exceeds left ventricular pressure/,/mitral valve closes/,/aortic valve opens later/],
+    ['Which gradient shuts the pulmonic valve?',/right ventricular pressure rises above pulmonary trunk pressure/,/tricuspid valve closed earlier/,/right ventricular pressure falls below pulmonary trunk pressure/],
+    ['Explain tricuspid valve timing.',/right atrial pressure exceeds right ventricular pressure/,/tricuspid valve closes/,/pulmonary valve opens later/],
+    ['When do the AV and semilunar valves open and close?',/ventricular contraction starts/,/isovolumetric contraction/,/isovolumetric relaxation/i],
+  ];
+  for(const [query,...checks] of cases){
+    const response=buildTutorMessages(query,[],context,'explain');
+    for(const pattern of checks)assert.match(response.authoredReply,pattern);
+    assert.match(response.authoredReply,/\[S1\]/);
+    assert.equal(response.sources[0].reference,'19.3');
+    assert.equal(response.sources[0].url,sectionById.get('19.3').source);
+    assert.equal(response.messages.length,0);
+  }
+});
+
+test('valve timing practice gives a focused Socratic question or a cue and respects the exam boundary',()=>{
+  const context={course:'ap2',reference:'19.3'};
+  const query='Why does the aortic valve open during ejection?';
+  const practice=buildTutorMessages(query,[],context,'socratic');
+  assert.match(practice.authoredReply,/which must be higher, left ventricular pressure or aortic pressure\?/i);
+  const hint=buildTutorMessages('When does it close?',[{role:'user',content:query}],context,'hint');
+  assert.match(hint.authoredReply,/back toward the valve.*aortic valve to close/i);
+  const ordinary=buildTutorMessages('Explain how the SA node starts a heartbeat.',[],context,'explain');
+  assert.equal(ordinary.authoredReply,undefined);
+  assert.ok(ordinary.messages.length>=2);
+  const structural=buildTutorMessages('What tissue forms the aortic valve cusps?',[],context,'explain');
+  assert.equal(structural.authoredReply,undefined);
+  const inExam=buildTutorMessages(query,[],{...context,assessmentMode:'exam'},'explain');
+  assert.equal(inExam.authoredReply,undefined);
+  assert.equal(inExam.blocked,true);
+  assert.deepEqual(inExam.sources,[]);
+});

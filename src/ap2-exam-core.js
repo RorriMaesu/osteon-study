@@ -43,7 +43,7 @@ export function grade(q,raw) {
   }
   if (q.type==='term') {
     if (q.section==='18.6' && /^(AB|A|B|O) (negative|positive)$/i.test(q.expected)) {
-      const type=response.toLowerCase().replace(/[−–]/g,'-').replace(/^type\s+/, '').replace(/rh(?:\(d\))?/g,'').replace(/\s+/g,'');
+      const type=response.toLowerCase().replace(/[−–]/g,'-').replace(/^type\s+/, '').replace(/rh(?:\(d\))?\s*[-‐‑]?(?=negative|positive|neg|pos)/g,'').replace(/rh(?:\(d\))?/g,'').replace(/\s+/g,'');
       const match=/^(ab|a|b|o)(negative|positive|neg|pos|[+-])$/.exec(type);
       if(!match)return 'incorrect';
       const canonical=match[1]+' '+(['-','neg','negative'].includes(match[2])?'negative':'positive');

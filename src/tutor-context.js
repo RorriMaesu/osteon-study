@@ -4,6 +4,7 @@ import {conversationForModel} from './tutor-state.js';
 import {allTerms} from './data.js';
 import {sections as ap2Sections, sectionById} from './ap2-library.js';
 import {ap2Reference, isAP2Context} from './tutor-ap2.js';
+import {cardiacValveTeaching} from './tutor-valves.js';
 const stop=new Set('a an the and or of to in on for with is are was were be by as at it this that how what why which me i you my can do does about please explain ask question help hint give compare from current highlighted target another clearly anatomy anatomical'.split(' '));
 const tokenize=t=>String(t).toLowerCase().replace(/femora/g,'femur').replace(/radii/g,'radius').replace(/ulnae/g,'ulna').replace(/vertebrae/g,'vertebra').match(/[a-z0-9]{3,}/g)?.filter(w=>!stop.has(w)).map(w=>w.length>5?w.replace(/s$/,''):w)||[];
 export function splitPageText(raw){
@@ -74,6 +75,11 @@ export function buildTutorMessages(query,history,context={},mode='socratic'){
  if(mode==='socratic'&&/\b(explain|explanation|tell me|give me the answer|what is the difference|what are the differences)\b/i.test(query))mode='explain';
  const followup=query.split(/\s+/).length<=16&&/\b(it|its|their|they|them|those|that|this|ones|continue|more)\b/i.test(query);
  const previous=followup?[...history].reverse().find(m=>m.role==='user'&&m.content)?.content.slice(0,400):'';
+ if(isAP2Context(context)){
+  const lastQuestion=[...history].reverse().find(m=>m.role==='user'&&m.content)?.content.slice(0,400);
+  const authored=cardiacValveTeaching(query,lastQuestion,context,mode);
+  if(authored)return{...authored,retrievalTopic:lastQuestion||'',messages:[]};
+ }
  const sources=retrieveSources(query,{...context,conversationTopic:previous}),term=allTerms.find(t=>t.id===context.termId);
  if(isAP2Context(context)){
   const approach=mode==='explain'?'Give the requested explanation first in two to five short sentences.':mode==='hint'?'Offer a small cue and one question that helps the learner reason through it.':'Ask one specific, answerable question at a time, then give feedback based on the notes.';

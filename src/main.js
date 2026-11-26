@@ -54,7 +54,9 @@ export function setView(view,{route,historyMode='push'}={}){if(!appViews.include
  if(!viewer.quiz)viewer.ensureTissues().catch(()=>{if(viewer.loaded)toast('Extra tissues could not load. Reopen the atlas or use Tissues to retry.');});
 }courseHome?.sync(view,route);document.dispatchEvent(new CustomEvent('viewchange',{detail:view}));window.scrollTo({top:0,behavior:'instant'});}
 function showHistoryRoute(initial=false){
- const route=location.hash.slice(1)||(location.search?'atlas':'courses');
+ const launchOptions=new URLSearchParams(location.search);
+ const legacyLaunch=['muscles','muscle','feature','nerve','lymph-node','lablist','exam','motionMode'].some(key=>launchOptions.has(key));
+ const route=location.hash.slice(1)||(legacyLaunch?'atlas':'courses');
  if(route===currentRoute&&!initial)return;
  const routeEvents={'exam4':'openexam4','exam4-exam':'resumeexam4','exam4-quiz-show':'resumeexam4quizshow','exam4-results':'exam4results','exam4-card':'exam4card','exam3':'openexam3','exam3-exam':'resumeexam3','exam3-results':'exam3results','exam3-card':'exam3card','exam-center':'openexams','exam-session':'resumeexam','bone-list':'lablist','bone-list-session':'lablist','study':'studyhome','muscle-list':'openmusclechecklist','muscle-labeling':'openmusclelabeling','muscle-worksheet':'openmuscleworksheet','muscle-label-3d':'openmusclespatial','professor-muscle-review':'openprofessormusclereview','professor-muscle-session':'resumeprofessormusclereview','professor-muscle-results':'professormuscleresults'};
  const mockReportId=parseMockReportRoute(route),exam4ReportId=parseMockReportRoute(route,'exam4');
@@ -277,7 +279,7 @@ $$('[data-region]').forEach(b=>b.onclick=()=>changeRegion(b.dataset.region));
 syncFilters();
 $('#structure-search').oninput=renderList;$('#exact-only').onchange=renderList;
 $$('[data-browse-mode]').forEach(b=>b.onclick=()=>{browseMode=b.dataset.browseMode;atlasTopic='all';$('#structure-search').placeholder=browseMode==='nerves'?'Search nerves, e.g. CN VII':browseMode==='ligaments'?'Search ligaments':browseMode==='lymph-nodes'?'Search lymph nodes':'Search bones, landmarks & nodes';$('#structure-search').setAttribute('aria-label',$('#structure-search').placeholder);if(browseMode==='ligaments')enableLigaments(true);if(browseMode==='lymph-nodes'&&!lymphNodes.loading)lymphNodes.toggle(true);if(browseMode==='nerves'){nervous.setFilter('all');nervous.toggle(true);}$$('[data-browse-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));if(browseMode==='landmarks')$('#exact-only').checked=false;$('#exact-only').disabled=['landmarks','ligaments','nerves','lymph-nodes'].includes(browseMode);renderList();});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();if($('#courses-view').classList.contains('active')&&selectedCourse()==='2'){if(!document.body.dataset.ap2Exam)courseHome.open('ap2-search');return;}setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
 $$('[data-camera]').forEach(b=>b.onclick=()=>{
  if(!ready)return;
  if(b.dataset.camera==='reset')viewer.recenter();
