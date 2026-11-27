@@ -138,7 +138,8 @@
     "bile_duct",
     "pancreatic_duct",
     "duodenum",
-    "hepatic_portal_vein"
+    "hepatic_portal_vein",
+    "cystic_duct"
   ],
   "assets/ap3-models/alimentary-tract.glb": [
     "esophagus",
@@ -171,6 +172,24 @@
     "umbilical_cord",
     "cervix",
     "birth_canal"
+  ],
+  "assets/ap3-models/blood-compartment.glb": [
+    "erythrocyte_membrane",
+    "platelet_fragment",
+    "neutrophil_cytoplasm",
+    "neutrophil_nucleus",
+    "neutrophil_granules",
+    "eosinophil_cytoplasm",
+    "eosinophil_nucleus",
+    "eosinophil_granules",
+    "basophil_cytoplasm",
+    "basophil_nucleus",
+    "basophil_granules",
+    "lymphocyte_cytoplasm",
+    "lymphocyte_nucleus",
+    "monocyte_cytoplasm",
+    "monocyte_nucleus",
+    "plasma"
   ],
   "assets/ap3-models/carnegie-stages.glb": [
     "stage_12",
@@ -205,9 +224,9 @@
     "capillary_wall",
     "plasma",
     "red_blood_cells",
-    "interstitial_fluid",
     "cell_membrane",
-    "intracellular_fluid"
+    "intracellular_fluid",
+    "interstitial_fluid"
   ],
   "assets/ap3-models/fuel-organs.glb": [
     "liver",

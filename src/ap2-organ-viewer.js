@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
+import {winterExpandedControls} from './ap2-expanded-station.js';
+import organVersions from './organ-model-versions.json' with {type:'json'};
 
 const instances = new WeakMap();
 function release(root) {
@@ -19,6 +21,7 @@ function release(root) {
 export function mountOrganViewer(host, options) {
   if (!host) return;
   instances.get(host)?.dispose();
+  options={...winterExpandedControls(host),...options};
   const title = options.title || '3D anatomy';
   host.innerHTML = '<div class="organ-viewport"></div><div class="organ-tools" aria-label="3D view controls"><button data-turn="left" aria-label="Rotate left">↶</button><button data-turn="right" aria-label="Rotate right">↷</button><button data-zoom="in" aria-label="Zoom in">+</button><button data-zoom="out" aria-label="Zoom out">−</button><select data-orientation aria-label="Preset view"><option value="home">Starting view</option><option value="reverse">Opposite view</option><option value="side">Side view</option><option value="above">View from above</option></select><button data-recenter>Reset view</button><button data-expand aria-expanded="false">Enlarge</button></div><small role="status" data-model-status></small><button type="button" data-retry-model hidden>Retry 3D model</button>';
   host.classList.add('organ-viewer');
@@ -98,7 +101,7 @@ export function mountOrganViewer(host, options) {
     shownSeconds+=delta;lastTime=now;
     if(model&&options.onFrame)options.onFrame(shownSeconds,api);
     if(controls)controls.update();
-    if(dirty||options.onFrame){dirty=false;renderer.render(scene,camera);}
+    if(dirty||options.onFrame){dirty=false;renderer.render(scene,camera);options.onRender?.(api);}
     if(model&&options.onFrame&&!frame)frame=requestAnimationFrame(draw);
   }
   function turn(angle){
@@ -153,7 +156,9 @@ export function mountOrganViewer(host, options) {
     const decoder=new DRACOLoader().setDecoderPath(new URL('vendor/draco/',document.baseURI).href).setWorkerLimit(1);
     try{
       const loader=new GLTFLoader().setDRACOLoader(decoder);
-      return (await loader.loadAsync(new URL(asset,document.baseURI).href)).scene;
+      const url=new URL(asset,document.baseURI);
+      if(organVersions[asset])url.searchParams.set('v',organVersions[asset]);
+      return (await loader.loadAsync(url.href)).scene;
     }finally{decoder.dispose();}
   }
   const layers=new Map();
@@ -213,6 +218,7 @@ export function mountOrganViewer(host, options) {
   };
   function dispose(){
     if(disposed)return;disposed=true;
+    if(host.classList.contains('organ-expanded'))options.onExpand?.(false);
     cancelAnimationFrame(frame);resizeObserver?.disconnect();onscreenObserver?.disconnect();removed?.disconnect();
     controls?.dispose();for(const fn of disposables)fn();release(scene);
     renderer?.dispose();renderer?.forceContextLoss();

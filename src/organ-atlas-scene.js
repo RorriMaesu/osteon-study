@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
-import {label as surfaceLabel} from './ap3-specimens-catalog.js';
+import {mountStructurePicker} from './organ-structure-picker.js';
 import {createOrganMotion,organSystemColor} from './organ-atlas-catalog.js';
 
 
@@ -13,6 +13,7 @@ function tapSurface(viewer,objects,choose,onTouch=()=>{}){
   const canvas=viewer.renderer.domElement,ray=new THREE.Raycaster(),pointer=new THREE.Vector2();
   const pointers=new Set();let down;
   canvas.onpointerdown=e=>{pointers.add(e.pointerId);down=pointers.size===1?[e.clientX,e.clientY]:null;onTouch();};
+  canvas.onpointermove=e=>{if(down&&Math.hypot(e.clientX-down[0],e.clientY-down[1])>6)down=null;};
   canvas.onpointercancel=e=>{pointers.delete(e.pointerId);down=null;};
   canvas.onpointerup=e=>{
     pointers.delete(e.pointerId);
@@ -39,8 +40,10 @@ function expandedControls(host){
 
 export function mountCloseup(host,entry,onReady){
   const targets=new Set(entry.targets),context=new Set(entry.context||[]),names=new Set([...targets,...context]);
+  let picker;
   const options={
     ...expandedControls(host),asset:entry.asset,title:entry.title,direction:entry.direction||[0,.05,1],up:entry.up||[0,1,0],
+    onRender:()=>picker?.updatePin(),
     include:(_,mesh)=>Boolean(lookupSurface(mesh,names)),
     colors:(_,mesh)=>{
       const name=lookupSurface(mesh,names),material=[].concat(mesh.material)[0];
@@ -66,20 +69,24 @@ export function mountCloseup(host,entry,onReady){
       // Fit the selected organ before an overlay or distant context can expand its bounds.
       const fitContext=new Set(entry.fitContext||[]);
       const fitMeshes=()=>{for(const id of context)if(!targets.has(id)&&!fitContext.has(id))for(const mesh of meshes.get(id)||[])mesh.visible=false;};
-      const showContext=visible=>{for(const id of context)if(!targets.has(id))for(const mesh of meshes.get(id)||[])mesh.visible=visible;viewer.invalidate();};
+      let contextVisible=true;
+      const showContext=visible=>{contextVisible=visible;for(const id of context)if(!targets.has(id))for(const mesh of meshes.get(id)||[])mesh.visible=visible;picker?.contextChanged(visible);viewer.invalidate();};
       fitMeshes();viewer.fit();showContext(true);
       const motion=createOrganMotion(entry,viewer,meshes);
       const frame=t=>{motion.set(t);viewer.invalidate();};
       viewer.addCleanup(()=>motion.dispose?.());
       const selectable=[...meshes.values()].flat();
-      viewer.announce('Tap a surface to identify it. Drag to rotate.');
-      tapSurface(viewer,()=>selectable,hits=>{
-        const hit=hits.find(h=>targets.has(lookupSurface(h.object,names)))||hits[0];
-        if(!hit)return;
-        const raw=lookupSurface(hit.object,names).replace(/\.001$/,'').replace(/\.([lr])$/,(_,s)=>s==='l'?' (left)':' (right)');
-        viewer.announce(surfaceLabel(raw));
+      picker=mountStructurePicker(host,viewer,entry,meshes,group=>{
+        if(!group.target&&!contextVisible){
+          const toggle=host.closest('.oa-content')?.querySelector('[data-oa-context]');
+          if(toggle)toggle.checked=true;showContext(true);
+        }
       });
-      host.querySelector('[data-recenter]').onclick=()=>{const first=[...context].filter(k=>!targets.has(k)).flatMap(k=>meshes.get(k)||[])[0];const was=first?.visible;fitMeshes();viewer.fit();showContext(was??true);host.querySelector('[data-orientation]').value='home';};
+      viewer.announce('Tap a surface or open Structures to identify it.');
+      tapSurface(viewer,()=>picker.isolateObjects(selectable),hits=>{
+        const hit=hits[0];if(hit)picker.pick(lookupSurface(hit.object,names),hit);
+      });
+      host.querySelector('[data-recenter]').onclick=()=>{fitMeshes();viewer.fit();showContext(contextVisible);host.querySelector('[data-orientation]').value='home';};
       onReady({frame,showContext,viewer});
     }
   };

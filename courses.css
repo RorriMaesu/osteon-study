@@ -371,3 +371,9 @@ body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>main,
   [data-spring-specimen] [data-ap3-explanation]{order:1;margin:.15rem 0}
   [data-spring-specimen] .ap3-specimen>small{order:2}
 }
+
+.organ-viewer.organ-expanded:has(.winter-expanded-controls){inset:0;margin:0;width:100%;height:100dvh;max-width:none;max-height:100dvh;grid-template-rows:minmax(0,1fr) auto auto auto}
+.winter-expanded-controls{max-block-size:min(32dvh,15rem);overflow:auto;overscroll-behavior:contain;min-inline-size:0;padding:4px 8px;background:#172c31;border-radius:8px}
+.winter-expanded-controls select,.winter-expanded-controls label{max-inline-size:100%;min-inline-size:0}
+.winter-expanded-controls [hidden]{display:none!important}
+.winter-expanded-controls p{margin:.25rem 0}

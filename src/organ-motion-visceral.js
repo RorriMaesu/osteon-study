@@ -31,10 +31,14 @@ function curveFor(effect){
   return {points,distance,length,at};
 }
 
+function tracerFraction(effect,p){
+  const [start,end]=effect.range||[0,1];
+  return start+p*(end-start);
+}
+
 function tracer(effect,curve,root,radius){
   const {length,at}=curve;
-  const range=effect.range||[0,1],fraction=p=>range[0]+p*(range[1]-range[0]);
-  const linePoints=Array.from({length:65},(_,i)=>at(fraction(i/64),new THREE.Vector3()));
+  const linePoints=Array.from({length:65},(_,i)=>at(tracerFraction(effect,i/64),new THREE.Vector3()));
   const lineGeo=new THREE.BufferGeometry().setFromPoints(linePoints);
   const lineMat=new THREE.LineBasicMaterial({color:effect.color||'#ffe28a',transparent:true,opacity:.28,depthTest:false,depthWrite:false});
   const line=new THREE.Line(lineGeo,lineMat);line.renderOrder=14;root.add(line);
@@ -49,7 +53,7 @@ function tracer(effect,curve,root,radius){
   marker.add(edge,dot);root.add(marker);
   return {
     set(t){
-      const p=localTime(t,effect.span),f=fraction(p);
+      const p=localTime(t,effect.span),f=tracerFraction(effect,p);
       marker.visible=t>=(effect.span?.[0]??0)&&t<=(effect.span?.[1]??1);
       line.visible=marker.visible;
       at(f,marker.position);
@@ -95,8 +99,10 @@ function wave(object,effect,curve){
     return (t,attr)=>{
       const p=localTime(t,effect.span);
       const on=t>=(effect.span?.[0]??0)&&t<=(effect.span?.[1]??1);
+      // A propulsive ring squeezes the lumen on the oral (or renal) side of its bolus.
+      // The gastric mixing wave has a separate clock as contents can reverse direction.
+      const traveling=effect.marker?tracerFraction(effect,p)-1.5*width:p*1.36-.18;
       for(const [i,f,edge,x,y,z,dx,dy,dz] of affected){
-        const traveling=(p*1.36-.18);
         const strength=effect.mode==='mix'
           ? (.5-.5*Math.cos(2*Math.PI*p))*Math.pow(.5+.5*Math.cos(4*Math.PI*(f-.28*Math.sin(2*Math.PI*p))),3)
           : Math.exp(-.5*((f-traveling)/width)**2)*Math.sin(Math.PI*p)**.4;

@@ -1,9 +1,16 @@
 import meshInventory from './ap3-specimens-meshes.json' with {type:'json'};
 import nodeInventory from './lymph-node-models.json' with {type:'json'};
+import {fetalSegments} from './ap2-fetal-paths.js';
 
 const atlas='Regional anatomy atlas',hra='Reference specimen',schema='3D teaching reconstruction';
 const catalog=[];
 const named={
+  ...fetalSegments,
+  VH_F_fundus_of_urinary_bladder_dome:'Urinary bladder dome (superior surface)',
+  VH_F_fundus_of_urinary_bladder_base:'Urinary bladder base (fundus)',
+  VH_F_abdominal_ostium_of_uterine_tube:'Uterotubal junctions (uterine ends of tubes)',
+  lungBranch:'Pulmonary artery to the left lung',
+  septal_flap:'Valve flap of the foramen ovale',
   Yao_afferent_lymphatic_vessel:'Afferent lymphatic vessel',Yao_efferent_lymph_node:'Efferent lymphatic vessel',
   Yao_blood_vasculature:'Blood vessels',Yao_capsule_of_lymph_node:'Capsule',Yao_follicles:'Lymphoid follicles',
   Yao_medulla_of_lymph_node:'Medulla',Yao_paracortex:'Paracortex',VH_M_kidney_capsule_L:'Fibrous capsule',
@@ -20,7 +27,7 @@ const named={
   shared_collecting_duct:'Shared collecting duct',lung_tissue:'Lung parenchyma',lacteal:'Central lacteal',
   superior_lobe_of_right_lung:'Right superior lobe',middle_lobe_of_right_lung:'Right middle lobe',
   inferior_lobe_of_right_lung:'Right inferior lobe',superior_lobe_of_left_lung:'Left superior lobe',
-  inferior_lobe_of_left_lung:'Left inferior lobe',bile_duct:'Common bile duct',theca:'Thecal layers',
+  inferior_lobe_of_left_lung:'Left inferior lobe',bile_duct:'Common bile duct',cystic_duct:'Cystic duct (teaching segment)',theca:'Thecal layers',
   region_Orbital_frontal_gyri:'Orbital surface of frontal lobes',trophoblast:'Blastocyst trophoblast',
   stage_12:'Stage 12 · 3.9 mm',stage_16:'Stage 16 · 10.5 mm',stage_20:'Stage 20 · 20 mm',stage_23:'Stage 23 · 31 mm'
 };
@@ -74,7 +81,7 @@ add(23,'distal-colon','Descending and sigmoid colon',atlas,'Follow the sigmoid c
   routes:[route('Distal colon','descending_colon sigmoid_colon')],
   handoffs:{sigmoid_colon:['ap3-specimen-alimentary-tract/target/rectum','Continue to the rectum →']}
 });
-add(23,'accessory-ducts','Bile, pancreatic juice and portal blood',atlas,'Follow the common bile duct and main pancreatic duct toward the duodenum. Compare transport into the intestinal lumen with blood entering the liver through the hepatic portal vein.',{routes:[route('Bile delivery','gallbladder bile_duct duodenum'),route('Pancreatic secretion','pancreas pancreatic_duct duodenum')]});
+add(23,'accessory-ducts','Bile, pancreatic juice and portal blood',atlas,'Trace stored bile from the gallbladder through the cystic duct and common bile duct to the duodenum. The donor represents these ducts as one continuous outlet. Their division is approximate because the common hepatic duct branch is absent. Pancreatic juice follows the pancreatic duct.',{routes:[route('Bile delivery','gallbladder cystic_duct bile_duct duodenum'),route('Pancreatic secretion','pancreas pancreatic_duct duodenum')]});
 add(23,'enteric-wall','Layers of the intestinal wall',schema,'Work outward from mucosa through submucosa and muscular layers to serosa. The myenteric plexus lies between the circular and longitudinal layers.',{asset:'assets/ap2-neuro/enteric-wall.glb'});
 add(23,'villus','A villus and its two absorption routes',schema,'Open villus, enlarged. The lacteal is a blind-ended lymphatic beside a network of capillaries. Compare the first vessel entered by glucose with the first vessel entered by a chylomicron.',{routes:[route('Glucose to portal blood','lumen surface_epithelium capillary_network portal_venule'),route('Chylomicron to lymph','lumen surface_epithelium lacteal')]});
 add(24,'fuel-organs','Organs of fuel regulation',atlas,'Locate the gut, hepatic portal vein, pancreas, liver and skeletal muscle. Follow absorbed fuel to the liver, then use the chapter’s feeding and fasting activity to predict its fate.',{routes:[route('From gut to liver','duodenum hepatic_portal_vein liver')]});
@@ -90,8 +97,8 @@ add(25,'nephron-pair','Cortical and juxtamedullary nephrons',schema,'Compare the
   route('Cortical blood supply','afferent_arteriole cortical_corpuscle efferent_arteriole peritubular_capillaries')]});
 add(25,'glomerulus','Glomerular blood vessels and podocytes','Reference microanatomy model','Inspect the afferent arteriole, glomerular capillary tuft and efferent arteriole. Podocyte processes cover the capillaries. This Human Reference Atlas functional tissue unit is enlarged and displayed separately.',{groups:[['podocytes',/^podocyte_/,'Podocytes']],routes:[route('Blood through the tuft','afferent_arteriole capillaries efferent_arteriole')]});
 add(25,'filtration-barrier','From plasma to capsular space',schema,'This open, enlarged barrier contains a fenestrated endothelial layer, glomerular basement membrane and podocyte processes with filtration slits. Follow water and small solutes into the capsular space.',{direction:[.48,.55,1],routes:[route('Filtration layers','fenestrae basement_membrane filtration_slits capsular_space')]});
-add(26,'fluid-spaces','Plasma, interstitial and intracellular fluid',schema,'Find the vessel wall that separates plasma from interstitial fluid and the cell membrane separating intracellular fluid. The drawing illustrates the barriers. The relative volumes are enlarged for visibility.');
-add(26,'blood-compartment','Formed elements within plasma',schema,'Use the red-cell membrane to locate the boundary between plasma and intracellular fluid. Plasma and interstitial fluid belong to the extracellular compartment.',{asset:'assets/ap2-blood/formed-elements.glb'});
+add(26,'fluid-spaces','Plasma, interstitial and intracellular fluid',schema,'Find the vessel wall that separates plasma from interstitial fluid and the cell membrane separating intracellular fluid. The fluid sample is enlarged. Open the section to see red cells inside the capillary and fluid inside each tissue cell.',{cut:/^(capillary_wall|cell_membrane|plasma|interstitial_fluid)$/,layers:[[/^interstitial_fluid$/,.095],[/^plasma$/,.22],[/^capillary_wall$/,.34],[/^cell_membrane$/,.40]],routes:[route('Trace water from plasma into a tissue cell','plasma capillary_wall interstitial_fluid cell_membrane intracellular_fluid')]});
+add(26,'blood-compartment','Formed elements within plasma',schema,'Select the pale gold plasma surrounding the formed elements. Open the section to inspect white-cell nuclei and granules. The cells are arranged for comparison and their numbers do not represent a blood count.',{cut:/^plasma$|_cytoplasm$/,layers:[[/^plasma$/,.095],[/_cytoplasm$/,.28]],routes:[route('Compare plasma and a white cell','plasma neutrophil_cytoplasm neutrophil_nucleus')]});
 add(26,'respiratory-buffer','Lung exchange during acid–base regulation',schema,'Blood delivers carbon dioxide to the exchange surface. A change in alveolar ventilation alters arterial carbon dioxide and the bicarbonate buffer equilibrium.',{asset:'assets/ap3-models/alveolar-exchange.glb'});
 add(26,'renal-buffer','Renal tubules during acid–base regulation',schema,'Locate the proximal tubule where most filtered bicarbonate is reclaimed. Collecting-duct intercalated cells participate in acid secretion and bicarbonate handling.',{asset:'assets/ap3-models/nephron-pair.glb'});
 add(27,'sperm-route','Testicular ducts and the shared urethra','Regional atlas with illustrative terminal segments','Follow one side from testis through the epididymis and ductus deferens. The two terminal continuations behind the bladder are illustrative. They bridge a 32 mm gap in the source. The source ejaculatory ducts pass through the prostate to the urethra.',{routes:[route('Sperm transport','testis_left epididymis_left ductus_deferens_left illustrative_terminal_ductus_left ejaculatory_duct_left urethra')]});
@@ -102,9 +109,13 @@ add(27,'seminiferous-tubule','Spermatogenesis across a tubule',schema,'Trace ger
 add(28,'cleavage-implantation','Cleavage, blastocyst and implantation',schema,'Sequence shown at enlarged teaching scales. Find the fluid cavity and inner cell mass in the open blastocyst before examining implantation in the endometrium.',{routes:[route('Early sequence','zygote two_cell_stage morula trophoblast implanting_blastocyst')]});
 add(28,'carnegie-stages','Four Carnegie embryo stages',hra,'Left to right, four segmented embryos share a display scale calibrated to their linked fixed specimens. Stages 12, 16, 20 and 23 correspond to roughly 29, 39, 49 and 56 days after fertilization. Obstetric gestational age adds approximately two weeks. Select and focus to enlarge a stage.',{direction:[.08,.04,1]});
 add(28,'placenta','Full-term placenta and umbilical cord',hra,'Rotate the separate full-term reference to compare the fetal chorionic plate with the maternal-facing basal plate. Inspect the two umbilical arteries and one umbilical vein inside the cord.',{asset:'assets/ap2-glands/placenta.glb',direction:[.15,.5,1],groups:[['umbilical_arteries',/umbilical_artery/,'Two umbilical arteries']]});
-add(28,'placental-exchange','Maternal and fetal exchange surfaces',schema,'Follow fetal blood inside a villus. Maternal blood moves through the surrounding intervillous space. Exchange occurs across tissues between those two streams.',{routes:[route('Fetal blood','fetal_arteriole fetal_capillaries fetal_venule'),route('Maternal blood','maternal_spiral_artery intervillous_space maternal_vein')]});
+add(28,'placental-exchange','Maternal and fetal exchange surfaces',schema,'Follow fetal blood through a branching chorionic villus. Maternal blood bathes its outer surface and drains separately. Open the section to see the vessels inside the villus.',{cut:/^(chorionic_villus|intervillous_space)$/,layers:[[/^intervillous_space$/,.11],[/^chorionic_villus$/,.37]],routes:[route('Fetal blood','fetal_arteriole fetal_capillaries fetal_venule'),route('Maternal blood','maternal_spiral_artery intervillous_space maternal_vein')]});
 add(28,'birth-orientation','Cephalic presentation and fetal supports',schema,'In this longitudinal teaching section the fetal head presents toward the cervix. Inspect the amniotic sac, placenta, umbilical cord and birth canal. Shapes show orientation rather than clinical measurements.');
-add(28,'fetal-shunts','Fetal circulation and shunts',schema,'Compare the paths across the foramen ovale, ductus arteriosus and ductus venosus. Trace placental return before comparing the newborn transition in the chapter lab.',{asset:'assets/ap2-fetal-flow.glb'});
+add(28,'fetal-shunts','Fetal circulation and shunts',schema,'Trace one of the three fetal bypasses. Play the selected route, then switch to the newborn circulation to see where blood flows after functional closure.',{asset:'assets/ap2-fetal-flow.glb',routes:[
+  route('Umbilical vein to right atrium','umbilicalVein ductusVenosus lowerCava right_atrium'),
+  route('Across the atrial opening','lowerCava right_atrium foramenOvale left_atrium mitralInflow left_ventricle ascendingAorta'),
+  route('Past the fetal lungs','right_ventricle pulmonaryTrunk ductusArteriosus descendingAorta')
+]});
 add(28,'lactating-unit','Lactating alveoli and ducts',schema,'Secretory epithelial cells produce milk. Surrounding myoepithelial cells contract during oxytocin-mediated ejection and move milk from the lumina into ducts.',{routes:[route('Milk outflow','secretory_alveoli milk_in_lumina lactiferous_duct nipple')]});
 export const specimens=catalog;
 

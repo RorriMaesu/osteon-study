@@ -5,7 +5,11 @@ const neck = {
   title:'Thyroid and parathyroids in the neck', file:'neck.glb', credit:zCredit,
   note:'Find the isthmus crossing the front of the trachea. Rotate behind each thyroid lobe to see the smaller parathyroids. Their number and position vary.',
   targets:[
-    ['Thyroid gland',/^thyroid$/,'#bf777e'], ['Parathyroid glands',/parathyroid/,'#eacc72'],
+    ['Thyroid gland',/^thyroid$/,'#bf777e'],
+    ['Left superior parathyroid gland',/^left_superior_parathyroid$/,'#eacc72'],
+    ['Left inferior parathyroid gland',/^left_inferior_parathyroid$/,'#eacc72'],
+    ['Right superior parathyroid gland',/^right_superior_parathyroid$/,'#eacc72'],
+    ['Right inferior parathyroid gland',/^right_inferior_parathyroid$/,'#eacc72'],
     ['Thyroid cartilage',/^thyroid_cartilage$/,'#84b9bd'], ['Cricoid cartilage',/^cricoid$/,'#80a5ac'],
     ['Trachea',/^trachea$/,'#a2c4bc'], ['Hyoid bone',/^hyoid$/,'#ded4bc']
   ]
@@ -13,7 +17,17 @@ const neck = {
 const gonads={
   ovary:{title:'Ovaries in the pelvis',file:'ovarian-region.glb',credit:hraCredit,dir:[.08,.51,1],
     note:'The ovaries lie lateral to the uterus. Follow a uterine tube toward its fimbriae near the ovary. The ovaries, tubes, uterus and bony pelvis share the Visible Human Female coordinate frame.',
-    targets:[['Ovaries',/ovary/i,'#eebc7b'],['Uterine tubes',/fimbria|fibria|infundibulum|ampulla|isthmus_of_fallopian/i,'#c499be'],['Uterus and cervix',/uterus|cerv|cornua|uterine_segment|ostium/i,'#bd7986'],['Bony pelvis',/bone|sacrum|coccyx/i,'#c6c5b7']]},
+    targets:[
+      ['Left ovary',/^VH_F_left_ovary$/,'#eebc7b'],
+      ['Right ovary',/^VH_F_right_ovary$/,'#eebc7b'],
+      ['Fimbriae',/fibria|fimbria/i,'#c499be','Fingerlike fringes help guide the ovulated oocyte toward the abdominal opening.'],
+      ['Infundibula',/infundibulum/i,'#be88ae','The abdominal opening of each tube is at the distal funnel beside the ovary. The highlighted surfaces are the funnels.'],
+      ['Ampullae',/ampulla/i,'#cf9caf','The broad, curved segment between each infundibulum and isthmus is the usual site of fertilization.'],
+      ['Isthmuses',/isthmus_of_fallopian/i,'#b68ea8','Each narrow isthmus approaches the wall of the uterus.'],
+      ['Uterotubal junctions',/^VH_F_abdominal_ostium_of_uterine_tube$/,'#d3a5ca','These paired surfaces mark the uterine ends of the tubes, where the isthmuses meet the uterus.'],
+      ['Uterus and cervix',/uterus|cerv|cornua|uterine_segment/i,'#bd7986'],
+      ['Bony pelvis',/bone|sacrum|coccyx/i,'#c6c5b7']
+    ]},
   testis:{title:'Testes and neighboring structures',file:'testicular-region.glb',credit:zCredit,dir:[.36,.13,1],
     note:'Find each testis below the pubic symphysis. Follow the epididymis into the ductus deferens and upward into the pelvis. Leydig cells lie between seminiferous tubules within the testis.',
     targets:[['Testes',/testis/,'#eebc7b'],['Epididymides',/epididymis/,'#c499be'],['Ductus deferentes',/ductus/,'#eb9b96'],['Seminal glands',/seminal/,'#bc9c6e'],['Prostate',/prostate/,'#b08686'],['Bladder',/bladder/,'#b0bcac'],['Pubic symphysis',/symphysis/,'#d1c8ac']]},
@@ -93,6 +107,6 @@ export function regionSpecimen(host, kind, showModel, direction){
       api.addCleanup(()=>{surface.removeEventListener('pointerdown',press);surface.removeEventListener('pointerup',pick);});
       paint();
       if(kind==='neck')api.fit(api.model.getObjectByName('thyroid'),direction||[0,0,1]);
-      if(kind==='ovary')frameGroup(name=>group(name)===0||group(name)===1||group(name)===2,data.dir);
+      if(kind==='ovary')frameGroup(name=>group(name)>=0&&!/bone|sacrum|coccyx/i.test(name),data.dir);
     }});
 }

@@ -75,6 +75,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
   let selected=spec.targets.find(t=>t.id===prior)||null,optionsList=[],routeIndex=-1,routeStep=0,clip,ready=false,frame=0,time=0,apex=0,viewer;
   let nodeContext;
   const hidden=()=>blind||el('anonymous')?.checked;
+  const layerOpacity=raw=>spec.layers?.find(([pattern])=>pattern.test(raw))?.[1];
   function populate(){
     const restored=Array.isArray(order)?[...new Set(order)].map(key=>spec.targets.find(t=>t.id===key)).filter(Boolean):[];
     optionsList=hidden()?(restored.length?[...restored,...spec.targets.filter(t=>!restored.includes(t))]:anonymousOrder(spec.targets)):spec.targets;
@@ -108,7 +109,11 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
         mat.color.copy(color);
         if(match)mat.color.set('#ffcf64');
         const soft=/kidney_capsule|capsule_of_lymph_node|umbilical_cord|amnion|compact_bone|spongy_bone|hilum_of_kidney|^podocyte_|^sixth_rib|^corpus_spongiosum/.test(raw);
-        const opacity=selected&&!match?.15:soft&&!match?.31:1;
+        const layer=layerOpacity(raw);
+        const baseline=layer??(soft?.31:1);
+        let opacity=baseline;
+        if(match)opacity=layer===undefined?1:Math.min(.68,layer+.26);
+        else if(selected)opacity=Math.min(baseline,.15);
         mat.transparent=opacity<1;mat.opacity=opacity;mat.depthWrite=opacity===1;
         const planes=sheet?[clip]:[];
         if((mat.clippingPlanes?.length||0)!==planes.length)mat.needsUpdate=true;
@@ -223,7 +228,11 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
         const hits=ray.intersectObjects(meshes.filter(obj=>obj.visible&&targetFor.has(obj)&&targetFor.get(obj)),false)
           .filter(({object,point})=>!materials.get(object)[0].mat.clippingPlanes?.some(plane=>plane.distanceToPoint(point)<0));
         // Material dimming for a previous selection must never impede selection of a new surface.
-        const hit=hits.find(({object})=>!(/umbilical_cord|amnion|kidney_capsule|capsule_of_lymph_node|hilum_of_kidney|compact_bone|spongy_bone|^corpus_spongiosum/.test(object.userData.ap3Raw)))||hits[0];
+        // An enclosing sample volume must allow picking the visible cells or vessels inside.
+        const isShell=/umbilical_cord|amnion|kidney_capsule|capsule_of_lymph_node|hilum_of_kidney|compact_bone|spongy_bone|^corpus_spongiosum/;
+        const solid=hits.find(({object})=>layerOpacity(object.userData.ap3Raw)===undefined&&!isShell.test(object.userData.ap3Raw));
+        const layers=spec.layers&&!solid?hits.sort((a,b)=>layerOpacity(b.object.userData.ap3Raw)-layerOpacity(a.object.userData.ap3Raw)):hits;
+        const hit=solid||layers[0];
         const nearDot=nodeContext?.pick(e,box);
         if(hit||nearDot)select(hit?targetFor.get(hit.object):nearDot);
       });

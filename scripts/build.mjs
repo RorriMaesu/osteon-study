@@ -21,6 +21,12 @@ if(fs.existsSync(walkMuscleManifest)){
   modelAssets['motion-walk-muscles']=createHash('sha256').update(fs.readFileSync(walkMuscleManifest)).digest('hex').slice(0,12);
 }
 fs.writeFileSync(path.join(root,'src/model-assets.json'),JSON.stringify(modelAssets,null,2)+'\n');
+const organFolder='assets/ap3-models';
+const organRevisions=Object.fromEntries(fs.readdirSync(path.join(root,organFolder)).filter(name=>name.endsWith('.glb')).sort().map(name=>{
+ const asset=organFolder+'/'+name;
+ return [asset,createHash('sha256').update(fs.readFileSync(path.join(root,asset))).digest('hex').slice(0,12)];
+}));
+fs.writeFileSync(path.join(root,'src/organ-model-versions.json'),JSON.stringify(organRevisions,null,2)+'\n');
 const nodeModules=path.dirname(path.dirname(path.dirname(require.resolve('three'))));
 const threeRoot=path.dirname(path.dirname(require.resolve('three')));
 // Load the declared source files directly, avoiding compiler discovery in parent

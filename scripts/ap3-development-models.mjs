@@ -46,17 +46,6 @@ export async function developmentModels({C,put,sphere,tube,ring,slab,around,save
   put('endometrium',C.tissue,slab(1.37,-.59,-.015,.74,.30,.46),...[-.23,0,.23].map(x=>tube([[1.37+x,-.73,.19],[1.39+x,-.59,.19],[1.36+x,-.49,.19]],.030)));
   await save('cleavage-implantation');
 
-  // A single villous branch with an entering arteriole and returning venule.
-  put('chorionic_villus',C.wall,tube([[0,.91,-.08],[0,.40,-.07],[-.09,.09,-.04],[-.39,-.22,-.02]],.17),
-    tube([[-.02,.24,-.074],[.23,.03,-.05],[.43,-.17,-.03]],.112));
-  put('fetal_arteriole',C.vein,tube([[-.09,1.11,.09],[-.11,.67,.10],[-.12,.28,.10],[-.23,.01,.12],[-.39,-.16,.09]],.041));
-  put('fetal_capillaries',C.blood,tube([[-.39,-.16,.09],[-.43,-.22,.12],[-.32,-.21,.12],[-.21,-.07,.12],[-.04,.18,.12],[.20,.03,.11],[.38,-.15,.09],[.42,-.17,.10],[.40,-.10,.10],[.21,.09,.13],[.04,.25,.13]],.025));
-  put('fetal_venule',C.blood,tube([[.04,.25,.13],[.075,.55,.11],[.07,1.12,.1]],.052));
-  put('intervillous_space','#cc9a92',sphere(-.02,-.04,-.22,.74,.58,.32,0,Math.PI));
-  put('maternal_spiral_artery',C.blood,tube([[-.55,-.97,0],[-.43,-.82,.11],[-.52,-.67,.08],[-.46,-.48,.04]],.073));
-  put('maternal_vein',C.vein,tube([[.55,-.48,.04],[.62,-.71,.01],[.71,-.98,-.01]],.078));
-  await save('placental-exchange');
-
   put('uterine_wall',C.muscle,sphere(0,.12,-.06,.80,1.06,.60,0,Math.PI));
   put('amniotic_sac',C.fluid,sphere(0,.15,-.02,.73,.96,.52,0,Math.PI));
   put('fetal_head','#dfb397',sphere(-.07,-.41,.05,.30,.33,.26));

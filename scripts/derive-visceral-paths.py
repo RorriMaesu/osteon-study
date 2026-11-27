@@ -111,7 +111,8 @@ derive('sigmoid-colon','ap3-models/distal-colon.glb','sigmoid_colon','descending
 derive('rectum',gut,'rectum','descending_colon','-y')
 derive('portal-inflow',duct,'hepatic_portal_vein','-y','+y',True,22)
 derive('pancreatic-duct',duct,'pancreatic_duct','+x','duodenum')
-derive('common-bile-duct',duct,'bile_duct','+y','duodenum',True)
+derive('cystic-duct',duct,'cystic_duct','gallbladder','bile_duct',True,18)
+derive('common-bile-duct',duct,'bile_duct','cystic_duct','duodenum',True)
 for side in ('left','right'):
     derive('ureter-'+side,urine,'ureter_'+side,'renal_pelvis_'+side,'urinary_bladder',True)
     derive('renal-artery-'+side,urine,side+'_renal_artery',('-x' if side=='left' else '+x'),'kidney_'+side,True,20)

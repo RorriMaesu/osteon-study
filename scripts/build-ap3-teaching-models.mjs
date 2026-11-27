@@ -2,6 +2,8 @@
  * directory. All coordinates use display X left/right, Y superior, Z anterior. */
 import {mkdir,writeFile} from 'node:fs/promises';
 import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {execFileSync} from 'node:child_process';
 import * as T from 'three';
 import {mergeGeometries,mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
@@ -133,12 +135,11 @@ put('filtration_slits','#70a5a0',[-.67,-.42,-.17,.08,.33,.58].map(x=>slab(x,-.10
 put('capsular_space',C.fluid,slab(0,-.39,.01,1.65,.13,.60));
 await save('filtration-barrier');
 
-put('capillary_wall',C.tissue,tube([[-1.17,-.44,-.14],[-.70,-.39,-.11],[-.29,-.44,-.12],[.18,-.43,-.13],[1.04,-.34,-.13]],.18));
-put('plasma',C.duct,tube([[-1.17,-.44,.042],[-.70,-.39,.07],[-.28,-.44,.065],[.19,-.43,.07],[1.04,-.34,.04]],.073));
-put('red_blood_cells',C.blood,[-.77,-.29,.34,.81].map(x=>sphere(x,-.42,.13,.084,.05,.035)));
-put('interstitial_fluid',C.fluid,slab(0,.10,-.21,1.96,.62,.16));
-put('cell_membrane','#b68fbd',[-.55,0,.62].map((x,i)=>sphere(x,.42+.09*(i%2),-.03,.31,.30,.23,0,Math.PI)));
-put('intracellular_fluid','#8eafbf',[-.55,0,.62].map((x,i)=>sphere(x,.42+.09*(i%2),.05,.256,.245,.19,0,Math.PI)));
-await save('fluid-spaces');
 await developmentModels({C,put,sphere,tube,ring,slab,around,save});
 
+
+// Closed, nested volumes are built and checked for containment in Blender.
+const blender=process.env.BLENDER_BIN||(process.platform==='win32'
+  ?path.join(process.env.ProgramFiles,'Blender Foundation','Blender 4.5','blender.exe'):'blender');
+execFileSync(blender,['-b','--factory-startup','--python-exit-code','1','-P',
+  fileURLToPath(new URL('./build-ap3-fluid-models.py',import.meta.url)),'--',path.resolve(destination)],{stdio:'inherit'});

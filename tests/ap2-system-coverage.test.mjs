@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {Box3, Raycaster, Vector3} from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {vesselWallTypes} from '../src/ap2-vessel-walls.js';
-import {fetalPaths, fetalRoutes, fetalSegments} from '../src/ap2-fetal-paths.js';
+import {fetalPaths, fetalRoutes, fetalSegments, newbornRoutes} from '../src/ap2-fetal-paths.js';
 import {entericParts, entericRoutes} from '../src/ap2-enteric-wall.js';
 import {structureIndex} from '../src/ap2-model-index.js';
 import {sectionById} from '../src/ap2-library.js';
@@ -133,6 +133,14 @@ test('each fetal marker route follows joined, labeled segments registered to the
     }
   }
   assert.deepEqual(fetalRoutes.map(route => route.id).sort(), ['atrial','ductal','lung','placentaReturn','placental']);
+  for (const id of ['atrial','ductal','lung']) {
+    const {path}=newbornRoutes[id];
+    assert.ok(path.includes('lungBranch') && path.includes('pulmonaryVein') && path.includes('ascendingAorta'));
+    assert.ok(!path.some(segment=>Object.values(shunts).includes(segment)));
+    for (let i=1;i<path.length;i++) assert.deepEqual(fetalPaths[path[i-1]].at(-1),fetalPaths[path[i]][0],id);
+  }
+  assert.deepEqual(newbornRoutes.placental.path,[]);
+  assert.deepEqual(newbornRoutes.placentaReturn.path,[]);
   const placenta = new Box3().setFromObject(model.getObjectByName('placenta'));
   assert.ok(placenta.containsPoint(vector(fetalPaths.umbilicalVein[0])));
   for (const id of ['leftUmbilicalArtery', 'rightUmbilicalArtery']) {

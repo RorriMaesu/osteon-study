@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {regulationOrgans} from './organ-motion-regulation-catalog.js';
 import {mountMechanicalMotion} from './organ-motion-regulation-dynamics.js';
+import {mountHeartbeatValves} from './organ-motion-heart-valves.js';
 export {regulationOrgans};
 
 const WARM = new THREE.Color('#efb23b');
@@ -129,6 +130,8 @@ function makeLensSection(mesh){
 export function mountRegulationMotion(entry,instance,meshesByName){
   const mechanical=entry.kind==='Organ movement'||entry.kind==='Movement and flow';
   const mechanism=mechanical?mountMechanicalMotion(entry,meshesByName):null;
+  const valves=entry.mechanism==='heart'?mountHeartbeatValves(instance.model,meshesByName):null;
+  valves?.set(0);
   const surfaces=new Map(),ink=new Map(),materialDefaults=new Map();
   const specimenMaterials=new Map();
   const sections=[];
@@ -140,9 +143,13 @@ export function mountRegulationMotion(entry,instance,meshesByName){
     const materials=new Set(found.flatMap(m=>[].concat(m.material||[])).filter(m=>m.emissive));
     ink.set(key,materials);
     for(const m of materials)if(!materialDefaults.has(m))materialDefaults.set(m,{color:m.emissive.clone(),intensity:m.emissiveIntensity});
-    if(entry.id==='thyroid'||entry.id==='eye'||entry.id==='coronary-circulation'||key==='diaphragm')for(const m of materials){
-      if(!specimenMaterials.has(m))specimenMaterials.set(m,{color:m.color.clone(),transparent:m.transparent,opacity:m.opacity,depthWrite:m.depthWrite});
-      if(entry.id==='coronary-circulation')m.color.set(/vein|sinus/.test(key)?'#557dba':'#bd6161');
+    if(valves||entry.id==='thyroid'||entry.id==='eye'||entry.id==='coronary-circulation'||key==='diaphragm')for(const m of materials){
+      if(!specimenMaterials.has(m))specimenMaterials.set(m,{color:m.color.clone(),transparent:m.transparent,opacity:m.opacity,depthWrite:m.depthWrite,side:m.side});
+      if(valves){
+        if(key.endsWith('_valve')){m.color.set('#e5b665');m.side=THREE.DoubleSide;m.needsUpdate=true;}
+        else{m.transparent=true;m.opacity=.19;m.depthWrite=false;}
+      }
+      else if(entry.id==='coronary-circulation')m.color.set(/vein|sinus/.test(key)?'#557dba':'#bd6161');
       else if(key==='diaphragm')m.color.set('#a56253');
       else if(entry.id==='eye')m.color.set(key==='Lens'?'#9cd5d3':key==='Zonules'?'#e4d9b8':'#ae6d67');
       else m.color.set(key==='capillary'?'#b65265':key==='colloid_section'?'#e7bb78':'#ae7d87');
@@ -168,6 +175,7 @@ export function mountRegulationMotion(entry,instance,meshesByName){
     if(closed)return;
     const {index,phase,u,t}=regulationPhaseAt(entry,time);
     mechanism?.set(t);
+    valves?.set(t);
     for(const [mat,base] of materialDefaults){mat.emissive.copy(base.color);mat.emissiveIntensity=base.intensity;}
     const level=releaseLevel(entry,index,u);
     const glow=(mechanical ? .14 : .10+.39*level)+.09*Math.sin(Math.PI*u);
@@ -222,8 +230,9 @@ export function mountRegulationMotion(entry,instance,meshesByName){
   function dispose(){
     if(closed)return;closed=true;
     mechanism?.dispose();
+    valves?.dispose();
     for(const [mat,base] of materialDefaults){mat.emissive.copy(base.color);mat.emissiveIntensity=base.intensity;}
-    for(const [mat,base] of specimenMaterials){mat.color.copy(base.color);mat.transparent=base.transparent;mat.opacity=base.opacity;mat.depthWrite=base.depthWrite;}
+    for(const [mat,base] of specimenMaterials){mat.color.copy(base.color);mat.transparent=base.transparent;mat.opacity=base.opacity;mat.depthWrite=base.depthWrite;mat.side=base.side;mat.needsUpdate=true;}
     for(const section of sections){section.removeFromParent();section.geometry.dispose();}
     group.removeFromParent();geometry.dispose();for(const m of materials)m.dispose();
   }

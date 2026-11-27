@@ -9,6 +9,7 @@ const digestive='Digestive',urinary='Urinary',reproductive='Reproductive';
 const amber='#ffcd62',blood='#ff795f',bile='#b7e05b',milk='#fff1ca',blue='#7cd2ed';
 const trace=(path,span=[0,1],color=amber,extra={})=>({mode:'trace',path,span,color,...extra});
 const wave=(mesh,path,extra={})=>({mode:'wave',mesh,path,...extra});
+const propel=(mesh,path,extra={})=>wave(mesh,path,{marker:true,color:amber,range:[.13,.98],...extra});
 const cue=(mesh,span,color)=>({mode:'cue',mesh,span,color});
 const list=[];
 function add(id,title,system,asset,targets,context,section,action,description,steps,effects,extra={}){
@@ -25,7 +26,7 @@ add('esophagus','Esophagus',digestive,gut,'esophagus','stomach','23.3','Swallow 
     ['Bolus enters','The pharynx delivers a bolus through the upper esophageal sphincter.'],
     ['Peristaltic wave','Circular muscle contracts behind the moving bolus.'],
     ['Distal delivery','Relaxation of the lower sphincter permits entry into the stomach.']],
-  [wave('esophagus','esophagus',{amplitude:.36,width:.065}),trace('esophagus',[0,1],amber,{range:[.13,.98]})]);
+  [propel('esophagus','esophagus',{amplitude:.36,width:.065})]);
 
 add('stomach','Stomach',digestive,gut,'stomach','duodenum','23.4','Mix and retropel chyme',
   'Follow an antral mixing wave toward the pylorus. The gold tracer shows a portion of chyme swept back when the outlet narrows. Its path and the contraction amplitude are illustrative.',[
@@ -37,7 +38,7 @@ add('stomach','Stomach',digestive,gut,'stomach','duodenum','23.4','Mix and retro
 add('duodenum','Duodenum',digestive,gut,'duodenum','','23.5','Propel chyme through the loop',
   'A local contraction advances around the C-shaped duodenum. Gold marks the luminal route from the pyloric side toward the jejunum.',[
     ['Receive','Chyme arrives from the pyloric stomach.'],['Advance','A peristaltic wave propels contents through the duodenal loop.'],['Deliver','The duodenum continues into the jejunum.']],
-  [wave('duodenum','duodenum',{amplitude:.23}),trace('duodenum',[0,1],amber,{range:[.13,.98]})],{bodyIds:['duodenum','small-intestine']});
+  [propel('duodenum','duodenum',{amplitude:.23})],{bodyIds:['duodenum','small-intestine']});
 
 for(const [id,title,key,label] of [['jejunum','Jejunum','jejunal-segment','jejunum'],['ileum','Ileum','ileal-segment','ileum']]){
   add(id,title,digestive,gut,id,'','23.5','Watch segmentation',
@@ -60,7 +61,7 @@ for(const [id,title,mesh,asset,beg,end] of [
       ['Arrival','Contents arrive from the '+beg+'.'],
       ['Contraction','Smooth muscle raises local pressure and propels contents distally.'],
       ['Distal passage','Contents move toward the '+end+'.']],
-    [wave(mesh,id,{amplitude:.24}),trace(id,[0,1],amber,{range:[.13,.98]})],{bodyIds:[id,...(id==='rectum'?[]:['large-intestine'])]});
+    [propel(mesh,id,{amplitude:.24})],{bodyIds:[id,...(id==='rectum'?[]:['large-intestine'])]});
 }
 
 add('liver','Liver',digestive,accessory,'liver','hepatic_portal_vein','23.6','Follow hepatic portal inflow',
@@ -69,12 +70,12 @@ add('liver','Liver',digestive,accessory,'liver','hepatic_portal_vein','23.6','Fo
     ['Portal entry','Blood approaches the porta hepatis.'],
     ['Hepatic processing','Inside the liver, portal branches supply sinusoids where hepatocytes exchange substances with blood.']],
   [trace('portal-inflow',[0,.82],blood),cue('liver',[.69,1],amber)]);
-add('gallbladder','Gallbladder',digestive,accessory,'gallbladder','bile_duct duodenum','23.6','Empty stored bile',
-  'The gallbladder contracts about its neck. The green tracer shows bile advancing down the common bile duct after entering through the cystic duct. Refill and emptying are compressed into one cycle.',[
+add('gallbladder','Gallbladder',digestive,accessory,'gallbladder','cystic_duct bile_duct duodenum','23.6','Empty stored bile',
+  'Follow bile out of the gallbladder through the cystic duct and into the common bile duct. The donor shows one continuous outlet. The change between the two duct labels illustrates where the common hepatic duct would join.',[
     ['Stored bile','Bile produced by the liver is concentrated in the gallbladder.'],
     ['Contraction','Cholecystokinin promotes gallbladder contraction during a meal.'],
     ['Duct delivery','Bile reaches the duodenum as outflow resistance falls.']],
-  [{mode:'empty',mesh:'gallbladder',pivot:[-.029,1.154,.038],amount:.21,span:[0,1]},trace('common-bile-duct',[.30,.93],bile,{range:[.2,.99]})],{direction:[.1,-.32,1]});
+  [{mode:'empty',mesh:'gallbladder',pivot:[-.03019,1.15737,.03916],amount:.21,span:[0,1]},trace('cystic-duct',[.22,.37],bile),trace('common-bile-duct',[.37,.93],bile)],{direction:[.1,-.32,1]});
 add('pancreas','Pancreas · exocrine secretion',digestive,accessory,'pancreas','pancreatic_duct duodenum','23.6','Deliver pancreatic juice',
   'Follow the gold tracer along the main pancreatic duct toward the duodenum. Juice from acinar and duct cells contains digestive enzymes and bicarbonate. The microscopic opening is beyond this mesh.',[
     ['Exocrine secretion','Acini supply enzymes and duct cells add a bicarbonate-rich fluid.'],
@@ -93,7 +94,7 @@ add('ureters','Ureters',urinary,renal,'ureter_left ureter_right','renal_pelvis_l
     ['Pelvic origin','A bolus enters a ureter from its renal pelvis.'],
     ['Traveling contraction','Smooth muscle contracts behind the bolus as it moves distally.'],
     ['Bladder entry','The bolus reaches the oblique intramural segment at the bladder.']],
-  ['left','right'].flatMap((side,i)=>[wave('ureter_'+side,'ureter-'+side,{span:[i*.10,.9+i*.10],amplitude:.40,width:.045}),trace('ureter-'+side,[i*.10,.9+i*.10],amber,{range:[.1,.99]})]));
+  ['left','right'].map((side,i)=>propel('ureter_'+side,'ureter-'+side,{span:[i*.10,.9+i*.10],amplitude:.40,width:.045,range:[.1,.99]})));
 add('urinary-bladder','Urinary bladder',urinary,renal,'urinary_bladder','','25.2','Fill and empty the bladder',
   'Watch the mobile dome expand above the comparatively fixed bladder neck. During voiding the outlet relaxes and the detrusor contracts. The shape change illustrates a storage and voiding cycle at an accelerated speed.',[
     ['Filling','The accommodating bladder stores urine at low pressure.'],
@@ -249,7 +250,7 @@ const femaleUrinary='assets/organ-atlas/female-urinary.glb';
 add('female-ureters','Ureters · female reference',urinary,femaleUrinary,'VH_F_left_ureter VH_F_right_ureter','VH_F_renal_pelvis_L VH_F_renal_pelvis_R VH_F_ureteral_orifice_L VH_F_ureteral_orifice_R VH_F_trigone_of_urinary_bladder','25.2','Trace ureteral transport',
   'Follow a urine bolus down each ureter. The paired models retain the female reference anatomy from the renal pelves to the bladder orifices.',[
     ['Entry','Each ureter begins below a renal pelvis.'],['Peristalsis','Sequential smooth-muscle contraction propels urine toward the pelvis.'],['Bladder','Urine reaches the ureteral orifices at the bladder wall.']],
-  ['left','right'].flatMap((side,i)=>[wave('VH_F_'+side+'_ureter','female-ureter-'+side,{amplitude:.33,width:.055,span:[.10*i,.90+.10*i]}),trace('female-ureter-'+side,[.10*i,.90+.10*i],amber,{range:[.10,.98]})]));
+  ['left','right'].map((side,i)=>propel('VH_F_'+side+'_ureter','female-ureter-'+side,{amplitude:.33,width:.055,span:[.10*i,.90+.10*i],range:[.10,.98]})));
 const bladderParts=['VH_F_fundus_of_urinary_bladder_dome','VH_F_fundus_of_urinary_bladder_base'];
 add('female-bladder','Urinary bladder · female reference',urinary,femaleUrinary,bladderParts.join(' ')+' VH_F_trigone_of_urinary_bladder VH_F_urinary_bladder_neck_smooth_muscle',
   'VH_F_ureteral_orifice_L VH_F_ureteral_orifice_R','25.2','Watch bladder accommodation',

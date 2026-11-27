@@ -1,5 +1,6 @@
 import {Plane,Vector3,DoubleSide} from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
+import {mountMechanicalMotion} from './organ-motion-regulation-dynamics.js';
 import {neuralRegions,renderNeuralRegion,startNeuralRegion} from './ap2-neural-regions.js';
 
 import {cutaways,cutawayMatch,cutawayColor,brainTargets,routeQuestions} from './ap2-neural-cutaways.js';
@@ -16,7 +17,7 @@ const specimens={
     ['Malleus','The tympanic membrane moves the handle of the malleus.'],
     ['Incus','At the incudomalleolar joint, vibration passes to the incus. Its long process articulates with the stapes.'],
     ['Stapes','Movement of the stapes footplate at the oval window transfers vibration into cochlear fluid.']
-  ],credit:'Three ossicles isolated together from the registered left ear of the Osteon skeleton. Play traces transmission through the chain. The inner ear below is a separate magnified specimen.'},
+  ],credit:'Three connected left-ear bones transmit a pressure vibration together. Play the sequence or move the phase slider to inspect the slowed, enlarged movement.'},
   eye:{title:'Left eye in sagittal section',file:'eye-section',direction:[1,.09,.14],steps:[
     ['Distant focus','The ciliary muscle is more relaxed. Zonular tension flattens the lens, reducing its optical power.'],
     ['Near focus','The ciliary ring contracts. Reduced zonular tension allows the elastic lens to thicken, increasing its optical power.']
@@ -79,6 +80,13 @@ function start(panel,kind){
   const route=panel.querySelector('[data-specimen-route]');
   const steps=()=>route?spec.routes[+route.value][1]:spec.steps;
   let current=0,timer=0,animationFrame=0,api,focusAmount=0;
+  let ossicles,phaseSlider;
+  if(kind==='ossicles'){
+    const label=document.createElement('label');label.textContent='Vibration phase ';
+    phaseSlider=document.createElement('input');phaseSlider.type='range';phaseSlider.min='0';phaseSlider.max='1000';phaseSlider.value='0';phaseSlider.disabled=true;
+    phaseSlider.dataset.vibrationPhase='';label.append(phaseSlider);play.before(label);play.disabled=true;
+    phaseSlider.oninput=()=>{stop();ossicles?.set(+phaseSlider.value/1000);api?.invalidate();};
+  }
   const spotEntries=kind==='ventricles'?brainTargets:kind==='ossicles'?spec.steps:targets[kind];
   const spotNames=spotEntries.map(([name])=>name);
   function matchesSpot(index,n){return kind==='ventricles'?n.startsWith(brainTargets[index][2]):cutawayMatch(spotNames[index],n);}
@@ -122,6 +130,7 @@ function start(panel,kind){
   }
   function stop(){
     clearTimeout(timer);timer=0;
+    if(phaseSlider)cancelAnimationFrame(animationFrame);
     play.textContent='Play sequence';play.setAttribute('aria-pressed','false');
   }
   function step(i){
@@ -185,6 +194,16 @@ function start(panel,kind){
     if(timer){stop();return;}
     if(identify)identify.value='';if(obstruction)obstruction.checked=false;if(region)region.value='0';
     step(0);play.textContent='Pause';play.setAttribute('aria-pressed','true');
+    if(ossicles){
+      const startTime=performance.now();
+      function vibrate(now){
+        if(!host.isConnected||document.hidden||panel.hidden){stop();return;}
+        const phase=((now-startTime)/1800)%1;
+        ossicles.set(phase);phaseSlider.value=String(Math.round(phase*1000));api.invalidate();
+        animationFrame=requestAnimationFrame(vibrate);
+      }
+      vibrate(startTime);
+    }
     function next(){
       if(!host.isConnected||panel.hidden||document.hidden||current===steps().length-1){stop();return;}
       step(current+1);timer=setTimeout(next,1800);
@@ -193,7 +212,17 @@ function start(panel,kind){
   };
   step(0);
   api=mountOrganViewer(host,{asset:'assets/ap2-neuro/'+spec.file+'.glb',title:spec.title,direction:spec.direction,colors:()=> '#aac4ce',
-    onLoad(ready){api=ready;styleModel();ready.addCleanup(()=>{stop();cancelAnimationFrame(animationFrame);});}});
+    onLoad(ready){
+      api=ready;
+      if(phaseSlider){
+        const targets=spec.steps.map(([name])=>name),bones=new Map();
+        ready.model.traverse(mesh=>{if(mesh.isMesh)for(const name of targets)if(nameOf(mesh)===name.toLowerCase())bones.set(name,[mesh]);});
+        if(bones.size!==targets.length)throw Error('Could not identify the three ossicles.');
+        ossicles=mountMechanicalMotion({mechanism:'ossicles',targets},bones);
+        phaseSlider.disabled=false;play.disabled=false;
+      }
+      styleModel();ready.addCleanup(()=>{stop();cancelAnimationFrame(animationFrame);ossicles?.dispose();});
+    }});
 }
 export function mountNeuralSpecimens(root){
   for(const panel of root.querySelectorAll('[data-neuro-specimen]')){

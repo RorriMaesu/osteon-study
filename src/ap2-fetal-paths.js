@@ -29,3 +29,14 @@ export const fetalRoutes=[
   {id:'placentaReturn',name:'Return to the placenta',path:['descendingAorta','rightUmbilicalArtery'],note:'Trace one of the two umbilical arteries from the internal iliac circulation to the placenta. The second artery follows the other side of the fetal bladder.'},
   {id:'lung',name:'Through the lung',path:['tricuspidInflow','pulmonaryTrunk','lungBranch','pulmonaryVein','mitralInflow'],note:'Some blood reaches the fetal lungs even before birth. After the first breaths, pulmonary resistance falls and more blood returns to the left atrium.'}
 ];
+
+// After functional shunt closure, caval blood traverses the right heart,
+// pulmonary circuit and left heart. Both alternatives follow existing tubes.
+const throughLung=['tricuspidInflow','pulmonaryTrunk','lungBranch','pulmonaryVein','mitralInflow','ascendingAorta'];
+export const newbornRoutes={
+  placental:{name:'Placental inflow ends',path:[],note:'Cord clamping stops umbilical venous inflow. The ductus venosus subsequently closes.'},
+  atrial:{name:'Inferior vena cava through the lungs',path:['lowerCava',...throughLung],note:'Increased pulmonary venous return raises left atrial pressure and closes the flap of the foramen ovale. Follow blood from the inferior vena cava through the right heart, lungs and left heart to the aorta.'},
+  ductal:{name:'Superior vena cava through the lungs',path:['upperCava',...throughLung,'descendingAorta'],note:'After pulmonary resistance falls and the ductus arteriosus constricts, blood from the right ventricle reaches the lungs. Trace its return to the left atrium and its delivery through the left ventricle to the descending aorta.'},
+  placentaReturn:{name:'Placental outflow ends',path:[],note:'After cord clamping, the umbilical arteries cease carrying blood to the placenta. Their proximal portions continue to supply the bladder.'},
+  lung:{name:'Through the expanded lung',path:throughLung,note:'Follow blood through the right heart to the lung, back to the left atrium and on to the aorta. The marker follows one representative lung branch.'}
+};

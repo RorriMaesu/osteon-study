@@ -106,7 +106,8 @@ export function openWinterExplore(body,section,requested,{store,escape,atlas}){
   if(id==='15.2')add('enteric-wall','Trace a reflex in the intestinal wall',trace,'enteric');
   for(const s of evidenceStations.filter(s=>s.section===id))add(s.id,s.title,interpret,'evidence');
   add('guided',section.activity.title,'Explain step by step','guided');
-  const current=choices.find(c=>c.key===requested)||choices[0],key=current.key;
+  const stream=id==='20.6'&&/^fetal-flow-(atrial|ductal|placentaReturn|placental|lung)$/.exec(requested||'');
+  const current=choices.find(c=>c.key===(stream?'fetal-flow':requested))||choices[0],key=current.key;
   remember(id,key);
   body.innerHTML='<div class="winter-station-bar"></div><div class="winter-station-content"></div>';
   const host=body.lastElementChild,bar=body.firstElementChild;
@@ -134,6 +135,7 @@ export function openWinterExplore(body,section,requested,{store,escape,atlas}){
     if(id==='18.1')template.content.querySelector('[data-formed-lab]')?.remove();
     const sim=document.createElement('div');sim.className='ap2-simulation';sim.append(template.content);host.append(sim);
     lab.mountLab(sim,id,{store,station:key});setView(sim,id,key);
+    if(stream)activateSelect(sim,'[data-fetal-route]',stream[1]);
     if(requested&&current.panel?.hasAttribute('data-neuro-specimen'))current.panel.querySelector('[data-load-specimen]')?.click();
   }
 }

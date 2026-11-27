@@ -163,14 +163,14 @@ add('coronary-circulation','Coronary arteries, veins and sinus','Cardiovascular'
     phase('Coronary sinus','The coronary sinus runs across the posterior heart and empties into the right atrium. Rotate the heart to follow its course.','VH_M_coronary_sinus')
   ],{bodyIds:['heart','aorta'],aliases:['cardiac perfusion','myocardial perfusion','coronary circulation','LAD','coronary sinus'],direction:[.28,.26,1],duration:11});
 add('heart','Heart','Cardiovascular','ap2-heart','VH_M_pulmonary_trunk|VH_M_ascending_aorta|VH_M_mitral_valve|VH_M_tricuspid_valve|VH_M_aortic_valve|VH_M_pulmonary_valve','Watch a heartbeat',
-  'The heart follows a slowed teaching beat. Atrial contraction precedes ventricular ejection. Chamber-wall movement is illustrative; the original donor surfaces show anatomy at one instant.',heart,[
+  'Follow four gold valve openings through a slowed beat. The reconstructed leaflets respond to the pressure gradient across each valve. Translucent chambers show illustrative wall movement. The left and right valves change state at slightly different times.',heart,[
     phase('Passive filling','Blood enters relaxed ventricles through open atrioventricular valves.',vent,0),
     phase('Atrial contraction','Atrial systole completes ventricular filling.',atria,88/800),
-    phase('Pressure rises','Both left-heart valves are closed; pressure rises at constant ventricular volume.',vent,195/800),
-    phase('Ejection','Ventricular pressure opens the outflow valves and ventricular volume falls.',vent,245/800),
-    phase('Relaxation','Outflow valves close. Ventricular pressure falls before filling begins again.',vent,492/800),
-    phase('Filling resumes','Atrioventricular valves open as atrial pressure exceeds ventricular pressure.',vent,562/800)
-  ],{mechanism:'heart',kind:'Organ movement',duration:5,direction:[.25,.05,1],bodyIds:['heart']});
+    phase('Isovolumetric contraction','The mitral valve closes, followed by the tricuspid. Each ventricle builds pressure with both of its valves closed.',vent,195/800),
+    phase('Ejection','The pulmonary valve opens first in this example, followed by the aortic. Blood exits as ventricular volume falls.',vent,235/800),
+    phase('Isovolumetric relaxation','The aortic valve closes first, then the pulmonary. With inflow and outflow closed, each ventricle relaxes at constant volume.',vent,492/800),
+    phase('Filling resumes','The mitral valve opens as left atrial pressure exceeds left ventricular pressure. The tricuspid follows on the right.',vent,562/800)
+  ],{mechanism:'heart',restingSurfaces:['VH_M_mitral_valve','VH_M_tricuspid_valve','VH_M_aortic_valve','VH_M_pulmonary_valve'],kind:'Organ movement',duration:7,direction:[.02,1,-.63],bodyIds:['heart']});
 add('artery','Artery · smooth muscle tone','Cardiovascular','ap2-vessel-walls','','Change arterial caliber',
   'An open teaching segment shows the lumen narrowing as smooth muscle contracts. The excursion is enlarged. Narrowing an arteriole strongly increases resistance.',vessels,[
     phase('Resting caliber','The vessel begins at its reference diameter.','artery_intima|artery_media|artery_externa',0),
