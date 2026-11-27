@@ -1,9 +1,18 @@
 import * as THREE from 'three';
 
-// Idealized cusps placed at the two HRA left-heart valve centers. The hinge and
-// opening are teaching approximations. The source surface remains available in
-// the dissection view. Geometry is updated in place as the pressure gradient changes.
-export function makeTeachingValve({center,axis,radius,cusps}) {
+// Centers follow the source HRA surfaces; the axes point into the downstream
+// chamber or artery. Radii, geometry and travel are illustrative.
+export const cardiacValves=[
+  {key:'mitral',label:'Mitral',from:'la',to:'lv',range:1.2,center:[.0261,.4746,.0145],axis:[.47,-.39,.79],radius:.017,cusps:2,av:true},
+  {key:'aortic',label:'Aortic',from:'lv',to:'ao',range:2,center:[.0089,.4971,.0279],axis:[-.40,.916,-.03],radius:.009,cusps:3,av:false},
+  {key:'tricuspid',label:'Tricuspid',from:'ra',to:'rv',range:1.2,center:[-.0024,.4589,.0466],axis:[.77,-.13,.63],radius:.019,cusps:3,av:true},
+  {key:'pulmonary',label:'Pulmonary',from:'rv',to:'pa',range:2,center:[.0179,.5086,.0432],axis:[-.22,.77,-.60],radius:.009,cusps:3,av:false}
+];
+export function openingFor(valve,state){
+  const gradient=state[valve.from]-state[valve.to];
+  return state[valve.key]?Math.min(1,Math.sqrt(Math.max(0,gradient)/valve.range)):0;
+}
+export function makeTeachingValve({center,axis,radius,cusps,av}) {
   const root=new THREE.Group(), axial=new THREE.Vector3(...axis).normalize();
   root.position.set(...center);
   root.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),axial);
@@ -37,7 +46,8 @@ export function makeTeachingValve({center,axis,radius,cusps}) {
         const closedY=cusps===2?0:edgeRadius*Math.sin(edgeAngle);
         const freeX=closedX+(rimX-closedX)*amount*.84;
         const freeY=closedY+(rimY-closedY)*amount*.84;
-        const z=radius*v*(amount*.86*mid-.15*(1-amount)*mid);
+        const bulge=av?.15:.32;
+        const z=radius*v*(amount*(av?1.05:.70)*mid-bulge*(1-amount)*mid);
         attr.setXYZ(i*(layers+1)+j,rimX+v*(freeX-rimX),rimY+v*(freeY-rimY),z);
       }
       attr.needsUpdate=true;leaf.geometry.computeVertexNormals();

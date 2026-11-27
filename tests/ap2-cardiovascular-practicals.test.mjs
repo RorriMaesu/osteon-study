@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {pressureState,rightPressureState} from '../src/ap2-heart-cycle.js';
+import {pressureState,rightPressureState,rightPhases,rightValveChallenges} from '../src/ap2-heart-cycle.js';
 import {limbRoutes} from '../src/ap2-limb-circuits.js';
 import {renderLab} from '../src/ap2-cardio.js';
 
@@ -21,6 +21,17 @@ test('lower-pressure right circuit opens and closes at its own four crossings',(
     const state=rightPressureState(t);
     assert.equal(state.tricuspid,t<200||t>=568,'tricuspid '+t);
     assert.equal(state.pulmonary,t>=235&&t<515,'pulmonary '+t);
+  }
+});
+
+test('each right-heart prediction leads to the next event shown on its own phase selector',()=>{
+  const changed=(t,previous)=>['tricuspid','pulmonary'].some(valve=>rightPressureState(t)[valve]!==previous[valve]);
+  for(const [t,,answer] of rightValveChallenges){
+    const before=rightPressureState(t);
+    const following=Array.from({length:800-t},(_,i)=>t+i+1).find(time=>changed(time,before));
+    assert.equal(rightPhases.find(phase=>phase.start>t)?.start,following);
+    const after=rightPressureState(following);
+    assert.equal([before.tricuspid&&!after.tricuspid,!before.pulmonary&&after.pulmonary,before.pulmonary&&!after.pulmonary,!before.tricuspid&&after.tricuspid][answer],true);
   }
 });
 

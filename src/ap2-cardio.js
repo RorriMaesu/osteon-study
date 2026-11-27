@@ -1,7 +1,7 @@
 // Original lessons and activities aligned with the linked OpenStax A&P 2e sections.
 import {renderSpecimen,mountSpecimen} from './ap2-cardio-specimens.js';
 import {renderValveWindow,paintValves,renderOutput,mountOutput,renderEmbryo,mountEmbryo,renderPump,mountPump,renderExchange,mountExchange,renderHemorrhage,mountHemorrhage} from './ap2-cardio-mechanisms.js';
-import {beat,rightBeat,rightPressureState,interpolate,pressureState,valveChallenges,valveChoices,rightValveChallenges,rightValveChoices} from './ap2-heart-cycle.js';
+import {beat,rightBeat,rightPhases,rightPressureState,interpolate,pressureState,valveChallenges,valveChoices,rightValveChallenges,rightValveChoices} from './ap2-heart-cycle.js';
 import {renderRoutes,mountRoutes} from './ap2-cardio-routes.js';
 import {smearStation,mountSmear,clotStation,mountClot} from './ap2-blood-stations.js';
 
@@ -504,7 +504,7 @@ function wireViews(root, onChange) {
 }
 function rightHeartChart() {
   const y=p=>177-p*4.7;
-  return `<h4>Right heart at the same instant</h4><p>The pulmonary circuit operates at lower pressures. Compare the right-sided pressure crossings with the left-sided readings below.</p>
+  return `<h4>Right heart at the same instant</h4><p>Follow blood from the right atrium through the right ventricle into the pulmonary artery. Switch to the left-heart traces to compare pressures at the same instant.</p>
     <figure class="ac-plot"><svg viewBox="0 0 500 212" role="img" aria-label="Right atrial, right ventricular and pulmonary arterial pressure on a zero to thirty millimeter mercury scale.">
     <text x="8" y="18">Pressure (mm Hg)</text>${[0,10,20,30].map(v=>`<line x1="48" x2="472" y1="${y(v)}" y2="${y(v)}" stroke="#354b50"/><text x="37" y="${y(v)+4}" text-anchor="end">${v}</text>`).join('')}
     ${[[rightBeat.atrium,'#e6b9e1','2 3'],[rightBeat.ventricle,'#a8c8ea','7 3'],[rightBeat.pulmonary,'#f1ac81','']].map(([p,color,dash])=>`<path d="${trace(p,y)}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${dash}"/>`).join('')}
@@ -514,8 +514,8 @@ function rightHeartChart() {
     <p>Right atrium · dotted. Right ventricle · dashed. Pulmonary artery · solid.</p><div class="ac-stats"><span>RA / RV / PA<strong data-right-pressures></strong></span><span>Tricuspid valve<strong data-right-tricuspid></strong></span><span>Pulmonary valve<strong data-right-pulmonary></strong></span></div>`;
 }
 function renderHeartbeat() {
-  return `<h3>Follow one heartbeat</h3><p>Move the cursor through a left-heart cycle or jump to a phase. One beat lasts 0.80 s at 75 beats/min. Playback slows the beat for study.</p>
-    ${views(['Left heart traces','3D cutaway','Valve motion','Right heart traces'])}<div data-cardio-panel="0">
+  return `<h3>Follow one heartbeat</h3><p>Play the beat or pause at a pressure crossing. Switch between the left heart, right heart and 3D valves to compare them at the same instant. One beat lasts 0.80 s at 75 beats/min. Playback slows it for study.</p>
+    ${views(['Left heart traces','3D heart','2D valve motion','Right heart traces'])}<div data-cardio-panel="0">
     <figure class="ac-plot"><svg viewBox="0 0 500 327" role="img" aria-label="A synchronized ECG, atrial, ventricular and aortic pressure, and left ventricular volume curves. A vertical cursor marks the selected time.">
     <text x="9" y="19">ECG</text>
     ${[[73,'P',33],[186,'QRS',23],[426,'T',34]].map(([time,name,y]) => `<text text-anchor="middle" x="${chartX(time)}" y="${y}">${name}</text>`).join('')}
@@ -539,18 +539,23 @@ function renderHeartbeat() {
     </div><div data-cardio-panel="1" hidden>${renderSpecimen('heart',true)}</div><div data-cardio-panel="2" hidden>${renderValveWindow()}</div><div data-cardio-panel="3" hidden>${rightHeartChart()}</div>
     <label class="ac-range">Beat time <strong data-time-out></strong><input type="range" min="0" max="800" step="1" value="0" data-beat-time></label>
     <div class="ac-row ac-actions"><button type="button" data-play>Play one beat</button><button type="button" data-rewind>Previous phase</button><label>Playback speed <select data-speed><option value="16">Slower</option><option value="8" selected>Study</option><option value="4">Faster</option></select></label><label>Jump to phase <select data-phase-select>${phases.map(p=>`<option value="${p.start}">${p.name}</option>`).join('')}</select></label></div>
-    <div class="ac-details"><small>Left-heart phase</small><h4 data-phase></h4><p data-phase-note></p>
-    <div class="ac-stats"><span>Mitral valve<strong data-mitral></strong></span><span>Aortic valve<strong data-aortic></strong></span><span>LV pressure<strong data-lv-pressure></strong></span><span>Aortic pressure<strong data-ao-pressure></strong></span><span>LA pressure<strong data-la-pressure></strong></span><span>LV volume<strong data-volume></strong></span></div></div>
+    <div class="ac-details"><small data-phase-side>Left-heart phase</small><h4 data-phase></h4><p data-phase-note></p>
+    <div class="ac-stats" data-left-stats><span>Mitral valve<strong data-mitral></strong></span><span>Aortic valve<strong data-aortic></strong></span><span>LV pressure<strong data-lv-pressure></strong></span><span>Aortic pressure<strong data-ao-pressure></strong></span><span>LA pressure<strong data-la-pressure></strong></span><span>LV volume<strong data-volume></strong></span></div></div>
     <div class="ac-actions ac-row"><button type="button" data-predict>Predict the next valve event</button></div>
     <div class="ac-details" data-probe hidden><p data-probe-prompt></p><div class="ac-actions ac-row">${valveChoices.map((label,i)=>`<button type="button" data-probe-choice="${i}">${label}</button>`).join('')}</div><p role="status" data-probe-note></p></div>`;
 }
 
 function mountHeartbeat(lab) {
-  let modelMounted=false, activeView='0';
+  let modelMounted=false, activeView='0',currentPhases=phases;
   wireViews(lab,view=>{
     activeView=view;
     endProbe();
-    if(view==='1'&&!modelMounted){mountSpecimen(lab,'heart',true);modelMounted=true;show(+time.value);}
+    currentPhases=view==='3'?rightPhases:phases;
+    jump.replaceChildren(...currentPhases.map(p=>new Option(p.name,String(p.start))));
+    get('phase-side').textContent=view==='3'?'Right-heart phase':'Left-heart phase';
+    get('left-stats').hidden=view==='3';
+    if(view==='1'&&!modelMounted){mountSpecimen(lab,'heart',true);modelMounted=true;}
+    show(+time.value);
   });
   const get = name => lab.querySelector('[data-' + name + ']');
   const time = get('beat-time');
@@ -560,8 +565,8 @@ function mountHeartbeat(lab) {
   const points = [get('ecg-point'),get('ao-point'),get('lv-point'),get('la-point'),get('vol-point')];
   let frame = null;
   function show(t) {
-    let phase = phases[0];
-    for (const candidate of phases) {
+    let phase = currentPhases[0];
+    for (const candidate of currentPhases) {
       if (candidate.start > t) break;
       phase = candidate;
     }
@@ -628,7 +633,7 @@ function mountHeartbeat(lab) {
       get('probe-note').textContent='Correct. '+explanation; clearMasks();challenge=null;
     } else get('probe-note').textContent='Trace the higher upstream pressure and check which valve is currently open. Try again.';
   });
-  get('rewind').onclick=()=>{stop();endProbe();show([...phases].reverse().find(p=>p.start<+time.value)?.start??0);};
+  get('rewind').onclick=()=>{stop();endProbe();show([...currentPhases].reverse().find(p=>p.start<+time.value)?.start??0);};
   get('speed').onchange=stop;
   time.addEventListener('input',endProbe);jump.addEventListener('change',endProbe);play.addEventListener('click',endProbe);
   time.addEventListener('input', () => { stop(); show(+time.value); });

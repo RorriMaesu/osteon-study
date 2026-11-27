@@ -1,13 +1,15 @@
 import * as THREE from 'three';
 import {ConvexGeometry} from 'three/addons/geometries/ConvexGeometry.js';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
-import {makeTeachingValve} from './ap2-valve-surfaces.js';
-import {pressureState} from './ap2-heart-cycle.js';
+import {makeMitralSupports,isMitralSupport,papillaryName} from './ap2-mitral-supports.js';
+import {makeTeachingValve,cardiacValves,openingFor} from './ap2-valve-surfaces.js';
+import {pressureState,rightPressureState} from './ap2-heart-cycle.js';
 import {vesselRegions,vesselPresets,vesselLabel} from './ap2-vessel-regions.js';
 
 const structureName = name => vesselLabel(name).replace(/heart (left|right) ventricle/,'$1 ventricle').replace(/cardiac atrium/,'atrium');
 const instructions = {
-  motion:'Watch the two mitral leaflets and three aortic cusps open and close at the pressure crossings. Gold moving surfaces are idealized reconstructions positioned at the source valve centers. Select Valves and supports to inspect the original surfaces.',
+  motion:'Each valve moves with the pressure difference across it. Compare all four or select one to follow during the beat. The moving leaflets are teaching reconstructions at the specimen’s four valve sites.',
+  supports:'The amber mitral surface and both pink papillary groups come from the specimen. Teal strands join those surfaces at illustrative attachment sites. During ventricular systole the muscles tension chordae and help prevent leaflet prolapse.',
   surface:'Locate the apex, then orbit to the posterior left atrium. Coronary arteries supply the myocardium. Cardiac veins return blood to the right atrium through the coronary sinus.',
   cut:'Adjust the frontal cut to expose both ventricles, the septum and internal valve apparatus. Compare the thicker left ventricular wall with the right.',
   valves:'View the valves from above. AV valves have chordal attachments to papillary muscles. Semilunar valves have pocket-shaped cusps and lack chordae. Chordae prevent prolapse during systole.',
@@ -29,7 +31,7 @@ function conductionIndex(t) {
   if(t<188)return 2;
   return 3;
 }
-const heartModes=[['surface','Heart surface'],['cut','Cutaway'],['valves','Valves and supports'],['motion','Valve movement'],['conduction','Conduction'],['thorax','Heart in rib cage']];
+const heartModes=[['surface','Heart surface'],['cut','Cutaway'],['valves','Valves and supports'],['supports','Mitral chordae and papillary muscles'],['motion','Valve movement'],['conduction','Conduction'],['thorax','Heart in rib cage']];
 const vesselModes=vesselPresets;
 const option=(value,label)=>`<option value="${value}">${label}</option>`;
 function nameColor(n) {
@@ -70,12 +72,15 @@ export function renderSpecimen(kind,linked=false) {
     <div class="ac-row"><label>Specimen view <select data-specimen-mode>${(heart?heartModes.filter(([m])=>linked||m!=='motion'):vesselModes).map(([v,l])=>option(v,l)).join('')}</select></label>
     <label>Highlight <select data-specimen-target aria-label="Highlight an anatomical structure"><option value="">All structures</option></select></label>
     <label><input type="checkbox" data-organ-names checked> Show names</label><button type="button" data-focus-structure disabled>Focus selection</button></div>
+    <div class="ac-row" data-support-settings hidden><label>Compare the attachment <select data-support-pick><option value="both">Both papillary groups and chordae</option><option value="anterolateral">Follow anterolateral group</option><option value="posteromedial">Follow posteromedial group</option><option value="donor">Donor surfaces alone</option></select></label></div>
+    <div class="ac-row" data-valve-settings hidden><label>Moving valve <select data-valve-pick><option value="">All four valves</option>${cardiacValves.map(v=>option(v.key,v.label)).join('')}</select></label><button type="button" data-valve-play aria-pressed="false">Play one beat</button><label>Beat time <input type="range" data-valve-time min="0" max="800" step="1" value="0"></label><span data-animated-states></span></div>
     <div data-organ-host></div><strong data-target-name role="status"></strong>
     <div class="ac-row" data-cut-settings hidden><label class="ac-range">Cut depth <input data-cut type="range" min="0" max="100" value="48"></label></div>
     <div class="ac-row" data-sac-settings ${heart?'':'hidden'}><label><input type="checkbox" data-sac> Show schematic pericardial sac</label></div>
     <label data-junction-settings hidden>Show an arterial transition <select data-junction><option value="">Whole leg</option>${junctions.map(([name],i)=>option(i,name)).join('')}</select></label><p data-junction-note></p>
     <div data-conduct-settings hidden><label class="ac-range">Conduction stage <input data-conduction-stage type="range" min="0" max="3" value="0"></label>
     <span data-conduction-note></span></div><p data-specimen-note></p>
+    <details data-support-check hidden><summary>Predict what happens if a chord ruptures</summary><p>During ventricular systole the unsupported leaflet can prolapse toward the left atrium, allowing regurgitation. Pressure closes the AV valve. Papillary tension stabilizes the closed leaflets.</p></details>
     <div data-spot-area><button type="button" data-spot-start>Identify a highlighted structure</button><div data-spot-choices hidden></div><p data-spot-answer role="status"></p></div>
     <small>${linked?'The clock below controls the pressure state, valve highlighting and conduction sequence. ':''}Sources and model adaptations · <a href="assets/AP2-CARDIO-LICENSE.md" target="_blank" rel="noopener">Credits</a></small></div>`;
 }
@@ -98,8 +103,8 @@ export function mountSpecimen(lab,kind,linked=false) {
   const get=k=>root.querySelector('[data-'+k+']');
   const mode=get('specimen-mode'), target=get('specimen-target'), host=get('organ-host'), names=get('organ-names');
   const heart=kind==='heart', namesOff='Selected structure • rotate to identify';
-  let api,ready=false,lastAsset='',time=0,meshes=[],sac,tracks=[],moving,clockState=pressureState(0);
-  let activeSegment=0, animated=[], animatedGroup,junctionDot, question=null,spotIndex=0;
+  let api,ready=false,lastAsset='',time=0,meshes=[],sac,tracks=[],moving,clockState={...pressureState(0),...rightPressureState(0)};
+  let activeSegment=0, animated=[], animatedGroup,chordae,junctionDot, question=null,spotIndex=0;
   function appearance() {
     if(!ready)return;
     const m=mode.value, focus=target.value;
@@ -107,10 +112,12 @@ export function mountSpecimen(lab,kind,linked=false) {
     const plane=new THREE.Plane(new THREE.Vector3(0,0,-1),.092-Number(get('cut').value)*.00105);
     for(const obj of meshes){
       const n=obj.name,isFocus=n===focus;
-      obj.visible=heart?(m==='motion'?(n.includes('papillary')||n.includes('septum')):m==='valves'?valve(n):m==='thorax'||m==='surface'||m==='conduction'||cut):vesselRegions[m].include(n);
+      obj.visible=heart?(m==='motion'?(n.includes('papillary')||n.includes('septum')):m==='supports'?isMitralSupport(n):m==='valves'?valve(n):m==='thorax'||m==='surface'||m==='conduction'||cut):vesselRegions[m].include(n);
       const mat=obj.material;
-      const dim=focus && !isFocus, translucent=dim || m==='conduction' || m==='motion' || (m==='thorax' && !/wall_of/.test(n)) || (m==='leg' && !/artery/.test(n)) || (!isFocus&&n.startsWith('context_'));
-      const timeColor=linked&&!focus&&((n==='VH_M_mitral_valve'&&clockState.mitral)||(n==='VH_M_aortic_valve'&&clockState.aortic));
+      const group=get('support-pick').value;
+      const opposite=m==='supports'&&['anterolateral','posteromedial'].includes(group)&&n.includes('papillary')&&n!==papillaryName(group);
+      const dim=opposite||(focus && !isFocus), translucent=dim || m==='conduction' || m==='motion' || (m==='thorax' && !/wall_of/.test(n)) || (m==='leg' && !/artery/.test(n)) || (!isFocus&&n.startsWith('context_'));
+      const timeColor=linked&&!focus&&m!=='supports'&&cardiacValves.some(v=>n==='VH_M_'+v.key+'_valve'&&clockState[v.key]);
       mat.color.set(isFocus?'#ffd977':timeColor?'#8fdbc8':nameColor(n));
       mat.transparent=Boolean(translucent);
       mat.opacity=dim?.12:(m==='conduction'||m==='motion')?.13:translucent?.32:1;
@@ -120,11 +127,17 @@ export function mountSpecimen(lab,kind,linked=false) {
       obj.renderOrder=isFocus?2:0;
     }
     if(animated.length){
-      const gradients=[clockState.la-clockState.lv,clockState.lv-clockState.ao];
+      const pick=get('valve-pick').value;
       for(const [i,leaf] of animated.entries()){
-        leaf.root.visible=m==='motion';
-        if(leaf.root.visible)leaf.open(gradients[i]>0?Math.min(1,Math.sqrt(gradients[i]/(i?2:1.2))):0);
+        const valve=cardiacValves[i];leaf.root.visible=m==='motion'&&(!pick||pick===valve.key);
+        if(leaf.root.visible)leaf.open(openingFor(valve,clockState));
       }
+      if(m==='motion')get('animated-states').textContent=cardiacValves.filter(v=>!pick||pick===v.key).map(v=>v.label+' '+(clockState[v.key]?'open':'closed')).join(' · ');
+    }
+    if(chordae){
+      const group=get('support-pick').value;
+      chordae.visible=m==='supports'&&group!=='donor';
+      for(const strand of chordae.children)strand.visible=group==='both'||strand.userData.papillary===group;
     }
     if(sac)sac.visible=m==='surface'&&get('sac').checked;
     for(const [i,obj] of tracks.entries()){
@@ -140,7 +153,7 @@ export function mountSpecimen(lab,kind,linked=false) {
     }
     const stage=traceLabels[activeSegment]||'Between activations';
     get('conduction-note').textContent=names.checked?stage:'Observe where the impulse travels';
-    target.parentElement.hidden=!names.checked||Boolean(question);
+    target.parentElement.hidden=!names.checked||Boolean(question)||m==='motion';
     get('spot-area').hidden=!spotters[m];
     get('spot-start').disabled=!ready;get('focus-structure').disabled=!focus;
     if(!names.checked||question)get('specimen-note').hidden=true;
@@ -160,10 +173,11 @@ export function mountSpecimen(lab,kind,linked=false) {
     meshes=[];instance.model.traverse(o=>{if(o.isMesh)meshes.push(o);});
     if(mode.value!=='thorax'&&heart){
       if(linked){
-        animated=[makeTeachingValve({center:[.0261,.4746,.0145],axis:[.47,-.39,.79],radius:.017,cusps:2}),makeTeachingValve({center:[.0089,.4971,.0279],axis:[-.40,.916,-.03],radius:.009,cusps:3})];
+        animated=cardiacValves.map(v=>makeTeachingValve(v));
         animatedGroup=new THREE.Group();instance.model.add(animatedGroup);
         for(const valve of animated)animatedGroup.add(valve.root);
       }
+      chordae=makeMitralSupports(instance.model);instance.model.add(chordae);
       sac=addPericardialEnvelope(instance.model);
       tracks=conduction.map(points=>{
         const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)));
@@ -176,7 +190,7 @@ export function mountSpecimen(lab,kind,linked=false) {
       junctionDot=new THREE.Mesh(new THREE.SphereGeometry(.004,14,10),new THREE.MeshBasicMaterial({color:'#ffe486',depthTest:false}));
       junctionDot.renderOrder=6;junctionDot.visible=false;instance.model.add(junctionDot);
     }
-    appearance();choices();instance.fit(instance.model,heart?undefined:vesselRegions[mode.value].direction);
+    appearance();choices();frameMode();
     // Distinguish a tap from an orbit, using the closest visible specimen surface.
     const canvas=instance.renderer.domElement,ray=new THREE.Raycaster();let start;
     canvas.addEventListener('pointerdown',event=>start=[event.clientX,event.clientY]);
@@ -189,16 +203,23 @@ export function mountSpecimen(lab,kind,linked=false) {
       if(hit&&[...target.options].some(o=>o.value===hit.object.name)){target.value=hit.object.name;appearance();}
     });
   }
+  function frameMode(){
+    const m=mode.value;
+    const direction=m==='motion'?[.02,1,-.63]:m==='supports'?[-.81,.09,.63]:m==='valves'?[.12,1,.3]:(!heart?vesselRegions[m].direction||[.1,.06,1]:undefined);
+    api.fit(m==='motion'?animatedGroup:api.model,direction);
+  }
   function changeMode() {
     question=null;spotIndex=0;get('spot-choices').hidden=true;get('spot-answer').textContent='';get('spot-start').disabled=true;
     const m=mode.value;
     get('spot-area').hidden=!spotters[m];
     const asset=heart?(m==='thorax'?'ap2-thorax':'ap2-heart'):(vesselRegions[m].asset||'ap2-vessels');
     get('junction-settings').hidden=m!=='leg';get('junction').value='';get('junction-note').textContent='';
+    get('support-settings').hidden=get('support-check').hidden=m!=='supports';get('support-check').open=false;
+    get('valve-settings').hidden=m!=='motion';get('valve-pick').value='';
     get('cut-settings').hidden=m!=='cut';get('sac-settings').hidden=m!=='surface';get('conduct-settings').hidden=m!=='conduction'||linked;
     get('specimen-note').textContent=heart?instructions[m]:vesselRegions[m].note;target.value='';
-    if(lastAsset===asset&&ready){appearance();choices();api.fit(m==='motion'?animatedGroup:api.model,m==='motion'?[.02,1,-.63]:m==='valves'?[.12,1,.3]:(!heart?vesselRegions[m].direction||[.1,.06,1]:undefined));return;}
-    ready=false;sac=null;junctionDot=null;animated=[];tracks=[];moving=null;lastAsset=asset;target.replaceChildren(new Option('All structures',''));
+    if(lastAsset===asset&&ready){appearance();choices();frameMode();return;}
+    ready=false;sac=null;chordae=null;junctionDot=null;animated=[];tracks=[];moving=null;lastAsset=asset;target.replaceChildren(new Option('All structures',''));
     api=mountOrganViewer(host,{asset:'assets/'+asset+'.glb',title:mode.selectedOptions[0].text,colors:nameColor,direction:(!heart&&vesselRegions[m].direction)||[.1,.06,1],onLoad:setup});
   }
   get('spot-start').onclick=()=>{
@@ -228,13 +249,27 @@ export function mountSpecimen(lab,kind,linked=false) {
     const frame=new THREE.Mesh(new THREE.BoxGeometry(.11,.12,.11));frame.position.copy(junctionDot.position);
     api.fit(frame,direction);frame.geometry.dispose();frame.material.dispose();
   };
+  get('support-pick').onchange=()=>{target.value='';appearance();};
+  get('valve-pick').onchange=()=>{appearance();if(ready)frameMode();};
   get('focus-structure').onclick=()=>{
     const focus=meshes.find(m=>m.name===target.value);
     if(ready&&focus)api.fit(focus,api.camera.position.clone().sub(api.controls.target));
   };
   mode.onchange=changeMode;target.onchange=names.onchange=get('cut').oninput=get('sac').onchange=appearance;
   get('conduction-stage').oninput=()=>{activeSegment=+get('conduction-stage').value;time=phaseTimes[activeSegment]+6;appearance();};
-  if(linked)lab.addEventListener('cardiobeat',e=>{clockState=e.detail;time=e.detail.t;activeSegment=conductionIndex(time);if(ready)appearance();});
+  if(linked){
+    const play=lab.querySelector('[data-play]'),clock=lab.querySelector('[data-beat-time]');
+    const localPlay=get('valve-play'),localClock=get('valve-time');
+    const sync=()=>{localPlay.textContent=play.textContent;localPlay.setAttribute('aria-pressed',play.getAttribute('aria-pressed')||'false');};
+    localPlay.onclick=()=>play.click();
+    localClock.oninput=()=>{clock.value=localClock.value;clock.dispatchEvent(new Event('input',{bubbles:true}));};
+    play.addEventListener('click',()=>queueMicrotask(sync));
+    lab.addEventListener('cardiobeat',e=>{
+      clockState=e.detail;time=e.detail.t;activeSegment=conductionIndex(time);
+      localClock.value=Math.round(time);localClock.setAttribute('aria-valuetext',Math.round(time)+' milliseconds');
+      if(ready)appearance();queueMicrotask(sync);
+    });
+  }
   if(linked)mode.value='cut';
   changeMode();
 }

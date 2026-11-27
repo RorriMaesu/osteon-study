@@ -51,6 +51,12 @@
 .organ-expanded .organ-viewport{height:100%}
 .organ-tools [data-zoom],.organ-tools [data-turn]{font-size:1.12rem}
 @media(max-width:700px){.organ-tools button,.organ-tools select{min-height:44px;min-width:44px}}
+@media(max-width:700px){
+  .ap2-page:has(.ap2-lesson-body [data-organ-host]),
+  .ap2-lesson-body:has([data-organ-host]),
+  .ap2-cardio-lab:has([data-organ-host]){padding-inline:8px}
+  [data-organ-host] .organ-viewer:not(.organ-expanded){padding-inline:4px}
+}
 
 .ap2-image-dialog{box-sizing:border-box;width:min(95vw,1000px);max-height:94dvh;padding:.8rem;border:1px solid var(--line);border-radius:12px;background:#16282d;color:var(--ink)}
 .ap2-image-dialog::backdrop{background:#071315dc}

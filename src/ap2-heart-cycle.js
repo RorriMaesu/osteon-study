@@ -48,6 +48,14 @@ export const valveChallenges = [
 export const valveChoices=['Mitral closes','Aortic opens','Aortic closes','Mitral opens'];
 
 export const rightValveChoices=['Tricuspid closes','Pulmonary opens','Pulmonary closes','Tricuspid opens'];
+export const rightPhases=[
+  {start:0,name:'Passive filling',note:'Right atrial pressure exceeds right ventricular pressure. Venous blood enters through the open tricuspid valve.'},
+  {start:88,name:'Atrial systole',note:'Right atrial contraction adds the final portion of blood to the right ventricle.'},
+  {start:200,name:'Isovolumetric contraction',note:'The tricuspid valve closes. The right ventricle builds pressure with both valves closed.'},
+  {start:235,name:'Ventricular ejection',note:'Right ventricular pressure exceeds pulmonary arterial pressure. Blood flows into the pulmonary trunk.'},
+  {start:515,name:'Isovolumetric relaxation',note:'The pulmonary valve closes. Right ventricular pressure falls while both valves are closed.'},
+  {start:568,name:'Ventricular filling resumes',note:'Right ventricular pressure falls below right atrial pressure. The tricuspid valve opens and filling resumes.'}
+];
 export const rightValveChallenges=[
   [189,'Right ventricular pressure is rising toward right atrial pressure. Which event comes next?',0,'RV pressure rises above RA pressure and closes the tricuspid valve.'],
   [224,'Both right-heart valves are closed and ventricular pressure is rising. Which event comes next?',1,'RV pressure rises above pulmonary arterial pressure, opening the pulmonary valve.'],

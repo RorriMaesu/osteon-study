@@ -57,7 +57,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
       ['Neural tissue and pathways', [['12.4','Myelinated axon','Compare signal conduction with intact and damaged myelin.','axon'],['13.2','Spinal cord and roots','Follow sensory input and motor output through a transverse section.','cord'],['13.3','Ventricles and CSF','Rotate the brain specimen, cut sections and test an obstruction.','ventricles'],['14.1','Eye and accommodation','Examine the lens and retina from several views.','eye'],['14.1','Middle-ear ossicles','Follow the bones that transmit vibration.','ossicles'],['14.1','Inner-ear labyrinth','Compare the sensory structures for hearing and balance.','ear'],['14.3','Motor pathways','Trace a motor command to a skeletal muscle.']]],
       ['Autonomic and neurological assessment',[['15.1','Autonomic routes to the heart','Trace each pathway through its ganglion to the pacemaker.','cardiac-autonomic'],['16.3','Pupillary light reflex','Shine light into either eye and localize the interruption.','pupil'],['16.5','Coordination and gait','Use observations from two tasks to explain a finding.']]],
       ['Endocrine and blood',[['17.1','Gland locator','Locate glands relative to nearby structures.'],['17.5','Posterior neck','Find the parathyroids behind the thyroid.','parathyroids'],['17.8','Pelvic endocrine anatomy','Locate the ovaries, testes and placenta in their respective specimens.'],['17.9','Pancreas and islets','Move between gross anatomy and a microscopic section.'],['18.4','Blood smear microscope','Identify cells and tally an unfamiliar mixed field.'],['18.5','Hemostasis','Predict the outcome when adhesion or fibrin formation is impaired.']]],
-      ['Heart and circulation',[['19.1','Heart dissection','Inspect the chambers, coronary vessels and valve supports.'],['19.3','Cardiac cycle','Match a pressure crossing to a valve event.'],['20.1','Veins and the calf pump','Track venous return during contraction and release.'],['20.5','Vascular routes','Trace blood through the trunk and limbs.'],['20.6','Fetal circulation','Compare placental and postnatal routes.']]]
+      ['Heart and circulation',[['19.1','Heart dissection','Inspect the chambers and coronary vessels.'],['19.1','Mitral valve supports','Follow the chordae from the papillary muscles to the leaflets.','supports'],['19.3','Four valves through one beat','Play a beat, then compare valve motion with the pressure traces.','motion'],['20.1','Veins and the calf pump','Track venous return during contraction and release.'],['20.5','Vascular routes','Trace blood through the trunk and limbs.'],['20.6','Fetal circulation','Compare placental and postnatal routes.']]]
     ];
     const groupCard=([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}<small>${e(goal)}</small></span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>';
     page(hero('A&P II · PRACTICALS','Model & slide lab','Choose a specimen or browse the activities in a textbook chapter.')+
@@ -149,6 +149,14 @@ export function initAP2({root,escape:e,toast,dialog}) {
         if(view&&[...view.options].some(o=>o.value===station)){
           body.querySelector('[data-cardio-view="1"]')?.click();
           view.value=station;view.dispatchEvent(new Event('change',{bubbles:true}));
+        }
+      }
+      if((s.id==='19.1'&&station==='supports')||(s.id==='19.3'&&station==='motion')){
+        if(station==='motion')body.querySelector('[data-cardio-view="1"]')?.click();
+        const view=body.querySelector('[data-organ-kind="heart"] [data-specimen-mode]');
+        if(view&&[...view.options].some(o=>o.value===station)){
+          view.value=station;view.dispatchEvent(new Event('change',{bubbles:true}));
+          requestAnimationFrame(()=>body.querySelector('[data-organ-kind="heart"] [data-organ-host]')?.scrollIntoView({block:'center',behavior:'instant'}));
         }
       }
       const atlas=atlasLinks[s.id];

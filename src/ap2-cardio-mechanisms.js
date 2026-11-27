@@ -1,30 +1,32 @@
+import {cardiacValves,openingFor} from './ap2-valve-surfaces.js';
 // Original explanatory drawings. Stage timing and case data are for A&P instruction.
 const row=(content)=>'<div class="ac-actions ac-row">'+content+'</div>';
 const svg=(title,inner)=>`<figure class="ac-plot"><svg viewBox="0 0 440 170" role="img" aria-label="${title}">${inner}</svg></figure>`;
 const line=(path,stroke,width=4,more='')=>`<path d="${path}" stroke="${stroke}" stroke-width="${width}" fill="none" stroke-linecap="round" stroke-linejoin="round" ${more}/>`;
 const text=(x,y,word,anchor='start')=>`<text x="${x}" y="${y}" text-anchor="${anchor}">${word}</text>`;
 export function renderValveWindow(){
-  return `<div class="ac-valve-window"><h4>Valve motion at the cursor</h4>
-    ${svg('Schematic of the mitral and aortic valves, with flow from bottom to top.',
-      text(109,20,'Mitral · LA to LV','middle')+text(323,20,'Aortic · LV to aorta','middle')+
-      [109,323].map((x,i)=>`<g transform="translate(${x} 0)">${line('M-43 143V43 M43 143V43','#8b909f',5)}
-      <path data-leaf-a="${i}" stroke="#f6d48c" stroke-width="6" fill="none"/><path data-leaf-b="${i}" stroke="#f6d48c" stroke-width="6" fill="none"/>
-      <path data-leaf-flow="${i}" d="M0 128V53 m-7 8 7-8 7 8" stroke="#a4dacb" stroke-width="3" fill="none"/>
-      <text data-leaf-state="${i}" x="0" y="162" text-anchor="middle"></text></g>`).join(''))}
-    <small>Section through two leaflets or cusps. Opening follows the forward pressure gradient. The 3D specimen shows the corresponding valve surfaces.</small></div>`;
+  const descriptions=['Mitral · LA to LV','Aortic · LV to aorta','Tricuspid · RA to RV','Pulmonary · RV to trunk'];
+  const pair=(offset)=>svg((offset?'Right':'Left')+' heart valve section. Forward flow points upward.',
+    [0,1].map((j)=>{
+      const i=j+offset,x=j?323:109;
+      return text(x,20,descriptions[i],'middle')+'<g transform="translate('+x+' 0)">'+line('M-43 143V43 M43 143V43','#8b909f',5)+
+        '<path data-leaf-a="'+i+'" stroke="#f6d48c" stroke-width="6" fill="none"/><path data-leaf-b="'+i+'" stroke="#f6d48c" stroke-width="6" fill="none"/>'+
+        '<path data-leaf-flow="'+i+'" d="M0 128V53 m-7 8 7-8 7 8" stroke="#a4dacb" stroke-width="3" fill="none"/>'+
+        '<text data-leaf-state="'+i+'" x="0" y="162" text-anchor="middle"></text></g>';
+    }).join(''));
+  return '<div class="ac-valve-window"><h4>Valve motion at the cursor</h4>'+pair(0)+pair(2)+'<small>Each section shows two leaflet edges. All four valves follow their own forward pressure gradients on the same heartbeat clock.</small></div>';
 }
 export function paintValves(root,state){
-  [state.mitral,state.aortic].forEach((open,i)=>{
-    const gradient=i?state.lv-state.ao:state.la-state.lv;
-    const sweep=open?Math.min(1,.65+Math.max(0,gradient)/6):0;
-    const spread=3+33*sweep, height=i?90-26*sweep:91-29*sweep;
+  cardiacValves.forEach((valve,i)=>{
+    const open=state[valve.key],sweep=openingFor(valve,state);
+    const spread=3+33*sweep,height=valve.av?91-29*sweep:90-26*sweep;
     for(const [side,sign] of [['a',-1],['b',1]]){
       const x=43*sign;
-      const cp=i?`Q${x} ${110-20*sweep} ${spread*sign} ${height}`:`Q${(28+8*sweep)*sign} ${88-10*sweep} ${(spread-2)*sign} ${height}`;
-      root.querySelector('[data-leaf-'+side+'="'+i+'"]').setAttribute('d',`M${x} 95 ${cp}`);
+      const cp=valve.av?`Q${27*sign} ${86-17*sweep} ${spread*sign} ${height}`:`Q${x} ${106-18*sweep} ${spread*sign} ${height}`;
+      root.querySelector('[data-leaf-'+side+'="'+i+'"]').setAttribute('d','M'+x+' 104 '+cp);
     }
-    root.querySelector('[data-leaf-state="'+i+'"]').textContent=open?'Open':'Closed';
     root.querySelector('[data-leaf-flow="'+i+'"]').style.display=open?'':'none';
+    root.querySelector('[data-leaf-state="'+i+'"]').textContent=open?'Open':'Closed';
   });
 }
 

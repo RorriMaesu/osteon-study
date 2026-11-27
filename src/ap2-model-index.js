@@ -28,6 +28,8 @@ const specimens=[
   station('Pancreatic islet','Microscopic 3D model','17.9','islet','pancreas alpha beta delta endocrine cells exocrine acini islets of Langerhans'),
   station('Blood smear','Micrograph','18.4','','blood erythrocyte platelet neutrophil eosinophil basophil monocyte lymphocyte'),
   station('Heart and coronary vessels','Separate 3D specimen','19.1','','atrium atria ventricle septum papillary muscles mitral tricuspid aortic pulmonary valve coronary sinus coronary arteries dissection'),
+  station('Mitral valve and papillary supports','Separate 3D specimen','19.1','supports','mitral leaflets ventricular papillary muscles chordae tendineae illustrated support apparatus'),
+  station('Four valves through one beat','3D teaching model','19.3','motion','mitral tricuspid pulmonary aortic semilunar cusps leaflets pressure opening closing cardiac cycle'),
   station('Aortic arch','Separate 3D specimen','20.5','arch','ascending aorta left common carotid artery subclavian brachiocephalic'),
   station('Pulmonary arteries and veins','Separate 3D specimen','20.5','pulmonary','right left superior inferior pulmonary veins trunk lung left atrium'),
   station('Systemic venous return','Separate 3D specimen','20.5','caval','brachiocephalic veins vena cava iliac veins'),
