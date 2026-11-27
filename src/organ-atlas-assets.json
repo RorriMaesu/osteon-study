@@ -1,0 +1,553 @@
+{
+  "frame": "osteon-z-anatomy",
+  "units": "m",
+  "asset": "assets/organ-atlas/registered-organs.glb",
+  "source": "assets/organ-atlas/SOURCES.md",
+  "organs": [
+    {
+      "id": "brain",
+      "label": "Brain",
+      "system": "Nervous",
+      "targets": [
+        "frontal_lobes",
+        "parietal_lobes",
+        "occipital_lobes",
+        "temporal_lobes",
+        "insulae",
+        "limbic_lobes",
+        "cerebellum",
+        "pons_left",
+        "pons_right",
+        "medulla_oblongata_left",
+        "medulla_oblongata_right",
+        "midbrain_left",
+        "midbrain_right",
+        "thalamus_left",
+        "thalamus_right"
+      ]
+    },
+    {
+      "id": "spinal-cord",
+      "label": "Spinal cord",
+      "system": "Nervous",
+      "targets": [
+        "white_matter_of_spinal_cord"
+      ]
+    },
+    {
+      "id": "eyes",
+      "label": "Eyes",
+      "system": "Special senses",
+      "targets": [
+        "cornea_left",
+        "cornea_right",
+        "sclera_left",
+        "sclera_right",
+        "lens_left",
+        "lens_right",
+        "iris_left",
+        "iris_right",
+        "retina_left",
+        "retina_right"
+      ]
+    },
+    {
+      "id": "ears",
+      "label": "Ears",
+      "system": "Special senses",
+      "targets": [
+        "helix_left",
+        "helix_right",
+        "concha_of_auricle_left",
+        "concha_of_auricle_right",
+        "lobule_of_auricle_left",
+        "lobule_of_auricle_right",
+        "tympanic_membrane_left",
+        "tympanic_membrane_right",
+        "malleus_left",
+        "malleus_right",
+        "incus_left",
+        "incus_right",
+        "stapes_left",
+        "stapes_right",
+        "cochlea_left",
+        "cochlea_right"
+      ]
+    },
+    {
+      "id": "lacrimal-glands",
+      "label": "Lacrimal glands and tear drainage",
+      "system": "Special senses",
+      "targets": [
+        "lacrimal_gland_left",
+        "lacrimal_gland_right",
+        "lacrimal_canaliculus_left",
+        "lacrimal_canaliculus_right",
+        "lacrimal_sac_left",
+        "lacrimal_sac_right",
+        "nasolacrimal_duct_left",
+        "nasolacrimal_duct_right"
+      ]
+    },
+    {
+      "id": "hypothalamus",
+      "label": "Hypothalamus",
+      "system": "Endocrine",
+      "targets": [
+        "hypothalamus"
+      ]
+    },
+    {
+      "id": "pituitary",
+      "label": "Pituitary gland",
+      "system": "Endocrine",
+      "targets": [
+        "adenohypophysis",
+        "neurohypophysis"
+      ]
+    },
+    {
+      "id": "pineal",
+      "label": "Pineal gland",
+      "system": "Endocrine",
+      "targets": [
+        "pineal_gland"
+      ]
+    },
+    {
+      "id": "thyroid",
+      "label": "Thyroid gland",
+      "system": "Endocrine",
+      "targets": [
+        "thyroid_gland"
+      ]
+    },
+    {
+      "id": "parathyroids",
+      "label": "Parathyroid glands",
+      "system": "Endocrine",
+      "targets": [
+        "superior_parathyroid_gland_left",
+        "superior_parathyroid_gland_right",
+        "inferior_parathyroid_gland_left",
+        "inferior_parathyroid_gland_right"
+      ]
+    },
+    {
+      "id": "adrenal-glands",
+      "label": "Adrenal glands",
+      "system": "Endocrine",
+      "targets": [
+        "suprarenal_gland_left",
+        "suprarenal_gland_right"
+      ]
+    },
+    {
+      "id": "heart",
+      "label": "Heart",
+      "system": "Cardiovascular",
+      "targets": [
+        "right_atrium",
+        "left_atrium",
+        "right_ventricle",
+        "left_ventricle"
+      ]
+    },
+    {
+      "id": "aorta",
+      "label": "Aorta",
+      "system": "Cardiovascular",
+      "targets": [
+        "ascending_aorta",
+        "aortic_arch",
+        "thoracic_aorta",
+        "abdominal_aorta"
+      ]
+    },
+    {
+      "id": "venae-cavae",
+      "label": "Superior and inferior venae cavae",
+      "system": "Cardiovascular",
+      "targets": [
+        "superior_vena_cava",
+        "inferior_vena_cava_thoracic_part",
+        "inferior_vena_cava_abdominal_part"
+      ]
+    },
+    {
+      "id": "tonsils",
+      "label": "Palatine tonsils",
+      "system": "Lymphatic and immune",
+      "targets": [
+        "palatine_tonsil_left",
+        "palatine_tonsil_right"
+      ]
+    },
+    {
+      "id": "thymus",
+      "label": "Thymus",
+      "system": "Lymphatic and immune",
+      "targets": [
+        "left_lobe_of_thymus",
+        "right_lobe_of_thymus"
+      ]
+    },
+    {
+      "id": "spleen",
+      "label": "Spleen",
+      "system": "Lymphatic and immune",
+      "targets": [
+        "spleen"
+      ]
+    },
+    {
+      "id": "nose",
+      "label": "Nose and nasal cavity",
+      "system": "Respiratory",
+      "targets": [
+        "nasal_septal_cartilage",
+        "major_alar_cartilage_left",
+        "major_alar_cartilage_right",
+        "inferior_nasal_concha_bone_left",
+        "inferior_nasal_concha_bone_right"
+      ]
+    },
+    {
+      "id": "larynx",
+      "label": "Larynx",
+      "system": "Respiratory",
+      "targets": [
+        "epiglottis",
+        "thyroid_cartilage",
+        "cricoid_cartilage",
+        "arytenoid_cartilage_left",
+        "arytenoid_cartilage_right"
+      ]
+    },
+    {
+      "id": "trachea",
+      "label": "Trachea",
+      "system": "Respiratory",
+      "targets": [
+        "trachea"
+      ]
+    },
+    {
+      "id": "bronchi",
+      "label": "Main bronchi",
+      "system": "Respiratory",
+      "targets": [
+        "left_main_bronchus",
+        "right_main_bronchus"
+      ]
+    },
+    {
+      "id": "lungs",
+      "label": "Lungs",
+      "system": "Respiratory",
+      "targets": [
+        "superior_lobe_of_right_lung",
+        "middle_lobe_of_right_lung",
+        "inferior_lobe_of_right_lung",
+        "superior_lobe_of_left_lung",
+        "inferior_lobe_of_left_lung"
+      ]
+    },
+    {
+      "id": "diaphragm",
+      "label": "Diaphragm",
+      "system": "Respiratory",
+      "targets": [
+        "diaphragm"
+      ]
+    },
+    {
+      "id": "teeth",
+      "label": "Teeth",
+      "system": "Digestive",
+      "targets": [
+        "upper_teeth",
+        "lower_teeth"
+      ]
+    },
+    {
+      "id": "tongue",
+      "label": "Tongue",
+      "system": "Digestive",
+      "targets": [
+        "tongue"
+      ]
+    },
+    {
+      "id": "parotid-glands",
+      "label": "Parotid glands",
+      "system": "Digestive",
+      "targets": [
+        "parotid_gland_left",
+        "parotid_gland_right",
+        "parotid_duct_left",
+        "parotid_duct_right"
+      ]
+    },
+    {
+      "id": "submandibular-glands",
+      "label": "Submandibular glands",
+      "system": "Digestive",
+      "targets": [
+        "submandibular_gland_left",
+        "submandibular_gland_right",
+        "submandibular_duct_left",
+        "submandibular_duct_right"
+      ]
+    },
+    {
+      "id": "sublingual-glands",
+      "label": "Sublingual glands",
+      "system": "Digestive",
+      "targets": [
+        "sublingual_gland_left",
+        "sublingual_gland_right"
+      ]
+    },
+    {
+      "id": "pharynx",
+      "label": "Pharynx",
+      "system": "Digestive",
+      "targets": [
+        "nasopharynx",
+        "oropharynx",
+        "laryngopharynx"
+      ]
+    },
+    {
+      "id": "esophagus",
+      "label": "Esophagus",
+      "system": "Digestive",
+      "targets": [
+        "esophagus"
+      ]
+    },
+    {
+      "id": "stomach",
+      "label": "Stomach",
+      "system": "Digestive",
+      "targets": [
+        "stomach"
+      ]
+    },
+    {
+      "id": "liver",
+      "label": "Liver",
+      "system": "Digestive",
+      "targets": [
+        "liver",
+        "hepatic_portal_vein"
+      ]
+    },
+    {
+      "id": "gallbladder",
+      "label": "Gallbladder and bile duct",
+      "system": "Digestive",
+      "targets": [
+        "gallbladder",
+        "bile_duct"
+      ]
+    },
+    {
+      "id": "pancreas",
+      "label": "Pancreas",
+      "system": "Digestive",
+      "targets": [
+        "pancreas",
+        "pancreatic_duct"
+      ]
+    },
+    {
+      "id": "small-intestine",
+      "label": "Small intestine",
+      "system": "Digestive",
+      "targets": [
+        "duodenum",
+        "jejunum",
+        "ileum"
+      ],
+      "registration": "Includes fitted BodyParts3D anatomy"
+    },
+    {
+      "id": "large-intestine",
+      "label": "Large intestine",
+      "system": "Digestive",
+      "targets": [
+        "cecum",
+        "ascending_colon",
+        "transverse_colon",
+        "descending_colon",
+        "sigmoid_colon"
+      ],
+      "registration": "Includes fitted BodyParts3D anatomy"
+    },
+    {
+      "id": "appendix",
+      "label": "Vermiform appendix",
+      "system": "Digestive",
+      "targets": [
+        "vermiform_appendix"
+      ]
+    },
+    {
+      "id": "rectum",
+      "label": "Rectum",
+      "system": "Digestive",
+      "targets": [
+        "rectum",
+        "external_anal_sphincter_left",
+        "external_anal_sphincter_right"
+      ],
+      "registration": "Includes fitted BodyParts3D anatomy"
+    },
+    {
+      "id": "kidneys",
+      "label": "Kidneys",
+      "system": "Urinary",
+      "targets": [
+        "kidney_left",
+        "kidney_right",
+        "left_renal_artery",
+        "right_renal_artery",
+        "renal_pelvis_left",
+        "renal_pelvis_right"
+      ],
+      "registration": "Includes fitted BodyParts3D anatomy"
+    },
+    {
+      "id": "ureters",
+      "label": "Ureters",
+      "system": "Urinary",
+      "targets": [
+        "ureter_left",
+        "ureter_right"
+      ]
+    },
+    {
+      "id": "bladder",
+      "label": "Urinary bladder",
+      "system": "Urinary",
+      "targets": [
+        "urinary_bladder"
+      ]
+    },
+    {
+      "id": "urethra",
+      "label": "Urethra",
+      "system": "Urinary",
+      "targets": [
+        "urethra"
+      ]
+    },
+    {
+      "id": "testes",
+      "label": "Testes",
+      "system": "Reproductive",
+      "targets": [
+        "testis_left",
+        "testis_right"
+      ]
+    },
+    {
+      "id": "epididymides",
+      "label": "Epididymides",
+      "system": "Reproductive",
+      "targets": [
+        "epididymis_left",
+        "epididymis_right"
+      ]
+    },
+    {
+      "id": "ductus-deferentes",
+      "label": "Ductus deferentes",
+      "system": "Reproductive",
+      "targets": [
+        "ductus_deferens_left",
+        "ductus_deferens_right"
+      ]
+    },
+    {
+      "id": "ejaculatory-ducts",
+      "label": "Ejaculatory ducts",
+      "system": "Reproductive",
+      "targets": [
+        "ejaculatory_duct_left",
+        "ejaculatory_duct_right"
+      ]
+    },
+    {
+      "id": "seminal-glands",
+      "label": "Seminal glands",
+      "system": "Reproductive",
+      "targets": [
+        "seminal_gland_left",
+        "seminal_gland_right"
+      ]
+    },
+    {
+      "id": "prostate",
+      "label": "Prostate",
+      "system": "Reproductive",
+      "targets": [
+        "prostate"
+      ]
+    },
+    {
+      "id": "penis",
+      "label": "Penis",
+      "system": "Reproductive",
+      "targets": [
+        "corpus_cavernosum_of_penis",
+        "corpus_spongiosum_of_penis",
+        "glans_penis"
+      ]
+    },
+    {
+      "id": "skin",
+      "label": "Skin surface",
+      "system": "Integumentary",
+      "targets": [
+        "skin"
+      ],
+      "contextOnly": true
+    }
+  ],
+  "registration": {
+    "zAnatomySHA256": "9f08a17ea0115fed80b2a73ecdf0a1bc2ab2f6956f37c593ce23d513ea35afcd",
+    "bodyPartsZipSHA256": "9fbc713fffeee924a5a657d9813d84d7eb957bded63adb854931dd5e3eb61c97",
+    "bowelTranslationBlenderMetres": [
+      0.0003522,
+      0.0986465,
+      0.0645809
+    ],
+    "bowelCentroidResidualsMm": {
+      "Gallbladder": 1.5,
+      "Stomach": 4.7,
+      "Vertebra T12": 1.3,
+      "Vertebra L1": 4.3,
+      "Sacrum": 12.8,
+      "Descending colon": 9.5
+    },
+    "kidneyFits": {
+      "left kidney": {
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "right kidney": {
+        "scale": [
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    }
+  }
+}
