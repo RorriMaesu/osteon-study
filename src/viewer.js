@@ -209,6 +209,7 @@ export class AnatomyViewer {
   if(nerve)return nerve;
   const musclesOwnFocus=this.muscleLayer?.ownsFocus(),muscle=musclesOwnFocus&&this.muscleLayer.pick(this.ray,hit);
   if(muscle)return muscle;
+  if(!this.peel&&!e.shiftKey){const organ=this.organLayer?.pick(this.ray,hit);if(organ)return organ;}
   if((this.lymphNodeLayer?.active||this.nervousLayer?.active&&!musclesOwnFocus)&&e.pointerType==='touch'&&e.type==='pointerup'&&!this.peel){
    for(const [x,y] of [[7,0],[-7,0],[0,7],[0,-7]]){
     const neighbor=boneAt(x,y),target=nodeAt(neighbor)||(!musclesOwnFocus&&this.nervousLayer?.pick(this.ray,neighbor));
@@ -229,7 +230,7 @@ export class AnatomyViewer {
   return inArea(n,this.focus.areaId,this.focus.side)||(this.focus.areaId==='skull'&&m.userData.region==='Skull')||(this.focus.areaId==='thorax'&&/^Costal cartilage/.test(n))||(this.focus.areaId==='neck'&&/Thyroid cartilage|Cricoid cartilage|Arytenoid cartilage|Corniculate cartilage/.test(n));
  }
  boneMeshes(m){const id=boneId(m.userData.zname);return this.meshes.filter(x=>boneId(x.userData.zname)===id);}
- navigateBone(m){if(m.userData.lymphNodeKey){document.dispatchEvent(new CustomEvent('lymphnodefocus',{detail:this.termFor(m)}));return;}if(m.userData.nerveKey){this.nervousLayer?.select(this.termFor(m));return;}if(m.userData.muscleId){this.muscleLayer?.navigate(m);return;}const term=this.termFor(m);if(term?.representation?.ligamentKey){this.selectLigament(term);return;}const action=navigationAction(this.focus,m.userData.zname,this.quiz||this.peel);if(action==='region')this.exploreBoneRegion(m);else if(action==='bone')this.focusBone(m);}
+ navigateBone(m){if(m.userData.organRow){this.organLayer?.open(m.userData.organRow);return;}if(m.userData.lymphNodeKey){document.dispatchEvent(new CustomEvent('lymphnodefocus',{detail:this.termFor(m)}));return;}if(m.userData.nerveKey){this.nervousLayer?.select(this.termFor(m));return;}if(m.userData.muscleId){this.muscleLayer?.navigate(m);return;}const term=this.termFor(m);if(term?.representation?.ligamentKey){this.selectLigament(term);return;}const action=navigationAction(this.focus,m.userData.zname,this.quiz||this.peel);if(action==='region')this.exploreBoneRegion(m);else if(action==='bone')this.focusBone(m);}
  exploreBoneRegion(m=this.selected[0]){
   if(!m||this.quiz)return;
   this.peel=false;document.dispatchEvent(new Event('layerschanged'));
@@ -310,9 +311,10 @@ export class AnatomyViewer {
  setRegion(region){this.drawerMotion?.stop();this.peel=false;this.activeDetail=null;this.cutaway=null;if(region==='Joints')this.tissues=true;this.focus={level:region==='All regions'?'overview':'region',areaId:null,side:null,boneId:null};this.focusHistory=[];this.clearPins();this.region=region;this.isolated=false;this.ghost=false;this.selected=[];this.selectedTerm=null;this.applyVisibility();this.frameScope();this.notifyFocus();}
  applyVisibility(){this.needsRender=true;this.sceneRevision=(this.sceneRevision||0)+1;this.el.dataset.specimen=this.activeDetail||'adult';const badge=this.el.closest('.specimen-stage')?.querySelector('.stage-header .tiny');if(badge)badge.textContent=this.activeDetail==='inner-ear'?'02 / INNER EAR':this.activeDetail?'03 / TEACHING':'01 / ADULT';this.scene.children.filter(o=>o.userData.ground).forEach(o=>o.visible=!this.activeDetail&&!this.selectedTerm?.representation?.ligamentKey&&!this.selectedTerm?.representation?.nerveKey&&!pointKinds.includes(this.selectedTerm?.representation?.kind));const selected=new Set(this.selected),r=this.selectedTerm?.representation;const clipping=this.cutaway?[new THREE.Plane(new THREE.Vector3(...(this.cutaway.normal||[0,-1,0])),this.cutaway.constant??this.cutaway.height??1.619)]:[];
   // Peeling one vertebra exposes its neighbors; it must not remove their discs.
+  const fadeBones=this.organLayer?.fadesBones();
   const adultStates=new Map(),levels=new Set(),innerDiscTarget=this.selected.some(m=>isNucleus(m.userData.zname));
   for(const m of this.meshes.filter(m=>!m.userData.detailGroup)){
-   const state={ligaments:this.quiz?undefined:this.ligaments,boneView:this.focus.level==='bone',activeDetail:this.activeDetail,division:this.division,hidden:this.peeledSurfaces.has(m),selected:selected.has(m),focusedBone:this.focus.level==='bone'&&!this.quiz&&boneId(m.userData.zname)===this.focus.boneId,inScope:this.scopeContains(m),context:(r?.contextPatterns||[]).some(p=>matches(p,m.userData.zname)),isolateContext:!!r?.isolateContext,isolated:this.isolated,tissues:!!this.tissues,discs:this.discs,sinuses:!!this.sinuses,ghost:this.ghost||this.nervousLayer?.fadesContext()||(!m.userData.nonbone&&this.lymphNodeLayer?.fadesContext()),ghostContext:!!r?.ghostContext,innerDiscTarget};
+   const state={ligaments:this.quiz?undefined:this.ligaments,boneView:this.focus.level==='bone',activeDetail:this.activeDetail,division:this.division,hidden:this.peeledSurfaces.has(m),selected:selected.has(m),focusedBone:this.focus.level==='bone'&&!this.quiz&&boneId(m.userData.zname)===this.focus.boneId,inScope:this.scopeContains(m),context:(r?.contextPatterns||[]).some(p=>matches(p,m.userData.zname)),isolateContext:!!r?.isolateContext,isolated:this.isolated,tissues:!!this.tissues,discs:this.discs,sinuses:!!this.sinuses,ghost:this.ghost||(!m.userData.nonbone&&fadeBones)||this.nervousLayer?.fadesContext()||(!m.userData.nonbone&&this.lymphNodeLayer?.fadesContext()),ghostContext:!!r?.ghostContext,innerDiscTarget};
    adultStates.set(m,state);const level=vertebralLevel(m.userData.zname);if(level&&adultVisibility({name:m.userData.zname,tissue:m.userData.tissue,sinus:m.userData.sinus,ligament:ligamentByMesh.get(m.userData.zname)},{...state,hidden:false}).visible)levels.add(level);
   }
   const adultDisplay=new Map(),visibleParents=new Set();
@@ -328,7 +330,7 @@ export class AnatomyViewer {
    const family=this.skullColors&&!this.quiz&&this.focus.level!=='overview'&&!m.userData.nonbone?boneFamily(m.userData.zname):null;
    const ligament=this.ligaments&&!this.quiz&&ligamentByMesh.has(m.userData.zname);
    const c=ligament?(selected.has(m)?0xffc26c:0xbd752d):family?parseInt(family.color.slice(1),16):selected.has(m)?(pointKinds.includes(r?.kind)?0xe5e1cd:0xb5e6be):m.userData.sinus?0xa1b59b:m.userData.tissue?/artery/.test(m.userData.zname)?0xd98878:0xc9aa7b:m.userData.nonbone?0x9da9a1:0xe5e1cd;m.material.color.setHex(c);m.material.emissive.setHex(selected.has(m)&&!pointKinds.includes(r?.kind)?0x14291b:0x000000);
-  }this.muscleLayer?.updateVisibility();this.nervousLayer?.refresh();this.lymphNodeLayer?.refresh();this.syncLayerControls();this.refreshLandmarkTools();
+  }this.muscleLayer?.updateVisibility();this.nervousLayer?.refresh();this.lymphNodeLayer?.refresh();this.organLayer?.refresh();this.syncLayerControls();this.refreshLandmarkTools();
  }
 
 

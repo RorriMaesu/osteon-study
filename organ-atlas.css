@@ -1,0 +1,66 @@
+#organs-view.active{display:block;height:100%;min-height:0;overflow:auto;margin:0}
+.oa-page{padding:clamp(8px,1.3vw,22px);box-sizing:border-box;height:100%;display:flex;flex-direction:column;gap:10px;color:var(--text);max-width:1720px;margin:auto}
+.oa-header,.oa-header>div,.oa-title,.oa-transport,.oa-links,.oa-body-controls,.oa-body-pick{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.oa-header,.oa-title{justify-content:space-between}
+.oa-header>div{gap:18px}
+.oa-page h1,.oa-page h2{margin:0;color:var(--cream,#f5ead9);line-height:1.05}
+.oa-page h1{font-size:clamp(24px,2.6vw,39px)}
+.oa-page h2{font-size:clamp(21px,2.3vw,32px)}
+.oa-link,.oa-notes a{color:var(--mint,#c2dfd0);text-underline-offset:3px}
+.oa-work{display:grid;grid-template-columns:clamp(210px,22vw,314px) minmax(0,1fr);gap:12px;min-height:0;flex:1}
+.oa-browser,.oa-content{background:#16262b;border:1px solid #355054;border-radius:12px;min-width:0}
+.oa-browser{display:flex;flex-direction:column;gap:8px;padding:12px;min-height:0}
+.oa-page label:not(.oa-check){display:grid;gap:3px}
+.oa-browser label,.oa-count,.oa-title small,.oa-body-controls label,.oa-notes{font-size:.82rem}
+.oa-page select,.oa-page input[type=search]{min-width:0;width:100%;max-width:100%;border:1px solid #52706c;border-radius:6px;background:#102429;color:#f1efe9;min-height:36px;padding:4px 8px;font:inherit}
+.oa-count,.oa-title small,.oa-phase span,.oa-notes{color:#c3cfcf}
+.oa-list{display:grid;align-content:start;gap:3px;overflow:auto;min-height:0}
+.oa-list a{display:grid;padding:8px;gap:3px;text-decoration:none;border:1px solid transparent;border-radius:6px;color:var(--text)}
+.oa-list a:hover,.oa-list a:focus-visible,.oa-list a[aria-current]{background:#29403f;border-color:#628276}
+.oa-list a span{font-size:.79rem;color:#b8c9c8}
+.oa-list a b{font-weight:600}
+.oa-content{padding:10px;display:flex;flex-direction:column;gap:8px;min-height:0}
+.oa-title{padding-inline:3px}
+.oa-title small{display:block;margin-bottom:3px}
+#organs-view .oa-model:not(.organ-expanded){flex:1;min-height:0;grid-template-rows:minmax(0,1fr) auto auto;padding:5px;background:#11262a}
+#organs-view .oa-model .organ-viewport{height:100%;min-height:0}
+#organs-view .oa-model .organ-tools{align-items:center}
+.oa-page .organ-tools button,.oa-page .organ-tools select,.oa-transport button,.oa-body-controls button{min-height:36px;padding:4px 9px}
+.oa-page .organ-tools select{width:auto}
+.oa-page [data-model-status]{font-size:.75rem}
+.oa-lesson{padding:4px 3px;color:var(--text)}
+.oa-body-controls label:not(.oa-check){flex:1 1 100px;max-width:320px}
+.oa-body-pick{margin-top:6px;font-size:.9rem}
+.oa-body-pick .oa-link{border:1px solid #53736c;padding:5px 9px;border-radius:6px;text-decoration:none}
+.oa-check{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:.86rem}
+.oa-check input{width:auto}
+.oa-transport label:has([type=range]){flex:1;min-width:60px}
+.oa-transport input[type=range]{width:100%;accent-color:#e7a880;min-height:32px}
+.oa-transport [data-oa-play]{color:#0c2722;background:#cce8d1;min-width:84px}
+.oa-phase{box-sizing:border-box;height:3.8em;overflow:auto;display:flex;align-items:baseline;gap:9px;padding:7px 0;line-height:1.35;font-size:.95rem}
+.oa-phase b{color:#f0bd91}
+.oa-notes summary{cursor:pointer;color:#d0e2d5}
+.oa-notes p{margin:6px 0;max-width:85ch}
+.oa-sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%)}
+#organs-view .oa-model.organ-expanded{grid-template-rows:minmax(0,1fr) auto auto auto}
+#organs-view .organ-expanded .oa-lesson{overflow:auto;max-height:35dvh}
+@media(min-width:801px){.oa-browser label:has([data-oa-menu]){display:none}.oa-notes[open]{max-height:18vh;overflow:auto}}
+@media(max-width:800px){
+ .oa-page{padding:5px 6px;gap:5px;height:100%;min-height:min(520px,100%);max-width:none}
+ .oa-header{gap:4px}.oa-header>div{gap:12px}.oa-header a{font-size:.78rem}
+ .oa-work{display:flex;flex-direction:column;gap:5px}
+ .oa-browser{padding:5px;display:grid;gap:3px 6px;grid-template-columns:1fr 1fr;flex:none}
+ .oa-browser label{font-size:.74rem}
+ .oa-browser label:has([data-oa-menu]){grid-column:1/-1;display:flex;align-items:center;gap:6px;white-space:nowrap}
+ .oa-list{display:none}.oa-count{grid-column:1/-1;font-size:.7rem}.oa-count:not(:only-child){line-height:1}
+ .oa-content{flex:1;padding:5px;gap:4px}
+ .oa-header h1{font-size:23px}.oa-title h2{font-size:21px}.oa-title small{font-size:.73rem}.oa-title .oa-link{font-size:.82rem}
+ #organs-view .oa-model:not(.organ-expanded){min-height:185px;gap:3px}
+ #organs-view .organ-tools{gap:3px}
+ #organs-view .organ-tools :is(button,select){font-size:.78rem;min-width:30px;min-height:34px;padding:3px 5px}
+ .oa-transport{gap:4px}.oa-phase{display:block;height:4.8em;padding:4px 0;font-size:.85rem}.oa-phase b{margin-right:6px}
+ .oa-body-controls{gap:4px}.oa-body-controls label:not(.oa-check){max-width:none;min-width:0}
+ .oa-lesson{padding:2px}.oa-notes[open]{max-height:20dvh;overflow:auto}
+ .oa-body-pick{line-height:1.2;font-size:.8rem}
+}
+@media(max-height:540px) and (orientation:landscape){.oa-page{height:auto;min-height:100%}.oa-work{min-height:325px}#organs-view .oa-model:not(.organ-expanded){min-height:200px}}

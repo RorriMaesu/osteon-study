@@ -1,5 +1,9 @@
 # Credits and licensing
 
+## Animated organ atlas
+
+The shared organ atlas uses registered Z-Anatomy and BodyParts3D anatomy as well as regional Human Reference Atlas preparations. It includes original teaching reconstructions for microscopic processes and surfaces that the source specimens do not show. Movement and flow timing are educational interpretations. Each close-up links to its specimen credits and physiology reference. [Organ atlas models, preparation and licenses](assets/organ-atlas/SOURCES.md)
+
 ## A&P III course materials
 
 The spring model catalog includes regional anatomy from Z-Anatomy and BodyParts3D, Human Reference Atlas preparations, four Carnegie embryo surfaces from NIH 3D, and teaching reconstructions by Osteon. Each source record identifies the license, preparation method, scale and limits of the model. [Spring model credits](assets/ap3-models/SOURCES.md)

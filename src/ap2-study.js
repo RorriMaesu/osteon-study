@@ -95,7 +95,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
   }
   function chapter(ch){
     const data=store.read();
-    page(hero('A&P II · CHAPTER '+ch.id,ch.title,ch.summary)+`<div class="course-actions">${link('ap2-lesson-'+(ch.sections.find(x=>!data.studied[x.id])||ch.sections[0]).id,'Continue chapter',true)}${link('ap2-structures/chapter-'+ch.id,'Interactive 3D models')}${link('ap2-exams/'+ch.id,'Chapter exam')}${link('ap2-writing-'+ch.id,'Written reasoning')}</div>
+    page(hero('A&P II · CHAPTER '+ch.id,ch.title,ch.summary)+`<div class="course-actions">${link('ap2-lesson-'+(ch.sections.find(x=>!data.studied[x.id])||ch.sections[0]).id,'Continue chapter',true)}${link('ap2-structures/chapter-'+ch.id,'Interactive 3D models')}${link('organs','Animated organ atlas')}${link('ap2-exams/'+ch.id,'Chapter exam')}${link('ap2-writing-'+ch.id,'Written reasoning')}</div>
     <section class="course-card"><h2>Lessons</h2><div class="ap2-chapter-list">${ch.sections.map(s=>`<a href="#ap2-lesson-${s.id}"><b>${s.id}</b><span>${e(s.title)}<small>${e(s.objectives[0])}</small></span><span>${data.studied[s.id]?'Studied':'→'}</span></a>`).join('')}</div></section>`);
     setLearningContext({course:'ap2',type:'study',label:ch.title,reference:ch.sections[0].id,text:ch.summary});
   }

@@ -131,3 +131,14 @@
   .ap2-practical-model-wrap .organ-viewer:not(.organ-expanded){padding:.35rem;gap:.25rem}
   .ap2-practical-layout .organ-viewport{height:clamp(155px,27dvh,260px)}
 }
+.ap3-specimen-actions,.ap3-motion-launch{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;min-width:0}
+.ap3-motion-launch{max-width:100%}
+.ap3-motion-launch[hidden]{display:none}
+.ap3-motion-launch .ap3-select{min-width:0;margin:0}
+.ap3-motion-launch select{width:min(34rem,100%);max-width:100%}
+@media(max-width:650px){
+  .ap3-specimen-actions{align-items:flex-end}
+  .ap3-motion-launch{display:contents}
+  .ap3-motion-launch .ap3-select{width:100%;gap:.25rem}
+  .ap3-motion-launch select{width:100%}
+}

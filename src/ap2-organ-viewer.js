@@ -117,7 +117,8 @@ export function mountOrganViewer(host, options) {
   function enlarged(active){
     if(active)savedFocus=document.activeElement;
     host.classList.toggle('organ-expanded',active);
-    expand.textContent=active?'Return to lesson':'Enlarge';expand.setAttribute('aria-expanded',String(active));
+    options.onExpand?.(active);
+    expand.textContent=active?(options.returnLabel||'Return to lesson'):'Enlarge';expand.setAttribute('aria-expanded',String(active));
     if(active)expand.focus();else if(savedFocus?.isConnected)savedFocus.focus();
     keepInView();
   }
@@ -133,7 +134,7 @@ export function mountOrganViewer(host, options) {
   };
   function keydown(ev){
     if(ev.key==='Tab'&&host.classList.contains('organ-expanded')){
-      const focusables=[...host.querySelectorAll('canvas,button,select')].filter(el=>!el.disabled&&el.getClientRects().length),first=focusables[0],last=focusables.at(-1);
+      const focusables=[...host.querySelectorAll('canvas,button,select,input,summary,a[href]')].filter(el=>!el.disabled&&el.getClientRects().length),first=focusables[0],last=focusables.at(-1);
       if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}
     }
     if(ev.key==='Escape'&&host.classList.contains('organ-expanded')){ev.preventDefault();enlarged(false);return;}
@@ -213,7 +214,7 @@ export function mountOrganViewer(host, options) {
   function dispose(){
     if(disposed)return;disposed=true;
     cancelAnimationFrame(frame);resizeObserver?.disconnect();onscreenObserver?.disconnect();removed?.disconnect();
-    controls?.dispose();release(scene);for(const fn of disposables)fn();
+    controls?.dispose();for(const fn of disposables)fn();release(scene);
     renderer?.dispose();renderer?.forceContextLoss();
     host.removeEventListener('keydown',keydown);host.classList.remove('organ-expanded');
     instances.delete(host);

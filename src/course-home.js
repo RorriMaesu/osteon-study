@@ -54,9 +54,11 @@ export function initCourseHome({setView, escape}) {
   }
   picker.onchange = () => { location.hash = picker.value === 'all' ? 'courses' : 'course-' + picker.value; };
   function sync(view, route) {
+    if(view==='organs'){
+      const tab=document.querySelector('.main-nav [data-view="atlas"]');
+      tab.classList.add('active');tab.setAttribute('aria-current','page');return;
+    }
     if (view === 'atlas' || view === 'motion') {
-      const labLink=document.querySelector('#atlas-organ-labs');
-      if(labLink){labLink.hidden=selected==='1';labLink.href=selected==='3'?'#ap3-models':'#ap2-practicals';}
       let ret = ''; try { ret = sessionStorage.getItem(returnKey) || ''; } catch {}
       back.hidden = !(lessonRoute.exec(ret)?.[1]===selected || selected==='3' && springStation.test(ret));
       if (!back.hidden) {

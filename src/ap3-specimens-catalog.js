@@ -24,7 +24,7 @@ const named={
   region_Orbital_frontal_gyri:'Orbital surface of frontal lobes',trophoblast:'Blastocyst trophoblast',
   stage_12:'Stage 12 · 3.9 mm',stage_16:'Stage 16 · 10.5 mm',stage_20:'Stage 20 · 20 mm',stage_23:'Stage 23 · 31 mm'
 };
-function label(name){
+export function label(name){
   if(named[name])return named[name];
   const text=name.replace(/^(?:VH_[MF]_|region_)/,'').replace(/_([LR])$/,(_,v)=>v==='L'?' (left)':' (right)')
     .replace(/_(left|right)$/,' ($1)').replace(/([a-z])([A-Z])/g,'$1 $2').replaceAll('_',' ').replace('fibria','fimbriae');

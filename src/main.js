@@ -1,3 +1,5 @@
+import {attachOrganLayer} from './atlas-organ-layer.js';
+import {initOrganAtlas} from './organ-atlas.js';
 import {initAP3} from './ap3-study.js';
 import {initAP2} from './ap2-study.js';
 import {initCourseHome,selectedCourse} from './course-home.js';
@@ -47,8 +49,8 @@ export function toast(s){$('#toast').textContent=s;$('#toast').hidden=false;clea
 export function dialog(html){$('#dialog-content').innerHTML=html;$('#info-dialog').showModal();}
 $('#close-dialog').onclick=()=>$('#info-dialog').close();
 $('#info-dialog').addEventListener('click',e=>{if(e.target===$('#info-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close();}});
-const appViews=['atlas','study','practice','progress','motion','courses'];
-let courseHome;
+const appViews=['atlas','study','practice','progress','motion','courses','organs'];
+let courseHome,organAtlas;
 let currentRoute,restoringRoute=false;
 export function setView(view,{route,historyMode='push'}={}){if(!appViews.includes(view))view='atlas';route||=view;const from=currentRoute;currentRoute=route;$$('.view').forEach(e=>e.classList.toggle('active',e.id===view+'-view'));$$('[data-view]').forEach(e=>{e.classList.toggle('active',e.dataset.view===view);e.setAttribute('aria-current',e.dataset.view===view?'page':'false');});if(location.hash!=='#'+route){if(historyMode==='replace')history.replaceState(null,'','#'+route);else if(historyMode==='push'){if(restoringRoute)history.replaceState(history.state,'','#'+route);else history.pushState({osteonFrom:from},'','#'+route);}}if(view==='atlas'){
  viewer?.resize();
@@ -65,6 +67,7 @@ function showHistoryRoute(initial=false){
  restoringRoute=true;
  try{
   if(route==='courses'||route==='course-1'||route==='course-2'||route==='course-3'||/^ap[23]-/.test(route))courseHome.open(route);
+  else if(route==='organs'||route.startsWith('organs/')){setView('organs',{route,historyMode:initial?'replace':'none'});organAtlas.open(route);}
   else if(exam4ReportId)document.dispatchEvent(new CustomEvent('exam4results',{detail:{id:exam4ReportId}}));
   else if(mockReportId)document.dispatchEvent(new CustomEvent('exam3results',{detail:{id:mockReportId}}));
   else if(Object.hasOwn(routeEvents,route))document.dispatchEvent(new Event(routeEvents[route]));
@@ -87,10 +90,13 @@ $$('[data-view]').forEach(b=>b.onclick=()=>{const view=b.dataset.view;const term
 let selectionEpoch=0;
 export const viewer=new AnatomyViewer($('#viewer'),m=>{
  selectionEpoch++;
+ if(m.userData.organRow){viewer.organLayer.select(m.userData.organRow);return;}
+ viewer.organLayer?.select(null);
  if(document.dispatchEvent(new CustomEvent('bonepick',{detail:m,cancelable:true}))===false)return;
  viewer.selectMesh(m);const term=viewer.termFor(m)||{id:'extra',name:viewer.displayName(m),region:m.userData.region,cue:'Supplementary anatomical structure from the Z-Anatomy skeleton.',type:m.userData.nonbone?'tissue':'bone',exact:true,source:'Full specimen',aliases:[]};selected=term;detail(term,term.exact?viewer.displayName(m):null);renderList();updateButtons();
 },()=>{const pendingSelection=selected;ready=true;$('#loading').hidden=true;$('#model-state').textContent=viewer.meshes.length+' objects · anatomy online';if(region!=='All regions')viewer.setRegion(region);if(pendingSelection)selectTerm(pendingSelection);renderList();updateButtons();document.dispatchEvent(new Event('anatomyready'));},err=>{$('#loading').innerHTML='<strong>3D viewer unavailable</strong><span>Your saved exams and lesson drafts remain available.</span><button type="button" data-model-retry>Retry model loading</button><button type="button" data-model-text>Continue with text study</button>';$('#model-state').textContent='Text study mode';console.error(err);});
 attachViewerRecovery(viewer,{toast});
+attachOrganLayer(viewer,toast);
 attachDrawerMotion(viewer);
 const nervous=attachNervousLayer(viewer,{toast});
 const lymphNodes=attachLymphNodeLayer(viewer,{toast});
@@ -280,7 +286,7 @@ $$('[data-region]').forEach(b=>b.onclick=()=>changeRegion(b.dataset.region));
 syncFilters();
 $('#structure-search').oninput=renderList;$('#exact-only').onchange=renderList;
 $$('[data-browse-mode]').forEach(b=>b.onclick=()=>{browseMode=b.dataset.browseMode;atlasTopic='all';$('#structure-search').placeholder=browseMode==='nerves'?'Search nerves, e.g. CN VII':browseMode==='ligaments'?'Search ligaments':browseMode==='lymph-nodes'?'Search lymph nodes':'Search bones, landmarks & nodes';$('#structure-search').setAttribute('aria-label',$('#structure-search').placeholder);if(browseMode==='ligaments')enableLigaments(true);if(browseMode==='lymph-nodes'&&!lymphNodes.loading)lymphNodes.toggle(true);if(browseMode==='nerves'){nervous.setFilter('all');nervous.toggle(true);}$$('[data-browse-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));if(browseMode==='landmarks')$('#exact-only').checked=false;$('#exact-only').disabled=['landmarks','ligaments','nerves','lymph-nodes'].includes(browseMode);renderList();});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();if($('#courses-view').classList.contains('active')&&selectedCourse()!=='1'){if(!document.body.dataset.ap2Exam&&!document.body.dataset.ap3Exam)courseHome.open('ap'+selectedCourse()+'-search');return;}setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();if($('#organs-view').classList.contains('active')){e.preventDefault();$('#organs-view [data-oa-search]')?.focus();return;}if($('#courses-view').classList.contains('active')&&selectedCourse()!=='1'){if(!document.body.dataset.ap2Exam&&!document.body.dataset.ap3Exam)courseHome.open('ap'+selectedCourse()+'-search');return;}setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
 $$('[data-camera]').forEach(b=>b.onclick=()=>{
  if(!ready)return;
  if(b.dataset.camera==='reset')viewer.recenter();
@@ -349,6 +355,7 @@ const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region
 initMuscleLabeling({viewer,setView,dialog,toast,escape});
 initMuscleList({setView,dialog,toast,escape});
 courseHome=initCourseHome({setView,escape});
+organAtlas=initOrganAtlas($('#organs-view'));
 initAP3({root:document.querySelector('#courses-view'),escape,toast});
 initAP2({root:document.querySelector('#courses-view'),escape,toast,dialog});
 showHistoryRoute(true);
