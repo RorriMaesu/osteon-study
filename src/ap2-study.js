@@ -39,7 +39,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
   const scopeNav=()=>`<nav class="ap2-nav" aria-label="A&P II workspace">${link('course-2','Chapters')}${link('ap2-practicals','Model & slide lab')}${link('ap2-exams','Exams & results')}${link('ap2-progress','My progress')}</nav>`;
   const page=(body)=>{root.innerHTML=`<div class="course-page ap2-page">${scopeNav()}<p data-storage-notice role="status" ${store.volatile?'':'hidden'}>This tab is keeping your work in memory. Download a backup from My progress before closing it.</p>${body}</div>`;root.scrollTop=0;};
   const hero=(kicker,title,description='')=>`<header class="course-hero"><div class="eyebrow">${e(kicker)}</div><h1 tabindex="-1">${e(title)}</h1>${description?'<p>'+e(description)+'</p>':''}</header>`;
-  const mocks=createTermMocks({course:'ap2',root,page,hero,link,e,store,scopes:winterScopes,makeForm:makeWinterMock,toast});
+  const mocks=createTermMocks({course:'ap2',root,page,hero,link,e,store,sections:sectionById,scopes:winterScopes,makeForm:makeWinterMock,toast});
   const exams=createExamScreens({root,page,hero,link,store,e,dialog,toast,mocks});
   const chapterComplete=(ch,data)=>ch.sections.filter(s=>data.studied[s.id]).length;
   function resume(data) {

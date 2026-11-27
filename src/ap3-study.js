@@ -35,7 +35,7 @@ export function initAP3({root,escape:e,toast}){
     root.innerHTML='<div class="course-page ap2-page ap3-page"><nav class="ap2-nav" aria-label="A&P III workspace">'+nav.map(([route,label])=>link(route,label)).join('')+'</nav>'+
       (store.volatile?'<p role="status">Work is saved in this tab only. Download a backup before closing it.</p>':'')+content+'</div>';root.scrollTop=0;
   }
-  const mocks=createTermMocks({course:'ap3',root,page,hero,link,e,store,scopes:springScopes,makeForm:makeSpringMock,toast});
+  const mocks=createTermMocks({course:'ap3',root,page,hero,link,e,store,sections,scopes:springScopes,makeForm:makeSpringMock,toast});
   const exams=createSpringExams({root,link,e,page,hero,store,go,sections,cleanup,mocks});
   const studied=id=>!!store.read('study:'+id)?.studied;
   const chapterList=ids=>'<div class="ap2-chapter-list">'+ids.map(id=>{

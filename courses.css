@@ -151,6 +151,17 @@
 .tm-settings label:first-child{grid-column:1/-1}
 .tm-settings select,.tm-settings input{width:100%;max-width:100%}
 .tm-settings input[type=number]{margin:0}
+.tm-week-picker{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:end;max-width:48rem}
+.tm-week-picker label{display:grid;gap:.25rem;min-width:0}
+.tm-week-picker select{width:100%;min-width:0;text-overflow:ellipsis}
+.tm-week-picker button{min-height:44px}
+.tm-week-settings label:first-child{grid-column:auto}
+.tm-week-outline{padding-inline-start:2.2rem}.tm-week-outline li{margin:.35rem 0}
+.tm-week-grid h3{margin:1em 0 .4em}.tm-week-lessons{gap:.4rem}
+@media(max-width:540px){
+  .tm-week-picker{grid-template-columns:1fr 1fr}.tm-week-picker label{grid-row:1;grid-column:1/-1}
+  .tm-week-grid .tm-week-lessons{display:grid}.tm-week-grid .tm-week-lessons a{justify-content:start}
+}
 .tm-head h1{font-size:clamp(1.3rem,3vw,2.4rem);line-height:1.12}
 .tm-head a{flex:none}
 .tm-tools{flex-wrap:wrap;justify-content:flex-start}

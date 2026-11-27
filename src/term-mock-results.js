@@ -1,4 +1,5 @@
 import {localAI} from './local-ai.js';
+import {chapterBreakdown} from './term-week-checks.js';
 import {setLearningContext,setTutorAssessmentMode} from './learning-context.js';
 import {
   scoreTermAttempt,termNotes,termRetestItems,confirmTermWritten,confirmTermMeaning,
@@ -53,7 +54,10 @@ export function createTermReport({db,root,page,hero,e,link,go,route,course,name,
     };
     page(hero(name+' · SAVED MOCK RESULT',r.title,new Date(r.submitted).toLocaleString())+
       '<section class="course-card"><h2>'+score.earned+' / '+score.possible+' points earned</h2><p>'+score.pending+' points pending · '+score.missed+' points missed · '+score.assisted+' questions assisted · '+e(r.mode)+'</p><div class="course-actions">'+link(route(),'Mock exams & saved results')+
+      (r.scope.startsWith('week-')?link(route('week',r.scope.slice(5)),'Revisit this week’s readings'):'')+
       (unresolved.length?'<button data-tm-batch>Review pending answers with Ollama ('+unresolved.length+')</button>':'')+(r.queue?.length?'<button data-tm-resume>Resume AI review</button><button data-tm-cancel>Cancel AI review</button>':'')+'</div><p data-tm-ai-status role="status"></p></section>'+
+      '<details class="course-card" data-key="chapters"><summary>Results by chapter</summary><p>Each question counts once under its primary section. Pending points are awaiting review.</p><div class="ap2-table-wrap"><table><thead><tr><th>Chapter</th><th>Questions</th><th>Earned / possible</th><th>Pending</th></tr></thead><tbody>'+
+      chapterBreakdown(score.rows).map(ch=>'<tr><th scope="row">'+ch.chapter+'</th><td>'+ch.questions+'</td><td>'+ch.earned+' / '+ch.possible+'</td><td>'+ch.pending+'</td></tr>').join('')+'</tbody></table></div></details>'+
       '<section class="course-card"><h2>Study notes</h2><p>'+concept.length+' concept notes · '+spell.length+' spelling reminders</p>'+
       (concept.length?'<button data-tm-retest>Retest missed concepts</button><details data-key="concept"><summary>Read concept notes</summary>'+concept.map(renderNote).join('')+'</details>':'')+
       (spell.length?'<details data-key="spelling"><summary>Practice spelling · credit retained</summary>'+spell.map((n,i)=>'<label>'+e(n.retrieval)+'<input data-spell="'+i+'" autocomplete="off"></label><button data-check-spell="'+i+'">Check spelling</button><span role="status" data-spell-status="'+i+'"></span>').join('')+'</details>':'')+'</section>'+

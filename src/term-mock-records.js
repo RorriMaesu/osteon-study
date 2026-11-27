@@ -139,7 +139,7 @@ function cuesOK(cues,ids){
 export function validTermRun(r,course) {
   if(!object(r)||r.course!==course||!['ap2','ap3'].includes(course)||r.version!==1||!idOK(r.id)||!time(r.created)||
     !line(r.title,300)||!['A','B','C'].includes(r.form)||!['independent','coached'].includes(r.mode)||
-    !/^(unit-[1-4]|all|practical)$/.test(r.scope)||!Array.isArray(r.items)||!r.items.length||r.items.length>44||
+    !/^(unit-[1-4]|week-(?:[1-9]|10)|all|practical)$/.test(r.scope)||!Array.isArray(r.items)||!r.items.length||r.items.length>44||
     !Number.isInteger(r.index)||r.index<0||r.index>=r.items.length||!r.items.every(q=>itemOK(q,course))) return false;
   const ids=new Map(r.items.map(q=>[q.id,q]));
   if(ids.size!==r.items.length||![r.answers,r.flags,r.assisted,r.reviews].every(object)) return false;

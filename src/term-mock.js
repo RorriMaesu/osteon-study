@@ -1,6 +1,8 @@
 import {courseMockStore} from './term-mock-records.js';
 import {gradeTermItem,scoreTermAttempt} from './term-mock-review.js';
 import {createTermReport} from './term-mock-results.js';
+import {makeWeekCheck} from './term-week-checks.js';
+import {showExamWeek} from './term-week-view.js';
 import {setLearningContext,setTutorAssessmentMode} from './learning-context.js';
 import {renderSpecimen,mountSpecimen} from './ap3-specimens.js';
 
@@ -14,7 +16,7 @@ if(typeof window!=='undefined'&&window.visualViewport){
   window.visualViewport.addEventListener('resize',fit);
   fit();
 }
-export function createTermMocks({course,root,page,hero,link,e,store,scopes,makeForm,toast}){
+export function createTermMocks({course,root,page,hero,link,e,store,sections,scopes,makeForm,toast}){
   const db=courseMockStore(course,store),prefix=course+'-mocks',name=course==='ap2'?'A&P II':'A&P III';
   const route=(action='',id='')=>prefix+(action?'/'+action:'')+(id?'/'+id:'');
   const go=(action,id)=>{location.hash=route(action,id);};
@@ -42,16 +44,23 @@ export function createTermMocks({course,root,page,hero,link,e,store,scopes,makeF
     document.body.append(panel);panel.onclose=()=>{panel.remove();if(button.isConnected)button.focus();};
     panel.showModal();close.focus();
   });
-  const results=createTermReport({db,root,page,hero,e,link,go,route,course,name,makeForm,toast,evidence});
+  const itemsFor=(scope,form)=>scope.startsWith('week-')?makeWeekCheck(course,Number(scope.slice(5)),form,scopes,makeForm):makeForm(scope,form);
+  function start(spec){
+    try{
+      const items=spec.items||itemsFor(spec.scope,spec.form);
+      go('take',db.start({...spec,items}).id);
+    }catch(error){toast(error.message);}
+  }
+  const results=createTermReport({db,root,page,hero,e,link,go,route,course,name,makeForm:itemsFor,toast,evidence});
   function entry(){
     const list=runs(),draft=list.find(r=>!r.submitted),last=list.find(r=>r.submitted);
-    return '<section class="course-card tm-entry"><div><h2>Mock exams</h2><p>Unit and cumulative forms with written feedback, study notes and retests.</p></div><div class="course-actions">'+link(route(),'Choose a mock',true)+(draft?link(route('take',draft.id),'Resume mock'):'')+(last?link(route('result',last.id),'Latest mock result'):'')+'</div></section>';
+    return '<section class="course-card tm-entry"><div><h2>Mock exams</h2><p>Weekly checks, unit exams and cumulative forms with written feedback and retests.</p></div><div class="course-actions">'+link(route(),'Choose a mock',true)+link(route('week','1'),'11-week study plan')+(draft?link(route('take',draft.id),'Resume mock'):'')+(last?link(route('result',last.id),'Latest mock result'):'')+'</div></section>';
   }
-  function center(){
+  function center(initialScope){
     const list=runs();
     const openRuns=list.filter(r=>!r.submitted),done=list.filter(r=>r.submitted);
     page(hero(name+' · PRACTICE LAB','Mock exams','Choose an independent exam or use coached practice to study as you go.')+
-      '<div class="course-grid"><article><h2>Start a mock</h2><div class="tm-settings"><label>Coverage<select data-tm-scope>'+scopes.map(s=>'<option value="'+e(s.id)+'">'+(s.id.startsWith('unit-')?'Ch. '+s.chapters[0]+(s.chapters.length>1?'–'+s.chapters.at(-1):'')+' · ':'')+e(s.title)+'</option>').join('')+'</select></label>'+
+      '<div class="course-actions">'+link(route('week','1'),'11-week study plan & weekly checks')+'</div><div class="course-grid"><article><h2>Start a mock</h2><div class="tm-settings"><label>Coverage<select data-tm-scope>'+scopes.map(s=>'<option value="'+e(s.id)+'">'+(s.id.startsWith('unit-')?'Ch. '+s.chapters[0]+(s.chapters.length>1?'–'+s.chapters.at(-1):'')+' · ':'')+e(s.title)+'</option>').join('')+'</select></label>'+
       '<label>Form<select data-tm-form>'+['A','B','C'].map(f=>'<option>'+f+'</option>').join('')+'</select></label>'+
       '<label>Mode<select data-tm-mode><option value="independent">Independent exam</option><option value="coached">Coached practice</option></select></label>'+
       '<label>Time goal (optional)<input type="number" data-tm-goal min="1" max="240" placeholder="Minutes"></label></div><p data-tm-size></p><button class="primary" data-tm-start>Start mock</button>'+
@@ -59,13 +68,12 @@ export function createTermMocks({course,root,page,hero,link,e,store,scopes,makeF
       '</article></div><section class="course-card"><h2>Saved mock results</h2>'+(done.length?'<div class="course-links">'+done.map(r=>{const s=scoreTermAttempt(r);return link(route('result',r.id),r.title+' · '+s.earned+'/'+s.possible+(s.pending?' · '+s.pending+' pending':'')+' · '+date(r.submitted));}).join('')+'</div>':'<p>Your score, written feedback and study notes appear here after submission.</p>')+'</section>'+link(course+'-exams','All exams & results'));
     const scope=root.querySelector('[data-tm-scope]'),form=root.querySelector('[data-tm-form]'),goal=root.querySelector('[data-tm-goal]');
     function describe(){root.querySelector('[data-tm-size]').textContent=scope.value==='practical'?'8 stations · 24 points':'44 questions · 60 points';}
+    if(scopes.some(s=>s.id===initialScope))scope.value=initialScope;
     describe();scope.onchange=describe;
     root.querySelector('[data-tm-start]').onclick=()=>{
       if(!goal.reportValidity())return;
       const spec=scopes.find(s=>s.id===scope.value);
-      try{const run=db.start({scope:spec.id,title:spec.title+' · Form '+form.value,form:form.value,mode:root.querySelector('[data-tm-mode]').value,timeGoal:Number(goal.value)||null,items:makeForm(spec.id,form.value)});
-        go('take',run.id);
-      }catch(error){toast(error.message);}
+      start({scope:spec.id,title:spec.title+' · Form '+form.value,form:form.value,mode:root.querySelector('[data-tm-mode]').value,timeGoal:Number(goal.value)||null});
     };
     setLearningContext({course,type:'study',label:name+' mock exams',text:''});
   }
@@ -161,6 +169,13 @@ export function createTermMocks({course,root,page,hero,link,e,store,scopes,makeF
     release();
     if(path.split('/')[0]!==prefix)return false;
     const [,action,id]=path.split('/');
+    if(action==='week'){
+      setTutorAssessmentMode(null);
+      setLearningContext({course,type:'study',label:name+' weekly exam plan',text:''});
+      showExamWeek({course,week:Number(id),name,page,root,hero,link,e,route,go,sections,scopes,itemsFor,start});
+      return true;
+    }
+    if(action==='setup'){center(id);return true;}
     const run=id&&db.get(id);
     if(!action)center();
     else if(!run)page(hero(name,'Attempt unavailable','This browser has no saved mock at this address.')+link(route(),'Mock exams & results'));
