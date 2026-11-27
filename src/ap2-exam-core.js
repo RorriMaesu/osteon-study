@@ -3,9 +3,13 @@ import {assessTyped} from './typed-answer.js';
 import {chapters,sections,units} from './ap2-library.js';
 import {appliedItems} from './ap2-applied.js';
 
+import {independentItems} from './ap2-independent.js';
+import {evidenceItems} from './ap2-independent-visuals.js';
+import {bloodExamItems} from './ap2-blood-exam.js';
+
 export const bank = [...sections.flatMap(section => section.questions.map((q,index) => ({
-  ...q,id:'ap2-'+section.id+'-q'+(index+1),section:section.id,type:'choice'
-}))), ...appliedItems.map(q=>({...q,...(q.expected!==undefined?{expected:String(q.expected)}:{})}))];
+  ...q,id:'ap2-'+section.id+'-q'+(index+1),section:section.id,type:'choice',pool:'recall'
+}))), ...independentItems, ...[...evidenceItems,...bloodExamItems,...appliedItems].map(q=>({...q,skill:q.skill||(q.type==='visual'?'Interpret evidence':q.type==='number'?'Calculate':'Identify'),...(q.expected!==undefined?{expected:String(q.expected)}:{})}))];
 export const examScopes = [
   ...chapters.map(ch=>({id:String(ch.id),title:'Chapter '+ch.id+' · '+ch.title,chapters:[ch.id]})),
   ...units.map(unit=>({...unit,title:'Unit · '+unit.title})),
@@ -23,11 +27,19 @@ export function examItems(scope,random=Math.random) {
   if (!spec) throw new Error('Unknown exam scope.');
   const selected=sections.filter(s=>spec.chapters.includes(Number(s.id.split('.')[0])));
   const perSection=spec.chapters.length===1 && !units.some(u=>u.id===scope) ? 2 : 1;
-  const questions=selected.flatMap(s=>shuffle(bank.filter(q=>q.type==='choice'&&q.section===s.id),random).slice(0,perSection));
+  const questions=[],counts=new Map();
+  for (const section of shuffle(selected,random)) {
+    const candidates=shuffle(independentItems.filter(q=>q.section===section.id),random);
+    // Within each required section, favor tasks that have had less representation on this form.
+    candidates.sort((a,b)=>(counts.get(a.skill)||0)-(counts.get(b.skill)||0));
+    for(const item of candidates.slice(0,perSection)){
+      questions.push(item);counts.set(item.skill,(counts.get(item.skill)||0)+1);
+    }
+  }
   for (const ch of spec.chapters) {
     const applied=bank.filter(q=>q.type!=='choice'&&Number(q.section.split('.')[0])===ch);
     const visual=applied.filter(q=>q.type==='visual'), typed=applied.filter(q=>q.type!=='visual');
-    questions.push(...(spec.id==='all'?[...shuffle(visual,random).slice(0,1),...shuffle(typed,random).slice(0,1)]:applied));
+    questions.push(...shuffle(visual,random).slice(0,1),...shuffle(typed,random).slice(0,spec.id==='all'?1:2));
   }
   return shuffle(questions,random).map(q=>{
     if (!q.choices) return {...q};

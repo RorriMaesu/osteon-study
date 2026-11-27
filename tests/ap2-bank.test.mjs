@@ -48,7 +48,7 @@ test('A&P II contains the 49 numbered OpenStax sections with lessons, activities
 test('27 applied items provide an accessible original visual and typed practice for each chapter', () => {
   assert.equal(appliedItems.length, 27);
   assert.equal(new Set(bank.map(q => q.id)).size, bank.length);
-  assert.equal(bank.length, sections.reduce((total, s) => total + s.questions.length, 0) + appliedItems.length);
+  assert.equal(bank.filter(q=>q.pool==='recall').length, sections.reduce((total,s)=>total+s.questions.length,0));
   const visuals = new Set();
   for (const chapter of chapters) {
     const group = appliedItems.filter(item => Number(item.section.split('.')[0]) === chapter.id);

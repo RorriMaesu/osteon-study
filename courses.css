@@ -41,3 +41,21 @@
 .ap2-writing-panel{margin-block:12px}.ap2-writing-panel summary{cursor:pointer;color:var(--mint);padding-block:6px}.ap2-writing-panel p,.ap2-writing-panel li{line-height:1.55}
 #course-motion-return[hidden]{display:none}
 @media(min-width:1000px){.ap2-page:has(.ap2-lesson-body){box-sizing:border-box;height:100%;display:flex;flex-direction:column}.ap2-page:has(.ap2-lesson-body)>.ap2-lesson-body{min-height:0;overflow:auto;flex:1}.ap2-page:has(.ap2-lesson-body)>:not(.ap2-lesson-body){flex:none}}
+
+.organ-viewer{display:grid;gap:.55rem;min-width:0;padding:.7rem;background:#13252b;color:#e7eee7;border:1px solid #415b5b;border-radius:.75rem}
+.organ-viewport{min-width:0;height:clamp(210px,41dvh,480px);position:relative;background:radial-gradient(ellipse at 46% 40%,#355155,#182a30 70%);border-radius:.5rem;overflow:hidden}
+.organ-viewport canvas{display:block;width:100%;height:100%;touch-action:none}
+.organ-tools{display:flex;gap:.35rem;align-items:center;flex-wrap:wrap}
+.organ-tools button,.organ-tools select{min-height:40px;min-width:40px}
+.organ-expanded{position:fixed;inset:0;z-index:11000;background:#14252a;border:0;border-radius:0;box-sizing:border-box;max-height:100dvh;grid-template-rows:minmax(0,1fr) auto auto;padding:max(8px,env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left))}
+.organ-expanded .organ-viewport{height:100%}
+.organ-tools [data-zoom],.organ-tools [data-turn]{font-size:1.12rem}
+@media(max-width:700px){.organ-tools button,.organ-tools select{min-height:44px;min-width:44px}}
+
+.ap2-image-dialog{box-sizing:border-box;width:min(95vw,1000px);max-height:94dvh;padding:.8rem;border:1px solid var(--line);border-radius:12px;background:#16282d;color:var(--ink)}
+.ap2-image-dialog::backdrop{background:#071315dc}
+.ap2-image-dialog img{display:block;margin:.6rem auto 0;width:100%;height:auto;max-height:78dvh;object-fit:contain}
+.ap2-stimulus figcaption{font-size:.82rem;margin:.5rem 0;color:var(--muted)}
+.ap2-writing-panel fieldset{display:grid;gap:.5rem;margin:.7rem 0;padding:.65rem;border:1px solid var(--line)}
+.ap2-writing-panel fieldset input{flex:none}
+#atlas-organ-labs[hidden]{display:none}

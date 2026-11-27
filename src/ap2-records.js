@@ -17,6 +17,10 @@ export const validItemId = id => typeof id === 'string' && /^ap2-[\w.-]{2,80}$/.
 
 function validStimulus(stimulus) {
   if (!obj(stimulus)) return false;
+  if (stimulus.image !== undefined) {
+    return /^assets\/ap2-blood\/field-\d{2}\.webp$/.test(stimulus.image) &&
+      nonempty(stimulus.alt,3000) && nonempty(stimulus.credit,1500);
+  }
   if (stimulus.svg !== undefined) {
     return nonempty(stimulus.svg,100000) && /^\s*<svg[\s>]/i.test(stimulus.svg) &&
       (stimulus.alt === undefined || line(stimulus.alt,3000));
@@ -65,6 +69,9 @@ function validWritingCases(cases) {
         chapters.has(entry.chapter) || !nonempty(entry.prompt,3000) || !nonempty(entry.example,5000) ||
         !line(entry.answer,2500) || !Array.isArray(entry.rubric) || !entry.rubric.length ||
         !entry.rubric.every(criterion => nonempty(criterion,2000))) return false;
+    if (entry.selfMarked!==undefined && !(Array.isArray(entry.selfMarked) && entry.selfMarked.length<=entry.rubric.length &&
+        new Set(entry.selfMarked).size===entry.selfMarked.length &&
+        entry.selfMarked.every(i=>Number.isInteger(i)&&i>=0&&i<entry.rubric.length))) return false;
     chapters.add(entry.chapter);
     return true;
   });

@@ -1,8 +1,9 @@
+import {examWritingCases} from './ap2-exam-writing.js';
 import {writtenCases} from './ap2-writing.js';
 import {setLearningContext} from './learning-context.js';
 export function snapshotWriting(items) {
   return [...new Set(items.map(q=>Number(q.section.split('.')[0])))].sort((a,b)=>a-b)
-    .map(chapter=>({chapter,...writtenCases[chapter],answer:''}));
+    .map(chapter=>({chapter,...examWritingCases[chapter],answer:''}));
 }
 function model(c,e) {
   return `<h3>Check your reasoning</h3><ul>${c.rubric.map(point=>'<li>'+e(point)+'</li>').join('')}</ul><p><strong>Example explanation</strong></p><p>${e(c.example)}</p>`;
@@ -43,5 +44,5 @@ export function examWriting(root,session,update,e){
 }
 export function writingResults(list,e){
   if(!list?.length)return '';
-  return `<section class="course-card ap2-writing-panel"><h2>Written reasoning</h2>${list.map(c=>`<details><summary>Chapter ${c.chapter} · ${c.answer.trim()?'Review your explanation':'Try the case'}</summary><p>${e(c.prompt)}</p><p><strong>Your response</strong> · ${e(c.answer||'Unanswered')}</p>${model(c,e)}</details>`).join('')}</section>`;
+  return `<section class="course-card ap2-writing-panel"><h2>Written reasoning</h2>${list.map(c=>`<details><summary>Chapter ${c.chapter} · ${c.answer.trim()?'Review your explanation':'Try the case'}</summary><p>${e(c.prompt)}</p><p><strong>Your response</strong> · ${e(c.answer||'Unanswered')}</p><p><strong>Example explanation</strong></p><p>${e(c.example)}</p><fieldset><legend>Which points did your answer explain?</legend>${c.rubric.map((point,i)=>`<label class="ap2-choice"><input type="checkbox" data-evidence-point="${i}" data-case-chapter="${c.chapter}" ${c.selfMarked?.includes(i)?'checked':''}>${e(point)}</label>`).join('')}</fieldset><button data-written-tutor="${c.chapter}">Discuss a missing point with the tutor</button></details>`).join('')}</section>`;
 }

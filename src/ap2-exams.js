@@ -36,10 +36,22 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
   function stimulus(q){
     // Saved attempts retain the original stimulus. SVGs render as inert images.
     const st=q.stimulus;if(!st)return '';
-    if(st.svg)return `<figure class="ap2-stimulus"><img alt="${e(st.alt||'Question diagram')}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(st.svg)}"></figure>`;
+    if(st.image&&/^assets\/ap2-blood\/field-\d{2}\.webp$/.test(st.image))return `<figure class="ap2-stimulus"><img src="${e(st.image)}" alt="${e(st.alt)}"><figcaption>${e(st.credit)} <a href="https://data.mendeley.com/datasets/snkd93bnjr/1" target="_blank" rel="noreferrer">Specimen source ↗</a></figcaption><button data-enlarge-stimulus>Enlarge specimen</button></figure>`;
+    if(st.svg)return `<figure class="ap2-stimulus"><img alt="${e(st.alt||'Question diagram')}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(st.svg)}"><button data-enlarge-stimulus>Enlarge diagram</button></figure>`;
     if(st.columns&&st.rows)return `<div class="ap2-table-wrap"><table><thead><tr>${st.columns.map(c=>'<th scope="col">'+e(c)+'</th>').join('')}</tr></thead><tbody>${st.rows.map(row=>'<tr>'+row.map(c=>'<td>'+e(c)+'</td>').join('')+'</tr>').join('')}</tbody></table></div>`;
     return '';
   }
+  root.addEventListener('click',ev=>{
+    const button=ev.target.closest('[data-enlarge-stimulus]');
+    if(!button||!root.contains(button))return;
+    const img=button.closest('figure').querySelector('img');
+    const panel=document.createElement('dialog');panel.className='ap2-image-dialog';
+    panel.setAttribute('aria-label','Enlarged exam figure');
+    const close=document.createElement('button');close.textContent='Return to question';close.onclick=()=>panel.close();
+    panel.append(close,img.cloneNode());document.body.append(panel);
+    panel.addEventListener('close',()=>{panel.remove();if(button.isConnected)button.focus();},{once:true});
+    panel.showModal();close.focus();
+  });
   function session(){
     const s=store.read().draft;
     if(!s){center();return;}
@@ -74,12 +86,19 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     if(!r){page(hero('A&P II','Result unavailable','This browser has no saved report at this address.')+link('ap2-exams','Exams & results'));return;}
     rememberAP2Route('ap2-report-'+r.id);
     const result=score(r),weak=r.items.filter(q=>r.grades[q.id]!=='correct'),pending=r.items.filter(q=>r.grades[q.id]==='pending').length;
+    const skills=new Map();
+    for(const q of r.items){
+      if(!q.skill)continue;
+      const record=skills.get(q.skill)||{total:0,earned:0};record.total++;
+      if(correctGrade(r.grades[q.id]))record.earned++;
+      skills.set(q.skill,record);
+    }
     const included=onlyReview?weak:r.items;
     page(hero('A&P II · SAVED RESULT',r.title,date(r.submitted))+
     `<div class="course-card ap2-report-head"><strong>${result.correct} / ${r.items.length} points earned</strong>${pending?`<p>${pending} response(s) need a meaning review. The original score is saved.</p>`:''}
     <div class="course-actions"><label class="ap2-choice"><input type="checkbox" data-missed ${onlyReview?'checked':''}> Review missed answers and spelling only</label>
     ${weak.length&&!data.draft?'<button data-retry>Practice these questions again</button>':''}${data.draft?link('ap2-session','Resume active draft'):''}</div></div>
-    ${writingResults(r.writing,e)}<div class="ap2-report-list">${included.map(q=>{
+    ${skills.size?'<details class="course-card"><summary>Results by skill</summary><ul>'+[...skills].map(([skill,t])=>'<li>'+e(skill)+' · '+t.earned+' / '+t.total+'</li>').join('')+'</ul></details>':''}${writingResults(r.writing,e)}<div class="ap2-report-list">${included.map(q=>{
       const g=r.grades[q.id],v=r.responses[q.id]||'',given=q.choices&&v!==''?q.choices[Number(v)]:v;
       const reviewed=r.ai?.[q.id];
       const quantity=q.type==='number'&&v&&g==='incorrect'?checkQuantity(q,v):null;
@@ -89,13 +108,26 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
       <div class="course-actions">${link('ap2-lesson-'+q.section,'Review §'+q.section)}<button data-ask="${e(q.id)}">Ask the tutor</button>${q.type==='term'&&v?`<button data-ai="${e(q.id)}">Review wording with Ollama</button>`:''}</div>
       <div data-review-for="${e(q.id)}">${reviewed?reviewHTML(reviewed):''}</div></details>`;
     }).join('')||'<p>All answers were correct.</p>'}</div>`);
-    root.querySelector('[data-missed]').onchange=ev=>report(id,ev.target.checked);
-    const retry=root.querySelector('[data-retry]');if(retry)retry.onclick=()=>begin('retry','Review · '+r.title.replace(/^(Review · )+/,''),weak);
-    for(const b of root.querySelectorAll('[data-ask]'))b.onclick=()=>{
-      const q=r.items.find(it=>it.id===b.dataset.ask),sec=sectionById.get(q.section);
-      setLearningContext({course:'ap2',type:'lesson',label:sec?.title||'Review missed question',reference:q.section,text:q.prompt+' '+q.why});
+    for(const box of root.querySelectorAll('[data-evidence-point]'))box.onchange=()=>{
+      store.update(data=>{
+        const c=data.reports.find(x=>x.id===id)?.writing?.find(x=>x.chapter===Number(box.dataset.caseChapter));
+        if(!c)return;
+        const marked=new Set(c.selfMarked||[]),index=Number(box.dataset.evidencePoint);
+        if(box.checked)marked.add(index);else marked.delete(index);
+        c.selfMarked=[...marked];
+      });
+    };
+    for(const button of root.querySelectorAll('[data-written-tutor]'))button.onclick=()=>{
+      const c=store.read().reports.find(x=>x.id===id)?.writing?.find(x=>x.chapter===Number(button.dataset.writtenTutor));
+      if(!c)return;
+      const point=c.rubric.find((_,i)=>!c.selfMarked?.includes(i))||c.rubric[0];
+      setLearningContext({course:'ap2',type:'review',reference:c.section,label:'Written reasoning · §'+c.section,
+        text:c.prompt+' Ask me for evidence about this rubric point: '+point,
+        review:{prompt:c.prompt,expected:point,response:c.answer||'Unanswered',why:c.example}});
       document.querySelector('#tutor-launch')?.click();
     };
+    root.querySelector('[data-missed]').onchange=ev=>report(id,ev.target.checked);
+    const retry=root.querySelector('[data-retry]');if(retry)retry.onclick=()=>begin('retry','Review · '+r.title.replace(/^(Review · )+/,''),weak);
     for(const b of root.querySelectorAll('[data-ask]'))b.onclick=()=>{
       const q=r.items.find(it=>it.id===b.dataset.ask),v=r.responses[q.id]||'';
       const given=q.choices&&v!==''?q.choices[Number(v)]:v;
@@ -133,7 +165,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     <div class="course-grid"><article><h2>Study record</h2><p>${Object.keys(r.studied).length} / 49 sections marked studied · ${answers.filter(a=>a.correct).length} recall questions last answered correctly · ${r.reports.length} exams submitted.</p><h2>Study next</h2>${next?link('ap2-lesson-'+next.id+'/check','Practice §'+next.id+' · '+next.title):'<p>You have checked every section.</p>'}</article>
     <article><h2>Results and review notes</h2><div class="course-links">${r.reports.map(navReport).join('')||'<p>Submit an exam to see its results here.</p>'}</div></article></div>
     <section class="course-card"><h2>By chapter</h2><div class="ap2-chapter-list">${chapters.map(ch=>{
-      const ids=new Set(ch.sections.map(s=>s.id)),checked=answers.filter(a=>ids.has(a.section)),all=bank.filter(q=>ids.has(q.section)&&q.type==='choice');
+      const ids=new Set(ch.sections.map(s=>s.id)),checked=answers.filter(a=>ids.has(a.section)),all=bank.filter(q=>ids.has(q.section)&&q.pool==='recall');
       return `<a href="#ap2-chapter-${ch.id}"><b>${ch.id}</b><span>${e(ch.title)}<small>${ch.sections.filter(s=>r.studied[s.id]).length}/${ch.sections.length} studied · ${checked.filter(a=>a.correct).length}/${all.length} recall questions correct</small></span><span>→</span></a>`;
     }).join('')}</div></section>`);
     bindStudyBackups(root,{dialog,toast,escape:e,getAP2Records:()=>store.read()});context('A&P II progress');
