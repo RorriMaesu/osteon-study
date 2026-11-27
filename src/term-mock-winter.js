@@ -6,6 +6,7 @@ import {winterTransferChoices} from './term-mock-winter-transfer.js';
 import {unitWinterWriting} from './term-mock-winter-writing.js';
 import {winterIntegrative} from './term-mock-winter-integration.js';
 import {varyStations} from './term-mock-winter-variants.js';
+import {winterWeeklyItems} from './term-winter-weekly.js';
 
 const version='winter-mock-2';
 const formNames=['A','B','C'];
@@ -94,7 +95,7 @@ function shuffleOptions(part,key){
   const order=stableOrder(part.choices.map((_,i)=>i),key,i=>part.choices[i]);
   return {...part,choices:order.map(i=>part.choices[i]),answer:order.indexOf(part.answer)};
 }
-export function makeWinterMock(scopeId,form='A'){
+function defaultWinterMock(scopeId,form){
   const scope=winterScopes.find(s=>s.id===scopeId),f=formNames.indexOf(form);
   if(!scope||f<0)throw new RangeError('Unknown A&P II mock form or scope.');
   const unit=winterScopes.indexOf(scope);
@@ -106,5 +107,34 @@ export function makeWinterMock(scopeId,form='A'){
     const output={...q,id,contentVersion:version,source:source.source,chapter:chapterOf(q)};
     if(q.parts)output.parts=q.parts.map((part,j)=>shuffleOptions(part,id+'/'+j));
     return JSON.parse(JSON.stringify(shuffleOptions(output,id)));
+  });
+}
+
+// Older weekly checks used material from the unit exams. Keep their submitted
+// snapshots intact and select fresh material the next time a unit is started.
+export function winterExposureKeys(q){
+  const st=q.stimulus,keys=[];
+  if(q.prompt!=='Interpret the specimen or recording and connect it to function.')keys.push('question:'+q.prompt);
+  if(st?.image||st?.svg)keys.push('figure:'+(st.image||st.svg));
+  if(st?.rows)keys.push('data:'+JSON.stringify([st.columns,st.rows]));
+  if(!keys.length)keys.push('parts:'+JSON.stringify(q.parts?.map(p=>p.prompt)));
+  return keys;
+}
+export function makeWinterMock(scopeId,form='A',history=[]){
+  if(scopeId.startsWith('week-'))return winterWeeklyItems(Number(scopeId.slice(5)),form);
+  const original=defaultWinterMock(scopeId,form);
+  if(!scopeId.startsWith('unit-'))return original;
+  const exposed=new Set(history.filter(run=>run.scope?.startsWith('week-')).flatMap(run=>run.items.flatMap(winterExposureKeys)));
+  const seen=q=>winterExposureKeys(q).some(key=>exposed.has(key));
+  if(!original.some(seen))return original;
+  const reserved=new Set(original.filter(q=>!seen(q)).flatMap(winterExposureKeys));
+  const reserve=formNames.filter(f=>f!==form).flatMap(f=>defaultWinterMock(scopeId,f)).filter(q=>!seen(q));
+  return original.map(q=>{
+    if(!seen(q))return q;
+    const valid=reserve.filter(other=>other.type===q.type&&!winterExposureKeys(other).some(key=>reserved.has(key)));
+    const replacement=valid.find(other=>other.section===q.section)||valid.find(other=>other.chapter===q.chapter)||valid[0];
+    if(!replacement)return {...q,seenInWeekly:true};
+    winterExposureKeys(replacement).forEach(key=>reserved.add(key));
+    return {...replacement,id:q.id};
   });
 }

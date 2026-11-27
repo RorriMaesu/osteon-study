@@ -8,6 +8,7 @@ import {localAI} from './local-ai.js';
 import {reviewWithUI,reviewHTML} from './answer-review-ui.js';
 import {setLearningContext} from './learning-context.js';
 import {practicalScores} from './ap2-practical-session.js';
+import {nextWinterSection} from './ap2-recall.js';
 
 export function createExamScreens({root,page,hero,link,store,e,dialog,toast,mocks}){
   const date=n=>new Date(n).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
@@ -163,7 +164,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast,mock
   document.addEventListener('localaistatechange',()=>{if(pendingAI&&localAI.state.ready){const job=pendingAI;pendingAI=null;if(location.hash==='#ap2-report-'+job.id)runAI(job.id,job.q);}});
   function progress(){
     const r=store.read(),answers=Object.values(r.checks);
-    const next=sectionsToRevisit(r);
+    const next=nextWinterSection(r);
     page(hero('A&P II · STUDY STUDIO','My progress','Track section review, recall practice, and independent exams separately.')+
     mocks.entry()+practicalLinks(r)+
     `<div class="course-actions">${link('ap2-exams','Exams & results')}${r.draft?link('ap2-session','Resume exam',true):''}<details class="ap2-backup"><summary>Back up or restore all courses</summary><button data-export-study>Back up all study work</button><label>Restore backup <input type="file" data-import-study accept="application/json,.json"></label><p role="status" data-backup-status></p></details></div>
@@ -174,16 +175,6 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast,mock
       return `<a href="#ap2-chapter-${ch.id}"><b>${ch.id}</b><span>${e(ch.title)}<small>${ch.sections.filter(s=>r.studied[s.id]).length}/${ch.sections.length} studied · ${checked.filter(a=>a.correct).length}/${all.length} recall questions correct</small></span><span>→</span></a>`;
     }).join('')}</div></section>`);
     bindStudyBackups(root,{dialog,toast,escape:e,getAP2Records:()=>store.read()});context('A&P II progress');
-  }
-  function sectionsToRevisit(r) {
-    const latest=new Map();
-    for(const report of [...r.reports].sort((a,b)=>a.submitted-b.submitted)){
-      for(const q of report.items)latest.set(q.id,{section:q.section,correct:correctGrade(report.grades[q.id]),at:report.submitted});
-    }
-    for(const [id,check] of Object.entries(r.checks))if(check.at>=(latest.get(id)?.at||0))latest.set(id,check);
-    const missed=[...latest.values()].filter(a=>!a.correct).sort((a,b)=>b.at-a.at)[0];
-    if(missed)return sectionById.get(missed.section);
-    return [...sectionById.values()].find(s=>s.questions.some((_,i)=>!r.checks['ap2-'+s.id+'-q'+(i+1)]?.correct));
   }
   function open(route){
     if(!route.startsWith('ap2-report-'))pendingAI=null;

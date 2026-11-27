@@ -68,11 +68,13 @@ const autonomic = {
     ]),
     lesson('15.4', 'Drugs that Affect the Autonomic System', [
       'Predict an organ response from the receptor, its location and the action of an agonist or antagonist.',
-      'Distinguish a drug acting at an autonomic ganglion from one acting at an effector.'
+      'Distinguish a drug acting at an autonomic ganglion from one acting at an effector.',
+      'Classify sympathomimetic and sympatholytic actions and explain an acute cardiovascular effect of nicotine.'
     ], [
       'An agonist activates a receptor. An antagonist prevents its usual transmitter from activating it. The physiological outcome depends on where that receptor sits and what the organ was doing. At a cardiac pacemaker, β1 stimulation increases rate, so a β1 antagonist limits acceleration during sympathetic drive. At an arteriole, α1 activation contracts smooth muscle and narrows the lumen.',
       'Nicotinic receptors on ganglionic neurons relay signals in both autonomic divisions. Interfering with this shared synapse can affect several organs, with direction determined by the prevailing tone. Effector muscarinic receptors have a different distribution. Blocking cardiac muscarinic receptors can release the pacemaker from vagal slowing. The same blockade can reduce sweating because eccrine glands use muscarinic receptors too.',
-      'An indirect action changes transmitter availability. Acetylcholinesterase normally breaks down ACh after release. In a model with intact ACh release, slowing this enzyme prolongs exposure at cholinergic synapses. That intervention reaches more sites than a substance selective for one subtype of muscarinic receptor.'
+      'An indirect action changes transmitter availability. Acetylcholinesterase normally breaks down ACh after release. In a model with intact ACh release, slowing this enzyme prolongs exposure at cholinergic synapses. That intervention reaches more sites than a substance selective for one subtype of muscarinic receptor.',
+      'A sympathomimetic mimics sympathetic signaling, as when a compound activates an arteriolar α1 receptor. A sympatholytic reduces sympathetic signaling, as when a compound blocks cardiac β1 receptors. Acute nicotine can activate neuronal nicotinic receptors in sympathetic and parasympathetic ganglia and in the adrenal medulla. Most systemic resistance vessels receive predominantly sympathetic vasomotor input, so this activation can raise vascular resistance and arterial pressure. The local synapse and the prevailing autonomic tone help explain the organ response.'
     ], task('Predict a receptor blockade', 'For each tissue, identify the usual signal before predicting what an antagonist changes.',
       ['Cardiac β1', 'Norepinephrine normally accelerates the pacemaker. β1 blockade blunts that acceleration.'],
       ['Cardiac M2', 'ACh normally slows the pacemaker. Muscarinic blockade reduces vagal slowing.'],
@@ -157,10 +159,12 @@ const neurological = {
     ]),
     lesson('16.5', 'The Coordination and Gait Exams', [
       'Explain why matching a movement to its target requires sensory feedback and cerebellar processing.',
-      'Distinguish inaccuracy of limb movement from loss of force or reliance on vision for balance.'
+      'Distinguish inaccuracy of limb movement from loss of force or reliance on vision for balance.',
+      'Relate the cerebellar vermis, hemispheres and flocculonodular lobe to axial control, limb coordination and vestibular input.'
     ], [
       'To reach a cup, the nervous system needs an intended movement and an estimate of where the limb actually is. Pontine pathways convey information about planned movement to the cerebellum through the middle cerebellar peduncle. Proprioceptive and vestibular signals supply feedback, much of it through the inferior peduncle. Deep cerebellar nuclei send much of their output through the superior peduncle to motor control circuits.',
       'Alternating hand movements and reaching to a target sample timing and scaling. Dysmetria means the movement overshoots or undershoots its target. A tremor that grows near the target can accompany impaired cerebellar coordination. Check strength, sensation and vision because these tasks require all three. Cerebellar hemisphere dysfunction often affects limb coordination on the same side.',
+      'The midline vermis contributes to control of the trunk and proximal muscles during gait. The cerebellar hemispheres contribute to the timing and accuracy of limb movements. The flocculonodular lobe receives vestibular input and helps coordinate equilibrium and eye movements. A single unsteady step does not distinguish a cerebellar cause from a sensory one. Compare the reaching, eye movement and balance observations.',
       'Gait and stance combine proprioceptive, visual, vestibular and motor information. A wide base and instability already evident with eyes open can fit truncal ataxia. A fictional subject who stands steadily with eyes open but becomes markedly unstable with eyes closed is using vision to compensate. A positive Romberg pattern suggests a proprioceptive or vestibular contribution, with additional observations needed to distinguish them.'
     ], task('Interpret two balance records', 'Compare two written observations from a supervised fictional exam.',
       ['Record A', 'The subject is steady with eyes open and much less stable with eyes closed. Vision was contributing substantial compensation.'],

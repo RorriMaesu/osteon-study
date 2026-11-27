@@ -1,4 +1,5 @@
 import {AP2_KEY,validAP2Records} from './ap2-records.js';
+import {mergeEndocrineTrials} from './ap2-feedback-reasoning.js';
 import {springPrefix,shouldRestoreCourseRecord} from './ap3-records.js';
 import {validatedBackup as validateSpring} from './ap3-backup.js';
 import {showLegacyStudyImport} from './legacy-study.js';
@@ -56,6 +57,7 @@ export function restoreStudyBackup(storage,x){
      if(shouldRestoreCourseRecord('mock:'+id,mocks[id],run))mocks[id]=run;
    }
    const winter={...x.ap2};
+   if(validAP2Records(current)&&current.endocrineTrials)winter.endocrineTrials=mergeEndocrineTrials(current.endocrineTrials,x.ap2.endocrineTrials);
    if(Object.keys(mocks).length)winter.mockRuns=mocks;
    if(validAP2Records(current)&&current.mechanismRecall){
      const recall={...current.mechanismRecall};

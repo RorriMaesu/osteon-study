@@ -1,0 +1,56 @@
+[
+  [
+    {
+      "file": "tally-1-1.webp",
+      "type": "neutrophil",
+      "source": "PBC_dataset_normal_DIB/neutrophil/SNE_449792.jpg"
+    },
+    {
+      "file": "tally-1-2.webp",
+      "type": "lymphocyte",
+      "source": "PBC_dataset_normal_DIB/lymphocyte/LY_504582.jpg"
+    },
+    {
+      "file": "tally-1-3.webp",
+      "type": "lymphocyte",
+      "source": "PBC_dataset_normal_DIB/lymphocyte/LY_591194.jpg"
+    },
+    {
+      "file": "tally-1-4.webp",
+      "type": "lymphocyte",
+      "source": "PBC_dataset_normal_DIB/lymphocyte/LY_554741.jpg"
+    },
+    {
+      "file": "tally-1-5.webp",
+      "type": "neutrophil",
+      "source": "PBC_dataset_normal_DIB/neutrophil/SNE_396735.jpg"
+    }
+  ],
+  [
+    {
+      "file": "tally-2-1.webp",
+      "type": "neutrophil",
+      "source": "PBC_dataset_normal_DIB/neutrophil/SNE_816733.jpg"
+    },
+    {
+      "file": "tally-2-2.webp",
+      "type": "neutrophil",
+      "source": "PBC_dataset_normal_DIB/neutrophil/SNE_4152.jpg"
+    },
+    {
+      "file": "tally-2-3.webp",
+      "type": "lymphocyte",
+      "source": "PBC_dataset_normal_DIB/lymphocyte/LY_260801.jpg"
+    },
+    {
+      "file": "tally-2-4.webp",
+      "type": "neutrophil",
+      "source": "PBC_dataset_normal_DIB/neutrophil/SNE_938584.jpg"
+    },
+    {
+      "file": "tally-2-5.webp",
+      "type": "neutrophil",
+      "source": "PBC_dataset_normal_DIB/neutrophil/SNE_786541.jpg"
+    }
+  ]
+]

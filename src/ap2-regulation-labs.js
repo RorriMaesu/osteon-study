@@ -1,4 +1,6 @@
 import {renderGlandPractical,mountGlandPractical} from './ap2-endocrine-practicals.js';
+import {mountFeedbackReasoning} from './ap2-feedback-reasoning.js';
+import {pupilTable} from './ap2-pupil-evidence.js';
 
 const labKinds = {
   '15.1': 'circuit', '15.4': 'circuit',
@@ -80,7 +82,7 @@ function controls(kind, id) {
 const labText = {
   circuit: ['Autonomic circuit bench', 'Choose a route and a receptor to block. Trace one incoming impulse through the ganglion to its target.'],
   pressure: ['Pressure reflex bench', 'Change arterial pressure and decide whether the sensory input reaching the medulla can register the change.'],
-  pupils: ['Pupillary reflex station', 'Illuminate each eye in a fictional case. Use both pupil responses to identify the affected limb. Left and right refer to the subject.'],
+  pupils: ['Pupillary reflex station', 'Face the subject. Their right eye appears on your left. Illuminate each eye and use the recorded direct and consensual responses to identify the affected limb.'],
   feedback: ['Endocrine feedback bench', 'Select an axis and change one part of it. Compare the three signals after feedback has had time to act.'],
   glucose: ['Fuel movement bench', 'Choose a metabolic condition. Follow the islet signal into liver, muscle and adipose tissue, then change insulin sensitivity.']
 };
@@ -111,11 +113,11 @@ function pupilOutput(read) {
   const test = cases[read('case')], lamp = read('lamp');
   function eye(side) {
     const small = lamp !== 'off' && lamp !== test.blockedInput && side !== test.blockedOutput;
-    const lit = lamp === side, label = side === 'left' ? 'Left eye' : 'Right eye';
+    const lit = lamp === side, label = 'Subject’s '+side+' eye';
     const response = lamp === 'off' ? 'Resting pupil' : small ? 'Pupil constricts' : 'No constriction';
     return `<figure class="reg-eye" data-lit="${lit}" data-small="${small}"><figcaption><strong>${label}</strong><small>${lit ? 'Illuminated' : 'No direct light'}</small></figcaption><div class="reg-iris" aria-hidden="true"></div><small>${response}</small></figure>`;
   }
-  return `<div class="reg-eyes">${eye('left')}${eye('right')}</div>`;
+  return `<div class="reg-eyes">${eye('right')}${eye('left')}</div>`;
 }
 
 const feedbackLevels = {
@@ -165,13 +167,13 @@ function renderOriginal(id) {
   const [title, prompt] = labText[kind];
   if(kind==='feedback'){
     const prediction=key=>'<select data-feedback-'+key+'><option value="">Choose level</option><option>Low</option><option>Usual</option><option>High</option></select>';
-    return '<section class="reg-lab" data-reg-lab="'+id+'" aria-label="'+title+'">'+styles+'<h3>'+title+'</h3><p>'+prompt+'</p><div class="reg-controls">'+controls(kind,id)+'</div><div class="reg-controls"><label>Predict pituitary drive'+prediction('drive')+'</label><label>Predict circulating end hormone'+prediction('end')+'</label></div><label>Explain how feedback produces your pattern (optional)<textarea data-feedback-why rows="2" style="display:block;width:100%;box-sizing:border-box"></textarea></label><button data-feedback-check>Compare my prediction</button><p data-feedback-note role="status"></p><div class="reg-out" hidden></div></section>';
+    return '<section class="reg-lab" data-reg-lab="'+id+'" aria-label="'+title+'">'+styles+'<h3>'+title+'</h3><p>'+prompt+'</p><div class="reg-controls">'+controls(kind,id)+'</div><div class="reg-controls"><label>Predict pituitary drive'+prediction('drive')+'</label><label>Predict circulating end hormone'+prediction('end')+'</label></div><label>Explain how feedback produces your pattern (optional)<textarea data-feedback-why maxlength="500" rows="2" style="display:block;width:100%;box-sizing:border-box"></textarea></label><button data-feedback-check>Compare my prediction</button> <button type="button" data-feedback-discuss hidden>Discuss my reasoning</button><p data-feedback-first></p><p data-feedback-note role="status"></p><div class="reg-out" hidden></div></section>';
   }
   const answer = kind === 'pupils' ? `<div class="reg-guess">${selectControl('prediction', 'Which pathway fits?', pupilOptions)}<button type="button" data-check-reg>Check interpretation</button></div><p data-verdict role="status"></p>` : '';
   return `<section class="reg-lab" data-reg-lab="${id}" aria-label="${title}">${styles}<h3>${title}</h3><p>${prompt}</p><div class="reg-controls">${controls(kind, id)}</div><div class="reg-out" aria-live="polite" aria-atomic="true"></div>${answer}</section>`;
 }
 
-export function mountLab(root, id) {
+export function mountLab(root, id, {store}={}) {
   mountGlandPractical(root,id);
   const kind = labKinds[id];
   if (!kind || !root) return;
@@ -184,19 +186,14 @@ export function mountLab(root, id) {
   const refresh = () => { panel.querySelector('.reg-out').innerHTML = draw[kind](read); };
   const verdict = panel.querySelector('[data-verdict]');
   if(kind==='feedback'){
-    const drive=panel.querySelector('[data-feedback-drive]'),end=panel.querySelector('[data-feedback-end]');
-    const output=panel.querySelector('.reg-out'),note=panel.querySelector('[data-feedback-note]');
-    const reset=()=>{drive.value='';end.value='';note.textContent='';panel.querySelector('[data-feedback-why]').value='';output.hidden=true;};
-    control('axis').onchange=control('change').onchange=reset;
-    panel.querySelector('[data-feedback-check]').onclick=()=>{
-      if(!drive.value||!end.value){note.textContent='Choose both hormone levels before checking.';return;}
-      const [,expectedDrive,expectedEnd]=feedbackLevels[read('change')];
-      note.textContent=(drive.value===expectedDrive?'Pituitary drive is correct. ':'Recheck the pituitary drive. ')+(end.value===expectedEnd?'End-hormone prediction is correct.':'Recheck the circulating end hormone.');
-      refresh();output.hidden=false;
-    };
+    mountFeedbackReasoning(panel,{id,store,axes,feedbackLevels,refresh});
     return;
   }
-  const observed = new Set();
+  const observed = new Map();
+  function showObserved(){
+    refresh();
+    if(kind==='pupils')panel.querySelector('.reg-out').insertAdjacentHTML('beforeend',pupilTable(observed));
+  }
   panel.addEventListener('change', event => {
     const field = event.target.dataset.regInput;
     if (!field) return;
@@ -207,10 +204,13 @@ export function mountLab(root, id) {
         control('prediction').value = '';
         observed.clear();
       }
-      if (field === 'lamp' && read('lamp') !== 'off') observed.add(read('lamp'));
+      if (field === 'lamp' && read('lamp') !== 'off') {
+        const lamp=read('lamp'),test=cases[read('case')],input=lamp!==test.blockedInput;
+        observed.set(lamp,{right:input&&test.blockedOutput!=='right',left:input&&test.blockedOutput!=='left'});
+      }
       if (field === 'prediction') return;
     }
-    refresh();
+    showObserved();
   });
   panel.querySelector('[data-check-reg]')?.addEventListener('click', () => {
     if (observed.size < 2) {
@@ -224,7 +224,7 @@ export function mountLab(root, id) {
     }
     verdict.textContent = guess === test.answer ? 'Correct. ' + test.explanation : 'Recheck the pattern. If the deficit follows the illuminated eye, compare the inputs. If one pupil fails with either light, compare the outputs.';
   });
-  refresh();
+  showObserved();
 }
 
 export function renderLab(id) {

@@ -1,6 +1,7 @@
 import {regionSpecimen} from './ap2-endocrine-regions.js';
 import {tissueMarkup,mountTissueModel} from './ap2-tissue-models.js';
 import {endocrineCaseMarkup,mountEndocrineCase} from './ap2-endocrine-cases.js';
+import {neckHistology} from './ap2-neck-histology.js';
 
 const root = 'assets/ap2-glands/';
 const bodyCredit = 'BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International. Converted from the 4.0 mesh release in Blender 4.5. <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html" target="_blank" rel="noreferrer">Source</a> · <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html" target="_blank" rel="noreferrer">Database license</a>.';
@@ -77,7 +78,7 @@ function stationBody(id){
  if(id==='17.3')return select('lobe','Route to inspect',{anterior:'Hypothalamus → anterior lobe',posterior:'Hypothalamus → posterior lobe'})+select('pit-lesion','Change the connection',{none:'Usual connection',vessel:'Interrupt portal blood delivery',axon:'Interrupt neurosecretory axons'})+'<button type="button" data-pit-next>Next stop</button> <button type="button" data-pit-run>Play route</button><p data-pit-step aria-live="polite"></p>'+tissueMarkup('pituitary')+'<div data-pit-route></div>';
  if(id==='17.4'||id==='17.5'){
    const ask=id==='17.4' ? select('neck-guess','Which structure crosses the trachea between the two thyroid lobes?',{'':'Choose a structure',isthmus:'Thyroid isthmus',cricoid:'Cricoid cartilage',parathyroid:'Inferior parathyroid gland'}) : select('neck-guess','After ionized calcium falls, what response would you expect?',{'':'Predict the response',loss:'PTH falls and less calcium is retained by the kidney',retain:'PTH rises and the kidney retains more calcium',phosphate:'PTH rises and the kidney retains more phosphate'});
-   return select('neck-view','Orientation or scale',{anterior:'Anterior neck · 3D',posterior:'Posterior neck · 3D',micro:'Microscopic · thyroid follicle'})+'<div data-neck-plate></div>'+ask+'<button data-neck-check>Check prediction</button><p data-result role="status"></p>';
+   return select('neck-view','Orientation or scale',{anterior:'Anterior neck · 3D',posterior:'Posterior neck · 3D',micro:id==='17.5'?'Microscopic · parathyroid and thyroid comparison':'Microscopic · thyroid follicle'})+'<div data-neck-plate></div><div data-neck-gross-check>'+ask+'<button data-neck-check>Check prediction</button><p data-result role="status"></p></div>';
  }
  if(id==='17.6')return tissueMarkup('adrenal')+'<div data-result role="status"></div><details><summary>Locate both adrenals above the kidneys</summary><div data-organ></div><small>'+bodyCredit+'</small></details><details><summary>Compare with the textbook section and micrograph</summary>'+figure('assets/ap2-figures/17.17.webp','A gland section and micrograph distinguish three cortical layers and the medulla.',credits('17.17','17-6-the-adrenal-glands',true))+'</details>';
  if(id==='17.7')return tissueMarkup('pineal')+select('light','During the biological night',{dark:'Dark surroundings',bright:'Bright light reaches the retina'})+select('melatonin','Predict relative pineal melatonin secretion',{'':'Choose a prediction',rise:'Nighttime rise is supported',fall:'Nighttime rise is suppressed'})+'<button data-pineal-check>Trace the pathway</button><div data-result role="status"></div>';
@@ -272,6 +273,9 @@ export function mountGlandPractical(rootElement,id){
    get('lobe').onchange=get('pit-lesion').onchange=trace;trace();
  }else if(id==='17.4'||id==='17.5'){
    function show(){
+     const compare=id==='17.5'&&get('neck-view').value==='micro';
+     get('neck-gross-check').hidden=compare;
+     if(compare){neckHistology(get('neck-plate'));return;}
      if(get('neck-view').value==='micro'){
        const micro=figure(root+'thyroid-follicles.webp','Follicle cells enclose a colloid-filled lumen. A leader identifies parafollicular cells near the follicles.',credits('17.12c, tissue panel','17-4-the-thyroid-gland',true));
        const steps={follicle:['Follicle cell','Follicle cells take up iodide from blood and secrete thyroglobulin toward the follicle lumen.'],colloid:['Colloid','Iodination and coupling on thyroglobulin form thyroid hormone precursors in the lumen. Iodinated thyroglobulin provides extracellular storage.'],release:['Return to blood','TSH stimulates uptake of colloid. Proteolysis frees T3 and T4 for release toward the capillaries.'],cCell:['Parafollicular cell','These cells secrete calcitonin and do not make T3 or T4. They lie adjacent to the follicles.']};

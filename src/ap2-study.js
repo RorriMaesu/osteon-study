@@ -1,14 +1,13 @@
 import {mountLessonFigure} from './lesson-figure.js';
+import {mountWinterRecall} from './ap2-recall.js';
 import {springSections} from './tutor-ap3.js';
-import {mountGuidedPredictions} from './ap2-guided-predictions.js';
+import {openWinterExplore,winterExploreRoute} from './ap2-explore.js';
 import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
 import {openStructureIndex} from './ap2-model-index.js';
 import {openScoredPractical} from './ap2-scored-practical.js';
-import {addOrgansToLesson} from './ap2-blood-organ-regions.js';
-import {addEntericLesson} from './ap2-enteric-wall.js';
-import {evidenceStations,addEvidenceLesson} from './ap2-evidence-labs.js';
+import {evidenceStations} from './ap2-evidence-labs.js';
 import {lessons as fallLessons} from './learning-data.js';
-import {chapters,sections,sectionById,labFor,units} from './ap2-library.js';
+import {chapters,sections,sectionById,units} from './ap2-library.js';
 import figures from './ap2-figures.json' with {type:'json'};
 import {openWritingPractice} from './ap2-writing-ui.js';
 import {plates} from './ap2-endocrine-plates.js';
@@ -118,7 +117,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
     const data=store.read(),studied=!!data.studied[s.id];
     page(`<div class="ap2-breadcrumb">${link('ap2-chapter-'+ch.id,'← Chapter '+ch.id)}<label>Section <select id="ap2-section" aria-label="Choose section">${ch.sections.map(v=>`<option value="${v.id}" ${v.id===s.id?'selected':''}>${v.id} · ${e(v.title)}</option>`).join('')}</select></label></div>`+
       hero('A&P II · SECTION '+s.id,s.title)+
-      `<nav class="ap2-tabs" aria-label="Lesson activities">${tabs.map(([key,label])=>`<a href="#${base}${key==='read'?'':'/'+key}" ${key===tab?'aria-current="page"':''}>${label}</a>`).join('')}</nav>
+      `<nav class="ap2-tabs" aria-label="Lesson activities">${tabs.map(([key,label])=>`<a href="#${(key==='activity'?winterExploreRoute(s.id):base+(key==='read'?'':'/'+key))}" ${key===tab?'aria-current="page"':''}>${label}</a>`).join('')}</nav>
       <section class="course-card ap2-lesson-body"></section><div class="ap2-lesson-footer"><button type="button" data-studied aria-pressed="${studied}">${studied?'✓ Studied':'Mark studied'}</button>
       <a href="${e(s.source)}" target="_blank" rel="noreferrer">Read OpenStax §${s.id} ↗</a><button type="button" data-course-tutor>Ask the tutor</button>
       ${sections[sections.indexOf(s)+1]?link('ap2-lesson-'+sections[sections.indexOf(s)+1].id,'Next section →'):link('ap2-exams','Open exams →')}</div>`);
@@ -139,68 +138,9 @@ export function initAP2({root,escape:e,toast,dialog}) {
       mountLessonFigure(body,{figures:entries,selected,section:s.id,source:s.source,
         onSelect:i=>{location.hash=base+'/figures/'+entries[i].id;}});
     } else if(tab==='activity') {
-      const lab=labFor(s.id),html=lab.renderLab(s.id);
-      body.innerHTML=`${html?'<div class="ap2-simulation">'+html+'</div>':''}<div class="ap2-guided"><h2>${e(s.activity.title)}</h2><p>${e(s.activity.prompt)}</p><div class="ap2-step"></div></div>`;
-      if(html)lab.mountLab(body.querySelector('.ap2-simulation'),s.id,{store,station});
-      addOrgansToLesson(body,s.id,station);
-      addEvidenceLesson(body,s.id,station);
-      if(s.id==='15.2')addEntericLesson(body,station);
-      if((s.id==='17.3'&&station==='pituitary-pathways')||(s.id==='17.6'&&station==='adrenal-layers')||(s.id==='17.7'&&station==='pineal')||(s.id==='18.1'&&station==='elements')){
-        if(station==='elements')body.querySelector('[data-formed-lab]').open=true;
-        requestAnimationFrame(()=>body.querySelector('[data-micro-stage]')?.scrollIntoView({block:'center',behavior:'instant'}));
-      }
-      const picker=body.querySelector('[data-neural-station-picker],[data-circulation-station]');
-      if(s.id==='20.1'&&['walls','capillaries'].includes(station)&&picker){
-        picker.value='tissue';picker.dispatchEvent(new Event('change'));
-        const tissue=body.querySelector('[data-vessel-3d]');
-        if(tissue){tissue.open=true;const scale=tissue.querySelector('[data-vessel-scale]');scale.value=station;scale.dispatchEvent(new Event('change'));requestAnimationFrame(()=>tissue.querySelector('[data-vessel-stage]')?.scrollIntoView({block:'center'}));}
-      }
-      if(picker&&station&&[...picker.options].some(o=>o.value===station)){
-        picker.value=station;picker.dispatchEvent(new Event('change',{bubbles:true}));
-        body.querySelector('[data-neuro-specimen="'+station+'"] [data-load-specimen]')?.click();
-        if(s.id==='20.6'&&station==='fetal-flow')requestAnimationFrame(()=>body.querySelector('[data-fetal-view]')?.scrollIntoView({block:'center'}));
-      }
-      const presets={follicle:['[data-neck-view]','micro'],neck:['[data-neck-view]','anterior'],parathyroids:['[data-neck-view]','posterior'],islet:['[data-scale]','micro'],pancreas:['[data-scale]','gross'],ovary:['[data-gonad]','ovary'],testis:['[data-gonad]','testis'],placenta:['[data-gonad]','placenta']};
-      const preset=Object.hasOwn(presets,station)?presets[station]:null;
-      if(preset){
-        const control=body.querySelector(preset[0]);
-        if(control&&control.value!==preset[1]){control.value=preset[1];control.dispatchEvent(new Event('change',{bubbles:true}));}
-      }
-      if(station&&s.id==='20.5'){
-        const view=body.querySelector('[data-cardio-panel="1"] [data-specimen-mode]');
-        if(view&&[...view.options].some(o=>o.value===station)){
-          body.querySelector('[data-cardio-view="1"]')?.click();
-          view.value=station;view.dispatchEvent(new Event('change',{bubbles:true}));
-        }
-      }
-      if((s.id==='19.1'&&station==='supports')||(s.id==='19.3'&&station==='motion')){
-        if(station==='motion')body.querySelector('[data-cardio-view="1"]')?.click();
-        const view=body.querySelector('[data-organ-kind="heart"] [data-specimen-mode]');
-        if(view&&[...view.options].some(o=>o.value===station)){
-          view.value=station;view.dispatchEvent(new Event('change',{bubbles:true}));
-          requestAnimationFrame(()=>body.querySelector('[data-organ-kind="heart"] [data-organ-host]')?.scrollIntoView({block:'center',behavior:'instant'}));
-        }
-      }
-      const atlas=atlasLinks[s.id];
-      if(atlas){
-        const context=document.createElement('a');context.className='course-link';
-        context.href='?nerve='+encodeURIComponent(atlas[0])+'#atlas';context.textContent='Find '+atlas[1]+' in the whole-body Atlas';
-        body.querySelector('.ap2-guided').append(context);
-      }
-      mountGuidedPredictions(body.querySelector('.ap2-step'),s,store,e);
+      openWinterExplore(body,s,station,{store,escape:e,atlas:atlasLinks[s.id]});
     } else {
-      const indices=s.questions.map((_,i)=>i);
-      const first=indices.find(i=>!data.checks[`ap2-${s.id}-q${i+1}`]?.correct)??0;
-      function check(i){
-        const q=s.questions[i];body.innerHTML=`<p class="eyebrow">RECALL ${i+1} / ${indices.length}</p><h2>${e(q.prompt)}</h2><div class="ap2-answers">${q.choices.map((a,n)=>`<button data-pick="${n}">${e(a)}</button>`).join('')}</div><div class="ap2-recall-feedback" role="status"></div>`;
-        for(const b of body.querySelectorAll('[data-pick]'))b.onclick=()=>{
-          const correct=Number(b.dataset.pick)===q.answer;
-          store.update(r=>{r.checks['ap2-'+s.id+'-q'+(i+1)]={section:s.id,at:Date.now(),correct};});
-          for(const v of body.querySelectorAll('[data-pick]')){v.disabled=true;if(+v.dataset.pick===q.answer)v.classList.add('ap2-correct');}
-          const out=body.querySelector('.ap2-recall-feedback');out.innerHTML=`<p><strong>${correct?'Correct.':'Review this connection.'}</strong> ${e(q.why)}</p><button>Next recall question →</button>`;
-          out.querySelector('button').onclick=()=>check((i+1)%indices.length);
-        };
-      }check(first);
+      mountWinterRecall(body,s,store,e);
     }
   }
   const isExam=()=>location.hash==='#ap2-session'&&!!store.read().draft;

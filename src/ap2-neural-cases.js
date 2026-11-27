@@ -115,7 +115,7 @@ export {controlsCss as neuralLabStyles};
 export function renderNeuralCases(id){
   const entries=neuralCases[id]||[];
   const form=entries.length?'<section class="neuro-station" data-neuro-cases="'+id+'"><h3>Observation station</h3><label>Case <select data-case-index>'+entries.map((c,i)=>'<option value="'+i+'">'+c.name+'</option>').join('')+'</select></label><div data-case-body></div></section>':'';
-  return (form?controlsCss+form:'')+(['15.1','16.2','16.3','16.5'].includes(id)?renderNeuralSpecimens(id):'')+(id==='16.3'?renderSensoryDetail(id):'')+(id.startsWith('15.')?renderNeuralSignal(id):'');
+  return (form?controlsCss+form:'')+(['15.1','16.2','16.3','16.5'].includes(id)?renderNeuralSpecimens(id):'')+(['15.4','16.3','16.5'].includes(id)?renderSensoryDetail(id):'')+(id.startsWith('15.')?renderNeuralSignal(id):'');
 }
 function motionObservation(i){
   if(i===1)return '';
@@ -129,7 +129,7 @@ export function mountNeuralCases(root,id){
   if(!root)return;
   if(id.startsWith('15.'))mountNeuralSignal(root,id);
   if(['15.1','16.2','16.3','16.5'].includes(id))mountNeuralSpecimens(root);
-  if(id==='16.3')mountSensoryDetail(root);
+  if(['15.4','16.3','16.5'].includes(id))mountSensoryDetail(root);
   const host=root.querySelector('[data-neuro-cases="'+id+'"]');
   if(!host||host.dataset.mounted)return;
   host.dataset.mounted='true';

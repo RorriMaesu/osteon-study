@@ -3,6 +3,7 @@ import {renderSpecimen,mountSpecimen} from './ap2-cardio-specimens.js';
 import {renderValveWindow,paintValves,renderOutput,mountOutput,renderEmbryo,mountEmbryo,renderPump,mountPump,renderExchange,mountExchange,renderHemorrhage,mountHemorrhage} from './ap2-cardio-mechanisms.js';
 import {beat,rightBeat,rightPhases,rightPressureState,interpolate,pressureState,valveChallenges,valveChoices,rightValveChallenges,rightValveChoices} from './ap2-heart-cycle.js';
 import {renderAfterload,mountAfterload} from './ap2-afterload.js';
+import {renderHeartSounds,mountHeartSounds} from './ap2-heart-sounds.js';
 import {renderRoutes,mountRoutes} from './ap2-cardio-routes.js';
 import {smearStation,mountSmear,clotStation,mountClot} from './ap2-blood-stations.js';
 
@@ -516,7 +517,7 @@ function rightHeartChart() {
 }
 function renderHeartbeat() {
   return `<h3>Follow one heartbeat</h3><p>Play the beat or pause at a pressure crossing. Switch between the left heart, right heart and 3D valves to compare them at the same instant. One beat lasts 0.80 s at 75 beats/min. Playback slows it for study.</p>
-    ${views(['Left heart traces','3D heart','2D valve motion','Right heart traces'])}<div data-cardio-panel="0">
+    ${views(['Left heart traces','3D heart','2D valve motion','Right heart traces','Heart sounds'])}<div data-cardio-panel="0">
     <figure class="ac-plot"><svg viewBox="0 0 500 327" role="img" aria-label="A synchronized ECG, atrial, ventricular and aortic pressure, and left ventricular volume curves. A vertical cursor marks the selected time.">
     <text x="9" y="19">ECG</text>
     ${[[73,'P',33],[186,'QRS',23],[426,'T',34]].map(([time,name,y]) => `<text text-anchor="middle" x="${chartX(time)}" y="${y}">${name}</text>`).join('')}
@@ -538,6 +539,7 @@ function renderHeartbeat() {
     </svg></figure>
     <div class="ac-legend"><span><i style="border-color:#bfe3cc"></i>ECG (relative amplitude)</span><span><i style="border-color:#f1ac81"></i>Aorta</span><span><i style="border-color:#a8c8ea;border-top-style:dashed"></i>Left ventricle</span><span><i style="border-color:#e6b9e1;border-top-style:dotted"></i>Left atrium</span><span><i style="border-color:#f1dc81"></i>LV volume</span></div>
     </div><div data-cardio-panel="1" hidden>${renderSpecimen('heart',true)}</div><div data-cardio-panel="2" hidden>${renderValveWindow()}</div><div data-cardio-panel="3" hidden>${rightHeartChart()}</div>
+    <div data-cardio-panel="4" hidden>${renderHeartSounds()}</div>
     <label class="ac-range">Beat time <strong data-time-out></strong><input type="range" min="0" max="800" step="1" value="0" data-beat-time></label>
     <div class="ac-row ac-actions"><button type="button" data-play>Play one beat</button><button type="button" data-rewind>Previous phase</button><label>Playback speed <select data-speed><option value="16">Slower</option><option value="8" selected>Study</option><option value="4">Faster</option></select></label><label>Jump to phase <select data-phase-select>${phases.map(p=>`<option value="${p.start}">${p.name}</option>`).join('')}</select></label></div>
     <div class="ac-details"><small data-phase-side>Left-heart phase</small><h4 data-phase></h4><p data-phase-note></p>
@@ -549,9 +551,12 @@ function renderHeartbeat() {
 function mountHeartbeat(lab) {
   let modelMounted=false, activeView='0',currentPhases=phases;
   wireViews(lab,view=>{
+    if(view!==activeView && (view==='4'||activeView==='4'))stop();
+    if(activeView==='4' && view!=='4')sounds.mute();
     activeView=view;
     endProbe();
     currentPhases=view==='3'?rightPhases:phases;
+    for(const el of [jump.closest('label'),get('phase').closest('.ac-details'),get('predict'),get('rewind')])el.hidden=view==='4';
     jump.replaceChildren(...currentPhases.map(p=>new Option(p.name,String(p.start))));
     get('phase-side').textContent=view==='3'?'Right-heart phase':'Left-heart phase';
     get('left-stats').hidden=view==='3';
@@ -561,6 +566,7 @@ function mountHeartbeat(lab) {
   const get = name => lab.querySelector('[data-' + name + ']');
   const time = get('beat-time');
   const play = get('play');
+  const sounds=mountHeartSounds(lab.querySelector('[data-cardio-panel="4"]'),time,stop);
   const jump = get('phase-select');
   const cursor = get('cursor');
   const points = [get('ecg-point'),get('ao-point'),get('lv-point'),get('la-point'),get('vol-point')];
@@ -580,7 +586,8 @@ function mountHeartbeat(lab) {
     lab.dispatchEvent(new CustomEvent('cardiobeat',{detail:{...state,t}}));
     const seconds = (t / 1000).toFixed(3) + ' s';
     time.value = String(t);
-    time.setAttribute('aria-valuetext', seconds + ', ' + phase.name);
+    time.setAttribute('aria-valuetext',activeView==='4'?seconds:seconds+', '+phase.name);
+    if(activeView==='4')sounds.show(t);
     get('time-out').textContent = seconds;
     cursor.setAttribute('x1', chartX(t));
     cursor.setAttribute('x2', chartX(t));
@@ -642,12 +649,15 @@ function mountHeartbeat(lab) {
   play.addEventListener('click', () => {
     if (frame !== null) { stop(); return; }
     const start = +time.value === 800 ? 0 : +time.value;
+    let previous=start;
     const began = performance.now();
     play.textContent = 'Pause beat';
     play.setAttribute('aria-pressed','true');
     function advance(now) {
       if (!lab.isConnected || !lab.getClientRects().length) { stop(); return; }
       const t = Math.min(800, Math.round(start + (now - began) / Number(get('speed').value)));
+      if(activeView==='4')sounds.playBetween(previous,t);
+      previous=t;
       show(t);
       if (t === 800) stop();
       else frame = requestAnimationFrame(advance);

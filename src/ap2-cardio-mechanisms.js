@@ -93,12 +93,49 @@ export function mountExchange(root){function draw(i){const [l,note,a,b]=exchange
   text(12,22,a)+text(425,155,b,'end')+text(20,94,'Interstitial fluid'));root.querySelector('[data-exchange-note]').textContent=note;root.querySelectorAll('button[data-exchange]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.exchange===i)));}root.querySelectorAll('button[data-exchange]').forEach(b=>b.onclick=()=>draw(+b.dataset.exchange));draw(0);}
 
 export const hemorrhage=[
-  ['Baseline',72,72,95,'Normal venous return maintains filling and stroke volume.'],
-  ['Early compensation',108,49,87,'Blood loss reduces venous return, end-diastolic volume and stroke volume. Reduced baroreceptor firing increases sympathetic drive. Tachycardia and vasoconstriction help sustain pressure.'],
-  ['Continuing loss',138,24,58,'Falling stroke volume now outweighs the rise in heart rate. Cardiac output and pressure decline, and organ perfusion becomes inadequate.']
+  {label:'Baseline',hr:72,sv:70,rap:4,svr:18},
+  {label:'Early compensation',hr:105,sv:40,rap:4,svr:21,why:'Cardiac output falls as stroke volume decreases. Increased vascular resistance partially offsets this loss, keeping mean arterial pressure near baseline.'},
+  {label:'Continuing loss',hr:140,sv:20,rap:4,svr:22,why:'The faster heart rate and higher resistance can no longer offset the loss of stroke volume. Output falls enough to lower mean arterial pressure substantially.'}
 ];
-export function renderHemorrhage(){return `<h3>Read a blood-loss time series</h3><p>A fictional adult loses blood progressively. Select the stage and predict whether the pressure is being maintained.</p>
-  ${row(hemorrhage.map(([l],i)=>`<button data-loss="${i}">${l}</button>`).join(''))}<div class="ac-stats"><span>Heart rate<strong data-loss-hr></strong></span><span>Stroke volume<strong data-loss-sv></strong></span><span>Mean arterial pressure<strong data-loss-map></strong></span></div>
-  ${row('<button data-loss-check>Explain these observations</button>')}<p role="status" data-loss-note></p>`;}
-export function mountHemorrhage(root){let current;function draw(i){current=i;const [,hr,sv,map]=hemorrhage[i];for(const [k,v]of [['hr',hr+' beats/min'],['sv',sv+' mL/beat'],['map',map+' mm Hg'],['note','']])root.querySelector('[data-loss-'+k+']').textContent=v;root.querySelectorAll('button[data-loss]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.loss===i)));}root.querySelectorAll('button[data-loss]').forEach(b=>b.onclick=()=>draw(+b.dataset.loss));root.querySelector('[data-loss-check]').onclick=()=>{const [,hr,sv,,msg]=hemorrhage[current];root.querySelector('[data-loss-note]').textContent='Cardiac output '+(hr*sv/1000).toFixed(2)+' L/min. '+msg;};draw(0);}
+export function hemorrhageValues({hr,sv,rap,svr}){
+  const co=hr*sv/1000;
+  return {co,map:Math.round(rap+co*svr)};
+}
+export function renderHemorrhage(){
+  return '<h3>Read a blood-loss time series</h3><p>Use the baseline and a new set of measurements to predict mean arterial pressure (MAP). Right atrial pressure (RAP) stays at 4 mm Hg in this simplified comparison.</p>'+
+    row(hemorrhage.map((s,i)=>'<button type="button" data-loss="'+i+'">'+s.label+'</button>').join(''))+
+    '<p>Baseline: 72 beats/min × 70 mL/beat = 5.04 L/min. Systemic vascular resistance (SVR) is 18 mm Hg·min/L and MAP is 95 mm Hg.</p>'+
+    '<div class="ac-stats"><span>Heart rate<strong data-loss-hr></strong></span><span>Stroke volume<strong data-loss-sv></strong></span><span>SVR<strong data-loss-svr></strong></span><span>MAP<strong data-loss-map></strong></span></div>'+
+    '<fieldset data-loss-inputs><legend>Predict and explain</legend><p>Cardiac output = HR × SV ÷ 1,000 in L/min. MAP = RAP + output × SVR.</p>'+
+    '<label>Predicted MAP (mm Hg)<input data-loss-prediction type="number" step="any" min="0" inputmode="decimal"></label>'+
+    '<label>Which measurement supports a resistance-vessel response?<select data-loss-evidence><option value="">Select evidence</option><option value="rate">Heart rate increased</option><option value="svr">SVR increased</option><option value="volume">Stroke volume decreased</option></select></label>'+
+    '<button type="button" data-loss-check>Compare prediction with measured pressure</button></fieldset><p role="status" data-loss-note></p>';
+}
+export function mountHemorrhage(root){
+  const get=key=>root.querySelector('[data-loss-'+key+']');
+  let current=0;
+  function draw(i){
+    current=i;
+    const s=hemorrhage[i];get('hr').textContent=s.hr+' beats/min';get('sv').textContent=s.sv+' mL/beat';
+    get('svr').textContent=s.svr+' mm Hg·min/L';get('map').textContent=i?'Predict first':'95 mm Hg';
+    get('prediction').value='';get('evidence').value='';get('note').textContent=i?'':'Choose a blood-loss stage to test your prediction.';
+    get('inputs').hidden=!i;
+    root.querySelectorAll('[data-loss]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.loss)===i)));
+  }
+  root.querySelectorAll('[data-loss]').forEach(b=>b.onclick=()=>draw(Number(b.dataset.loss)));
+  function revise(){
+    get('map').textContent='Predict first';get('note').textContent='';
+  }
+  get('prediction').oninput=revise;get('evidence').onchange=revise;
+  get('check').onclick=()=>{
+    const input=get('prediction'),evidence=get('evidence').value;
+    if(!input.value||!input.validity.valid||!evidence){get('note').textContent='Enter a pressure and choose the evidence before comparing.';return;}
+    const s=hemorrhage[current],{co,map}=hemorrhageValues(s);
+    const close=Math.abs(input.valueAsNumber-map)<=1;
+    get('map').textContent=map+' mm Hg';get('note').textContent=(close?'Your pressure prediction fits. ':'Recheck the pressure calculation. ')+
+      'Cardiac output is '+co.toFixed(2)+' L/min. 4 + ('+co.toFixed(2)+' × '+s.svr+') gives about '+map+' mm Hg. '+
+      (evidence==='svr'?'You identified the resistance change. ':'The evidence for constriction is the higher SVR. ')+s.why;
+  };
+  draw(1);
+}
 

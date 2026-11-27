@@ -8,6 +8,8 @@ The labeled teaching plate comes from OpenStax, *Anatomy and Physiology 2e*, Fig
 
 ## Mixed-field exercises
 
+The two blind differential sets use ten additional, disjoint photomicrographs from the Acevedo et al. dataset. Each photograph is an independently captured field and contributes its centered pathologist-classified cell. The two sets, the existing practice fields, and the independent examination photographs use different original files. The images were reduced in size and converted to WebP. [Field identities](tally-specimens.json) · [Dataset and license](https://data.mendeley.com/datasets/snkd93bnjr/1).
+
 **normal-adult-field.webp** shows the Giemsa-stained peripheral smear photographed by Keith Chambers for the SCOOTER Project. Resized, converted to WebP and displayed with interactive overlays. [Original photograph](https://commons.wikimedia.org/wiki/File:Normal_Adult_Blood_Smear.JPG) · [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
 
 **phil-5864.webp** comes from CDC and Steven Glenn (1979). The differential exercise displays a selected portion and counts only complete leukocytes. **phil-15133.webp** is the labeled comparison field by CDC and Dr. Candler Ballard (1974). Both are public-domain photographs, converted to WebP. [Original free CDC field 5864](https://wwwn.cdc.gov/phil/Details.aspx?pid=5864) · [Original free CDC field 15133](https://wwwn.cdc.gov/phil/Details.aspx?pid=15133).

@@ -2,6 +2,7 @@ import {reviewMatches} from './answer-review-data.js';
 import {validPractical} from './ap2-practical-session.js';
 import {validTermRun} from './term-mock-records.js';
 import {validMechanismRecord} from './mechanism-transfer.js';
+import {validEndocrineTrial} from './ap2-feedback-reasoning.js';
 
 export const AP2_KEY = 'osteon-ap2-v1';
 const counts = [5,4,3,4,5,11,6,5,6];
@@ -119,6 +120,16 @@ export function validAP2Records(records) {
       !Array.isArray(records.reports) || !records.reports.every(report => validSession(report,true)) ||
       !(records.draft === null || validSession(records.draft,false))) return false;
   if(records.mockRuns!==undefined && !(obj(records.mockRuns)&&Object.entries(records.mockRuns).every(([id,r])=>r?.id===id&&validTermRun(r,'ap2'))))return false;
+  if(records.recoveries!==undefined){
+    if(!obj(records.recoveries))return false;
+    const reportsById=new Map(records.reports.map(r=>[r.id,r]));
+    if(!Object.entries(records.recoveries).every(([reportId,entries])=>{
+      const report=reportsById.get(reportId);
+      return report&&obj(entries)&&Object.entries(entries).every(([id,item])=>Object.hasOwn(report.grades,id)&&
+        obj(item)&&Number.isSafeInteger(item.attempts)&&item.attempts>=1&&typeof item.first==='boolean'&&
+        typeof item.passed==='boolean'&&(!item.first||item.passed));
+    }))return false;
+  }
   if (!Object.entries(records.studied).every(([id,date]) => validSection(id) && when(date))) return false;
   if(records.mechanismRecall!==undefined && !(obj(records.mechanismRecall) && Object.entries(records.mechanismRecall).every(([key,v])=>validMechanismRecord(key,v,'afterload'))))return false;
   if (records.guidedPredictions!==undefined && !(obj(records.guidedPredictions) && Object.entries(records.guidedPredictions).every(([key,entry])=>{
@@ -127,6 +138,7 @@ export function validAP2Records(records) {
   }))) return false;
   if(records.afterload!==undefined&&!(obj(records.afterload)&&Object.entries(records.afterload).every(([trial,first])=>
     ['higher','lower'].includes(trial)&&['smaller','same','larger'].includes(first))))return false;
+  if(records.endocrineTrials!==undefined&&!(obj(records.endocrineTrials)&&Object.entries(records.endocrineTrials).every(([key,value])=>validEndocrineTrial(key,value))))return false;
   if(records.practicalDraft!==undefined&&!validPractical(records.practicalDraft,false))return false;
   if(records.practicalReports!==undefined&&(!Array.isArray(records.practicalReports)||!records.practicalReports.every(s=>validPractical(s,true))||
     new Set(records.practicalReports.map(s=>s.id)).size!==records.practicalReports.length||records.practicalReports.some(s=>s.id===records.practicalDraft?.id)))return false;
@@ -135,7 +147,7 @@ export function validAP2Records(records) {
       typeof entry.compared === 'boolean'))) return false;
   if (!Object.entries(records.checks).every(([id,check]) => obj(check) && validSection(check.section) &&
       validItemId(id) && /^ap2-(\d+\.\d+)-q[1-9]\d*$/.exec(id)?.[1] === check.section &&
-      when(check.at) && typeof check.correct === 'boolean')) return false;
+      when(check.at) && typeof check.correct === 'boolean' && (check.first===undefined||typeof check.first==='boolean'))) return false;
   const sessionIds = new Set(records.reports.map(report => report.id));
   return sessionIds.size === records.reports.length && !sessionIds.has(records.draft?.id) && validResume(records);
 }

@@ -43,7 +43,7 @@ export const regionalLessons={
   '18.3':[['abdomen','Where aging erythrocytes are cleared']]
 };
 export function addOrgansToLesson(body,section,preset){
-  const entries=regionalLessons[section];
+  const entries=regionalLessons[section]?.filter(([id])=>!preset||id===preset);
   if(!entries)return;
   const container=document.createElement('section');
   container.className='ap2-regional-practical';

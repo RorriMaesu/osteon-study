@@ -1,4 +1,5 @@
 import {routeSignals, drawNeuralRoute} from './ap2-neural-routes.js';
+import {renderConduction,mountConduction} from './ap2-conduction.js';
 const seq=(name,labels,notes)=>({name,labels,notes});
 export const signals={
   ...routeSignals,
@@ -22,13 +23,6 @@ function neuron(mode,step){
   const [x,y]=paths[mode][step];
   return path(d)+dot(soma[0],soma[1],13,'#78ad99')+dot(soma[0],soma[1],4,'#e4efdc')+'<circle cx="'+x+'" cy="'+y+'" r="12" fill="none" stroke="#f5b871" stroke-width="3" stroke-dasharray="4 2"/>';
 }
-function axon(mode,step){
-  let s=path('M24 65H261','#afc6b9',7);
-  if(!mode)for(const x of [51,101,151,201])s+='<rect x="'+x+'" y="50" width="37" height="30" rx="11" fill="#789bb9" stroke="#c4dbe1"/>';
-  const x=mode?38+step*49:[44,75,94,119,144][step];
-  if(!mode&&step%2)s+=path('M'+(x-24)+' 35q16 -18 34 0l-6 -2','#f5b871',2);
-  return s+dot(x,65)+path('M28 99H254l-9 -4','#85a6a1',1.5);
-}
 function synapse(mode,step){
   let s=mode?path('M20 30H120V91H20 M260 30H157V91H260','#79ad9b',4):path('M52 11Q56 38 95 47Q117 54 100 70H15Q0 55 27 48Q54 38 52 11 M8 91Q72 83 108 91H260','#8fbba6',4);
   if(mode){
@@ -47,12 +41,14 @@ function synapse(mode,step){
   return s;
 }
 export function renderNeuralSignal(id){
+  if(id==='12.4')return renderConduction(signals[id].modes);
   const s=signals[id];if(!s)return '';
   return '<section class="neuro-signal" data-process="'+id+'"><h3>'+s.title+'</h3><div class="course-actions"><label>Compare <select data-mode>'+s.modes.map((m,i)=>'<option value="'+i+'">'+m.name+'</option>').join('')+'</select></label><button type="button" data-step-back aria-label="Previous stage">←</button><button type="button" data-step-next aria-label="Next stage">→</button><button type="button" data-play-signal>Play sequence</button></div><svg viewBox="0 0 280 116" role="img"></svg><p data-process-caption aria-live="polite"></p></section>';
 }
 export function mountNeuralSignal(root,id){
   const panel=root?.querySelector('[data-process="'+id+'"]');if(!panel||panel.dataset.ready)return;
   panel.dataset.ready='true';
+  if(id==='12.4'){mountConduction(panel);return;}
   const mode=panel.querySelector('[data-mode]'),svg=panel.querySelector('svg'),caption=panel.querySelector('[data-process-caption]');
   const back=panel.querySelector('[data-step-back]'),next=panel.querySelector('[data-step-next]'),play=panel.querySelector('[data-play-signal]');
   let stage=0,timer=0;
@@ -60,7 +56,7 @@ export function mountNeuralSignal(root,id){
   function stop(){clearTimeout(timer);timer=0;play.textContent='Play sequence';play.setAttribute('aria-pressed','false');}
   function draw(){
     const seq=sequence(),n=+mode.value;
-    svg.innerHTML=routeSignals[id]?drawNeuralRoute(id,n,stage):(id==='12.2'?neuron:id==='12.4'?axon:synapse)(n,stage);
+    svg.innerHTML=routeSignals[id]?drawNeuralRoute(id,n,stage):(id==='12.2'?neuron:synapse)(n,stage);
     svg.setAttribute('aria-label',seq.name+' · '+seq.labels[stage]);
     caption.textContent=(stage+1)+' / '+seq.labels.length+' · '+seq.labels[stage]+'. '+seq.notes[stage];
     back.disabled=stage===0;next.disabled=stage===seq.labels.length-1;

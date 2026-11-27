@@ -1,3 +1,4 @@
+import {mountDifferentialSets} from './ap2-blood-differentials.js';
 const directory = 'assets/ap2-blood/';
 const samples = [
   {type:'Erythrocyte',x:502,y:180,description:'A pink disc with a pale center.'},
@@ -28,6 +29,7 @@ export function mountFieldLab(host, mode){
     prompt(); return;
   }
   const n=host.querySelector('[data-count-neut]'),l=host.querySelector('[data-count-lymph]'),key=host.querySelector('[data-count-key]');
+  mountDifferentialSets(host);
   const clear=()=>{feedback.textContent='';key.replaceChildren();};
   n.oninput=l.oninput=clear;
   host.querySelector('[data-count-check]').onclick=()=>{

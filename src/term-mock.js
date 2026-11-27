@@ -44,7 +44,8 @@ export function createTermMocks({course,root,page,hero,link,e,store,sections,sco
     document.body.append(panel);panel.onclose=()=>{panel.remove();if(button.isConnected)button.focus();};
     panel.showModal();close.focus();
   });
-  const itemsFor=(scope,form)=>scope.startsWith('week-')?makeWeekCheck(course,Number(scope.slice(5)),form,scopes,makeForm):makeForm(scope,form);
+  const itemsFor=(scope,form)=>scope.startsWith('week-')?makeWeekCheck(course,Number(scope.slice(5)),form,scopes,makeForm):
+    makeForm(scope,form,course==='ap2'&&scope.startsWith('unit-')?db.all():[]);
   function start(spec){
     try{
       const items=spec.items||itemsFor(spec.scope,spec.form);
