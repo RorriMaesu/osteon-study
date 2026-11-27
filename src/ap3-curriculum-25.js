@@ -90,12 +90,12 @@ export default [
   },
   {
     id: '25.9',
-    objective: "Relate segment-specific salt and water transport to a medullary concentration gradient.",
-    explanation: "In the descending thin limb, water can leave for a more concentrated medulla. The ascending limb transports salt outward and is relatively impermeable to water. Countercurrent multiplication in long loops helps build the gradient. Exchange in the vasa recta helps preserve it, supporting regulated water recovery downstream.",
+    objective: "Predict how segment-specific transport and a loop diuretic affect the medullary gradient and water recovery.",
+    explanation: "In the descending thin limb, water can leave for a more concentrated medulla. The ascending limb transports salt outward and is relatively impermeable to water. Countercurrent multiplication builds the gradient and exchange in the vasa recta helps preserve it. A loop diuretic reduces salt recovery in the thick ascending limb. More salt stays in the tubule and the weaker medullary gradient limits water recovery downstream.",
     worked: "Compare tubular fluid entering and leaving the thick ascending limb. Salt leaves while little water follows. The tubular fluid becomes more dilute and the surrounding tissue gains solute.",
     check: ["What happens to fluid descending a water-permeable limb in increasingly concentrated medulla?","It loses water and becomes more concentrated","It gains water and becomes dilute","Its concentration must equal plasma throughout","The interstitial gradient draws water out of the descending limb."],
     exams: [
-      ["Which combination can produce concentrated urine in a collecting duct?","A concentrated medullary interstitium and high duct water permeability","High duct water permeability with no osmotic gradient","A dilute medulla and zero duct water permeability","Both a driving gradient and a water-permeable route support substantial water reabsorption."],
+      ["A loop diuretic blocks salt reabsorption in the thick ascending limb while ADH stays high. Which pair of changes is most likely?","A smaller medullary osmotic gradient and less water recovery","A larger medullary osmotic gradient and more water recovery","An unchanged medullary gradient because ADH is still high","Salt transport helps build the medullary gradient. Water channels supplied by ADH cannot by themselves maintain that driving force."],
       ["What role do the hairpin capillaries alongside long nephron loops play?","Vasa recta exchange solutes and water while limiting gradient washout","They filter plasma directly into capsular space","They receive urine from multiple nephrons","Countercurrent exchange in vasa recta helps maintain the medullary gradient."],
     ],
   },

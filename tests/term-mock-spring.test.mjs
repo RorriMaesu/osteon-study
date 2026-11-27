@@ -88,6 +88,27 @@ test('Water deprivation pilot includes three criteria and benchmark responses',(
   assert.equal(q.rubric.fixtures.length,4);
   for(const f of q.rubric.fixtures)assert.deepEqual(Object.keys(f.expectedPoints),q.rubric.criteria.map(c=>c.id));
 });
+test('The three cumulative forms sample all spring sections and use independent transfer problems',()=>{
+  const exams=forms.map(form=>makeSpringMock('all',form));
+  assert.deepEqual(new Set(exams.flat().map(q=>q.section)),sections);
+  const recalls=exams.flat().filter(q=>q.type==='short');
+  assert.equal(new Set(recalls.map(q=>q.prompt)).size,12);
+  const gas=exams.map(qs=>qs.find(q=>q.objective==='integration-gas').parts[0]);
+  assert.deepEqual(gas.map(p=>p.choices[p.answer]),['It rises','It remains approximately unchanged','It falls']);
+});
+test('Kidney, newborn, ovarian and nutrition stations present the evidence their prompts require',()=>{
+  const renal=makeSpringMock('unit-3','C').find(q=>q.objective==='kidney-routes');
+  assert.equal(renal.section,'25.3');
+  assert.deepEqual(renal.parts.map(p=>p.choices[p.answer]),['Minor calyx','Major calyx']);
+  const repro=makeSpringMock('unit-4','C');
+  assert.equal(repro.find(q=>q.objective==='birth-transition').section,'28.6');
+  assert.match(repro.find(q=>q.objective==='ovarian-cycle').prompt,/Tissue observation: .+/);
+  for(const [i,f] of forms.entries()){
+    const meal=makeSpringMock('practical',f).find(q=>q.objective==='food-energy');
+    assert.equal(meal.parts[1].choices[meal.parts[1].answer],['Carbohydrate','Fat','Carbohydrate'][i]);
+    assert.equal(meal.parts[2].expected,15);
+  }
+});
 test('Retains directional distinctions, equivalent units and one-point partial credit',()=>{
   const vessels=makeSpringMock('unit-3','A').find(q=>q.type==='short'&&q.section==='25.4');
   assert.equal(gradeTermItem(vessels,['efferent','efferent']).earned,1);

@@ -6,23 +6,23 @@ import {acidBase, foodEnergy, ovarian, development, pedigree, birth} from './ap3
 import {ordered,pick,term,number,data,item} from './term-mock-spring-items.js';
 
 const fieldFollow={
-  lx1:pick('What arrives through the vessels entering the capsule?','Lymph from peripheral tissues','Blood from the aorta','Air from the trachea'),
+  lx1:pick('Which route brings a tissue antigen to the sinus beneath this capsule?','Afferent lymphatic vessel from the drainage territory','Efferent lymphatic vessel entering at the hilum','Nodal vein returning blood from the hilum'),
   lx2:pick('Which other region removes aging red blood cells?','Red pulp','Germinal center','Thymic medulla'),
   rx1:pick('At a fixed gradient, what happens if the barrier thickens?','Diffusion slows','Diffusion accelerates','Diffusion stops only in the conducting airways'),
   rx2:pick('If the exposed projections stop beating, what happens to trapped particles?','Clearance toward the throat decreases','Diffusion into red cells increases','They are swept toward the throat faster'),
   gx1:pick('Where does absorbed glucose first enter the circulation here?','Blood capillaries','Central lymphatic capillary','Bile ducts'),
   gx2:pick('How does secretion from the pale mucous cells aid this region?','Lubricates the luminal contents','Emulsifies fat','Converts pepsinogen to pepsin'),
-  ux1:pick('Which muscle drives normal emptying of this reservoir?','Detrusor','Diaphragm','External intercostals'),
+  ux1:pick('Which muscle contracts to expel urine from this reservoir during micturition?','Detrusor','External urethral sphincter','Internal urethral sphincter'),
   ux2:pick('Pressure would first increase on which side of a complete obstruction?','Upstream toward the renal pelvis','Downstream toward the urethral opening','Equally on both sides immediately'),
   px1:pick('Which supporting cells directly nourish developing germ cells here?','Sertoli cells','Leydig cells','Granulosa cells'),
-  px2:pick('Which pituitary signal normally triggers release of the mature oocyte?','LH surge','Prolactin surge','Fall in TSH'),
+  px2:pick('Which pituitary signal normally triggers release of the secondary oocyte?','LH surge','Fall in LH','Suppression of FSH without an LH surge'),
 };
 const fieldThird={
   21:pick('Which defense depends on clones with specific antigen receptors?','Adaptive immunity','Epidermal keratin barrier','Mucociliary clearance'),
   22:pick('Which vessel normally brings blood from the right ventricle toward this organ?','Pulmonary artery','Pulmonary vein','Bronchial vein'),
-  23:pick('Which neural network coordinates contractions along the gut wall?','Myenteric plexus','Celiac lymph nodes','Dorsal columns'),
+  23:pick('Which neural network between the two major muscle layers coordinates local contractions?','Myenteric plexus','Submucosal plexus','Celiac plexus'),
   25:pick('Which passage carries urine from the bladder to the exterior?','Urethra','Ureter','Calyx'),
-  27:pick('Which pituitary hormone supports gamete development through Sertoli or granulosa cells?','FSH','Oxytocin','ADH'),
+  27:pick('Which pituitary hormone acts directly on Sertoli or granulosa cells to support gamete development?','FSH','LH','Prolactin'),
 };
 const transferField={
   21: ['lx1','Identify the material this tissue normally samples and the path it takes.',
@@ -53,11 +53,11 @@ function fieldItem(ch, n, practical=false) {
 }
 
 const surfaceThird={
-  'lymph-drainage':pick('What sustains one-way flow in collecting lymphatic vessels?','Valves limit backflow as fluid is propelled','A separate lymphatic ventricle pumps at high pressure','Each collecting vessel opens directly to the outside'),
+  'lymph-drainage':pick('As skeletal muscles repeatedly compress a collecting lymphatic vessel, what keeps net flow directed toward the venous angles?','Valves close against reverse flow','Filtration pressure at blood capillaries acts as a one-way valve','The pressure gradient reverses with every muscle contraction and no valves are needed'),
   'lung-lobes':pick('Which surface lines the inner chest wall?','Parietal pleura','Visceral pleura','Alveolar epithelium'),
   villus:pick('Which movement mixes chyme locally to improve mucosal contact?','Segmentation','Swallowing','Vomiting'),
   kidney:pick('Which event occurs before fluid reaches the first collecting cup?','Filtrate has passed through collecting and papillary ducts','Urine has traveled through the ureter','Blood has traveled through the renal vein into the cup'),
-  'sperm-route':pick('Which gland normally contributes a fructose-rich secretion to semen?','Seminal gland','Pituitary gland','Adrenal gland'),
+  'sperm-route':pick('Which gland normally contributes a fructose-rich secretion to semen?','Seminal gland','Prostate gland','Bulbourethral gland'),
   'placental-exchange':pick('Which fetal vessel carries blood from fetus to placenta?','Umbilical artery','Umbilical vein','Pulmonary vein'),
 };
 const transferSurface={
@@ -83,10 +83,11 @@ function experiment(key, lab, config, prompt, follow, third) {
   const {headers:columns,rows}=result.observation;
   const parts=[pick(result.question,...result.choices),follow];
   if(third)parts.push(third);
-  return item(lab.section,key,prompt,parts,result.why+' '+parts.slice(1).map(p=>p.type==='choice'?p.choices[0]+'.':p.expected+' '+(p.unit||'')+'.').join(' '),{columns,rows});
+  const evidence=key==='ovarian-cycle'?prompt+' Tissue observation: '+result.note:prompt;
+  return item(lab.section,key,evidence,parts,result.why+' '+parts.slice(1).map(p=>p.type==='choice'?p.choices[0]+'.':p.expected+' '+(p.unit||'')+'.').join(' '),{columns,rows});
 }
-const flux=pick('What drives diffusion of this gas across the barrier?','Its partial-pressure gradient','The total number of red cells alone','One-way valves in the septa');
-const immuneSignal=pick('Which cells directly secrete large amounts of antibody?','Plasma cells','Cytotoxic T cells','Erythrocytes');
+const flux=pick('What determines the direction of net diffusion of this gas across the barrier?','Its partial-pressure gradient','Total oxygen content including hemoglobin-bound oxygen','The direction in which blood flows along the capillary');
+const immuneSignal=pick('Which cells directly secrete large amounts of antibody?','Plasma cells','Helper T cells','Resting memory B cells');
 function oxygen(n){
   const alveolus=[100,90,85][n],blood=[40,100,85][n];
   const direction=alveolus>blood?'From air to blood':alveolus<blood?'From blood to air':'No net diffusion';
@@ -139,11 +140,11 @@ function tonicity(n){
 }
 function hormoneData(n){
   const high=n!==1;
-  return item('26.2','urine-response','In a healthy volunteer, compare plasma osmolality to the reference of 285 mOsm/kg. Assume volume signals stay constant.',
-    [pick('Which change in ADH release is expected?',high?'Increase':'Decrease',high?'Decrease':'Increase','Remain unchanged regardless of osmolality'),
-      pick('Which way does collecting-duct water permeability change?',high?'It rises':'It falls',high?'It falls':'It rises','Water permeability is fixed')],
+  return item('26.2','urine-response','A healthy volunteer gains or loses water. Effective circulating volume is held constant. Compare the measurements with this person’s baseline.',
+    [pick('Which change in ADH release is expected?',high?'Increase':'Decrease',high?'Decrease':'Increase','No change from baseline'),
+      pick('Which way does collecting-duct water permeability change?',high?'It rises':'It falls',high?'It falls':'It rises','It remains at its baseline value')],
     'With intact feedback, higher osmolality increases ADH and collecting-duct water permeability. Lower osmolality has the opposite effect.',
-    data(['Experiment','Plasma osmolality (mOsm/kg)'],['Measurement',[298,272,302][n]]));
+    data(['Time','Plasma osmolality (mOsm/kg)'],['Baseline',285],['After water shift',[298,272,302][n]]));
 }
 function androgenData(n){
   const sets=[['LH declines while FSH remains stable.','Leydig cells','Testosterone production falls'],['FSH declines while LH remains stable.','Sertoli cells','Support for spermatogenesis decreases'],['The preovulatory LH surge is absent while a dominant follicle is present.','Mature ovarian follicle','Ovulation is less likely']];
@@ -155,14 +156,14 @@ function androgenData(n){
 function renalBarrier(n){
   const sets=[['Red cells remain within glomerular capillaries.','Efferent arteriole','Peritubular capillaries or vasa recta'],['A filtered molecule reaches capsular space and remains in the lumen.','Proximal convoluted tubule','Nephron loop'],['Urine emerges from a renal papilla.','Minor calyx','Major calyx']];
   const [clue,next,later]=sets[n];
-  return item('25.4','kidney-routes','Trace the sample through two successive structures in its own pathway.',
+  return item(n===2?'25.3':'25.4','kidney-routes','Trace the sample through two successive structures in its own pathway.',
     [pick('Where does it go next?',next,...sets.filter(r=>r[1]!==next).map(r=>r[1])),pick('Which structure follows that destination?',later,...sets.filter(r=>r[2]!==later).map(r=>r[2]))],
     'The relevant sequence is '+next+' then '+later+'.',data(['Tracking condition'],[clue]));
 }
 function labBlood(n,third){
-  const follow=[['Increase net acid excretion','Decrease net acid excretion'],['Increase renal bicarbonate loss','Increase bicarbonate retention'],['Increase ventilation','Decrease ventilation']][n];
+  const follow=[['Increase net acid excretion','Decrease net acid excretion','Increase renal bicarbonate loss'],['Increase renal bicarbonate loss','Increase bicarbonate retention','Increase net acid excretion'],['Increase alveolar ventilation','Decrease alveolar ventilation','Keep alveolar ventilation at baseline']][n];
   return experiment('blood-gas',acidBase,{panel:n},'Interpret this single primary disturbance. Reference intervals: pH 7.35–7.45, PCO₂ 35–45 mmHg, bicarbonate 22–26 mmol/L.',
-    pick('Which compensatory response would move pH toward normal?',...follow,'Stop all carbon dioxide transport'),third?pick('Which organ system can change CO₂ most rapidly?','Respiratory system','Urinary system','Integumentary system'):null);
+    pick('Which compensatory response would move pH toward normal?',...follow),third?pick('Which variable changes directly within minutes when effective alveolar ventilation increases at fixed CO₂ production?','Arterial PCO₂ falls','Arterial PCO₂ rises','Arterial PCO₂ holds steady'):null);
 }
 function inheritance(n,third){
   return experiment('pedigree',pedigree,{evidence:n},'This autosomal recessive trait is fully penetrant. Assume independent segregation and no new mutations.',
@@ -170,9 +171,19 @@ function inheritance(n,third){
     third?pick('If an affected child later has offspring with a confirmed AA partner, which outcome is expected?','All offspring are unaffected carriers','Half have the recessive trait','All are AA'):null);
 }
 function nutrientEnergy(n,third){
+  const [portion]=foodEnergy.run({meal:n}).observation.rows;
+  const nutrients=['Carbohydrate','Protein','Fat'];
+  const energies=portion.map((mass,i)=>mass*(i===2?9:4));
+  const key=nutrients[energies.indexOf(Math.max(...energies))];
   return experiment('food-energy',foodEnergy,{meal:n},'Use 4 kcal/g for carbohydrate and protein and 9 kcal/g for fat.',
-    pick('Which nutrient supplies the most energy per gram?','Fat','Carbohydrate','Protein'),
-    third?pick('How does thiamine contribute to metabolism?','Serves as part of a coenzyme','Adds 9 kcal per gram as a triglyceride','Supplies the nitrogen in all proteins'):null);
+    pick('Which macronutrient supplies the most energy in this particular serving?',key,...nutrients.filter(s=>s!==key)),
+    third?number('Replace 3 g of carbohydrate with 3 g of fat. By how many kcal does the serving’s energy increase?',15,'kcal'):null);
+}
+function birthStation(n){
+  const station=experiment('birth-transition',birth,{event:n},'Follow the event in the observation to its physiological effect.',
+    n===2?pick('Which anterior pituitary signal supports continued milk synthesis?','Prolactin','Oxytocin','Progesterone'):
+    pick('Which fetal connection normally links the pulmonary trunk and aorta?','Ductus arteriosus','Ductus venosus','Foramen ovale'));
+  return n===2?{...station,section:'28.6'}:station;
 }
 export function chapterEvidence(ch,n) {
   switch(ch){
@@ -189,15 +200,14 @@ export function chapterEvidence(ch,n) {
     case 27: return [fieldItem(27,n),surface('sperm-route',n),androgenData(n),experiment('ovarian-cycle',ovarian,{interval:n},'Compare each hormone with itself across days. Values are relative units on separate scales.',
       pick('Which ovarian structure supplies most progesterone after ovulation in a typical nonpregnant cycle?','Corpus luteum','Primordial follicle','Fimbria'))];
     case 28: return [inheritance(n),surface('placental-exchange',n),experiment('embryo-stage',development,{stage:n},'Identify the developmental stage from the observed structures.',
-      pick('Which process gives rise to the three germ layers?','Gastrulation','Cleavage','Ovulation')),experiment('birth-transition',birth,{event:n},'Follow the event in the observation to its physiological effect.',
-      pick('Which fetal connection normally links the pulmonary trunk and aorta?','Ductus arteriosus','Ductus venosus','Foramen ovale'))];
+      pick('Which process gives rise to the three germ layers?','Gastrulation','Cleavage','Neurulation')),birthStation(n)];
   }
 }
 function electrolytes(n){
   const sets=[['Aldosterone rises with intact renal targets.','More sodium reabsorption','More potassium secretion'],['Aldosterone falls with other inputs fixed.','Less sodium reabsorption','Less potassium secretion'],['Aldosterone receptors in principal cells are blocked despite high circulating hormone.','Less sodium reabsorption','Less potassium secretion']];
   const [finding,sodium,potassium]=sets[n];
   return item('26.3','distal-ion','Compare distal nephron transport with baseline.',
-    [pick('What changes in sodium handling?',sodium,sodium.startsWith('More')?'Less sodium reabsorption':'More sodium reabsorption','Sodium ceases to be filtered'),pick('What changes in potassium handling?',potassium,potassium.startsWith('More')?'Less potassium secretion':'More potassium secretion','Potassium is no longer present in plasma')],
+    [pick('What changes in sodium handling?',sodium,sodium.startsWith('More')?'Less sodium reabsorption':'More sodium reabsorption','No change in distal sodium reabsorption'),pick('What changes in potassium handling?',potassium,potassium.startsWith('More')?'Less potassium secretion':'More potassium secretion','No change in distal potassium secretion')],
     'Aldosterone promotes distal sodium uptake and potassium secretion. Reduced signaling decreases both effects.',data(['Hormone condition'],[finding]));
 }
 export function springPracticalStations(n){

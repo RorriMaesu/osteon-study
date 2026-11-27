@@ -37,6 +37,19 @@ test('spring practicals vary real anatomical targets and hold scores against the
     assert(second.every(next=>next.id!==q.id));assert.equal(gradeSpring(q,q.expected),'correct');
   }
 });
+test('short cumulative covers inheritance and rotates neglected sections on a retake',()=>{
+  for(const seed of [.01,.4,.8]){
+    const previous=makeAssessment('all','exam',[],()=>seed);
+    const next=makeAssessment('all','exam',previous,()=>seed);
+    for(const exam of [previous,next]){
+      assert.equal(exam.length,32);
+      assert.ok(exam.some(q=>q.section==='28.7'));
+    }
+    assert.ok(next.every(q=>!previous.some(p=>p.id===q.id)));
+    const sections=new Set(previous.map(q=>q.section));
+    assert.ok(next.filter(q=>!sections.has(q.section)).length>=12);
+  }
+});
 test('spring short answers accept spelling and equivalent units while distinguishing similar terms',()=>{
   const name={kind:'name',id:'test',expected:'Thoracic duct',aliases:[]};
   assert.equal(gradeSpring(name,'thoracik duct'),'spelling');
