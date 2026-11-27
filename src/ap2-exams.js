@@ -7,6 +7,7 @@ import {bindStudyBackups} from './study-backup.js';
 import {localAI} from './local-ai.js';
 import {reviewWithUI,reviewHTML} from './answer-review-ui.js';
 import {setLearningContext} from './learning-context.js';
+import {practicalScores} from './ap2-practical-session.js';
 
 export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
   const date=n=>new Date(n).toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'});
@@ -15,6 +16,8 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
   const go=route=>{location.hash=route;};
   const context=(title,text='')=>setLearningContext({course:'ap2',type:'study',label:title,text});
   const navReport=r=>link('ap2-report-'+r.id,date(r.submitted)+' · '+r.title+' · '+score(r).correct+'/'+r.items.length);
+  const practicalLinks=r=>'<div class="course-actions">'+link('ap2-spotter','Scored 3D practical')+(r.practicalDraft?link('ap2-spotter/run','Resume 3D practical',true):'')+'</div>'+
+    (r.practicalReports?.length?'<div class="course-links">'+r.practicalReports.map(p=>link('ap2-spotter/result-'+p.id,date(p.submitted)+' · 3D practical · '+practicalScores(p).reduce((a,b)=>a+b,0)+' / '+p.items.length*3)).join('')+'</div>':'');
   function begin(scope,title,items) {
     const data=store.update(r=>{if(r.draft)return;
       r.draft={id:crypto.randomUUID(),scope,title,started:Date.now(),items,index:0,responses:{},writing:snapshotWriting(items)};r.resume='ap2-session';});
@@ -23,6 +26,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
   function center(scope){
     const selection=examScopes.find(s=>s.id===scope)||examScopes[0],r=store.read();
     page(hero('A&P II · PRACTICE LAB','Exams & results','Chapter exams sample every section. Unit and cumulative exams mix topics, visual interpretation, and short answers.')+
+      practicalLinks(r)+
       (r.draft?`<div class="course-card ap2-draft"><strong>Saved exam · ${e(r.draft.title)}</strong>${link('ap2-session','Resume at question '+(r.draft.index+1),true)}</div>`:'')+
       `<div class="course-grid"><article><h2>Take an exam</h2><label for="ap2-exam-scope">Choose coverage</label><select id="ap2-exam-scope">${examScopes.map(s=>`<option value="${s.id}" ${s===selection?'selected':''}>${e(s.title)}</option>`).join('')}</select>
       <p id="ap2-exam-size"></p><button class="primary" data-start ${r.draft?'disabled':''}>Start exam</button>${r.draft?'<p>Submit your current A&P II draft to start another. You can study lessons at any time.</p>':''}</article>
@@ -161,6 +165,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     const r=store.read(),answers=Object.values(r.checks);
     const next=sectionsToRevisit(r);
     page(hero('A&P II · STUDY STUDIO','My progress','Track section review, recall practice, and independent exams separately.')+
+    practicalLinks(r)+
     `<div class="course-actions">${link('ap2-exams','Exams & results')}${r.draft?link('ap2-session','Resume exam',true):''}<details class="ap2-backup"><summary>Back up or restore both courses</summary><button data-export-study>Back up all study work</button><label>Restore backup <input type="file" data-import-study accept="application/json,.json"></label><p role="status" data-backup-status></p></details></div>
     <div class="course-grid"><article><h2>Study record</h2><p>${Object.keys(r.studied).length} / 49 sections marked studied · ${answers.filter(a=>a.correct).length} recall questions last answered correctly · ${r.reports.length} exams submitted.</p><h2>Study next</h2>${next?link('ap2-lesson-'+next.id+'/check','Practice §'+next.id+' · '+next.title):'<p>You have checked every section.</p>'}</article>
     <article><h2>Results and review notes</h2><div class="course-links">${r.reports.map(navReport).join('')||'<p>Submit an exam to see its results here.</p>'}</div></article></div>

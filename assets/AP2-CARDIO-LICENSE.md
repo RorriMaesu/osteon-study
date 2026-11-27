@@ -16,3 +16,9 @@ Osteon converted millimeters to meters, grouped source elements under their anat
 
 The original overlays, pressure and volume curves, case values, developmental drawings and flow diagrams support the learning objectives in OpenStax Anatomy and Physiology 2e. The University of Minnesota’s Visible Heart Atlas provides views of valve anatomy and function for comparison. [OpenStax cardiac cycle](https://openstax.org/books/anatomy-and-physiology-2e/pages/19-3-cardiac-cycle) · [OpenStax circulatory pathways](https://openstax.org/books/anatomy-and-physiology-2e/pages/20-5-circulatory-pathways) · [Visible Heart Atlas](https://www.vhlab.umn.edu/atlas/)
 
+
+## Regional limb circulation
+
+**ap2-arm-circulation.glb** contains the usual right arch-to-hand arterial route and the major deep and superficial venous channels returning to the right atrium. **ap2-leg-venous-return.glb** contains the right plantar and dorsal venous arches, paired deep veins, great and small saphenous veins, iliac veins, both portions of the inferior vena cava and the right atrium. Same-specimen bones provide orientation. In the source segmentation the surface labeled anterior tibial veins includes the short proximal confluence up to the popliteal vein.
+
+These are separate derivatives of Z-Anatomy, the libre 3D atlas of anatomy, by Gauthier Kervyn and contributors, based on BodyParts3D by The Database Center for Life Science. The original source curves and meshes were evaluated in Blender 4.5 and converted in their native world coordinates. Only the skeletal landmarks were simplified. Display colors and teaching routes are Osteon annotations. The regional files are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). [Source model and authors](https://github.com/Z-Anatomy/Models-of-human-anatomy) · [Regional export script](../scripts/build-ap2-limb-circulation.py).

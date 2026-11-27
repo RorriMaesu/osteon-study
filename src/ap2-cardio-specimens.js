@@ -3,8 +3,9 @@ import {ConvexGeometry} from 'three/addons/geometries/ConvexGeometry.js';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {makeTeachingValve} from './ap2-valve-surfaces.js';
 import {pressureState} from './ap2-heart-cycle.js';
+import {vesselRegions,vesselPresets,vesselLabel} from './ap2-vessel-regions.js';
 
-const structureName = name => name.replace(/^VH_M_/,'').replaceAll('_',' ').replace(/heart (left|right) ventricle/,'$1 ventricle').replace(/cardiac atrium/,'atrium');
+const structureName = name => vesselLabel(name).replace(/heart (left|right) ventricle/,'$1 ventricle').replace(/cardiac atrium/,'atrium');
 const instructions = {
   motion:'Watch the two mitral leaflets and three aortic cusps open and close at the pressure crossings. Gold moving surfaces are idealized reconstructions positioned at the source valve centers. Select Valves and supports to inspect the original surfaces.',
   surface:'Locate the apex, then orbit to the posterior left atrium. Coronary arteries supply the myocardium. Cardiac veins return blood to the right atrium through the coronary sinus.',
@@ -29,9 +30,12 @@ function conductionIndex(t) {
   return 3;
 }
 const heartModes=[['surface','Heart surface'],['cut','Cutaway'],['valves','Valves and supports'],['motion','Valve movement'],['conduction','Conduction'],['thorax','Heart in rib cage']];
-const vesselModes=[['arch','Aortic arch'],['portal','Hepatic portal system'],['kidneys','Renal circulation'],['leg','Right leg and foot']];
+const vesselModes=vesselPresets;
 const option=(value,label)=>`<option value="${value}">${label}</option>`;
 function nameColor(n) {
+  if(n.startsWith('context_'))return '#e5d8b8';
+  if(/venous|venae/.test(n))return '#6492ad';
+  if(/palmar_arch/.test(n))return '#cc7568';
   if(/valve/.test(n))return '#efcc84';
   if(/papillary/.test(n))return '#db9baf';
   if(/septum/.test(n))return '#df9fa1';
@@ -59,12 +63,6 @@ const spotters = {
   kidneys:[['VH_M_left_renal_artery','Left renal artery','Right renal artery','Renal vein','From the aorta this artery carries blood to the left kidney.']]
 };
 const traceLabels=['Atrial spread','AV delay','His bundle and branches','Ventricular spread'];
-const vesselGroup = {
-  arch: n=>/aortic_arch|ascending_aorta|descending_aorta|brachiocephalic_artery|left_common_carotid|left_subclavian/.test(n),
-  portal: n=>/portal_vein|mesenteric_vein|splenic_vein|hepatic_vein|vena_cava/.test(n),
-  kidneys: n=>/renal_(artery|vein)|descending_aorta|vena_cava/.test(n)
-};
-const vesselNotes={arch:'Identify the three usual arch branches. The right common carotid and right subclavian share the brachiocephalic trunk. The left common carotid and left subclavian arise independently.',portal:'Compare the portal vein entering the liver with hepatic veins leaving for the inferior vena cava. A portal circuit connects two capillary beds.',kidneys:'Trace a renal artery from the abdominal aorta to a kidney and a renal vein to the inferior vena cava. Compare left and right lengths.',leg:'Follow the femoral artery behind the knee to the popliteal artery. Select the anterior tibial artery, then dorsalis pedis where it crosses the front of the ankle. The deep and superficial venous returns are in the route exercise.'};
 
 export function renderSpecimen(kind,linked=false) {
   const heart=kind==='heart';
@@ -109,9 +107,9 @@ export function mountSpecimen(lab,kind,linked=false) {
     const plane=new THREE.Plane(new THREE.Vector3(0,0,-1),.092-Number(get('cut').value)*.00105);
     for(const obj of meshes){
       const n=obj.name,isFocus=n===focus;
-      obj.visible=heart?(m==='motion'?(n.includes('papillary')||n.includes('septum')):m==='valves'?valve(n):m==='thorax'||m==='surface'||m==='conduction'||cut):m==='leg'||vesselGroup[m](n);
+      obj.visible=heart?(m==='motion'?(n.includes('papillary')||n.includes('septum')):m==='valves'?valve(n):m==='thorax'||m==='surface'||m==='conduction'||cut):vesselRegions[m].include(n);
       const mat=obj.material;
-      const dim=focus && !isFocus, translucent=dim || m==='conduction' || m==='motion' || (m==='thorax' && !/wall_of/.test(n)) || (m==='leg' && !/artery/.test(n));
+      const dim=focus && !isFocus, translucent=dim || m==='conduction' || m==='motion' || (m==='thorax' && !/wall_of/.test(n)) || (m==='leg' && !/artery/.test(n)) || (!isFocus&&n.startsWith('context_'));
       const timeColor=linked&&!focus&&((n==='VH_M_mitral_valve'&&clockState.mitral)||(n==='VH_M_aortic_valve'&&clockState.aortic));
       mat.color.set(isFocus?'#ffd977':timeColor?'#8fdbc8':nameColor(n));
       mat.transparent=Boolean(translucent);
@@ -178,7 +176,7 @@ export function mountSpecimen(lab,kind,linked=false) {
       junctionDot=new THREE.Mesh(new THREE.SphereGeometry(.004,14,10),new THREE.MeshBasicMaterial({color:'#ffe486',depthTest:false}));
       junctionDot.renderOrder=6;junctionDot.visible=false;instance.model.add(junctionDot);
     }
-    appearance();choices();instance.fit();
+    appearance();choices();instance.fit(instance.model,heart?undefined:vesselRegions[mode.value].direction);
     // Distinguish a tap from an orbit, using the closest visible specimen surface.
     const canvas=instance.renderer.domElement,ray=new THREE.Raycaster();let start;
     canvas.addEventListener('pointerdown',event=>start=[event.clientX,event.clientY]);
@@ -186,7 +184,8 @@ export function mountSpecimen(lab,kind,linked=false) {
       if(question||!start||Math.hypot(event.clientX-start[0],event.clientY-start[1])>5)return;
       const rect=canvas.getBoundingClientRect();
       ray.setFromCamera(new THREE.Vector2(2*(event.clientX-rect.left)/rect.width-1,1-2*(event.clientY-rect.top)/rect.height),instance.camera);
-      const hit=ray.intersectObjects(meshes.filter(m=>m.visible),false).find(({object,point})=>!object.material.clippingPlanes?.some(p=>p.distanceToPoint(point)<0));
+      const hits=ray.intersectObjects(meshes.filter(m=>m.visible),false).filter(({object,point})=>!object.material.clippingPlanes?.some(p=>p.distanceToPoint(point)<0));
+      const hit=(!heart&&hits.find(({object})=>!object.name.startsWith('context_')&&(mode.value!=='leg'||object.name.includes('artery'))))||hits[0];
       if(hit&&[...target.options].some(o=>o.value===hit.object.name)){target.value=hit.object.name;appearance();}
     });
   }
@@ -194,13 +193,13 @@ export function mountSpecimen(lab,kind,linked=false) {
     question=null;spotIndex=0;get('spot-choices').hidden=true;get('spot-answer').textContent='';get('spot-start').disabled=true;
     const m=mode.value;
     get('spot-area').hidden=!spotters[m];
-    const asset=m==='thorax'?'ap2-thorax':m==='leg'?'ap2-leg-vessels':heart?'ap2-heart':'ap2-vessels';
+    const asset=heart?(m==='thorax'?'ap2-thorax':'ap2-heart'):(vesselRegions[m].asset||'ap2-vessels');
     get('junction-settings').hidden=m!=='leg';get('junction').value='';get('junction-note').textContent='';
     get('cut-settings').hidden=m!=='cut';get('sac-settings').hidden=m!=='surface';get('conduct-settings').hidden=m!=='conduction'||linked;
-    get('specimen-note').textContent=heart?instructions[m]:vesselNotes[m];target.value='';
-    if(lastAsset===asset&&ready){appearance();choices();api.fit(m==='motion'?animatedGroup:api.model,m==='motion'?[.02,1,-.63]:m==='valves'?[.12,1,.3]:undefined);return;}
+    get('specimen-note').textContent=heart?instructions[m]:vesselRegions[m].note;target.value='';
+    if(lastAsset===asset&&ready){appearance();choices();api.fit(m==='motion'?animatedGroup:api.model,m==='motion'?[.02,1,-.63]:m==='valves'?[.12,1,.3]:(!heart?vesselRegions[m].direction||[.1,.06,1]:undefined));return;}
     ready=false;sac=null;junctionDot=null;animated=[];tracks=[];moving=null;lastAsset=asset;target.replaceChildren(new Option('All structures',''));
-    api=mountOrganViewer(host,{asset:'assets/'+asset+'.glb',title:mode.selectedOptions[0].text,colors:nameColor,direction:[.1,.06,1],onLoad:setup});
+    api=mountOrganViewer(host,{asset:'assets/'+asset+'.glb',title:mode.selectedOptions[0].text,colors:nameColor,direction:(!heart&&vesselRegions[m].direction)||[.1,.06,1],onLoad:setup});
   }
   get('spot-start').onclick=()=>{
     const eligible=spotters[mode.value]?.filter(([name])=>meshes.some(m=>m.name===name&&m.visible));

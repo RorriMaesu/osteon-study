@@ -1,7 +1,7 @@
 // Original lessons and activities aligned with the linked OpenStax A&P 2e sections.
 import {renderSpecimen,mountSpecimen} from './ap2-cardio-specimens.js';
 import {renderValveWindow,paintValves,renderOutput,mountOutput,renderEmbryo,mountEmbryo,renderPump,mountPump,renderExchange,mountExchange,renderHemorrhage,mountHemorrhage} from './ap2-cardio-mechanisms.js';
-import {beat,rightBeat,rightPressureState,interpolate,pressureState,valveChallenges,valveChoices} from './ap2-heart-cycle.js';
+import {beat,rightBeat,rightPressureState,interpolate,pressureState,valveChallenges,valveChoices,rightValveChallenges,rightValveChoices} from './ap2-heart-cycle.js';
 import {renderRoutes,mountRoutes} from './ap2-cardio-routes.js';
 import {smearStation,mountSmear,clotStation,mountClot} from './ap2-blood-stations.js';
 
@@ -508,6 +508,7 @@ function rightHeartChart() {
     <figure class="ac-plot"><svg viewBox="0 0 500 212" role="img" aria-label="Right atrial, right ventricular and pulmonary arterial pressure on a zero to thirty millimeter mercury scale.">
     <text x="8" y="18">Pressure (mm Hg)</text>${[0,10,20,30].map(v=>`<line x1="48" x2="472" y1="${y(v)}" y2="${y(v)}" stroke="#354b50"/><text x="37" y="${y(v)+4}" text-anchor="end">${v}</text>`).join('')}
     ${[[rightBeat.atrium,'#e6b9e1','2 3'],[rightBeat.ventricle,'#a8c8ea','7 3'],[rightBeat.pulmonary,'#f1ac81','']].map(([p,color,dash])=>`<path d="${trace(p,y)}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${dash}"/>`).join('')}
+    <rect data-right-future x="472" y="21" width="0" height="159" fill="#192a30"/>
     <line data-right-cursor y1="30" y2="179" stroke="white" stroke-dasharray="2 3"/>
     ${[0,200,400,600,800].map(t=>`<text x="${chartX(t)}" y="202" text-anchor="middle">${(t/1000).toFixed(1)} s</text>`).join('')}</svg></figure>
     <p>Right atrium · dotted. Right ventricle · dashed. Pulmonary artery · solid.</p><div class="ac-stats"><span>RA / RV / PA<strong data-right-pressures></strong></span><span>Tricuspid valve<strong data-right-tricuspid></strong></span><span>Pulmonary valve<strong data-right-pulmonary></strong></span></div>`;
@@ -529,7 +530,7 @@ function renderHeartbeat() {
     <text x="${chartX(501)+25}" y="${pressureY(91)-36}">Notch</text>
     <text x="9" y="247">LV volume (mL)</text>${[50,120].map(v=>`<line x1="48" x2="472" y1="${volumeY(v)}" y2="${volumeY(v)}" stroke="#354b50"/><text x="37" y="${volumeY(v)+4}" text-anchor="end">${v}</text>`).join('')}
     <path d="${trace(beat.volume,volumeY)}" fill="none" stroke="#f1dc81" stroke-width="2.8"/>
-    <rect data-future x="472" y="22" width="0" height="281" fill="#192a30" opacity=".96"/>
+    <rect data-future x="472" y="22" width="0" height="281" fill="#192a30"/>
     ${[0,200,400,600,800].map(t => `<text x="${chartX(t)}" y="320" text-anchor="middle">${(t/1000).toFixed(1)} s</text>`).join('')}
     <line data-cursor y1="26" y2="300" stroke="#fff4cf" stroke-width="1.5" stroke-dasharray="2 3"/>
     <circle data-la-point r="3.5" fill="#e6b9e1"/><circle data-vol-point r="3.5" fill="#f1dc81"/><circle data-ecg-point r="3.5" fill="#bfe3cc"/><circle data-ao-point r="3.5" fill="#f1ac81"/><circle data-lv-point r="3.5" fill="#a8c8ea"/>
@@ -545,8 +546,10 @@ function renderHeartbeat() {
 }
 
 function mountHeartbeat(lab) {
-  let modelMounted=false;
+  let modelMounted=false, activeView='0';
   wireViews(lab,view=>{
+    activeView=view;
+    endProbe();
     if(view==='1'&&!modelMounted){mountSpecimen(lab,'heart',true);modelMounted=true;show(+time.value);}
   });
   const get = name => lab.querySelector('[data-' + name + ']');
@@ -595,20 +598,34 @@ function mountHeartbeat(lab) {
     play.textContent = +time.value === 800 ? 'Replay beat' : 'Play one beat';
     play.setAttribute('aria-pressed', 'false');
   }
-  let probeIndex = -1;
-  function endProbe() { get('future').setAttribute('width',0); get('probe').hidden=true; get('phase-note').hidden=false; }
+  const probeIndices = { left: -1, right: -1 };
+  let challenge;
+  function clearMasks() {
+    for(const mask of [get('future'), get('right-future')])mask.setAttribute('width',0);
+  }
+  function endProbe() {
+    clearMasks(); challenge=null; get('probe').hidden=true; get('phase-note').hidden=false;
+  }
   get('predict').onclick=()=>{
     stop();
-    probeIndex=(probeIndex+1)%valveChallenges.length;
-    const [t,prompt]=valveChallenges[probeIndex];
+    if(activeView!=='0'&&activeView!=='3')lab.querySelector('[data-cardio-view="0"]').click();
+    const right=activeView==='3', side=right?'right':'left';
+    const challenges=right?rightValveChallenges:valveChallenges;
+    const labels=right?rightValveChoices:valveChoices;
+    probeIndices[side]=(probeIndices[side]+1)%challenges.length;
+    challenge=challenges[probeIndices[side]];
+    const [t,prompt]=challenge;
     show(t); get('probe').hidden=false; get('phase-note').hidden=true;
-    get('future').setAttribute('x',chartX(t)+2); get('future').setAttribute('width',Math.max(0,472-chartX(t)-2));
-    get('probe-prompt').textContent=prompt; get('probe-note').textContent='';
+    const mask=get(right?'right-future':'future');
+    mask.setAttribute('x',chartX(t));mask.setAttribute('width',472-chartX(t));
+    get('probe-prompt').textContent=(right?'Right heart · ':'Left heart · ')+prompt; get('probe-note').textContent='';
+    lab.querySelectorAll('[data-probe-choice]').forEach((button,i)=>button.textContent=labels[i]);
   };
   lab.querySelectorAll('[data-probe-choice]').forEach(button=>button.onclick=()=>{
-    const [, , answer, explanation]=valveChallenges[probeIndex];
+    if(!challenge)return;
+    const [, , answer, explanation]=challenge;
     if (+button.dataset.probeChoice===answer) {
-      get('probe-note').textContent='Correct. '+explanation; get('future').setAttribute('width',0);
+      get('probe-note').textContent='Correct. '+explanation; clearMasks();challenge=null;
     } else get('probe-note').textContent='Trace the higher upstream pressure and check which valve is currently open. Try again.';
   });
   get('rewind').onclick=()=>{stop();endProbe();show([...phases].reverse().find(p=>p.start<+time.value)?.start??0);};
@@ -708,7 +725,16 @@ const labs = new Map([
   ['20.4', [renderHemorrhage,mountHemorrhage]],
   ['20.5', [() => views(['Follow a route','3D vessels']) + '<div data-cardio-panel="0">'+renderRoutes(false)+'</div><div data-cardio-panel="1" hidden>'+renderSpecimen('vessels')+'</div>', lab => {
     mountRoutes(lab,false);let mounted=false;
-    wireViews(lab,view=>{if(view==='1'&&!mounted){mountSpecimen(lab,'vessels');mounted=true;}});
+    wireViews(lab,view=>{
+      if(view!=='1')return;
+      if(!mounted){mountSpecimen(lab,'vessels');mounted=true;}
+      requestAnimationFrame(()=>{
+        const viewport=lab.querySelector('[data-organ-kind="vessels"] .organ-viewport');
+        if(!viewport?.getClientRects().length)return;
+        const bounds=viewport.getBoundingClientRect();
+        if(bounds.top<0||bounds.bottom>innerHeight)viewport.scrollIntoView({block:'center',behavior:'instant'});
+      });
+    });
   }]],
   ['20.6', [() => renderRoutes(true), lab => mountRoutes(lab,true)]]
 ]);

@@ -47,3 +47,11 @@ export const valveChallenges = [
 ];
 export const valveChoices=['Mitral closes','Aortic opens','Aortic closes','Mitral opens'];
 
+export const rightValveChoices=['Tricuspid closes','Pulmonary opens','Pulmonary closes','Tricuspid opens'];
+export const rightValveChallenges=[
+  [189,'Right ventricular pressure is rising toward right atrial pressure. Which event comes next?',0,'RV pressure rises above RA pressure and closes the tricuspid valve.'],
+  [224,'Both right-heart valves are closed and ventricular pressure is rising. Which event comes next?',1,'RV pressure rises above pulmonary arterial pressure, opening the pulmonary valve.'],
+  [500,'Right ventricular pressure is falling late in ejection. Which event comes next?',2,'Pulmonary arterial pressure overtakes RV pressure and closes the pulmonary valve.'],
+  [550,'Both right-heart valves are closed and ventricular pressure is falling. Which event comes next?',3,'RV pressure drops below RA pressure, so the tricuspid valve opens and filling resumes.']
+];
+

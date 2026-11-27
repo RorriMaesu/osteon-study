@@ -1,5 +1,6 @@
 import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
 import {openStructureIndex} from './ap2-model-index.js';
+import {openScoredPractical} from './ap2-scored-practical.js';
 import {lessons as fallLessons} from './learning-data.js';
 import {chapters,sections,sectionById,labFor,units} from './ap2-library.js';
 import figures from './ap2-figures.json' with {type:'json'};
@@ -21,6 +22,7 @@ const atlasLinks = {
   '15.1':['Sympathetic trunk.r','Sympathetic trunk'], '16.3':['Abducens nerve (VI).r','Abducens nerve']
 };
 export function initAP2({root,escape:e,toast,dialog}) {
+  const indexState={query:'',kind:''};
   let storage; try {storage=localStorage;} catch {}
   const store=createRecordsStore(storage,message=>{
     toast(message);
@@ -52,14 +54,14 @@ export function initAP2({root,escape:e,toast,dialog}) {
   }
   function practicals(){
     const stations=[
-      ['Neural tissue and pathways', [['12.4','Action potential','Compare membrane voltage across phases.'],['13.3','Ventricles and CSF','Rotate the brain specimen, cut sections and test an obstruction.','ventricles'],['14.1','Eye and accommodation','Examine the lens and retina from several views.','eye'],['14.1','Middle-ear ossicles','Follow the bones that transmit vibration.','ossicles'],['14.1','Inner-ear labyrinth','Compare the sensory structures for hearing and balance.','ear'],['14.3','Motor pathways','Trace a motor command to a skeletal muscle.']]],
-      ['Autonomic and neurological assessment',[['15.1','Autonomic routes','Compare ganglionic relays and target organs.'],['16.3','Cranial nerves','Compare input and output in a pupil examination.'],['16.5','Coordination and gait','Use observations from two tasks to explain a finding.']]],
-      ['Endocrine and blood',[['17.1','Gland locator','Locate glands relative to nearby structures.'],['17.9','Pancreas and islets','Move between gross anatomy and a microscopic section.'],['18.4','Blood smear microscope','Identify six formed elements from real specimens.'],['18.5','Hemostasis','Follow a plug from vessel injury through fibrin stabilization.']]],
+      ['Neural tissue and pathways', [['12.4','Myelinated axon','Compare signal conduction with intact and damaged myelin.','axon'],['13.2','Spinal cord and roots','Follow sensory input and motor output through a transverse section.','cord'],['13.3','Ventricles and CSF','Rotate the brain specimen, cut sections and test an obstruction.','ventricles'],['14.1','Eye and accommodation','Examine the lens and retina from several views.','eye'],['14.1','Middle-ear ossicles','Follow the bones that transmit vibration.','ossicles'],['14.1','Inner-ear labyrinth','Compare the sensory structures for hearing and balance.','ear'],['14.3','Motor pathways','Trace a motor command to a skeletal muscle.']]],
+      ['Autonomic and neurological assessment',[['15.1','Autonomic routes to the heart','Trace each pathway through its ganglion to the pacemaker.','cardiac-autonomic'],['16.3','Pupillary light reflex','Shine light into either eye and localize the interruption.','pupil'],['16.5','Coordination and gait','Use observations from two tasks to explain a finding.']]],
+      ['Endocrine and blood',[['17.1','Gland locator','Locate glands relative to nearby structures.'],['17.5','Posterior neck','Find the parathyroids behind the thyroid.','parathyroids'],['17.8','Pelvic endocrine anatomy','Locate the ovaries, testes and placenta in their respective specimens.'],['17.9','Pancreas and islets','Move between gross anatomy and a microscopic section.'],['18.4','Blood smear microscope','Identify cells and tally an unfamiliar mixed field.'],['18.5','Hemostasis','Predict the outcome when adhesion or fibrin formation is impaired.']]],
       ['Heart and circulation',[['19.1','Heart dissection','Inspect the chambers, coronary vessels and valve supports.'],['19.3','Cardiac cycle','Match a pressure crossing to a valve event.'],['20.1','Veins and the calf pump','Track venous return during contraction and release.'],['20.5','Vascular routes','Trace blood through the trunk and limbs.'],['20.6','Fetal circulation','Compare placental and postnatal routes.']]]
     ];
     const groupCard=([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}<small>${e(goal)}</small></span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>';
     page(hero('A&P II · PRACTICALS','Model & slide lab','Choose a specimen or browse the activities in a textbook chapter.')+
-      '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+link('ap2-structures','Find a structure')+
+      '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+link('ap2-structures','Find a structure')+link('ap2-spotter','Scored 3D practical')+
       '<label>Browse <select data-lab-chapter><option value="">Featured practicals</option>'+
       chapters.map(c=>`<option value="${c.id}">Chapter ${c.id} · ${e(c.title)}</option>`).join('')+
       '</select></label></div><div class="ap2-unit-grid" data-practical-list></div>');
@@ -131,12 +133,12 @@ export function initAP2({root,escape:e,toast,dialog}) {
       const lab=labFor(s.id),html=lab.renderLab(s.id);
       body.innerHTML=`${html?'<div class="ap2-simulation">'+html+'</div>':''}<div class="ap2-guided"><h2>${e(s.activity.title)}</h2><p>${e(s.activity.prompt)}</p><div class="ap2-step"></div></div>`;
       if(html)lab.mountLab(body.querySelector('.ap2-simulation'),s.id);
-      const picker=body.querySelector('[data-neural-station-picker]');
+      const picker=body.querySelector('[data-neural-station-picker],[data-circulation-station]');
       if(picker&&station&&[...picker.options].some(o=>o.value===station)){
         picker.value=station;picker.dispatchEvent(new Event('change',{bubbles:true}));
         body.querySelector('[data-neuro-specimen="'+station+'"] [data-load-specimen]')?.click();
       }
-      const presets={follicle:['[data-neck-view]','micro'],islet:['[data-scale]','micro'],pancreas:['[data-scale]','gross'],ovary:['[data-gonad]','ovary']};
+      const presets={follicle:['[data-neck-view]','micro'],neck:['[data-neck-view]','anterior'],parathyroids:['[data-neck-view]','posterior'],islet:['[data-scale]','micro'],pancreas:['[data-scale]','gross'],ovary:['[data-gonad]','ovary'],testis:['[data-gonad]','testis'],placenta:['[data-gonad]','placenta']};
       const preset=Object.hasOwn(presets,station)?presets[station]:null;
       if(preset){
         const control=body.querySelector(preset[0]);
@@ -197,7 +199,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
     const writingId=route.match(/^ap2-writing-(1[2-9]|20)$/)?.[1];
     if(writingId){rememberStudy(route);openWritingPractice(Number(writingId),{root,page,hero,link,store,e});return;}
     if(route==='ap2-structures'){
-      openStructureIndex({root,page,hero,link,e});setLearningContext({course:'ap2',type:'study',label:'Find a structure',text:'Anatomical specimens, microscopic structures and textbook figures.'});return;
+      openStructureIndex({root,page,hero,link,e,state:indexState});setLearningContext({course:'ap2',type:'study',label:'Find a structure',text:'Anatomical specimens, microscopic structures and textbook figures.'});return;
     }
     const bodyRoute=route.match(/^ap2-body(?:\/([\w-]+))?$/);
     if(bodyRoute){
@@ -208,6 +210,12 @@ export function initAP2({root,escape:e,toast,dialog}) {
       setLearningContext({course:'ap2',type:'study',label:'Body systems in 3D',text:'Position of the glands, heart chambers, and right lower-limb arteries relative to the skeleton.'});return;
     }
     if(route==='ap2-practicals'){practicals();return;}
+    if(/^ap2-spotter(?:\/run|\/result-[\w-]+)?$/.test(route)){
+      openScoredPractical(route,{root,page,hero,link,store,e});
+      setLearningContext({course:'ap2',type:'study',label:'Scored 3D practical',text:'Independent structure identification, connections and functional prediction.'});
+      if(route==='ap2-spotter/run'&&store.read().practicalDraft){document.body.dataset.ap2Exam='true';setTutorAssessmentMode('exam');}
+      return;
+    }
     if(route==='ap2-search'){contextForSearch();search();return;}
     if(exams.open(route)){
       if(isExam()){document.body.dataset.ap2Exam='true';setTutorAssessmentMode('exam');}

@@ -64,7 +64,7 @@ export function initCourseHome({setView, escape}) {
     if(motionBack)motionBack.hidden=true;
     if (view === 'courses') {
       if (route === 'courses') { picker.value='all'; return; }
-      const active=route==='ap2-progress'?'progress':/^ap2-(exams|session|report)/.test(route)?'practice':'study';
+      const active=route==='ap2-progress'?'progress':/^ap2-(exams|session|report|spotter)/.test(route)?'practice':'study';
       for(const b of document.querySelectorAll('.main-nav [data-view]')){
         b.classList.toggle('active',b.dataset.view===active);b.setAttribute('aria-current',b.dataset.view===active?'page':'false');
       }

@@ -62,6 +62,44 @@
 .ap2-index-controls{display:flex;gap:1rem;flex-wrap:wrap}
 .ap2-index-controls label{display:grid;gap:.35rem;flex:1 1 14rem;min-width:0}
 .ap2-index-controls input,.ap2-index-controls select{min-width:0;width:100%}
+.ap2-page .course-actions label,.ap2-page [data-sensory-detail] label{min-width:0;max-width:100%}
+.ap2-page [data-sensory-detail] select{display:block;width:100%;max-width:100%;min-width:0}
+.ap2-lab-switch{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-bottom:.7rem}
+.ap2-lab-switch select{min-width:0;max-width:100%;min-height:42px}
 .ap2-index-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:.5rem}
 .ap2-index-list .course-link{display:grid;align-content:center;justify-content:start;gap:.2rem}
 .ap2-index-list small{color:var(--muted,#abbebc)}
+.ap2-practical-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(.7rem,2vw,2rem);align-items:start}
+.ap2-practical-layout>*,.ap2-practical-layout select{min-width:0;max-width:100%}
+.ap2-practical-layout .organ-viewport{height:clamp(220px,44dvh,500px)}
+.ap2-practical-layout [data-practical-task]{display:grid;gap:.65rem}
+.ap2-practical-layout [data-practical-task]>:is(h2,p){margin:0}
+.ap2-practical-layout details summary{cursor:pointer}
+.ap2-practical-layout select{margin-left:.4rem}
+@media(max-width:720px){.ap2-practical-layout{grid-template-columns:minmax(0,1fr)}.ap2-practical-layout .organ-viewport{height:clamp(165px,28dvh,270px)}}
+.ap2-practical-layout{grid-template-areas:"model brief" "model controls";grid-template-rows:auto 1fr;row-gap:.65rem}
+.ap2-practical-model-wrap{grid-area:model}
+.ap2-practical-layout [data-practical-brief]{grid-area:brief;align-self:start}
+.ap2-practical-layout [data-practical-brief] h2{margin:.2rem 0 0;font-size:clamp(1.12rem,2vw,1.6rem);line-height:1.24}
+.ap2-practical-layout [data-practical-task]{grid-area:controls;align-content:start}
+.ap2-practical-layout .organ-expanded .organ-viewport{height:100%}
+.ap2-practical-side{position:absolute;bottom:.35rem;left:.35rem;padding:.2rem .4rem;border-radius:.3rem;background:#11282be8;color:#e7f2e9;font-size:.75rem;pointer-events:none}
+@media(max-width:720px){
+  .ap2-page:has(.ap2-practical-station)>.ap2-nav{display:none}
+  .ap2-page:has(.ap2-practical-station){padding:.65rem}
+  .ap2-page:has(.ap2-practical-station) .ap2-exam-header{margin-bottom:.3rem}
+  .ap2-practical-station{padding:.65rem}
+  .ap2-practical-model-wrap .organ-tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .ap2-practical-model-wrap .organ-tools :is(button,select){min-width:0;margin:0;font-size:.8rem;padding-inline:.2rem}
+  .ap2-practical-model-wrap [data-orientation]{grid-column:span 2}
+  .ap2-practical-layout [data-surface-status]:empty{display:none}
+  .ap2-practical-layout [data-practical-task]:has([data-part-pick]){grid-template-columns:minmax(0,1fr) auto;align-items:center}
+  .ap2-practical-layout [data-practical-task]:has([data-part-pick])>:not(label):not([data-commit]){grid-column:1/-1}
+  .ap2-practical-layout [data-practical-task]:has([data-part-pick])>label{grid-row:2;grid-column:1}
+  .ap2-practical-layout [data-practical-task]:has([data-part-pick])>[data-commit]{grid-row:2;grid-column:2;font-size:.8rem}
+  .ap2-practical-layout [data-part-pick]{display:block;margin:0}
+  .ap2-practical-station h1{font-size:1.25rem;margin:.05rem 0 .55rem}
+  .ap2-practical-layout{grid-template-areas:"brief" "model" "controls";grid-template-rows:auto auto auto}
+  .ap2-practical-model-wrap .organ-viewer:not(.organ-expanded){padding:.35rem;gap:.25rem}
+  .ap2-practical-layout .organ-viewport{height:clamp(155px,27dvh,260px)}
+}
