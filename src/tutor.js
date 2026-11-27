@@ -5,6 +5,8 @@ import {newTutorSession,tutorSessionInstruction,completeTutorTurn} from './tutor
 import { getLearningContext } from './learning-context.js';
 import { sanitizeConversation, citationParts, CHAT_LIMIT } from './tutor-state.js';
 import { checkTutorReply } from './tutor-checks.js';
+import { checkAfterloadTutorReply } from './ap2-afterload.js';
+import { checkRenalTutorReply } from './ap3-renal-tutor.js';
 import { endpoints, localModelProblem } from './ollama-client.js';
 import { detectOS, browserHardware, validateHardware, mergeBrowserHardware, memoryValues, downloadModels, recommendedDownload } from './hardware.js';
 import { buildTutorMessages } from './tutor-context.js';
@@ -304,7 +306,10 @@ function initTutor({escape:e,toast}) {
     document.dispatchEvent(new Event("studyassistance"));
     const course=activeTutorCourse();
     const courseHistory=chat.filter(m=>(m.course||'ap1')===course);
-    const { sources, messages, retrievalTopic, authoredReply } = buildTutorMessages(query, courseHistory, guided&&guided.completed<guided.total?{...context,label:guided.topic}:context, mode);
+    const turnContext=guided&&guided.completed<guided.total?{...context,label:guided.topic}:context;
+    const { sources, messages, retrievalTopic, authoredReply } = buildTutorMessages(query, courseHistory, turnContext, mode);
+    const verifyObservation=turnContext.diagram?.id==='ap2-lab-afterload'&&turnContext.diagram.state?.status==='Prediction checked'?checkAfterloadTutorReply:
+      turnContext.diagram?.id==='ap3-lab-25-2'?checkRenalTutorReply:null;
     const contract=tutorSessionInstruction(guided);if(contract&&messages.length)messages[0].content+="\n"+contract;
     chat.push({ role: "user", content: query, course });
     const reply = { role: "assistant", content: "", model, course, pending: true, sources };
@@ -324,15 +329,16 @@ function initTutor({escape:e,toast}) {
       render();
       return;
     }
-    generationText = "Preparing a local reply. First use of a model can take longer.";
+    generationText = verifyObservation?"Preparing a local reply and checking it against your lab.":"Preparing a local reply. First use of a model can take longer.";
     beginJob("chat");
     $("#tutor-input")?.focus({ preventScroll: true });
     $("#tutor-body").scrollTop = $("#tutor-body").scrollHeight;
     try {
       const info = await checkedModel(model);
-      const started=performance.now();let firstText=null;
+      const started=performance.now();let firstText=null,observationDraft='';
       await client.chat(model, messages, (text) => {
         if(firstText===null&&text.trim())firstText=(performance.now()-started)/1000;
+        if(verifyObservation){observationDraft=text;return;}
         reply.content = text;
         if (tab === "chat" && $("#tutor-messages")) {
           const body = $("#tutor-body"), follow = body.scrollHeight - body.scrollTop - body.clientHeight < 160, el = $("#tutor-messages").lastElementChild?.querySelector(".tutor-message-text");
@@ -340,15 +346,17 @@ function initTutor({escape:e,toast}) {
           if (follow) body.scrollTop = body.scrollHeight;
         }
       }, { signal: controller.signal, info });
-      const correction = course === "ap1" && checkTutorReply(reply.content, query+" "+retrievalTopic);
+      if(verifyObservation)reply.content=observationDraft;
+      const correction = verifyObservation?verifyObservation(reply.content,turnContext,query):course === "ap1" && checkTutorReply(reply.content, query+" "+retrievalTopic);
       if (correction) {
         reply.content = correction.text;
         reply.correction = correction.reason;
         reply.reference = correction.reference;
+        if(verifyObservation){reply.kind='course-note';reply.model='';}
       }
       localAI.markResponded(model);
       if(contract)guided=completeTutorTurn(guided);
-      generationText = "Reply ready \xB7 " + model + ". Check the source readings."+(firstText>20?" First text took "+Math.round(firstText)+" seconds; a smaller installed model may feel quicker alongside the atlas.":"");
+      generationText = reply.kind==='course-note'?'Verified course note · §'+reply.reference:"Reply ready \xB7 " + model + ". Check the source readings."+(firstText>20?" First text took "+Math.round(firstText)+" seconds; a smaller installed model may feel quicker alongside the atlas.":"");
     } catch (err) {
       reply.error = true;
       reply.content += (reply.content ? "\n\n" : "") + (controller.signal.aborted ? "Stopped." : err.message?.includes("fetch") ? "Connection lost. Check Ollama and retry." : err.message || "No answer received.");

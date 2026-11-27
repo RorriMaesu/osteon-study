@@ -52,12 +52,49 @@ export function afterloadContext(trial,first,selectedEvent=null){
   const base=beatValues('baseline'),beat=beatValues(trial);
   const facts=['First beat after changing aortic pressure. End-diastolic volume is 120 mL; myocardial contractility, compliance and heart rate stay fixed.',
     'Baseline aortic opening pressure is 80 mm Hg; baseline end-systolic volume is 50 mL.',
-    'Aortic opening pressure for this trial is '+beat.events[1][1]+' mm Hg.'];
-  if(first)facts.push('The displayed comparison ends systole at '+beat.esv+' mL. Stroke volume equals end-diastolic volume minus end-systolic volume.');
+    'Aortic opening pressure for this trial is '+beat.events[1][1]+' mm Hg. Aortic pressure is the input changed to alter afterload. Loop width measures the resulting stroke volume.'];
+  const state={trial,status:first?'Prediction checked':'Awaiting prediction',baselineStrokeVolume:base.sv};
+  const prediction=first?'Stroke volume would be '+(first==='same'?'unchanged':first)+'.':'';
+  if(first){
+    state.trialStrokeVolume=beat.sv;
+    state.changeInStrokeVolume=beat.sv-base.sv;
+    facts.push('Learner prediction: '+prediction+' Measured baseline stroke volume = '+base.edv+' − '+base.esv+' = '+base.sv+' mL. Measured '+trial+' afterload stroke volume = '+beat.edv+' − '+beat.esv+' = '+beat.sv+' mL. Stroke volume '+(beat.sv<base.sv?'decreased':'increased')+' by '+Math.abs(state.changeInStrokeVolume)+' mL. The comparison ends systole at '+beat.esv+' mL.');
+  }
   if(first&&selectedEvent!==null)facts.push('Inspected point '+letters[selectedEvent]+' on the comparison curve: '+beat.events[selectedEvent][0]+' mL and '+beat.events[selectedEvent][1]+' mm Hg.');
   return {course:'ap2',type:'diagram',reference:'19.4',label:'Afterload and stroke volume',text:facts.join(' '),diagram:{
-    id:'ap2-lab-afterload',state:{trial,status:first?'Prediction checked':'Awaiting prediction',baselineStrokeVolume:base.sv},
-    question:'Which change in loop width supports your explanation?',prediction:first?'Stroke volume would be '+first+'.':'',facts}};
+    id:'ap2-lab-afterload',state,
+    question:'Which change in loop width supports your explanation?',prediction,facts}};
+}
+
+// Check claims about this particular first beat against the values that drew the curves.
+export function checkAfterloadTutorReply(text,context){
+  const diagram=context?.diagram,trial=diagram?.state?.trial;
+  if(context?.assessmentMode==='exam'||diagram?.id!=='ap2-lab-afterload'||diagram.state.status!=='Prediction checked'||!['higher','lower'].includes(trial))return null;
+  const base=beatValues('baseline'),beat=beatValues(trial);
+  const allowedVolumes=new Set([0,base.edv,base.esv,base.sv,beat.esv,beat.sv,Math.abs(beat.sv-base.sv)]);
+  const statements=String(text).replace(/[*_]/g,'').split(/(?<=[.!?])\s+|\n+/);
+  const conflicts=statements.some(line=>{
+    if(/\bloop width\s*\(afterload\)|\bafterload\s*\(loop width\)|\bloop width\s+(?:measures|represents|is)\s+(?:the\s+)?afterload\b/i.test(line))return true;
+    if(/\b(?:if|hypothetically|suppose|imagine)\b/i.test(line))return false;
+    const measured=line.replace(/.*?\b(?:but|whereas|however|in fact|in your trial)\b[, ]*/i,'');
+    if(/\b(?:you predicted|your prediction|you expected|you thought|you hypothesi[sz]ed)\b/i.test(measured))return false;
+    if(/\b(?:stroke volume|SV) (?:remaining|left in the ventricle|at the end of systole)\b/i.test(measured))return true;
+    if([...measured.matchAll(/(-?\d+(?:\.\d+)?)\s*(?:mL|milliliters?|millilitres?)\b/gi)].some(m=>!allowedVolumes.has(Math.abs(Number(m[1])))))return true;
+    if(!/\bstroke volume\b|\bSV\b/i.test(measured))return false;
+    const pair=measured.match(/(?:stroke volume|\bSV)\s+(?:(?:actually|instead)\s+)?(?:go|went|change[d]?|move[d]?|increase[d]?|rise|rose|decrease[d]?|fall|fell|drop(?:ped)?|decline[d]?)\s+from\s+(\d+(?:\.\d+)?)(?:\s*mL)?\s+to\s+(\d+(?:\.\d+)?)/i);
+    if(pair&&(Number(pair[1])!==base.sv||Number(pair[2])!==beat.sv))return true;
+    const quantity=measured.match(/\b(?:stroke volume|SV)\s+(?:is|was|equals|became|(?:rose|fell|increased|decreased|dropped)\s+to)\s+(\d+(?:\.\d+)?)\s*mL\b/i);
+    if(quantity&&Number(quantity[1])!== (/\bbaseline\b/i.test(measured.slice(0,quantity.index))?base.sv:beat.sv))return true;
+    const change=measured.match(/\b(?:stroke volume|SV)\s+(?:rose|fell|increased|decreased|dropped|changed)\s+by\s+(\d+(?:\.\d+)?)\s*mL\b/i);
+    if(change&&Number(change[1])!==Math.abs(beat.sv-base.sv))return true;
+    const direction=measured.match(/\b(?:stroke volume|SV)\s+(?:actually\s+|instead\s+)?(increased|rose|decreased|fell|remained unchanged|stayed the same)\b/i)?.[1];
+    return !!direction&&!(beat.sv<base.sv?/^(decreased|fell)$/i:/^(increased|rose)$/i).test(direction);
+  });
+  if(!conflicts)return null;
+  const outcome=beat.sv<base.sv?'decreased':'increased';
+  const predicted=diagram.prediction.replace(/^Stroke volume/,'stroke volume');
+  return {reason:'The local reply disagreed with the volumes in this trial.',reference:'19.4',text:
+    'You predicted that '+predicted+' In the displayed '+trial+'-afterload beat, stroke volume '+outcome+' from '+base.sv+' mL to '+beat.sv+' mL. Both beats began at '+beat.edv+' mL. The baseline beat ended at '+base.esv+' mL and the comparison beat ended at '+beat.esv+' mL. [S1]\n\nWhich edge of the loop moved, and how does that explain the change in its width?'};
 }
 
 export function renderAfterload(){

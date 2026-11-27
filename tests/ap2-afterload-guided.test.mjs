@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {beatValues,afterloadContext} from '../src/ap2-afterload.js';
+import {beatValues,afterloadContext,checkAfterloadTutorReply} from '../src/ap2-afterload.js';
 import {renderLab} from '../src/ap2-cardio.js';
 import {newRecords,validAP2Records,createRecordsStore} from '../src/ap2-records.js';
 import {createStudyBackup,restoreStudyBackup} from '../src/study-backup.js';
@@ -33,8 +33,31 @@ test('winter lab tutoring uses the displayed trial and learner prediction, witho
   assert.match(reviewed.sources[0].text,/65 mL/);
   assert.match(reviewed.sources[0].text,/point C/);
   assert.match(reviewed.messages[0].content,/would be larger/);
+  assert.match(reviewed.sources[0].text,/120 − 65 = 55 mL/);
+  assert.match(reviewed.sources[0].text,/decreased by 15 mL/);
   assert.equal(request({...revealed,assessmentMode:'exam'}).blocked,true);
   assert.match(request(afterloadContext('lower','larger')).sources[0].text,/40 mL/);
+});
+
+test('the observed loop protects the learner against the incorrect local-model response and preserves sound coaching',()=>{
+  const high=afterloadContext('higher','larger'),low=afterloadContext('lower','same');
+  const actual='You predicted that stroke volume would be larger after increasing the loop width. In your trial, the stroke volume increased from 70 mL to 125 mL. What did you expect?';
+  assert.match(checkAfterloadTutorReply(actual,high).text,/decreased from 70 mL to 55 mL/);
+  assert.match(checkAfterloadTutorReply('Why did stroke volume rise from 70 to 125 mL?',high).text,/to 55 mL/);
+  assert.match(checkAfterloadTutorReply('Why did stroke volume rise from 70 to 65 mL?',high).text,/to 55 mL/);
+  assert.match(checkAfterloadTutorReply('You increased the loop width (afterload).',high).text,/Which edge of the loop/);
+  assert.match(checkAfterloadTutorReply('What was the observed value of stroke volume at the end of systole?',high).text,/The baseline beat ended/);
+  assert.match(checkAfterloadTutorReply('Stroke volume increased from 70 to 65 mL.',high).text,/would be larger/);
+  assert.match(checkAfterloadTutorReply('The stroke volume was 65 mL.',high).text,/to 55 mL/);
+  assert.match(checkAfterloadTutorReply('Stroke volume decreased by 55 mL.',high).text,/to 55 mL/);
+  assert.equal(checkAfterloadTutorReply('Baseline stroke volume was 70 mL. After the pressure increased, stroke volume was 55 mL.',high),null);
+  assert.match(checkAfterloadTutorReply('Stroke volume decreased.',low).text,/increased from 70 mL to 80 mL/);
+  assert.equal(checkAfterloadTutorReply('You predicted stroke volume would be larger, but stroke volume decreased from 70 mL to 55 mL. Why did more blood remain?',high),null);
+  assert.equal(checkAfterloadTutorReply('Stroke volume increased from 70 to 80 mL. Which edge moved?',low),null);
+  assert.equal(checkAfterloadTutorReply('How would stroke volume change if end-diastolic volume were 135 mL?',high),null);
+  assert.equal(checkAfterloadTutorReply('Why did you predict stroke volume would be higher?',high),null);
+  assert.equal(checkAfterloadTutorReply(actual,afterloadContext('higher')),null);
+  assert.equal(checkAfterloadTutorReply(actual,{...high,assessmentMode:'exam'}),null);
 });
 
 test('winter study records preserve original responses and revisions through a backup, accepting older records without predictions',()=>{
