@@ -6,6 +6,7 @@ const pass=status=>status==='correct'||status==='spelling';
 export {pass};
 export function shouldRestoreCourseRecord(key,current,value){
   if(!current)return true;
+  if(key.startsWith('mechanism:'))return value.at<current.at;
   if(key.startsWith('run:'))return !current.submitted&&Boolean(value.submitted);
   if(key.startsWith('mock:')){
     if(!current.submitted&&value.submitted)return true;

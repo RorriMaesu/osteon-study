@@ -2,6 +2,7 @@
 import {renderSpecimen,mountSpecimen} from './ap2-cardio-specimens.js';
 import {renderValveWindow,paintValves,renderOutput,mountOutput,renderEmbryo,mountEmbryo,renderPump,mountPump,renderExchange,mountExchange,renderHemorrhage,mountHemorrhage} from './ap2-cardio-mechanisms.js';
 import {beat,rightBeat,rightPhases,rightPressureState,interpolate,pressureState,valveChallenges,valveChoices,rightValveChallenges,rightValveChoices} from './ap2-heart-cycle.js';
+import {renderAfterload,mountAfterload} from './ap2-afterload.js';
 import {renderRoutes,mountRoutes} from './ap2-cardio-routes.js';
 import {smearStation,mountSmear,clotStation,mountClot} from './ap2-blood-stations.js';
 
@@ -722,7 +723,14 @@ const labs = new Map([
   ['19.1', [()=>renderSpecimen('heart'),lab=>mountSpecimen(lab,'heart')]],
   ['19.2', [renderHeartbeat, mountHeartbeat]],
   ['19.3', [renderHeartbeat, mountHeartbeat]],
-  ['19.4', [renderOutput,mountOutput]],
+  ['19.4', [()=>'<nav class="course-actions" aria-label="Cardiac physiology experiments"><a class="course-link" data-output-link href="#ap2-lesson-19.4/activity">Cardiac output</a><a class="course-link" data-afterload-link href="#ap2-lesson-19.4/activity/afterload">Compare pressure–volume loops</a></nav>'+
+    '<div data-output-view>'+renderOutput()+'</div><div data-afterload-view hidden>'+renderAfterload()+'</div>',(lab,{store,station}={})=>{
+      const afterload=station==='afterload',outputView=lab.querySelector('[data-output-view]'),afterloadView=lab.querySelector('[data-afterload-view]');
+      outputView.hidden=afterload;afterloadView.hidden=!afterload;
+      lab.querySelector(afterload?'[data-afterload-link]':'[data-output-link]').setAttribute('aria-current','page');
+      if(afterload)mountAfterload(afterloadView,store);
+      else mountOutput(outputView);
+    }]],
   ['19.5', [renderEmbryo,mountEmbryo]],
   ['20.1', [renderPump,mountPump]],
   ['20.2', [renderVessel, mountVessel]],
@@ -749,13 +757,13 @@ export function renderLab(id) {
   return lab ? `${labCss}<section class="ap2-cardio-lab" data-cardio-lab="${id}">${lab[0]()}</section>` : '';
 }
 
-export function mountLab(root, id) {
+export function mountLab(root, id, options) {
   const behavior = labs.get(id);
   if (!root || !behavior) return;
   const selector = `[data-cardio-lab="${id}"]`;
   const lab = root.matches?.(selector) ? root : root.querySelector(selector);
   if (!lab || lab.dataset.cardioMounted) return;
-  behavior[1](lab);
+  behavior[1](lab,options);
   lab.dataset.cardioMounted = 'true';
 }
 

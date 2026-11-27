@@ -1,5 +1,6 @@
 import {activeChapters} from './chapters.js';
 import {setLearningContext} from './learning-context.js';
+import {springLabRoutePattern} from './ap3-lab-links.js';
 
 const selectionKey = 'osteon-selected-course';
 const returnKey = 'osteon-course-atlas-return';
@@ -12,7 +13,8 @@ function remember(key, value) {
 }
 const numerals = {'1':'I', '2':'II', '3':'III'};
 const lessonRoute = /^ap([23])-lesson-(\d+\.\d+)(?:\/(?:activity|figures|check)(?:\/[\w.-]+)?)?$/;
-const springStation = /^ap3-(?:specimen-[\w-]+(?:\/target\/[\w-]+)?|lab-2[1-8](?:\/\d+)?)$/;
+const springSpecimen = /^ap3-specimen-[\w-]+(?:\/target\/[\w-]+)?$/;
+const isSpringStation = route=>springSpecimen.test(route)||springLabRoutePattern.test(route);
 export function selectedCourse() { return selected; }
 
 export function initCourseHome({setView, escape}) {
@@ -60,7 +62,7 @@ export function initCourseHome({setView, escape}) {
     }
     if (view === 'atlas' || view === 'motion') {
       let ret = ''; try { ret = sessionStorage.getItem(returnKey) || ''; } catch {}
-      back.hidden = !(lessonRoute.exec(ret)?.[1]===selected || selected==='3' && springStation.test(ret));
+      back.hidden = !(lessonRoute.exec(ret)?.[1]===selected || selected==='3' && isSpringStation(ret));
       if (!back.hidden) {
         back.href='#'+ret;back.textContent='← '+courseRouteLabel(ret);
       }
@@ -90,7 +92,7 @@ export function rememberAP2Route(route) {
 }
 export function rememberAP3Route(route) {
   remember('osteon-course-resume-3',route);
-  if (lessonRoute.test(route) || springStation.test(route)) {
+  if (lessonRoute.test(route) || isSpringStation(route)) {
     try { sessionStorage.setItem(returnKey,route); } catch {}
   }
 }

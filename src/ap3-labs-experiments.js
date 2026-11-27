@@ -70,11 +70,11 @@ export const spirometry = {
   run({form}){
     const high=Number(form)===0?3.2:3.5, low=Number(form)===0?-1.1:-0.9;
     const rows=[[0,0],[1,0.5],[2,0],[3,0.5],[4,0],[6,high],[9,low],[12,0]];
-    return {observation:table('Relative volume at sampled times',['Time (s)','Relative volume (L)'],rows),plot:{x:'Time (s)',y:'Relative volume (L)',rows},
+    return {observation:table('Relative volume at sampled times',['Time (s)','Relative volume (L)'],rows),plot:{x:'Time (s)',y:'Relative volume (L)',rows,frameTimes:[1,6,9],measureExtrema:true},
       question:'Which value can you determine from the deepest inspiration and maximal expiration in this trace?',
       choices:[(high-low).toFixed(1)+' L vital capacity',high.toFixed(1)+' L total lung capacity',Math.abs(low).toFixed(1)+' L residual volume'],
       why:'Vital capacity is the difference between the two volume extremes. A simple spirometer does not measure the gas that remains after maximal expiration.',
-      frames:[frame('Quiet breath','The first quiet excursion is 0.5 L.'),frame('Maximal inspiration','The trace reaches +'+high+' L relative to resting end-expiration.'),frame('Maximal expiration','The trace reaches '+low+' L. The change from the maximum is '+(high-low).toFixed(1)+' L.')],
+      frames:[frame('Quiet breath','At 1 s, the first quiet excursion is +0.5 L.'),frame('Maximal inspiration','At 6 s, the trace reaches +'+high+' L relative to resting end-expiration.'),frame('Maximal expiration','At 9 s, the trace reaches '+low+' L. The change from the maximum is '+(high-low).toFixed(1)+' L.')],
     };
   },
 };

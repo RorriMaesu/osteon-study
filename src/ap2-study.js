@@ -1,4 +1,6 @@
+import {mountLessonFigure} from './lesson-figure.js';
 import {springSections} from './tutor-ap3.js';
+import {mountGuidedPredictions} from './ap2-guided-predictions.js';
 import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
 import {openStructureIndex} from './ap2-model-index.js';
 import {openScoredPractical} from './ap2-scored-practical.js';
@@ -112,6 +114,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
     const art=figures.filter(f=>f.section===s.id), plate=plates[s.id];
     const tabs=[['read','Learn'],['activity','Explore'],...(art.length||plate?[['figures','Figures']]:[]),['check','Check recall']];
     if(!tabs.some(t=>t[0]===tab))tab='read';
+    setLearningContext({course:'ap2',type:'lesson',reference:s.id,label:s.title,text:s.paragraphs.join(' ')});
     const data=store.read(),studied=!!data.studied[s.id];
     page(`<div class="ap2-breadcrumb">${link('ap2-chapter-'+ch.id,'← Chapter '+ch.id)}<label>Section <select id="ap2-section" aria-label="Choose section">${ch.sections.map(v=>`<option value="${v.id}" ${v.id===s.id?'selected':''}>${v.id} · ${e(v.title)}</option>`).join('')}</select></label></div>`+
       hero('A&P II · SECTION '+s.id,s.title)+
@@ -130,19 +133,15 @@ export function initAP2({root,escape:e,toast,dialog}) {
       const atlas=atlasLinks[s.id];
       body.innerHTML=`<div class="ap2-lesson-text"><div>${s.paragraphs.map(p=>'<p>'+e(p)+'</p>').join('')}</div><aside><h2>Learning goals</h2><ul>${s.objectives.map(o=>'<li>'+e(o)+'</li>').join('')}</ul>${atlas?`<a class="course-link" href="?nerve=${encodeURIComponent(atlas[0])}#atlas">Locate ${e(atlas[1])} in 3D</a>`:''}</aside></div>`;
     } else if(tab==='figures') {
-      function show(index) {
-        if(plate&&!art.length){
-          body.innerHTML=`<figure class="ap2-art"><img alt="${e(plate.alt)}" src="data:image/svg+xml;charset=utf-8,${encodeURIComponent(plate.svg)}"><figcaption>${e(plate.title)} · Osteon teaching diagram</figcaption></figure>`;return;
-        }
-        const f=art[index], src='assets/ap2-figures/'+f.figure+'.webp';
-        body.innerHTML=`<figure class="ap2-art"><div>${art.length>1?`<label>Diagram <select data-figure>${art.map((a,i)=>`<option value="${i}" ${i===index?'selected':''}>${e(a.title)}</option>`).join('')}</select></label>`:''} <a href="${src}" target="_blank" rel="noreferrer">Open full size ↗</a></div>
-        <img src="${src}" width="${f.width}" height="${f.height}" alt="${e(f.alt||f.title)}"><figcaption>Fig. ${f.figure} · ${e(f.title)}. OpenStax, Rice University · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a>. ${e(f.credit||'')} <a href="${e(s.source)}" target="_blank" rel="noreferrer">Access for free at openstax.org ↗</a></figcaption></figure>`;
-        const pick=body.querySelector('[data-figure]');if(pick)pick.onchange=()=>show(Number(pick.value));
-      } show(Math.max(0,art.findIndex(f=>f.figure===station)));
+      const entries=art.length?art.map(f=>({...f,id:f.figure,src:'assets/ap2-figures/'+f.figure+'.webp'})):
+        [{...plate,src:'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(plate.svg)}];
+      const selected=Math.max(0,entries.findIndex(f=>f.id===station));
+      mountLessonFigure(body,{figures:entries,selected,section:s.id,source:s.source,
+        onSelect:i=>{location.hash=base+'/figures/'+entries[i].id;}});
     } else if(tab==='activity') {
       const lab=labFor(s.id),html=lab.renderLab(s.id);
       body.innerHTML=`${html?'<div class="ap2-simulation">'+html+'</div>':''}<div class="ap2-guided"><h2>${e(s.activity.title)}</h2><p>${e(s.activity.prompt)}</p><div class="ap2-step"></div></div>`;
-      if(html)lab.mountLab(body.querySelector('.ap2-simulation'),s.id);
+      if(html)lab.mountLab(body.querySelector('.ap2-simulation'),s.id,{store,station});
       addOrgansToLesson(body,s.id,station);
       addEvidenceLesson(body,s.id,station);
       if(s.id==='15.2')addEntericLesson(body,station);
@@ -188,18 +187,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
         context.href='?nerve='+encodeURIComponent(atlas[0])+'#atlas';context.textContent='Find '+atlas[1]+' in the whole-body Atlas';
         body.querySelector('.ap2-guided').append(context);
       }
-      const stepArea=body.querySelector('.ap2-step');
-      const predictions=new Map();
-      function step(i,show=false){
-        const a=s.activity.steps[i],prediction=predictions.get(i)||'';
-        stepArea.innerHTML=`<p class="eyebrow">STEP ${i+1} / ${s.activity.steps.length}</p><h3>${e(a.label)}</h3>
-          <label>Your prediction or explanation <small>(optional)</small><input data-prediction maxlength="500" autocomplete="off" value="${e(prediction)}"></label>
-          ${show?'<p role="status">'+e(a.detail)+'</p>':''}
-          <div class="course-actions"><button data-before ${i?'':'disabled'}>← Previous</button><button data-reveal>${show?'Hide explanation':'Show explanation'}</button><button data-after ${i===s.activity.steps.length-1?'disabled':''}>Next step →</button></div>`;
-        stepArea.querySelector('[data-prediction]').oninput=ev=>predictions.set(i,ev.target.value);
-        stepArea.querySelector('[data-before]').onclick=()=>step(i-1);stepArea.querySelector('[data-after]').onclick=()=>step(i+1);
-        stepArea.querySelector('[data-reveal]').onclick=()=>step(i,!show);
-      }step(0);
+      mountGuidedPredictions(body.querySelector('.ap2-step'),s,store,e);
     } else {
       const indices=s.questions.map((_,i)=>i);
       const first=indices.find(i=>!data.checks[`ap2-${s.id}-q${i+1}`]?.correct)??0;
@@ -214,7 +202,6 @@ export function initAP2({root,escape:e,toast,dialog}) {
         };
       }check(first);
     }
-    setLearningContext({course:'ap2',type:'lesson',reference:s.id,label:s.title,text:s.paragraphs.join(' ')});
   }
   const isExam=()=>location.hash==='#ap2-session'&&!!store.read().draft;
   document.addEventListener('viewchange',()=>{if(!location.hash.startsWith('#ap2-')&&!location.hash.startsWith('#course-2')&&document.body.dataset.ap2Exam){delete document.body.dataset.ap2Exam;setTutorAssessmentMode(null);}});

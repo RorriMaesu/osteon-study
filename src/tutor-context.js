@@ -3,7 +3,7 @@ import {lessons} from './learning-data.js';
 import {conversationForModel} from './tutor-state.js';
 import {allTerms} from './data.js';
 import {sections as ap2Sections, sectionById} from './ap2-library.js';
-import {ap2Reference, isAP2Context} from './tutor-ap2.js';
+import {ap2Reference, isAP2Context, activeWinterLab} from './tutor-ap2.js';
 import {springSections,springSectionById,isAP3Context,ap3Reference,activeSpringLab} from './tutor-ap3.js';
 import {cardiacValveTeaching} from './tutor-valves.js';
 const stop=new Set('a an the and or of to in on for with is are was were be by as at it this that how what why which me i you my can do does about please explain ask question help hint give compare from current highlighted target another clearly anatomy anatomical'.split(' '));
@@ -40,8 +40,8 @@ function wordFrequencies(courseNotes){
 const firstFrequencies=wordFrequencies(notes),secondFrequencies=wordFrequencies(ap2Notes),thirdFrequencies=wordFrequencies(ap3Notes);
 export function retrieveSources(query,context={}){
  if(context.assessmentMode==='exam')return [];
- if(activeSpringLab(context)){
-  const source=ap3Reference(context.reference);
+ if(activeSpringLab(context)||activeWinterLab(context)){
+  const source=activeWinterLab(context)?ap2Reference(context.reference):ap3Reference(context.reference);
   return source?[{id:'S1',...source,text:context.diagram.facts.join(' ').slice(0,3600)}]:[];
  }
  const third=isAP3Context(context),second=isAP2Context(context),courseNotes=third?ap3Notes:second?ap2Notes:notes,frequencies=third?thirdFrequencies:second?secondFrequencies:firstFrequencies;
@@ -81,14 +81,14 @@ export function buildTutorMessages(query,history,context={},mode='socratic'){
  if(mode==='socratic'&&/\b(explain|explanation|tell me|give me the answer|what is the difference|what are the differences)\b/i.test(query))mode='explain';
  const followup=query.split(/\s+/).length<=16&&/\b(it|its|their|they|them|those|that|this|ones|continue|more)\b/i.test(query);
  const previous=followup?[...history].reverse().find(m=>m.role==='user'&&m.content)?.content.slice(0,400):'';
- if(isAP2Context(context)){
+ if(isAP2Context(context)&&!activeWinterLab(context)){
   const lastQuestion=[...history].reverse().find(m=>m.role==='user'&&m.content)?.content.slice(0,400);
   const authored=cardiacValveTeaching(query,lastQuestion,context,mode);
   if(authored)return{...authored,retrievalTopic:lastQuestion||'',messages:[]};
  }
  const sources=retrieveSources(query,{...context,conversationTopic:previous}),term=allTerms.find(t=>t.id===context.termId);
  if(isAP2Context(context)||isAP3Context(context)){
-  const approach=activeSpringLab(context)
+  const approach=activeSpringLab(context)||activeWinterLab(context)
    ? 'Coach the current lab step using the displayed controls, observations and confirmed results. Before a prediction or on a route retry, ask for the observation that would distinguish outcomes. Keep the pending answer and future stops hidden, even when asked for the answer. After a response is checked, explain its displayed feedback and the selected frame.'
    : mode==='explain'?'Give the requested explanation first in two to five short sentences.':mode==='hint'?'Offer a small cue and one question that helps the learner reason through it.':'Ask one specific, answerable question at a time, then give feedback based on the notes.';
   const system=[

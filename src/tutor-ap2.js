@@ -16,6 +16,10 @@ export function ap2Reference(reference) {
   };
 }
 
+export function activeWinterLab(context={}){
+  return isAP2Context(context)&&context.diagram?.id?.startsWith('ap2-lab-');
+}
+
 export function ap2GuideLessons() {
   return sections.map(section => {
     const check = section.questions[0];

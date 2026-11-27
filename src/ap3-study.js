@@ -1,6 +1,8 @@
+import {mountLessonFigure} from './lesson-figure.js';
 import {specimenAnimations,animationForTarget} from './ap3-specimen-animations.js';
 import {chapters} from './ap3-curriculum.js';
 import {chapterLabs,renderLab,mountLab} from './ap3-labs.js';
+import {springLessonLabs,labRoute,readLabRoute} from './ap3-lab-links.js';
 import {specimens,renderSpecimen,mountSpecimen} from './ap3-specimens.js';
 import figures from './ap3-figures.json' with {type:'json'};
 import {springStore} from './ap3-records.js';
@@ -66,9 +68,10 @@ export function initAP3({root,escape:e,toast}){
     root.querySelector('[data-mark]').onclick=ev=>{const value=!studied(s.id);store.write('study:'+s.id,{studied:value,at:Date.now()});ev.currentTarget.textContent=value?'✓ Studied':'Mark studied';ev.currentTarget.setAttribute('aria-pressed',String(value));};
     root.querySelector('[data-tutor]').onclick=()=>document.querySelector('#tutor-launch')?.click();
     if(tab==='figures'){
-      const available=figures.sections[s.id],id=available.includes(figure)?figure:available[0],f=figures.figures[id],src='assets/ap3-figures/'+id+'.webp';
-      body.innerHTML='<figure class="ap2-art"><div><label>Figure <select data-figure>'+available.map(n=>'<option value="'+n+'" '+(n===id?'selected':'')+'>'+n+' · '+e(figures.figures[n].title)+'</option>').join('')+'</select></label> <a href="'+src+'" target="_blank" rel="noreferrer">Open full size ↗</a></div><img src="'+src+'" alt="'+e(f.title)+'"><figcaption>Figure '+id+' · '+e(f.title)+'. OpenStax, Rice University. '+e(f.credit||'')+' <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a> · <a href="'+e(sections.get(f.section)?.source||s.source)+'" target="_blank" rel="noreferrer">Access for free at openstax.org</a>.</figcaption></figure>';
-      body.querySelector('[data-figure]').onchange=ev=>go(base+'/figures/'+ev.target.value);
+      const entries=figures.sections[s.id].map(id=>({...figures.figures[id],id,src:'assets/ap3-figures/'+id+'.webp'}));
+      const selected=Math.max(0,entries.findIndex(f=>f.id===figure));
+      mountLessonFigure(body,{figures:entries,selected,section:s.id,source:sections.get(entries[selected].section)?.source||s.source,
+        onSelect:i=>go(base+'/figures/'+entries[i].id)});
     }else if(tab==='check'){
       body.innerHTML='<h2>'+e(s.question)+'</h2><div class="ap2-answers">'+s.options.map((opt,i)=>'<button data-answer="'+i+'">'+e(opt)+'</button>').join('')+'</div><p role="status" data-feedback></p>';
       for(const el of body.querySelectorAll('[data-answer]'))el.onclick=()=>{
@@ -79,21 +82,37 @@ export function initAP3({root,escape:e,toast}){
         body.querySelector('[data-feedback]').textContent=(correct?'Correct. ':'Expected answer · '+s.options[s.answer]+'. ')+s.why;
       };
     }else{
+      const recommendation=springLessonLabs[s.id];
+      const task=labRoute(recommendation.chapter||ch.id,recommendation.activity,recommendation.settings,s.id);
+      const model=specimens.find(v=>v.id===recommendation.model);
       body.innerHTML='<div class="ap2-lesson-text"><div><p>'+e(s.explanation)+'</p></div><aside><h2>Worked example</h2><p>'+e(s.worked)+'</p></aside></div>'+
-        '<div class="course-actions">'+link('ap3-lab-'+ch.id+'/'+Math.max(0,chapterLabs[ch.id].findIndex(a=>a.section===s.id)),'Try the physiology lab')+link('ap3-models/'+ch.id,'Explore this chapter in 3D')+(s.id==='25.2'?link('ap2-lesson-15.2/activity/enteric-wall','Compare autonomic reflexes in A&P II'):'')+'</div>';
+        '<div class="course-actions">'+link(task,(recommendation.related?'Related practice · ':'')+recommendation.label)+
+        (model?link('ap3-specimen-'+model.id,model.title+' · 3D'):link('ap3-models/'+ch.id,'Explore this chapter in 3D'))+
+        (s.id==='25.2'?link('ap2-lesson-15.2/activity/enteric-wall','Compare autonomic reflexes in A&P II'):'')+'</div>';
     }
   }
-  function lab(ch,requested){
+  function lab(ch,requested,segments){
     const activity=Number.isInteger(Number(requested))&&chapterLabs[ch.id][Number(requested)]?Number(requested):0;
-    page(hero('Chapter '+ch.id+' · Physiology lab',ch.title)+link('ap3-chapter-'+ch.id,'← Chapter '+ch.id)+'<section class="course-card ap3-lab" data-lab>'+renderLab(ch.id,activity)+'</section>');
-    cleanup(mountLab(root.querySelector('[data-lab]'),ch.id,activity,setLearningContext));
-    const picker=root.querySelector('[data-ap3-activity]');
-    const syncTopic=()=>{
-      const index=Number(picker?.value||0);
-      const route='ap3-lab-'+ch.id+'/'+index;
-      store.write('last',{route});rememberAP3Route(route);
-    };
-    picker?.addEventListener('change',syncTopic);syncTopic();
+    const {settings,from}=readLabRoute(segments);
+    const back=from?link('ap3-lesson-'+from,'← Return to §'+from+' · '+sections.get(from).title):link('ap3-chapter-'+ch.id,'← Chapter '+ch.id);
+    const oldLab=root.querySelector('[data-lab-chapter="'+ch.id+'"]'),oldFocus=document.activeElement;
+    let focusSelector;
+    if(oldLab?.contains(oldFocus)){
+      if(oldFocus.hasAttribute('data-ap3-activity'))focusSelector='[data-ap3-activity]';
+      if(oldFocus.hasAttribute('data-ap3-route'))focusSelector='[data-ap3-route]';
+      if(oldFocus.hasAttribute('data-ap3-control'))focusSelector='[data-ap3-control="'+oldFocus.dataset.ap3Control+'"]';
+      if(oldFocus.hasAttribute('data-ap3-choice'))focusSelector='[data-ap3-choice]';
+    }
+    const scroll=oldLab?root.scrollTop:0;
+    page(hero('Chapter '+ch.id+' · Physiology lab',ch.title)+back+'<section class="course-card ap3-lab" data-lab data-lab-chapter="'+ch.id+'">'+renderLab(ch.id,activity,settings)+'</section>');
+    const active=labRoute(ch.id,activity,settings,from);
+    if(isSpringStudyRoute(active)){store.write('last',{route:active});rememberAP3Route(active);}
+    cleanup(mountLab(root.querySelector('[data-lab]'),ch.id,activity,setLearningContext,{settings,store,
+      onNavigate:(index,values)=>{
+        const next=labRoute(ch.id,index,values,from);
+        if(location.hash!=='#'+next)go(next);
+      }}));
+    if(oldLab){root.scrollTop=scroll;if(focusSelector)root.querySelector(focusSelector)?.focus({preventScroll:true});}
   }
   function library(ch){
     const entries=ch?specimens.filter(s=>s.chapter===ch.id):specimens;
@@ -158,7 +177,7 @@ export function initAP3({root,escape:e,toast}){
     if(knownStudyPage&&isSpringStudyRoute(route)){store.write('last',{route});rememberAP3Route(route);}
     if(name.startsWith('ap3-lesson-')&&s){lesson(s,arg,detail);return;}
     if(name.startsWith('ap3-chapter-')&&ch){chapter(ch);return;}
-    if(name.startsWith('ap3-lab-')&&ch){lab(ch,arg);return;}
+    if(name.startsWith('ap3-lab-')&&ch){lab(ch,arg,route.split('/').slice(2));return;}
     if(name.startsWith('ap3-specimen-')){const st=specimens.find(v=>'ap3-specimen-'+v.id===name);if(st){specimen(st,arg==='target'?detail:null);return;}}
     if(name==='ap3-models'){library(byChapter.get(arg));return;}
     if(name==='ap3-exams'){exams.center(arg);return;}

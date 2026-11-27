@@ -1,9 +1,10 @@
 import {renderSensoryDetail,mountSensoryDetail} from './ap2-neural-sensory.js';
 import {renderNeuralSpecimens, mountNeuralSpecimens} from './ap2-neural-specimens.js';
 import {renderNeuralSignal, mountNeuralSignal} from './ap2-neural-signals.js';
+import {renderCaseEvidence,mountCaseEvidence} from './ap2-neural-case-evidence.js';
 
 const q=(prompt,choices,key,why,hints)=>({prompt,choices,key,why,hints});
-const station=(name,observation,finding,reason)=>({name,observation,questions:[finding,reason]});
+const station=(name,observation,finding,reason,evidence)=>({name,observation,questions:[finding,reason],evidence});
 export const neuralCases={
   '12.1':[
     station('Trace a fingertip signal','A light touch on a fingertip produces a signal in an arm nerve traveling toward the spinal cord. A separate recording shows signals traveling from the cord to a hand muscle.',
@@ -18,9 +19,9 @@ export const neuralCases={
       q('Block only the ascending route above the spinal branches. What does the simulated circuit predict?',['Neither withdrawal nor ascending signaling can occur','The brain receives the signal but withdrawal stops','Withdrawal can begin while the ascending signal fails to reach the brain'],2,'The local sensory-to-motor circuit is intact below the block. Conscious perception through the modeled ascending route requires transmission to the brain.',
         ['The local spinal relay and motor output still have an intact connection.','Trace the location of the block. It is above the local reflex branch, on the route to the brain.']))],
   '12.2':[
-    station('Compare myelinating cells','In micrograph A, processes from one glial cell wrap internodes on several axons. In B, one cell wraps one internode of a peripheral nerve fiber.',
+    station('Compare myelinating cells','Trace the connection between a glial cell and its myelin in each panel. Each sleeve represents one internode.',
       q('Which specimen shows a many-axon pattern?',['A','B','Neither'],0,'One oligodendrocyte can supply myelin to segments of multiple CNS axons.'),
-      q('Which cell made the myelin in B?',['Astrocyte','Schwann cell','Satellite glial cell'],1,'A myelinating Schwann cell forms one internode on one PNS axon. Satellite glia support neuronal cell bodies in peripheral ganglia.'))],
+      q('Which cell made the myelin in B?',['Astrocyte','Schwann cell','Satellite glial cell'],1,'A myelinating Schwann cell forms one internode on one PNS axon. Satellite glia support neuronal cell bodies in peripheral ganglia.'),'myelin')],
   '12.5':[
     station('Follow a receptor potential','A taste receptor cell responds to a chemical with a graded voltage change and releases transmitter. A neighboring afferent neuron develops a graded postsynaptic response.',
       q('Where is the initial receptor potential?',['In the taste receptor cell','In the postsynaptic neuron only','In a node of Ranvier'],0,'A separate sensory receptor cell can change its voltage and release transmitter onto an afferent.'),
@@ -32,9 +33,9 @@ export const neuralCases={
     station('Compare ventricular spaces','On successive sections both lateral ventricles and the third ventricle are enlarged. The fourth ventricle is of usual size.',
       q('Where does the change stop?',['Before the third ventricle','Between the third and fourth ventricles','After the fourth ventricle'],1,'The third ventricle is upstream of the change. The fourth is downstream.'),
       q('Which interruption best accounts for this pattern?',['Aqueduct obstruction','Right interventricular foramen obstruction','Reduced absorption at arachnoid granulations alone'],0,'The cerebral aqueduct connects the third and fourth ventricles. An isolated block backs up CSF in both lateral ventricles and the third.')),
-    station('Compare vascular and CSF patterns','A fictional record describes sudden unilateral weakness. An image shows a focal region of reduced perfusion and normally sized ventricles.',
-      q('Which observation identifies the affected process?',['Both lateral ventricles are enlarged','Flow through the aqueduct is absent','A focal area receives less blood'],2,'Perfusion describes delivery of blood to tissue.'),
-      q('Which mechanism fits the observation?',['Blocked CSF outflow alone','Ischemia in a vascular territory','Excess CSF production alone'],1,'An interrupted arterial supply can produce a focal deficit. These findings alone do not establish whether a clot formed locally or traveled.'))],
+    station('Compare vascular and CSF patterns','Panel A accompanies a fictional case of sudden unilateral weakness. Panel B is a different case at the same transverse level. Compare tissue perfusion and the central fluid spaces.',
+      q('Which observation in case A identifies the affected process?',['Both lateral ventricles are enlarged','Flow through the aqueduct is absent','A focal area receives less blood'],2,'Perfusion describes delivery of blood to tissue.'),
+      q('Which mechanism fits case A?',['Blocked CSF outflow alone','Ischemia in a vascular territory','Excess CSF production alone'],1,'An interrupted arterial supply can produce a focal deficit. These findings alone do not establish whether a clot formed locally or traveled.'),'perfusion')],
   '14.2':[
     station('Trace a visual field','With either eye tested separately, a fictional learner misses targets in the left half of space. The right half remains visible.',
       q('Which field is missing?',['Left visual field of both eyes','Left eye only','Temporal field of both eyes'],0,'The missing half stays on the same side of space when either eye is covered.'),
@@ -135,7 +136,8 @@ export function mountNeuralCases(root,id){
   const selector=host.querySelector('[data-case-index]'),body=host.querySelector('[data-case-body]');
   function draw(){
     const i=Number(selector.value),c=neuralCases[id][i];
-    body.innerHTML='<p>'+c.observation+'</p>'+(id==='16.5'?motionObservation(i):'')+c.questions.map((question,j)=>'<div data-question="'+j+'"'+(j?' hidden':'')+'><label>'+question.prompt+' <select><option value="">Choose a response</option>'+question.choices.map((choice,k)=>'<option value="'+k+'">'+choice+'</option>').join('')+'</select></label><button type="button">Check '+(j?'interpretation':'observation')+'</button><output aria-live="polite"></output></div>').join('');
+    body.innerHTML='<p>'+c.observation+'</p>'+renderCaseEvidence(c.evidence)+(id==='16.5'?motionObservation(i):'')+c.questions.map((question,j)=>'<div data-question="'+j+'"'+(j?' hidden':'')+'><label>'+question.prompt+' <select><option value="">Choose a response</option>'+question.choices.map((choice,k)=>'<option value="'+k+'">'+choice+'</option>').join('')+'</select></label><button type="button">Check '+(j?'interpretation':'observation')+'</button><output aria-live="polite"></output></div>').join('');
+    if(c.evidence)mountCaseEvidence(body.querySelector('[data-case-evidence]'));
     if(id==='16.2'){
       const ol=document.createElement('ol'),timeline=i?['Before injury · remembers an event while it is occurring.','Injury occurs.','After injury · learns a new name.','Later · cannot recall the event from just before the injury.']:['Before onset · established memories are available.','After onset · hears three words and repeats them immediately.','Intervening task · attention shifts.','Delayed recall · the new words cannot be retrieved.'];
       ol.setAttribute('aria-label','Memory timeline');for(const moment of timeline){const li=document.createElement('li');li.textContent=moment;ol.append(li);}

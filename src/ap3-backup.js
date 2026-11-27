@@ -2,13 +2,15 @@ import {chapters} from './ap3-curriculum.js';
 import {fields} from './ap3-slides.js';
 import {specimens} from './ap3-specimens.js';
 import {validTermRun} from './term-mock-records.js';
+import {validMechanismRecord} from './mechanism-transfer.js';
+import {springLabRoutePattern} from './ap3-lab-links.js';
 
 const sectionIds=new Set(chapters.flatMap(c=>c.sections.map(s=>s.id)));
 const time=n=>Number.isSafeInteger(n)&&n>=0;
 const short=(s,max=2600)=>typeof s==='string'&&s.length<=max;
 const record=o=>o!==null&&typeof o==='object'&&!Array.isArray(o);
 const routes=/^ap3-(?:chapter-2[1-8]|lesson-2[1-8]\.\d+(?:\/(?:check|figures)(?:\/\d+\.\d+)?)?|specimen-[\w-]+(?:\/target\/[\w-]+)?|lab-2[1-8](?:\/\d+)?)$/;
-export const isSpringStudyRoute=route=>short(route,160)&&routes.test(route);
+export const isSpringStudyRoute=route=>short(route,160)&&(routes.test(route)||springLabRoutePattern.test(route));
 function validItem(q){
   if(!record(q)||!short(q.id,150)||!short(q.prompt)||!short(q.why)||!sectionIds.has(q.section))return false;
   if(q.kind==='choice'||q.kind==='field'){
@@ -36,7 +38,8 @@ export function validatedBackup(file){
   const entries=Object.entries(file.records);
   for(const [key,v] of entries){
     let valid=false;
-    if(key.startsWith('mock:'))valid=key==='mock:'+v?.id && validTermRun(v,'ap3');
+    if(key.startsWith('mechanism:'))valid=validMechanismRecord(key.slice(10),v,'collecting-duct');
+    else if(key.startsWith('mock:'))valid=key==='mock:'+v?.id && validTermRun(v,'ap3');
     else if(key.startsWith('run:'))valid=validRun(key.slice(4),v);
     else if(record(v)){
       if(key==='last')valid=isSpringStudyRoute(v.route);

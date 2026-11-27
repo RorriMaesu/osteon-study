@@ -203,516 +203,602 @@
   "figures": {
     "21.3": {
       "title": "Lymphatic Capillaries",
+      "alt": "A blind-ended lymphatic capillary lies between tissue cells and blood vessels. Overlapping endothelial flaps let interstitial fluid enter and oppose backflow.",
       "page": 936,
       "credit": "",
       "section": "21.1"
     },
     "21.4": {
       "title": "Major Trunks and Ducts of the Lymphatic System",
+      "alt": "The map separates the right upper quadrant drained by the right lymphatic duct from the larger territory drained by the thoracic duct. Insets show each duct joining veins near the base of the neck.",
       "page": 937,
       "credit": "",
       "section": "21.1"
     },
     "21.8": {
       "title": "Structure and Histology of a Lymph Node",
+      "alt": "A lymph node section sits beside a diagram. Follicles with pale germinal centers lie in the outer cortex beneath the capsule. Several vessels enter the convex surface and a vessel leaves at the hilum.",
       "page": 942,
       "credit": "Micrograph provided by the Regents of the University of Michigan Medical School © 2012",
       "section": "21.1"
     },
     "21.9": {
       "title": "Spleen",
+      "alt": "A body locator and spleen section lead to magnified views of white pulp around a central artery and the surrounding red pulp.",
       "page": 943,
       "credit": "Micrograph provided by the Regents of the University of Michigan Medical School © 2012",
       "section": "21.1"
     },
     "21.13": {
       "title": "Complement Cascade and Function",
+      "alt": "A sequence follows complement activation from antigen bound by antibody through cleavage of complement proteins to terminal components forming a pore in the target membrane.",
       "page": 950,
       "credit": "",
       "section": "21.2"
     },
     "21.14": {
       "title": "The inflammatory response",
+      "alt": "Two panels show a mast cell releasing histamine beside injured tissue, followed by increased local blood flow and phagocytes leaving the vessel.",
       "page": 951,
       "credit": "",
       "section": "21.2"
     },
     "21.17": {
       "title": "Antigen Processing and Presentation",
+      "alt": "A dendritic cell takes up material, processes it in vesicles and displays a peptide on MHC class II at its surface for recognition by a T cell.",
       "page": 955,
       "credit": "",
       "section": "21.3"
     },
     "21.19": {
       "title": "Clonal Selection and Expansion of T Lymphocytes",
+      "alt": "A matching antigen-presenting cell activates a T cell. Branching arrows distinguish cytotoxic effector cells that attack infected cells from a surviving memory population.",
       "page": 958,
       "credit": "",
       "section": "21.3"
     },
     "21.22": {
       "title": "Five Classes of Antibodies",
+      "alt": "A table compares IgM, IgD, secretory IgA, IgE and IgG. The drawings distinguish a pentameric IgM, paired units in secretory IgA and the single Y-shaped units in the other columns.",
       "page": 962,
       "credit": "",
       "section": "21.4"
     },
     "21.24": {
       "title": "Primary and Secondary Antibody Responses",
+      "alt": "On a graph of antibody concentration over time, the first exposure precedes a small delayed peak. After a second exposure the curve rises sooner and higher.",
       "page": 965,
       "credit": "",
       "section": "21.4"
     },
     "21.27": {
       "title": "IgA Immunity",
+      "alt": "A plasma cell beneath a mucosal surface releases IgA. The diagram follows IgA across epithelial cells into the lumen and shows how an immune response is initiated in underlying lymphoid tissue.",
       "page": 968,
       "credit": "",
       "section": "21.5"
     },
     "21.28": {
       "title": "Immune Hypersensitivity",
+      "alt": "Four columns compare hypersensitivity mediated by mast-cell degranulation, antibodies against cells, deposited immune complexes and activated T cells.",
       "page": 971,
       "credit": "",
       "section": "21.6"
     },
     "22.2": {
       "title": "Major Respiratory Structures",
+      "alt": "A front view follows air from the nasal and oral cavities through the pharynx, larynx, trachea and main bronchi into the lungs. The diaphragm lies below the lungs.",
       "page": 990,
       "credit": "",
       "section": "22.1"
     },
     "22.11": {
       "title": "Structures of the Respiratory Zone",
+      "alt": "An alveolar cluster and magnified wall are paired with a tissue section. Air spaces share thin septa containing capillaries, and an alveolar duct opens into groups of alveoli.",
       "page": 999,
       "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012",
       "section": "22.1"
     },
     "22.13": {
       "title": "Gross Anatomy of the Lungs",
+      "alt": "The right lung has three lobes and the left has two with a cardiac notch. An airway cutaway follows the trachea into main, lobar and segmental bronchi.",
       "page": 1001,
       "credit": "",
       "section": "22.2"
     },
     "22.14": {
       "title": "Parietal and Visceral Pleurae of the Lungs",
+      "alt": "A chest-wall cross section shows parietal pleura lining the wall and visceral pleura covering the lung. The narrow pleural cavity lies between the two layers.",
       "page": 1002,
       "credit": "",
       "section": "22.2"
     },
     "22.17": {
       "title": "Normal Inspiration and Expiration",
+      "alt": "Two side views compare breathing phases. During inspiration the thorax expands and the diaphragm descends. During quiet expiration the thorax recoils and the diaphragm rises.",
       "page": 1007,
       "credit": "",
       "section": "22.3"
     },
     "22.18": {
       "title": "Respiratory Volumes and Capacities",
+      "alt": "A spirogram overlays small tidal breaths and a larger excursion on colored volume bands. Adjacent columns group the volumes into capacities and show that residual volume remains after maximal expiration.",
       "page": 1008,
       "credit": "",
       "section": "22.3"
     },
     "22.22": {
       "title": "External Respiration",
+      "alt": "At the alveolar interface, oxygen arrows lead from air to blood and the red cell. Carbon dioxide arrows point from blood into the alveolus.",
       "page": 1015,
       "credit": "",
       "section": "22.4"
     },
     "22.23": {
       "title": "Internal Respiration",
+      "alt": "At a systemic capillary, oxygen moves from the red cell and plasma toward tissue cells. Carbon dioxide moves from the tissues into the blood.",
       "page": 1016,
       "credit": "",
       "section": "22.4"
     },
     "22.26": {
       "title": "Oxygen-Hemoglobin Dissociation and Effects of pH and Temperature",
+      "alt": "Oxygen saturation curves plot hemoglobin saturation against oxygen partial pressure at different temperatures. Warmer curves sit farther right, showing lower saturation at the same intermediate oxygen pressure.",
       "page": 1020,
       "credit": "",
       "section": "22.5"
     },
     "22.28": {
       "title": "Carbon Dioxide Transport",
+      "alt": "Carbon dioxide enters blood from tissue. Three paths depict gas dissolved in plasma, gas carried on hemoglobin, and carbon dioxide converted to bicarbonate after entering a red cell.",
       "page": 1021,
       "credit": "",
       "section": "22.5"
     },
     "22.29": {
       "title": "Development of the Lower Respiratory System",
+      "alt": "A sequence shows the lower respiratory tract beginning as a ventral foregut outgrowth. The trachea and branching bronchial buds develop into the two lung trees.",
       "page": 1026,
       "credit": "",
       "section": "22.7"
     },
     "23.2": {
       "title": "Components of the Digestive System",
+      "alt": "A front view follows the digestive tract from mouth to anus. The salivary glands, liver, gallbladder and pancreas connect to the tract; small intestine fills the space within the frame of the colon.",
       "page": 1040,
       "credit": "",
       "section": "23.1"
     },
     "23.3": {
       "title": "Layers of the Alimentary Canal",
+      "alt": "A cutaway of the gut wall proceeds outward from mucosa to submucosa, circular and longitudinal smooth muscle, and outer covering. Two nerve plexuses occupy different layers.",
       "page": 1042,
       "credit": "",
       "section": "23.1"
     },
     "23.5": {
       "title": "Peristalsis",
+      "alt": "Three successive drawings show a ring of contraction behind a bolus and expansion ahead of it as the bolus moves along the gut.",
       "page": 1047,
       "credit": "",
       "section": "23.2"
     },
     "23.6": {
       "title": "Digestive Processes",
+      "alt": "A map of the digestive tract places ingestion at the mouth, mixing and propulsion along the tract, much nutrient absorption in the small intestine, and defecation at the outlet.",
       "page": 1049,
       "credit": "",
       "section": "23.2"
     },
     "23.9": {
       "title": "Salivary glands",
+      "alt": "A side view locates the parotid gland near the ear, the submandibular gland beneath the jaw and the sublingual gland beneath the tongue, with ducts entering the mouth.",
       "page": 1053,
       "credit": "",
       "section": "23.3"
     },
     "23.14": {
       "title": "Deglutition",
+      "alt": "Successive side views show a bolus progressing from pharynx toward esophagus as different pharyngeal constrictors contract in sequence.",
       "page": 1059,
       "credit": "",
       "section": "23.3"
     },
     "23.15": {
       "title": "Stomach",
+      "alt": "A stomach cutaway labels the entry from the esophagus, fundus, body and pyloric outlet into the duodenum. Folds line the lumen and differently oriented muscle layers surround it.",
       "page": 1061,
       "credit": "",
       "section": "23.4"
     },
     "23.16": {
       "title": "Histology of the Stomach",
+      "alt": "A stomach wall section zooms into tubular gastric glands beneath surface pits. Mucous, parietal, chief and enteroendocrine cells occupy different positions along the gland.",
       "page": 1062,
       "credit": "",
       "section": "23.4"
     },
     "23.19": {
       "title": "Histology of the Small Intestine",
+      "alt": "A progression of magnifications shows circular folds, fingerlike villi and the brush border of absorptive cells. Each villus contains blood capillaries and a central lacteal.",
       "page": 1068,
       "credit": "credit b-d: Micrograph provided by the Regents of University of Michigan Medical School © 2012",
       "section": "23.5"
     },
     "23.22": {
       "title": "Histology of the large Intestine",
+      "alt": "A colon wall drawing and micrograph show a relatively flat luminal surface with closely spaced straight intestinal glands and many goblet cells.",
       "page": 1073,
       "credit": "credit b: Micrograph provided by the Regents of University of Michigan Medical School © 2012",
       "section": "23.5"
     },
     "23.24": {
       "title": "Accessory Organs",
+      "alt": "Bile ducts from the liver join the duct from the gallbladder. The common bile duct approaches the pancreatic duct where secretions enter the duodenum.",
       "page": 1076,
       "credit": "",
       "section": "23.6"
     },
     "23.25": {
       "title": "Microscopic Anatomy of the Liver",
+      "alt": "A liver lobule is organized around a central vein. Portal vessels and a bile duct lie near the periphery, while sinusoids run between plates of hepatocytes toward the center.",
       "page": 1077,
       "credit": "",
       "section": "23.6"
     },
     "23.28": {
       "title": "Digestion and Absorption",
+      "alt": "A tract outline locates mechanical and chemical digestion and absorption. Most nutrient absorption is placed in the small intestine, with water and electrolytes also absorbed farther along.",
       "page": 1082,
       "credit": "",
       "section": "23.7"
     },
     "23.33": {
       "title": "Lipid Absorption",
+      "alt": "Lipid products cross the intestinal brush border, are repackaged into triglycerides and chylomicrons, and leave the enterocyte for the villus lacteal.",
       "page": 1090,
       "credit": "",
       "section": "23.7"
     },
     "24.3": {
       "title": "Sources of ATP",
+      "alt": "Arrows connect dietary carbohydrate, fat and protein to smaller molecules, energy production and storage or tissue building. The ATP and ADP cycle appears below the nutrient paths.",
       "page": 1104,
       "credit": "",
       "section": "24.1"
     },
     "24.4": {
       "title": "Cellular Respiration",
+      "alt": "Stacked compartments place glycolysis in cytosol, pyruvate processing and the citric acid cycle in the mitochondrial matrix, and oxidative phosphorylation at the inner membrane.",
       "page": 1108,
       "credit": "",
       "section": "24.2"
     },
     "24.8": {
       "title": "Electron Transport Chain",
+      "alt": "Electron carriers in the inner mitochondrial membrane transfer electrons toward oxygen. Protons accumulate on one side and pass back through ATP synthase as ATP is formed.",
       "page": 1115,
       "credit": "",
       "section": "24.2"
     },
     "24.13": {
       "title": "Breakdown of Fatty Acids",
+      "alt": "A fatty-acid breakdown pathway passes through coenzyme A intermediates. Repeated shortening yields acetyl-CoA that can enter the citric acid cycle.",
       "page": 1122,
       "credit": "",
       "section": "24.3"
     },
     "24.18": {
       "title": "Urea Cycle",
+      "alt": "A cycle connects ornithine, citrulline and arginine. Nitrogen enters the pathway; urea leaves and ornithine is regenerated.",
       "page": 1128,
       "credit": "",
       "section": "24.4"
     },
     "24.21": {
       "title": "Absorptive State",
+      "alt": "A blood vessel connects pancreatic insulin signaling with liver, muscle and adipose tissue after a meal. Arrows show uptake and storage of incoming nutrients.",
       "page": 1132,
       "credit": "",
       "section": "24.5"
     },
     "24.22": {
       "title": "Postabsorptive State",
+      "alt": "During the postabsorptive state, arrows show the liver supplying fuel to blood and adipose stores being mobilized as pancreatic signals shift.",
       "page": 1134,
       "credit": "",
       "section": "24.5"
     },
     "24.23": {
       "title": "Hypothalamus Controls Thermoregulation",
+      "alt": "Paired feedback paths show hypothalamic responses to warming and cooling. Skin blood flow, sweating and muscle activity change in ways that move body temperature back toward its usual range.",
       "page": 1136,
       "credit": "",
       "section": "24.6"
     },
     "25.2": {
       "title": "Urine Color",
+      "alt": "A vertical series of urine-color swatches progresses from pale yellow toward darker shades, with brackets associating the samples with different hydration states.",
       "page": 1156,
       "credit": "",
       "section": "25.1"
     },
     "25.3": {
       "title": "Female and Male Urethras",
+      "alt": "Two sagittal pelvic sections trace the urethra from the bladder. The shorter route opens anterior to the vagina; the longer route passes through the prostate and penis.",
       "page": 1158,
       "credit": "",
       "section": "25.2"
     },
     "25.4": {
       "title": "Bladder",
+      "alt": "A bladder section shows the ureteral openings, detrusor wall and outlet into the urethra. An inset magnifies the transitional epithelium and connective tissue beneath it.",
       "page": 1159,
       "credit": "Micrograph provided by the Regents of the University of Michigan Medical School © 2012",
       "section": "25.2"
     },
     "25.8": {
       "title": "Left Kidney",
+      "alt": "A left kidney cutaway places cortex around medullary pyramids. Each papilla points into a calyx, and collecting spaces converge on the renal pelvis and ureter.",
       "page": 1162,
       "credit": "",
       "section": "25.3"
     },
     "25.9": {
       "title": "Blood Flow in the Kidney",
+      "alt": "Blood vessels branch from the renal artery through the kidney cortex. The enlarged view follows blood into and out of a glomerulus, then into capillaries around tubules.",
       "page": 1163,
       "credit": "",
       "section": "25.3"
     },
     "25.11": {
       "title": "Podocytes",
+      "alt": "Interdigitating podocyte processes wrap a glomerular capillary. The narrow spaces between neighboring foot processes are filtration slits.",
       "page": 1165,
       "credit": "",
       "section": "25.4"
     },
     "25.13": {
       "title": "Juxtaglomerular Apparatus and Glomerulus",
+      "alt": "The distal tubule contacts the vascular pole of a glomerulus. Macula densa cells lie next to juxtaglomerular cells in the afferent arteriole wall.",
       "page": 1167,
       "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012",
       "section": "25.4"
     },
     "25.16": {
       "title": "Net Filtration Pressure",
+      "alt": "Across a glomerular capillary, outward blood pressure of 55 mm Hg is opposed by blood colloid osmotic pressure of 30 and capsular pressure of 15, leaving 10 mm Hg outward.",
       "page": 1171,
       "credit": "",
       "section": "25.5"
     },
     "25.17": {
       "title": "Locations of Secretion and Reabsorption in the Nephron",
+      "alt": "Arrows along the nephron show which substances move into or out of the tubule. Follow water leaving the descending limb, salt leaving the ascending limb and regulated transport farther downstream.",
       "page": 1173,
       "credit": "",
       "section": "25.6"
     },
     "25.20": {
       "title": "Countercurrent Multiplier System",
+      "alt": "An enlarged nephron loop descends into progressively concentrated medullary interstitium. Arrows show water leaving the descending limb and sodium and chloride leaving the ascending limb.",
       "page": 1179,
       "credit": "",
       "section": "25.6"
     },
     "25.21": {
       "title": "Major Hormones That Influence GFR and RFB",
+      "alt": "A table compares how vasoactive signals affect glomerular filtration rate and renal blood flow. Arrows indicate increases, decreases or little net change under the illustrated conditions.",
       "page": 1184,
       "credit": "",
       "section": "25.8"
     },
     "26.11": {
       "title": "Antidiuretic Hormone (ADH)",
+      "alt": "A brain inset places ADH production in the hypothalamus and release at the posterior pituitary. Arrows lead to water conservation in the kidney and constriction of arterioles.",
       "page": 1211,
       "credit": "",
       "section": "26.2"
     },
     "25.22": {
       "title": "Nitrogen Wastes",
+      "alt": "Ball-and-stick structures compare ammonia, urea and uric acid. Their different sizes and arrangements show different ways of packaging nitrogen for excretion.",
       "page": 1187,
       "credit": "",
       "section": "25.10"
     },
     "26.3": {
       "title": "Fluid Compartments in the Human Body",
+      "alt": "A vessel runs among tissue cells. The drawing distinguishes plasma inside the vessel, fluid between cells and fluid enclosed by cell membranes.",
       "page": 1204,
       "credit": "",
       "section": "26.1"
     },
     "26.5": {
       "title": "The Concentrations of Different Elements in Key Bodily Fluids",
+      "alt": "Grouped bars compare ion and protein concentrations in intracellular fluid, interstitial fluid and plasma. Sodium predominates outside cells and potassium inside them.",
       "page": 1205,
       "credit": "",
       "section": "26.1"
     },
     "26.10": {
       "title": "A Flowchart Showing the Thirst Response",
+      "alt": "A branching flowchart follows fluid deficit through blood concentration, volume and mouth dryness to thirst. Drinking feeds back to reduce the initial deficit.",
       "page": 1210,
       "credit": "",
       "section": "26.2"
     },
     "26.13": {
       "title": "The Aldosterone Feedback Loop",
+      "alt": "A flowchart follows a potassium or sodium disturbance through adrenal aldosterone release to the kidney. The branches trace potassium and sodium handling back toward balance.",
       "page": 1216,
       "credit": "",
       "section": "26.3"
     },
     "26.16": {
       "title": "Respiratory Regulation of Blood pH",
+      "alt": "Parallel branches show how increased ventilation lowers carbon dioxide during acidosis and decreased ventilation retains it during alkalosis, moving pH toward its reference range.",
       "page": 1220,
       "credit": "",
       "section": "26.4"
     },
     "26.17": {
       "title": "Conservation of Bicarbonate in the Kidney",
+      "alt": "A proximal tubule cell lies between tubular fluid and blood. Secreted hydrogen combines with filtered bicarbonate; carbon dioxide enters the cell and bicarbonate is returned to the bloodstream.",
       "page": 1221,
       "credit": "",
       "section": "26.4"
     },
     "27.2": {
       "title": "Testicular Reproductive System",
+      "alt": "External views and a sagittal pelvic section show the testes, sperm ducts, accessory glands, urethra and penis in relation to the bladder and rectum.",
       "page": 1233,
       "credit": "",
       "section": "27.1"
     },
     "27.4": {
       "title": "Anatomy of the Testis",
+      "alt": "A testis cutaway follows seminiferous tubules toward the rete testis and efferent ductules. The epididymis curves around the testis and leads into the ductus deferens.",
       "page": 1235,
       "credit": "",
       "section": "27.1"
     },
     "27.5": {
       "title": "Spermatogenesis",
+      "alt": "A cell lineage traces meiosis and maturation into sperm. The neighboring seminiferous tubule section places earlier germ cells near the wall and later stages closer to the lumen.",
       "page": 1236,
       "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012",
       "section": "27.1"
     },
     "27.9": {
       "title": "Female Reproductive System",
+      "alt": "A sagittal view locates uterus and vagina between bladder and rectum. An anterior view shows the ovaries and uterine tubes beside the uterus.",
       "page": 1243,
       "credit": "",
       "section": "27.2"
     },
     "27.12": {
       "title": "Folliculogenesis",
+      "alt": "Successive follicle drawings show the oocyte gaining surrounding cell layers and a fluid-filled antrum. A tissue section identifies the oocyte and surrounding follicular layers.",
       "page": 1248,
       "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012",
       "section": "27.2"
     },
     "27.15": {
       "title": "Hormone Levels in Ovarian and Menstrual Cycles",
+      "alt": "Aligned panels relate follicle and corpus luteum changes to the uterine lining and hormone concentrations. A sharp LH peak near ovulation precedes the luteal rise in progesterone.",
       "page": 1254,
       "credit": "",
       "section": "27.2"
     },
     "27.18": {
       "title": "Hormones of Puberty",
+      "alt": "A diagram links hypothalamic and pituitary signals with testes and ovaries. Downstream branches show gamete development and hormone-dependent changes at puberty.",
       "page": 1260,
       "credit": "",
       "section": "27.3"
     },
     "28.16": {
       "title": "Sexual Differentiation",
+      "alt": "An early pair of ducts is shown above two developmental paths. Each path highlights the duct system that persists and the structures derived from it.",
       "page": 1286,
       "credit": "",
       "section": "28.3"
     },
     "28.2": {
       "title": "Sperm and the Process of Fertilization",
+      "alt": "Sperm approach the layers surrounding the oocyte. An enlarged view marks contact with the zona pellucida, the acrosome reaction and eventual fusion at the oocyte membrane.",
       "page": 1271,
       "credit": "",
       "section": "28.1"
     },
     "28.4": {
       "title": "Pre-Embryonic Cleavages",
+      "alt": "The series progresses from two, four and eight cells to a compact morula and then a cavity-bearing blastocyst with an inner cell mass.",
       "page": 1275,
       "credit": "",
       "section": "28.2"
     },
     "28.6": {
       "title": "Implantation",
+      "alt": "Successive wall sections show the blastocyst attaching and embedding in endometrium. Small uterine diagrams distinguish the usual implantation area from other locations.",
       "page": 1277,
       "credit": "",
       "section": "28.2"
     },
     "28.9": {
       "title": "Germ Layers",
+      "alt": "Two sections compare an early disc with the appearance of three germ layers. Cells enter through the primitive streak to form endoderm and mesoderm beneath the remaining epiblast.",
       "page": 1280,
       "credit": "",
       "section": "28.2"
     },
     "28.14": {
       "title": "Embryonic Folding",
+      "alt": "Transverse and sagittal views follow a flat embryonic disc as its edges fold. Endoderm is incorporated into the developing gut as the ventral body wall closes.",
       "page": 1284,
       "credit": "",
       "section": "28.2"
     },
     "28.11": {
       "title": "Cross-Section of the Placenta",
+      "alt": "A section through the placenta shows fetal vessels running through chorionic villi and maternal blood occupying the surrounding spaces. The umbilical cord links the fetal vessels to the fetus.",
       "page": 1281,
       "credit": "",
       "section": "28.2"
     },
     "28.17": {
       "title": "Fetal Circulatory System",
+      "alt": "The diagram traces fetal blood between placenta and heart and locates the ductus venosus, foramen ovale and ductus arteriosus as shortcuts through the circulation.",
       "page": 1287,
       "credit": "",
       "section": "28.3"
     },
     "28.20": {
       "title": "Hormones Initiating Labor",
+      "alt": "A graph plots hormone concentration over pregnancy. Human chorionic gonadotropin peaks early; estrogen and progesterone rise more gradually over subsequent weeks.",
       "page": 1293,
       "credit": "",
       "section": "28.4"
     },
     "28.21": {
       "title": "Stages of Childbirth",
+      "alt": "Three stages show dilation of the cervix, delivery of the infant and expulsion of the placenta. Paired views follow changes in the positions of the infant and membranes.",
       "page": 1294,
       "credit": "",
       "section": "28.4"
     },
     "28.22": {
       "title": "Neonatal Circulatory System",
+      "alt": "Before-and-after diagrams compare the circulation at birth. Lung expansion changes flow through the heart, fetal shunts close and placental vessels cease carrying blood.",
       "page": 1297,
       "credit": "",
       "section": "28.5"
     },
     "28.23": {
       "title": "Let-Down Reflex",
+      "alt": "Arrows connect suckling to hypothalamic and pituitary signaling. A magnified mammary alveolus shows milk ejection toward a duct, alongside the pathway supporting milk production.",
       "page": 1300,
       "credit": "",
       "section": "28.6"
     },
     "28.25": {
       "title": "Random Segregation",
+      "alt": "A homozygous cross first produces heterozygous offspring. A second Punnett square crossing two heterozygotes shows AA, two Aa combinations and aa.",
       "page": 1305,
       "credit": "",
       "section": "28.7"
     },
     "28.27": {
       "title": "Autosomal Recessive Inheritance",
+      "alt": "Two heterozygous parents are connected to four possible offspring genotypes. A Punnett square shows one affected homozygous recessive outcome among the four equally likely combinations.",
       "page": 1307,
       "credit": "credit: U.S. National Library of Medicine",
       "section": "28.7"
     },
     "24.24": {
       "title": "MyPlate",
+      "alt": "A plate is divided into fruit, vegetables, grains and protein, with a smaller dairy circle to the side. The fruit and vegetable sectors together fill about half the plate.",
       "page": 1138,
       "section": "24.7",
       "credit": "U.S. Department of Agriculture"

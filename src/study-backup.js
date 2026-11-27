@@ -55,7 +55,15 @@ export function restoreStudyBackup(storage,x){
    for(const [id,run] of Object.entries(x.ap2.mockRuns||{})){
      if(shouldRestoreCourseRecord('mock:'+id,mocks[id],run))mocks[id]=run;
    }
-   const winter=Object.keys(mocks).length?{...x.ap2,mockRuns:mocks}:x.ap2;
+   const winter={...x.ap2};
+   if(Object.keys(mocks).length)winter.mockRuns=mocks;
+   if(validAP2Records(current)&&current.mechanismRecall){
+     const recall={...current.mechanismRecall};
+     for(const [key,value] of Object.entries(x.ap2.mechanismRecall||{})){
+       if(!recall[key]||value.at<recall[key].at)recall[key]=value;
+     }
+     winter.mechanismRecall=recall;
+   }
    writes.push([AP2_KEY,JSON.stringify(winter)]);
  }
  if(!preview.legacy&&x.ap3)for(const [key,value] of validateSpring(x.ap3)){
