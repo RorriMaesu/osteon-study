@@ -1,3 +1,21 @@
+import {SphereGeometry} from 'three';
+
+// In this teaching cross-section each supporting cell spans from the tubular
+// basement membrane to the lumen. Its basal/body/apical widths differ. Two
+// neighbors meet close to the base where Sertoli junctions form the barrier.
+function sustentacularCell(angle){
+  const geometry=new SphereGeometry(1,32,24),position=geometry.attributes.position;
+  for(let i=0;i<position.count;i++){
+    const x=position.getX(i),y=position.getY(i),z=position.getZ(i);
+    const u=(y+1)/2,r=.935-.604*u;
+    const basalWidth=.031+.113*Math.exp(-((u-.31)**2)/.035);
+    const tangent=x*basalWidth+.015*Math.sin(2*Math.PI*u);
+    const depth=.016+.099*Math.sin(Math.PI*u);
+    position.setXYZ(i,r*Math.cos(angle)-tangent*Math.sin(angle),r*Math.sin(angle)+tangent*Math.cos(angle),depth+.044*z);
+  }
+  geometry.computeVertexNormals();return geometry;
+}
+
 /** Reproductive and developmental reconstructions share the exporter and palette
  * with the gross-to-microscopic spring teaching models. */
 export async function developmentModels({C,put,sphere,tube,ring,slab,around,save}){
@@ -32,6 +50,11 @@ export async function developmentModels({C,put,sphere,tube,ring,slab,around,save
     sphere(.355*Math.cos(a),.355*Math.sin(a),.06,.038,.048,.037),
     tube([[.33*Math.cos(a),.33*Math.sin(a),.07],[.23*Math.cos(a+.18),.23*Math.sin(a+.18),.08],[.14*Math.cos(a-.13),.14*Math.sin(a-.13),.08]],.011)]));
   put('lumen',C.fluid,sphere(0,0,-.14,.33,.33,.035));
+  const pairAngle=.83,halfGap=.142,sites=[pairAngle-halfGap,pairAngle+halfGap];
+  put('sustentacular_cells','#78b4ac',sites.map(sustentacularCell));
+  put('sustentacular_nuclei','#476e81',sites.map(a=>sphere(.763*Math.cos(a)-.014*Math.sin(a),.763*Math.sin(a)+.014*Math.cos(a),.095,.029,.029,.025)));
+  const junction=[-.015,0,.015].map(d=>[.755*Math.cos(pairAngle+d),.755*Math.sin(pairAngle+d),.096]);
+  put('sertoli_tight_junction','#e7bf6b',tube(junction,.012));
   put('interstitial_cells',C.duct,[[-.88,.72],[-.72,.87],[-.97,.89]].map(([x,y])=>sphere(x,y,0,.09)));
   await save('seminiferous-tubule');
 

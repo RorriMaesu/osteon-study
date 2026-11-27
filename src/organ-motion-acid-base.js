@@ -39,7 +39,7 @@ export const acidBaseOrgans=[
     action:'Compare proximal and collecting-duct transport',description:'The 3D model locates each segment. Open the cell view to follow solutes between tubular fluid, the epithelial cell and the blood side. The last two phases compare responses to separate acid and base loads.',
     aliases:['chapter 26','acid base','kidney','hydrogen ion','alpha intercalated cell','beta intercalated cell','bicarbonate','pH','pendrin'],section:'26.4',source,
     asset:'assets/ap3-models/nephron-pair.glb',targets:['cortical_proximal_tubule','peritubular_capillaries','shared_collecting_duct'],
-    context:['cortical_corpuscle','cortical_loop','cortical_distal_tubule','afferent_arteriole','efferent_arteriole'],
+    context:['cortical_glomerular_capsule','cortical_glomerular_tuft','cortical_loop','cortical_distal_tubule','afferent_arteriole','efferent_arteriole'],
     direction:[.04,.04,1],duration:24,phases:renal,
     effects:[
       cue('cortical_proximal_tubule',[0,.25],amber),trace(proximal,[0,.25],amber),

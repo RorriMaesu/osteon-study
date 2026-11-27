@@ -46,7 +46,7 @@ const germCells=sequence('seminiferous-tubule','Seminiferous tubule · germ cell
     phase(.25,'Spermatocytes','Follow the next band toward the lumen. Primary spermatocytes complete meiosis I and secondary spermatocytes proceed through meiosis II.',['spermatocytes']),
     phase(.5,'Spermatids','Haploid spermatids remodel their nucleus, acrosome and flagellum during spermiogenesis.',['spermatids']),
     phase(.75,'Release toward the lumen','Elongated spermatozoa are released into the lumen. They travel to the epididymis for further maturation.',['spermatozoa','lumen'])
-  ],{context:['basement_membrane','interstitial_cells'],bodyIds:['testes'],aliases:['spermatogenesis','spermiogenesis','meiosis','testis']});
+  ],{context:['basement_membrane','sustentacular_cells','sustentacular_nuclei','sertoli_tight_junction','interstitial_cells'],bodyIds:['testes'],aliases:['spermatogenesis','spermiogenesis','meiosis','testis']});
 
 export const developmentMotions=[energy,cleavage,stages,germCells];
 export function mountDevelopmentMotion(entry,viewer,meshes){

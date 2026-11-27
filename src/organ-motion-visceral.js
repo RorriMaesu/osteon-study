@@ -236,7 +236,7 @@ export function mountVisceralMotion(entry,instance,meshesByName){
   const root=new THREE.Group();root.name='Visceral process indicators';
   instance.model.add(root);
   const bounds=new THREE.Box3();
-  for(const target of entry.targets)for(const obj of lookup(meshesByName,target))bounds.union(new THREE.Box3().setFromObject(obj));
+  for(const target of entry.fitTargets||entry.targets)for(const obj of lookup(meshesByName,target))bounds.union(new THREE.Box3().setFromObject(obj));
   const radius=bounds.isEmpty()?1:bounds.getSize(new THREE.Vector3()).length()*.5;
   const operations=[];
   for(const spec of entry.landmarks||[]){

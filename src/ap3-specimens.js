@@ -1,3 +1,5 @@
+import {organRegions} from './ap2-blood-organ-regions.js';
+import {separateRegionalSurfaces} from './ap2-endocrine-regions.js';
 import {adiposeTissueColors} from './organ-motion-adipose.js';
 import * as THREE from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
@@ -59,7 +61,13 @@ const surfaceColors=[
   [/pancreas|testis|ovary/,'#dcb889'],[/jejunum|descending_colon|stage_16|stage_23/,'#c28a8d'],
   [/ileum|transverse_colon|stage_12|stage_20/,'#d4a197'],[/thymus|prostate|uterus/,'#b5849e']
 ];
-function modelColor(name,object){
+function specimenColor(id,name,object){
+  if(id==='adipose'&&adiposeTissueColors[name])return adiposeTissueColors[name];
+  if(id==='red-marrow'){
+    const marrow=organRegions.marrow;
+    const color=marrow.colors[name]||marrow.targets.find(([,pattern])=>pattern.test(name))?.[2];
+    if(color)return color;
+  }
   // Authored teaching meshes carry material colors. Atlas files use neutral material.
   const material=[].concat(object.material)[0];
   if(material?.color&&material.color.getHex()!==0xffffff)return material.color;
@@ -124,7 +132,11 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     }
     viewer.invalidate();
   }
-  function select(t,notify=true){
+  function select(t,notify=true,keepRoute=false){
+    if(routeIndex>=0&&!keepRoute){
+      routeIndex=-1;routeStep=0;el('route').value='';el('route-state').textContent='';
+      el('prev').disabled=el('next').disabled=true;
+    }
     selected=t||null;if(!selected)el('isolate').checked=false;
     apply();if(notify)onSelect?.(selected?.id??null);
   }
@@ -134,7 +146,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     const target=spec.targets.find(t=>t.id===r.steps[routeStep]);
     el('route-state').textContent='Stop '+(routeStep+1)+' of '+r.steps.length+(hidden()?'':' · '+target.label);
     el('prev').disabled=routeStep===0;el('next').disabled=routeStep===r.steps.length-1;
-    if(ready)select(target);
+    if(ready)select(target,true,true);
   }
   function applyBreath(t){
     const b=breathingFrame(t);time=b.t;
@@ -201,8 +213,9 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     box.position.copy(center);viewer.fit(box,viewer.camera.position.clone().sub(viewer.controls.target));box.geometry.dispose();box.material.dispose();
   };
   viewer=mountOrganViewer(el('view'),{asset:spec.asset,title:blind?'Practical specimen':spec.title,
-    direction:spec.direction||[.04,.04,1],colors:(name,obj)=>(id==='adipose'&&adiposeTissueColors[name])||modelColor(name,obj),onLoad:instance=>{
+    direction:spec.direction||[.04,.04,1],colors:(name,obj)=>specimenColor(id,name,obj),onLoad:instance=>{
       viewer=instance;
+      separateRegionalSurfaces(instance.model);
       instance.model.traverse(obj=>{
         if(!obj.isMesh)return;
         let raw;
@@ -220,12 +233,18 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
       if(el('node-context'))nodeContext=mountNodeContext(instance,spec,meshes,targetFor,panel);
       ready=true;picker.disabled=false;apply();if(el('breath'))applyBreath(time);updateRoute();
       const ray=new THREE.Raycaster(),canvas=instance.renderer.domElement;
-      let start;
-      canvas.addEventListener('pointerdown',e=>{start=[e.clientX,e.clientY];});
-      canvas.addEventListener('pointercancel',()=>{start=null;});
+      const contacts=new Set();let start;
+      canvas.addEventListener('pointerdown',e=>{
+        contacts.add(e.pointerId);start=contacts.size===1&&e.button===0?[e.clientX,e.clientY,e.pointerId]:null;
+      });
+      const moved=e=>start&&Math.hypot(start[0]-e.clientX,start[1]-e.clientY)>6;
+      canvas.addEventListener('pointermove',e=>{if(moved(e))start=null;});
+      canvas.addEventListener('pointercancel',e=>{contacts.delete(e.pointerId);start=null;});
       canvas.addEventListener('pointerup',e=>{
-        if(!start||Math.hypot(start[0]-e.clientX,start[1]-e.clientY)>6)return;
-        start=null;const box=canvas.getBoundingClientRect();
+        contacts.delete(e.pointerId);
+        const tap=start?.[2]===e.pointerId&&!moved(e);start=null;
+        if(!tap)return;
+        const box=canvas.getBoundingClientRect();
         ray.setFromCamera(new THREE.Vector2(2*(e.clientX-box.left)/box.width-1,1-2*(e.clientY-box.top)/box.height),instance.camera);
         const hits=ray.intersectObjects(meshes.filter(obj=>obj.visible&&targetFor.has(obj)&&targetFor.get(obj)),false)
           .filter(({object,point})=>!materials.get(object)[0].mat.clippingPlanes?.some(plane=>plane.distanceToPoint(point)<0));

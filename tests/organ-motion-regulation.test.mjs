@@ -78,6 +78,21 @@ test('process overlays animate inside the same 3D scene and clean up after selec
   }
 });
 
+test('superior and inferior caval streams approach the atrium simultaneously throughout the lesson',()=>{
+  const entry=regulationOrgans.find(row=>row.id==='venae-cavae'),{instance,byName}=specimen(entry);
+  const motion=mountRegulationMotion(entry,instance,byName),overlay=instance.scene.children.at(-1);
+  for(const moment of [.06,.39,.72]){
+    motion.set(moment);
+    const streams=['Superior caval stream','Inferior caval stream'].map(name=>overlay.children.filter(m=>m.visible&&m.name===name));
+    assert.ok(streams.every(s=>s.length>1));
+    const start=streams.map(s=>s[0].position.y);
+    motion.set(moment+.015);
+    assert.ok(streams[0][0].position.y<start[0],'superior return descends');
+    assert.ok(streams[1][0].position.y>start[1],'inferior return ascends');
+  }
+  motion.dispose();
+});
+
 test('the sagittal lens visibly closes its actual cut edge and releases the cap on exit',()=>{
   const entry=regulationOrgans.find(o=>o.id==='eye');
   const raw=readFileSync(new URL('../'+entry.asset,import.meta.url)),jsonLength=raw.readUInt32LE(12);

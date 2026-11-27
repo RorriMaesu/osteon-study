@@ -64,7 +64,7 @@ for(const [id,title,mesh,asset,beg,end] of [
     [propel(mesh,id,{amplitude:.24})],{bodyIds:[id,...(id==='rectum'?[]:['large-intestine'])]});
 }
 
-add('liver','Liver',digestive,accessory,'liver','hepatic_portal_vein','23.6','Follow hepatic portal inflow',
+add('liver','Liver',digestive,accessory,'liver hepatic_portal_vein','','23.6','Follow hepatic portal inflow',
   'A tracer follows the segmented hepatic portal vein toward the liver. Its arrival marks delivery of absorbed nutrients. The smaller intrahepatic vessels lie beyond this preparation.',[
     ['Portal stream','Nutrient-rich venous blood travels from digestive organs.'],
     ['Portal entry','Blood approaches the porta hepatis.'],
@@ -76,14 +76,14 @@ add('gallbladder','Gallbladder',digestive,accessory,'gallbladder cystic_duct bil
     ['Cystic duct','Cholecystokinin promotes contraction during a meal. Stored bile leaves through the gallbladder neck and cystic duct.',.22],
     ['Common bile duct','Follow the marker toward the duodenal wall. Bile enters the bowel through the duodenal papilla, beyond the end of this visible duct.',.37]],
   [{mode:'empty',mesh:'gallbladder',pivot:[-.03019,1.15737,.03916],amount:.21,span:[.22,1]},trace('cystic-duct',[.22,.37],bile),trace('common-bile-duct',[.37,.93],bile)],{direction:[.1,-.32,1]});
-add('pancreas','Pancreas · exocrine secretion',digestive,accessory,'pancreas','pancreatic_duct duodenum','23.6','Deliver pancreatic juice',
+add('pancreas','Pancreas · exocrine secretion',digestive,accessory,'pancreas pancreatic_duct','duodenum','23.6','Deliver pancreatic juice',
   'Follow the gold tracer along the main pancreatic duct toward the duodenum. Juice from acinar and duct cells contains digestive enzymes and bicarbonate. The microscopic opening is beyond this mesh.',[
     ['Exocrine secretion','Acini supply enzymes and duct cells add a bicarbonate-rich fluid.'],
     ['Duct transport','Pancreatic juice flows from smaller branches into the main duct.'],
     ['Duodenal delivery','The duct directs the secretion toward the descending duodenum.']],
   [trace('pancreatic-duct',[0,1],amber)],{bodyIds:['pancreas']});
 
-add('kidneys','Kidneys',urinary,renal,'kidney_left kidney_right','left_renal_artery right_renal_artery','25.3','Follow renal blood supply',
+add('kidneys','Kidneys',urinary,renal,'kidney_left kidney_right left_renal_artery right_renal_artery','','25.3','Follow renal blood supply',
   'Red tracers follow the two renal arteries toward the hila. The kidney surfaces retain their shape during inflow. Filtration takes place downstream in microscopic glomeruli.',[
     ['Arterial inflow','Each renal artery carries blood from the abdominal aorta.'],
     ['Approach the hilum','The paired vessels enter on the medial sides of the kidneys.'],
@@ -106,7 +106,7 @@ add('urethra','Urethra',urinary,renal,'urethra','urinary_bladder','25.2','Follow
     ['Outlet opens','Coordinated sphincter relaxation permits flow.'],['Urethral flow','A pressure gradient drives urine through the lumen.'],['Exit','Urine reaches the external urethral opening.']],
   [trace('urethra')],{direction:[.7,.1,1]});
 
-add('testes','Testes',reproductive,male,'testis_left testis_right','epididymis_left epididymis_right','27.1','Follow sperm into the epididymis',
+add('testes','Testes',reproductive,male,'testis_left testis_right epididymis_left','epididymis_right','27.1','Follow sperm into the epididymis',
   'The paired testes provide orientation. The gold marker follows the gross head-to-tail course along the left epididymis after sperm leave the testis. Its tightly coiled microscopic duct is represented by the external envelope.',[
     ['Production','Developing sperm form inside seminiferous tubules.'],
     ['Testicular outflow','Tubules drain through the rete testis and efferent ductules to the epididymal head.'],
@@ -116,7 +116,7 @@ add('epididymis','Epididymis',reproductive,male,'epididymis_left','testis_left',
   'Follow the gross course of the left epididymis from its head around the testis to its tail. The tracer represents the direction of passage through a highly coiled microscopic duct.',[
     ['Head','Efferent ductules carry sperm into the epididymal head.'],['Body','Sperm mature during ductal transit.'],['Tail','Stored sperm can enter the ductus deferens.']],
   [trace('epididymis')],{direction:[-.4,.08,-1],bodyIds:['epididymis','epididymides']});
-add('ductus-deferens','Ductus deferens',reproductive,male,'ductus_deferens_left illustrative_terminal_ductus_left','ejaculatory_duct_left','27.1','Follow sperm during emission',
+add('ductus-deferens','Ductus deferens',reproductive,male,'ductus_deferens_left illustrative_terminal_ductus_left ejaculatory_duct_left','','27.1','Follow sperm during emission',
   'The tracer ascends from the epididymal end of the left duct and returns behind the bladder. A short terminal continuation bridges a gap in the donor surface.',[
     ['Ascend','Smooth muscle propels sperm from near the epididymal tail.'],
     ['Pelvic turn','The duct turns inferiorly behind the bladder.'],
@@ -128,28 +128,28 @@ add('ejaculatory-ducts','Ejaculatory ducts',reproductive,male,'ejaculatory_duct_
     ['Through the prostate','Each short duct crosses the prostate on its own side.'],
     ['Urethral entry','Contents enter the prostatic urethra. Prostatic glandular ducts have separate openings.']],
   [trace('ejaculatory-duct')],{direction:[.55,.32,-1]});
-add('seminal-glands','Seminal glands',reproductive,male,'seminal_gland_left seminal_gland_right','ejaculatory_duct_left ejaculatory_duct_right prostate','27.1','Add seminal fluid',
+add('seminal-glands','Seminal glands',reproductive,male,'seminal_gland_left seminal_gland_right ejaculatory_duct_left','ejaculatory_duct_right prostate','27.1','Add seminal fluid',
   'The seminal glands supply much of the fluid in semen. Follow the gold tracer along the left ejaculatory duct after the gland outlet meets the ductus deferens.',[
     ['Gland secretion','The paired glands produce a fructose-containing secretion.'],
     ['Duct junction','The seminal-gland duct joins the ductus deferens.'],
     ['Emission','The ejaculatory duct delivers its contents to the prostatic urethra.']],
   [cue('seminal_gland_left',[0,.48],amber),cue('seminal_gland_right',[0,.48],amber),trace('ejaculatory-duct',[.32,1])],{direction:[.38,.13,-1],bodyIds:['seminal-glands','seminal-vesicles']});
-add('prostate','Prostate',reproductive,male,'prostate','urethra','27.1','Follow prostatic fluid',
+add('prostate','Prostate',reproductive,male,'prostate urethra','','27.1','Follow prostatic fluid',
   'Prostatic secretion enters the prostatic urethra through small glandular ducts. The tracer starts in that proximal urethral segment and travels distally after secretion enters.',[
     ['Gland activity','Prostatic tissue contributes fluid to semen.'],
     ['Duct openings','Multiple small prostatic ducts open independently into the urethra.'],
     ['Urethral transport','Secretions join other components of semen for onward transport.']],
-  [cue('prostate',[0,.53],amber),trace('urethra',[.36,1],amber,{range:[.06,.30]})],{direction:[.4,.10,1]});
-add('penis','Penis · spongy urethra',reproductive,male,'corpus_spongiosum_of_penis glans_penis','urethra','27.1','Trace the spongy urethra',
-  'This preparation shows corpus spongiosum, glans and the urethral channel. A gold tracer follows the spongy urethra through the penis during emission and expulsion.',[
+  [cue('prostate',[0,.53],amber),trace('urethra',[.36,1],amber,{range:[.06,.30]})],{direction:[.4,.10,1],fitTargets:['prostate']});
+add('penis','Penis · spongy urethra',reproductive,male,'corpus_spongiosum_of_penis glans_penis urethra','','27.1','Trace the spongy urethra',
+  'During emission, sperm and glandular secretions enter the prostatic urethra. During expulsion, rhythmic muscle contractions propel semen through the spongy urethra. Follow the gold marker toward the glans.',[
     ['Proximal segment','Semen enters the spongy urethra after the membranous segment.'],
     ['Penile course','The spongy urethra runs within the corpus spongiosum.'],
     ['External opening','The distal urethra opens at the glans.']],
-  [trace('urethra',[0,1],amber,{range:[.43,1]})]);
+  [trace('urethra',[0,1],amber,{range:[.43,1]})],{fitTargets:['corpus_spongiosum_of_penis','glans_penis']});
 
 const leftTube='VH_F_fibria_of_uterine_tube_L VH_F_uterine_tube_infundibulum_L VH_F_ampulla_of_uterine_tube_L VH_F_isthmus_of_fallopian_tube_L';
 const tubeFlow=[trace('oocyte-capture',[0,.2]),trace('left-infundibulum',[.2,.35]),trace('left-ampulla',[.35,.85]),trace('left-isthmus',[.85,1])];
-add('ovaries','Ovaries',reproductive,female,'VH_F_left_ovary VH_F_right_ovary',leftTube,'27.2','Follow an ovulated oocyte',
+add('ovaries','Ovaries',reproductive,female,'VH_F_left_ovary VH_F_right_ovary '+leftTube,'','27.2','Follow an ovulated oocyte',
   'An enlarged gold marker starts at the left ovarian surface, passes the fimbrial region, then follows the uterine tube. The timing is compressed. The ovary and tube are separate structures.',[
     ['Ovulation','A mature follicle releases its secondary oocyte into the peritoneal cavity beside the tube.'],
     ['Capture','Fimbrial and ciliary movements help direct the oocyte into the infundibulum.'],
@@ -198,7 +198,7 @@ for(const [key,title,outlet] of [
   ['parotid','Parotid glands','oral vestibule near the upper second molar'],
   ['submandibular','Submandibular glands','floor of the mouth beside the lingual frenulum']
 ]){
-  add(key+'-glands',title,digestive,registered,key+'_gland_left '+key+'_gland_right',key+'_duct_left '+key+'_duct_right','23.3','Follow saliva along the ducts',
+  add(key+'-glands',title,digestive,registered,[key+'_gland_left',key+'_gland_right',key+'_duct_left',key+'_duct_right'].join(' '),'','23.3','Follow saliva along the ducts',
     'Two tracers follow the paired donor ducts from gland to mouth. The '+key+' ducts deliver saliva to the '+outlet+'.',[
       ['Secretion','Secretory cells produce saliva.'],
       ['Duct transit','Fluid moves along the excretory duct on each side.'],
@@ -264,8 +264,13 @@ add('female-bladder','Urinary bladder · female reference',urinary,femaleUrinary
   'As the bladder fills, its dome moves while the neck and posterior trigone remain relatively fixed. Follow the change in outline through filling and voiding.',[
     ['Filling','Ureteral inflow gradually increases bladder volume.'],['Accommodation','The dome can expand while the outlet stays closed.'],['Emptying','Detrusor contraction and outlet relaxation reduce bladder volume.']],
   bladderParts.map(mesh=>({mode:'fill',mesh,amount:.38,bounds:[[-.0405,-.0152,-.0593],[.0114,.0262,.0024]],fixPosterior:true})),{direction:[.43,.16,1]});
+const leftCollectingSystem=[
+  ...Array.from('abcdefghij',branch=>'VH_F_minor_calyx_L_'+branch),
+  ...Array.from('abcd',branch=>'VH_F_major_calyx_L_'+branch),
+  'VH_F_renal_pelvis_L'
+];
 add('female-collecting-system','Renal collecting system · female reference',urinary,femaleUrinary,
-  'VH_F_minor_calyx_L_a VH_F_minor_calyx_L_b VH_F_minor_calyx_L_c VH_F_minor_calyx_L_d VH_F_minor_calyx_L_e VH_F_minor_calyx_L_f VH_F_minor_calyx_L_g VH_F_minor_calyx_L_h VH_F_minor_calyx_L_i VH_F_minor_calyx_L_j VH_F_major_calyx_L_a VH_F_major_calyx_L_b VH_F_major_calyx_L_c VH_F_major_calyx_L_d VH_F_renal_pelvis_L','VH_F_left_ureter','25.3','Drain urine from a calyx',
+  [...leftCollectingSystem,'VH_F_left_ureter'].join(' '),'','25.3','Drain urine from a calyx',
   'Trace one branch of the left collecting system. The arrow follows urine out of a minor calyx, into a major calyx, through the renal pelvis and into the upper ureter. Other calyces drain neighboring papillae.',[
     ['Minor calyx','Urine from a papilla enters the highlighted cup.',0],
     ['Major calyx','The arrow follows that cup into its shared major calyx.',.35],
@@ -278,7 +283,7 @@ add('female-collecting-system','Renal collecting system · female reference',uri
     {...cue('VH_F_minor_calyx_L_e',[0,.3499],amber),sustained:true},
     {...cue('VH_F_major_calyx_L_b',[.35,.6199],amber),sustained:true},
     {...cue('VH_F_renal_pelvis_L',[.62,.8799],amber),sustained:true}],
-  {direction:[.52,.10,-1]});
+  {direction:[.52,.10,-1],fitTargets:leftCollectingSystem});
 
 add('female-urethra','Urethra · female sagittal section',urinary,pelvic,'urethra','bladder pubic_symphysis vagina','25.2','Follow urine through the pelvic outlet',
   'The gold marker moves from the bladder neck to the external urethral opening. In this sagittal teaching model, the urethra lies behind the pubic symphysis and in front of the vagina.',[
@@ -294,7 +299,7 @@ add('glomerular-filtration','Glomerular filtration barrier',urinary,spring('filt
     ['Filtration slit','Water crosses the slit diaphragm between podocyte foot processes and enters capsular space.']],
   [trace('filtration-barrier',[0,1],blue)],{direction:[.35,.20,1],bodyIds:['kidneys','female-collecting-system'],modelSource:'Original Osteon microscopic teaching reconstruction'});
 add('nephron-transit','Cortical nephron and collecting duct',urinary,spring('nephron-pair'),
-  'cortical_corpuscle cortical_proximal_tubule cortical_loop cortical_distal_tubule shared_collecting_duct','afferent_arteriole efferent_arteriole peritubular_capillaries','25.4','Follow tubular fluid through the nephron',
+  'cortical_glomerular_capsule cortical_glomerular_tuft cortical_proximal_tubule cortical_loop cortical_distal_tubule shared_collecting_duct','afferent_arteriole efferent_arteriole peritubular_capillaries','25.4','Follow tubular fluid through the nephron',
   'The gold marker represents fluid remaining in the tubule. Follow one cortical nephron into a collecting duct. Reabsorption returns water and solutes to blood, while secretion transfers selected substances into the tubule.',[
     ['Proximal tubule','Filtrate enters from the renal corpuscle. The proximal tubule reabsorbs most filtered water and solutes.'],
     ['Nephron loop','Fluid descends the loop, rounds the bend and returns toward the cortex.'],

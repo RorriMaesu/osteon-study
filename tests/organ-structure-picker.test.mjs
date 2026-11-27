@@ -5,7 +5,7 @@ import {organMotions} from '../src/organ-atlas-catalog.js';
 
 test('every named target and visible context maps to exactly one searchable group',()=>{
   for(const entry of organMotions){
-    const names=[...new Set([...entry.targets,...(entry.context||[])])];
+    const names=[...new Set([...entry.targets,...(entry.context||[]),...(entry.studyOnly||[])])];
     const meshes=new Map(names.map(name=>[name,[{name}]]));
     const {byRaw,groups}=organStructureGroups(entry,meshes);
     assert.equal(byRaw.size,names.length,entry.id);

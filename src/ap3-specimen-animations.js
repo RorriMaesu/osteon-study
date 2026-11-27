@@ -23,7 +23,7 @@ const companions={
 };
 const byId=new Map(organMotions.map(entry=>[entry.id,entry]));
 export function specimenMotionRoute(entry,targetId){
-  const phase=entry.phases.findIndex(p=>p.members?.includes(targetId)||p.assemblies?.includes(targetId));
+  const phase=entry.phases.findIndex(p=>p.members?.includes(targetId)||p.assemblies?.includes(targetId)||p.sites?.includes(targetId));
   return 'organs/'+entry.id+(phase>0?'/step-'+(phase+1):'');
 }
 export function specimenAnimations(specimen){
@@ -52,6 +52,7 @@ export function animationForTarget(specimen,targetId,choices){
 }
 
 export function specimenActivity(specimen,targetId){
+  if(specimen.id==='enteric-wall')return {label:'Trace an enteric reflex',route:'ap2-lesson-15.2/activity/enteric-wall'};
   if(specimen.id==='birth-orientation')return {label:'Explore the stages of labor',route:'ap3-lab-28/5/from-28.4'};
   if(specimen.id!=='fetal-shunts')return;
   const streams=[

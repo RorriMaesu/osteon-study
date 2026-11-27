@@ -348,11 +348,13 @@
     "matrix"
   ],
   "assets/ap3-models/nephron-pair.glb": [
-    "cortical_corpuscle",
+    "cortical_glomerular_capsule",
+    "cortical_glomerular_tuft",
     "cortical_proximal_tubule",
     "cortical_loop",
     "cortical_distal_tubule",
-    "juxtamedullary_corpuscle",
+    "juxtamedullary_glomerular_capsule",
+    "juxtamedullary_glomerular_tuft",
     "juxtamedullary_proximal_tubule",
     "juxtamedullary_loop",
     "juxtamedullary_distal_tubule",
@@ -369,6 +371,7 @@
     "capsule",
     "subcapsular_sinus",
     "cortical_follicles",
+    "cortical_sinuses",
     "medullary_sinuses",
     "afferent_vessels",
     "efferent_vessel"
@@ -427,6 +430,9 @@
     "spermatids",
     "spermatozoa",
     "lumen",
+    "sustentacular_cells",
+    "sustentacular_nuclei",
+    "sertoli_tight_junction",
     "interstitial_cells"
   ],
   "assets/ap3-models/sperm-route.glb": [

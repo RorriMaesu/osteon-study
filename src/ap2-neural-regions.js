@@ -2,6 +2,7 @@ import {DoubleSide,Raycaster,Vector2} from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {addSideGuide} from './ap2-side-guide.js';
 import {cellularNeuralRegions} from './ap2-cellular-neural-regions.js';
+import {neuralMotionControls, setupNeuralMotion} from './ap2-neural-transmission.js';
 
 const bone='#dfcfa9', nerve='#daa759', muscle='#bb7771', deep='#98adcd';
 const part=(name,color,detail)=>({name,color,detail});
@@ -124,7 +125,7 @@ export function renderNeuralRegion(kind){
 
 export function startNeuralRegion(panel,kind){
   const spec=neuralRegions[kind],get=name=>panel.querySelector('[data-'+name+']'),picker=get('region-target'),focus=get('focus-part'),alone=get('alone'),guess=get('spot-pick');
-  let api,quiz=false,target='',remaining=[];const surfaces=new Map();
+  let api,motion,quiz=false,target='',remaining=[];const surfaces=new Map();
   function paint(){
     const i=target===''?-1:Number(target);
     for(const [mesh,index] of surfaces){
@@ -140,18 +141,19 @@ export function startNeuralRegion(panel,kind){
     api?.invalidate();
   }
   function frame(){const mesh=[...surfaces].find(([,i])=>i===Number(target))?.[0];if(api&&mesh)api.fit(mesh,api.camera.position.clone().sub(api.controls.target));}
-  picker.onchange=()=>{target=picker.value;if(target==='')alone.checked=false;paint();if(api&&(target===''||alone.checked))target===''?api.fit():frame();};
+  picker.onchange=()=>{motion?.stop();target=picker.value;if(target==='')alone.checked=false;paint();if(api&&(target===''||alone.checked))target===''?api.fit():frame();};
   focus.onclick=frame;
   alone.onchange=()=>{paint();if(alone.checked)frame();else api?.fit();};
   function next(){
     if(!remaining.length){remaining=spec.parts.map((_,i)=>i);for(let i=remaining.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[remaining[i],remaining[j]]=[remaining[j],remaining[i]];}if(String(remaining.at(-1))===target)remaining.reverse();}
     target=String(remaining.pop());guess.value='';get('spot-verdict').textContent='';paint();if(api)api.fit();
   }
-  get('spot-open').onclick=()=>{quiz=true;alone.checked=false;get('explore').hidden=true;get('spot-open').hidden=true;get('spot').hidden=false;next();guess.focus();};
+  get('spot-open').onclick=()=>{quiz=true;motion?.stop();if(motion)motion.controls.hidden=true;alone.checked=false;get('explore').hidden=true;get('spot-open').hidden=true;get('spot').hidden=false;next();guess.focus();};
   get('spot-next').onclick=next;
   get('spot-check').onclick=()=>{get('spot-verdict').textContent=guess.value===''?'Choose a name first.':guess.value===target?'Correct. '+spec.parts[+target].detail:'Look at the highlighted surface and try again.';};
-  get('spot-leave').onclick=()=>{quiz=false;get('spot').hidden=true;get('explore').hidden=false;get('spot-open').hidden=false;target=picker.value='';paint();api?.fit();get('spot-open').focus();};
+  get('spot-leave').onclick=()=>{quiz=false;if(motion)motion.controls.hidden=false;get('spot').hidden=true;get('explore').hidden=false;get('spot-open').hidden=false;target=picker.value='';paint();api?.fit();get('spot-open').focus();};
   get('spot-open').disabled=true;
+  if(!get('neural-motion'))get('explore').insertAdjacentHTML('afterend',neuralMotionControls(kind));
   paint();
   api=mountOrganViewer(get('specimen-host'),{asset:'assets/ap2-neuro/'+kind+'.glb',title:spec.title,direction:spec.view,colors:()=>'#a8b7b6',onLoad(ready){
     api=ready;ready.model.traverse(mesh=>{
@@ -159,6 +161,11 @@ export function startNeuralRegion(panel,kind){
       const i=spec.parts.findIndex(part=>part.name===mesh.userData.teachingLabel);
       if(i<0)throw Error('Unmapped specimen part '+mesh.name);
       surfaces.set(mesh,i);
+    });
+    motion=setupNeuralMotion(panel,kind,ready,surfaces,()=>{
+      const restoreFrame=alone.checked;
+      alone.checked=false; target=picker.value=''; paint();
+      if(restoreFrame)ready.fit();
     });
     const canvas=ready.renderer.domElement,ray=new Raycaster();let down;
     if(!spec.reconstruction)addSideGuide(canvas.parentElement,ready);
@@ -170,7 +177,7 @@ export function startNeuralRegion(panel,kind){
       const b=canvas.getBoundingClientRect();
       ray.setFromCamera(new Vector2((e.clientX-b.left)*2/b.width-1,1-(e.clientY-b.top)*2/b.height),ready.camera);
       const hit=ray.intersectObjects([...surfaces.keys()].filter(m=>m.visible),false)[0];
-      if(hit){target=picker.value=String(surfaces.get(hit.object));paint();}
+      if(hit){motion?.stop();target=picker.value=String(surfaces.get(hit.object));paint();}
     });
     get('spot-open').disabled=false;paint();
   }});

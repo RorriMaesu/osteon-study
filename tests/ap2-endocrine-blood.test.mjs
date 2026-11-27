@@ -4,6 +4,8 @@ import {readFileSync, existsSync} from 'node:fs';
 import {renderLab as endocrine} from '../src/ap2-regulation-labs.js';
 import {renderLab as blood} from '../src/ap2-cardio.js';
 import {signalOutcome} from '../src/ap2-endocrine-practicals.js';
+import {gonads,separateRegionalSurfaces} from '../src/ap2-endocrine-regions.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {teachingFields, examFields, clotFrame} from '../src/ap2-blood-stations.js';
 import {bloodExamItems} from '../src/ap2-blood-exam.js';
 
@@ -14,6 +16,41 @@ function readGltf(filename){
   assert.equal(bytes.readUInt32LE(8),bytes.length);
   return JSON.parse(bytes.subarray(20,20+bytes.readUInt32LE(12)).toString('utf8'));
 }
+
+test('every modeled gonadal, pelvic and placental surface maps to one named target',()=>{
+  for(const spec of Object.values(gonads)){
+    const names=readGltf(spec.file).nodes.filter(node=>Number.isInteger(node.mesh)).map(node=>node.name);
+    for(const name of names){
+      assert.equal(spec.targets.filter(([,pattern])=>pattern.test(name)).length,1,spec.file+' '+name);
+    }
+    for(const [label,pattern] of spec.targets){
+      const hits=names.filter(name=>pattern.test(name));
+      assert(hits.length,label);
+      if(/^(Left|Right) /.test(label)){
+        const other=label.startsWith('Left')?/right|_R$/i:/left|_L$/i;
+        assert(hits.every(name=>!other.test(name)),label);
+      }
+    }
+  }
+});
+
+test('regional isolation keeps nested surfaces visible at their source coordinates',async()=>{
+  const data=readFileSync(location('assets/ap2-glands/ovarian-region.glb'));
+  const {scene}=await new GLTFLoader().parseAsync(data.buffer.slice(data.byteOffset,data.byteOffset+data.byteLength),'');
+  scene.updateMatrixWorld(true);
+  const meshes=[],before=new Map();
+  scene.traverse(mesh=>{if(mesh.isMesh){meshes.push(mesh);before.set(mesh,mesh.matrixWorld.clone());}});
+  const os=scene.getObjectByName('VH_F_internal_cervical_os');
+  assert(os.parent.isMesh,'The real donor nests this smaller surface below a drawable parent');
+  separateRegionalSurfaces(scene);scene.updateMatrixWorld(true);
+  for(const mesh of meshes)assert(mesh.matrixWorld.equals(before.get(mesh)),mesh.name);
+  for(const [label,pattern] of gonads.ovary.targets){
+    for(const mesh of meshes)mesh.visible=pattern.test(mesh.name);
+    const visible=[];
+    scene.traverseVisible(mesh=>{if(mesh.isMesh)visible.push(mesh.name);});
+    assert.deepEqual(visible.sort(),meshes.filter(m=>pattern.test(m.name)).map(m=>m.name).sort(),label);
+  }
+});
 
 test('endocrine practicals are reachable by section and the signaling section tests a target cell',()=>{
   for(const id of ['17.1','17.2','17.3','17.4','17.5','17.6','17.7','17.8','17.9','17.10','17.11'])assert.ok(endocrine(id).includes('data-gland-station="'+id+'"'),id);

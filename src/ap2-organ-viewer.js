@@ -62,12 +62,14 @@ export function mountOrganViewer(host, options) {
   function fit(target=model,direction=defaultView) {
     if(!target||!controls)return;
     const bounds=new THREE.Box3();
-    target.updateWorldMatrix(true,true);
-    target.traverseVisible(obj=>{
-      if(!obj.isMesh)return;
-      if(!obj.geometry.boundingBox)obj.geometry.computeBoundingBox();
-      if(obj.geometry.boundingBox)bounds.union(obj.geometry.boundingBox.clone().applyMatrix4(obj.matrixWorld));
-    });
+    for(const root of Array.isArray(target)?target:[target]){
+      root.updateWorldMatrix(true,true);
+      root.traverseVisible(obj=>{
+        if(!obj.isMesh)return;
+        if(!obj.geometry.boundingBox)obj.geometry.computeBoundingBox();
+        if(obj.geometry.boundingBox)bounds.union(obj.geometry.boundingBox.clone().applyMatrix4(obj.matrixWorld));
+      });
+    }
     if(bounds.isEmpty())return;
     const sphere=bounds.getBoundingSphere(new THREE.Sphere());
     currentRadius=Math.max(sphere.radius,.00001);
@@ -187,6 +189,7 @@ export function mountOrganViewer(host, options) {
       const loaded=await fetchScene(options.asset);
       if(disposed){release(loaded);return;}
       model=loaded;
+      options.prepare?.(model);
       model.traverse(obj=>{
         if(!obj.isMesh)return;
         if(options.include&&!options.include(obj.name,obj)){obj.visible=false;return;}

@@ -70,3 +70,7 @@ The build writes to new paths. During development, versioned model backups and S
 
 Each catalogue target was checked against the reachable GLB mesh and its vertex extents. Automated Chrome checks opened every view at 375 × 667 and 1280 × 680, exercised rotation, zoom, reset and focus, and selected each available structure. The six scored models also ran with WebGL disabled using their lettered spatial descriptions and saved selections. The four embryo orientations and the node overlays received a separate rendered inspection. These checks use emulated viewports. A physical handset and an instructor practical review are still needed for classroom sign-off.
 
+
+### Microscopic structures in the spring teaching models
+
+The lymph node shows the connected subcapsular, cortical (trabecular) and medullary sinuses. The renal corpuscle cutaways distinguish the glomerular capillary tuft from the surrounding capsule. The seminiferous tubule shows a representative neighboring pair of Sertoli cells, their basal nuclei and a tight junction between them. The reconstructed cells, vessels and spaces are enlarged to make their relationships visible. [OpenStax lymphatic anatomy](https://openstax.org/books/anatomy-and-physiology-2e/pages/21-1-anatomy-of-the-lymphatic-and-immune-systems), [microscopic kidney anatomy](https://openstax.org/books/anatomy-and-physiology-2e/pages/25-4-microscopic-anatomy-of-the-kidney), [testicular anatomy](https://openstax.org/books/anatomy-and-physiology-2e/pages/27-1-anatomy-and-physiology-of-the-testicular-reproductive-system).

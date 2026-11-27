@@ -90,6 +90,18 @@ function flowPosition(target,path,u){
   return target.copy(path[i]).lerp(path[i+1],s-i);
 }
 
+function cavalStreams(surfaces){
+  const upper=surfaces.get('superior_vena_cava')?.path;
+  const abdominal=surfaces.get('inferior_vena_cava_abdominal_part')?.path;
+  const thoracic=surfaces.get('inferior_vena_cava_thoracic_part')?.path;
+  if(!upper||!abdominal||!thoracic)return null;
+  return [upper,[...abdominal,...thoracic]].map(points=>{
+    const path=new THREE.CurvePath();
+    for(let i=1;i<points.length;i++)path.add(new THREE.LineCurve3(points[i-1],points[i]));
+    return path;
+  });
+}
+
 function releaseLevel(entry,index,u){
   if(entry.mechanism==='pineal-release')return pinealOutput((index+u)/3);
   if(entry.mechanism==='feedback-release'){
@@ -178,6 +190,7 @@ export function mountRegulationMotion(entry,instance,meshesByName){
   }));
   const maxSites=Math.max(...entry.phases.map(p=>p.sites.length));
   const cochlea=entry.mechanism==='cochlear-wave';
+  const cavae=entry.mechanism==='caval-return'?cavalStreams(surfaces):null;
   const markers=Array.from({length:mechanical?0:cochlea?cochlearPartition.length:Math.max(1,maxSites)*count},(_,i)=>{
     const m=new THREE.Mesh(geometry,materials[i%count]);m.renderOrder=7;m.visible=false;group.add(m);return m;
   });
@@ -196,6 +209,19 @@ export function mountRegulationMotion(entry,instance,meshesByName){
       mat.emissive.copy(emission.copy(base.color).lerp(WARM,glow));mat.emissiveIntensity=Math.max(base.intensity,.85);
     }
     for(const mark of markers)mark.visible=false;
+    if(cavae){
+      // Both streams return continuously. The selected phase only changes the emphasis.
+      cavae.forEach((path,stream)=>{
+        for(let j=0;j<count;j++){
+          const mark=markers[stream*count+j],fraction=(t*2+j/count)%1;
+          mark.name=stream?'Inferior caval stream':'Superior caval stream';
+          path.getPoint(fraction,mark.position);
+          mark.visible=true;
+          mark.scale.setScalar(radius*(j===0?.012:.008)*(index===stream||index===2?1:.72));
+        }
+      });
+      instance.invalidate();return;
+    }
     if(cochlea){
       const peak=index===0?.22:.78;
       markers.forEach((mark,i)=>{

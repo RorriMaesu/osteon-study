@@ -1,6 +1,7 @@
 // Move the original controls so an expanded specimen uses the same classroom
 // selection, quiz state and playback clock. Restore their exact positions on exit.
 const stations=[
+  ['[data-ap3-view]','[data-ap3-specimen]',':scope > .ac-row, :scope > [data-ap3-selection], :scope > [data-ap3-route-state], :scope > [data-ap3-breath-state], :scope > [data-ap3-node-context], :scope > [data-ap3-handoff], :scope > [data-ap3-described]'],
   ['[data-specimen-host]','[data-specimen-content]', ':scope > .course-actions, :scope > [data-spot-open], :scope > [data-spot], :scope > [data-region-reading], :scope > [data-specimen-reading]'],
   ['[data-organ-host]','[data-organ-kind]',':scope > .ac-row, :scope > [data-junction-settings], :scope > [data-conduct-settings], :scope > [data-target-name], :scope > [data-spot-area]'],
   ['[data-micro-stage]','[data-tissue-station]',':scope > .course-actions, :scope > [data-tissue-note]'],
@@ -8,7 +9,7 @@ const stations=[
   ['[data-body-model]','[data-body-systems]','.ap2-body-controls, .ap2-body-pick, [data-body-info]'],
   ['[data-vessel-stage]',null,':scope > .course-actions, :scope > [data-wall-note]'],
   ['[data-fetal-view]','[data-fetal-flow]',':scope > .course-actions, label:has(> [data-fetal-position]), [data-fetal-segment]'],
-  ['[data-region-canvas]',null,':scope > label:has([data-region-target]), :scope > [data-region-focus], :scope > [data-region-detail]'],
+  ['[data-region-canvas]',null,':scope > label:has([data-region-target], [data-region-isolate]), :scope > [data-region-focus], :scope > [data-region-detail]'],
   ['[data-organ]','[data-gland-station]','label:has(> [data-part]), label:has(> [data-region])'],
   ['[data-micro-model]','[data-gland-station]','[data-secretion], [data-path-label], label:has(> [data-cell]), label:has(> [data-follicle-step])']
 ];

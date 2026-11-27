@@ -60,7 +60,15 @@ await save('lymph-drainage');
 put('capsule',C.wall,sphere(0,0,-.03,.99,.73,.50,0,Math.PI));
 put('subcapsular_sinus',C.lymph,tube([[-.85,-.23,0],[-.88,.18,.03],[-.55,.50,.09],[0,.61,.13],[.58,.50,.10],[.85,.22,.04]],.062));
 put('cortical_follicles',C.nucleus,[-.64,-.35,0,.35,.64].map(x=>sphere(x,.40-Math.abs(x)*.33,.02,.15,.13,.14)));
-put('medullary_sinuses',C.lymph,[-.58,-.24,.12,.48].map(x=>tube([[x,.35,.14],[x+.08,.08,.12],[x-.04,-.12,.12],[.25,-.24,.12],[.58,-.27,.07]],.043)));
+// Follow one connected route from the subcapsular sinus past the cortical
+// follicles to the medullary sinuses. Shared endpoints keep the lumen continuous.
+const corticalEnds=[[-.71,.385,.07],[-.19,.592,.12],[.22,.593,.125],[.72,.396,.08]];
+const medullaryStarts=[[-.53,.06,.13],[-.18,.06,.13],[.17,.06,.13],[.51,.06,.13]];
+put('cortical_sinuses','#70b39e',corticalEnds.map((start,i)=>{
+  const end=medullaryStarts[i];
+  return tube([start,[start[0],.31,.17],[end[0],.16,.15],end],.039);
+}));
+put('medullary_sinuses',C.lymph,medullaryStarts.map(([x,y,z])=>tube([[x,y,z],[x-.04,-.12,.12],[.25,-.24,.12],[.58,-.27,.07]],.043)));
 put('afferent_vessels','#83ac71',[-.55,.12,.58].map(x=>tube([[x*1.22,.97,.14],[x,.74,.08],[x,.56-Math.abs(x)*.22,.08]],.037)));
 put('efferent_vessel',C.lymph,tube([[.54,-.26,.06],[.78,-.33,.02],[1.10,-.48,.06]],.07));
 await save('node-sinuses');
@@ -106,7 +114,17 @@ const loops=[[-.78,-.45],[.15,-1.17]];
 for(const [i,[x,depth]] of loops.entries()){
   const label=i?'juxtamedullary':'cortical';
   const top=i?.51:.94;
-  put(label+'_corpuscle',C.wall,sphere(x,top,-.02,.135,.12,.12,0,Math.PI),sphere(x,top,.005,.091,.085,.095));
+  put(label+'_glomerular_capsule',C.wall,sphere(x,top,-.02,.135,.12,.12,0,Math.PI));
+  // Cutaway renal corpuscle. Short branches fan out from the vascular pole,
+  // form capillary loops, and converge back toward the efferent arteriole.
+  const vessel=(points,r)=>tube(points.map(([dx,dy,z])=>[x+dx,top+dy,z]),r);
+  const inlet=[-.09,.030,.05],outlet=[-.09,0,.05];
+  const fork=[-.053,.034,.013],join=[-.054,-.018,.018];
+  put(label+'_glomerular_tuft',C.blood,vessel([inlet,[-.072,.028,.028],fork],.012),
+    vessel([fork,[-.045,.063,.004],[.010,.075,0],[.057,.042,-.004],[.029,.014,0],[-.018,.005,.004],join],.009),
+    vessel([fork,[-.016,.044,.037],[.042,.039,.037],[.075,.002,.019],[.054,-.031,.014],[.012,-.022,.027],join],.009),
+    vessel([fork,[-.028,.013,-.033],[.034,.014,-.047],[.054,-.033,-.031],[.015,-.057,-.009],[-.029,-.053,.009],join],.009),
+    vessel([join,[-.070,-.005,.034],outlet],.010));
   const start=[x+.10,top,.02], end=[x+.21,top-.12,.02], distal=[x+.48,top-.01,0];
   put(label+'_proximal_tubule',C.wall,tube([start,[x+.17,top+.10,.08],[x+.25,top+.06,.12],[x+.13,top+.01,.13],end],.041));
   put(label+'_loop',i?'#c88d57':'#c8ac68',tube([end,[x+.20,depth+.16,.03],[x+.26,depth,.03],[x+.34,depth+.11,.02],[x+.38,top-.12,.02],distal],.032));

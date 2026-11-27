@@ -58,8 +58,12 @@
 .oa-structure-dialog small{min-height:1.3em;color:#c7d6cc}
 .oa-surface-pin{pointer-events:none;position:absolute;z-index:1;width:8px;height:8px;transform:translate(-50%,-50%);border:2px solid #172723;background:#ffce75;border-radius:50%}
 .oa-surface-pin[hidden]{display:none}
+.oa-quick-isolate{position:absolute;right:8px;top:8px;z-index:2;min-height:36px;background:#132629ef;color:#ffdc9d;border:1px solid #72877a;border-radius:6px;padding:4px 10px}
+.oa-quick-isolate[hidden]{display:none}
 .oa-surface-pin span{position:absolute;left:7px;bottom:6px;width:max-content;max-width:min(42vw,170px);padding:2px 5px;border-radius:4px;background:#132629f0;color:#ffdc9d;font:600 12px/1.2 system-ui}
 .oa-surface-pin.oa-pin-left span{left:auto;right:7px}.oa-surface-pin.oa-pin-down span{bottom:auto;top:6px}
+.oa-surface-pin.oa-pin-covered{background:transparent;border:2px dashed #f3ce8c}
+.oa-surface-pin.oa-pin-covered span::after{content:'Point behind surface';display:block;font-size:10px;font-weight:400;color:#d5e2de}
 @media(min-width:801px){.oa-browser label:has([data-oa-menu]){display:none}.oa-notes[open]{max-height:18vh;overflow:auto}}
 @media(max-width:800px){
  #organs-view.active{height:auto;min-height:0}

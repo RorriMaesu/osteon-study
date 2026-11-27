@@ -1,11 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {Box3, Raycaster, Vector3} from 'three';
+import {Box3, Group, Raycaster, Vector3} from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {labFor} from '../src/ap2-library.js';
 import {structureIndex} from '../src/ap2-model-index.js';
 import {neuralRegions} from '../src/ap2-neural-regions.js';
+import {setupNeuralMotion} from '../src/ap2-neural-transmission.js';
 
 async function readParts(id) {
   const bytes = await readFile(new URL('../assets/ap2-neuro/' + id + '.glb', import.meta.url));
@@ -30,6 +31,35 @@ function bounds(parts, label) {
   for (const mesh of meshes) box.expandByObject(mesh, true);
   return box;
 }
+
+test('transmission cues align with successive axonal gaps and the physical synaptic openings', async () => {
+  for(const kind of ['multipolar-neuron','chemical-synapse']){
+    const parts=await readParts(kind), model=new Group();
+    const surfaces=new Map([...parts.values()].flat().map(mesh=>[mesh,0]));
+    const play={}, range={setAttribute(){},removeAttribute(){}}, caption={};
+    const controls={querySelector:key=>({'[data-nerve-play]':play,'[data-nerve-progress]':range,'[data-nerve-event]':caption}[key])};
+    const motion=setupNeuralMotion({querySelector:()=>controls},kind,{model,addCleanup(){},invalidate(){}},surfaces,()=>{});
+    const cues=model.children[0];
+    const seek=value=>{range.value=String(value);range.oninput();};
+    if(kind==='multipolar-neuron'){
+      for(const [t,index] of [[62,0],[70,1],[76,2]]){
+        seek(t);assert.deepEqual(cues.children.map(c=>c.visible),[0,1,2].map(i=>i===index));
+        const x=cues.children[index].position.x;
+        assert(axialIntervals(parts.get('Nodes of Ranvier')).some(([lo,hi])=>lo<x&&x<hi));
+      }
+    }else{
+      const [calcium,transmitter]=cues.children;
+      seek(22);assert(calcium.position.y<bounds(parts,'Presynaptic terminal').min.y);
+      seek(39);assert(calcium.position.y>bounds(parts,'Voltage-gated calcium channels').max.y);
+      seek(42);assert(transmitter.position.y>bounds(parts,'Presynaptic terminal').min.y);
+      seek(59);assert(transmitter.position.y<bounds(parts,'Presynaptic terminal').min.y);
+      seek(79.8);assert(bounds(parts,'Ligand-gated receptors').containsPoint(transmitter.position));
+      assert(!parts.get('Neurotransmitter')[0].visible);
+    }
+    motion.stop();assert(!cues.visible);assert.equal(range.value,'0');
+    if(kind==='chemical-synapse')assert(parts.get('Neurotransmitter')[0].visible);
+  }
+});
 
 // Disjoint intervals identify separate sheath segments even when the exporter merges them.
 function axialIntervals(meshes) {

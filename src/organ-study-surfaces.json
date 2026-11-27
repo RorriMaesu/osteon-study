@@ -1,0 +1,516 @@
+{
+  "alveoli": [
+    "respiratory_bronchiole"
+  ],
+  "aorta": [
+    "VH_M_left_coronary_artery",
+    "VH_M_right_coronary_artery"
+  ],
+  "artery": [
+    "vein_intima",
+    "vein_media",
+    "vein_externa",
+    "vein_leaflet_b",
+    "vein_leaflet_a"
+  ],
+  "ascending-colon": [
+    "ileocecal_junction",
+    "transverse_colon"
+  ],
+  "formed-elements": [
+    "platelet_fragment",
+    "neutrophil_cytoplasm",
+    "neutrophil_nucleus",
+    "neutrophil_granules",
+    "eosinophil_cytoplasm",
+    "eosinophil_nucleus",
+    "eosinophil_granules",
+    "basophil_cytoplasm",
+    "basophil_nucleus",
+    "basophil_granules",
+    "lymphocyte_cytoplasm",
+    "lymphocyte_nucleus",
+    "monocyte_cytoplasm",
+    "monocyte_nucleus"
+  ],
+  "paired-ears": [
+    "helix_left",
+    "helix_right",
+    "concha_of_auricle_left",
+    "concha_of_auricle_right",
+    "lobule_of_auricle_left",
+    "lobule_of_auricle_right",
+    "cochlea_left",
+    "cochlea_right"
+  ],
+  "paired-eyes": [
+    "iris_left",
+    "iris_right",
+    "retina_left",
+    "retina_right"
+  ],
+  "brain": [
+    "region_Right_frontal_lobe",
+    "region_Right_parietal_lobe",
+    "region_Right_temporal_lobe",
+    "region_Insula",
+    "region_Hypothalamus",
+    "region_Corpus_callosum",
+    "region_Midbrain",
+    "region_Medulla_oblongata"
+  ],
+  "ventricles": [
+    "Caudate nucleus.l",
+    "Caudate nucleus.r",
+    "Globus pallidus.l",
+    "Globus pallidus.r",
+    "Medulla oblongata.l",
+    "Medulla oblongata.r",
+    "Midbrain.l",
+    "Midbrain.r",
+    "Precentral gyrus.l",
+    "Precentral gyrus.r",
+    "Putamen.l",
+    "Putamen.r"
+  ],
+  "brainstem": [
+    "region_Thalamus"
+  ],
+  "cecum": [
+    "ileum",
+    "vermiform_appendix"
+  ],
+  "cervix": [
+    "VH_F_anterior_wall_of_uterus",
+    "VH_F_body_of_uterus",
+    "VH_F_cornua",
+    "VH_F_fundus_of_uterus",
+    "VH_F_lower_uterine_segment",
+    "VH_F_posterior_wall_of_uterus"
+  ],
+  "cochlea": [
+    "Utricle",
+    "Saccule"
+  ],
+  "coronary-circulation": [
+    "VH_M_right_posterior_descending_artery",
+    "VH_M_diagonal_branch_of_left_anterior_descending_artery",
+    "VH_M_left_marginal_branch",
+    "VH_M_oblique_vein_of_left_atrium",
+    "VH_M_anterior_cardiac_vein",
+    "VH_M_posterior_vein_of_left_ventricle",
+    "VH_M_small_cardiac_vein"
+  ],
+  "nephron-transit": [
+    "juxtamedullary_glomerular_capsule",
+    "juxtamedullary_glomerular_tuft",
+    "juxtamedullary_proximal_tubule",
+    "juxtamedullary_loop",
+    "juxtamedullary_distal_tubule",
+    "vasa_recta",
+    "cortex",
+    "outer_medulla",
+    "inner_medulla"
+  ],
+  "cranial-nerves": [
+    "region_Olfactory_nerve_(I)",
+    "region_Trochlear_nerve_(IV)",
+    "region_Trigeminal_nerve_(V)",
+    "region_Abducens_nerve_(VI)",
+    "region_Facial_nerve_(VII)",
+    "region_Vestibulocochlear_nerve_(VIII)",
+    "region_Glossopharyngeal_nerve_(IX)",
+    "region_Vagus_nerve_(X)",
+    "region_Accessory_nerve_(XI)",
+    "region_Hypoglossal_nerve_(XII)"
+  ],
+  "descending-colon": [
+    "transverse_colon"
+  ],
+  "diaphragm": [
+    "sixth_rib_left",
+    "sixth_rib_right"
+  ],
+  "ductus-deferens": [
+    "epididymis_left",
+    "epididymis_right",
+    "ductus_deferens_right",
+    "ejaculatory_duct_right",
+    "illustrative_terminal_ductus_right"
+  ],
+  "duodenum": [
+    "stomach",
+    "jejunum"
+  ],
+  "ejaculatory-ducts": [
+    "seminal_gland_left",
+    "seminal_gland_right",
+    "urethra",
+    "illustrative_terminal_ductus_left",
+    "illustrative_terminal_ductus_right"
+  ],
+  "epididymis": [
+    "testis_right",
+    "epididymis_right",
+    "ductus_deferens_left",
+    "ductus_deferens_right"
+  ],
+  "eye": [
+    "Retina",
+    "Fovea",
+    "Macula lutea",
+    "Optic disc",
+    "Choroid",
+    "Sclera"
+  ],
+  "gallbladder": [
+    "liver"
+  ],
+  "heart": [
+    "VH_M_papillary_muscle_of_heart_anterior",
+    "VH_M_papillary_muscle_of_heart_anterolateral",
+    "VH_M_papillary_muscle_of_heart_medial",
+    "VH_M_papillary_muscle_of_heart_posterior",
+    "VH_M_papillary_muscle_of_heart_posteromedial",
+    "VH_M_interventricular_septum",
+    "VH_M_aortic_arch",
+    "VH_M_left_anterior_descending_artery",
+    "VH_M_right_marginal_artery",
+    "VH_M_right_posterior_descending_artery",
+    "VH_M_left_coronary_artery",
+    "VH_M_right_coronary_artery",
+    "VH_M_diagonal_branch_of_left_anterior_descending_artery",
+    "VH_M_left_marginal_branch",
+    "VH_M_great_cardiac_vein",
+    "VH_M_middle_cardiac_vein",
+    "VH_M_oblique_vein_of_left_atrium",
+    "VH_M_anterior_cardiac_vein",
+    "VH_M_coronary_sinus",
+    "VH_M_posterior_vein_of_left_ventricle",
+    "VH_M_small_cardiac_vein",
+    "VH_M_superior_vena_cava"
+  ],
+  "hypothalamus": [
+    "anterior_lobe",
+    "primary_plexus",
+    "portal_veins",
+    "secondary_plexus"
+  ],
+  "ileum": [
+    "jejunum",
+    "ileocecal_junction"
+  ],
+  "inner-ear": [
+    "Anterior ampulla",
+    "Posterior ampulla"
+  ],
+  "jejunum": [
+    "duodenum",
+    "ileum"
+  ],
+  "kidneys": [
+    "renal_pelvis_left",
+    "renal_pelvis_right",
+    "ureter_left",
+    "ureter_right"
+  ],
+  "renal-acid-base": [
+    "juxtamedullary_glomerular_capsule",
+    "juxtamedullary_glomerular_tuft",
+    "juxtamedullary_proximal_tubule",
+    "juxtamedullary_loop",
+    "juxtamedullary_distal_tubule",
+    "vasa_recta",
+    "cortex",
+    "outer_medulla",
+    "inner_medulla"
+  ],
+  "phonation": [
+    "Oblique part of cricothyroid muscle.r.001",
+    "Straight part of cricothyroid muscle.r.001",
+    "Oblique part of cricothyroid muscle.l.001",
+    "Straight part of cricothyroid muscle.l.001",
+    "External part of thyro-arytenoid muscle.r.001",
+    "External part of thyro-arytenoid muscle.l.001",
+    "Ary-epiglottic part of oblique arytenoid muscle.r.001",
+    "Thyro-epiglottic part of thyro-arytenoid muscle.r.001",
+    "Ary-epiglottic part of oblique arytenoid muscle.l.001",
+    "Thyro-epiglottic part of thyro-arytenoid muscle.l.001",
+    "Transverse arytenoid muscle.001"
+  ],
+  "larynx": [
+    "trachea"
+  ],
+  "liver": [
+    "gallbladder",
+    "bile_duct"
+  ],
+  "lungs": [
+    "thyroid_cartilage",
+    "sixth_rib_left",
+    "sixth_rib_right",
+    "right_pulmonary_artery",
+    "left_pulmonary_artery"
+  ],
+  "mammary-glands": [
+    "VH_F_areolar_tubercles_L",
+    "VH_F_fat_R",
+    "VH_F_areolar_tubercles_R",
+    "VH_F_nipple_R",
+    "VH_F_areola_R",
+    "VH_F_main_lactiferous_sinuses_R",
+    "VH_F_main_lactiferous_ducts_R",
+    "VH_F_mammary_lobes_R",
+    "VH_F_suspensory_ligaments_R"
+  ],
+  "nasal-olfaction": [
+    "region_Nasal_bones",
+    "region_Major_alar_cartilages",
+    "region_Orbital_frontal_gyri"
+  ],
+  "ovaries": [
+    "VH_F_ampulla_of_uterine_tube_R",
+    "VH_F_fibria_of_uterine_tube_R",
+    "VH_F_isthmus_of_fallopian_tube_R",
+    "VH_F_uterine_tube_infundibulum_R",
+    "VH_F_abdominal_ostium_of_uterine_tube",
+    "VH_F_cornua"
+  ],
+  "glandular-pancreas": [
+    "beta_cell_2",
+    "alpha_cell_4",
+    "beta_cell_6",
+    "alpha_cell_8",
+    "beta_cell_9",
+    "delta_cell_10",
+    "beta_cell_11",
+    "alpha_cell_12",
+    "beta_cell_13",
+    "acinar_cell_0_0",
+    "acinar_cell_0_1",
+    "acinar_cell_0_2",
+    "acinar_cell_0_3",
+    "acinar_cell_0_4",
+    "acinar_cell_0_5",
+    "duct_branch_0",
+    "duct_collect_0",
+    "acinar_cell_1_0",
+    "acinar_cell_1_1",
+    "acinar_cell_1_2",
+    "acinar_cell_1_3",
+    "acinar_cell_1_4",
+    "acinar_cell_1_5",
+    "duct_branch_1",
+    "duct_collect_1",
+    "acinar_cell_2_0",
+    "acinar_cell_2_1",
+    "acinar_cell_2_2",
+    "acinar_cell_2_3",
+    "acinar_cell_2_4",
+    "acinar_cell_2_5",
+    "duct_branch_2",
+    "duct_collect_2"
+  ],
+  "pancreas": [
+    "bile_duct"
+  ],
+  "parathyroids": [
+    "thyroid_cartilage",
+    "cricoid",
+    "hyoid",
+    "trachea"
+  ],
+  "parotid-glands": [
+    "upper_teeth"
+  ],
+  "pineal": [
+    "hypothalamus",
+    "pituitary"
+  ],
+  "pituitary": [
+    "hypothalamus",
+    "neurosecretory_axons",
+    "axon_terminals",
+    "posterior_capillaries"
+  ],
+  "placenta": [
+    "VH_F_amnion"
+  ],
+  "prostate": [
+    "ejaculatory_duct_left",
+    "ejaculatory_duct_right",
+    "urinary_bladder"
+  ],
+  "pulmonary-outflow": [
+    "VH_M_tricuspid_valve",
+    "VH_M_interventricular_septum"
+  ],
+  "red-marrow": [
+    "megakaryocyte_nucleus",
+    "marrow_adipocytes"
+  ],
+  "female-collecting-system": [
+    "VH_F_minor_calyx_R_a",
+    "VH_F_minor_calyx_R_b",
+    "VH_F_minor_calyx_R_c",
+    "VH_F_minor_calyx_R_d",
+    "VH_F_minor_calyx_R_e",
+    "VH_F_minor_calyx_R_f",
+    "VH_F_minor_calyx_R_g",
+    "VH_F_minor_calyx_R_h",
+    "VH_F_minor_calyx_R_i",
+    "VH_F_minor_calyx_R_j",
+    "VH_F_major_calyx_R_a",
+    "VH_F_major_calyx_R_b",
+    "VH_F_major_calyx_R_c",
+    "VH_F_renal_pelvis_R",
+    "VH_F_right_ureter"
+  ],
+  "seminal-glands": [
+    "illustrative_terminal_ductus_left",
+    "illustrative_terminal_ductus_right"
+  ],
+  "sigmoid-colon": [
+    "descending_colon"
+  ],
+  "skin": [
+    "region_Free_nerve_endings",
+    "region_Merkel_cell_and_tactile_disc",
+    "region_Pacinian_corpuscle",
+    "region_Ruffini_ending"
+  ],
+  "spinal-cord": [
+    "Ventral white column",
+    "Gray commissure",
+    "Spinal nerve"
+  ],
+  "spleen": [
+    "stomach",
+    "pancreas",
+    "portal_vein"
+  ],
+  "stomach": [
+    "esophagus"
+  ],
+  "sublingual-glands": [
+    "submandibular_duct_left",
+    "submandibular_duct_right"
+  ],
+  "submandibular-glands": [
+    "tongue",
+    "sublingual_gland_left",
+    "sublingual_gland_right"
+  ],
+  "testes": [
+    "ductus_deferens_left",
+    "ductus_deferens_right"
+  ],
+  "thyroid": [
+    "cell_nucleus",
+    "cell_nucleus.001",
+    "cell_nucleus.002",
+    "cell_nucleus.003",
+    "cell_nucleus.004",
+    "cell_nucleus.005",
+    "cell_nucleus.006",
+    "cell_nucleus.007",
+    "cell_nucleus.008",
+    "cell_nucleus.009",
+    "cell_nucleus.010",
+    "cell_nucleus.011",
+    "cell_nucleus.012",
+    "cell_nucleus.013",
+    "cell_nucleus.014",
+    "cell_nucleus.015",
+    "cell_nucleus.016",
+    "cell_nucleus.017",
+    "cell_nucleus.018",
+    "cell_nucleus.019",
+    "cell_nucleus.020",
+    "cell_nucleus.021",
+    "cell_nucleus.022",
+    "cell_nucleus.023",
+    "cell_nucleus.024",
+    "cell_nucleus.025",
+    "cell_nucleus.026",
+    "cell_nucleus.027",
+    "cell_nucleus.028",
+    "cell_nucleus.029",
+    "cell_nucleus.030",
+    "cell_nucleus.031",
+    "cell_nucleus.032",
+    "cell_nucleus.033",
+    "cell_nucleus.034",
+    "cell_nucleus.035",
+    "cell_nucleus.036",
+    "cell_nucleus.037",
+    "cell_nucleus.038",
+    "cell_nucleus.039",
+    "cell_nucleus.040",
+    "cell_nucleus.041",
+    "cell_nucleus.042",
+    "cell_nucleus.043",
+    "cell_nucleus.044",
+    "cell_nucleus.045"
+  ],
+  "tongue-swallow": [
+    "epiglottis",
+    "laryngopharynx"
+  ],
+  "tongue-taste": [
+    "region_Glossopharyngeal_nerve",
+    "region_Epiglottis",
+    "region_Sublingual_glands"
+  ],
+  "trachea-bronchi": [
+    "superior_lobe_of_right_lung",
+    "middle_lobe_of_right_lung",
+    "inferior_lobe_of_right_lung",
+    "superior_lobe_of_left_lung",
+    "inferior_lobe_of_left_lung"
+  ],
+  "transverse-colon": [
+    "ascending_colon",
+    "descending_colon"
+  ],
+  "ureters": [
+    "kidney_left",
+    "kidney_right"
+  ],
+  "female-ureters": [
+    "VH_F_fundus_of_urinary_bladder_dome",
+    "VH_F_urinary_bladder_neck_smooth_muscle",
+    "VH_F_fundus_of_urinary_bladder_base"
+  ],
+  "urinary-bladder": [
+    "ureter_left",
+    "ureter_right",
+    "urethra"
+  ],
+  "female-bladder": [
+    "VH_F_left_ureter",
+    "VH_F_right_ureter"
+  ],
+  "uterine-tubes": [
+    "VH_F_right_ovary",
+    "VH_F_ampulla_of_uterine_tube_R",
+    "VH_F_fibria_of_uterine_tube_R",
+    "VH_F_isthmus_of_fallopian_tube_R",
+    "VH_F_uterine_tube_infundibulum_R",
+    "VH_F_abdominal_ostium_of_uterine_tube",
+    "VH_F_fundus_of_uterus"
+  ],
+  "uterus": [
+    "VH_F_cervicovaginal_junction",
+    "VH_F_cornua"
+  ],
+  "vagina": [
+    "bladder",
+    "urethra",
+    "uterine_body"
+  ],
+  "appendix": [
+    "ileum",
+    "ascending_colon"
+  ]
+}

@@ -40,7 +40,7 @@ export const bodyMaps=[
   ]}
 ];
 export function mapForKey(key){return bodyMaps.find(m=>m.key===key);}
-export function mapRoute(map,row){return 'organs/'+map.key+(row?'/'+row.id:'');}
+export function mapRoute(map,row,part){return 'organs/'+map.key+(row?'/'+row.id+(row.targets.includes(part)?'/'+encodeURIComponent(part):''):'');}
 export function mappedActions(map,row){
   if(row.actionIds)return row.actionIds.map(id=>motionById.get(id)).filter(Boolean);
   const specific=motionsForBody(row.id);

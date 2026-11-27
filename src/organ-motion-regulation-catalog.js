@@ -202,7 +202,8 @@ add('lymph-node','Lymph node','Lymphatic',spring+'node-sinuses','capsule|cortica
   'The opened teaching model shows entry on the convex surface and exit at the hilum. Sinuses slow lymph and expose its contents to immune cells.',lymph,[
     phase('Afferent vessels','Several afferent vessels bring lymph to a node.','afferent_vessels'),
     phase('Subcapsular sinus','Lymph enters the sinus immediately beneath the capsule.','subcapsular_sinus'),
-    phase('Medullary sinuses','After passing through cortical sinuses, lymph reaches the medullary sinuses.','medullary_sinuses'),
+    phase('Cortical sinuses','Lymph passes through the cortical (trabecular) sinuses between lymphoid follicles toward the medulla.','cortical_sinuses'),
+    phase('Medullary sinuses','The medullary sinuses converge toward the hilar outlet.','medullary_sinuses'),
     phase('Efferent vessel','Filtered lymph exits at the hilum.','efferent_vessel')
   ],{bodyIds:[]});
 const thymic='right_lobe_of_thymus|left_lobe_of_thymus';
@@ -303,7 +304,7 @@ add('venae-cavae','Venae cavae and right atrium','Cardiovascular',registered,'',
     phase('Upper body','Venous blood from the head, neck, upper limbs and thorax descends through the superior vena cava.','superior_vena_cava'),
     phase('Lower body','The inferior vena cava ascends through the abdomen, crosses the diaphragm and continues to the heart.','inferior_vena_cava_abdominal_part|inferior_vena_cava_thoracic_part'),
     phase('Right atrium','Both caval streams empty into the right atrium.','right_atrium')
-  ],{direction:[.35,.06,1],bodyIds:['venae-cavae','heart']});
+  ],{mechanism:'caval-return',direction:[.35,.06,1],bodyIds:['venae-cavae','heart']});
 
 add('cochlea','Cochlea · place and pitch','Special senses',neuro+'labyrinth','','Compare the location of two pitch responses',
   'The marked spiral follows the partition between the two fluid-filled scalae. The bright band represents the approximate site of greatest vibration. Time and amplitude are enlarged. Each sound produces a traveling wave that begins at the base.',

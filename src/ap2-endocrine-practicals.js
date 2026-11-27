@@ -321,10 +321,12 @@ export function mountGlandPractical(rootElement,id){
      get('gonad-specimen').innerHTML='<div data-gross></div>';
      regionSpecimen(get('gross'),organ,showModel);
      if(organ==='ovary'){
-       get('gonad-specimen').insertAdjacentHTML('beforeend','<details><summary>Isolated left ovary</summary><div data-organ></div></details>');
+       get('gonad-specimen').insertAdjacentHTML('beforeend','<details><summary>Isolated left ovary</summary><div data-organ></div><small>Left ovarian surface, Visible Human Female. Kristen Browne and Heidi Schlehlein, Human Reference Atlas. <a href="https://doi.org/10.48539/HBM695.KCXS.294" target="_blank" rel="noreferrer">Specimen and credits ↗</a></small></details>');
        showModel(get('organ'),{asset:root+'ovary-v1.3.glb',title:'Left ovary',colors:()=>'#eab8b9'});
      }
      if(organ==='testis')get('gonad-specimen').insertAdjacentHTML('beforeend','<details><summary>Textbook section through the testis</summary>'+figure(root+'testis-section.webp','A sagittal section shows seminiferous tubules and the epididymis.',credits('27.4','27-1-anatomy-and-physiology-of-the-testicular-reproductive-system'))+'</details>');
+     const microscopic={ovary:['follicle-ovulation','Watch an oocyte leave a follicle'],testis:['seminiferous-tubule','Follow sperm development in a seminiferous tubule'],placenta:['placental-villus-exchange','Trace exchange across a placental villus']}[organ];
+     get('gonad-specimen').insertAdjacentHTML('beforeend','<p><a href="#organs/'+microscopic[0]+'">'+microscopic[1]+' in a separate enlarged model ↗</a></p>');
      get('gonad-controls').innerHTML=organ==='placenta'?'':select('gonad-signal','Signal to trace',{fsh:'FSH',lh:'LH'});
      if(organ!=='placenta')get('gonad-signal').onchange=guess;
      guess();

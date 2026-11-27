@@ -175,7 +175,7 @@ paths['female-urethra']=[[-.47,-.07,.03],[-.50,-.27,.08],[-.50,-.52,.08]]
 paths['filtration-barrier']=[[0,.51,0],[0,.35,0],[0,.22,0],[.025,.08,0],[.08,-.107,0],[.08,-.39,0]]
 nephron='ap3-models/nephron-pair.glb'
 for key,mesh,begin,finish in [
-    ('proximal-tubule','cortical_proximal_tubule','cortical_corpuscle','cortical_loop'),
+    ('proximal-tubule','cortical_proximal_tubule','cortical_glomerular_capsule','cortical_loop'),
     ('nephron-loop','cortical_loop','cortical_proximal_tubule','cortical_distal_tubule'),
     ('distal-tubule','cortical_distal_tubule','cortical_loop','shared_collecting_duct'),
     ('collecting-duct','shared_collecting_duct','+y','-y')
