@@ -302,3 +302,72 @@ body:has(#courses-view.active :is(.tm-frame,.ap2-test))>main{min-height:0;overfl
   body:has(#courses-view.active :is(.tm-frame,.ap2-test))>.topbar{display:none}
   .tm-frame{gap:.15rem}.tm-head .eyebrow{display:none}
 }
+/* Spring lessons and experiments keep their controls in the viewport. */
+body:has(#courses-view.active :is(.spring-start,.spring-lab-columns)){
+  height:100dvh;min-height:0;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr) auto
+}
+body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>main,
+#courses-view.active:has(:is(.spring-start,.spring-lab-columns)){height:100%;min-height:0;overflow:hidden}
+.ap3-page:has(:is(.spring-start,.spring-lab-columns)){box-sizing:border-box;display:flex;flex-direction:column;height:100%;min-height:0;padding-block:.55rem}
+.ap3-page:has(:is(.spring-start,.spring-lab-columns))>.course-hero h1{font-size:clamp(1.4rem,2.5vw,2.2rem)}
+.ap3-page:has(.spring-start)>.ap2-lesson-body{flex:1;min-height:0;overflow:auto}
+.spring-start.course-actions{margin:0 0 .85rem}
+.ap3-page:has(.spring-lab-columns)>.course-link{align-self:flex-start;flex:none;max-width:100%;box-sizing:border-box}
+.ap3-lab:has(.spring-lab-columns){flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;padding:clamp(7px,1.3vw,16px);margin-top:.4rem}
+.ap3-lab>label.ap3-select{flex:none;margin:0 0 .4rem;display:flex;flex-wrap:nowrap}
+.ap3-lab>label.ap3-select select{max-width:100%;min-width:0;width:min(100%,44rem)}
+.ap3-lab [data-ap3-lab-activity]{min-height:0;display:flex;flex-direction:column;flex:1}
+.ap3-lab .spring-lab-title{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden;white-space:nowrap}
+.spring-lab-columns{flex:1;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);min-height:0;gap:1rem}
+.spring-lab-columns>section{min-height:0;min-width:0;overflow:auto;overscroll-behavior:contain;scrollbar-gutter:stable;padding:.4rem .5rem .7rem .15rem}
+.spring-lab-columns>section>:first-child,.spring-lab-columns [data-spring-question]>:first-child{margin-top:.15rem}
+.spring-lab-question{border-inline-start:1px solid var(--line);padding-inline-start:.85rem!important}
+.spring-lab-question h3{font-size:clamp(1.08rem,1.6vw,1.35rem)}
+.spring-position{color:var(--mint)}
+.spring-lab-panes{display:none}
+.spring-evidence-switch,.spring-lab-panes{gap:5px;margin:0 0 .45rem}
+.spring-evidence-switch{display:flex;flex-wrap:wrap}
+.ap3-lab [aria-pressed=true]:is([data-spring-pane],[data-spring-medium]){background:var(--mint);color:#102124}
+.spring-lab-columns [hidden]{display:none!important}
+@media(max-width:900px),(max-height:700px){
+  body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>footer,
+  .ap3-page:has(:is(.spring-start,.spring-lab-columns))>.ap2-nav{display:none}
+  .ap3-page:has(:is(.spring-start,.spring-lab-columns)){padding:.45rem}
+  .ap3-page:has(.spring-lab-columns)>.course-hero,.ap3-page:has(.spring-start)>.course-hero .eyebrow{display:none}
+  .ap3-page:has(.spring-start) .ap2-breadcrumb,.ap3-page:has(.spring-start) .ap2-tabs{margin:0 0 .3rem}
+  .ap3-page:has(.spring-start) .ap2-breadcrumb{display:grid;grid-template-columns:auto minmax(0,1fr)}
+  .ap3-page:has(.spring-start) .ap2-breadcrumb label,.ap3-page:has(.spring-start) .ap2-breadcrumb select{min-width:0;max-width:100%}
+}
+@media(max-width:900px){
+  body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>.topbar{display:flex;position:static;align-items:center;flex-wrap:nowrap;height:auto;gap:.5rem;padding:.2rem .6rem}
+  body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>.topbar .main-nav{display:none}
+  body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>.topbar .brand{font-size:22px}
+}
+@media(max-width:700px){
+  .spring-lab-panes{display:flex}
+  .spring-lab-panes button{flex:1;min-height:44px}
+  .spring-lab-columns{display:flex;flex-direction:column;gap:0}
+  .spring-lab-columns>section{flex:1;border:0;padding:.3rem .2rem .7rem!important}
+  .ap3-lab:not([data-pane=evidence]) .spring-lab-evidence,.ap3-lab[data-pane=evidence] .spring-lab-question{display:none}
+  .ap3-page:has(.spring-start) .ap2-lesson-footer{gap:4px;padding:.25rem 0}
+}
+@media(max-height:490px){
+  .ap3-page:has(.spring-start)>.course-hero{display:none}
+  .ap3-page:has(.spring-start)>.ap2-lesson-footer{padding:0}
+}
+@media(max-width:375px){
+  body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>.topbar{flex-wrap:wrap;gap:3px;padding:.15rem .3rem}
+  body:has(#courses-view.active :is(.spring-start,.spring-lab-columns))>.topbar .brand-mark{display:none}
+}
+@media(max-width:900px),(max-height:600px){
+  .ap3-page:has(>[data-spring-specimen]){display:flex;flex-direction:column;padding:.45rem}
+  .ap3-page:has(>[data-spring-specimen])>.ap2-nav{order:3}
+  .ap3-page:has(>[data-spring-specimen])>.course-hero{margin:0}
+  .ap3-page:has(>[data-spring-specimen])>.course-hero h1{font-size:clamp(1.4rem,4vw,2rem);margin:.2rem 0}
+  .ap3-page:has(>[data-spring-specimen])>.ap3-specimen-actions{order:1}
+  .ap3-page:has(>[data-spring-specimen])>.course-actions:last-child{order:2}
+  [data-spring-specimen]>.ap3-specimen{display:flex;flex-direction:column;gap:.35rem}
+  [data-spring-specimen]>.ap3-specimen>h3{display:none}
+  [data-spring-specimen] [data-ap3-explanation]{order:1;margin:.15rem 0}
+  [data-spring-specimen] .ap3-specimen>small{order:2}
+}

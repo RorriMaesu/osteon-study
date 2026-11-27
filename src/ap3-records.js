@@ -7,6 +7,8 @@ export {pass};
 export function shouldRestoreCourseRecord(key,current,value){
   if(!current)return true;
   if(key.startsWith('mechanism:'))return value.at<current.at;
+  if(key.startsWith('recovery:'))return value.passed&&!current.passed||value.passed===current.passed&&value.at>current.at;
+  if(key.startsWith('wording:'))return value.at>current.at;
   if(key.startsWith('run:'))return !current.submitted&&Boolean(value.submitted);
   if(key.startsWith('mock:')){
     if(!current.submitted&&value.submitted)return true;
@@ -47,7 +49,7 @@ export function springStore(storage,warn=()=>{}){
   function update(id,change){
     if(!idPattern.test(id))return;
     const run=read('run:'+id);if(!run||run.submitted)return run;
-    change(run);return write('run:'+id,run);
+    change(run);run.updated=Date.now();return write('run:'+id,run);
   }
   function backup(){return {course:'ap3',version:1,records:Object.fromEntries(entries())};}
   function restore(file){

@@ -3,6 +3,7 @@ import {fields} from './ap3-slides.js';
 import {specimens} from './ap3-specimens.js';
 import {validTermRun} from './term-mock-records.js';
 import {validMechanismRecord} from './mechanism-transfer.js';
+import {validAnswerReview} from './answer-review-data.js';
 import {springLabRoutePattern} from './ap3-lab-links.js';
 
 const sectionIds=new Set(chapters.flatMap(c=>c.sections.map(s=>s.id)));
@@ -42,9 +43,13 @@ export function validatedBackup(file){
     else if(key.startsWith('mock:'))valid=key==='mock:'+v?.id && validTermRun(v,'ap3');
     else if(key.startsWith('run:'))valid=validRun(key.slice(4),v);
     else if(record(v)){
+      if(/^recovery:[a-z0-9-]{1,70}:\d{1,3}$/i.test(key))valid=typeof v.firstCorrect==='boolean'&&typeof v.passed==='boolean'&&Number.isSafeInteger(v.attempts)&&v.attempts>0&&time(v.at);
+      if(/^wording:[a-z0-9-]{1,70}:\d{1,3}$/i.test(key))valid=validAnswerReview(v);
       if(key==='last')valid=isSpringStudyRoute(v.route);
       if(key.startsWith('study:'))valid=sectionIds.has(key.slice(6))&&typeof v.studied==='boolean'&&time(v.at);
-      if(key.startsWith('check:'))valid=sectionIds.has(key.slice(6))&&typeof v.correct==='boolean'&&typeof v.firstCorrect==='boolean'&&time(v.at);
+      if(key.startsWith('check:'))valid=sectionIds.has(key.slice(6))&&typeof v.correct==='boolean'&&typeof v.firstCorrect==='boolean'&&time(v.at)
+        &&(v.nextItem===undefined||Number.isInteger(v.nextItem)&&v.nextItem>=0&&v.nextItem<3)
+        &&(v.seen===undefined||Array.isArray(v.seen)&&v.seen.length<=3&&v.seen.every(id=>short(id,100)));
     }
     if(!valid)throw new Error('This backup contains an unrecognized spring record. Your current work is still available.');
   }

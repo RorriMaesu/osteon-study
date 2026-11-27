@@ -3,6 +3,9 @@ import {drainage,absorption,digestiveRoutes,nephron,sperm} from './ap3-labs-rout
 import {chapterEvidence,springPracticalStations} from './term-mock-spring-evidence.js';
 import {chapterShort,chapterWriting,recallChoices} from './term-mock-spring-recall.js';
 import {ordered,pick,term,number,data,item} from './term-mock-spring-items.js';
+import {springWeeklyItems} from './term-spring-weekly.js';
+import {springTransferCases} from './ap3-recovery-cases.js';
+import {springUnitReserve} from './term-spring-unit-reserve.js';
 
 const all=chapters.map(c=>c.id);
 export const springScopes=[
@@ -105,7 +108,7 @@ function publish(q,form,scope){
   return JSON.parse(JSON.stringify(result));
 }
 
-export function makeSpringMock(scopeId,form='A'){
+function defaultSpringMock(scopeId,form){
   const scope=springScopes.find(s=>s.id===scopeId),n=['A','B','C'].indexOf(form);
   if(!scope||n===-1)throw new RangeError('Unknown spring mock or form.');
   if(scopeId==='practical')return springPracticalStations(n).map(q=>publish(q,form,scopeId));
@@ -116,6 +119,34 @@ export function makeSpringMock(scopeId,form='A'){
     ...scope.chapters.flatMap(ch=>chapterShort(ch,n)),
     ...scope.chapters.map(ch=>chapterWriting(ch,n))];
   return [...ordered(choices,scopeId+form),...extras].map(q=>publish(q,form,scopeId));
+}
+
+export function springExposureKeys(q){
+  const keys=['stem:'+q.prompt];
+  if(q.stimulus?.rows)keys.push('data:'+JSON.stringify([q.stimulus.columns,q.stimulus.rows]));
+  if(q.stimulus?.image||q.stimulus?.svg)keys.push('image:'+(q.stimulus.image||q.stimulus.svg));
+  return keys;
+}
+export function makeSpringMock(scopeId,form='A',history=[]){
+  if(scopeId.startsWith('week-'))return springWeeklyItems(Number(scopeId.slice(5)),form);
+  const items=defaultSpringMock(scopeId,form);
+  if(!scopeId.startsWith('unit-'))return items;
+  const exposed=new Set(history.filter(r=>['exam','practical','study'].includes(r.mode)||r.scope?.startsWith('week-')).flatMap(r=>r.items.flatMap(springExposureKeys)));
+  const seen=q=>springExposureKeys(q).some(k=>exposed.has(k));
+  if(!items.some(seen))return items;
+  const reserved=new Set(items.filter(q=>!seen(q)).flatMap(springExposureKeys));
+  const extra=springTransferCases.map(q=>publish(choice(q.section,q.id,q.prompt,q.options,q.answer,q.why),form,scopeId));
+  const reserves=springUnitReserve(form).map(q=>publish(q,form,scopeId));
+  const spare=[...['A','B','C'].filter(f=>f!==form).flatMap(f=>defaultSpringMock(scopeId,f)),...reserves,...extra].filter(q=>!seen(q));
+  const chapter=q=>q.section.split('.')[0];
+  return items.map(q=>{
+    if(!seen(q))return q;
+    const candidates=spare.filter(r=>r.type===q.type&&r.points===q.points&&chapter(q)===chapter(r)&&!springExposureKeys(r).some(k=>reserved.has(k)));
+    const next=candidates.find(r=>r.section===q.section)||candidates[0];
+    if(!next)return {...q,previouslyPracticed:true};
+    springExposureKeys(next).forEach(k=>reserved.add(k));
+    return next;
+  });
 }
 
 function integrated(q,otherSection){return {...q,relatedSections:[otherSection]};}

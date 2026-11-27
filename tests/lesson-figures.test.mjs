@@ -1,12 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readdirSync} from 'node:fs';
 import winter from '../src/ap2-figures.json' with {type:'json'};
 import spring from '../src/ap3-figures.json' with {type:'json'};
 import {figureCovers} from '../src/lesson-figure-covers.js';
 
 test('every spring textbook image has its own description of the printed evidence',()=>{
   const descriptions=Object.values(spring.figures).map(f=>f.alt);
-  assert.equal(descriptions.length,86);
+  const imageIds=readdirSync(new URL('../assets/ap3-figures/',import.meta.url)).filter(file=>file.endsWith('.webp')).map(file=>file.slice(0,-5));
+  assert.deepEqual(Object.keys(spring.figures).sort(),imageIds.sort());
   assert.equal(new Set(descriptions).size,descriptions.length);
   for(const [id,f] of Object.entries(spring.figures)){
     assert.ok(f.alt.length>45&&f.alt!==f.title,id);

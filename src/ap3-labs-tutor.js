@@ -1,3 +1,5 @@
+import {gradeVolumeTrace} from './ap3-labs-experiments.js';
+
 function describeTable({ caption, headers, rows }) {
   return caption + '. ' + headers.join(' | ') + '. ' + rows.map(row => row.join(' | ')).join('. ');
 }
@@ -13,8 +15,8 @@ function routeContext(activity, state) {
   if (confirmed.length) facts.push('Confirmed stops in order: ' + confirmed.join(' → ') + '.');
   if (state.routeCorrect) facts.push(step[3]);
   if (prediction && !state.routeCorrect) facts.push('The selected stop did not match the route. Another attempt is available.');
-  let question = 'From ' + location + ', which stop comes next?';
-  if (complete) question = 'How does material travel from the starting point to the final confirmed stop?';
+  let question = route.prompts?.[state.step] || 'From ' + location + ', which stop comes next?';
+  if (complete) question = route.prompts?'Which observations connect the initial finding to your final decision?':'How does material travel from the starting point to the final confirmed stop?';
   else if (state.routeCorrect) question = 'What explains the connection you just confirmed?';
   return {
     state: {
@@ -24,19 +26,36 @@ function routeContext(activity, state) {
       status: complete ? 'Complete' : state.routeCorrect ? 'Step confirmed' : prediction ? 'Retry current step' : 'Awaiting next stop',
     },
     question, prediction, facts,
-    hint: 'Identify the compartment you are in and which direction the material is traveling.',
+    hint: route.prompts?'Use the current finding and the last confirmed decision. Explain why the alternative would give a different outcome.':'Identify the compartment you are in and which direction the material is traveling.',
     answer: state.routeCorrect ? step[3] : complete ? [route.start, ...confirmed].join(' → ') : '',
   };
 }
 
 function experimentContext(activity, state) {
-  const data = activity.run(state.values);
+  const prior=state.responses||[];
+  const data = activity.run(state.values,prior);
   const settings = Object.fromEntries(activity.controls.map(control => {
     const value = state.values[control.key];
     return [control.label, control.labels ? control.labels[value] : value + ' ' + control.unit];
   }));
   const submitted = state.choice !== null;
   const facts = [activity.intro, describeTable(data.observation)];
+  if(data.plot?.measureExtrema){
+    const marks=state.marks||{};
+    for(const key of ['peak','trough']){
+      const point=data.plot.rows[marks[key]];
+      if(point)settings['Selected '+key]=point[0]+' s, '+point[1]+' L';
+    }
+    if(marks.excursion!==undefined&&marks.excursion!=='')settings['Student excursion']=marks.excursion+' L';
+    if(submitted){
+      const g=gradeVolumeTrace(data.plot,marks,state.choice);
+      facts.push('Measurement feedback: '+['peak','trough','excursion','quantity'].map(k=>k+' '+(g[k]?'correct':'needs review')).join(', ')+'.');
+    }
+  }
+  prior.forEach((pick,i)=>{
+    const step=activity.run(state.values,prior.slice(0,i));
+    facts.push('Earlier decision: '+step.question+' Response: '+step.choices[pick]+'. '+(pick===0?'Correct.':'Reviewed answer: '+step.choices[0]+'.'));
+  });
   if (data.media) facts.push(data.media.description);
   if (data.note) facts.push(data.note);
   const prediction = submitted ? data.choices[state.choice] : '';

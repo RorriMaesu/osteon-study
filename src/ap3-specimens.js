@@ -33,6 +33,7 @@ export function renderSpecimen(id,{blind=false}={}){
     '</div><p data-ap3-selection role="status" aria-live="polite"></p>'+
     (blind&&descriptions[id]?'<details data-ap3-described><summary>Read the spatial description of each structure</summary><dl data-ap3-descriptions></dl></details>':'')+
     (!blind&&spec.routes?'<div class="ac-row"><label>Route <select data-ap3-route><option value="">Choose a route</option>'+spec.routes.map((r,i)=>'<option value="'+i+'">'+escape(r.name)+'</option>').join('')+'</select></label><button type="button" data-ap3-prev disabled>Previous stop</button><button type="button" data-ap3-next disabled>Next stop</button></div><p data-ap3-route-state aria-live="polite"></p>':'')+
+    (!blind&&spec.handoffs?'<a hidden class="course-link" data-ap3-handoff></a>':'')+
     (!blind&&spec.breathing?'<div class="ac-row"><button type="button" data-ap3-play aria-pressed="false">Play one breath</button><label>Breath time <input type="range" min="0" max="5" step="0.01" value="0" data-ap3-breath></label><button type="button" data-ap3-end-in>End-inspiration</button></div><p data-ap3-breath-state></p>':'')+
     (!blind&&id.startsWith('nodes-')?'<div class="ac-row"><label><input data-ap3-landmarks type="checkbox" checked> Skeletal landmarks</label><label><input data-ap3-dots type="checkbox" checked> Location dots</label><a data-ap3-atlas href="./?lymph-node='+encodeURIComponent(spec.targets[0].meshes[0].slice(7))+'#atlas">Find nodes on the body</a></div><p data-ap3-node-context role="status"></p>':'')+
     (!blind?'<small>'+credit+'</small>':'')+'</section>';
@@ -84,6 +85,13 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
   }
   function apply(){
     const index=selected?optionsList.indexOf(selected):-1;
+    const handoff=el('handoff');
+    if(handoff){
+      const next=!hidden()&&spec.handoffs[selected?.id];
+      handoff.hidden=!next;
+      if(next){handoff.href='#'+next[0];handoff.textContent=next[1];}
+      else{handoff.removeAttribute('href');handoff.textContent='';}
+    }
     picker.value=index<0?'':String(index);
     el('selection').textContent=selected?(hidden()?'Selected structure '+letters(index):selected.label+(selected.detail?' · '+selected.detail:'')):'';
     el('focus').disabled=el('isolate').disabled=!selected||!ready;
@@ -119,7 +127,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     const target=spec.targets.find(t=>t.id===r.steps[routeStep]);
     el('route-state').textContent='Stop '+(routeStep+1)+' of '+r.steps.length+(hidden()?'':' · '+target.label);
     el('prev').disabled=routeStep===0;el('next').disabled=routeStep===r.steps.length-1;
-    if(ready)select(target,false);
+    if(ready)select(target);
   }
   function applyBreath(t){
     const b=breathingFrame(t);time=b.t;
@@ -171,7 +179,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
   if(el('route')){
     el('route').onchange=()=>{
       routeIndex=el('route').value===''?-1:+el('route').value;routeStep=0;
-      if(routeIndex<0){el('route-state').textContent='';el('prev').disabled=el('next').disabled=true;select(null,false);}
+      if(routeIndex<0){el('route-state').textContent='';el('prev').disabled=el('next').disabled=true;select(null);}
       else updateRoute();
     };
     el('prev').onclick=()=>{routeStep--;updateRoute();};el('next').onclick=()=>{routeStep++;updateRoute();};

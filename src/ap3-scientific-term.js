@@ -1,7 +1,7 @@
 // Resolve only unambiguous scientific notation and qualifiers. Other responses
 // still go through the existing anatomy spelling and meaning checks.
 export function springScientificTerm(expected,raw){
-  const key=String(expected).toLowerCase(),s=String(raw).normalize('NFKC').trim().toLowerCase().replace(/[−–]/g,'-').replace(/[.,;:]$/,'').trim();
+  const key=String(expected).toLowerCase(),s=String(raw).normalize('NFKC').trim().toLowerCase().replace(/[−–]/g,'-').replace(/(\bcd\s*8)-positive\b/g,'$1 positive').replace(/[.,;:]$/,'').trim();
   if(key==='bicarbonate'){
     if(/\bhco\s*3/.test(s)){
       const formula='hco\\s*3\\s*(?:\\^?\\s*-)?',name='(?:bicarbonate(?: ion)?|hydrogen carbonate(?: ion)?)';

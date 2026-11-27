@@ -1,4 +1,5 @@
 import {assessTyped, editDistance, fold, outcomeCorrect} from './typed-answer.js';
+import {springScientificTerm} from './ap3-scientific-term.js';
 import {checkQuantity} from './ap2-quantities.js';
 import {LocalAnswerJudge} from './answer-judge.js';
 import {reviewMatches, reviewedCorrect} from './answer-review-data.js';
@@ -89,7 +90,10 @@ function gradePart(item, part, index, raw, possible=1) {
     }
   } else if(part.type==='term' && input) {
     const keyGroup=bloodType(part.expected), givenGroup=bloodType(input);
-    if(keyGroup&&givenGroup) {
+    const scientific=springScientificTerm(part.expected,input);
+    if(scientific){
+      status=scientific;reason=status==='correct'?'The anatomical meaning and scientific notation agree with the key.':'Check the ion charge, cell marker or direction of compensation.';
+    } else if(keyGroup&&givenGroup) {
       status=bloodKey(keyGroup)===bloodKey(givenGroup)?'correct':'incorrect';
       reason='Compare both the ABO group and the Rh factor.';
     } else if(commonFormulae.has(chemicalForm(part.expected)) && commonFormulae.has(chemicalForm(input))) {

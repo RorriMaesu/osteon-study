@@ -1,21 +1,26 @@
 import { absorption, digestiveRoutes, drainage, nephron, sperm } from './ap3-labs-routes.js';
-import { antibody, breathing, ventilation, spirometry, fedFast, heat, excretion, waterShift } from './ap3-labs-experiments.js';
+import { antibody, breathing, ventilation, spirometry, gradeVolumeTrace, fedFast, heat, excretion, waterShift } from './ap3-labs-experiments.js';
 import { acidBase, lymphTissue, foodEnergy, ovarian, development, birth, pedigree } from './ap3-labs-evidence.js';
 import { intestinalTissue, gasSurface, gonadField, cleavageFields } from './ap3-labs-fields.js';
 import { springLabTutorContext } from './ap3-labs-tutor.js';
 import { collectingDuct,renderCollectingDuct } from './ap3-labs-kidney.js';
+import {immuneRecognition,oxygenCarriage,gutWall,gastricGlands,lipidJourney,alanineFates} from './ap3-labs-immune-fuel.js';
+import {immuneDisorders,altitude,lungDevelopment} from './ap3-labs-immune-respiratory.js';
+import { filtrationPressure,renalSignals,compensation,electrolyteRoles } from './ap3-renal-fluid-cases.js';
+import { ductSignals,gameteTimeline,familyEvidence,pregnancyLabor } from './ap3-reproduction-development-cases.js';
+import springFigures from './ap3-figures.json' with {type:'json'};
 import { renderMechanismTransfer,mountMechanismTransfer } from './mechanism-transfer.js';
 import { getTutorAssessmentMode } from './learning-context.js';
 
 export const chapterLabs = {
-  21: [drainage, lymphTissue, antibody],
-  22: [breathing, ventilation, spirometry, gasSurface],
-  23: [absorption, digestiveRoutes, intestinalTissue],
-  24: [fedFast, heat, foodEnergy],
-  25: [nephron, excretion, collectingDuct],
-  26: [waterShift, acidBase],
-  27: [ovarian, sperm, gonadField],
-  28: [development, birth, pedigree, cleavageFields],
+  21: [drainage, lymphTissue, antibody, immuneRecognition, immuneDisorders],
+  22: [breathing, ventilation, spirometry, gasSurface, oxygenCarriage, altitude, lungDevelopment],
+  23: [absorption, digestiveRoutes, intestinalTissue, gutWall, gastricGlands, lipidJourney],
+  24: [fedFast, heat, foodEnergy, alanineFates],
+  25: [nephron, excretion, collectingDuct, filtrationPressure, renalSignals],
+  26: [waterShift, acidBase, compensation, electrolyteRoles],
+  27: [ovarian, sperm, gonadField, ductSignals, gameteTimeline],
+  28: [development, birth, pedigree, cleavageFields, familyEvidence, pregnancyLabor],
 };
 
 function escapeText(value) {
@@ -96,7 +101,7 @@ function makeState(list, activityIndex = 0, settings={}) {
     if(allowed)values[control.key]=value;
   }
   return { activityIndex, route:Number.isInteger(settings.route)&&activity.routes?.[settings.route]?settings.route:0,
-    step:0, routeCorrect:false, routeChoice:null,values,choice:null, frame:0,marks:{next:'peak'} };
+    step:0, routeCorrect:false, routeChoice:null,values,choice:null, responses:[],frame:0,marks:{next:'peak'} };
 }
 
 function studySettings(activity,state){
@@ -129,17 +134,18 @@ function optionsHtml(choices, position, locked, selected) {
 function traceBody(activity,state) {
   const route=activity.routes[state.route];
   const completed=route.steps.slice(0,state.step+(state.routeCorrect?1:0));
-  const trace='<p><strong>Starting point</strong> · '+escapeText(route.start)+'</p>'+
+  const trace=(activity.media?renderField(activity.media):'')+'<p><strong>Starting point</strong> · '+escapeText(route.start)+'</p>'+
     (completed.length?'<ol aria-label="Confirmed route">'+completed.map(s=>'<li>'+escapeText(s[0])+'</li>').join('')+'</ol>':'');
   if(state.step===route.steps.length) {
-    return trace+'<h3 data-ap3-focus tabindex="-1">Route complete</h3><button type="button" data-ap3-reset>Trace again with the route hidden</button>';
+    return {evidence:trace,answer:'<h3 data-ap3-focus tabindex="-1">Route complete</h3><button type="button" data-ap3-reset>Trace again with the route hidden</button>'};
   }
   const step=route.steps[state.step], locked=state.routeCorrect;
-  const feedback=state.routeChoice===null?'':locked?'Correct. '+step[3]:'Reconsider the direction of travel from the last confirmed structure and try again.';
-  return trace+'<h3 data-ap3-focus tabindex="-1">Choose the next stop</h3>'+
+  const feedback=state.routeChoice===null?'':locked?'Correct. '+step[3]:route.prompts?'Use the finding and your last confirmed choice to try again.':'Reconsider the direction of travel from the last confirmed structure and try again.';
+  const location=state.step?route.steps[state.step-1][0]:route.start;
+  return {evidence:trace,answer:'<p class="spring-position">'+escapeText(location)+'</p><h3 data-ap3-focus tabindex="-1">'+escapeText(route.prompts?.[state.step]||'Choose the next stop')+'</h3>'+
     optionsHtml(step.slice(0,3),state.activityIndex+state.step+state.route+1,locked,state.routeChoice)+
     '<p role="status">'+escapeText(feedback)+'</p>'+
-    (locked?'<button type="button" data-ap3-next>'+(state.step+1===route.steps.length?'See completed route':'Continue route')+'</button>':'');
+    (locked?'<button type="button" data-ap3-next>'+(state.step+1===route.steps.length?'See completed route':'Continue route')+'</button>':'')};
 }
 
 function frameBody(data,index) {
@@ -147,38 +153,64 @@ function frameBody(data,index) {
   return '<p><strong>'+escapeText(label)+'</strong></p><p>'+escapeText(detail)+'</p>';
 }
 
-function markVolumes(plot,marks){
+function resultIllustration(activity,data){
+  const id=data.figure||activity.figure,figure=springFigures.figures[id];
+  if(!figure||data.nextDecision)return '';
+  const title=escapeText(figure.title),section=springFigures.sections[activity.section]?.includes(id)?activity.section:figure.section;
+  return '<details class="ap3-result-art"><summary>See the textbook diagram · '+title+'</summary><figure>'+
+    '<img loading="lazy" src="assets/ap3-figures/'+escapeText(id)+'.webp" alt="'+escapeText(figure.alt)+'" style="width:100%;max-height:18rem;object-fit:contain;background:#fafaf4">'+
+    '<figcaption>OpenStax, Anatomy and Physiology 2e · Fig. '+escapeText(id)+' · '+title+'. '+escapeText(figure.credit||'')+
+    ' <a href="#ap3-lesson-'+escapeText(section)+'/figures/'+escapeText(id)+'">Focus figure and view credits</a> · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a></figcaption></figure></details>';
+}
+
+function markVolumes(plot,marks,locked=false){
   const {rows}=plot;
-  const picked=key=>'<label>'+ (key==='peak'?'Peak':'Trough')+' <select data-ap3-measure="'+key+'"><option value="">Choose time</option>'+
+  const picked=key=>'<label>'+ (key==='peak'?'Peak':'Trough')+' <select data-ap3-measure="'+key+'"'+(locked?' disabled':'')+'><option value="">Choose time</option>'+
     rows.map(([t,v],i)=>'<option value="'+i+'"'+(marks[key]===i?' selected':'')+'>'+t+' s · '+v+' L</option>').join('')+'</select></label>';
-  let message='Tap the trace to mark the '+marks.next+', or use the time selectors.';
-  if(rows[marks.peak]&&rows[marks.trough]){
-    const high=rows[marks.peak][1],low=rows[marks.trough][1],samples=rows.map(r=>r[1]);
-    message='Marked difference '+(high-low).toFixed(1)+' L. '+(high===Math.max(...samples)&&low===Math.min(...samples)?
-      'Both extremes are marked.':'Look for the highest and lowest measured volumes.');
-  }
-  return '<fieldset><legend>Measure the excursion</legend><div class="course-actions">'+picked('peak')+picked('trough')+'</div><p role="status">'+message+'</p></fieldset>';
+  const message=locked?'Measurements submitted.':'Mark the highest and lowest points. Tap the trace to mark the '+marks.next+', or use the time selectors. Calculate peak minus trough to the nearest 0.1 L.';
+  return '<fieldset><legend>Measure the excursion</legend><div class="course-actions">'+picked('peak')+picked('trough')+
+    '<label>Your excursion (L) <input data-ap3-excursion type="number" inputmode="decimal" step="0.1" value="'+escapeText(marks.excursion??'')+'"'+(locked?' disabled':'')+'></label></div><p role="status" data-measure-prompt>'+message+'</p></fieldset>';
+}
+
+function volumeVerdict(data,state){
+  const g=gradeVolumeTrace(data.plot,state.marks,state.choice);
+  const line=(ok,label,detail)=>'<li>'+label+' · '+(ok?'Correct':'Review')+'. '+detail+'</li>';
+  return '<strong>'+(g.peak&&g.trough&&g.excursion&&g.quantity?'Correct.':'Review your measurement.')+'</strong><ul>'+
+    line(g.peak,'Peak','The highest measured volume is +'+g.high.toFixed(1)+' L.')+
+    line(g.trough,'Trough','The lowest measured volume is '+g.low.toFixed(1)+' L.')+
+    line(g.excursion,'Excursion',g.high.toFixed(1)+' − ('+g.low.toFixed(1)+') = '+(g.high-g.low).toFixed(1)+' L.')+
+    line(g.quantity,'Quantity','The difference is vital capacity.')+'</ul>'+escapeText(data.why);
 }
 
 function experimentBody(activity,state) {
-  const data=activity.run(state.values), locked=state.choice!==null;
+  const data=activity.run(state.values,state.responses), locked=state.choice!==null;
+  const responses=state.responses.length?'<details><summary>Earlier decisions · '+state.responses.filter(c=>c===0).length+' of '+state.responses.length+' correct</summary><ol>'+
+    state.responses.map((pick,i)=>{
+      const prior=activity.run(state.values,state.responses.slice(0,i));
+      return '<li>'+escapeText(prior.question)+' · '+escapeText(prior.choices[pick])+' · '+(pick===0?'Correct':'Review: '+escapeText(prior.choices[0]))+'</li>';
+    }).join('')+'</ol></details>':'';
   const hash=activity.title.length+Object.values(state.values).reduce((sum,v)=>sum+Math.round(Number(v)*10),0);
-  return (data.media?renderField(data.media):'')+
+  const visual=(data.media?renderField(data.media):'')+
     (data.duct?renderCollectingDuct(data.duct,locked):'')+
-    (data.plot?'<div data-ap3-observed-plot>'+renderPlot(data.plot,locked?state.frame:-1,state.marks)+'</div>':'')+
-    (data.plot?.measureExtrema?'<div data-ap3-measure-tool>'+markVolumes(data.plot,state.marks)+'</div>':'')+
-    renderTable(data.observation)+(data.note?'<p>'+escapeText(data.note)+'</p>':'')+
-    '<h3>'+escapeText(data.question)+'</h3>'+optionsHtml(data.choices,hash,locked,state.choice)+
+    (data.plot?'<div data-ap3-observed-plot>'+renderPlot(data.plot,locked?state.frame:-1,state.marks)+'</div>':'');
+  const table=renderTable(data.observation);
+  const evidence=(visual?'<div class="spring-evidence-switch" role="group" aria-label="Evidence view"><button type="button" data-spring-medium="visual">'+(data.plot?'Graph':'Figure')+'</button><button type="button" data-spring-medium="table">Data table</button></div><div data-spring-visual>'+visual+'</div><div data-spring-table>'+table+'</div>':table)+
+    (data.plot?.measureExtrema?'<div data-ap3-measure-tool>'+markVolumes(data.plot,state.marks,locked)+'</div>':'')+
+    responses+(data.note?'<p>'+escapeText(data.note)+'</p>':'');
+  const answer='<h3>'+escapeText(data.question)+'</h3>'+optionsHtml(data.choices,hash,locked,state.choice)+
     '<div role="status" data-ap3-verdict tabindex="-1">'+(locked?
-      '<p><strong>'+(state.choice===0?'Correct.':'Expected prediction · '+escapeText(data.choices[0])+'.')+'</strong> '+escapeText(data.why)+'</p>':'')+'</div>'+
-    (locked?(data.result?renderTable(data.result):'')+
+      (data.plot?.measureExtrema?volumeVerdict(data,state):'<p><strong>'+(state.choice===0?'Correct.':'Expected prediction · '+escapeText(data.choices[0])+'.')+'</strong> '+escapeText(data.why)+'</p>')+
+      (state.responses.length&&!data.nextDecision?'<p>Case complete · '+(state.responses.filter(pick=>pick===0).length+Number(state.choice===0))+' of '+(state.responses.length+1)+' decisions correct.</p>':''):'')+'</div>'+
+    (locked?(data.result?renderTable(data.result):'')+resultIllustration(activity,data)+
       (data.plotAfter?'<div data-ap3-result-plot>'+renderPlot(data.plotAfter,state.frame)+'</div>':'')+
       '<label class="ap3-lab-slider">Inspect the result <input type="range" data-ap3-frame min="0" max="'+(data.frames.length-1)+
       '" step="1" value="'+state.frame+'" aria-valuetext="'+escapeText(data.frames[state.frame][0])+'"></label>'+
       '<div data-ap3-frame-text aria-live="polite">'+frameBody(data,state.frame)+'</div>'+
-      '<button type="button" data-ap3-reset>Repeat this prediction</button>'+
+      (data.nextDecision?'<button type="button" class="course-primary" data-ap3-decision-next>'+escapeText(data.nextDecision)+'</button>':'')+
+      '<button type="button" data-ap3-reset>'+(state.responses.length||data.nextDecision?'Restart case':'Repeat this prediction')+'</button>'+
       (activity===collectingDuct?' <button type="button" data-ap3-discuss>Discuss my result</button>':'')+
       (activity.nextTrial?' <button type="button" data-ap3-new-trial>Try another condition</button>':''):'');
+  return {evidence,answer};
 }
 
 function bodyContent(activity,state) {
@@ -186,11 +218,13 @@ function bodyContent(activity,state) {
 }
 
 function activityContent(activity,state) {
-  return '<h2>'+escapeText(activity.title)+'</h2><p>'+escapeText(activity.intro)+'</p>'+
-    '<div class="course-actions">'+controlsFor(activity,state)+'</div>'+
-    '<div data-ap3-lab-body>'+bodyContent(activity,state)+'</div>'+
-    '<p><a href="#ap3-lesson-'+activity.section+'">Review lesson '+activity.section+'</a></p>'+
-    (activity===collectingDuct?renderMechanismTransfer('collecting-duct'):'');
+  const {evidence,answer}=bodyContent(activity,state);
+  return '<h2 class="spring-lab-title">'+escapeText(activity.title)+'</h2><div class="spring-lab-panes" role="group" aria-label="Activity workspace"><button type="button" data-spring-pane="question">Question</button><button type="button" data-spring-pane="evidence">Evidence &amp; settings</button></div>'+
+    '<div data-ap3-lab-body class="spring-lab-columns"><section class="spring-lab-evidence" aria-label="Evidence and settings"><p>'+escapeText(activity.intro)+'</p>'+
+    '<div class="course-actions">'+controlsFor(activity,state)+'</div><div data-spring-observations>'+evidence+'</div></section>'+
+    '<section class="spring-lab-question" aria-label="Question and feedback"><div data-spring-question>'+answer+'</div>'+
+    (activity===collectingDuct?renderMechanismTransfer('collecting-duct'):'')+
+    '<p><a href="#ap3-lesson-'+activity.section+'">Review lesson '+activity.section+'</a></p></section></div>';
 }
 
 export function renderLab(chapterId,initialIndex=0,settings={}) {
@@ -210,17 +244,30 @@ export function mountLab(root,chapterId,initialIndex=0,onContext,{settings={},on
   const current=()=>list[state.activityIndex];
   const body=()=>root.querySelector('[data-ap3-lab-body]');
   const publish=()=>onContext?.(springLabTutorContext(chapterId,current(),state));
-  const refreshBody=()=>{body().innerHTML=bodyContent(current(),state);publish();};
+  function syncWorkspace(){
+    for(const button of root.querySelectorAll('[data-spring-pane]'))button.setAttribute('aria-pressed',String(button.dataset.springPane===(root.dataset.pane||'question')));
+    const table=root.dataset.medium==='table';
+    for(const button of root.querySelectorAll('[data-spring-medium]'))button.setAttribute('aria-pressed',String((button.dataset.springMedium==='table')===table));
+    const visual=body().querySelector('[data-spring-visual]'),numbers=body().querySelector('[data-spring-table]');
+    if(visual&&numbers){visual.hidden=table;numbers.hidden=!table;}
+  }
+  const refreshBody=()=>{
+    const {evidence,answer}=bodyContent(current(),state);
+    body().querySelector('[data-spring-observations]').innerHTML=evidence;
+    body().querySelector('[data-spring-question]').innerHTML=answer;
+    syncWorkspace();publish();
+  };
   const navigate=()=>onNavigate?.(state.activityIndex,studySettings(current(),state));
-  const mountTransfer=()=>{if(current()===collectingDuct)mountMechanismTransfer(root,'collecting-duct',store);};
+  const mountTransfer=()=>{syncWorkspace();if(current()===collectingDuct)mountMechanismTransfer(root,'collecting-duct',store);};
   function mark(key,index,focus){
     const plot=current().run(state.values).plot;
-    if(!plot?.measureExtrema)return;
+    if(!plot?.measureExtrema||state.choice!==null)return;
     if(Number.isInteger(index)&&plot.rows[index])state.marks[key]=index;
     else delete state.marks[key];
     state.marks.next=key==='peak'?'trough':'peak';
     root.querySelector('[data-ap3-observed-plot]').innerHTML=renderPlot(plot,state.choice===null?-1:state.frame,state.marks);
     root.querySelector('[data-ap3-measure-tool]').innerHTML=markVolumes(plot,state.marks);
+    publish();
     if(focus)root.querySelector('[data-ap3-measure="'+key+'"]').focus({preventScroll:true});
   }
   mountTransfer();publish();
@@ -230,7 +277,7 @@ export function mountLab(root,chapterId,initialIndex=0,onContext,{settings={},on
     const control=current().controls.find(c=>c.key===key);
     if(!control)return;
     state.values[key]=Number(input.value);
-    state.choice=null;state.frame=0;state.marks={next:'peak'};
+    state.choice=null;state.responses=[];state.frame=0;state.marks={next:'peak'};
     if(!control.labels) {
       const value=input.value+' '+control.unit;
       root.querySelector('[data-ap3-value="'+key+'"]').textContent=value;
@@ -260,10 +307,11 @@ export function mountLab(root,chapterId,initialIndex=0,onContext,{settings={},on
 
   root.addEventListener('input',event=>{
     const target=event.target;
+    if(target.matches('[data-ap3-excursion]')){state.marks.excursion=target.value;publish();}
     if(target.matches('input[data-ap3-control]'))updateControl(target);
     if(!target.matches('[data-ap3-frame]'))return;
     state.frame=Number(target.value);
-    const data=current().run(state.values);
+    const data=current().run(state.values,state.responses);
     target.setAttribute('aria-valuetext',data.frames[state.frame][0]);
     root.querySelector('[data-ap3-frame-text]').innerHTML=frameBody(data,state.frame);
     if(data.plot)root.querySelector('[data-ap3-observed-plot]').innerHTML=renderPlot(data.plot,state.frame,state.marks);
@@ -276,15 +324,29 @@ export function mountLab(root,chapterId,initialIndex=0,onContext,{settings={},on
     if(point){mark(state.marks.next,Number(point.dataset.ap3Point),false);return;}
     const button=event.target.closest('button');
     if(!button||button.disabled)return;
+    if(button.dataset.springPane){root.dataset.pane=button.dataset.springPane;syncWorkspace();return;}
+    if(button.dataset.springMedium){root.dataset.medium=button.dataset.springMedium;syncWorkspace();return;}
     const isRoute=!!current().routes;
     if(button.hasAttribute('data-ap3-choice')){
       const choice=Number(button.dataset.ap3Choice);
+      if(current()===spirometry){
+        const missing=['peak','trough'].find(key=>!Number.isInteger(state.marks[key]));
+        const field=missing?body().querySelector('[data-ap3-measure="'+missing+'"]'):body().querySelector('[data-ap3-excursion]');
+        if(missing||field.value===''||!Number.isFinite(field.valueAsNumber)){
+          body().querySelector('[data-measure-prompt]').textContent=missing?'Select the '+missing+' before checking your answer.':'Enter your calculated excursion in liters.';
+          root.dataset.pane='evidence';syncWorkspace();field.focus();return;
+        }
+        state.marks.excursion=field.value;
+      }
       if(isRoute){
         state.routeChoice=choice;state.routeCorrect=choice===0;
       }else state.choice=choice;
       refreshBody();
       const focus=isRoute?(state.routeCorrect?'[data-ap3-next]':'[data-ap3-choice="'+choice+'"]'):'[data-ap3-verdict]';
       body().querySelector(focus)?.focus();
+    }else if(button.hasAttribute('data-ap3-decision-next')&&state.choice!==null){
+      state.responses.push(state.choice);state.choice=null;state.frame=0;
+      refreshBody();body().querySelector('[data-ap3-choice]')?.focus();
     }else if(button.hasAttribute('data-ap3-next')&&state.routeCorrect){
       state.step++;state.routeCorrect=false;state.routeChoice=null;
       refreshBody();body().querySelector('[data-ap3-focus]')?.focus();
@@ -297,7 +359,8 @@ export function mountLab(root,chapterId,initialIndex=0,onContext,{settings={},on
       mountTransfer();
       publish();navigate();body().querySelector('[data-ap3-choice]')?.focus();
     }else if(button.hasAttribute('data-ap3-reset')){
-      state.step=0;state.routeCorrect=false;state.routeChoice=null;state.choice=null;state.frame=0;
+      state.responses=[];
+      state.step=0;state.routeCorrect=false;state.routeChoice=null;state.choice=null;state.frame=0;state.marks={next:'peak'};
       refreshBody();body().querySelector('[data-ap3-choice]')?.focus();
     }
   },listener);

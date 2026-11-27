@@ -27,7 +27,7 @@ test('every spring lesson links to an authored, usable case with a reversible bo
     assert.deepEqual(readLabRoute(path.split('/').slice(2)),{from:section,settings});
     assert.ok(renderLab(ch,index,settings).includes(activity.title));
   }
-  assert.equal(springLessonLabs['21.3'].related,true);
+  assert.equal(chapterLabs[21][springLessonLabs['21.3'].activity].section,'21.3');
   assert.equal(springLessonLabs['28.6'].model,'lactating-unit');
   assert.match(renderLab(28,1,{event:2}),/<option value="2" selected>Suckling/);
   assert.equal(isSpringStudyRoute('ap3-lab-22/2'),true);

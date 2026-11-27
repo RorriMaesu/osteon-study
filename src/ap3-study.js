@@ -1,4 +1,5 @@
 import {mountLessonFigure} from './lesson-figure.js';
+import {openSpringSearch,specimenRoute,springTargetKey} from './ap3-search.js';
 import {specimenAnimations,animationForTarget} from './ap3-specimen-animations.js';
 import {chapters} from './ap3-curriculum.js';
 import {chapterLabs,renderLab,mountLab} from './ap3-labs.js';
@@ -8,6 +9,7 @@ import figures from './ap3-figures.json' with {type:'json'};
 import {springStore} from './ap3-records.js';
 import {isSpringStudyRoute} from './ap3-backup.js';
 import {createSpringExams} from './ap3-exams.js';
+import {latestSpringDraft,mountSpringRecall} from './ap3-recall.js';
 import {createTermMocks} from './term-mock.js';
 import {springScopes,makeSpringMock} from './term-mock-spring.js';
 import {rememberAP3Route} from './course-home.js';
@@ -44,9 +46,9 @@ export function initAP3({root,escape:e,toast}){
     const c=byChapter.get(String(id));return '<a href="#ap3-chapter-'+id+'"><b>'+id+'</b><span>'+e(c.title)+'<small>'+c.sections.filter(s=>studied(s.id)).length+' of '+c.sections.length+' sections studied</small></span><span aria-hidden="true">→</span></a>';
   }).join('')+'</div>';
   function home(){
-    const resume=store.read('last')?.route, draft=store.attempts().find(r=>!r.submitted);
+    const resume=store.read('last')?.route, draft=latestSpringDraft(store);
     page(hero('Spring · BI 233Z','Anatomy & Physiology III','Chapters 21–28 of OpenStax Anatomy and Physiology 2e.')+
-      '<div class="course-actions">'+(draft?link('ap3-session-'+draft.id,'Resume '+draft.mode,true):resume?link(resume,'Continue studying',true):link('ap3-lesson-21.1','Start the lymphatic system',true))+link('ap3-search','Find a lesson')+link('atlas','Shared 3D Atlas')+'</div>'+
+      '<div class="course-actions">'+(draft?link(draft.route,'Resume '+draft.label,true):'')+(resume?link(resume,'Continue studying',!draft):link('ap3-lesson-21.1','Start the lymphatic system',!draft))+link('ap3-search','Search spring resources')+link('atlas','Shared 3D Atlas')+'</div>'+
       '<div class="ap2-unit-grid">'+units.map(([name,ids])=>'<article class="course-card"><h2>'+e(name)+'</h2>'+chapterList(ids)+'</article>').join('')+'</div>');
   }
   function chapter(ch){
@@ -73,22 +75,17 @@ export function initAP3({root,escape:e,toast}){
       mountLessonFigure(body,{figures:entries,selected,section:s.id,source:sections.get(entries[selected].section)?.source||s.source,
         onSelect:i=>go(base+'/figures/'+entries[i].id)});
     }else if(tab==='check'){
-      body.innerHTML='<h2>'+e(s.question)+'</h2><div class="ap2-answers">'+s.options.map((opt,i)=>'<button data-answer="'+i+'">'+e(opt)+'</button>').join('')+'</div><p role="status" data-feedback></p>';
-      for(const el of body.querySelectorAll('[data-answer]'))el.onclick=()=>{
-        const correct=+el.dataset.answer===s.answer;
-        const prior=store.read('check:'+s.id);store.write('check:'+s.id,{firstCorrect:prior?.firstCorrect??correct,correct,at:Date.now()});
-        for(const b of body.querySelectorAll('button'))b.disabled=true;
-        body.querySelector('[data-answer="'+s.answer+'"]').classList.add('ap2-correct');
-        body.querySelector('[data-feedback]').textContent=(correct?'Correct. ':'Expected answer · '+s.options[s.answer]+'. ')+s.why;
-      };
+      mountSpringRecall(body,s,store,e);
     }else{
       const recommendation=springLessonLabs[s.id];
       const task=labRoute(recommendation.chapter||ch.id,recommendation.activity,recommendation.settings,s.id);
       const model=specimens.find(v=>v.id===recommendation.model);
-      body.innerHTML='<div class="ap2-lesson-text"><div><p>'+e(s.explanation)+'</p></div><aside><h2>Worked example</h2><p>'+e(s.worked)+'</p></aside></div>'+
-        '<div class="course-actions">'+link(task,(recommendation.related?'Related practice · ':'')+recommendation.label)+
+      body.innerHTML='<div class="course-actions spring-start">'+link(task,(recommendation.related?'Related practice · ':'')+recommendation.label,true)+
         (model?link('ap3-specimen-'+model.id,model.title+' · 3D'):link('ap3-models/'+ch.id,'Explore this chapter in 3D'))+
-        (s.id==='25.2'?link('ap2-lesson-15.2/activity/enteric-wall','Compare autonomic reflexes in A&P II'):'')+'</div>';
+        (['21.1','23.7','24.3'].includes(s.id)?link(labRoute(23,5,{},s.id),'Track one dietary lipid across three chapters'):'')+
+        (s.id==='27.2'?link(labRoute(27,4,{},s.id),'Trace the two meiotic arrests'):'')+
+        (s.id==='25.2'?link('ap2-lesson-15.2/activity/enteric-wall','Compare autonomic reflexes in A&P II'):'')+'</div>'+
+        '<div class="ap2-lesson-text"><div><p>'+e(s.explanation)+'</p></div><aside><h2>Worked example</h2><p>'+e(s.worked)+'</p></aside></div>';
     }
   }
   function lab(ch,requested,segments){
@@ -104,7 +101,9 @@ export function initAP3({root,escape:e,toast}){
       if(oldFocus.hasAttribute('data-ap3-choice'))focusSelector='[data-ap3-choice]';
     }
     const scroll=oldLab?root.scrollTop:0;
-    page(hero('Chapter '+ch.id+' · Physiology lab',ch.title)+back+'<section class="course-card ap3-lab" data-lab data-lab-chapter="'+ch.id+'">'+renderLab(ch.id,activity,settings)+'</section>');
+    const same=oldLab?.dataset.activity===String(activity);
+    const pane=same?oldLab.dataset.pane:'question',medium=same?oldLab.dataset.medium:'visual';
+    page(hero('Chapter '+ch.id+' · Physiology lab',ch.title)+back+'<section class="course-card ap3-lab" data-lab data-activity="'+activity+'" data-pane="'+(pane==='evidence'?'evidence':'question')+'" data-medium="'+(medium==='table'?'table':'visual')+'" data-lab-chapter="'+ch.id+'">'+renderLab(ch.id,activity,settings)+'</section>');
     const active=labRoute(ch.id,activity,settings,from);
     if(isSpringStudyRoute(active)){store.write('last',{route:active});rememberAP3Route(active);}
     cleanup(mountLab(root.querySelector('[data-lab]'),ch.id,activity,setLearningContext,{settings,store,
@@ -132,28 +131,25 @@ export function initAP3({root,escape:e,toast}){
     const select=root.querySelector('[data-specimen-motion]'),openMotion=root.querySelector('[data-open-specimen-motion]');
     const anonymous=root.querySelector('[data-ap3-anonymous]');
     if(select)select.onchange=()=>{openMotion.setAttribute('href','#organs/'+select.value);};
-    if(anonymous)anonymous.addEventListener('change',()=>{root.querySelector('[data-specimen-animations]').hidden=anonymous.checked;});
+    function rememberTarget(id){
+      const route=specimenRoute(s.id,id);
+      if(location.hash==='#'+route)return;
+      history.replaceState(history.state,'','#'+route);store.write('last',{route});rememberAP3Route(route);
+    }
+    if(anonymous)anonymous.addEventListener('change',()=>{root.querySelector('[data-specimen-animations]').hidden=anonymous.checked;rememberTarget(null);});
     cleanup(mountSpecimen(root.querySelector('[data-spring-specimen]'),s.id,{selected:target,onSelect:id=>{
+      if(!anonymous?.checked)rememberTarget(id);
       const match=animationForTarget(s,id,choices);
       if(select&&match&&!anonymous?.checked){select.value=match.id;openMotion.setAttribute('href','#organs/'+match.id);}
     }}));
     root.querySelector('[data-mobile-enlarge]').onclick=()=>root.querySelector('[data-spring-specimen] [data-expand]')?.click();
-  }
-  function search(){
-    page(hero('A&P III','Find a lesson')+'<section class="course-card"><label>Topic or anatomical term<input type="search" data-find autocomplete="off" placeholder="Try nephron, alveolus or lactation"></label><div data-matches></div></section>');
-    const input=root.querySelector('[data-find]'),out=root.querySelector('[data-matches]');
-    function filter(){
-      const words=input.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
-      const matches=[...sections.values()].filter(s=>words.every(w=>[s.id,s.title,s.explanation,s.objective,s.worked].join(' ').toLowerCase().includes(w)));
-      out.innerHTML='<p role="status">'+matches.length+' matching sections</p><div class="course-links">'+matches.map(s=>link('ap3-lesson-'+s.id,s.id+' · '+s.title)).join('')+'</div>';
-    }input.oninput=filter;filter();input.focus({preventScroll:true});
   }
   function progress(){
     const runs=store.attempts(),completed=runs.filter(r=>r.submitted),notes=exams.notes(completed);
     page(hero('A&P III','My progress',[...sections.values()].filter(s=>studied(s.id)).length+' of '+sections.size+' sections marked studied')+
       mocks.entry()+
       '<section class="course-card"><h2>Saved exams & practicals</h2><div class="course-actions">'+runs.filter(r=>!r.submitted).map(r=>link('ap3-session-'+r.id,'Resume '+(r.scope==='all'?'cumulative':'Chapter '+r.scope)+' '+r.mode)).join('')+'</div>'+exams.results(completed)+'</section>'+
-      '<section class="course-card"><h2>Notes from missed questions</h2>'+(notes.length?'<div class="ap2-report-list">'+notes.map(({q,r,i})=>'<details><summary>§'+q.section+' · '+e(q.prompt)+'</summary>'+exams.fieldView(q)+'<p>Your response · '+e(displayAnswer(q,r.answers[i]))+'</p><strong>'+e(expectedAnswer(q))+'</strong><p>'+e(q.why)+'</p>'+exams.reviewedModel(q)+' '+link('ap3-lesson-'+q.section,'Review lesson')+' '+link('ap3-report-'+r.id,'Original result')+'</details>').join('')+'</div>':'<p>After submission, each missed question appears here with the answer, reasoning and source lesson.</p>')+'</section>'+
+      '<section class="course-card"><h2>Notes from missed questions</h2>'+(notes.length?'<div class="ap2-report-list">'+notes.map(({q,r,i})=>'<details><summary>§'+q.section+' · '+e(q.prompt)+'</summary>'+exams.fieldView(q)+'<p>Your response · '+e(displayAnswer(q,r.answers[i]))+'</p><strong>'+e(expectedAnswer(q))+'</strong><p>'+e(q.why)+'</p>'+exams.practiceLink(r,i,completed)+' '+exams.reviewedModel(q)+' '+link('ap3-lesson-'+q.section,'Review lesson')+' '+link('ap3-report-'+r.id,'Original result')+'</details>').join('')+'</div>':'<p>There are no open missed questions. Submitted results retain your answers and any completed recovery practice.</p>')+'</section>'+
       '<div class="course-actions"><button data-backup>Download spring study records</button><label class="course-link">Restore spring backup <input type="file" data-restore accept=".json,application/json"></label></div><p role="status" data-import-status></p>');
     root.querySelector('[data-restore]').onchange=async ev=>{
       const file=ev.target.files[0];if(!file)return;
@@ -178,13 +174,14 @@ export function initAP3({root,escape:e,toast}){
     if(name.startsWith('ap3-lesson-')&&s){lesson(s,arg,detail);return;}
     if(name.startsWith('ap3-chapter-')&&ch){chapter(ch);return;}
     if(name.startsWith('ap3-lab-')&&ch){lab(ch,arg,route.split('/').slice(2));return;}
-    if(name.startsWith('ap3-specimen-')){const st=specimens.find(v=>'ap3-specimen-'+v.id===name);if(st){specimen(st,arg==='target'?detail:null);return;}}
+    if(name.startsWith('ap3-specimen-')){const st=specimens.find(v=>'ap3-specimen-'+v.id===name);if(st){specimen(st,arg==='target'?st.targets.find(t=>springTargetKey(t.id)===detail)?.id:null);return;}}
     if(name==='ap3-models'){library(byChapter.get(arg));return;}
     if(name==='ap3-exams'){exams.center(arg);return;}
     if(name.startsWith('ap3-session-')){exams.session(name.slice(12));return;}
     if(name.startsWith('ap3-report-')){exams.report(name.slice(11));return;}
+    if(name.startsWith('ap3-recover-')){exams.recover(name.slice(12),arg);return;}
     if(name==='ap3-progress'){progress();return;}
-    if(name==='ap3-search'){search();return;}
+    if(name==='ap3-search'){openSpringSearch({root,page,hero,link,e});return;}
     home();
   }
   document.addEventListener('viewchange',()=>{

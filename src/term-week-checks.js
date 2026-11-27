@@ -8,9 +8,7 @@ export function makeWeekCheck(course,week,form,scopes,makeForm){
   const current=new Set(row.sections);
   const learned=new Set(plan.filter(w=>w.week<=week).flatMap(w=>w.sections));
   const chapters=new Set([...learned].map(s=>Number(s.split('.')[0])));
-  const currentChapters=new Set(row.sections.map(s=>Number(s.split('.')[0])));
-  const candidates=course==='ap2'?makeForm('week-'+week,form):
-    scopes.filter(s=>s.id.startsWith('unit-')&&s.chapters.some(ch=>currentChapters.has(ch))).flatMap(s=>makeForm(s.id,form));
+  const candidates=makeForm('week-'+week,form);
   const pool=candidates
     .filter(q=>current.has(q.section)&&(q.relatedSections||[]).every(s=>learned.has(s))
       &&(q.relatedChapters||[]).every(ch=>chapters.has(ch)));

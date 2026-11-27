@@ -2,6 +2,7 @@ import {courseMockStore} from './term-mock-records.js';
 import {gradeTermItem,scoreTermAttempt} from './term-mock-review.js';
 import {createTermReport} from './term-mock-results.js';
 import {makeWeekCheck} from './term-week-checks.js';
+import {springStudyExposure} from './ap3-recall.js';
 import {showExamWeek} from './term-week-view.js';
 import {setLearningContext,setTutorAssessmentMode} from './learning-context.js';
 import {renderSpecimen,mountSpecimen} from './ap3-specimens.js';
@@ -45,7 +46,7 @@ export function createTermMocks({course,root,page,hero,link,e,store,sections,sco
     panel.showModal();close.focus();
   });
   const itemsFor=(scope,form)=>scope.startsWith('week-')?makeWeekCheck(course,Number(scope.slice(5)),form,scopes,makeForm):
-    makeForm(scope,form,course==='ap2'&&scope.startsWith('unit-')?db.all():[]);
+    makeForm(scope,form,scope.startsWith('unit-')?(course==='ap3'?[...db.all(),...springStudyExposure(store)]:db.all()):[]);
   function start(spec){
     try{
       const items=spec.items||itemsFor(spec.scope,spec.form);
@@ -104,7 +105,7 @@ export function createTermMocks({course,root,page,hero,link,e,store,sections,sco
       '<div class="tm-tools"><label>Question <select data-tm-jump aria-label="Jump to question">'+run.items.map((it,n)=>'<option value="'+n+'" '+(n===i?'selected':'')+'>'+ (n+1)+' / '+run.items.length+' · '+status(run,it)+(run.flags[it.id]?' · flagged':'')+'</option>').join('')+'</select></label>'+
       '<button data-tm-flag aria-pressed="'+!!run.flags[q.id]+'">'+(run.flags[q.id]?'Unflag':'Flag')+'</button><span data-tm-count role="status"></span></div>'+
       '<section class="course-card tm-question"><div class="eyebrow">'+(run.scope==='practical'?'Practical station':labels[q.type])+' · '+q.points+' point'+(q.points===1?'':'s')+'</div>'+
-      '<h2 tabindex="-1" data-tm-prompt>'+e(q.prompt)+'</h2>'+
+      (q.previouslyPracticed?'<p>Previously practiced item</p>':'')+'<h2 tabindex="-1" data-tm-prompt>'+e(q.prompt)+'</h2>'+
       (visual?'<div class="tm-tabs"><button aria-pressed="true" data-tm-pane="figure">'+(surface>=0?'Specimen':'Evidence')+'</button><button aria-pressed="false" data-tm-pane="response">Answer</button></div>':'')+
       '<div class="tm-panes '+(visual?'has-evidence':'')+'" data-pane="figure">'+(visual?'<div class="tm-figure">'+visual+'</div>':'')+'<div class="tm-response">'+content+'</div></div>'+
       (run.mode==='coached'?'<details data-tm-help '+(assisted?'open':'')+'><summary>Study clue · counts as assistance</summary><p>'+e(q.why)+'</p></details>':'')+'</section>'+

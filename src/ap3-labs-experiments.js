@@ -63,18 +63,29 @@ export const ventilation = {
   },
 };
 
+export function gradeVolumeTrace(plot,marks,choice){
+  const values=plot.rows.map(row=>row[1]),high=Math.max(...values),low=Math.min(...values);
+  const excursion=Number(marks.excursion);
+  return {peak:values[marks.peak]===high,trough:values[marks.trough]===low,
+    excursion:marks.excursion!==''&&Number.isFinite(excursion)&&Math.abs(excursion-(high-low))<.05,
+    quantity:choice===0,high,low};
+}
+
 export const spirometry = {
   title: 'Read a volume trace', section:'22.3',
   intro:'A simple spirometer records changes in lung volume relative to resting end-expiration. The baseline of zero represents this reference position.',
-  controls:[select('form','Trial',['Trial A','Trial B'])],
+  controls:[select('form','Trial',['Trial A','Trial B','Trial C'])],
+  nextTrial:({form})=>({form:(Number(form)+1)%3}),
   run({form}){
-    const high=Number(form)===0?3.2:3.5, low=Number(form)===0?-1.1:-0.9;
-    const rows=[[0,0],[1,0.5],[2,0],[3,0.5],[4,0],[6,high],[9,low],[12,0]];
-    return {observation:table('Relative volume at sampled times',['Time (s)','Relative volume (L)'],rows),plot:{x:'Time (s)',y:'Relative volume (L)',rows,frameTimes:[1,6,9],measureExtrema:true},
+    const [high,low]=[[3.2,-1.1],[3.5,-0.9],[2.9,-1.2]][Number(form)];
+    const peakTime=Number(form)===2?9:6,troughTime=Number(form)===2?5:9;
+    const rows=[[0,0],[1,0.5],[2,0],[3,0.5],[4,0],[peakTime,high],[troughTime,low],[12,0]].sort((a,b)=>a[0]-b[0]);
+    const measured=rows.filter(([t])=>[1,peakTime,troughTime].includes(t));
+    return {observation:table('Relative volume at sampled times',['Time (s)','Relative volume (L)'],rows),plot:{x:'Time (s)',y:'Relative volume (L)',rows,frameTimes:measured.map(([t])=>t),measureExtrema:true},
       question:'Which value can you determine from the deepest inspiration and maximal expiration in this trace?',
-      choices:[(high-low).toFixed(1)+' L vital capacity',high.toFixed(1)+' L total lung capacity',Math.abs(low).toFixed(1)+' L residual volume'],
+      choices:['Vital capacity','Total lung capacity','Residual volume'],
       why:'Vital capacity is the difference between the two volume extremes. A simple spirometer does not measure the gas that remains after maximal expiration.',
-      frames:[frame('Quiet breath','At 1 s, the first quiet excursion is +0.5 L.'),frame('Maximal inspiration','At 6 s, the trace reaches +'+high+' L relative to resting end-expiration.'),frame('Maximal expiration','At 9 s, the trace reaches '+low+' L. The change from the maximum is '+(high-low).toFixed(1)+' L.')],
+      frames:measured.map(([t,v])=>v===high?frame('Maximal inspiration','At '+t+' s the trace reaches +'+high+' L.'):v===low?frame('Maximal expiration','At '+t+' s the trace reaches '+low+' L.'):frame('Quiet breath','At 1 s, the first quiet excursion is +0.5 L.')),
     };
   },
 };
