@@ -2,11 +2,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {newRecords,validAP2Records,createRecordsStore,AP2_KEY} from '../src/ap2-records.js';
-import {practicalStations,partForMesh} from '../src/ap2-practical-bank.js';
+import {practicalStations,practicalFamilies,byStation,partForMesh} from '../src/ap2-practical-bank.js';
 import {newPractical,markStation,practicalScores,validPractical} from '../src/ap2-practical-session.js';
 
 test('each practical surface is present and uniquely matched in the shipped specimen',()=>{
-  for(const station of practicalStations){
+  for(const station of practicalFamilies.flat()){
     const file=readFileSync(new URL('../assets/'+station.asset+'.glb',import.meta.url));
     const gltf=JSON.parse(file.subarray(20,20+file.readUInt32LE(12)));
     const names=gltf.nodes.filter(n=>n.mesh!==undefined).map(n=>n.name);

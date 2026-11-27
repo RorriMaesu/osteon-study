@@ -1,5 +1,11 @@
 # Credits and licensing
 
+## A&P III course materials
+
+The spring model catalog includes regional anatomy from Z-Anatomy and BodyParts3D, Human Reference Atlas preparations, four Carnegie embryo surfaces from NIH 3D, and teaching reconstructions by Osteon. Each source record identifies the license, preparation method, scale and limits of the model. [Spring model credits](assets/ap3-models/SOURCES.md)
+
+Spring lessons use figures from *Anatomy and Physiology 2e* by OpenStax, Rice University. The microscopy practical uses cropped fields credited to the University of Michigan Medical School in the textbook. [Textbook figure credits](assets/ap3-figures/SOURCES.md) · [Microscopy credits and crop details](assets/ap3-slides/SOURCES.md)
+
 ## Anatomy model
 
 `assets/skeleton.glb`: Z-Anatomy, the libre 3D atlas of anatomy, by Gauthier Kervyn and contributors, CC BY-SA 4.0. Derived from BodyParts3D © The Database Center for Life Science (Kousaku Okubo and contributors), CC BY-SA 2.1 Japan. Web export and simplification by the [3d-human-body-anatomy project](https://github.com/SeemaBansal1/3d-human-body-anatomy). This copy retains the exported mesh geometry and metadata; Osteon changes display materials in the viewer. The model remains under CC BY-SA 4.0. See assets/MODEL-LICENSE.md.

@@ -8,7 +8,7 @@ export function hearingMarkup(){
   return '<section class="neuro-station" data-sensory-detail="hearing"><h3>From stapes to auditory nerve</h3><p>Follow one sound into the cochlea. The cochlea is shown uncoiled and movement is enlarged.</p>'+
     '<div class="course-actions"><label>Pitch <select data-pitch><option value="high">Higher pitch</option><option value="low">Lower pitch</option></select></label><label>Footplate mobility <select data-mobility><option value="free">Free to vibrate</option><option value="fixed">Completely fixed</option></select></label></div>'+
     '<div data-hearing-diagram></div><p data-hearing-detail aria-live="polite"></p><div class="course-actions"><label>Stage <select data-hearing-step>'+stages.map(([name],i)=>'<option value="'+i+'">'+(i+1)+' · '+name+'</option>').join('')+'</select></label><button data-hearing-play>Play sequence</button></div>'+
-    '<p><a href="#ap2-lesson-14.1/activity/ossicles">Inspect the three ossicles</a> · <a href="#ap2-lesson-14.1/activity/ear">Open the 3D labyrinth</a> · <a href="https://www.nidcd.nih.gov/health/how-do-we-hear" target="_blank" rel="noreferrer">NIDCD hearing reference ↗</a></p></section>';
+    '<p><a href="#ap2-lesson-14.1/activity/ossicles">Inspect the three ossicles</a> · <a href="#ap2-lesson-16.3/activity/tuning-fork">Compare air and bone conduction</a> · <a href="#ap2-lesson-14.1/activity/ear">Open the 3D labyrinth</a> · <a href="https://www.nidcd.nih.gov/health/how-do-we-hear" target="_blank" rel="noreferrer">NIDCD hearing reference ↗</a></p></section>';
 }
 export function mountHearing(panel){
   const get=s=>panel.querySelector(s);

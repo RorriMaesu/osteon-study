@@ -1,4 +1,5 @@
 import {bodyStructures} from './ap2-body-systems.js';
+import {evidenceStations} from './ap2-evidence-labs.js';
 import figures from './ap2-figures.json' with {type:'json'};
 import {sectionById} from './ap2-library.js';
 
@@ -6,6 +7,7 @@ const station=(title,kind,section,preset,terms)=>({
   title,kind,terms,section,route:'ap2-lesson-'+section+'/activity'+(preset?'/'+preset:'')
 });
 const specimens=[
+  ...evidenceStations.map(s=>station(s.title,'Physiology activity',s.section,s.id,s.goal)),
   station('Multipolar neuron from dendrites to terminals','Microscopic 3D model','12.2','multipolar-neuron','nervous tissue soma cell body nucleus dendrites axon hillock initial segment myelin nodes of Ranvier synaptic boutons'),
   station('Chemical synapse and neurotransmitter release','Microscopic 3D model','12.5','chemical-synapse','axon terminal synaptic vesicles calcium channels exocytosis synaptic cleft receptors ligand gated postsynaptic membrane'),
   station('Touch, vibration and cutaneous receptors','Microscopic 3D model','14.1','skin-receptors','skin fingertip sensation Meissner Merkel tactile disc Pacinian lamellated corpuscle Ruffini free endings touch pressure pain vibration'),

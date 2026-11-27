@@ -1,14 +1,15 @@
 import {isLessonId} from './chapters.js';
+import {ap3Reference} from './tutor-ap3.js';
 import {ap2Reference} from './tutor-ap2.js';
 import foundationPages from './foundations-reader.json' with {type:'json'};
 import pages from './reader-pages.json' with {type:'json'};
 const pageMap=new Map([...foundationPages,...pages].map(p=>[p.pdf,p]));
-const validReference=s=>isLessonId(s)||Boolean(ap2Reference(s));
+const validReference=s=>isLessonId(s)||Boolean(ap2Reference(s)||ap3Reference(s));
 function restoreSource(s){
  if(!s||!/^S[1-4]$/.test(s.id))return null;
  const excerpt=typeof s.text==='string'?s.text.slice(0,3600):'';
- if(s.course==='ap2'){
-  const canonical=ap2Reference(s.reference);
+ if(s.course==='ap2'||s.course==='ap3'){
+  const canonical=s.course==='ap3'?ap3Reference(s.reference):ap2Reference(s.reference);
   return canonical?{id:s.id,...canonical,text:excerpt}:null;
  }
  const p=pageMap.get(s.pdf);
@@ -23,7 +24,7 @@ export function sanitizeConversation(value){
   role:m.role,content:m.content.slice(0,24000)||(m.pending?'Reply interrupted by page reload. Edit and retry your question.':''),
   error:!!(m.error||m.pending),model:typeof m.model==='string'?m.model.slice(0,100):'',
   correction:typeof m.correction==='string'?m.correction.slice(0,300):'',reference:validReference(m.reference)?m.reference:undefined,
-  course:m.course==='ap2'?'ap2':'ap1',
+  course:['ap2','ap3'].includes(m.course)?m.course:'ap1',
   kind:m.role==='assistant'&&m.kind==='course-note'?'course-note':undefined,
   sources:(Array.isArray(m.sources)?m.sources:[]).map(restoreSource).filter(Boolean).slice(0,4)
  })).filter(m=>m.content.trim());

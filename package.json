@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Anatomy and Physiology I and II study modules for OpenStax chapters 1–20, with a shared 3D anatomy atlas",
+  "description": "Anatomy and Physiology I, II and III study modules for OpenStax chapters 1–28, with a shared 3D anatomy atlas",
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test tests/*.test.mjs",

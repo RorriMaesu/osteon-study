@@ -1,7 +1,7 @@
 import {DoubleSide,Raycaster,Vector2,Vector3} from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {addSideGuide} from './ap2-side-guide.js';
-import {practicalStations,byStation,partForMesh,meshKey} from './ap2-practical-bank.js';
+import {practicalFamilies,byStation,partForMesh,meshKey} from './ap2-practical-bank.js';
 import {newPractical,markStation,practicalScores} from './ap2-practical-session.js';
 
 const skills=['Locate','Trace','Predict'];
@@ -23,17 +23,17 @@ export function openScoredPractical(route,{root,page,hero,link,store,e}){
       '<section class="course-card"><h2>'+practicalTotal(result)+' points</h2><div class="course-actions">'+skills.map((s,i)=>'<strong>'+s+' · '+scores[i]+' / '+result.items.length+'</strong>').join('')+'</div></section>'+
       result.items.map(it=>'<details class="course-card"><summary>'+e(it.title)+' · '+it.result.filter(a=>a.correct).length+' / 3</summary>'+
         it.result.map((r,i)=>'<p><strong>'+skills[i]+' · '+(r.correct?'Correct':'Review')+'</strong> '+e(r.prompt)+'<br>Your answer · '+e(r.chosen)+(r.correct?'':'<br>Expected · '+e(r.expected))+(it.methods[i]==='description'?' · Described view':'')+'</p>').join('')+
-        '<p>'+e(it.note)+'</p>'+link('ap2-lesson-'+it.lesson,'Review the specimen')+'</details>').join('')+link('ap2-spotter','Back to practicals'));
+        '<p>'+e(it.note)+'</p>'+link('ap2-lesson-'+it.lesson,'Review the specimen')+(it.lesson==='14.1/activity/ossicles'?link('ap2-lesson-16.3/activity/tuning-fork','Interpret air and bone conduction'):'')+'</details>').join('')+link('ap2-spotter','Back to practicals'));
     return;
   }
   const run=store.read().practicalDraft;
   if(route!=='ap2-spotter/run'||!run){
     page(hero('A&P II · LAB EXAM','Scored 3D practical','Locate a structure, trace its connection, and predict what happens. Each task earns one point.')+
-      '<div class="course-grid"><article><h2>Take the practical</h2><p>'+practicalStations.length+' specimens · Untimed · Saved on this device</p><p>Rotate or tap each unlabeled specimen. You can also use the keyboard or choose a described view. Confirm each response once. Feedback follows submission.</p>'+
+      '<div class="course-grid"><article><h2>Take the practical</h2><p>'+practicalFamilies.length+' stations · Two forms per station · Untimed · Saved on this device</p><p>Rotate or tap each unlabeled specimen. You can also use the keyboard or choose a described view. Confirm each response once. Feedback follows submission.</p>'+
       (run?link('ap2-spotter/run','Resume station '+(run.index+1)+' of '+run.items.length,true):'<button class="primary" data-practical-start>Start 3D practical</button>')+
       '</article><article><h2>Completed practicals</h2><div class="course-links">'+reports()+'</div></article></div>'+link('ap2-practicals','Study in the model & slide lab'));
     const button=root.querySelector('[data-practical-start]');
-    if(button)button.onclick=()=>{store.update(r=>{r.practicalDraft||=newPractical(practicalStations);});go('ap2-spotter/run');};
+    if(button)button.onclick=()=>{store.update(r=>{r.practicalDraft||=newPractical(practicalFamilies);});go('ap2-spotter/run');};
     return;
   }
   const item=run.items[run.index],spec=byStation(item.station);
@@ -116,7 +116,7 @@ export function openScoredPractical(route,{root,page,hero,link,store,e}){
       });
       paint();
       const canvas=api.renderer.domElement,ray=new Raycaster();let start=null;
-      if(['adrenal','pulmonary'].includes(spec.id))addSideGuide(canvas.parentElement,api);
+      if(['adrenal','pulmonary'].includes(spec.id.replace(/-b$/,'')))addSideGuide(canvas.parentElement,api);
       canvas.addEventListener('pointerdown',event=>{start=event.isPrimary&&event.button===0?[event.clientX,event.clientY]:null;});
       canvas.addEventListener('pointercancel',()=>{start=null;});
       canvas.addEventListener('pointerup',event=>{

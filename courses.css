@@ -57,6 +57,27 @@
   .ap2-lesson-body :is(.ap2-cardio-lab,.ap2-endocrine-lab,.blood-work):has(.organ-viewer){padding-inline:8px}
   .ap2-lesson-body .organ-viewer:not(.organ-expanded){padding-inline:4px}
 }
+
+.ap3-page .ap3-select{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;margin:.8rem 0}
+.ap3-select select{min-width:0;max-width:100%}
+.ap3-results{display:grid;gap:.5rem}
+.ap3-mobile-enlarge{display:none}
+@media(max-width:700px){
+  #courses-view:has(.ap3-page){scroll-padding-block-start:4.5rem}
+  .ap3-page :is(.organ-viewport,[data-ap3-target],summary){scroll-margin-block-start:4.5rem}
+  .ap3-mobile-enlarge{display:inline-flex;align-items:center;margin:.35rem 0 .6rem}
+  .ap3-page .ap2-lesson-footer{gap:.4rem}
+}
+.ap3-scores{display:flex;flex-wrap:wrap;gap:.5rem}.ap3-scores span{padding:.35rem .65rem;border:1px solid var(--line);border-radius:.4rem;color:var(--muted)}.ap3-scores strong{color:var(--mint)}
+.ap3-page [data-restore]{max-width:100%;min-width:0}
+.ap3-page .course-card+.course-card,.ap3-page [data-backup],.ap3-lab{margin-block-start:1rem}
+.ap3-page .ap3-field{margin:.7rem 0;display:grid;gap:.4rem}
+.ap3-field img{width:auto;max-width:100%;height:auto;max-height:27dvh;object-fit:contain;border-radius:.4rem;background:white}
+.ap3-field figcaption{font-size:.8rem;color:var(--muted)}
+.ap3-page .ap2-tabs a,.ap3-page .ap3-select,.ap3-page .course-link{overflow-wrap:anywhere}
+.ap3-jumps button{min-width:44px}
+@media(min-width:950px){.course-grid:has(>article:nth-child(3):last-child){grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px){.ap3-page .ap2-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}.ap3-page .ap2-nav a{justify-content:center}.ap3-page .ap2-art label{display:grid;max-width:100%}.ap3-page select{min-width:0;max-width:100%}.ap3-page .course-actions>*{min-width:0}.ap3-page input,.ap3-page select{font-size:16px}.ap3-page .ap2-test-nav>*{flex:1}}
 .ap2-regional-practical{margin-bottom:1rem}.ap2-regional-practical details{padding:.45rem 0;border-bottom:1px solid var(--line)}.ap2-regional-practical summary{min-height:42px;align-content:center;cursor:pointer;color:var(--mint)}
 
 .ap2-image-dialog{box-sizing:border-box;width:min(95vw,1000px);max-height:94dvh;padding:.8rem;border:1px solid var(--line);border-radius:12px;background:#16282d;color:var(--ink)}

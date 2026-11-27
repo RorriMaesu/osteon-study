@@ -1,3 +1,4 @@
+import {initAP3} from './ap3-study.js';
 import {initAP2} from './ap2-study.js';
 import {initCourseHome,selectedCourse} from './course-home.js';
 import {isLessonId} from './chapters.js';
@@ -63,7 +64,7 @@ function showHistoryRoute(initial=false){
  const lesson=route.startsWith('lesson-')?route.slice(7):null,reader=route.match(/^reader-(\d+)$/);
  restoringRoute=true;
  try{
-  if(route==='courses'||route==='course-1'||route==='course-2'||route.startsWith('ap2-'))courseHome.open(route);
+  if(route==='courses'||route==='course-1'||route==='course-2'||route==='course-3'||/^ap[23]-/.test(route))courseHome.open(route);
   else if(exam4ReportId)document.dispatchEvent(new CustomEvent('exam4results',{detail:{id:exam4ReportId}}));
   else if(mockReportId)document.dispatchEvent(new CustomEvent('exam3results',{detail:{id:mockReportId}}));
   else if(Object.hasOwn(routeEvents,route))document.dispatchEvent(new Event(routeEvents[route]));
@@ -82,7 +83,7 @@ function openPracticeHome(historyMode='push'){
  setView('practice',{historyMode});
  document.dispatchEvent(new Event('practicehome'));
 }
-$$('[data-view]').forEach(b=>b.onclick=()=>{const view=b.dataset.view;if(selectedCourse()==='2'&&['study','practice','progress'].includes(view)){courseHome.open({study:'course-2',practice:'ap2-exams',progress:'ap2-progress'}[view]);return;}if(view==='study')document.dispatchEvent(new Event('studyhome'));else if(view==='practice')openPracticeHome();else setView(view);const heading=$('#'+b.dataset.view+'-view h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}});$('.brand').onclick=e=>{e.preventDefault();courseHome.open('courses');};
+$$('[data-view]').forEach(b=>b.onclick=()=>{const view=b.dataset.view;const term=selectedCourse();if(term!=='1'&&['study','practice','progress'].includes(view)){courseHome.open({study:'course-'+term,practice:'ap'+term+'-exams',progress:'ap'+term+'-progress'}[view]);return;}if(view==='study')document.dispatchEvent(new Event('studyhome'));else if(view==='practice')openPracticeHome();else setView(view);const heading=$('#'+b.dataset.view+'-view h1');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}});$('.brand').onclick=e=>{e.preventDefault();courseHome.open('courses');};
 let selectionEpoch=0;
 export const viewer=new AnatomyViewer($('#viewer'),m=>{
  selectionEpoch++;
@@ -279,7 +280,7 @@ $$('[data-region]').forEach(b=>b.onclick=()=>changeRegion(b.dataset.region));
 syncFilters();
 $('#structure-search').oninput=renderList;$('#exact-only').onchange=renderList;
 $$('[data-browse-mode]').forEach(b=>b.onclick=()=>{browseMode=b.dataset.browseMode;atlasTopic='all';$('#structure-search').placeholder=browseMode==='nerves'?'Search nerves, e.g. CN VII':browseMode==='ligaments'?'Search ligaments':browseMode==='lymph-nodes'?'Search lymph nodes':'Search bones, landmarks & nodes';$('#structure-search').setAttribute('aria-label',$('#structure-search').placeholder);if(browseMode==='ligaments')enableLigaments(true);if(browseMode==='lymph-nodes'&&!lymphNodes.loading)lymphNodes.toggle(true);if(browseMode==='nerves'){nervous.setFilter('all');nervous.toggle(true);}$$('[data-browse-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));if(browseMode==='landmarks')$('#exact-only').checked=false;$('#exact-only').disabled=['landmarks','ligaments','nerves','lymph-nodes'].includes(browseMode);renderList();});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();if($('#courses-view').classList.contains('active')&&selectedCourse()==='2'){if(!document.body.dataset.ap2Exam)courseHome.open('ap2-search');return;}setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();if($('#courses-view').classList.contains('active')&&selectedCourse()!=='1'){if(!document.body.dataset.ap2Exam&&!document.body.dataset.ap3Exam)courseHome.open('ap'+selectedCourse()+'-search');return;}setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
 $$('[data-camera]').forEach(b=>b.onclick=()=>{
  if(!ready)return;
  if(b.dataset.camera==='reset')viewer.recenter();
@@ -348,6 +349,7 @@ const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region
 initMuscleLabeling({viewer,setView,dialog,toast,escape});
 initMuscleList({setView,dialog,toast,escape});
 courseHome=initCourseHome({setView,escape});
+initAP3({root:document.querySelector('#courses-view'),escape,toast});
 initAP2({root:document.querySelector('#courses-view'),escape,toast,dialog});
 showHistoryRoute(true);
 if(new URLSearchParams(location.search).get('lablist')==='1'&&['#atlas','#practice'].includes(location.hash))labList.home();

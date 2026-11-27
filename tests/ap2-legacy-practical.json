@@ -1,0 +1,394 @@
+{
+  "id": "winter-eight-stations-v1",
+  "started": 1754000000000,
+  "items": [
+    {
+      "station": "cord",
+      "parts": [
+        0,
+        3,
+        1,
+        4,
+        2
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        1,
+        1,
+        0
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Select the cluster of sensory neuron cell bodies outside the spinal cord.",
+          "chosen": "Dorsal root",
+          "expected": "Dorsal root ganglion",
+          "correct": false
+        },
+        {
+          "prompt": "Follow a central process toward the cord. Select the root it travels in.",
+          "chosen": "Dorsal root",
+          "expected": "Dorsal root",
+          "correct": true
+        },
+        {
+          "prompt": "If only this root is cut, which function is directly impaired at that level?",
+          "chosen": "Sensory input entering that side of the cord.",
+          "expected": "Sensory input entering that side of the cord.",
+          "correct": true
+        }
+      ],
+      "note": "Sensory neuron cell bodies lie in the dorsal root ganglion. Their central processes enter by the dorsal root. Ventral roots carry motor axons.",
+      "title": "Spinal cord segment",
+      "lesson": "13.2/activity/cord"
+    },
+    {
+      "station": "heart",
+      "parts": [
+        0,
+        3,
+        1,
+        4,
+        2
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        0,
+        4,
+        0
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Select the mitral valve.",
+          "chosen": "Mitral valve",
+          "expected": "Mitral valve",
+          "correct": true
+        },
+        {
+          "prompt": "Select the visible ventricular muscle that tensions its chordae during systole.",
+          "chosen": "Pulmonary valve",
+          "expected": "Left anterolateral papillary muscle",
+          "correct": false
+        },
+        {
+          "prompt": "If these chordae rupture, which flow can occur during ventricular systole?",
+          "chosen": "Left ventricle → left atrium.",
+          "expected": "Left ventricle → left atrium.",
+          "correct": true
+        }
+      ],
+      "note": "Papillary muscles tension the chordae and help prevent mitral leaflet prolapse. Loss of support can allow backward flow into the left atrium.",
+      "title": "Valve apparatus",
+      "lesson": "19.1/activity/supports"
+    },
+    {
+      "station": "neck",
+      "parts": [
+        0,
+        3,
+        1,
+        2
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        0,
+        1,
+        1
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Find and select any parathyroid gland.",
+          "chosen": "Parathyroid gland",
+          "expected": "Parathyroid gland",
+          "correct": true
+        },
+        {
+          "prompt": "Select the endocrine organ against whose posterior surface these glands usually lie.",
+          "chosen": "Thyroid gland",
+          "expected": "Thyroid gland",
+          "correct": true
+        },
+        {
+          "prompt": "As blood calcium falls, which response helps restore it?",
+          "chosen": "PTH secretion falls and the kidneys excrete more calcium.",
+          "expected": "PTH secretion rises and the kidneys conserve more calcium.",
+          "correct": false
+        }
+      ],
+      "note": "Parathyroid chief cells release PTH as ionized calcium falls. Renal calcium conservation and increased calcitriol production help restore extracellular calcium.",
+      "title": "Posterior neck glands",
+      "lesson": "17.5/activity/parathyroids"
+    },
+    {
+      "station": "leg",
+      "parts": [
+        0,
+        3,
+        1,
+        2
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        1,
+        1,
+        0
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Select the femoral artery.",
+          "chosen": "Popliteal artery",
+          "expected": "Femoral artery",
+          "correct": false
+        },
+        {
+          "prompt": "Follow it through the adductor hiatus. Select its continuation.",
+          "chosen": "Popliteal artery",
+          "expected": "Popliteal artery",
+          "correct": true
+        },
+        {
+          "prompt": "Which vessel would you expect to have a weaker pulse downstream of this obstruction?",
+          "chosen": "Dorsalis pedis on the same side.",
+          "expected": "Dorsalis pedis on the same side.",
+          "correct": true
+        }
+      ],
+      "note": "The femoral artery becomes the popliteal artery at the adductor hiatus. Flow reaches dorsalis pedis through the anterior tibial artery distal to the knee.",
+      "title": "Right lower-limb arteries",
+      "lesson": "20.5/activity/leg"
+    },
+    {
+      "station": "ossicles",
+      "parts": [
+        0,
+        2,
+        1
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        1,
+        0,
+        0
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Select the incus.",
+          "chosen": "Incus",
+          "expected": "Incus",
+          "correct": true
+        },
+        {
+          "prompt": "Follow vibration one bone toward the oval window. Select that bone.",
+          "chosen": "Malleus",
+          "expected": "Stapes",
+          "correct": false
+        },
+        {
+          "prompt": "If the footplate becomes fixed, what change would you expect?",
+          "chosen": "Less vibration reaches the cochlear fluid.",
+          "expected": "Less vibration reaches the cochlear fluid.",
+          "correct": true
+        }
+      ],
+      "note": "Vibration passes from malleus to incus to stapes. The mobile stapes footplate transfers energy into the inner ear.",
+      "title": "Middle ear",
+      "lesson": "14.1/activity/ossicles"
+    },
+    {
+      "station": "pulmonary",
+      "parts": [
+        0,
+        3,
+        1,
+        4,
+        2
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        0,
+        1,
+        1
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Select the pulmonary trunk.",
+          "chosen": "Pulmonary trunk",
+          "expected": "Pulmonary trunk",
+          "correct": true
+        },
+        {
+          "prompt": "Trace blood traveling toward the right lung. Select the next artery.",
+          "chosen": "Right pulmonary artery",
+          "expected": "Right pulmonary artery",
+          "correct": true
+        },
+        {
+          "prompt": "After blood exchanges gases in that lung, which chamber receives it first?",
+          "chosen": "Right atrium.",
+          "expected": "Left atrium.",
+          "correct": false
+        }
+      ],
+      "note": "Blood travels from the right ventricle through the pulmonary trunk and pulmonary arteries. Pulmonary veins return oxygenated blood to the left atrium.",
+      "title": "Pulmonary vessels",
+      "lesson": "20.5/activity/pulmonary"
+    },
+    {
+      "station": "csf",
+      "parts": [
+        0,
+        3,
+        1,
+        2
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        3,
+        3,
+        0
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Select the cerebral aqueduct.",
+          "chosen": "Fourth ventricle",
+          "expected": "Cerebral aqueduct",
+          "correct": false
+        },
+        {
+          "prompt": "Follow CSF through this channel and select the cavity it enters next.",
+          "chosen": "Fourth ventricle",
+          "expected": "Fourth ventricle",
+          "correct": true
+        },
+        {
+          "prompt": "If only this channel closes, which spaces can enlarge upstream?",
+          "chosen": "The lateral and third ventricles.",
+          "expected": "The lateral and third ventricles.",
+          "correct": true
+        }
+      ],
+      "note": "CSF passes from the third ventricle through the aqueduct into the fourth. A block can enlarge the lateral and third ventricles.",
+      "title": "Ventricular system",
+      "lesson": "13.3/activity/ventricles"
+    },
+    {
+      "station": "adrenal",
+      "parts": [
+        0,
+        3,
+        1,
+        2
+      ],
+      "choices": [
+        0,
+        2,
+        1
+      ],
+      "angle": 0.04899999999999996,
+      "answers": [
+        0,
+        3,
+        0
+      ],
+      "methods": [
+        "description",
+        "model",
+        "choice"
+      ],
+      "result": [
+        {
+          "prompt": "Select the right adrenal gland.",
+          "chosen": "Right adrenal gland",
+          "expected": "Right adrenal gland",
+          "correct": true
+        },
+        {
+          "prompt": "Select the organ just inferior to this gland on the same side.",
+          "chosen": "Left kidney",
+          "expected": "Right kidney",
+          "correct": false
+        },
+        {
+          "prompt": "A fall in aldosterone most directly reduces which renal response?",
+          "chosen": "Sodium reabsorption in the late distal nephron.",
+          "expected": "Sodium reabsorption in the late distal nephron.",
+          "correct": true
+        }
+      ],
+      "note": "Aldosterone from the adrenal cortex promotes renal sodium reabsorption and potassium secretion in the aldosterone-sensitive distal nephron.",
+      "title": "Posterior abdominal wall",
+      "lesson": "17.6/activity"
+    }
+  ],
+  "index": 7,
+  "submitted": 1754000300000
+}

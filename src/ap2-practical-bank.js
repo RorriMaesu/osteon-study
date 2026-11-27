@@ -1,3 +1,5 @@
+import {additionalStations,alternateForm} from './ap2-practical-forms.js';
+
 const part=(label,mesh,clue)=>({label,mesh,clue});
 const task=(prompt,answer)=>({prompt,answer});
 export const practicalStations=[
@@ -39,4 +41,7 @@ export const practicalStations=[
 export const meshKey=name=>String(name).replace(/[^a-z0-9]/gi,'').toLowerCase();
 export const partKeys=part=>[].concat(part.mesh).map(meshKey);
 export const partForMesh=(station,name)=>station.parts.findIndex(part=>partKeys(part).includes(meshKey(name)));
-export const byStation=id=>practicalStations.find(s=>s.id===id);
+practicalStations.push(...additionalStations);
+export const practicalFamilies=practicalStations.map(station=>[station,alternateForm(station)]);
+const forms=new Map(practicalFamilies.flat().map(station=>[station.id,station]));
+export const byStation=id=>forms.get(id);

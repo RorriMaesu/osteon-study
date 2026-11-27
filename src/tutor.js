@@ -1,4 +1,5 @@
 import {lessons} from './learning-data.js';
+import {ap3GuideLessons,ap3Reference,isAP3Context} from './tutor-ap3.js';
 import {ap2GuideLessons,ap2Reference,isAP2Context} from './tutor-ap2.js';
 import {newTutorSession,tutorSessionInstruction,completeTutorTurn} from './tutor-session.js';
 import { getLearningContext } from './learning-context.js';
@@ -16,7 +17,9 @@ function initTutor({escape:e,toast}) {
   let context=getLearningContext(), hardware={}, os=detectOS(), chat=[], draft='', lastFocus=null;
   let guided=null,guideSection='',guidePrompt='recall',guideReveal='',useDiagramGuide=true;
   const secondGuide=ap2GuideLessons();
-  const guideLessons=()=>isAP2Context(context)?secondGuide:lessons;
+  const thirdGuide=ap3GuideLessons();
+  const activeTutorCourse=()=>isAP3Context(context)?'ap3':isAP2Context(context)?'ap2':'ap1';
+  const guideLessons=()=>isAP3Context(context)?thirdGuide:isAP2Context(context)?secondGuide:lessons;
   let setupPage='auto', sample='', returnToReview=false, setupContinuation=null, assistantFinished=false, opening=false, pollTimer=null, pollRun=0;
   let benchmarkText='', generationText='', downloadState={model:downloadModels[0].name,text:'',progress:null};
   try {
@@ -125,7 +128,7 @@ function initTutor({escape:e,toast}) {
     }else{tab='chat';render();$('#tutor-input')?.focus();}
   }
   function renderTextbookGuide(){
-    if(useDiagramGuide&&context.review?.prompt&&isAP2Context(context)){renderReviewGuide();return;}
+    if(useDiagramGuide&&context.review?.prompt&&(isAP2Context(context)||isAP3Context(context))){renderReviewGuide();return;}
     if(useDiagramGuide&&context.diagram?.question){renderDiagramGuide();return;}
     const available=guideLessons();
     const lesson=available.find(l=>l.id===guideSection)||available[0],prompt=lesson[guidePrompt];
@@ -146,7 +149,7 @@ function initTutor({escape:e,toast}) {
     if($('#tutor-guide-activity'))$('#tutor-guide-activity').onclick=()=>{useDiagramGuide=true;guideReveal='';render();};
   }
   function renderReviewGuide(){
-    const review=context.review,section=secondGuide.find(s=>s.id===context.reference);
+    const review=context.review,section=guideLessons().find(s=>s.id===context.reference);
     const answers=Array.isArray(review.choices)?`<ol type="A">${review.choices.map(choice=>`<li>${e(choice)}</li>`).join('')}</ol>`:'';
     $('#tutor-body').innerHTML=`<div class="tutor-textbook-guide"><h3>Review your exam response</h3><p>§${e(context.reference)} · ${e(context.label)}</p>
       <div class="objective tutor-guide-prompt"><strong>${e(review.prompt)}</strong>${answers}</div><p>Your response · ${e(review.response||'Unanswered')}</p>
@@ -227,11 +230,12 @@ function initTutor({escape:e,toast}) {
     finally{endJob();}
   }
   function openSection(reference) {
-    if(ap2Reference(reference))location.hash='ap2-lesson-'+reference;
+    if(ap3Reference(reference))location.hash='ap3-lesson-'+reference;
+    else if(ap2Reference(reference))location.hash='ap2-lesson-'+reference;
     else document.dispatchEvent(new CustomEvent('openreader',{detail:reference}));
   }
   function sourceAttribute(source) {
-    return source.course==='ap2' ? `data-tutor-section="${e(source.reference)}"` : `data-tutor-page="${e(String(source.pdf))}"`;
+    return ['ap2','ap3'].includes(source.course) ? `data-tutor-section="${e(source.reference)}"` : `data-tutor-page="${e(String(source.pdf))}"`;
   }
   function answerHTML(m) {
     if (m.pending) return e(m.content || "Preparing a local reply\u2026");
@@ -298,7 +302,7 @@ function initTutor({escape:e,toast}) {
     if (!draft.trim() && !allowPrompt) return;
     const query = draft.trim() || (guided&&guided.completed<guided.total?`Ask me one focused question about ${guided.topic}.`:mode === "explain" ? `Explain ${context.label} clearly.` : mode === "hint" ? `Give me a small hint about ${context.label}.` : `Ask me one question about ${context.label}.`), model = choice;
     document.dispatchEvent(new Event("studyassistance"));
-    const course=isAP2Context(context)?'ap2':'ap1';
+    const course=activeTutorCourse();
     const courseHistory=chat.filter(m=>(m.course||'ap1')===course);
     const { sources, messages, retrievalTopic, authoredReply } = buildTutorMessages(query, courseHistory, guided&&guided.completed<guided.total?{...context,label:guided.topic}:context, mode);
     const contract=tutorSessionInstruction(guided);if(contract&&messages.length)messages[0].content+="\n"+contract;
@@ -360,10 +364,10 @@ function initTutor({escape:e,toast}) {
     }
   }
   document.addEventListener("tutorcontext", (ev) => {
-    const oldReference=context.reference,oldCourse=isAP2Context(context);
+    const oldReference=context.reference,oldCourse=activeTutorCourse();
     const wasLocked=context.assessmentMode==='exam',oldDiagram=context.diagram?.id,oldQuestion=context.diagram?.question,oldState=JSON.stringify(context.diagram?.state);
     context = { ...ev.detail };
-    if(oldCourse!==isAP2Context(context)){guideSection='';guideReveal='';guided=null;}
+    if(oldCourse!==activeTutorCourse()){guideSection='';guideReveal='';guided=null;}
     if(context.reference!==oldReference&&guideLessons().some(item=>item.id===context.reference)){guideSection=context.reference;guideReveal='';}
     if(oldDiagram!==context.diagram?.id)useDiagramGuide=true;
     if(oldDiagram!==context.diagram?.id||oldQuestion!==context.diagram?.question||oldState!==JSON.stringify(context.diagram?.state))guideReveal='';

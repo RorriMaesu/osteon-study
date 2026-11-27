@@ -4,7 +4,7 @@ export function shuffle(items,random=Math.random){
   return out;
 }
 export function newPractical(stations,random=Math.random){
-  const order=shuffle(stations,random);
+  const order=shuffle(stations.map(entry=>Array.isArray(entry)?entry[Math.floor(random()*entry.length)]:entry),random);
   return {id:crypto.randomUUID(),started:Date.now(),items:order.map(s=>({
     station:s.id, parts:shuffle(s.parts.map((_,i)=>i),random), choices:shuffle(s.options.map((_,i)=>i),random),
     angle:(random()-.5)*.7,answers:[null,null,null],methods:[null,null,null]

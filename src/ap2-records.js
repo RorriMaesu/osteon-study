@@ -108,7 +108,7 @@ function validResume(records) {
   if (route === 'ap2-session') return !!records.draft;
   if (route.startsWith('ap2-report-')) return records.reports.some(report => route === 'ap2-report-' + report.id);
   if (/^ap2-(?:chapter|writing)-(1[2-9]|20)$/.test(route)) return true;
-  const lesson = route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(?:activity|figures|check))?$/);
+  const lesson = route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(?:activity(?:\/[\w-]+)?|figures(?:\/[\w.-]+)?|check))?$/);
   return !!lesson && validSection(lesson[1]);
 }
 

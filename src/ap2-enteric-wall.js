@@ -81,7 +81,7 @@ export function addEntericLesson(body,preset) {
   const panel = document.createElement('details');
   panel.className = 'course-card';
   panel.dataset.enteric = '';
-  panel.innerHTML = '<summary>Explore the intestinal wall and enteric reflexes in 3D</summary><div data-enteric-station></div>';
+  panel.innerHTML = '<summary>Explore the intestinal wall and enteric reflexes in 3D</summary><div data-enteric-station></div><p>Compare this local reflex with bladder voiding. Pelvic parasympathetic output contracts detrusor smooth muscle. Somatic pudendal output can contract the external urethral sphincter during storage. <a href="#ap3-lesson-25.2">Follow urine storage and release in A&amp;P III</a>.</p>';
   body.prepend(panel);
   const host = panel.querySelector('[data-enteric-station]');
   const show = () => { if (panel.open && !host.firstElementChild) mountEntericStation(host); };

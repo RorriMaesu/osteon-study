@@ -1,4 +1,5 @@
 import {systemsQuestions} from './ap2-independent-systems.js';
+import {transferQuestions} from './ap2-independent-transfer.js';
 // Independent items use fresh observations. The correct option is first in this source array.
 // examItems shuffles both questions and options and snapshots the presented form on the device.
 function item(section,slug,skill,prompt,right,alternatives,why){
@@ -47,5 +48,6 @@ export const independentItems=[
   item('16.4','paired-modalities','Trace','Vibration is reduced in the right leg below a spinal lesion while pinprick is relatively preserved. Which pathway should be examined first?','Right dorsal column',['Left lateral corticospinal tract','Right optic tract','Left auditory radiation'],'Leg vibration ascends ipsilaterally in the cord before crossing in the medulla.'),
   item('16.5','target-error','Identify','A hand overshoots a fixed target twice despite sufficient strength and clear vision. Which term describes the observed movement?','Dysmetria',['Paralysis','Anesthesia','Aphasia'],'Dysmetria describes an error in movement distance, including overshoot or undershoot.'),
   item('16.5','eyes-closed','Explain','In a supported balance record, stance worsens markedly with eyes closed and toe-position sense is impaired. What is the most useful inference?','Vision had been compensating for unreliable position information',['Loss of vision alone proves cerebellar damage','Strength must be absent in both legs','Eye closure activates a new muscle lesion'],'Removing visual input exposes dependence on vision. The position-sense finding helps distinguish the mechanism.'),
-  ...systemsQuestions(item)
+  ...systemsQuestions(item),
+  ...transferQuestions(item)
 ];
