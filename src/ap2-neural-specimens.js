@@ -1,7 +1,10 @@
 import {Plane,Vector3,DoubleSide} from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 
+import {cutaways,cutawayMatch,cutawayColor,brainTargets,routeQuestions} from './ap2-neural-cutaways.js';
+
 const specimens={
+  ...Object.fromEntries(Object.entries(cutaways).map(([key,value])=>[key,{...value,steps:value.routes[0][1]}])),
   ventricles:{title:'Ventricular casts in 3D',file:'ventricles',direction:[1,.16,.3],steps:[
     ['Lateral ventricles','Paired cavities in the cerebral hemispheres. Each communicates with the third ventricle through an interventricular foramen.'],
     ['Third ventricle','The narrow midline cavity is in the diencephalon.'],
@@ -24,17 +27,19 @@ const specimens={
   ],credit:'IE-Map measured inner-ear template by Ahmadi and colleagues, with registered surfaces from David and colleagues. Highlighting identifies the responding structures.'}
 };
 
-const kindBySection={'13.1':['ventricles'],'13.2':['ventricles'],'13.3':['ventricles'],'14.1':['eye','ossicles','ear'],'16.3':['eye']};
+const kindBySection={'12.2':['axon'],'12.3':['cord'],'12.4':['axon'],'13.4':['cord'],'15.1':['cardiac-autonomic'],'13.1':['ventricles'],'13.2':['ventricles','cord'],'13.3':['ventricles'],'14.1':['eye','ossicles','ear'],'16.3':['eye']};
 const regions=[
   ['Ventricular cast',[],'Follow each connected space.'],
   ['Telencephalon · caudate',['caudatenucleus'],'The caudate follows the curvature of the lateral ventricle. The telencephalon gives rise to it, the cortex and other components of the cerebral hemispheres.'],
   ['Telencephalon · lentiform nucleus',['putamen','globuspallidus'],'The putamen and globus pallidus form the lentiform nucleus. The globus pallidus lies medial to the putamen.'],
+  ['Telencephalon · precentral gyrus',['precentralgyrus'],'This cortical ridge lies anterior to the central sulcus and contains primary motor cortex.'],
   ['Diencephalon · thalamus',['thalamus'],'The paired thalami border the midline third ventricle.'],
   ['Mesencephalon · midbrain',['midbrain'],'The midbrain surrounds the cerebral aqueduct. Mesencephalon retains its name through the five-vesicle stage.'],
   ['Metencephalon · pons',['pons'],'The metencephalon forms pons and cerebellum. The pons lies anterior to the fourth ventricle.'],
   ['Myelencephalon · medulla',['medullaoblongata'],'The myelencephalon forms the medulla, continuous caudally with the spinal cord.']
 ];
 const targets={
+  ...Object.fromEntries(Object.entries(cutaways).map(([key,value])=>[key,value.targets])),
   eye:[['Cornea','Transparent anterior curved surface providing much of the refractive power.'],['Sclera','Tough outer coat surrounding the posterior globe.'],['Retina','Neural lining containing photoreceptors.'],['Iris','Aperture-control ring in front of the lens.'],['Lens','Elastic transparent body that changes shape for near focus.'],['Ciliary muscle','Smooth muscle whose contraction reduces zonular tension.'],['Zonules','Suspensory fibers connecting the lens capsule to the ciliary body.']],
   ear:[['Anterior duct','One of three approximately orthogonal ducts sensitive to angular acceleration.'],['Lateral duct','The horizontal duct lies in a different plane from the anterior and posterior ducts.'],['Posterior duct','This duct occupies the posterior vertical plane.'],['Utricle','Its macula responds chiefly to horizontal acceleration in the upright head.'],['Saccule','Its macula responds chiefly to vertical acceleration in the upright head.'],['Scala vestibuli','The perilymph-filled passage that begins near the oval window.'],['Scala tympani','The perilymph-filled passage ending at the round window.']],
 };
@@ -47,9 +52,11 @@ export function renderNeuralSpecimens(id){
   return kinds.map(kind=>{
     const spec=specimens[kind];
     const atlasTarget=kind==='eye'?['Optic nerve (II).l','Locate the left optic nerve in the full atlas']:kind==='ear'||kind==='ossicles'?['Vestibulocochlear nerve (VIII).l','Locate the left vestibulocochlear nerve in the full atlas']:['Third ventricle','Locate the third ventricle in the full atlas'];
-    return '<section class="neuro-specimen course-card" data-neuro-specimen="'+kind+'"><h3>'+spec.title+'</h3><p>'+spec.credit+' <a href="assets/ap2-neuro/SOURCES.md" target="_blank" rel="noreferrer">Model credits ↗</a></p><button type="button" data-load-specimen>Open the 3D specimen</button><div data-specimen-content hidden><div data-specimen-host></div><div class="course-actions"><label>Structure or condition <select data-stage>'+spec.steps.map(([label],i)=>option(label,i)).join('')+'</select></label>'+
+    const jump=cutaways[kind]?'<a href="'+(kind==='axon'?'#ap2-lesson-12.4/activity/signal':kind==='cord'?'#ap2-lesson-13.4/activity/schematic':'#ap2-lesson-19.3/activity')+'">'+(kind==='axon'?'Compare impulse propagation':kind==='cord'?'Trace spinal nerve fibers':'Compare the cardiac cycle')+' ↗</a>':'<a href="?nerve='+encodeURIComponent(atlasTarget[0])+'#atlas">'+atlasTarget[1]+' ↗</a>';
+    const routeSelect=spec.routes?'<label>Pathway or condition <select data-specimen-route>'+spec.routes.map(([label],i)=>option(label,i)).join('')+'</select></label>':'';
+    return '<section class="neuro-specimen course-card" data-neuro-specimen="'+kind+'"><h3>'+spec.title+'</h3><p>'+spec.credit+' <a href="assets/ap2-neuro/SOURCES.md" target="_blank" rel="noreferrer">Model credits ↗</a></p><button type="button" data-load-specimen>Open the 3D specimen</button><div data-specimen-content hidden><div data-specimen-host></div><div class="course-actions">'+routeSelect+'<label>Structure or condition <select data-stage>'+spec.steps.map(([label],i)=>option(label,i)).join('')+'</select></label>'+
       (kind==='ventricles'?'<label>Section plane <select data-plane><option>Whole cast</option><option>Sagittal</option><option>Coronal</option><option>Axial</option></select></label><label>Move section <input type="range" data-slice min="0" max="100" value="50" disabled></label><label>Adult derivatives <select data-region>'+regions.map(([name],i)=>option(name,i)).join('')+'</select></label><label><input type="checkbox" data-context> Show surrounding landmarks</label><label><input type="checkbox" data-obstruction> Simulate aqueduct obstruction</label>':targets[kind]?'<label>Identify a structure <select data-identify><option value="">Show this condition</option>'+targets[kind].map(([label],i)=>option(label,i)).join('')+'</select></label>':'')+
-      '<button type="button" data-play-stages>Play sequence</button></div><p data-specimen-reading role="status"></p><button type="button" data-spot-open>Try a hidden-label identification</button><div data-spot hidden><label>Name the highlighted surface <select data-spot-pick></select></label><div class="course-actions"><button type="button" data-spot-check>Check structure</button><button type="button" data-spot-next>Another target</button><button type="button" data-spot-leave>Return to exploration</button></div><p role="status" data-spot-verdict></p></div></div><div class="course-actions"><a href="?nerve='+encodeURIComponent(atlasTarget[0])+'#atlas">'+atlasTarget[1]+' ↗</a>'+(kind==='eye'?(id==='14.1'?'<a href="#ap2-lesson-16.3">Compare cranial nerve and pupil testing ↗</a>':'<a href="#ap2-lesson-14.1">Review lens accommodation ↗</a>'):'')+'</div></section>';
+      '<button type="button" data-play-stages>Play sequence</button></div><p data-specimen-reading role="status"></p>'+(spec.routes?'<div data-route-question><label><span data-predict-prompt></span> <select data-route-response></select></label><button type="button" data-check-route>Check prediction</button><p data-route-feedback role="status"></p></div>':'')+'<button type="button" data-spot-open>Try a hidden-label identification</button><div data-spot hidden><label>Name the highlighted surface <select data-spot-pick></select></label><div class="course-actions"><button type="button" data-spot-check>Check structure</button><button type="button" data-spot-next>Another target</button><button type="button" data-spot-leave>Return to exploration</button></div><p role="status" data-spot-verdict></p></div></div><div class="course-actions">'+jump+(kind==='eye'?(id==='14.1'?'<a href="#ap2-lesson-14.1/activity/rod">Magnify the rod light response ↗</a><a href="#ap2-lesson-16.3/activity/pupil">Test the pupillary light reflex ↗</a>':'<a href="#ap2-lesson-16.3/activity/pupil">Test the pupillary light reflex ↗</a><a href="#ap2-lesson-14.1/activity/eye">Review lens accommodation ↗</a>'):'')+'</div></section>';
   }).join('');
 }
 
@@ -67,8 +74,12 @@ function start(panel,kind){
   const spec=specimens[kind], stage=panel.querySelector('[data-stage]'),plane=panel.querySelector('[data-plane]'),ctx=panel.querySelector('[data-context]'),play=panel.querySelector('[data-play-stages]'),reading=panel.querySelector('[data-specimen-reading]');
   const host=panel.querySelector('[data-specimen-host]'),slice=panel.querySelector('[data-slice]'),obstruction=panel.querySelector('[data-obstruction]'),identify=panel.querySelector('[data-identify]');
   const region=panel.querySelector('[data-region]');
+  const route=panel.querySelector('[data-specimen-route]');
+  const steps=()=>route?spec.routes[+route.value][1]:spec.steps;
   let current=0,timer=0,animationFrame=0,api,focusAmount=0;
-  const spotNames=kind==='ventricles'?['Lateral ventricles','Third ventricle','Cerebral aqueduct','Fourth ventricle']:kind==='ossicles'?spec.steps.map(([n])=>n):targets[kind].map(([n])=>n);
+  const spotEntries=kind==='ventricles'?brainTargets:kind==='ossicles'?spec.steps:targets[kind];
+  const spotNames=spotEntries.map(([name])=>name);
+  function matchesSpot(index,n){return kind==='ventricles'?n.startsWith(brainTargets[index][2]):cutawayMatch(spotNames[index],n);}
   let spot=-1,bag=[];
   const planes=[null,new Plane(new Vector3(-1,0,0)),new Plane(new Vector3(0,0,-1)),new Plane(new Vector3(0,-1,0))];
   const ranges=[null,[-.035,.035],[-.06,.035],[1.57,1.655]];
@@ -78,18 +89,21 @@ function start(panel,kind){
       if(!mesh.isMesh)return;
       const n=nameOf(mesh),context=kind==='ventricles'&&!/ventricle|aqueduct/.test(n);
       const matchingRegion=region&&regions[+region.value][1].some(prefix=>n.startsWith(prefix));
-      mesh.visible=!context||ctx.checked||matchingRegion;
+      const spotMatch=spot>=0&&matchesSpot(spot,n);
+      const bareAxon=kind==='axon'&&route.value==='1'&&identify.value===''&&spot<0;
+      mesh.visible=(!context||ctx.checked||matchingRegion||spot>=0)&&!(bareAxon&&n==='middlemyelin');
       const selection=identify?.value;
-      const selected=selection!==undefined&&selection!==''?n===targets[kind][+selection][0].replace(/ /g,'').toLowerCase():focused(kind,current,n);
+      const selected=selection!==undefined&&selection!==''?cutawayMatch(targets[kind][+selection][0],n):spec.routes?cutawayMatch(steps()[current][0],n):focused(kind,current,n);
       const upstream=n.startsWith('lateralventricle')||n==='thirdventricle';
       const occluded=obstruction?.checked;
       for(const m of [].concat(mesh.material)){
-        const spotMatch=spot<0?false:kind==='ventricles'||kind==='ossicles'?focused(kind,spot,n):n===spotNames[spot].toLowerCase().replace(/ /g,'');
-        m.color.set(spot>=0?(spotMatch?'#f5b668':'#839da4'):occluded?(n==='aqueductofmidbrain'?'#c74950':upstream?'#f5b668':baseColor(n)):matchingRegion?(n.startsWith('globuspallidus')?'#ed9580':'#f5b668'):region&&+region.value?baseColor(n):selected?'#f5b668':baseColor(n));
+        const tissue=spec.routes?cutawayColor(n):baseColor(n);
+        m.color.set(spot>=0?(spotMatch?'#f5b668':'#839da4'):occluded?(n==='aqueductofmidbrain'?'#c74950':upstream?'#f5b668':tissue):matchingRegion?(n.startsWith('globuspallidus')?'#ed9580':'#f5b668'):region&&+region.value?tissue:selected&&bareAxon&&current===2?'#8cb3c3':selected?'#f5b668':tissue);
         m.transparent=(context&&!matchingRegion)||(kind==='eye'&&n==='cornea');
         m.opacity=context&&!matchingRegion?.12:kind==='eye'&&n==='cornea'?.5:1;
         if(identify && identify.value!==''){m.transparent=!selected;m.opacity=selected?1:.16;}
-        if(spot>=0 && kind==='eye'){m.transparent=!spotMatch;m.opacity=spotMatch?1:.12;}
+        if(kind==='cardiac-autonomic'&&(n.startsWith('wallof')||n.endsWith('vertebra'))){m.transparent=true;m.opacity=.25;}
+        if(spot>=0 && (kind==='eye'||kind==='ventricles'||spec.routes)){m.transparent=!spotMatch;m.opacity=spotMatch?1:.12;}
         if(spot>=0 && kind==='ear'){m.transparent=!spotMatch;m.opacity=spotMatch?1:.23;}
         m.depthWrite=!m.transparent;
         m.side=DoubleSide;
@@ -110,8 +124,8 @@ function start(panel,kind){
   }
   function step(i){
     current=i;stage.value=String(i);
-    const extra=kind==='ventricles'?' In the default orientation, superior is up. The pons is anterior to the fourth ventricle.':kind==='eye'?' Gold marks the lens. The globe stays still so you can distinguish accommodation from convergence.':kind==='ossicles'?' Gold marks this ossicle.':' Gold marks the organ associated with this stimulus.';
-    reading.textContent=obstruction?.checked?'Aqueduct obstruction. The red channel marks the block. The gold lateral and third ventricles lie upstream and can enlarge. The fourth lies downstream. The cast shows their usual shapes.':identify&&identify.value!==''?targets[kind][+identify.value].join(' · '):spec.steps[i][1]+extra;
+    const extra=spec.routes?'':kind==='ventricles'?' In the default orientation, superior is up. The pons is anterior to the fourth ventricle.':kind==='eye'?' Gold marks the lens. The globe stays still so you can distinguish accommodation from convergence.':kind==='ossicles'?' Gold marks this ossicle.':' Gold marks the organ associated with this stimulus.';
+    reading.textContent=obstruction?.checked?'Aqueduct obstruction. The red channel marks the block. The gold lateral and third ventricles lie upstream and can enlarge. The fourth lies downstream. The cast shows their usual shapes.':identify&&identify.value!==''?targets[kind][+identify.value].join(' · '):steps()[i][1]+extra;
     if(region&&+region.value&&!obstruction.checked)reading.textContent=regions[+region.value][2]+' The ventricular cast remains visible for orientation.';
     if(kind==='eye'){
       cancelAnimationFrame(animationFrame);
@@ -124,6 +138,20 @@ function start(panel,kind){
       }
       transition(start);
     }else styleModel();
+  }
+  const questionBox=panel.querySelector('[data-route-question]');
+  if(route){
+    const prompt=questionBox.querySelector('[data-predict-prompt]'),response=questionBox.querySelector('[data-route-response]'),feedback=questionBox.querySelector('[data-route-feedback]');
+    const refreshQuestion=()=>{
+      const [question,choices]=routeQuestions[kind][+route.value];
+      prompt.textContent=question;response.innerHTML='<option value="">Choose a prediction</option>'+choices.map(option).join('');feedback.textContent='';
+    };
+    questionBox.querySelector('[data-check-route]').onclick=()=>{
+      const [,,answer,why]=routeQuestions[kind][+route.value];
+      feedback.textContent=response.value===''?'Choose a prediction first.':(+response.value===answer?'Correct. ':'Revisit the route. ')+why;
+    };
+    route.onchange=()=>{stop();identify.value='';stage.innerHTML=steps().map(([label],i)=>option(label,i)).join('');step(0);refreshQuestion();};
+    refreshQuestion();
   }
   stage.onchange=()=>{stop();if(identify)identify.value='';if(obstruction)obstruction.checked=false;if(region)region.value='0';step(+stage.value);};
   if(region)region.onchange=()=>{stop();obstruction.checked=false;step(current);};
@@ -147,16 +175,16 @@ function start(panel,kind){
     spot=bag.pop();guess.value='';feedback.textContent='Rotate the specimen until you can identify the gold surface.';styleModel();
   }
   open.onclick=()=>{stop();if(plane){plane.selectedIndex=0;cut();}if(ctx)ctx.checked=false;if(region)region.value='0';if(obstruction)obstruction.checked=false;
-    open.hidden=true;explore.hidden=true;reading.hidden=true;spotBox.hidden=false;newTarget();guess.focus();};
-  panel.querySelector('[data-spot-check]').onclick=()=>{feedback.textContent=guess.value===''?'Choose a structure first.':+guess.value===spot?'Correct. '+spotNames[spot]+'. '+(kind==='ventricles'||kind==='ossicles'?spec.steps[spot][1]:targets[kind][spot][1]):'Compare the highlighted surface with the nearby landmarks and try again.';};
+    open.hidden=true;explore.hidden=true;reading.hidden=true;if(questionBox)questionBox.hidden=true;spotBox.hidden=false;newTarget();guess.focus();};
+  panel.querySelector('[data-spot-check]').onclick=()=>{feedback.textContent=guess.value===''?'Choose a structure first.':+guess.value===spot?'Correct. '+spotNames[spot]+'. '+spotEntries[spot][1]:'Compare the highlighted surface with the nearby landmarks and try again.';};
   panel.querySelector('[data-spot-next]').onclick=newTarget;
-  panel.querySelector('[data-spot-leave]').onclick=()=>{spot=-1;spotBox.hidden=true;open.hidden=false;reading.hidden=false;explore.hidden=false;step(current);open.focus();};
+  panel.querySelector('[data-spot-leave]').onclick=()=>{spot=-1;spotBox.hidden=true;open.hidden=false;reading.hidden=false;explore.hidden=false;if(questionBox)questionBox.hidden=false;step(current);open.focus();};
   play.onclick=()=>{
     if(timer){stop();return;}
     if(identify)identify.value='';if(obstruction)obstruction.checked=false;if(region)region.value='0';
     step(0);play.textContent='Pause';play.setAttribute('aria-pressed','true');
     function next(){
-      if(!host.isConnected||panel.hidden||document.hidden||current===spec.steps.length-1){stop();return;}
+      if(!host.isConnected||panel.hidden||document.hidden||current===steps().length-1){stop();return;}
       step(current+1);timer=setTimeout(next,1800);
     }
     timer=setTimeout(next,1800);

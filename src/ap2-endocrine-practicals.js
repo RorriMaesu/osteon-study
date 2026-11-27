@@ -1,3 +1,4 @@
+import {regionSpecimen} from './ap2-endocrine-regions.js';
 import {endocrineCaseMarkup,mountEndocrineCase} from './ap2-endocrine-cases.js';
 
 const root = 'assets/ap2-glands/';
@@ -16,6 +17,9 @@ const tissue = {
   thymus:{title:'Thymus behind the sternum',keys:['thymus','manubrium','trachea','right_clavicle','left_clavicle'],note:'The paired thymic lobes lie behind the manubrium. This lateral-oblique view exposes their depth.',view:[1,.08,-.35]},
   adrenals:{title:'Adrenals above the kidneys',keys:['right_kidney','left_kidney','right_adrenal','left_adrenal','l1','t12'],note:'Follow each kidney to its superomedial pole. The two adrenal glands differ in shape. Open the section study below to distinguish cortex and medulla.',view:[.1,.28,1]},
   pancreas:{title:'Pancreas across the upper abdomen',keys:['pancreas','right_kidney','left_kidney','l1','t12'],note:'The pancreas crosses in front of the upper lumbar region. The head is on the subject’s right and the tail points toward the subject’s left.',view:[0,.32,1]},
+  neck:{title:'Thyroid and parathyroids in the neck',note:'Rotate the neck specimen to compare the isthmus with the posterior surfaces.'},
+  ovary:{title:'Ovaries in the female pelvis',note:'Locate the ovaries relative to the uterine tubes.'},
+  testis:{title:'Testes and pelvic organs',note:'Trace each epididymis toward the pelvis.'},
   map:{title:'All major endocrine sites',note:'Trace the hypothalamus, pituitary, pineal, thyroid, parathyroids, thymus, adrenals, pancreatic islets and gonads. The textbook places ovaries and testes together for comparison.'}
 };
 const glandColor = name => {
@@ -70,10 +74,13 @@ function stationBody(id){
  if(id==='17.1')return select('region','Choose an anatomical view',regions)+'<p data-location></p><div data-organ></div><small data-attribution></small><h4>Find it from a landmark</h4><p data-locator-prompt></p>'+select('locator-guess','Gland region',{'':'Choose a region',pituitary:'Pituitary',thymus:'Thymus',adrenals:'Adrenals',pancreas:'Pancreas'})+'<button data-identify>Check location</button> <button data-next-location>Next location</button><p data-result role="status"></p>';
  if(id==='17.2')return two(select('signal','Hormone and target',Object.fromEntries(Object.entries(signalRoutes).map(([k,v])=>[k,v.label])))+select('block','Interruption',blocks),select('prediction','Predict the downstream response',{'':'Choose a prediction',continues:'Response can proceed',stops:'Response is reduced'})+'<button data-reveal>Trace the signal</button>')+'<div data-result role="status"></div>';
  if(id==='17.3')return select('lobe','Route to inspect',{anterior:'Hypothalamus → anterior lobe',posterior:'Hypothalamus → posterior lobe'})+select('pit-lesion','Change the connection',{none:'Usual connection',vessel:'Interrupt portal blood delivery',axon:'Interrupt neurosecretory axons'})+'<div data-pit-route></div>';
- if(id==='17.4'||id==='17.5')return select('neck-view','Orientation or scale',{anterior:'Anterior neck · gland overview',posterior:'Posterior thyroid · parathyroid surface',micro:'Microscopic · thyroid follicle'})+'<div data-neck-plate></div>'+select('neck-guess','Where are the small paired parathyroid glands typically found?',{'':'Choose the relationship',front:'On the anterior thyroid isthmus',back:'On the posterior surface of the thyroid lobes',under:'Within the thymus'})+'<button data-neck-check>Check and inspect</button><p data-result role="status"></p>';
+ if(id==='17.4'||id==='17.5'){
+   const ask=id==='17.4' ? select('neck-guess','Which structure crosses the trachea between the two thyroid lobes?',{'':'Choose a structure',isthmus:'Thyroid isthmus',cricoid:'Cricoid cartilage',parathyroid:'Inferior parathyroid gland'}) : select('neck-guess','After ionized calcium falls, what response would you expect?',{'':'Predict the response',loss:'PTH falls and less calcium is retained by the kidney',retain:'PTH rises and the kidney retains more calcium',phosphate:'PTH rises and the kidney retains more phosphate'});
+   return select('neck-view','Orientation or scale',{anterior:'Anterior neck · 3D',posterior:'Posterior neck · 3D',micro:'Microscopic · thyroid follicle'})+'<div data-neck-plate></div>'+ask+'<button data-neck-check>Check prediction</button><p data-result role="status"></p>';
+ }
  if(id==='17.6')return '<p>Start at the superomedial pole of each kidney. Then use the section to trace the layers from capsule to center.</p><div data-organ></div><small>'+bodyCredit+'</small>'+two(figure('assets/ap2-figures/17.17.webp','A gland section and micrograph distinguish three cortical layers and the medulla.',credits('17.17','17-6-the-adrenal-glands',true)),select('zone','Trace a layer',Object.fromEntries(Object.entries(adrenal).map(([k,v])=>[k,v[0]])))+'<div data-result role="status"></div>');
  if(id==='17.7')return '<p>The pineal body is gold, the pituitary is pink, the hypothalamus is mauve and the third-ventricle space is blue. Rotate to compare the posterior and inferior positions.</p><div data-organ></div><small>'+bodyCredit+'</small>'+select('light','During the biological night',{dark:'Dark surroundings',bright:'Bright light reaches the retina'})+select('melatonin','Predict relative pineal melatonin secretion',{'':'Choose a prediction',rise:'Nighttime rise is supported',fall:'Nighttime rise is suppressed'})+'<button data-pineal-check>Trace the pathway</button><div data-result role="status"></div>';
- if(id==='17.8')return select('gonad','Specimen',{ovary:'Left ovary · reference surface',testis:'Testis · anatomical section'})+'<div data-gonad-specimen></div>'+select('gonad-signal','Signal to trace',{fsh:'FSH',lh:'LH'})+'<div data-gonad-guess></div><button data-check-gonad>Check the response</button><p data-gonad-response role="status"></p>';
+ if(id==='17.8')return select('gonad','Regional specimen',{ovary:'Ovaries, uterus and uterine tubes',testis:'Testes, ducts and pelvic organs',placenta:'Full-term placenta and umbilical cord'})+'<div data-gonad-specimen></div><div data-gonad-controls></div><div data-gonad-guess></div><button data-check-gonad>Check the response</button><p data-gonad-response role="status"></p>';
  return select('scale','Scale',{gross:'Gross anatomy · organ regions',micro:'Microscopic anatomy · islet and acinus'})+'<div data-scale-view></div>';
 }
 export function renderGlandPractical(id){return glandStations[id]?style+'<section class="gland-lab" data-gland-station="'+id+'"><h3>'+glandStations[id]+'</h3>'+stationBody(id)+'</section>':'';}
@@ -209,6 +216,9 @@ export function mountGlandPractical(rootElement,id){
      if(selected==='map'){
        get('organ').innerHTML=figure('assets/ap2-figures/17.2.webp','Body and regional insets showing the major endocrine glands and gonads.',credits('17.2','17-1-an-overview-of-the-endocrine-system'));
        get('attribution').innerHTML='';
+     }else if(['neck','ovary','testis'].includes(selected)){
+       const host=document.createElement('div');get('organ').append(host);regionSpecimen(host,selected,showModel);
+       get('attribution').textContent='';
      }else{
        const host=document.createElement('div');get('organ').append(host);wholeModel(host,selected,part=>{if(part!==get('region').value){get('region').value=part;locate();}});
        get('attribution').innerHTML=bodyCredit;
@@ -242,10 +252,20 @@ export function mountGlandPractical(rootElement,id){
        get('follicle-step').onchange=explain;explain();return;
      }
      const back=get('neck-view').value==='posterior';
-     get('neck-plate').innerHTML=back?figure(root+'posterior-thyroid.webp','Posterior thyroid lobes with small superior and inferior parathyroid glands and a section of parathyroid tissue.',credits('17.15','17-5-the-parathyroid-glands',true)):figure(root+'anterior-thyroid.webp','Anterior thyroid lobes connected by the isthmus over the trachea.',credits('17.12a, anterior panel','17-4-the-thyroid-gland'));
+     const plate=back?figure(root+'posterior-thyroid.webp','Posterior thyroid lobes with small superior and inferior parathyroids.',credits('17.15','17-5-the-parathyroid-glands',true)):figure(root+'anterior-thyroid.webp','Anterior thyroid lobes connected by the isthmus over the trachea.',credits('17.12a','17-4-the-thyroid-gland'));
+     get('neck-plate').innerHTML='<div data-neck-region></div><details><summary>Compare with the textbook plate</summary>'+plate+'</details>';
+     regionSpecimen(get('neck-region'),'neck',showModel,back?[.28,.08,-1]:[.08,.08,1]);
    }
    get('neck-view').onchange=show;
-   get('neck-check').onclick=()=>{const guess=get('neck-guess').value;if(!guess){get('result').textContent='Choose a relationship first.';return;}get('neck-view').value='posterior';show();get('result').textContent=(guess==='back'?'Correct. ':'Turn to the posterior surface. ')+'Usually there are four, with variation in number and location. Their chief cells release PTH when circulating calcium falls.';};
+   get('neck-check').onclick=()=>{
+     const guess=get('neck-guess').value;
+     if(!guess){get('result').textContent='Choose a prediction first.';return;}
+     if(id==='17.4'){
+       get('result').textContent=(guess==='isthmus'?'Correct. ':'Find the isthmus. ')+'The isthmus joins the thyroid lobes anterior to the upper trachea.';
+     }else{
+       get('result').textContent=(guess==='retain'?'Correct. ':'Follow the kidney response. ')+'Falling ionized calcium stimulates chief cells to release PTH. Kidneys retain calcium, excrete more phosphate, and make more calcitriol. Calcitriol increases intestinal calcium absorption. As calcium recovers, PTH secretion falls.';
+     }
+   };
    if(id==='17.5')get('neck-view').value='posterior';show();
  }else if(id==='17.6'){
    wholeModel(get('organ'),'adrenals');
@@ -264,20 +284,30 @@ export function mountGlandPractical(rootElement,id){
      testis:{fsh:['Support spermatogenesis through Sertoli cells','FSH acts on Sertoli cells in seminiferous tubules. Sertoli cells also release inhibin, which feeds back on FSH.'],lh:['Stimulate testosterone production in Leydig cells','LH stimulates Leydig cells in the interstitial tissue between seminiferous tubules.']}
    };
    function loadGonad(){
-     const ovarian=get('gonad').value==='ovary',container=get('gonad-specimen');
-     if(ovarian){
-       container.innerHTML='<div data-organ></div><p>A single external ovary surface from the Visible Human Female. Follicles are microscopic or internal structures.</p><small>Kristen Browne and Heidi Schlehlein, Human Reference Atlas, left ovary v1.3 (2024). <a href="https://doi.org/10.48539/HBM695.KCXS.294" target="_blank" rel="noreferrer">Source</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>.</small>';
+     const organ=get('gonad').value;
+     get('gonad-specimen').innerHTML='<div data-gross></div>';
+     regionSpecimen(get('gross'),organ,showModel);
+     if(organ==='ovary'){
+       get('gonad-specimen').insertAdjacentHTML('beforeend','<details><summary>Isolated left ovary</summary><div data-organ></div></details>');
        showModel(get('organ'),{asset:root+'ovary-v1.3.glb',title:'Left ovary',colors:()=>'#eab8b9'});
-     }else container.innerHTML=figure(root+'testis-section.webp','A sagittal testis section shows lobules containing seminiferous tubules and the nearby epididymis.',credits('27.4','27-1-anatomy-and-physiology-of-the-testicular-reproductive-system'));
+     }
+     if(organ==='testis')get('gonad-specimen').insertAdjacentHTML('beforeend','<details><summary>Textbook section through the testis</summary>'+figure(root+'testis-section.webp','A sagittal section shows seminiferous tubules and the epididymis.',credits('27.4','27-1-anatomy-and-physiology-of-the-testicular-reproductive-system'))+'</details>');
+     get('gonad-controls').innerHTML=organ==='placenta'?'':select('gonad-signal','Signal to trace',{fsh:'FSH',lh:'LH'});
+     if(organ!=='placenta')get('gonad-signal').onchange=guess;
      guess();
    }
-   function guess(){const data=outcomes[get('gonad').value];
-     get('gonad-guess').innerHTML=select('expected-effect','Which action follows?',{'':'Choose an action',lh:data.lh[0],fsh:data.fsh[0]});
+   function guess(){
+     const data=outcomes[get('gonad').value];
+     get('gonad-guess').innerHTML=data ? select('expected-effect','Which action follows?',{'':'Choose an action',lh:data.lh[0],fsh:data.fsh[0]}) : select('expected-effect','Which signal maintains the corpus luteum early in pregnancy?',{'':'Choose a signal',insulin:'Insulin',hcg:'Human chorionic gonadotropin',fsh:'Follicle-stimulating hormone'});
      get('gonad-response').textContent='';
    }
-   get('check-gonad').onclick=()=>{const target=get('gonad-signal').value,chosen=get('expected-effect').value;
-     get('gonad-response').textContent=!chosen?'Choose an action first.':(target===chosen?'Correct. ':'Recheck the hormone target. ')+outcomes[get('gonad').value][target][1];};
-   get('gonad').onchange=loadGonad;get('gonad-signal').onchange=guess;loadGonad();
+   get('check-gonad').onclick=()=>{
+     const organ=get('gonad').value, chosen=get('expected-effect').value;
+     if(!chosen){get('gonad-response').textContent='Choose a response first.';return;}
+     const target=organ==='placenta'?'hcg':get('gonad-signal').value;
+     get('gonad-response').textContent=(target===chosen?'Correct. ':'Recheck the hormone target. ')+(organ==='placenta'?'Early trophoblast hCG sustains the ovarian corpus luteum. Placental progesterone production takes over as pregnancy progresses.':outcomes[organ][target][1]);
+   };
+   get('gonad').onchange=loadGonad;loadGonad();
  }else{
    function changeScale(){
      const gross=get('scale').value==='gross';

@@ -1,5 +1,7 @@
 import {renderNeuralCases, mountNeuralCases, neuralLabStyles} from './ap2-neural-cases.js';
 import {renderNeuralSpecimens, mountNeuralSpecimens} from './ap2-neural-specimens.js';
+import {renderSensoryDetail,mountSensoryDetail} from './ap2-neural-sensory.js';
+import {hearingMarkup,mountHearing} from './ap2-hearing.js';
 import {renderNeuralSignal, mountNeuralSignal} from './ap2-neural-signals.js';
 
 // Original schematic diagrams. Coordinates describe relationships, not clinical measurements.
@@ -303,7 +305,7 @@ function initialState(config) {
 }
 
 export function renderLab(id) {
-  const additions = renderNeuralSpecimens(id) + renderNeuralSignal(id) + renderNeuralCases(id);
+  const additions = renderNeuralSpecimens(id) + renderNeuralSignal(id) + renderNeuralCases(id) + renderSensoryDetail(id)+(id==='14.1'?hearingMarkup():'');
   return (additions ? neuralLabStyles + additions : '') + renderSchematic(id);
 }
 
@@ -317,6 +319,8 @@ function renderSchematic(id) {
 export function mountLab(root, id) {
   if (!root) return;
   mountNeuralSpecimens(root);
+  mountSensoryDetail(root);
+  const hearing=root.querySelector('[data-sensory-detail="hearing"]');if(hearing)mountHearing(hearing);
   mountNeuralSignal(root, id);
   mountNeuralCases(root, id);
   mountNeuralStationPicker(root);
@@ -349,7 +353,7 @@ export function mountLab(root, id) {
 
 export function mountNeuralStationPicker(root) {
   if(!root || root.querySelector('[data-neural-station-picker]'))return;
-  const stations=[...root.querySelectorAll('[data-neuro-specimen],[data-process],[data-neuro-cases],[data-neural-lab],[data-reg-lab]')];
+  const stations=[...root.querySelectorAll('[data-sensory-detail],[data-neuro-specimen],[data-process],[data-neuro-cases],[data-neural-lab],[data-reg-lab]')];
   if(stations.length<2)return;
   const picker=document.createElement('nav');picker.setAttribute('aria-label','Lesson stations');picker.className='course-actions neuro-station-picker';
   const style=document.createElement('style');
@@ -359,7 +363,7 @@ export function mountNeuralStationPicker(root) {
   label.textContent='Activity ';select.dataset.neuralStationPicker='';
   for(const panel of stations){
     const option=document.createElement('option');
-    option.value=panel.dataset.neuroSpecimen||('process' in panel.dataset?'signal':'neuroCases' in panel.dataset?'cases':'regLab' in panel.dataset?'regulation':'schematic');
+    option.value=panel.dataset.neuroSpecimen||panel.dataset.sensoryDetail||('process' in panel.dataset?'signal':'neuroCases' in panel.dataset?'cases':'regLab' in panel.dataset?'regulation':'schematic');
     option.textContent=panel.querySelector('h3,h2')?.textContent||'Practice station';
     select.append(option);
   }

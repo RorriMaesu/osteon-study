@@ -63,3 +63,28 @@ test('hemostasis perturbations change the affected visual step and preserve the 
   assert.doesNotMatch(clotFrame(4,'usual').image,/stroke="#f9cc74"/);
   assert.match(clotFrame(4,'plasmin').image,/stroke="#f9cc74"/);
 });
+
+test('injuries with weak adhesion and deficient fibrin have distinct final states',()=>{
+  const adhesion=clotFrame(4,'adhesion'),thrombin=clotFrame(4,'thrombin');
+  assert.match(adhesion.title,/persistent bleeding/);
+  assert.match(thrombin.title,/recurrent bleeding/);
+  assert.match(adhesion.image,/stroke="#ff8c85"/);
+  assert.match(adhesion.image,/stroke="#f9cc74"/);
+  assert.doesNotMatch(thrombin.image,/stroke="#f9cc74"/);
+  assert.doesNotMatch(clotFrame(4,'usual').image,/stroke="#ff8c85"/);
+});
+test('regional specimens retain distinct sided anatomical meshes and expose the new chapter exercises',()=>{
+  for(const [file,names] of Object.entries({
+    'neck.glb':['thyroid','thyroid_cartilage','left_superior_parathyroid','right_inferior_parathyroid','trachea'],
+    'testicular-region.glb':['left_testis','right_testis','right_epididymis','bladder'],
+    'ovarian-region.glb':['VH_F_left_ovary','VH_F_right_ovary','VH_F_fundus_of_uterus','VH_F_sacrum'],
+    'placenta.glb':['VH_F_basal_plate','VH_F_chorionic_plate','VH_F_umbilical_artery_2','VH_F_umbilical_vein']
+  })){
+    const model=readGltf(file);
+    for(const name of names)assert.ok(model.nodes.some(n=>n.name===name&&n.mesh!==undefined),name);
+  }
+  assert.match(endocrine('17.5'),/ionized calcium falls/);
+  assert.match(endocrine('17.4'),/crosses the trachea/);
+  assert.match(endocrine('17.8'),/placenta/);
+  for(const img of ['phil-5864','normal-adult-field','phil-15133'])assert.ok(existsSync(location('assets/ap2-blood/'+img+'.webp')));
+});

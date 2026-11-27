@@ -6,6 +6,9 @@ import {neuralCases,renderNeuralCases} from '../src/ap2-neural-cases.js';
 import {signals} from '../src/ap2-neural-signals.js';
 import {appliedItems} from '../src/ap2-applied.js';
 
+import {cutaways,cutawayMatch,brainTargets,normalizeNeuroName,routeQuestions} from '../src/ap2-neural-cutaways.js';
+import {pupilResponse} from '../src/ap2-neural-sensory.js';
+
 function glb(path){
   const bytes=readFileSync(new URL('../assets/'+path,import.meta.url));
   assert.equal(bytes.subarray(0,4).toString(),'glTF');
@@ -75,5 +78,41 @@ test('introductory pathways and spinal reflex stations give each distractor a sp
       q.choices.forEach((_,i)=>{if(i!==q.key)assert.ok(q.hints[i].length>30);});
     }
   }
+});
+
+test('every neural cutaway target and route resolves to a named, nonempty 3D surface',()=>{
+  for(const [key,model] of Object.entries(cutaways)){
+    const doc=glb('ap2-neuro/'+model.file+'.glb');
+    const names=doc.nodes.filter(n=>n.mesh!==undefined).map(n=>normalizeNeuroName(n.name));
+    for(const [label] of [...model.targets,...model.routes.flatMap(([,stages])=>stages)]){
+      assert.ok(names.some(n=>cutawayMatch(label,n)),key+' '+label);
+    }
+    assert.equal(model.routes.length,routeQuestions[key].length);
+    for(const [,choices,answer,why] of routeQuestions[key])assert.ok(choices[answer]&&why.length>30);
+    for(const n of doc.nodes.filter(n=>n.mesh!==undefined))assert.ok(coords(doc,n).every(Number.isFinite));
+  }
+  const brain=glb('ap2-neuro/ventricles.glb');
+  for(const n of brain.nodes){
+    const matches=brainTargets.filter(([, ,prefix])=>normalizeNeuroName(n.name).startsWith(prefix));
+    assert.equal(matches.length,1,n.name+' must have one blind identification target');
+  }
+  for(const [id,kind] of [['12.4','axon'],['13.2','cord'],['13.4','cord']])assert.ok(renderLab(id).includes('data-neuro-specimen="'+kind+'"'));
+  assert.ok(renderLab('14.1').includes('data-sensory-detail="rod"'));
+  assert.ok(renderNeuralCases('15.1').includes('data-neuro-specimen="cardiac-autonomic"'));
+  assert.ok(renderNeuralCases('16.3').includes('data-sensory-detail="pupil"'));
+});
+
+test('pupil observations separate input loss from unilateral efferent loss',()=>{
+  const both={left:true,right:true},neither={left:false,right:false};
+  assert.deepEqual(pupilResponse(0,'right'),both);
+  assert.deepEqual(pupilResponse(1,'left'),neither);
+  assert.deepEqual(pupilResponse(1,'right'),both);
+  assert.deepEqual(pupilResponse(2,'right'),neither);
+  assert.deepEqual(pupilResponse(2,'left'),both);
+  for(const light of ['right','left']){
+    assert.deepEqual(pupilResponse(3,light),{left:false,right:true});
+    assert.deepEqual(pupilResponse(4,light),{left:true,right:false});
+  }
+  for(let condition=0;condition<5;condition++)assert.deepEqual(pupilResponse(condition,'off'),neither);
 });
 
