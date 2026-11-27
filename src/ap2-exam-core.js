@@ -13,7 +13,8 @@ export const bank = [...sections.flatMap(section => section.questions.map((q,ind
 export const examScopes = [
   ...chapters.map(ch=>({id:String(ch.id),title:'Chapter '+ch.id+' · '+ch.title,chapters:[ch.id]})),
   ...units.map(unit=>({...unit,title:'Unit · '+unit.title})),
-  {id:'all',title:'Cumulative · Chapters 12–20',chapters:chapters.map(ch=>ch.id)}
+  {id:'all',title:'Cumulative · All 49 sections',chapters:chapters.map(ch=>ch.id)},
+  {id:'balanced',title:'Mixed practical · Equal chapter weight',chapters:chapters.map(ch=>ch.id)}
 ];
 function shuffle(items,random) {
   const out=[...items];
@@ -28,8 +29,10 @@ export function examItems(scope,random=Math.random) {
   const selected=sections.filter(s=>spec.chapters.includes(Number(s.id.split('.')[0])));
   const perSection=spec.chapters.length===1 && !units.some(u=>u.id===scope) ? 2 : 1;
   const questions=[],counts=new Map();
-  for (const section of shuffle(selected,random)) {
-    const candidates=shuffle(independentItems.filter(q=>q.section===section.id),random);
+  const groupByChapter=spec.id==='balanced';
+  const groups=groupByChapter?spec.chapters.map(ch=>selected.filter(s=>s.id.startsWith(ch+'.')).map(s=>s.id)):selected.map(s=>[s.id]);
+  for (const ids of shuffle(groups,random)) {
+    const candidates=shuffle(independentItems.filter(q=>ids.includes(q.section)),random);
     // Within each required section, favor tasks that have had less representation on this form.
     candidates.sort((a,b)=>(counts.get(a.skill)||0)-(counts.get(b.skill)||0));
     for(const item of candidates.slice(0,perSection)){
@@ -39,7 +42,7 @@ export function examItems(scope,random=Math.random) {
   for (const ch of spec.chapters) {
     const applied=bank.filter(q=>q.type!=='choice'&&Number(q.section.split('.')[0])===ch);
     const visual=applied.filter(q=>q.type==='visual'), typed=applied.filter(q=>q.type!=='visual');
-    questions.push(...shuffle(visual,random).slice(0,1),...shuffle(typed,random).slice(0,spec.id==='all'?1:2));
+    questions.push(...shuffle(visual,random).slice(0,1),...shuffle(typed,random).slice(0,spec.id==='all'||groupByChapter?1:2));
   }
   return shuffle(questions,random).map(q=>{
     if (!q.choices) return {...q};

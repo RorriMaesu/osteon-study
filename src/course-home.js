@@ -48,6 +48,8 @@ export function initCourseHome({setView, escape}) {
   picker.onchange = () => { location.hash = picker.value === 'all' ? 'courses' : 'course-' + picker.value; };
   function sync(view, route) {
     if (view === 'atlas' || view === 'motion') {
+      const labLink=document.querySelector('#atlas-organ-labs');
+      if(labLink)labLink.hidden=selected!=='2';
       let ret = ''; try { ret = sessionStorage.getItem(returnKey) || ''; } catch {}
       back.hidden = !(selected === '2' && /^ap2-lesson-[\d.]+(?:\/(?:activity|figures|check))?$/.test(ret));
       const motionBack=document.querySelector('#course-motion-return');

@@ -1,3 +1,4 @@
+import {limbRoutes} from './ap2-limb-circuits.js';
 // A route lists landmarks along one selected stream. Other branches can carry blood at the same time.
 const pulmonary = [
   ['Right ventricle','chamber','The right ventricle receives systemic venous blood and ejects it through the pulmonary valve.'],
@@ -58,7 +59,8 @@ const fetalOutflow = [
 const pathways = {
   pulmonary:{label:'Pulmonary circuit',steps:pulmonary},
   systemic:{label:'Systemic circuit to the left arm',steps:systemic},
-  portal:{label:'Hepatic portal circuit',steps:portal}
+  portal:{label:'Hepatic portal circuit',steps:portal},
+  ...limbRoutes
 };
 
 const shunts = {
@@ -84,7 +86,7 @@ const shunts = {
 
 const stationGlyphs = {
   chamber:'<path d="M14 23 C12 20 3 15 3 9 C3 3 10 2 14 7 C18 2 25 3 25 9 C25 15 16 22 14 23Z" fill="none" stroke="currentColor" stroke-width="1.8"/>',
-  vein:'<path d="M2 7 Q12 4 26 7 M2 21 Q13 23 26 20 M8 8 Q11 14 15 14 M19 20 Q16 14 12 14" fill="none" stroke="currentColor" stroke-width="1.8"/>',
+  vein:'<path d="M2 7 Q12 4 26 7 M2 21 Q13 23 26 20" fill="none" stroke="currentColor" stroke-width="1.8"/>',
   artery:'<path d="M2 6 H14 Q18 6 24 1 M2 20 H14 Q18 20 24 25 M2 11 H15 Q20 10 26 5 M2 15 H15 Q20 16 26 21" fill="none" stroke="currentColor" stroke-width="1.6"/>',
   bed:'<path d="M1 14 H6 M21 14 H28 M6 14 Q12 -4 21 14 Q12 32 6 14 M6 14 Q13 6 21 14 Q13 22 6 14 M6 14 H21" fill="none" stroke="currentColor" stroke-width="1.6"/>',
   shunt:'<path d="M3 5 H25 M3 22 H25 M7 19 L19 8 M13 8 H20 V15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'

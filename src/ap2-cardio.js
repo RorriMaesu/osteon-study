@@ -1,5 +1,9 @@
 // Original lessons and activities aligned with the linked OpenStax A&P 2e sections.
+import {renderSpecimen,mountSpecimen} from './ap2-cardio-specimens.js';
+import {renderValveWindow,paintValves,renderOutput,mountOutput,renderEmbryo,mountEmbryo,renderPump,mountPump,renderExchange,mountExchange,renderHemorrhage,mountHemorrhage} from './ap2-cardio-mechanisms.js';
+import {beat,rightBeat,rightPressureState,interpolate,pressureState,valveChallenges,valveChoices} from './ap2-heart-cycle.js';
 import {renderRoutes,mountRoutes} from './ap2-cardio-routes.js';
+import {smearStation,mountSmear,clotStation,mountClot} from './ap2-blood-stations.js';
 
 const book = 'https://openstax.org/books/anatomy-and-physiology-2e/pages/';
 
@@ -72,7 +76,8 @@ const blood = {
       ['Use cell features and behavior to distinguish leukocyte populations.', 'Explain how platelets and white cells reach different targets.'],
       [
         'A differential count separates white cells into populations with different jobs. Neutrophils have multilobed nuclei and rapidly ingest microbes. Eosinophils have conspicuous granules and release substances active against parasites. Basophils release inflammatory mediators including histamine. These three are granulocytes. A monocyte can enter tissue and develop into a macrophage. Lymphocytes include antibody-producing B-cell descendants, T cells involved in cellular immunity, and natural killer cells that attack abnormal cells.',
-        'White cells circulate to reach tissues. At an inflamed site they can adhere to endothelium, squeeze between its cells (diapedesis), and move up a chemical gradient (chemotaxis). Platelets take another route to their target. These small, nucleus-free fragments circulate until an injured vessel exposes adhesive surfaces. They attach there, release signals and recruit additional platelets to form a temporary plug.'
+        'White cells circulate to reach tissues. At an inflamed site they can adhere to endothelium, squeeze between its cells (diapedesis), and move up a chemical gradient (chemotaxis). Platelets take another route to their target. These small, nucleus-free fragments circulate until an injured vessel exposes adhesive surfaces. They attach there, release signals and recruit additional platelets to form a temporary plug.',
+        'Leukemia starts in blood-forming tissue. Abnormal cells can crowd out production of mature red cells, platelets and effective white cells. Lymphoma typically presents in lymphoid tissue, although cells may also reach blood or marrow. These categories can overlap. The smear practical uses healthy specimens to teach cell recognition. A single white cell, its shape or an elevated count alone cannot establish a diagnosis.'
       ],
       activity('Identify three visitors to a wound', 'Assign a different circulating component to each observation at an injured vessel.', [
         ['An early microbe-eater', 'A cell with a segmented nucleus engulfs bacteria. These clues point to a neutrophil.'],
@@ -315,6 +320,9 @@ const vessels = {
 export const chapters = [blood, heart, vessels];
 
 const labCss = `<style>
+.ap2-cardio-lab [hidden]{display:none!important}
+.ap2-cardio-lab .ac-specimen .ac-row{align-items:end}.ac-specimen select{max-width:min(60vw,21em)}
+.ap2-cardio-lab .ac-actions [aria-pressed=true]{border-color:#a8d4b8;background:#29443b;color:#f5fff9}
 .ap2-cardio-lab {background:var(--panel,#172228);border:1px solid var(--line,#35464a);border-radius:14px;padding:clamp(16px,3vw,28px);color:var(--text,#f0eee4);margin:20px 0;min-width:0}
 .ap2-cardio-lab * {box-sizing:border-box}
 .ap2-cardio-lab h3 {margin:0 0 8px;font:400 clamp(24px,3.5vw,34px)/1.15 var(--serif,Georgia,serif);color:var(--text,#f0eee4)}
@@ -472,63 +480,81 @@ const phases = [
   { start: 562, name: 'Ventricular filling resumes', mitral: 'Open', aortic: 'Closed', note: 'The mitral valve opens as ventricular pressure drops below atrial pressure. Blood flows into the ventricle again.' }
 ];
 
-// Schematic samples for a single 800 ms beat. Pressure and ECG have separate vertical scales.
-const beat = {
-  aorta: [[0,84],[90,82],[195,80],[245,79],[275,98],[310,113],[347,118],[405,113],[456,103],[492,95],[501,91],[513,96],[570,92],[660,88],[800,84]],
-  ventricle: [[0,4],[70,5],[88,5],[125,7],[164,10],[186,8],[195,9],[212,25],[229,51],[245,79],[274,104],[310,120],[345,123],[405,117],[456,106],[492,95],[511,69],[533,35],[550,14],[562,6],[588,3],[680,4],[800,4]],
-  volume: [[0,95],[88,102],[135,112],[178,119],[195,120],[245,120],[294,96],[349,73],[412,59],[459,53],[492,50],[562,50],[605,65],[685,87],[800,95]],
-  ecg: [[0,0],[53,0],[64,.07],[73,.19],[81,.18],[90,.05],[96,0],[171,0],[177,-.12],[182,0],[188,1],[193,.12],[198,-.24],[204,0],[350,0],[379,.06],[408,.24],[426,.28],[445,.18],[466,.03],[478,0],[800,0]]
-};
 const chartX = t => 48 + t * .53;
 const pressureY = v => 230 - v * .85;
 const ecgY = v => 63 - v * 26;
-
-function interpolate(points, t) {
-  for (let i = 1; i < points.length; i++) {
-    const [time, value] = points[i];
-    if (t <= time) {
-      const [previousTime, previousValue] = points[i-1];
-      return previousValue + (value - previousValue) * (t - previousTime) / (time - previousTime);
-    }
-  }
-  return points[points.length-1][1];
-}
 
 function trace(points, y) {
   return points.map(([time, value], i) => `${i ? 'L' : 'M'}${chartX(time).toFixed(1)},${y(value).toFixed(1)}`).join(' ');
 }
 
+const volumeY = v => 299 - (v-50)*.52;
+
+function views(labels) {
+  return '<div class="ac-row ac-actions" aria-label="Choose a practical view">'+labels.map((label,i)=>`<button type="button" data-cardio-view="${i}" aria-pressed="${i===0}">${label}</button>`).join('')+'</div>';
+}
+function wireViews(root, onChange) {
+  const buttons=root.querySelectorAll('[data-cardio-view]');
+  for(const button of buttons)button.onclick=()=>{
+    const view=button.dataset.cardioView;
+    for(const b of buttons)b.setAttribute('aria-pressed',String(b===button));
+    for(const panel of root.querySelectorAll('[data-cardio-panel]'))panel.hidden=panel.dataset.cardioPanel!==view;
+    onChange?.(view);
+  };
+}
+function rightHeartChart() {
+  const y=p=>177-p*4.7;
+  return `<h4>Right heart at the same instant</h4><p>The pulmonary circuit operates at lower pressures. Compare the right-sided pressure crossings with the left-sided readings below.</p>
+    <figure class="ac-plot"><svg viewBox="0 0 500 212" role="img" aria-label="Right atrial, right ventricular and pulmonary arterial pressure on a zero to thirty millimeter mercury scale.">
+    <text x="8" y="18">Pressure (mm Hg)</text>${[0,10,20,30].map(v=>`<line x1="48" x2="472" y1="${y(v)}" y2="${y(v)}" stroke="#354b50"/><text x="37" y="${y(v)+4}" text-anchor="end">${v}</text>`).join('')}
+    ${[[rightBeat.atrium,'#e6b9e1','2 3'],[rightBeat.ventricle,'#a8c8ea','7 3'],[rightBeat.pulmonary,'#f1ac81','']].map(([p,color,dash])=>`<path d="${trace(p,y)}" fill="none" stroke="${color}" stroke-width="3" stroke-dasharray="${dash}"/>`).join('')}
+    <line data-right-cursor y1="30" y2="179" stroke="white" stroke-dasharray="2 3"/>
+    ${[0,200,400,600,800].map(t=>`<text x="${chartX(t)}" y="202" text-anchor="middle">${(t/1000).toFixed(1)} s</text>`).join('')}</svg></figure>
+    <p>Right atrium · dotted. Right ventricle · dashed. Pulmonary artery · solid.</p><div class="ac-stats"><span>RA / RV / PA<strong data-right-pressures></strong></span><span>Tricuspid valve<strong data-right-tricuspid></strong></span><span>Pulmonary valve<strong data-right-pulmonary></strong></span></div>`;
+}
 function renderHeartbeat() {
   return `<h3>Follow one heartbeat</h3><p>Move the cursor through a left-heart cycle or jump to a phase. One beat lasts 0.80 s at 75 beats/min. Playback slows the beat for study.</p>
-    <figure class="ac-plot"><svg viewBox="0 0 500 258" role="img" aria-label="A synchronized ECG above left ventricular and aortic pressure curves. A vertical cursor marks the selected time.">
+    ${views(['Left heart traces','3D cutaway','Valve motion','Right heart traces'])}<div data-cardio-panel="0">
+    <figure class="ac-plot"><svg viewBox="0 0 500 327" role="img" aria-label="A synchronized ECG, atrial, ventricular and aortic pressure, and left ventricular volume curves. A vertical cursor marks the selected time.">
     <text x="9" y="19">ECG</text>
     ${[[73,'P',33],[186,'QRS',23],[426,'T',34]].map(([time,name,y]) => `<text text-anchor="middle" x="${chartX(time)}" y="${y}">${name}</text>`).join('')}
     <line x1="48" y1="63" x2="472" y2="63" stroke="#334e53"/>
     <path d="${trace(beat.ecg,ecgY)}" fill="none" stroke="#bfe3cc" stroke-width="2.8"/>
     <text x="9" y="102">Pressure (mm Hg)</text>
     ${[0,40,80,120].map(v => `<line x1="48" x2="472" y1="${pressureY(v)}" y2="${pressureY(v)}" stroke="#354b50"/><text x="37" y="${pressureY(v)+4}" text-anchor="end">${v}</text>`).join('')}
+    <path d="${trace(beat.atrium,pressureY)}" fill="none" stroke="#e6b9e1" stroke-width="3" stroke-dasharray="2 3"/>
     <path d="${trace(beat.aorta,pressureY)}" fill="none" stroke="#f1ac81" stroke-width="3"/>
     <path d="${trace(beat.ventricle,pressureY)}" fill="none" stroke="#a8c8ea" stroke-width="3" stroke-dasharray="7 3"/>
     <path d="M${chartX(501)},${pressureY(91)-3} l17,-27 h25" fill="none" stroke="#e4b092"/>
     <text x="${chartX(501)+25}" y="${pressureY(91)-36}">Notch</text>
-    ${[0,200,400,600,800].map(t => `<text x="${chartX(t)}" y="252" text-anchor="middle">${(t/1000).toFixed(1)} s</text>`).join('')}
-    <line data-cursor y1="26" y2="233" stroke="#fff4cf" stroke-width="1.5" stroke-dasharray="2 3"/>
-    <circle data-ecg-point r="3.5" fill="#bfe3cc"/><circle data-ao-point r="3.5" fill="#f1ac81"/><circle data-lv-point r="3.5" fill="#a8c8ea"/>
+    <text x="9" y="247">LV volume (mL)</text>${[50,120].map(v=>`<line x1="48" x2="472" y1="${volumeY(v)}" y2="${volumeY(v)}" stroke="#354b50"/><text x="37" y="${volumeY(v)+4}" text-anchor="end">${v}</text>`).join('')}
+    <path d="${trace(beat.volume,volumeY)}" fill="none" stroke="#f1dc81" stroke-width="2.8"/>
+    <rect data-future x="472" y="22" width="0" height="281" fill="#192a30" opacity=".96"/>
+    ${[0,200,400,600,800].map(t => `<text x="${chartX(t)}" y="320" text-anchor="middle">${(t/1000).toFixed(1)} s</text>`).join('')}
+    <line data-cursor y1="26" y2="300" stroke="#fff4cf" stroke-width="1.5" stroke-dasharray="2 3"/>
+    <circle data-la-point r="3.5" fill="#e6b9e1"/><circle data-vol-point r="3.5" fill="#f1dc81"/><circle data-ecg-point r="3.5" fill="#bfe3cc"/><circle data-ao-point r="3.5" fill="#f1ac81"/><circle data-lv-point r="3.5" fill="#a8c8ea"/>
     </svg></figure>
-    <div class="ac-legend"><span><i style="border-color:#bfe3cc"></i>ECG (relative amplitude)</span><span><i style="border-color:#f1ac81"></i>Aorta</span><span><i style="border-color:#a8c8ea;border-top-style:dashed"></i>Left ventricle</span></div>
+    <div class="ac-legend"><span><i style="border-color:#bfe3cc"></i>ECG (relative amplitude)</span><span><i style="border-color:#f1ac81"></i>Aorta</span><span><i style="border-color:#a8c8ea;border-top-style:dashed"></i>Left ventricle</span><span><i style="border-color:#e6b9e1;border-top-style:dotted"></i>Left atrium</span><span><i style="border-color:#f1dc81"></i>LV volume</span></div>
+    </div><div data-cardio-panel="1" hidden>${renderSpecimen('heart',true)}</div><div data-cardio-panel="2" hidden>${renderValveWindow()}</div><div data-cardio-panel="3" hidden>${rightHeartChart()}</div>
     <label class="ac-range">Beat time <strong data-time-out></strong><input type="range" min="0" max="800" step="1" value="0" data-beat-time></label>
-    <div class="ac-row ac-actions"><button type="button" data-play>Play one beat</button><label>Jump to phase <select data-phase-select>${phases.map(p=>`<option value="${p.start}">${p.name}</option>`).join('')}</select></label></div>
-    <div class="ac-details"><h4 data-phase></h4><p data-phase-note></p>
-    <div class="ac-stats"><span>Mitral valve<strong data-mitral></strong></span><span>Aortic valve<strong data-aortic></strong></span><span>LV pressure<strong data-lv-pressure></strong></span><span>Aortic pressure<strong data-ao-pressure></strong></span><span>LV volume<strong data-volume></strong></span></div></div>`;
+    <div class="ac-row ac-actions"><button type="button" data-play>Play one beat</button><button type="button" data-rewind>Previous phase</button><label>Playback speed <select data-speed><option value="16">Slower</option><option value="8" selected>Study</option><option value="4">Faster</option></select></label><label>Jump to phase <select data-phase-select>${phases.map(p=>`<option value="${p.start}">${p.name}</option>`).join('')}</select></label></div>
+    <div class="ac-details"><small>Left-heart phase</small><h4 data-phase></h4><p data-phase-note></p>
+    <div class="ac-stats"><span>Mitral valve<strong data-mitral></strong></span><span>Aortic valve<strong data-aortic></strong></span><span>LV pressure<strong data-lv-pressure></strong></span><span>Aortic pressure<strong data-ao-pressure></strong></span><span>LA pressure<strong data-la-pressure></strong></span><span>LV volume<strong data-volume></strong></span></div></div>
+    <div class="ac-actions ac-row"><button type="button" data-predict>Predict the next valve event</button></div>
+    <div class="ac-details" data-probe hidden><p data-probe-prompt></p><div class="ac-actions ac-row">${valveChoices.map((label,i)=>`<button type="button" data-probe-choice="${i}">${label}</button>`).join('')}</div><p role="status" data-probe-note></p></div>`;
 }
 
 function mountHeartbeat(lab) {
+  let modelMounted=false;
+  wireViews(lab,view=>{
+    if(view==='1'&&!modelMounted){mountSpecimen(lab,'heart',true);modelMounted=true;show(+time.value);}
+  });
   const get = name => lab.querySelector('[data-' + name + ']');
   const time = get('beat-time');
   const play = get('play');
   const jump = get('phase-select');
   const cursor = get('cursor');
-  const points = [get('ecg-point'),get('ao-point'),get('lv-point')];
+  const points = [get('ecg-point'),get('ao-point'),get('lv-point'),get('la-point'),get('vol-point')];
   let frame = null;
   function show(t) {
     let phase = phases[0];
@@ -536,23 +562,29 @@ function mountHeartbeat(lab) {
       if (candidate.start > t) break;
       phase = candidate;
     }
-    const ao = interpolate(beat.aorta, t);
-    const lv = interpolate(beat.ventricle, t);
+    const state = {...pressureState(t),...rightPressureState(t)};
+    get('right-cursor').setAttribute('x1',chartX(t));get('right-cursor').setAttribute('x2',chartX(t));
+    get('right-pressures').textContent=[state.ra,state.rv,state.pa].map(n=>Math.round(n)).join(' / ')+' mm Hg';
+    get('right-tricuspid').textContent=state.tricuspid?'Open':'Closed';get('right-pulmonary').textContent=state.pulmonary?'Open':'Closed';
+    const {la,ao,lv} = state;
+    paintValves(lab,state);
+    lab.dispatchEvent(new CustomEvent('cardiobeat',{detail:{...state,t}}));
     const seconds = (t / 1000).toFixed(3) + ' s';
     time.value = String(t);
     time.setAttribute('aria-valuetext', seconds + ', ' + phase.name);
     get('time-out').textContent = seconds;
     cursor.setAttribute('x1', chartX(t));
     cursor.setAttribute('x2', chartX(t));
-    [ecgY(interpolate(beat.ecg,t)),pressureY(ao),pressureY(lv)].forEach((y,i) => {
+    [ecgY(interpolate(beat.ecg,t)),pressureY(ao),pressureY(lv),pressureY(la),volumeY(state.volume)].forEach((y,i) => {
       points[i].setAttribute('cx', chartX(t));
       points[i].setAttribute('cy', y);
     });
     jump.value = String(phase.start);
     get('phase').textContent = phase.name;
     get('phase-note').textContent = phase.note;
-    get('mitral').textContent = phase.mitral;
-    get('aortic').textContent = phase.aortic;
+    get('mitral').textContent = state.mitral ? 'Open' : 'Closed';
+    get('aortic').textContent = state.aortic ? 'Open' : 'Closed';
+    get('la-pressure').textContent = Math.round(la) + ' mm Hg';
     get('ao-pressure').textContent = Math.round(ao) + ' mm Hg';
     get('lv-pressure').textContent = Math.round(lv) + ' mm Hg';
     get('volume').textContent = Math.round(interpolate(beat.volume,t)) + ' mL';
@@ -563,6 +595,25 @@ function mountHeartbeat(lab) {
     play.textContent = +time.value === 800 ? 'Replay beat' : 'Play one beat';
     play.setAttribute('aria-pressed', 'false');
   }
+  let probeIndex = -1;
+  function endProbe() { get('future').setAttribute('width',0); get('probe').hidden=true; get('phase-note').hidden=false; }
+  get('predict').onclick=()=>{
+    stop();
+    probeIndex=(probeIndex+1)%valveChallenges.length;
+    const [t,prompt]=valveChallenges[probeIndex];
+    show(t); get('probe').hidden=false; get('phase-note').hidden=true;
+    get('future').setAttribute('x',chartX(t)+2); get('future').setAttribute('width',Math.max(0,472-chartX(t)-2));
+    get('probe-prompt').textContent=prompt; get('probe-note').textContent='';
+  };
+  lab.querySelectorAll('[data-probe-choice]').forEach(button=>button.onclick=()=>{
+    const [, , answer, explanation]=valveChallenges[probeIndex];
+    if (+button.dataset.probeChoice===answer) {
+      get('probe-note').textContent='Correct. '+explanation; get('future').setAttribute('width',0);
+    } else get('probe-note').textContent='Trace the higher upstream pressure and check which valve is currently open. Try again.';
+  });
+  get('rewind').onclick=()=>{stop();endProbe();show([...phases].reverse().find(p=>p.start<+time.value)?.start??0);};
+  get('speed').onchange=stop;
+  time.addEventListener('input',endProbe);jump.addEventListener('change',endProbe);play.addEventListener('click',endProbe);
   time.addEventListener('input', () => { stop(); show(+time.value); });
   jump.addEventListener('change', () => { stop(); show(+jump.value); });
   play.addEventListener('click', () => {
@@ -573,7 +624,7 @@ function mountHeartbeat(lab) {
     play.setAttribute('aria-pressed','true');
     function advance(now) {
       if (!lab.isConnected || !lab.getClientRects().length) { stop(); return; }
-      const t = Math.min(800, Math.round(start + (now - began) / 8));
+      const t = Math.min(800, Math.round(start + (now - began) / Number(get('speed').value)));
       show(t);
       if (t === 800) stop();
       else frame = requestAnimationFrame(advance);
@@ -643,11 +694,22 @@ function mountVessel(lab) {
 }
 
 const labs = new Map([
+  ['18.4', [smearStation, mountSmear]],
+  ['18.5', [clotStation, mountClot]],
   ['18.6', [renderTyping, mountTyping]],
+  ['19.1', [()=>renderSpecimen('heart'),lab=>mountSpecimen(lab,'heart')]],
   ['19.2', [renderHeartbeat, mountHeartbeat]],
   ['19.3', [renderHeartbeat, mountHeartbeat]],
+  ['19.4', [renderOutput,mountOutput]],
+  ['19.5', [renderEmbryo,mountEmbryo]],
+  ['20.1', [renderPump,mountPump]],
   ['20.2', [renderVessel, mountVessel]],
-  ['20.5', [() => renderRoutes(false), lab => mountRoutes(lab,false)]],
+  ['20.3', [renderExchange,mountExchange]],
+  ['20.4', [renderHemorrhage,mountHemorrhage]],
+  ['20.5', [() => views(['Follow a route','3D vessels']) + '<div data-cardio-panel="0">'+renderRoutes(false)+'</div><div data-cardio-panel="1" hidden>'+renderSpecimen('vessels')+'</div>', lab => {
+    mountRoutes(lab,false);let mounted=false;
+    wireViews(lab,view=>{if(view==='1'&&!mounted){mountSpecimen(lab,'vessels');mounted=true;}});
+  }]],
   ['20.6', [() => renderRoutes(true), lab => mountRoutes(lab,true)]]
 ]);
 

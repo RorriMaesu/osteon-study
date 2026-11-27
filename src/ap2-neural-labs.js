@@ -1,3 +1,7 @@
+import {renderNeuralCases, mountNeuralCases, neuralLabStyles} from './ap2-neural-cases.js';
+import {renderNeuralSpecimens, mountNeuralSpecimens} from './ap2-neural-specimens.js';
+import {renderNeuralSignal, mountNeuralSignal} from './ap2-neural-signals.js';
+
 // Original schematic diagrams. Coordinates describe relationships, not clinical measurements.
 const ink = '#193742';
 const teal = '#096859';
@@ -299,6 +303,11 @@ function initialState(config) {
 }
 
 export function renderLab(id) {
+  const additions = renderNeuralSpecimens(id) + renderNeuralSignal(id) + renderNeuralCases(id);
+  return (additions ? neuralLabStyles + additions : '') + renderSchematic(id);
+}
+
+function renderSchematic(id) {
   const config = labs[id];
   if (!config) return '';
   const [drawing, title, detail] = config.draw(initialState(config));
@@ -306,6 +315,11 @@ export function renderLab(id) {
 }
 
 export function mountLab(root, id) {
+  if (!root) return;
+  mountNeuralSpecimens(root);
+  mountNeuralSignal(root, id);
+  mountNeuralCases(root, id);
+  mountNeuralStationPicker(root);
   const config = labs[id];
   if (!config || !root) return;
   const selector = `[data-neural-lab="${id}"]`;
@@ -331,6 +345,29 @@ export function mountLab(root, id) {
     reading.querySelector('p').textContent = detail;
   };
   fields.forEach(field=>field.addEventListener(field.type==='range'?'input':'change',refresh));
+}
+
+export function mountNeuralStationPicker(root) {
+  if(!root || root.querySelector('[data-neural-station-picker]'))return;
+  const stations=[...root.querySelectorAll('[data-neuro-specimen],[data-process],[data-neuro-cases],[data-neural-lab],[data-reg-lab]')];
+  if(stations.length<2)return;
+  const picker=document.createElement('nav');picker.setAttribute('aria-label','Lesson stations');picker.className='course-actions neuro-station-picker';
+  const style=document.createElement('style');
+  style.textContent='.neuro-station-picker{display:flex;align-items:center;flex-wrap:wrap;gap:.6rem;margin:.4rem 0}.neuro-station-picker label{min-width:0;max-width:100%;display:flex;gap:.5rem;align-items:center}.neuro-station-picker select{min-width:0;max-width:100%;min-height:40px;padding:.35rem .5rem;background:#1c3337;color:#eff6ed;border:1px solid #63817d;border-radius:.4rem}.neuro-station-picker small{color:#b8cfca}[data-neuro-specimen][hidden],[data-process][hidden],[data-neuro-cases][hidden],[data-neural-lab][hidden],[data-reg-lab][hidden]{display:none!important}';
+  picker.append(style);
+  const label=document.createElement('label'),select=document.createElement('select');
+  label.textContent='Activity ';select.dataset.neuralStationPicker='';
+  for(const panel of stations){
+    const option=document.createElement('option');
+    option.value=panel.dataset.neuroSpecimen||('process' in panel.dataset?'signal':'neuroCases' in panel.dataset?'cases':'regLab' in panel.dataset?'regulation':'schematic');
+    option.textContent=panel.querySelector('h3,h2')?.textContent||'Practice station';
+    select.append(option);
+  }
+  label.append(select);picker.append(label);
+  const count=document.createElement('small');count.setAttribute('aria-live','polite');picker.append(count);
+  root.prepend(picker);
+  function show(){const i=select.selectedIndex;stations.forEach((s,j)=>{s.hidden=i!==j;});count.textContent=(i+1)+' of '+stations.length;}
+  select.onchange=show;show();
 }
 
 

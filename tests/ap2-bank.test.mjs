@@ -100,7 +100,7 @@ test('nine independent written cases map to their chapters and stay outside the 
 
 test('chapter, unit and cumulative exams stratify by section and preserve their shuffled answer keys', () => {
   const chapterIds = chapters.map(ch => String(ch.id));
-  assert.deepEqual(examScopes.map(s => s.id), [...chapterIds, ...units.map(u => u.id), 'all']);
+  assert.deepEqual(examScopes.map(s => s.id), [...chapterIds, ...units.map(u => u.id), 'all', 'balanced']);
   assert.equal(units.length, 4);
   assert.deepEqual(units.flatMap(u => u.chapters), chapters.map(ch => ch.id));
   const master = new Map(bank.map(q => [q.id, q]));
@@ -110,11 +110,12 @@ test('chapter, unit and cumulative exams stratify by section and preserve their 
     for (const seed of [0.02, 0.87]) {
       const items = examItems(spec.id, () => seed);
       assert.equal(new Set(items.map(q => q.id)).size, items.length);
-      for (const s of scopeSections) assert.equal(items.filter(q => q.section === s.id && q.type === 'choice').length, perSection, `${spec.id} / ${s.id}`);
+      if(spec.id!=='balanced')for (const s of scopeSections) assert.equal(items.filter(q => q.section === s.id && q.type === 'choice').length, perSection, `${spec.id} / ${s.id}`);
       assert.ok(items.every(q => scopeSections.some(s => s.id === q.section)));
       for (const ch of spec.chapters) {
         const applied = items.filter(q => q.type !== 'choice' && Number(q.section.split('.')[0]) === ch);
-        assert.equal(applied.length, spec.id === 'all' ? 2 : 3);
+        assert.equal(applied.length, ['all','balanced'].includes(spec.id) ? 2 : 3);
+        if(spec.id==='balanced')assert.equal(items.filter(q=>q.type==='choice'&&q.section.startsWith(ch+'.')).length,1);
         assert.ok(applied.some(q => q.type === 'visual'));
         assert.ok(applied.some(q => q.type === 'term' || q.type === 'number'));
       }

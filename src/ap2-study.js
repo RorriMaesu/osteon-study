@@ -1,3 +1,4 @@
+import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
 import {lessons as fallLessons} from './learning-data.js';
 import {chapters,sections,sectionById,labFor,units} from './ap2-library.js';
 import figures from './ap2-figures.json' with {type:'json'};
@@ -11,6 +12,11 @@ import {createExamScreens} from './ap2-exams.js';
 const atlasLinks = {
   '12.1':['Median nerve.r','Median nerve'], '13.2':['Anterior horn of spinal cord','Anterior horn of the spinal cord'],
   '13.4':['Sciatic nerve.r','Sciatic nerve'], '14.3':['Anterior horn of spinal cord','Anterior horn of the spinal cord'],
+  '13.1':['Lateral ventricle.l','left lateral ventricle'], '13.3':['Third ventricle','third ventricle'],
+  '14.1':['Optic nerve (II).l','left optic nerve'], '14.2':['Postcentral gyrus.l','left postcentral gyrus'],
+  '15.2':['Vagus nerve (X).r','right vagus nerve'], '15.3':['Hypothalamus','hypothalamus'],
+  '16.2':['Hippocampus.l','left hippocampus'], '16.4':['Precentral gyrus.r','right precentral gyrus'],
+  '17.3':['Hypothalamus','hypothalamus'],
   '15.1':['Sympathetic trunk.r','Sympathetic trunk'], '16.3':['Abducens nerve (VI).r','Abducens nerve']
 };
 export function initAP2({root,escape:e,toast,dialog}) {
@@ -21,7 +27,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
     if(notice){notice.hidden=false;notice.textContent=message+' Use My progress to download a backup before closing this tab.';}
   });
   const link=(route,label,primary=false)=>`<a class="course-link${primary?' course-primary':''}" href="#${e(route)}">${e(label)}</a>`;
-  const scopeNav=()=>`<nav class="ap2-nav" aria-label="A&P II workspace">${link('course-2','Chapters')}${link('ap2-exams','Exams & results')}${link('ap2-progress','My progress')}</nav>`;
+  const scopeNav=()=>`<nav class="ap2-nav" aria-label="A&P II workspace">${link('course-2','Chapters')}${link('ap2-practicals','Model & slide lab')}${link('ap2-exams','Exams & results')}${link('ap2-progress','My progress')}</nav>`;
   const page=(body)=>{root.innerHTML=`<div class="course-page ap2-page">${scopeNav()}<p data-storage-notice role="status" ${store.volatile?'':'hidden'}>This tab is keeping your work in memory. Download a backup from My progress before closing it.</p>${body}</div>`;root.scrollTop=0;};
   const hero=(kicker,title,description='')=>`<header class="course-hero"><div class="eyebrow">${e(kicker)}</div><h1 tabindex="-1">${e(title)}</h1>${description?'<p>'+e(description)+'</p>':''}</header>`;
   const exams=createExamScreens({root,page,hero,link,store,e,dialog,toast});
@@ -42,6 +48,17 @@ export function initAP2({root,escape:e,toast,dialog}) {
     page(hero('STUDY STUDIO · CHAPTERS 12–20','Anatomy & Physiology II','Follow a signal from a neuron to an organ, then follow blood from the heart to the tissues.')+
       `<div class="course-actions">${resume(data)} ${link('ap2-search','Search lessons')} ${link('atlas','Shared 3D Atlas')}</div><div class="ap2-unit-grid">${units.map(unit=>`<article class="course-card"><h2>${e(unit.title)}</h2><div class="ap2-chapter-list">${chapters.filter(ch=>unit.chapters.includes(ch.id)).map(ch=>`<a href="#ap2-chapter-${ch.id}"><b>${ch.id}</b><span>${e(ch.title)}<small>${chapterComplete(ch,data)} of ${ch.sections.length} sections studied</small></span><span aria-hidden="true">→</span></a>`).join('')}</div></article>`).join('')}</div>`);
     setLearningContext({course:'ap2',type:'study',label:'A&P II · Chapters 12–20',text:chapters.map(c=>c.title).join(', ')});
+  }
+  function practicals(){
+    const stations=[
+      ['Neural tissue and pathways', [['12.4','Action potential','Compare membrane voltage across phases.'],['13.3','Ventricles and CSF','Rotate the brain specimen, cut sections and test an obstruction.','ventricles'],['14.1','Eye and accommodation','Examine the lens and retina from several views.','eye'],['14.1','Middle-ear ossicles','Follow the bones that transmit vibration.','ossicles'],['14.1','Inner-ear labyrinth','Compare the sensory structures for hearing and balance.','ear'],['14.3','Motor pathways','Trace a motor command to a skeletal muscle.']]],
+      ['Autonomic and neurological assessment',[['15.1','Autonomic routes','Compare ganglionic relays and target organs.'],['16.3','Cranial nerves','Compare input and output in a pupil examination.'],['16.5','Coordination and gait','Use observations from two tasks to explain a finding.']]],
+      ['Endocrine and blood',[['17.1','Gland locator','Locate glands relative to nearby structures.'],['17.9','Pancreas and islets','Move between gross anatomy and a microscopic section.'],['18.4','Blood smear microscope','Identify six formed elements from real specimens.'],['18.5','Hemostasis','Follow a plug from vessel injury through fibrin stabilization.']]],
+      ['Heart and circulation',[['19.1','Heart dissection','Inspect the chambers, coronary vessels and valve supports.'],['19.3','Cardiac cycle','Match a pressure crossing to a valve event.'],['20.1','Veins and the calf pump','Track venous return during contraction and release.'],['20.5','Vascular routes','Trace blood through the trunk and limbs.'],['20.6','Fetal circulation','Compare placental and postnatal routes.']]]
+    ];
+    page(hero('A&P II · PRACTICALS','Model & slide lab','Choose a specimen or process. Each station opens inside its textbook section.')+
+      '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+'</div><div class="ap2-unit-grid">'+stations.map(([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}<small>${e(goal)}</small></span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>').join('')+'</div>');
+    setLearningContext({course:'ap2',type:'study',label:'Model and slide practicals',text:'Neural pathways, endocrine anatomy, blood and circulation'});
   }
   function contextForSearch(){setLearningContext({course:'ap2',type:'study',label:'A&P II lesson search',text:''});}
   function search(){
@@ -66,7 +83,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
     rememberAP2Route(route);
     if(store.read().resume!==route)store.update(r=>{r.resume=route;});
   }
-  function lesson(s,tab) {
+  function lesson(s,tab,station) {
     const ch=chapters.find(c=>c.sections.includes(s)),base='ap2-lesson-'+s.id;
     const art=figures.filter(f=>f.section===s.id), plate=plates[s.id];
     const tabs=[['read','Learn'],['activity','Explore'],...(art.length||plate?[['figures','Figures']]:[]),['check','Check recall']];
@@ -102,10 +119,28 @@ export function initAP2({root,escape:e,toast,dialog}) {
       const lab=labFor(s.id),html=lab.renderLab(s.id);
       body.innerHTML=`${html?'<div class="ap2-simulation">'+html+'</div>':''}<div class="ap2-guided"><h2>${e(s.activity.title)}</h2><p>${e(s.activity.prompt)}</p><div class="ap2-step"></div></div>`;
       if(html)lab.mountLab(body.querySelector('.ap2-simulation'),s.id);
+      const picker=body.querySelector('[data-neural-station-picker]');
+      if(picker&&station&&[...picker.options].some(o=>o.value===station)){
+        picker.value=station;picker.dispatchEvent(new Event('change',{bubbles:true}));
+        body.querySelector('[data-neuro-specimen="'+station+'"] [data-load-specimen]')?.click();
+      }
+      const atlas=atlasLinks[s.id];
+      if(atlas){
+        const context=document.createElement('a');context.className='course-link';
+        context.href='?nerve='+encodeURIComponent(atlas[0])+'#atlas';context.textContent='Find '+atlas[1]+' in the whole-body Atlas';
+        body.querySelector('.ap2-guided').append(context);
+      }
       const stepArea=body.querySelector('.ap2-step');
+      const predictions=new Map();
       function step(i,show=false){
-        const a=s.activity.steps[i];stepArea.innerHTML=`<p class="eyebrow">STEP ${i+1} / ${s.activity.steps.length}</p><strong>${e(a.label)}</strong><div aria-live="polite">${show?'<p>'+e(a.detail)+'</p>':''}</div><div class="course-actions"><button data-prev ${i?'':'disabled'}>←</button><button data-explain>${show?'Hide explanation':'Show explanation'}</button><button data-next ${i+1===s.activity.steps.length?'disabled':''}>Next step →</button></div>`;
-        stepArea.querySelector('[data-prev]').onclick=()=>step(i-1);stepArea.querySelector('[data-next]').onclick=()=>step(i+1);stepArea.querySelector('[data-explain]').onclick=()=>step(i,!show);
+        const a=s.activity.steps[i],prediction=predictions.get(i)||'';
+        stepArea.innerHTML=`<p class="eyebrow">STEP ${i+1} / ${s.activity.steps.length}</p><h3>${e(a.label)}</h3>
+          <label>Your prediction or explanation <small>(optional)</small><input data-prediction maxlength="500" autocomplete="off" value="${e(prediction)}"></label>
+          ${show?'<p role="status">'+e(a.detail)+'</p>':''}
+          <div class="course-actions"><button data-before ${i?'':'disabled'}>← Previous</button><button data-reveal>${show?'Hide explanation':'Show explanation'}</button><button data-after ${i===s.activity.steps.length-1?'disabled':''}>Next step →</button></div>`;
+        stepArea.querySelector('[data-prediction]').oninput=ev=>predictions.set(i,ev.target.value);
+        stepArea.querySelector('[data-before]').onclick=()=>step(i-1);stepArea.querySelector('[data-after]').onclick=()=>step(i+1);
+        stepArea.querySelector('[data-reveal]').onclick=()=>step(i,!show);
       }step(0);
     } else {
       const indices=s.questions.map((_,i)=>i);
@@ -130,12 +165,17 @@ export function initAP2({root,escape:e,toast,dialog}) {
     delete document.body.dataset.ap2Exam;
     setTutorAssessmentMode(null);
     const chapterId=route.match(/^ap2-chapter-(\d+)$/)?.[1];
-    const lessonId=route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(activity|figures|check))?$/);
+    const lessonId=route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(activity|figures|check))?(?:\/(ventricles|eye|ear|ossicles))?$/);
     const ch=chapters.find(c=>String(c.id)===chapterId);
     if(ch){rememberStudy(route);chapter(ch);return;}
-    if(lessonId&&sectionById.has(lessonId[1])){rememberStudy(route);lesson(sectionById.get(lessonId[1]),lessonId[2]||'read');return;}
+    if(lessonId&&sectionById.has(lessonId[1])){rememberStudy(lessonId[3]?route.slice(0,route.lastIndexOf('/')):route);lesson(sectionById.get(lessonId[1]),lessonId[2]||'read',lessonId[3]);return;}
     const writingId=route.match(/^ap2-writing-(1[2-9]|20)$/)?.[1];
     if(writingId){rememberStudy(route);openWritingPractice(Number(writingId),{root,page,hero,link,store,e});return;}
+    if(route==='ap2-body'){
+      page(hero('A&P II · MODEL LAB','Body systems in 3D','Locate the glands, heart and right leg arteries in a common skeletal reference.')+bodySystemsHTML()+link('ap2-practicals','← Model & slide lab'));
+      mountBodySystems(root);setLearningContext({course:'ap2',type:'study',label:'Body systems in 3D',text:'Position of the glands, heart chambers, and right lower-limb arteries relative to the skeleton.'});return;
+    }
+    if(route==='ap2-practicals'){practicals();return;}
     if(route==='ap2-search'){contextForSearch();search();return;}
     if(exams.open(route)){
       if(isExam()){document.body.dataset.ap2Exam='true';setTutorAssessmentMode('exam');}

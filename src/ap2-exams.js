@@ -28,7 +28,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
       <p id="ap2-exam-size"></p><button class="primary" data-start ${r.draft?'disabled':''}>Start exam</button>${r.draft?'<p>Submit your current A&P II draft to start another. You can study lessons at any time.</p>':''}</article>
       <article><h2>Completed exams</h2>${r.reports.length?`<div class="course-links">${r.reports.map(navReport).join('')}</div>`:'<p>Your submitted scores, answers, and review notes will appear here.</p>'}</article></div>`);
     const select=root.querySelector('#ap2-exam-scope');
-    function describe(){root.querySelector('#ap2-exam-size').textContent=examItems(select.value).length+' questions · untimed · saved on this device';}
+    function describe(){root.querySelector('#ap2-exam-size').textContent=examItems(select.value).length+' questions · '+(select.value==='balanced'?'Three per chapter: one concept, one evidence interpretation and one short answer.':select.value==='all'?'All 49 sections plus a visual and a short answer in each chapter.':'Untimed. Saved on this device.');}
     select.onchange=describe;describe();
     root.querySelector('[data-start]').onclick=()=>{const spec=examScopes.find(s=>s.id===select.value);begin(spec.id,spec.title,examItems(spec.id));};
     context('A&P II exam center');

@@ -1,8 +1,10 @@
+import {renderGlandPractical,mountGlandPractical} from './ap2-endocrine-practicals.js';
+
 const labKinds = {
   '15.1': 'circuit', '15.4': 'circuit',
   '15.2': 'pressure', '15.3': 'pressure',
   '16.1': 'pupils', '16.3': 'pupils',
-  '17.2': 'feedback', '17.3': 'feedback', '17.4': 'feedback', '17.6': 'feedback',
+  '17.3': 'feedback', '17.4': 'feedback', '17.6': 'feedback',
   '17.9': 'glucose'
 };
 
@@ -123,6 +125,16 @@ const feedbackLevels = {
   external: ['Low', 'Low', 'High']
 };
 
+function feedbackPlot(axis,change,levels){
+  const middle={rest:['Usual','Usual','Usual'],gland:['Usual','Usual','Low'],pituitary:['Usual','Low','Usual'],external:['Usual','Usual','High']}[change];
+  const y={High:20,Usual:50,Low:80};
+  const rows=[axis.release,axis.drive,axis.hormone].map((h,i)=>{
+    const description=h+' begins at baseline, is '+middle[i].toLowerCase()+' immediately after the disturbance, and becomes '+levels[i].toLowerCase()+' as feedback acts.';
+    return '<figure style="margin:.2rem"><figcaption>'+h+'</figcaption><svg viewBox="0 0 235 100" role="img" aria-label="'+description+'"><path d="M8 50 H225" stroke="#83988c" stroke-dasharray="3 4"/><path d="M10 50 L107 '+y[middle[i]]+' L220 '+y[levels[i]]+'" fill="none" stroke="#8ce1c4" stroke-width="4"/><g fill="#f9d6a6"><circle cx="10" cy="50" r="4"/><circle cx="107" cy="'+y[middle[i]]+'" r="4"/><circle cx="220" cy="'+y[levels[i]]+'" r="4"/></g></svg></figure>';
+  });
+  return '<details><summary>Trace each hormone over time</summary><p>Read left to right: baseline → direct disturbance → later feedback. Each dashed line is that hormone’s own usual level. These qualitative trends use illustrative timing.</p><div class="reg-track">'+rows.join('')+'</div></details>';
+}
+
 function feedbackOutput(read) {
   const axis = axes[read('axis')], change = read('change'), levels = feedbackLevels[change];
   function signal(tissue, product, level) {
@@ -135,7 +147,7 @@ function feedbackOutput(read) {
     pituitary: `The hypothalamus increases ${axis.release} as feedback falls. The pituitary cannot supply adequate ${axis.drive}, so the peripheral gland remains understimulated.`,
     external: `The high circulating end hormone includes the external supply. Negative feedback lowers ${axis.release} and ${axis.drive}, reducing the gland’s own production.`
   };
-  return `<div class="reg-track">${signal('Hypothalamus', axis.release, levels[0])}${signal('Anterior pituitary', axis.drive, levels[1])}${signal(`${axis.organ} · circulating end hormone`, axis.hormone, levels[2])}</div><p>${notes[change]} Levels show qualitative directions for this simplified model.</p>`;
+  return `<div class="reg-track">${signal('Hypothalamus', axis.release, levels[0])}${signal('Anterior pituitary', axis.drive, levels[1])}${signal(`${axis.organ} · circulating end hormone`, axis.hormone, levels[2])}</div><p>${notes[change]} Levels show qualitative directions for this simplified model.</p>`+feedbackPlot(axis,change,levels);
 }
 
 function glucoseOutput(read) {
@@ -147,15 +159,20 @@ function glucoseOutput(read) {
 
 const draw = { circuit: circuitOutput, pressure: pressureOutput, pupils: pupilOutput, feedback: feedbackOutput, glucose: glucoseOutput };
 
-export function renderLab(id) {
+function renderOriginal(id) {
   const kind = labKinds[id];
   if (!kind) return '';
   const [title, prompt] = labText[kind];
+  if(kind==='feedback'){
+    const prediction=key=>'<select data-feedback-'+key+'><option value="">Choose level</option><option>Low</option><option>Usual</option><option>High</option></select>';
+    return '<section class="reg-lab" data-reg-lab="'+id+'" aria-label="'+title+'">'+styles+'<h3>'+title+'</h3><p>'+prompt+'</p><div class="reg-controls">'+controls(kind,id)+'</div><div class="reg-controls"><label>Predict pituitary drive'+prediction('drive')+'</label><label>Predict circulating end hormone'+prediction('end')+'</label></div><label>Explain how feedback produces your pattern (optional)<textarea data-feedback-why rows="2" style="display:block;width:100%;box-sizing:border-box"></textarea></label><button data-feedback-check>Compare my prediction</button><p data-feedback-note role="status"></p><div class="reg-out" hidden></div></section>';
+  }
   const answer = kind === 'pupils' ? `<div class="reg-guess">${selectControl('prediction', 'Which pathway fits?', pupilOptions)}<button type="button" data-check-reg>Check interpretation</button></div><p data-verdict role="status"></p>` : '';
   return `<section class="reg-lab" data-reg-lab="${id}" aria-label="${title}">${styles}<h3>${title}</h3><p>${prompt}</p><div class="reg-controls">${controls(kind, id)}</div><div class="reg-out" aria-live="polite" aria-atomic="true"></div>${answer}</section>`;
 }
 
 export function mountLab(root, id) {
+  mountGlandPractical(root,id);
   const kind = labKinds[id];
   if (!kind || !root) return;
   const selector = `[data-reg-lab="${id}"]`;
@@ -166,6 +183,19 @@ export function mountLab(root, id) {
   const read = key => control(key).value;
   const refresh = () => { panel.querySelector('.reg-out').innerHTML = draw[kind](read); };
   const verdict = panel.querySelector('[data-verdict]');
+  if(kind==='feedback'){
+    const drive=panel.querySelector('[data-feedback-drive]'),end=panel.querySelector('[data-feedback-end]');
+    const output=panel.querySelector('.reg-out'),note=panel.querySelector('[data-feedback-note]');
+    const reset=()=>{drive.value='';end.value='';note.textContent='';panel.querySelector('[data-feedback-why]').value='';output.hidden=true;};
+    control('axis').onchange=control('change').onchange=reset;
+    panel.querySelector('[data-feedback-check]').onclick=()=>{
+      if(!drive.value||!end.value){note.textContent='Choose both hormone levels before checking.';return;}
+      const [,expectedDrive,expectedEnd]=feedbackLevels[read('change')];
+      note.textContent=(drive.value===expectedDrive?'Pituitary drive is correct. ':'Recheck the pituitary drive. ')+(end.value===expectedEnd?'End-hormone prediction is correct.':'Recheck the circulating end hormone.');
+      refresh();output.hidden=false;
+    };
+    return;
+  }
   const observed = new Set();
   panel.addEventListener('change', event => {
     const field = event.target.dataset.regInput;
@@ -195,4 +225,8 @@ export function mountLab(root, id) {
     verdict.textContent = guess === test.answer ? 'Correct. ' + test.explanation : 'Recheck the pattern. If the deficit follows the illuminated eye, compare the inputs. If one pupil fails with either light, compare the outputs.';
   });
   refresh();
+}
+
+export function renderLab(id) {
+  return renderGlandPractical(id)+renderOriginal(id);
 }

@@ -1,0 +1,122 @@
+[
+  {
+    "file": "field-01.webp",
+    "type": "lymphocyte",
+    "source": "PBC_dataset_normal_DIB/lymphocyte/LY_644505.jpg"
+  },
+  {
+    "file": "field-02.webp",
+    "type": "monocyte",
+    "source": "PBC_dataset_normal_DIB/monocyte/MO_200691.jpg"
+  },
+  {
+    "file": "field-03.webp",
+    "type": "neutrophil",
+    "source": "PBC_dataset_normal_DIB/neutrophil/SNE_999519.jpg"
+  },
+  {
+    "file": "field-04.webp",
+    "type": "monocyte",
+    "source": "PBC_dataset_normal_DIB/monocyte/MO_104441.jpg"
+  },
+  {
+    "file": "field-05.webp",
+    "type": "neutrophil",
+    "source": "PBC_dataset_normal_DIB/neutrophil/SNE_687178.jpg"
+  },
+  {
+    "file": "field-06.webp",
+    "type": "eosinophil",
+    "source": "PBC_dataset_normal_DIB/eosinophil/EO_278795.jpg"
+  },
+  {
+    "file": "field-07.webp",
+    "type": "lymphocyte",
+    "source": "PBC_dataset_normal_DIB/lymphocyte/LY_731097.jpg"
+  },
+  {
+    "file": "field-08.webp",
+    "type": "basophil",
+    "source": "PBC_dataset_normal_DIB/basophil/BA_446850.jpg"
+  },
+  {
+    "file": "field-09.webp",
+    "type": "neutrophil",
+    "source": "PBC_dataset_normal_DIB/neutrophil/SNE_402972.jpg"
+  },
+  {
+    "file": "field-10.webp",
+    "type": "lymphocyte",
+    "source": "PBC_dataset_normal_DIB/lymphocyte/LY_893259.jpg"
+  },
+  {
+    "file": "field-11.webp",
+    "type": "monocyte",
+    "source": "PBC_dataset_normal_DIB/monocyte/MO_503447.jpg"
+  },
+  {
+    "file": "field-12.webp",
+    "type": "lymphocyte",
+    "source": "PBC_dataset_normal_DIB/lymphocyte/LY_483585.jpg"
+  },
+  {
+    "file": "field-13.webp",
+    "type": "platelet",
+    "source": "PBC_dataset_normal_DIB/platelet/PLATELET_373870.jpg"
+  },
+  {
+    "file": "field-14.webp",
+    "type": "eosinophil",
+    "source": "PBC_dataset_normal_DIB/eosinophil/EO_379318.jpg"
+  },
+  {
+    "file": "field-15.webp",
+    "type": "platelet",
+    "source": "PBC_dataset_normal_DIB/platelet/PLATELET_733871.jpg"
+  },
+  {
+    "file": "field-16.webp",
+    "type": "platelet",
+    "source": "PBC_dataset_normal_DIB/platelet/PLATELET_418137.jpg"
+  },
+  {
+    "file": "field-17.webp",
+    "type": "basophil",
+    "source": "PBC_dataset_normal_DIB/basophil/BA_946406.jpg"
+  },
+  {
+    "file": "field-18.webp",
+    "type": "eosinophil",
+    "source": "PBC_dataset_normal_DIB/eosinophil/EO_158905.jpg"
+  },
+  {
+    "file": "field-19.webp",
+    "type": "platelet",
+    "source": "PBC_dataset_normal_DIB/platelet/PLATELET_308160.jpg"
+  },
+  {
+    "file": "field-20.webp",
+    "type": "eosinophil",
+    "source": "PBC_dataset_normal_DIB/eosinophil/EO_163905.jpg"
+  },
+  {
+    "file": "field-21.webp",
+    "type": "neutrophil",
+    "source": "PBC_dataset_normal_DIB/neutrophil/SNE_778015.jpg"
+  },
+  {
+    "file": "field-22.webp",
+    "type": "monocyte",
+    "source": "PBC_dataset_normal_DIB/monocyte/MO_111681.jpg"
+  },
+  {
+    "file": "field-23.webp",
+    "type": "basophil",
+    "source": "PBC_dataset_normal_DIB/basophil/BA_844617.jpg"
+  },
+  {
+    "file": "field-24.webp",
+    "type": "basophil",
+    "source": "PBC_dataset_normal_DIB/basophil/BA_413473.jpg"
+  }
+]
