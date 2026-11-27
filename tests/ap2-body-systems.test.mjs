@@ -32,8 +32,11 @@ test('organ, thoracic and limb exports share the same registered landmarks',()=>
       assert.ok(match,'Shared source landmark must agree in all axes to within two micrometers');
     }
   }
+  const central=loadMeshes('ap2-glands/cranial-glands');
+  for(const key of ['pineal','hypothalamus'])assert.ok(central.has(key));
+  assert.deepEqual(central.get('pituitary'),body.get('pituitary'));
   const html=bodySystemsHTML();
-  for(const key of ['skeleton','heart','glands','arteries'])assert.ok(html.includes('data-body-layer="'+key+'"'));
+  for(const key of ['skeleton','central','heart','glands','arteries'])assert.ok(html.includes('data-body-layer="'+key+'"'));
   for(const [key,mesh] of [['wall_of_left_ventricle',heart],['right_dorsalis_pedis_artery',leg],['pituitary',body]]){
     assert.ok(mesh.has(key));assert.ok(html.includes('value="'+key+'"'));
   }

@@ -1,3 +1,5 @@
+import {endocrineCaseMarkup,mountEndocrineCase} from './ap2-endocrine-cases.js';
+
 const root = 'assets/ap2-glands/';
 const bodyCredit = 'BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International. Converted from the 4.0 mesh release in Blender 4.5. <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/download.html" target="_blank" rel="noreferrer">Source</a> · <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html" target="_blank" rel="noreferrer">Database license</a>.';
 const pancreasCredit = 'Kristen Browne and Heidi Schlehlein, Human Reference Atlas, Visible Human Male pancreas v1.3 (2024). <a href="https://doi.org/10.48539/HBM396.QWWJ.639" target="_blank" rel="noreferrer">Model and creators</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>.';
@@ -10,6 +12,7 @@ const style = '<style>.gland-lab{padding:clamp(.8rem,2.4vw,1.4rem);border:1px so
 const tissue = {
   whole:{title:'Skeleton and glands',note:'Trace from the pituitary in the skull to the thymus in the superior chest and the endocrine organs in the upper abdomen. Tap a colored gland or choose its region above.',view:[.25,.05,1]},
   pituitary:{title:'Pituitary in the sphenoid',keys:['pituitary','sphenoid'],note:'Look down into the sella turcica. The highlighted pituitary sits within the sphenoid bone, below the hypothalamus.',view:[.2,1,.38]},
+  brain:{title:'Hypothalamus, pineal and pituitary',note:'Compare the pineal body behind the third ventricle with the pituitary below the hypothalamus. The two small superior colliculi sit below the pineal body.',view:[1,.28,-.3]},
   thymus:{title:'Thymus behind the sternum',keys:['thymus','manubrium','trachea','right_clavicle','left_clavicle'],note:'The paired thymic lobes lie behind the manubrium. This lateral-oblique view exposes their depth.',view:[1,.08,-.35]},
   adrenals:{title:'Adrenals above the kidneys',keys:['right_kidney','left_kidney','right_adrenal','left_adrenal','l1','t12'],note:'Follow each kidney to its superomedial pole. The two adrenal glands differ in shape. Open the section study below to distinguish cortex and medulla.',view:[.1,.28,1]},
   pancreas:{title:'Pancreas across the upper abdomen',keys:['pancreas','right_kidney','left_kidney','l1','t12'],note:'The pancreas crosses in front of the upper lumbar region. The head is on the subject’s right and the tail points toward the subject’s left.',view:[0,.32,1]},
@@ -17,13 +20,15 @@ const tissue = {
 };
 const glandColor = name => {
   if(name.includes('adrenal')) return '#eea065';
-  return ({pituitary:'#e997c5',thymus:'#e4a69a',pancreas:'#ecbf69',right_kidney:'#8e6e83',left_kidney:'#8e6e83',trachea:'#83a7a1'})[name] || '#bfc4bf';
+  return ({pituitary:'#e997c5',pineal:'#f5b55d',hypothalamus:'#9d989e',third_ventricle:'#8ec7db',thymus:'#e4a69a',pancreas:'#ecbf69',right_kidney:'#8e6e83',left_kidney:'#8e6e83',trachea:'#83a7a1'})[name] || '#bfc4bf';
 };
 const pancreasParts = {head:'Head near the duodenum',uncinate:'Uncinate process',neck:'Neck',body:'Body',tail:'Tail toward the spleen'};
 const regions = Object.fromEntries(Object.entries(tissue).map(([id,t])=>[id,t.title]));
 const glandStations = {
   '17.1':'Locate the endocrine organs','17.2':'Predict the target-cell response','17.3':'Trace the two pituitary routes',
-  '17.4':'Orient the thyroid','17.5':'Locate the parathyroids','17.6':'From adrenal surface to cortex and medulla','17.9':'From pancreas to islet'
+  '17.4':'Orient the thyroid','17.5':'Locate the parathyroids','17.6':'From adrenal surface to cortex and medulla',
+  '17.7':'Locate the pineal gland and trace the night signal','17.8':'Compare gonadal hormone sources','17.9':'From pancreas to islet',
+  '17.10':'Trace a hormone between organs','17.11':'Compare gland origins and life-stage changes'
 };
 const identifications = [
   ['adrenals','A paired gland caps each kidney. Which region should you isolate?','At the superomedial poles of the kidneys, the adrenal cortex and medulla supply different hormones.'],
@@ -61,11 +66,14 @@ const islet={
   acinus:['Exocrine acinus','Meal-related digestive stimulation','Acinar cells release digestive enzymes into ducts leading to the duodenum.']
 };
 function stationBody(id){
+ if(id==='17.10'||id==='17.11')return endocrineCaseMarkup(id);
  if(id==='17.1')return select('region','Choose an anatomical view',regions)+'<p data-location></p><div data-organ></div><small data-attribution></small><h4>Find it from a landmark</h4><p data-locator-prompt></p>'+select('locator-guess','Gland region',{'':'Choose a region',pituitary:'Pituitary',thymus:'Thymus',adrenals:'Adrenals',pancreas:'Pancreas'})+'<button data-identify>Check location</button> <button data-next-location>Next location</button><p data-result role="status"></p>';
  if(id==='17.2')return two(select('signal','Hormone and target',Object.fromEntries(Object.entries(signalRoutes).map(([k,v])=>[k,v.label])))+select('block','Interruption',blocks),select('prediction','Predict the downstream response',{'':'Choose a prediction',continues:'Response can proceed',stops:'Response is reduced'})+'<button data-reveal>Trace the signal</button>')+'<div data-result role="status"></div>';
  if(id==='17.3')return select('lobe','Route to inspect',{anterior:'Hypothalamus → anterior lobe',posterior:'Hypothalamus → posterior lobe'})+select('pit-lesion','Change the connection',{none:'Usual connection',vessel:'Interrupt portal blood delivery',axon:'Interrupt neurosecretory axons'})+'<div data-pit-route></div>';
  if(id==='17.4'||id==='17.5')return select('neck-view','Orientation or scale',{anterior:'Anterior neck · gland overview',posterior:'Posterior thyroid · parathyroid surface',micro:'Microscopic · thyroid follicle'})+'<div data-neck-plate></div>'+select('neck-guess','Where are the small paired parathyroid glands typically found?',{'':'Choose the relationship',front:'On the anterior thyroid isthmus',back:'On the posterior surface of the thyroid lobes',under:'Within the thymus'})+'<button data-neck-check>Check and inspect</button><p data-result role="status"></p>';
  if(id==='17.6')return '<p>Start at the superomedial pole of each kidney. Then use the section to trace the layers from capsule to center.</p><div data-organ></div><small>'+bodyCredit+'</small>'+two(figure('assets/ap2-figures/17.17.webp','A gland section and micrograph distinguish three cortical layers and the medulla.',credits('17.17','17-6-the-adrenal-glands',true)),select('zone','Trace a layer',Object.fromEntries(Object.entries(adrenal).map(([k,v])=>[k,v[0]])))+'<div data-result role="status"></div>');
+ if(id==='17.7')return '<p>The pineal body is gold, the pituitary is pink, the hypothalamus is mauve and the third-ventricle space is blue. Rotate to compare the posterior and inferior positions.</p><div data-organ></div><small>'+bodyCredit+'</small>'+select('light','During the biological night',{dark:'Dark surroundings',bright:'Bright light reaches the retina'})+select('melatonin','Predict relative pineal melatonin secretion',{'':'Choose a prediction',rise:'Nighttime rise is supported',fall:'Nighttime rise is suppressed'})+'<button data-pineal-check>Trace the pathway</button><div data-result role="status"></div>';
+ if(id==='17.8')return select('gonad','Specimen',{ovary:'Left ovary · reference surface',testis:'Testis · anatomical section'})+'<div data-gonad-specimen></div>'+select('gonad-signal','Signal to trace',{fsh:'FSH',lh:'LH'})+'<div data-gonad-guess></div><button data-check-gonad>Check the response</button><p data-gonad-response role="status"></p>';
  return select('scale','Scale',{gross:'Gross anatomy · organ regions',micro:'Microscopic anatomy · islet and acinus'})+'<div data-scale-view></div>';
 }
 export function renderGlandPractical(id){return glandStations[id]?style+'<section class="gland-lab" data-gland-station="'+id+'"><h3>'+glandStations[id]+'</h3>'+stationBody(id)+'</section>':'';}
@@ -102,7 +110,8 @@ function wholeModel(host,region,onPick){
    canvas.addEventListener('pointerdown',start);canvas.addEventListener('pointerup',pick);
    api.addCleanup(()=>{canvas.removeEventListener('pointerdown',start);canvas.removeEventListener('pointerup',pick);});
  } : undefined;
- return showModel(host,{asset:root+(region==='whole'?'body-overview.glb':'bodyparts-locator.glb'),title:config.title,direction:config.view,include:name=>!config.keys||config.keys.includes(name),colors:glandColor,onLoad});
+ const file=region==='whole'?'body-overview.glb':region==='brain'?'cranial-glands.glb':'bodyparts-locator.glb';
+ return showModel(host,{asset:root+file,title:config.title,direction:config.view,include:name=>!config.keys||config.keys.includes(name),colors:glandColor,onLoad});
 }
 // Coordinates follow the two original cell-scale models, with Y superior in glTF.
 const secretionPaths={
@@ -189,6 +198,7 @@ export function mountGlandPractical(rootElement,id){
  if(!panel||panel.dataset.mounted)return;
  panel.dataset.mounted='true';
  const get=k=>panel.querySelector('[data-'+k+']');
+ if(id==='17.10'||id==='17.11'){mountEndocrineCase(panel,id);return;}
  if(id==='17.1'){
    let caseIndex=0;
    function locate(){
@@ -241,6 +251,33 @@ export function mountGlandPractical(rootElement,id){
    wholeModel(get('organ'),'adrenals');
    function layer(){const [,position,product,effect]=adrenal[get('zone').value];get('result').innerHTML='<p><b>'+position+' · '+product+'</b></p><p>'+effect+'</p>';}
    get('zone').onchange=layer;layer();
+ }else if(id==='17.7'){
+   wholeModel(get('organ'),'brain');
+   get('light').onchange=()=>{get('melatonin').value='';get('result').textContent='';};
+   get('pineal-check').onclick=()=>{const dark=get('light').value==='dark',guess=get('melatonin').value;
+     if(!guess){get('result').textContent='Predict the change in melatonin first.';return;}
+     const note=dark?'During the biological night, darkness permits sympathetic input that promotes pineal melatonin synthesis.':'Bright light at night can suppress melatonin through retinal input to the suprachiasmatic nucleus and its downstream sympathetic pathway.';
+     get('result').innerHTML='<p>'+((guess==='rise')===dark?'Correct. ':'Recheck the night signal. ')+note+'</p>'+routeTrack(['Retinal light input','Suprachiasmatic nucleus of hypothalamus','Sympathetic pathway via superior cervical ganglion','Pineal melatonin secretion']);};
+ }else if(id==='17.8'){
+   const outcomes={
+     ovary:{fsh:['Support granulosa cell estradiol production','FSH supports follicular growth and aromatase activity in granulosa cells.'],lh:['Stimulate theca steroidogenesis and trigger ovulation with a surge','LH stimulates androgen synthesis by theca cells. The midcycle LH surge triggers ovulation and luteinization.']},
+     testis:{fsh:['Support spermatogenesis through Sertoli cells','FSH acts on Sertoli cells in seminiferous tubules. Sertoli cells also release inhibin, which feeds back on FSH.'],lh:['Stimulate testosterone production in Leydig cells','LH stimulates Leydig cells in the interstitial tissue between seminiferous tubules.']}
+   };
+   function loadGonad(){
+     const ovarian=get('gonad').value==='ovary',container=get('gonad-specimen');
+     if(ovarian){
+       container.innerHTML='<div data-organ></div><p>A single external ovary surface from the Visible Human Female. Follicles are microscopic or internal structures.</p><small>Kristen Browne and Heidi Schlehlein, Human Reference Atlas, left ovary v1.3 (2024). <a href="https://doi.org/10.48539/HBM695.KCXS.294" target="_blank" rel="noreferrer">Source</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>.</small>';
+       showModel(get('organ'),{asset:root+'ovary-v1.3.glb',title:'Left ovary',colors:()=>'#eab8b9'});
+     }else container.innerHTML=figure(root+'testis-section.webp','A sagittal testis section shows lobules containing seminiferous tubules and the nearby epididymis.',credits('27.4','27-1-anatomy-and-physiology-of-the-testicular-reproductive-system'));
+     guess();
+   }
+   function guess(){const data=outcomes[get('gonad').value];
+     get('gonad-guess').innerHTML=select('expected-effect','Which action follows?',{'':'Choose an action',lh:data.lh[0],fsh:data.fsh[0]});
+     get('gonad-response').textContent='';
+   }
+   get('check-gonad').onclick=()=>{const target=get('gonad-signal').value,chosen=get('expected-effect').value;
+     get('gonad-response').textContent=!chosen?'Choose an action first.':(target===chosen?'Correct. ':'Recheck the hormone target. ')+outcomes[get('gonad').value][target][1];};
+   get('gonad').onchange=loadGonad;get('gonad-signal').onchange=guess;loadGonad();
  }else{
    function changeScale(){
      const gross=get('scale').value==='gross';

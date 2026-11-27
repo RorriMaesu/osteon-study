@@ -68,4 +68,12 @@ test('action-potential marker is on its descending trace and axis distances scal
   assert.match(svg,/M57 38 H462/);assert.match(svg,/M57 68 H462/);assert.match(svg,/M57 138 H462/);
   assert.match(svg,/L202 56 L211 74 L226 103/);assert.match(svg,/cx="211" cy="74"/);
 });
+test('introductory pathways and spinal reflex stations give each distractor a specific cue',()=>{
+  for(const id of ['12.1','12.3']){
+    assert.ok(renderLab(id).includes('data-neuro-cases="'+id+'"'));
+    for(const q of neuralCases[id][0].questions){
+      q.choices.forEach((_,i)=>{if(i!==q.key)assert.ok(q.hints[i].length>30);});
+    }
+  }
+});
 

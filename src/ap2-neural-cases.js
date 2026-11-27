@@ -1,9 +1,21 @@
 import {renderNeuralSpecimens, mountNeuralSpecimens} from './ap2-neural-specimens.js';
 import {renderNeuralSignal, mountNeuralSignal} from './ap2-neural-signals.js';
 
-const q=(prompt,choices,key,why)=>({prompt,choices,key,why});
+const q=(prompt,choices,key,why,hints)=>({prompt,choices,key,why,hints});
 const station=(name,observation,finding,reason)=>({name,observation,questions:[finding,reason]});
 export const neuralCases={
+  '12.1':[
+    station('Trace a fingertip signal','A light touch on a fingertip produces a signal in an arm nerve traveling toward the spinal cord. A separate recording shows signals traveling from the cord to a hand muscle.',
+      q('How would you classify the fingertip signal while it travels in the arm?',['Central and afferent','Peripheral and efferent','Peripheral and afferent'],2,'The arm nerve is outside the brain and spinal cord. This sensory axon carries information toward the CNS.',
+        ['The direction is afferent. Check where the arm nerve lies relative to the CNS.','The nerve is peripheral. Efferent signals travel away from the CNS.']),
+      q('Only the outgoing motor axons to that muscle are blocked. What happens when the fingertip is touched again?',['Both recordings must disappear','Sensory input can reach the cord, but the motor signal cannot reach that muscle','The sensory response reverses direction'],1,'Sensory and motor axons can share a peripheral nerve while carrying signals in opposite directions. The selective block interrupts only the outgoing motor path.',
+        ['Trace the incoming sensory axon separately from the blocked motor axons.',null,'Blocking a motor axon does not reverse a sensory axon’s normal signal direction.']))],
+  '12.3':[
+    station('Separate a reflex from awareness','In a simulated withdrawal circuit, a skin stimulus produces a receptor potential and sensory spikes enter the spinal cord. One branch recruits spinal interneurons and motor neurons. A second pathway relays the sensory information to the brain.',
+      q('Which event is transduction?',['A sensory spike travels along the axon','The stimulus changes the voltage at the sensory ending','A motor neuron releases transmitter onto muscle'],1,'Transduction converts stimulus energy into a local electrical change at the receptor.',
+        ['Travel of a spike along one axon is conduction. Look for the step that first converts a stimulus into voltage.',null,'Release of transmitter at a junction is synaptic transmission. Look upstream for where the stimulus is detected.']),
+      q('Block only the ascending route above the spinal branches. What does the simulated circuit predict?',['Neither withdrawal nor ascending signaling can occur','The brain receives the signal but withdrawal stops','Withdrawal can begin while the ascending signal fails to reach the brain'],2,'The local sensory-to-motor circuit is intact below the block. Conscious perception through the modeled ascending route requires transmission to the brain.',
+        ['The local spinal relay and motor output still have an intact connection.','Trace the location of the block. It is above the local reflex branch, on the route to the brain.']))],
   '12.2':[
     station('Compare myelinating cells','In micrograph A, processes from one glial cell wrap internodes on several axons. In B, one cell wraps one internode of a peripheral nerve fiber.',
       q('Which specimen shows a many-axon pattern?',['A','B','Neither'],0,'One oligodendrocyte can supply myelin to segments of multiple CNS axons.'),
@@ -147,7 +159,7 @@ export function mountNeuralCases(root,id){
       block.querySelector('button').onclick=()=>{
         if(s.value===''){out.textContent='Choose a response first.';return;}
         if(firstAttempts[j]===undefined)firstAttempts[j]=+s.value===question.key;
-        if(+s.value!==question.key){out.textContent=j?'Reconsider the mechanism using the recorded finding. You can try again.':'Compare the choices with the observation in the record. You can try again.';return;}
+        if(+s.value!==question.key){out.textContent=question.hints?.[+s.value]||(j?'Reconsider the mechanism using the recorded finding. You can try again.':'Compare the choices with the observation in the record. You can try again.');return;}
         out.textContent='Correct. '+question.why;
         if(steps[j+1])steps[j+1].hidden=false;
         else {

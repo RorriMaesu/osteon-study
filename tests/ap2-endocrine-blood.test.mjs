@@ -16,7 +16,7 @@ function readGltf(filename){
 }
 
 test('endocrine practicals are reachable by section and the signaling section tests a target cell',()=>{
-  for(const id of ['17.1','17.2','17.3','17.4','17.5','17.6','17.9'])assert.ok(endocrine(id).includes('data-gland-station="'+id+'"'),id);
+  for(const id of ['17.1','17.2','17.3','17.4','17.5','17.6','17.7','17.8','17.9','17.10','17.11'])assert.ok(endocrine(id).includes('data-gland-station="'+id+'"'),id);
   assert.doesNotMatch(endocrine('17.2'),/Negative feedback bench/i);
   assert.match(endocrine('17.4'),/data-feedback-drive/);
   for(const [route,block] of Object.entries({camp:'cyclase',ip3:'ip3r',nuclear:'transcription',insulin:'kinase'})){
@@ -36,6 +36,8 @@ test('gland context extends from the feet to the skull and provides all register
   for(const name of ['sphenoid','pituitary','left_adrenal','right_adrenal','pancreas','l1','t12'])assert.ok(local.meshes.some(m=>m.name===name),name);
   for(const file of ['follicle-cutaway.glb','islet-cutaway.glb'])assert.ok(readGltf(file).nodes.length>6);
   assert.equal(readGltf('pancreas-v1.3.glb').meshes.length,5);
+  assert.equal(readGltf('ovary-v1.3.glb').meshes.length,1);
+  assert.ok(readGltf('cranial-glands.glb').nodes.some(n=>n.name==='pineal'));
 });
 
 test('blood film practice and exam use unique pathologist-labeled fields with disjoint sources',()=>{

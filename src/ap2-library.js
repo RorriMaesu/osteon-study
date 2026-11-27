@@ -1,3 +1,4 @@
+import {renderBloodFoundations,mountBloodFoundations} from './ap2-blood-foundations.js';
 import {mountNeuralStationPicker} from './ap2-neural-labs.js';
 import {renderNeuralCases,mountNeuralCases} from './ap2-neural-cases.js';
 import * as neural from './ap2-neural.js';
@@ -22,7 +23,9 @@ const examinationLabs = {
     mountNeuralStationPicker(root);
   }
 };
+const introductoryBloodLabs={renderLab:renderBloodFoundations,mountLab:mountBloodFoundations};
 export function labFor(sectionId) {
+  if(['18.1','18.2','18.3'].includes(sectionId))return introductoryBloodLabs;
   const ch=Number(sectionId.split('.')[0]);
   return ch===15||ch===16?examinationLabs:labs.get(ch);
 }

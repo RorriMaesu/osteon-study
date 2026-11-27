@@ -56,8 +56,19 @@ export function initAP2({root,escape:e,toast,dialog}) {
       ['Endocrine and blood',[['17.1','Gland locator','Locate glands relative to nearby structures.'],['17.9','Pancreas and islets','Move between gross anatomy and a microscopic section.'],['18.4','Blood smear microscope','Identify six formed elements from real specimens.'],['18.5','Hemostasis','Follow a plug from vessel injury through fibrin stabilization.']]],
       ['Heart and circulation',[['19.1','Heart dissection','Inspect the chambers, coronary vessels and valve supports.'],['19.3','Cardiac cycle','Match a pressure crossing to a valve event.'],['20.1','Veins and the calf pump','Track venous return during contraction and release.'],['20.5','Vascular routes','Trace blood through the trunk and limbs.'],['20.6','Fetal circulation','Compare placental and postnatal routes.']]]
     ];
-    page(hero('A&P II · PRACTICALS','Model & slide lab','Choose a specimen or process. Each station opens inside its textbook section.')+
-      '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+'</div><div class="ap2-unit-grid">'+stations.map(([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}<small>${e(goal)}</small></span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>').join('')+'</div>');
+    const groupCard=([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}<small>${e(goal)}</small></span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>';
+    page(hero('A&P II · PRACTICALS','Model & slide lab','Choose a specimen or browse the activities in a textbook chapter.')+
+      '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+
+      '<label>Browse <select data-lab-chapter><option value="">Featured practicals</option>'+
+      chapters.map(c=>`<option value="${c.id}">Chapter ${c.id} · ${e(c.title)}</option>`).join('')+
+      '</select></label></div><div class="ap2-unit-grid" data-practical-list></div>');
+    const select=root.querySelector('[data-lab-chapter]'),list=root.querySelector('[data-practical-list]');
+    function listStations(){
+      const ch=chapters.find(c=>String(c.id)===select.value);
+      const groups=ch?[[ch.title,ch.sections.map(s=>[s.id,s.title,s.objectives[0]])]]:stations;
+      list.innerHTML=groups.map(groupCard).join('');
+    }
+    select.onchange=listStations;listStations();
     setLearningContext({course:'ap2',type:'study',label:'Model and slide practicals',text:'Neural pathways, endocrine anatomy, blood and circulation'});
   }
   function contextForSearch(){setLearningContext({course:'ap2',type:'study',label:'A&P II lesson search',text:''});}

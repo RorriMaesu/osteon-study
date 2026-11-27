@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { chapters, sections, sectionById, units } from '../src/ap2-library.js';
+import { chapters, sections, sectionById, units, labFor } from '../src/ap2-library.js';
 import { appliedItems } from '../src/ap2-applied.js';
 import { writtenCases } from '../src/ap2-writing.js';
 import { bank, examScopes, examItems, grade, correctGrade, submitDraft, score } from '../src/ap2-exam-core.js';
@@ -30,6 +30,9 @@ test('A&P II contains the 49 numbered OpenStax sections with lessons, activities
       assertPhrases(s.objectives, 2);
       assertPhrases(s.paragraphs, 2);
       assert.ok(s.activity.title && s.activity.prompt);
+      const lab=labFor(s.id);
+      assert.equal(typeof lab.mountLab,'function',s.id);
+      assert.match(lab.renderLab(s.id),/<(?:button|select|input)\b/,s.id+' has an interactive practical');
       assert.ok(s.activity.steps.length >= 2);
       for (const step of s.activity.steps) assert.ok(step.label && step.detail);
       assert.ok(s.questions.length >= 3);

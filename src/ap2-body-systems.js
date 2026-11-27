@@ -5,10 +5,13 @@ import {mountOrganViewer} from './ap2-organ-viewer.js';
 const layers={
   skeleton:{label:'Skeleton',color:'#e9ddc3'},
   glands:{label:'Endocrine organs',color:'#deaf77'},
+  central:{label:'Central endocrine structures',asset:'assets/ap2-glands/cranial-glands.glb',color:'#88c6cd'},
   heart:{label:'Heart walls',asset:'assets/ap2-thorax.glb',color:'#cb7b81'},
   arteries:{label:'Right leg arteries',asset:'assets/ap2-leg-vessels.glb',color:'#e07c65'}
 };
 const structures={
+  pineal:['central','Pineal gland','The pineal gland lies behind the third ventricle and releases melatonin.'],
+  hypothalamus:['central','Hypothalamus','The hypothalamus lies below the thalamus and connects with the pituitary through the infundibulum.'],
   pituitary:['glands','Pituitary gland','A small gland in the sella turcica at the base of the skull.'],
   thymus:['glands','Thymus','The thymus occupies the upper anterior mediastinum behind the sternum and overlaps the great-vessel region.'],
   pancreas:['glands','Pancreas','The head and tail extend across the upper abdomen. Endocrine islets are microscopic.'],
@@ -50,7 +53,7 @@ export function mountBodySystems(parent){
   const get=k=>root.querySelector('[data-body-'+k+']');
   const checks=new Map([...root.querySelectorAll('[data-body-layer]')].map(el=>[el.dataset.bodyLayer,el]));
   const select=get('select'),notice=get('state'),info=get('info');
-  const surfaces=new Map(), groups={skeleton:[],glands:[],heart:[],arteries:[]};
+  const surfaces=new Map(), groups=Object.fromEntries(Object.keys(layers).map(key=>[key,[]]));
   const pending=new Set(),loaded=new Set(),errors=new Set();
   let api,wholeFrame,heartFrame,disposed=false,shouldCenter=false;
   const checked=key=>checks.get(key).checked;
@@ -152,7 +155,7 @@ export function mountBodySystems(parent){
       wholeFrame=frame(groups.skeleton);loaded.add('glands');loaded.add('skeleton');paint();
       if(wholeFrame)api.fit(wholeFrame);
       if(shouldCenter&&loaded.has(structures[select.value]?.[0]))center();
-      for(const key of ['heart','arteries'])if(checked(key))startLayer(key);
+      for(const key of Object.keys(layers))if(layers[key].asset&&checked(key))startLayer(key);
       const canvas=api.renderer.domElement,ray=new THREE.Raycaster();let down=null;
       canvas.addEventListener('pointerdown',event=>{down=[event.clientX,event.clientY];});
       canvas.addEventListener('pointerup',event=>{

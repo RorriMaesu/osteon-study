@@ -33,6 +33,10 @@ if overview:
     roles = {key:value for key,value in roles.items() if value in
              ("pituitary","right_adrenal","left_adrenal","thymus","pancreas","right_kidney","left_kidney")}
     roles["skeletal system"] = "context_skeleton"
+if "--cranial" in args[2:]:
+    roles = {"hypothalamus":"hypothalamus", "pineal body":"pineal",
+             "pituitary gland":"pituitary", "third ventricle":"third_ventricle",
+             "right superior colliculus":"right_colliculus", "left superior colliculus":"left_colliculus"}
 with (directory / "partof_element_parts.txt").open() as file:
     records = list(csv.reader(file, delimiter="\t"))[1:]
 bpy.ops.object.select_all(action="SELECT")
