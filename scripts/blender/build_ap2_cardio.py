@@ -28,13 +28,11 @@ def save(name, objects):
         obj.parent = None
         obj.matrix_world = transform
         obj.select_set(True)
-        # Export material-neutral geometry. The viewer assigns study colors.
-        obj.data.materials.clear()
         for polygon in obj.data.polygons:
             polygon.use_smooth = True
     bpy.ops.export_scene.gltf(filepath=str(path), use_selection=True,
-                              export_format='GLB', export_materials='NONE',
-                              export_texcoords=False, export_normals=True,
+                              export_format='GLB', export_materials='EXPORT',
+                              export_texcoords=True, export_normals=True, export_tangents=True,
                               export_animations=False, export_cameras=False)
     print("Saved", path, len(objects), path.stat().st_size, flush=True)
 

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {cloneOrganMaterial,tintOrganMaterial} from './organ-tissue-material.js';
 import {filtrationReading} from './organ-mechanism-signals.js';
 import tracks from './organ-motion-visceral-paths.json' with {type:'json'};
 
@@ -64,6 +65,7 @@ function tracer(effect,curve,root,radius){
     trail=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:effect.color||'#ffe28a',depthTest:false,depthWrite:false,transparent:true,opacity:.86}));
     trail.renderOrder=14;root.add(trail);
   }
+  for(const obj of [line,edge,dot,trail])if(obj)obj.userData.organProcessMarker=true;
   const up=new THREE.Vector3(0,1,0),direction=new THREE.Vector3();
   return {
     set(t,particleKind='water'){
@@ -193,7 +195,7 @@ function cue(object,effect){
   // Material references on a specimen can be shared. Copy before applying any
   // temporary highlighting so nearby context and subsequent specimens stay intact.
   const original=object.material;
-  const list=[].concat(original).map(m=>m.clone());
+  const list=[].concat(original).map(cloneOrganMaterial);
   object.material=Array.isArray(original)?list:list[0];
   const base=list.map(m=>m.color?.clone());
   const opacities=list.map(m=>m.opacity);
@@ -203,7 +205,7 @@ function cue(object,effect){
     const active=t>=effect.span[0]&&t<=effect.span[1];
     const level=effect.sustained?(active?.80:0):Math.sin(Math.PI*p)**.7*.82;
     list.forEach((m,i)=>{
-      if(base[i])m.color.copy(base[i]).lerp(color,level);
+      if(base[i])tintOrganMaterial(m,base[i],color,level);
       if(effect.opacity!==undefined)m.opacity=active?effect.opacity:opacities[i];
     });
   },dispose(){object.material=original;list.forEach(m=>m.dispose());}};
@@ -228,6 +230,10 @@ function landmarkTag(spec,mesh,root,radius){
   const height=radius*(spec.size||.15);
   tag.scale.set(height*canvas.width/canvas.height,height,1);
   tag.renderOrder=20;leader.renderOrder=19;mesh.add(leader,tag);
+  if(!['L','R'].includes(spec.label)){
+    // The label switch controls materials. Phase-specific visibility stays independent.
+    tag.userData.organProcessLabel=true;leader.userData.organProcessLabel=true;
+  }
   return {set(t){tag.visible=leader.visible=!spec.span||(t>=spec.span[0]&&t<=spec.span[1]);},
     dispose(){tag.removeFromParent();leader.removeFromParent();texture.dispose();tag.material.dispose();leader.geometry.dispose();leader.material.dispose();}};
 }

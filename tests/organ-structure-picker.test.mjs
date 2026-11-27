@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {organStructureName,organStructureGroups} from '../src/organ-structure-names.js';
+import {normalizeOrganSystem,organLabelRole,organSystemColor} from '../src/organ-label-roles.js';
+import {mountStructurePicker} from '../src/organ-structure-picker.js';
 import {organMotions} from '../src/organ-atlas-catalog.js';
 import {bodyMaps,mapRoute} from '../src/organ-atlas-bodies.js';
 import {makeCourseSearch} from '../src/ap2-term-search.js';
@@ -32,6 +34,36 @@ test('repeated teaching structures share names while sided anatomy remains disti
   assert.notEqual(name('peripheral-nerve','First node'),name('peripheral-nerve','Second node'));
   assert.equal(name('teeth','Upper medial incisor.r.001'),'Upper central incisor (right)');
   assert.equal(name('artery','artery_media'),'Tunica media');
+});
+
+test('a surface gets its own anatomy role regardless of the lesson that contains it',()=>{
+  for(const [id,name,role] of [
+    ['heart','VH_M_left_coronary_artery','vessel'],['heart','VH_M_aortic_valve','valve'],
+    ['lungs','diaphragm','muscle'],['placenta','VH_F_umbilical_vein','vessel'],
+    ['liver','bile_duct','passage'],['kidneys','renal_hilum','structure'],
+    ['artery','vein_media','wall'],['ovaries','VH_F_fibria_of_uterine_tube_L','structure'],
+    ['lymph-node','efferent_vessel','lymph'],['lymphatic','Node | Deep cervical lymph node near internal jugular vein','node'],
+    ['peripheral','Nerve | Accessory nerve','nerve'],['lymphatic-drainage','thoracic_duct_territory','structure'],
+    ['peripheral-nerve','First node','nerve'],['glandular-pancreas','beta_cell_1','tissue']
+  ]){
+    const semantic=organLabelRole({id},name,organStructureName(id,name));
+    assert.equal(semantic.id,role,name);assert.ok(semantic.symbol&&semantic.title&&semantic.color);
+  }
+  for(const [a,b] of [['Special senses','sensory'],['Lymphatic and immune','lymphatic']]){
+    assert.equal(normalizeOrganSystem(a),normalizeOrganSystem(b));
+    assert.equal(organSystemColor(a),organSystemColor(b));
+  }
+  for(const name of new Set([...organMotions.map(row=>row.system),...bodyMaps.flatMap(map=>map.organs.map(row=>row.system))])){
+    assert.notEqual(organSystemColor(name),organSystemColor(''),name);
+  }
+});
+
+test('a blind station cannot expose a name, role, key or geometry picker through the study controls',()=>{
+  const picker=mountStructurePicker(null,null,null,null,{blind:true});
+  assert.equal(picker.pick('diaphragm'),false);
+  const trial=[{}];
+  assert.equal(picker.isolateObjects(trial),trial);
+  picker.updatePin();picker.clear();picker.refresh();
 });
 
 test('a whole-body component link identifies one registered surface on the selected organ',()=>{

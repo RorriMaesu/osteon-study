@@ -104,9 +104,16 @@ export function mountCloseup(host,entry,onReady){
       if(entry.id==='liver'){
         const presets=host.querySelector('[data-orientation]'),standard=presets.onchange;
         presets.options[0].text='Portal inflow · visceral surface';
-        presets.add(new Option('Anterior surface','anterior'),1);
+        presets.add(new Option('Portal vein close-up','portal'),1);
+        presets.add(new Option('Anterior surface','anterior'),2);
         presets.onchange=event=>{
-          if(presets.value==='anterior')resetView([0,.05,1]);
+          if(presets.value==='portal'){
+            viewer.fit(meshes.get('hepatic_portal_vein'),portalView);
+            // Leave some surrounding capsule in the frame for orientation.
+            const center=viewer.controls.target;
+            viewer.camera.position.sub(center).multiplyScalar(1.45).add(center);
+            viewer.controls.update();viewer.invalidate();
+          }else if(presets.value==='anterior')resetView([0,.05,1]);
           else if(presets.value==='home')resetView();
           else standard.call(presets,event);
         };
@@ -114,8 +121,8 @@ export function mountCloseup(host,entry,onReady){
       const motion=createOrganMotion(entry,viewer,meshes);
       const frame=(t,particle)=>{motion.set(t,particle);viewer.invalidate();};
       viewer.addCleanup(()=>motion.dispose?.());
-      picker=mountStructurePicker(host,viewer,entry,meshes,{reveal(group){
-        selectedParts=new Set(group?.meshes);visibility();
+      picker=mountStructurePicker(host,viewer,entry,meshes,{reveal(_group,groups){
+        selectedParts=new Set(groups.flatMap(group=>group.meshes));visibility();
       }});
       viewer.announce('Tap a surface or open Structures to identify it.');
       tapSurface(viewer,()=>picker.isolateObjects(selectable),hits=>{
@@ -132,16 +139,16 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
   const bySurface=new Map(map.organs.flatMap(organ=>organ.targets.map(name=>[name,organ])));
   const meshes=[],localBones=[],materials=new Map(),boneNames=new Set(map.boneNames||[]),contextNames=new Set(map.contextNames||[]);
   const parts=new Map();
-  let selected=null,selectedPart=null,activeParts=null,system='',skeleton=null,bones=true,skeletonLoading=false,closed=false,api,picker;
+  let selected=null,selectedPart=null,activeParts=null,comparedParts=new Set(),system='',skeleton=null,bones=true,skeletonLoading=false,closed=false,api,picker;
   function show(){
     for(const {mesh,organ,raw} of meshes){
-      const match=organ.id===selected&&(!activeParts||activeParts.includes(raw));
-      mesh.visible=(!system||organ.system===system)&&(!organ.contextOnly||organ.id===selected||!!system);
-      for(const {mat,base} of materials.get(mesh)){
-        mat.color.copy(base);if(match)mat.color.set('#ffd06f');
+      const match=comparedParts.has(raw)||(organ.id===selected&&(!activeParts||activeParts.includes(raw)));
+      mesh.visible=(!system||organ.system===system)&&(!organ.contextOnly||organ.id===selected||comparedParts.has(raw)||!!system);
+      for(const {mat,opacity,transparent,depthWrite} of materials.get(mesh)){
         const envelope=/^(skin|integument|body-surface)$/i.test(organ.id);
-        mat.opacity=envelope?(match?.26:.035):selected&&!match?.23:1;
-        mat.transparent=mat.opacity<1;mat.depthWrite=!mat.transparent;
+        const limit=envelope?(match?.26:.035):selected&&!match?.23:1;
+        mat.opacity=Math.min(opacity,limit);
+        mat.transparent=transparent||mat.opacity<1;mat.depthWrite=depthWrite&&mat.opacity===opacity;
       }
     }
     if(skeleton)skeleton.visible=bones;
@@ -188,7 +195,7 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
       return color&&color.getHex()!==0xffffff?color:organSystemColor(organ?.system);
     },onLoad(instance){
       api=instance;addViewMenu(host);
-      function indexLayer(layer,extra=false){layer.traverse(mesh=>{
+      function indexLayer(layer,extraAsset){layer.traverse(mesh=>{
         if(!mesh.isMesh)return;
         const organ=bySurface.get(lookupSurface(mesh,bySurface));
         if(!organ){
@@ -197,19 +204,19 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
           else mesh.visible=false;
           return;
         }
-        if(extra){const original=mesh.material;mesh.material=new THREE.MeshStandardMaterial({color:organSystemColor(organ.system),roughness:.8});api.addCleanup(()=>{for(const mat of [].concat(original))mat.dispose();});}
+        if(extraAsset)api.prepareTissue(mesh,extraAsset,organSystemColor(organ.system));
         const raw=lookupSurface(mesh,bySurface);
         if(!parts.has(raw))parts.set(raw,[]);
         parts.get(raw).push(mesh);
         meshes.push({mesh,organ,raw});mesh.userData.registeredOrgan=organ;
-        materials.set(mesh,[].concat(mesh.material).map(mat=>({mat,base:mat.color.clone()})));
+        materials.set(mesh,[].concat(mesh.material).map(mat=>({mat,opacity:mat.opacity,transparent:mat.transparent,depthWrite:mat.depthWrite})));
       });}
       indexLayer(api.model);
       if(!meshes.length)throw Error('No registered organ surfaces');
       picker=mountStructurePicker(host,api,{id:map.key,title:map.title,targets:[...bySurface.keys()]},parts,{
         terms:group=>{const organ=bySurface.get(group.names[0]);return organ.label+' '+organ.system;},
         eligible:group=>!system||bySurface.get(group.names[0]).system===system,
-        reveal(group){activeParts=group?.names||null;if(group){selectedPart=group.names[0];selected=bySurface.get(selectedPart).id;}else selectedPart=null;show();},
+        reveal(group,groups){activeParts=group?.names||null;comparedParts=new Set(groups.flatMap(item=>item.names));if(group){selectedPart=group.names[0];selected=bySurface.get(selectedPart).id;}else selectedPart=null;show();},
         onSelect(group){interacted=true;onPick(group?bySurface.get(group.names[0]):null,group?.names[0]);}
       });
       show();whole();
@@ -219,7 +226,7 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
       },()=>{interacted=true;});
       host.querySelector('[data-recenter]').onclick=()=>{host.querySelector('[data-orientation]').value='home';whole();};
       loadSkeleton();onReady();
-      for(const extra of map.extraAssets||[]){api.loadLayer(extra).then(layer=>{if(closed)return;indexLayer(layer,true);picker.refresh();show();if(!interacted)whole();onReady();}).catch(()=>{if(!closed)onLayerError('The additional urinary surfaces could not load. Reopen this preparation to retry.');});}
+      for(const extra of map.extraAssets||[]){api.loadLayer(extra).then(layer=>{if(closed)return;indexLayer(layer,extra);picker.refresh();show();if(!interacted)whole();onReady();}).catch(()=>{if(!closed)onLayerError('The additional urinary surfaces could not load. Reopen this preparation to retry.');});}
     }});
   return {select,setSystem,has(id){return meshes.some(p=>p.organ.id===id);},showSkeleton(on){bones=on;if(on)loadSkeleton();show();},
     focus(){interacted=true;if(api&&selected)frame(meshes.filter(o=>o.organ.id===selected&&(!activeParts||activeParts.includes(o.raw))).map(o=>o.mesh),api.camera.position.clone().sub(api.controls.target));},

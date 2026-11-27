@@ -2,71 +2,108 @@ import * as THREE from 'three';
 import {makeCourseSearch} from './ap2-term-search.js';
 import {organStructureGroups} from './organ-structure-names.js';
 
-// Selected meshes get a separate render layer so studying a deep structure
-// never changes its phase, tissue material or the learner's camera position.
 const studyLayer=30;
+const visibleInScene=mesh=>{
+  for(let node=mesh;node;node=node.parent)if(!node.visible)return false;
+  return true;
+};
+function element(tag,className,parent){
+  const el=document.createElement(tag);
+  if(className)el.className=className;
+  parent.append(el);
+  return el;
+}
+function markRole(el,role){
+  el.style.setProperty('--oa-role',role.color);
+  el.dataset.symbol=role.symbol;
+}
+function newPin(viewport){
+  const el=element('div','oa-surface-pin',viewport);
+  el.hidden=true;el.setAttribute('aria-hidden','true');
+  const leader=element('i','oa-pin-leader',el);
+  const caption=element('span','oa-pin-caption',el);
+  return {el,leader,caption};
+}
+
 export function mountStructurePicker(host,viewer,entry,meshes,options={}){
-  let byRaw,search;
-  function index(){
-    const lookup=organStructureGroups(entry,meshes,options.describe);
-    if(options.terms)for(const group of lookup.groups)group.terms+=' '+options.terms(group);
-    byRaw=lookup.byRaw;search=makeCourseSearch(lookup.groups);
-  }
-  index();
+  if(options.blind)return {updatePin(){},pick(){return false;},clear(){},refresh(){},isolateObjects:objects=>objects};
   const bar=host.querySelector('.organ-tools'),viewport=host.querySelector('.organ-viewport');
-  const open=document.createElement('button');
-  open.type='button';open.textContent='Structures';open.setAttribute('aria-haspopup','dialog');
-  open.dataset.oaStructures='';bar.prepend(open);
-  const dialog=document.createElement('dialog');dialog.className='oa-structure-dialog';
-  dialog.setAttribute('aria-label','Find a structure in '+entry.title);
-  dialog.innerHTML='<header><strong>Structures in this view</strong><button type="button" data-close aria-label="Close structures">×</button></header><input type="search" aria-label="Find a structure" placeholder="Find a structure" autocomplete="off"><small role="status"></small><div class="oa-structure-results"></div><footer><label><input type="checkbox" data-label checked> Show label</label><label><input type="checkbox" data-solo> Isolate selection</label><button type="button" data-clear>Clear selection</button></footer>';
-  host.append(dialog);
+  const open=element('button','',bar);bar.prepend(open);
+  open.type='button';open.textContent='Structures';open.setAttribute('aria-haspopup','dialog');open.dataset.oaStructures='';
+  const dialog=element('dialog','oa-structure-dialog',host);dialog.setAttribute('aria-label','Find a structure in '+entry.title);
+  dialog.innerHTML='<header><strong>Structures in this view</strong><button type="button" data-close aria-label="Close structures">×</button></header><input type="search" aria-label="Find a structure" placeholder="Find a structure" autocomplete="off"><small role="status"></small><div class="oa-structure-results"></div><div class="oa-label-settings"><label><input type="checkbox" data-label checked> Anatomy labels</label><label><input type="checkbox" data-colors checked> Category colors</label><label><input type="checkbox" data-compare> Compare structures</label><label hidden><input type="checkbox" data-process-label checked> Process labels</label><label hidden><input type="checkbox" data-process-markers checked> Process markers</label><label><input type="checkbox" data-solo> Isolate selection</label></div><details class="oa-local-key"><summary>Label key</summary><div></div></details><footer><button type="button" data-focus-surface>Focus selection</button><button type="button" data-clear>Clear selection</button></footer>';
   const filter=dialog.querySelector('input[type=search]'),results=dialog.querySelector('.oa-structure-results'),status=dialog.querySelector('[role=status]');
   const label=dialog.querySelector('[data-label]'),solo=dialog.querySelector('[data-solo]'),clear=dialog.querySelector('[data-clear]');
-  const focus=document.createElement('button');focus.type='button';focus.textContent='Focus selection';focus.dataset.focusSurface='';clear.before(focus);
-  const isolate=document.createElement('button');
-  isolate.type='button';isolate.className='oa-quick-isolate';isolate.hidden=true;viewport.append(isolate);
-  const pin=document.createElement('div'),caption=document.createElement('span');
-  pin.className='oa-surface-pin';pin.append(caption);pin.hidden=true;pin.setAttribute('aria-hidden','true');viewport.append(pin);
-  const glow=new THREE.MeshBasicMaterial({color:0xffc76e,transparent:true,opacity:.36,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2,side:THREE.DoubleSide});
-  const savedMasks=new Map(),overlays=[],point=new THREE.Vector3();
-  const world=new THREE.Vector3(),origin=new THREE.Vector3(),toward=new THREE.Vector3();
-  const occlusionRay=new THREE.Raycaster(),occlusionMeshes=[];
-  let lastCheck=0,recheck;
-  const triangle=new THREE.Triangle(),weights=new THREE.Vector3();
-  function readTriangle(mesh,face){
-    mesh.getVertexPosition(face.a,triangle.a);mesh.getVertexPosition(face.b,triangle.b);mesh.getVertexPosition(face.c,triangle.c);
+  const compare=dialog.querySelector('[data-compare]'),colors=dialog.querySelector('[data-colors]'),process=dialog.querySelector('[data-process-label]');
+  const focus=dialog.querySelector('[data-focus-surface]'),key=dialog.querySelector('.oa-local-key div');
+  const markers=dialog.querySelector('[data-process-markers]');
+  const processMaterials=new Set(),markerMaterials=new Set();
+  viewer.scene.traverse(obj=>{
+    if(obj.userData.organProcessLabel)processMaterials.add(obj.material);
+    if(obj.userData.organProcessMarker)markerMaterials.add(obj.material);
+  });
+  process.parentElement.hidden=!processMaterials.size&&!viewport.querySelector('[data-process-caption]');
+  process.onchange=()=>{
+    for(const material of processMaterials)material.visible=process.checked;
+    viewport.classList.toggle('oa-hide-process-captions',!process.checked);viewer.invalidate();
+  };
+  markers.parentElement.hidden=!markerMaterials.size;
+  markers.onchange=()=>{for(const material of markerMaterials)material.visible=markers.checked;viewer.invalidate();};
+  const isolate=element('button','oa-quick-isolate',viewport);
+  isolate.type='button';isolate.hidden=true;
+  const dock=element('div','oa-compare-key',bar);dock.hidden=true;dock.setAttribute('role','group');dock.setAttribute('aria-label','Compared structures');
+  const pins=Array.from({length:3},()=>newPin(viewport));
+  const narrow=window.matchMedia('(max-width: 700px)');
+  const limit=()=>narrow.matches?2:3;
+  let byRaw,groups,search,selected=[],lastMessage='',lastCheck=0,recheck;
+  const active=()=>selected.at(-1)?.group;
+  function index(){
+    ({byRaw,groups}=organStructureGroups(entry,meshes,options.describe));
+    if(options.terms)for(const group of groups)group.terms+=' '+options.terms(group);
+    search=makeCourseSearch(groups);
   }
-  const cameraMask=viewer.camera.layers.mask;
-  let active=null,anchor=null;
-  function includesVisible(mesh){for(let n=mesh;n;n=n.parent)if(!n.visible)return false;return true;}
+  index();
+  const point=new THREE.Vector3(),world=new THREE.Vector3(),origin=new THREE.Vector3(),toward=new THREE.Vector3();
+  const ray=new THREE.Raycaster(),triangle=new THREE.Triangle(),weights=new THREE.Vector3();
+  const savedMasks=new Map(),cameraMask=viewer.camera.layers.mask;
+  const allSelected=()=>[...new Set(selected.flatMap(s=>s.group.meshes))];
   function resetLayer(){
     viewer.camera.layers.mask=cameraMask;
-    for(const [object,mask] of savedMasks)object.layers.mask=mask;
+    for(const [obj,mask] of savedMasks)obj.layers.mask=mask;
     savedMasks.clear();
   }
   function setLayer(){
     resetLayer();
-    isolate.hidden=!active;
-    isolate.textContent=solo.checked?'Show context':'Isolate part';
+    isolate.hidden=!selected.length;
+    isolate.textContent=solo.checked?'Show context':selected.length>1?'Isolate parts':'Isolate part';
     isolate.setAttribute('aria-pressed',String(solo.checked));
-    isolate.setAttribute('aria-label',solo.checked?'Show anatomy around '+active?.title:'Isolate '+(active?.title||'selected structure'));
-    if(active&&solo.checked){
-      viewer.scene.traverse(obj=>{if(obj.isLight){savedMasks.set(obj,obj.layers.mask);obj.layers.enable(studyLayer);}});
-      for(const mesh of [...active.meshes,...overlays]){savedMasks.set(mesh,mesh.layers.mask);mesh.layers.enable(studyLayer);}
+    isolate.setAttribute('aria-label',solo.checked?'Show surrounding anatomy':selected.length>1?'Isolate compared structures':'Isolate '+(active()?.title||'selection'));
+    if(selected.length&&solo.checked){
+      const isolated=allSelected();
+      viewer.scene.traverse(obj=>{if(obj.isLight)isolated.push(obj);});
+      for(const obj of isolated){savedMasks.set(obj,obj.layers.mask);obj.layers.enable(studyLayer);}
       viewer.camera.layers.set(studyLayer);
     }
-    viewer.invalidate();
+    lastCheck=0;viewer.invalidate();
   }
   function chooseSurface(mesh){
-    const bounds=new THREE.Box3().setFromObject(mesh);
-    const center=bounds.getCenter(new THREE.Vector3()),origin=viewer.camera.position;
-    const ray=new THREE.Raycaster(origin,center.sub(origin).normalize());
+    const bounds=new THREE.Box3().setFromObject(mesh),center=bounds.getCenter(new THREE.Vector3());
+    ray.set(viewer.camera.position,center.sub(viewer.camera.position).normalize());ray.far=Infinity;ray.layers.mask=mesh.layers.mask;
     const hit=ray.intersectObject(mesh,false)[0];
-    return {object:mesh,point:hit?.point||mesh.localToWorld(mesh.getVertexPosition(0,new THREE.Vector3())),face:hit?.face};
+    return hit||{object:mesh,point:mesh.localToWorld(mesh.getVertexPosition(0,new THREE.Vector3()))};
   }
-  function locateAnchor(){
-    if(!anchor||!includesVisible(anchor.mesh))return false;
+  function readTriangle(mesh,face){
+    mesh.getVertexPosition(face.a,triangle.a);mesh.getVertexPosition(face.b,triangle.b);mesh.getVertexPosition(face.c,triangle.c);
+  }
+  function makeAnchor(group,hit){
+    const source=hit||chooseSurface(group.meshes.find(visibleInScene)||group.meshes[0]);
+    const local=source.object.worldToLocal(source.point.clone());
+    if(source.face)readTriangle(source.object,source.face);
+    const valid=source.face&&triangle.getBarycoord(local,weights);
+    return {mesh:source.object,local,face:valid?source.face:null,geometry:source.object.geometry,weights:weights.clone()};
+  }
+  function locate(anchor){
+    if(!anchor||!visibleInScene(anchor.mesh))return false;
     if(anchor.face&&anchor.geometry===anchor.mesh.geometry){
       readTriangle(anchor.mesh,anchor.face);
       point.copy(triangle.a).multiplyScalar(anchor.weights.x).addScaledVector(triangle.b,anchor.weights.y).addScaledVector(triangle.c,anchor.weights.z);
@@ -74,76 +111,144 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
     world.copy(anchor.mesh.localToWorld(point));point.project(viewer.camera);
     return point.z>=-1&&point.z<=1&&Math.abs(point.x)<=1&&Math.abs(point.y)<=1;
   }
-  function checkOcclusion(){
+  function opaque(mat){return mat?.visible&&(!mat.transparent||mat.opacity>=.75);}
+  function covered(candidates){
     viewer.camera.getWorldPosition(origin);
     const distance=toward.subVectors(world,origin).length();
     if(!distance)return false;
-    occlusionRay.set(origin,toward.normalize());occlusionRay.far=distance*(1-1e-4);
-    occlusionRay.layers.mask=viewer.camera.layers.mask;occlusionMeshes.length=0;
-    for(const parts of meshes.values())for(const mesh of parts){
-      if(includesVisible(mesh)&&[].concat(mesh.material).some(m=>m.visible&&(!m.transparent||m.opacity>=.75)))occlusionMeshes.push(mesh);
-    }
-    const hits=occlusionRay.intersectObjects(occlusionMeshes,false);
-    return hits.some(hit=>{
-      const material=Array.isArray(hit.object.material)?hit.object.material[hit.face.materialIndex]:hit.object.material;
-      return material?.visible&&(!material.transparent||material.opacity>=.75)&&!material.clippingPlanes?.some(p=>p.distanceToPoint(hit.point)<0);
+    ray.set(origin,toward.normalize());ray.far=distance*(1-1e-4);ray.layers.mask=viewer.camera.layers.mask;
+    return ray.intersectObjects(candidates,false).some(hit=>{
+      const mat=Array.isArray(hit.object.material)?hit.object.material[hit.face.materialIndex]:hit.object.material;
+      return opaque(mat)&&!mat.clippingPlanes?.some(p=>p.distanceToPoint(hit.point)<0);
     });
   }
+  // Place tags inside the canvas, clear of the isolate control and earlier tags.
+  // Comparing shows short numbered tags; their full names sit outside the image.
+  function place(pin,x,y,width,height,occupied){
+    // Text layout only changes when the caption, its state, or the viewport changes.
+    // Avoid a layout read after each pin write while an organ or camera is moving.
+    const sizeKey=[width,pin.caption.textContent,pin.caption.dataset.detail,pin.caption.dataset.symbol].join('|');
+    if(pin.sizeKey!==sizeKey){
+      pin.width=pin.caption.offsetWidth;pin.height=pin.caption.offsetHeight;pin.sizeKey=sizeKey;
+    }
+    const w=pin.width,h=pin.height;
+    const clamp=(v,max)=>Math.max(2,Math.min(v,max-2)),gap=14;
+    const right=width/2>x,above=height/2<y;
+    let left,top;
+    for(const [r,a] of [[right,above],[!right,above],[right,!above],[!right,!above]]){
+      left=clamp(r?x+gap:x-gap-w,width-w);top=clamp(a?y-gap-h:y+gap,height-h);
+      if(!occupied.some(b=>left<b.r+2&&left+w>b.l-2&&top<b.b+2&&top+h>b.t-2))break;
+    }
+    occupied.push({l:left,t:top,r:left+w,b:top+h});
+    const dx=left-x,dy=top-y,ex=Math.max(dx,Math.min(0,dx+w)),ey=Math.max(dy,Math.min(0,dy+h));
+    pin.el.style.left=x+'px';pin.el.style.top=y+'px';
+    pin.caption.style.left=dx+'px';pin.caption.style.top=dy+'px';
+    pin.leader.style.width=Math.hypot(ex,ey)+'px';pin.leader.style.transform='rotate('+Math.atan2(ey,ex)+'rad)';
+  }
   function updatePin(){
-    if(!label.checked||!locateAnchor()){pin.hidden=true;return;}
-    pin.hidden=false;pin.style.left=(50+point.x*50)+'%';pin.style.top=(50-point.y*50)+'%';
-    pin.classList.toggle('oa-pin-left',point.x>0);pin.classList.toggle('oa-pin-down',point.y>.55);
-    const now=performance.now();
-    if(!lastCheck||now-lastCheck>=160){
-      pin.classList.toggle('oa-pin-covered',checkOcclusion());lastCheck=now;
-      clearTimeout(recheck);recheck=null;
-    }else if(!recheck)recheck=setTimeout(()=>{recheck=null;viewer.invalidate();},165-(now-lastCheck));
+    if(!selected.length||!label.checked){for(const pin of pins)pin.el.hidden=true;return;}
+    const width=viewport.clientWidth,height=viewport.clientHeight,now=performance.now(),due=!lastCheck||now-lastCheck>=180;
+    const occupied=isolate.hidden?[]:[{l:isolate.offsetLeft,t:isolate.offsetTop,r:isolate.offsetLeft+isolate.offsetWidth,b:isolate.offsetTop+isolate.offsetHeight}];
+    let candidates;
+    if(due){
+      candidates=[];
+      for(const parts of meshes.values())for(const mesh of parts)if(mesh.layers.test(viewer.camera.layers)&&visibleInScene(mesh)&&[].concat(mesh.material).some(opaque))candidates.push(mesh);
+      lastCheck=now;clearTimeout(recheck);recheck=null;
+    }else if(!recheck)recheck=setTimeout(()=>{recheck=null;viewer.invalidate();},185-(now-lastCheck));
+    for(const [i,pin] of pins.entries()){
+      const record=selected[i],onscreen=record&&locate(record.anchor);pin.el.hidden=!onscreen;
+      if(!record)continue;
+      if(onscreen){
+        if(due)record.covered=covered(candidates);
+        pin.el.classList.toggle('oa-pin-covered',!!record.covered);
+        const detail=selected.length>1?'':record.group.role.title+(record.covered?' · Behind surface':'');
+        if(pin.caption.dataset.detail!==detail)pin.caption.dataset.detail=detail;
+        place(pin,(point.x+1)*width/2,(1-point.y)*height/2,width,height,occupied);
+      }
+      const condition=!onscreen?'Out of view':record.covered?'Behind surface':'';
+      if(record.key&&record.key.dataset.condition!==condition)record.key.dataset.condition=condition;
+      if(i===selected.length-1){
+        const words=[record.group.title,record.group.role.title,condition].filter(Boolean);
+        if(selected.length>1)words.push('Comparing '+selected.length+' structures');
+        announce(words.join(' · '));
+      }
+    }
+  }
+  function announce(text){if(text!==lastMessage){lastMessage=text;viewer.announce(text);}}
+  function showSelection(){
+    const compared=selected.length>1;
+    host.classList.toggle('oa-has-comparison',compared&&label.checked);
+    dock.replaceChildren();dock.hidden=!(label.checked&&compared);
+    for(const [i,record] of selected.entries()){
+      const {group}=record,pin=pins[i];
+      markRole(pin.el,group.role);pin.caption.dataset.symbol=group.role.symbol;pin.caption.textContent=compared?String(i+1):group.title;
+      pin.el.classList.toggle('oa-pin-number',compared);
+      if(compared){
+        const button=element('button','',dock);button.type='button';button.textContent=(i+1)+'. '+group.title;
+        markRole(button,group.role);button.setAttribute('aria-label','Remove '+group.title+' from comparison');button.title='Remove from comparison';
+        button.onclick=()=>{applySelection(selected.filter(item=>item!==record));open.focus();};record.key=button;
+      }else record.key=null;
+    }
+    setLayer();updatePin();renderList();
+    if(!label.checked&&active())announce(active().title+' selected. Anatomy labels hidden.');
+  }
+  function applySelection(records,hit,notify=true){
+    resetLayer();selected=records;
+    const group=active()||null;
+    options.reveal?.(group,records.map(item=>item.group));
+    if(notify)options.onSelect?.(group,hit);
+    for(const rec of selected)if(!rec.anchor)rec.anchor=makeAnchor(rec.group,rec.hit);
+    if(!group){solo.checked=false;announce('Tap a surface or open Structures to identify it.');}
+    showSelection();
   }
   function select(group,hit,notify=true){
-    resetLayer();
-    for(const mesh of overlays)mesh.removeFromParent();
-    overlays.length=0;active=group;anchor=null;lastCheck=0;clearTimeout(recheck);recheck=null;
-    options.reveal?.(group);
-    if(notify)options.onSelect?.(group,hit);
-    if(group){
-      const source=hit||chooseSurface(group.meshes.find(includesVisible)||group.meshes[0]);
-      const local=source.object.worldToLocal(source.point.clone()),face=source.face;
-      // Keep the exact point inside its triangle as that triangle moves.
-      if(face)readTriangle(source.object,face);
-      const valid=face&&triangle.getBarycoord(local,weights);
-      anchor={mesh:source.object,local,face:valid?face:null,geometry:source.object.geometry,weights:weights.clone()};
-      for(const mesh of group.meshes){
-        const overlay=new THREE.Mesh(mesh.geometry,glow);overlay.raycast=()=>{};
-        overlay.morphTargetInfluences=mesh.morphTargetInfluences;overlay.renderOrder=mesh.renderOrder+1;
-        mesh.add(overlay);overlays.push(overlay);
-      }
-      caption.textContent=group.title;viewer.announce(group.title);
-      if(!hit&&!locateAnchor())viewer.fit(group.meshes.filter(includesVisible),viewer.camera.position.clone().sub(viewer.controls.target));
-    }else {solo.checked=false;viewer.announce('Tap a surface or open Structures to identify it.');}
-    setLayer();updatePin();renderList();
+    const was=selected.find(r=>r.group===group);
+    const retained=compare.checked&&group?selected.filter(r=>r!==was).slice(1-limit()):[];
+    const current=group?(was&&!hit?was:{group,hit}):null;
+    applySelection(current?[...retained,current]:[],hit,notify);
+    if(current&&!hit&&!locate(current.anchor))viewer.fit(allSelected(),viewer.camera.position.clone().sub(viewer.controls.target));
   }
   function renderList(){
     const {items,suggestion}=search(filter.value,options.eligible);
     results.replaceChildren();
     for(const item of items){
-      const button=document.createElement('button');button.type='button';button.textContent=item.title;button.setAttribute('aria-pressed',String(item===active));
-      button.onclick=()=>{select(item);dialog.close();};results.append(button);
+      const button=element('button','',results);
+      button.type='button';button.textContent=item.title;button.setAttribute('aria-label',item.title);markRole(button,item.role);
+      button.setAttribute('aria-pressed',String(selected.some(rec=>rec.group===item)));
+      button.onclick=()=>{select(item);dialog.close();};
     }
     status.textContent=items.length?(suggestion?'Showing matches for “'+suggestion+'” · ':'')+items.length+' structures':'No matching structure in this view.';
-    focus.disabled=solo.disabled=clear.disabled=!active;
+    key.replaceChildren();
+    const local=new Set(groups.filter(options.eligible||(()=>true)).map(group=>group.role));
+    for(const role of local){const el=element('span','',key);markRole(el,role);el.textContent=role.title;}
+    focus.disabled=solo.disabled=clear.disabled=!selected.length;
+    compare.parentElement.title='Keep up to '+limit()+' structures. A new selection replaces the oldest when full.';
   }
   filter.oninput=renderList;clear.onclick=()=>{select(null);dialog.close();};
-  solo.onchange=setLayer;label.onchange=()=>{updatePin();viewer.invalidate();};
-  isolate.onclick=()=>{solo.checked=!solo.checked;lastCheck=0;setLayer();updatePin();};
-  focus.onclick=()=>{if(active){viewer.fit(active.meshes,viewer.camera.position.clone().sub(viewer.controls.target));dialog.close();}};
+  solo.onchange=()=>{setLayer();updatePin();};
+  label.onchange=showSelection;
+  colors.onchange=()=>host.classList.toggle('oa-neutral-marks',!colors.checked);
+  compare.onchange=()=>{if(!compare.checked&&selected.length>1)applySelection(selected.slice(-1),null,false);};
+  function resize(){if(selected.length>limit())applySelection(selected.slice(-limit()),null,false);else viewer.invalidate();}
+  narrow.addEventListener('change',resize);
+  isolate.onclick=()=>{solo.checked=!solo.checked;solo.onchange();};
+  focus.onclick=()=>{if(active()){viewer.fit(allSelected(),viewer.camera.position.clone().sub(viewer.controls.target));dialog.close();}};
   open.onclick=()=>{filter.value='';renderList();dialog.showModal();filter.focus();};
   dialog.querySelector('[data-close]').onclick=()=>dialog.close();
   dialog.addEventListener('keydown',ev=>{if(ev.key==='Escape'){ev.preventDefault();ev.stopPropagation();dialog.close();}});
   dialog.onclose=()=>{if(open.isConnected)open.focus();};
-  viewer.addCleanup(()=>{clearTimeout(recheck);resetLayer();for(const overlay of overlays)overlay.removeFromParent();glow.dispose();pin.remove();isolate.remove();dialog.remove();open.remove();});
+  viewer.addCleanup(()=>{
+    clearTimeout(recheck);narrow.removeEventListener('change',resize);resetLayer();host.classList.remove('oa-neutral-marks','oa-has-comparison');
+    viewport.classList.remove('oa-hide-process-captions');
+    for(const pin of pins)pin.el.remove();dock.remove();isolate.remove();dialog.remove();open.remove();
+  });
   return {updatePin,
     pick(raw,hit,notify=true){if(byRaw.has(raw)){select(byRaw.get(raw),hit,notify);return true;}return false;},
-    clear(){if(active)select(null,null,false);},
-    refresh(){const raw=active?.names[0];index();if(raw)select(byRaw.get(raw),null,false);else if(dialog.open)renderList();},
-    isolateObjects(objects){return active&&solo.checked?active.meshes:objects;}};
+    clear(){if(selected.length)select(null,null,false);},
+    refresh(){
+      index();
+      if(selected.length)applySelection(selected.flatMap(r=>{const group=byRaw.get(r.group.names[0]);return group?[{...r,group}]:[];}),null,false);
+      else if(dialog.open)renderList();
+    },
+    isolateObjects(objects){return selected.length&&solo.checked?allSelected():objects;}};
 }

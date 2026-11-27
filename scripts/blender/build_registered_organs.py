@@ -15,6 +15,7 @@ import uuid
 import zipfile
 from pathlib import Path
 
+import bmesh
 import bpy
 import numpy as np
 
@@ -48,22 +49,48 @@ def safeguard(path):
     return digest
 
 
+def divide_left_bowel(objects, height):
+    # Divide the decimated *working copy* before glTF flattens its loop data.
+    # bmesh interpolates UVs/colors at the cut and keeps per-face material slots.
+    by_name = {obj.name: obj for obj in objects}
+    graph = bpy.context.evaluated_depsgraph_get()
+    source = bpy.data.meshes.new_from_object(by_name["descending_colon"].evaluated_get(graph),
+        preserve_all_data_layers=True, depsgraph=graph)
+    for name, distal in (("descending_colon", False), ("sigmoid_colon", True)):
+        target = by_name[name]
+        bm = bmesh.new()
+        try:
+            bm.from_mesh(source)
+            bmesh.ops.bisect_plane(bm, geom=list(bm.verts)+list(bm.edges)+list(bm.faces),
+                plane_co=(0, 0, height), plane_no=(0, 0, 1), dist=1e-8,
+                clear_outer=distal, clear_inner=not distal)
+            if not bm.faces:
+                raise ValueError("Bowel split missed " + name)
+            bm.normal_update()
+            result = source.copy()
+            bm.to_mesh(result)
+            target.modifiers.clear()
+            target.data = result
+        finally:
+            bm.free()
+    bpy.data.meshes.remove(source)
+
+
 def publish(objects):
+    if mode == 'registered':
+        # Every registered copy already has its source world transform baked in.
+        # Blender +Z maps to glTF +Y (superior).
+        divide_left_bowel(objects, .960)
     bpy.ops.object.select_all(action="DESELECT")
     for obj in objects:
         obj.select_set(True)
     staged = asset_dir / (data_name + "-" + uuid.uuid4().hex + ".glb")
     bpy.ops.export_scene.gltf(filepath=str(staged), export_format="GLB", use_selection=True,
         use_active_scene=True, export_apply=True, export_yup=True,
-        export_materials="NONE", export_cameras=False, export_lights=False, export_animations=False)
+        export_materials="EXPORT", export_texcoords=True, export_normals=True, export_tangents=True,
+        export_cameras=False, export_lights=False, export_animations=False)
     if staged.stat().st_size < 10000:
         raise RuntimeError("Incomplete export")
-    if mode == 'registered':
-        import runpy
-        segmented = staged.with_suffix('.segmented.glb')
-        prepare = runpy.run_path(str(Path(__file__).with_name('prepare-colorectal-reference.py')))
-        prepare['split_left_bowel'](staged,segmented,.960)
-        segmented.replace(staged)
     staged.replace(output)
 
 
@@ -145,7 +172,7 @@ def bp_geometry(key):
 
 def z_mesh(label):
     obj = source_objects[label].evaluated_get(graph)
-    geo = bpy.data.meshes.new_from_object(obj, depsgraph=graph)
+    geo = bpy.data.meshes.new_from_object(obj, preserve_all_data_layers=True, depsgraph=graph)
     geo.transform(obj.matrix_world)
     if not geo.polygons:
         raise ValueError(f"Missing anatomical surface: {label}")

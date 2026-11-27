@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {showOrganSelection} from './organ-selection-label.js';
 import {ConvexGeometry} from 'three/addons/geometries/ConvexGeometry.js';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {makeMitralSupports,isMitralSupport,papillaryName} from './ap2-mitral-supports.js';
@@ -118,7 +119,7 @@ export function mountSpecimen(lab,kind,linked=false) {
       const opposite=m==='supports'&&['anterolateral','posteromedial'].includes(group)&&n.includes('papillary')&&n!==papillaryName(group);
       const dim=opposite||(focus && !isFocus), translucent=dim || m==='conduction' || m==='motion' || (m==='thorax' && !/wall_of/.test(n)) || (m==='leg' && !/artery/.test(n)) || (!isFocus&&n.startsWith('context_'));
       const timeColor=linked&&!focus&&m!=='supports'&&cardiacValves.some(v=>n==='VH_M_'+v.key+'_valve'&&clockState[v.key]);
-      mat.color.set(isFocus?'#ffd977':timeColor?'#8fdbc8':nameColor(n));
+      mat.color.set(isFocus&&(question||!names.checked)?'#ffd977':timeColor?'#8fdbc8':nameColor(n));
       mat.transparent=Boolean(translucent);
       mat.opacity=dim?.12:(m==='conduction'||m==='motion')?.13:translucent?.32:1;
       mat.depthWrite=!translucent;mat.side=THREE.DoubleSide;
@@ -158,7 +159,8 @@ export function mountSpecimen(lab,kind,linked=false) {
     get('spot-start').disabled=!ready;get('focus-structure').disabled=!focus;
     if(!names.checked||question)get('specimen-note').hidden=true;
     else get('specimen-note').hidden=false;
-    get('target-name').textContent=focus?(names.checked&&!question?structureName(focus):namesOff):'';
+    if(focus&&names.checked&&!question)showOrganSelection(get('target-name'),{id:kind},focus,structureName(focus));
+    else get('target-name').textContent=focus?namesOff:'';
     api?.invalidate();
   }
   function choices() {

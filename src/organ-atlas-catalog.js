@@ -13,8 +13,7 @@ import {fluidExchangeOrgans} from './organ-motion-fluid-exchange.js';
 import registration from './organ-atlas-assets.json' with {type:'json'};
 import studySurfaces from './organ-study-surfaces.json' with {type:'json'};
 
-const colors={digestive:'#d5956e',urinary:'#bd7992',reproductive:'#be89b5',respiratory:'#c18c99',endocrine:'#e4ae65',nervous:'#d7b686',lymphatic:'#85aa86',cardiovascular:'#bd6974',sensory:'#8fb4bd',integumentary:'#d0a387'};
-export function organSystemColor(name){return colors[name?.toLowerCase()]||'#ca967f';}
+export {organSystemColor} from './organ-label-roles.js';
 export const bodyAtlas=registration;
 export const organMotions=[adiposeLipolysis,...developmentMotions,...visceralOrgans,...regulationOrgans,...exchangeOrgans,...skinOrgans,...acidBaseOrgans,follicleMotion,...fluidExchangeOrgans,...accessoryGlandOrgans,dentition,vulvarPerfusion].sort((a,b)=>a.title.localeCompare(b.title));
 for(const entry of organMotions)entry.studyOnly=studySurfaces[entry.id]||[];

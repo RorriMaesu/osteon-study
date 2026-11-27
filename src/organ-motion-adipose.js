@@ -84,6 +84,7 @@ export function mountAdiposeLipolysis(entry,viewer,meshes){
     const edgeMaterial=new THREE.MeshBasicMaterial({color:'#473a30',side:THREE.BackSide,depthTest:false,depthWrite:false});
     mats.push(edgeMaterial);
     const edge=new THREE.Mesh(marker.geometry,edgeMaterial);edge.scale.setScalar(1.22);edge.renderOrder=7;
+    marker.userData.organProcessMarker=edge.userData.organProcessMarker=true;
     marker.add(edge);
     const offset=(i-1.5)*.038;
     const path=[cell.clone().add(new THREE.Vector3(offset,.02,.10)),

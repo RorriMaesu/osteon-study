@@ -1,4 +1,5 @@
 import {DoubleSide,Raycaster,Vector2} from 'three';
+import {rememberOrganTeachingColor} from './organ-tissue-material.js';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {addSideGuide} from './ap2-side-guide.js';
 import {cellularNeuralRegions} from './ap2-cellular-neural-regions.js';
@@ -132,6 +133,7 @@ export function startNeuralRegion(panel,kind){
       const selected=i===index,dim=i!==-1&&!selected;
       mesh.visible=!(dim&&alone.checked);
       for(const material of [].concat(mesh.material)){
+        rememberOrganTeachingColor(material,spec.parts[index].color);
         material.color.set(selected?'#ffd880':quiz?'#92a5ac':spec.parts[index].color);
         material.transparent=dim;material.opacity=dim?.11:1;material.depthWrite=!dim;material.side=DoubleSide;
       }

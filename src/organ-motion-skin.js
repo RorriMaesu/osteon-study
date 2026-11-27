@@ -67,6 +67,7 @@ function mountLabel(viewer){
   const ns='http://www.w3.org/2000/svg';
   const node=name=>document.createElementNS(ns,name);
   const svg=node('svg'),line=node('line'),dot=node('circle'),box=node('rect'),label=node('text');
+  svg.setAttribute('data-process-caption','');
   svg.setAttribute('aria-hidden','true');svg.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden';
   const previous=viewport.style.position;
   if(getComputedStyle(viewport).position==='static')viewport.style.position='relative';
@@ -119,6 +120,7 @@ export function mountSkinMotion(entry,viewer,meshes){
   const markerMat=new THREE.MeshBasicMaterial({color:sweat?'#64e4f4':'#ffd46a',depthTest:false,depthWrite:false,toneMapped:false});
   const geometry=new THREE.SphereGeometry(1,16,10);
   const bead=new THREE.Mesh(geometry,markerMat);bead.renderOrder=6;bead.visible=false;
+  if(!pilo)bead.userData.organProcessMarker=true;
   const cutawayName=sweat?'Sweat':oil?'Sebum':'Hair';
   bead.name=cutawayName+' process marker';viewer.scene.add(bead);
   const accents=new THREE.Color(pilo?'#d67c80':sweat?'#64d4de':'#f0b854');

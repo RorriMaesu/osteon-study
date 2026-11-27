@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
+import {showOrganSelection} from './organ-selection-label.js';
 
 // Only geometry from the same BodyParts3D 4.0 donor belongs in this scene.
 const layers={
@@ -83,25 +84,25 @@ export function mountBodySystems(parent){
     for(const [key,objects] of Object.entries(groups))for(const obj of objects){
       const chosen=selected===obj.name||(selected==='heart'&&key==='heart');
       obj.visible=checked(key)&&(!isolated||chosen);
-      const mat=obj.material;
-      mat.color.set(chosen?'#ffe391':obj.userData.bodyColor);
       const context=key==='skeleton'||key==='skin'&&!chosen, muted=selected&&!chosen;
-      mat.transparent=Boolean(context||muted);
-      mat.opacity=context?(key==='skin'?.1:selected?.11:.25):muted?.21:1;
-      mat.depthWrite=!mat.transparent;obj.renderOrder=chosen?2:0;
+      for(const mat of [].concat(obj.material)){
+        mat.transparent=Boolean(context||muted);
+        mat.opacity=context?(key==='skin'?.1:selected?.11:.25):muted?.21:1;
+        mat.depthWrite=!mat.transparent;
+      }
+      obj.renderOrder=chosen?2:0;
     }
     get('center').disabled=!selected||!loaded.has(structures[selected][0]);
     const isolate=get('isolate');isolate.disabled=get('center').disabled;isolate.textContent=isolated?'Show neighbors':'Isolate selection';isolate.setAttribute('aria-pressed',String(isolated));
-    info.textContent=selected?structures[selected][1]+' · '+structures[selected][2]:'Select a structure by name or tap it on the model.';
+    if(selected)showOrganSelection(info,{id:'body'},selected,structures[selected][1],structures[selected][2]);
+    else info.textContent='Select a structure by name or tap it on the model.';
     api?.invalidate();note();
   }
-  function mark(object,key){
-    const original=object.material;
-    const color=object.name.endsWith('_kidney')?'#b18175':key==='heart'&&object.name.includes('right')?'#9e7898':layers[key].color;
-    object.userData.bodyColor=color;
-    object.material=new THREE.MeshStandardMaterial({color,roughness:.83,side:THREE.DoubleSide});
-    // Other meshes in the same glTF can share the original material.
-    api.addCleanup(()=>{for(const mat of [].concat(original))mat.dispose();});
+  function baseColor(name,key){
+    return name.endsWith('_kidney')?'#b18175':key==='heart'&&name.includes('right')?'#9e7898':layers[key].color;
+  }
+  function mark(object,key,asset){
+    if(asset)api.prepareTissue(object,asset,baseColor(object.name,key));
     groups[key].push(object);if(key!=='skeleton')surfaces.set(object.name,object);
   }
   function frame(objects){
@@ -127,7 +128,7 @@ export function mountBodySystems(parent){
       if(disposed||!group)return;
       group.traverse(obj=>{
         if(!obj.isMesh)return;
-        if(structures[obj.name]?.[0]===key)mark(obj,key);
+        if(structures[obj.name]?.[0]===key)mark(obj,key,layers[key].asset);
         else obj.visible=false;
       });
       group.updateWorldMatrix(true,true);
@@ -163,7 +164,7 @@ export function mountBodySystems(parent){
     whole();
   };
   mountOrganViewer(get('model'),{asset:'assets/ap2-glands/body-overview.glb',title:'Adult organ systems',direction:[0,0,1],
-    onLoad(instance){
+    colors:name=>baseColor(name,structures[name]?.[0]||'skeleton'),onLoad(instance){
       api=instance;instance.addCleanup(()=>{disposed=true;});
       const base=api.model;
       base.traverse(obj=>{if(obj.isMesh)mark(obj,structures[obj.name]?.[0]||'skeleton');});

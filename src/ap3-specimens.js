@@ -7,6 +7,7 @@ import {specimens as catalogue} from './ap3-specimens-catalog.js';
 import {specimenStations} from './ap3-specimens-practical.js';
 import {descriptions} from './ap3-specimens-descriptions.js';
 import {mountNodeContext} from './ap3-specimens-node-context.js';
+import {showOrganSelection} from './organ-selection-label.js';
 
 export const specimens=catalogue.map(spec=>({...spec,stations:specimenStations[spec.id]||[]}));
 const lookup=new Map(specimens.map(spec=>[spec.id,spec]));
@@ -104,7 +105,10 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
       else{handoff.removeAttribute('href');handoff.textContent='';}
     }
     picker.value=index<0?'':String(index);
-    el('selection').textContent=selected?(hidden()?'Selected structure '+letters(index):selected.label+(selected.detail?' · '+selected.detail:'')):'';
+    const status=el('selection');
+    if(selected&&!hidden()){
+      showOrganSelection(status,spec,selected.assembly?'':selected.meshes[0],selected.label,selected.detail);
+    }else status.textContent=selected?'Selected structure '+letters(index):'';
     el('focus').disabled=el('isolate').disabled=!selected||!ready;
     if(!ready)return;
     const isolate=el('isolate').checked&&selected;
@@ -117,7 +121,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
       const sheet=spec.cut?.test(raw)&&el('section')?.checked&&!match;
       for(const {mat,color} of materials.get(obj)){
         mat.color.copy(color);
-        if(match)mat.color.set('#ffcf64');
+        if(match&&hidden())mat.color.set('#ffcf64');
         const soft=/kidney_capsule|capsule_of_lymph_node|umbilical_cord|amnion|compact_bone|spongy_bone|hilum_of_kidney|^podocyte_|^sixth_rib|^corpus_spongiosum/.test(raw);
         const layer=layerOpacity(raw);
         const baseline=layer??(soft?.31:1);
@@ -212,7 +216,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     const box=new THREE.Mesh(new THREE.BoxGeometry(size.x,size.y,size.z));
     box.position.copy(center);viewer.fit(box,viewer.camera.position.clone().sub(viewer.controls.target));box.geometry.dispose();box.material.dispose();
   };
-  viewer=mountOrganViewer(el('view'),{asset:spec.asset,title:blind?'Practical specimen':spec.title,
+  viewer=mountOrganViewer(el('view'),{asset:spec.asset,title:blind?'Practical specimen':spec.title,appearance:blind?'teaching':undefined,lockAppearance:blind,
     direction:spec.direction||[.04,.04,1],colors:(name,obj)=>specimenColor(id,name,obj),onLoad:instance=>{
       viewer=instance;
       separateRegionalSurfaces(instance.model);

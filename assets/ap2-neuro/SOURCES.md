@@ -8,7 +8,7 @@ BodyParts3D, The Database Center for Life Science, CC BY-SA 2.1 Japan. Z-Anatomy
 
 ## Left eye
 
-Kristen Browne and Heidi Schlehlein, Human Reference Atlas, 3D Reference Organ for Eye (Male, Left), version 1.3. Osteon selected eleven anatomical surfaces, including the fovea, macula, optic disc and choroid, reduced the triangle counts, and opened a sagittal section in Blender. The interactive lens and ciliary-ring deformation illustrates the direction of change during accommodation. It is amplified for visibility and does not measure optical power. The specimen has its own magnified viewing space. [HRA record](https://apps.humanatlas.io/kg-explorer/ref-organ/eye-male-left/v1.3) · [DOI](https://doi.org/10.48539/HBM769.RWTZ.963) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+Kristen Browne and Heidi Schlehlein, Human Reference Atlas, 3D Reference Organ for Eye (Male, Left), version 1.3. Osteon sectioned eleven anatomical surfaces in Blender at their original resolution. The exposed faces on the sclera, choroid, retina, cornea, lens, macula and fovea follow the source tissue contours. The cut leaves the globe cavity open and the optic disc intact. The magnified specimen uses teaching colors and amplified changes in lens shape to illustrate accommodation. [HRA record](https://apps.humanatlas.io/kg-explorer/ref-organ/eye-male-left/v1.3) · [DOI](https://doi.org/10.48539/HBM769.RWTZ.963) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ## Inner ear
 

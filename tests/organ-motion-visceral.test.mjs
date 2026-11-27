@@ -97,3 +97,19 @@ test('urine, semen, milk and portal examples respect source geometry and flow di
   assert(length(paths['placental-artery'].at(-1),paths['placental-vein'][0])<.01);
   assert(length(paths['placental-artery'][0],paths['placental-vein'].at(-1))<.012);
 });
+
+test('renal tracers remain at the ends of both source arteries through the final phase',async()=>{
+  const lesson=visceralOrgans.find(o=>o.id==='kidneys');
+  const model=(await specimen(lesson.asset)).clone(true);
+  const meshes=new Map(lesson.targets.map(name=>[name,[model.getObjectByName(name)]]));
+  const motion=mountVisceralMotion(lesson,{model,invalidate(){}},meshes);
+  try{
+    motion.set(1);
+    const markers=model.getObjectByName('Visceral process indicators').children.filter(o=>o.isGroup&&o.visible);
+    assert.equal(markers.length,2);
+    for(const side of ['left','right']){
+      const endpoint=new Vector3(...paths['renal-artery-'+side].at(-1));
+      assert.ok(markers.some(m=>m.position.distanceTo(endpoint)<1e-6),side+' renal artery endpoint');
+    }
+  }finally{motion.dispose();}
+});

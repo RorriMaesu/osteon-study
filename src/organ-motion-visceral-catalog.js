@@ -8,6 +8,7 @@ const male=spring('sperm-route'),female='assets/ap2-glands/ovarian-region.glb',p
 const digestive='Digestive',urinary='Urinary',reproductive='Reproductive';
 const amber='#ffcd62',blood='#ff795f',bile='#b7e05b',milk='#fff1ca',blue='#7cd2ed';
 const trace=(path,span=[0,1],color=amber,extra={})=>({mode:'trace',path,span,color,...extra});
+const flow=(path,span,color,extra)=>trace(path,span,color,{arrow:true,...extra});
 const wave=(mesh,path,extra={})=>({mode:'wave',mesh,path,...extra});
 const propel=(mesh,path,extra={})=>wave(mesh,path,{marker:true,color:amber,range:[.13,.98],...extra});
 const cue=(mesh,span,color)=>({mode:'cue',mesh,span,color});
@@ -83,26 +84,26 @@ add('liver','Liver',digestive,accessory,'liver hepatic_portal_vein','','23.6','F
     ['Portal stream','Nutrient-rich venous blood travels from digestive organs.'],
     ['Portal entry','Blood approaches the porta hepatis.'],
     ['Hepatic processing','Inside the liver, portal branches supply sinusoids where hepatocytes exchange substances with blood.']],
-  [trace('portal-inflow',[0,.82],blood),cue('liver',[.69,1],amber)]);
+  [flow('portal-inflow',[0,.82],blood),cue('liver',[.69,1],amber)]);
 add('gallbladder','Gallbladder',digestive,accessory,'gallbladder cystic_duct bile_duct','duodenum','23.6','Empty stored bile',
   'Follow bile out of the gallbladder through the cystic duct and into the common bile duct. The donor shows one continuous outlet. The change between the two duct labels illustrates where the common hepatic duct would join.',[
     ['Stored bile','Bile produced by the liver is concentrated in the gallbladder.',0],
     ['Cystic duct','Cholecystokinin promotes contraction during a meal. Stored bile leaves through the gallbladder neck and cystic duct.',.22],
     ['Common bile duct','Follow the marker toward the duodenal wall. Bile enters the bowel through the duodenal papilla, beyond the end of this visible duct.',.37]],
-  [{mode:'empty',mesh:'gallbladder',pivot:[-.03019,1.15737,.03916],amount:.21,span:[.22,1]},trace('cystic-duct',[.22,.37],bile),trace('common-bile-duct',[.37,.93],bile)],{direction:[.1,-.32,1]});
+  [{mode:'empty',mesh:'gallbladder',pivot:[-.03019,1.15737,.03916],amount:.21,span:[.22,1]},flow('cystic-duct',[.22,.37],bile),flow('common-bile-duct',[.37,.93],bile)],{direction:[.1,-.32,1]});
 add('pancreas','Pancreas · exocrine secretion',digestive,accessory,'pancreas pancreatic_duct','duodenum','23.6','Deliver pancreatic juice',
   'Follow the gold tracer along the main pancreatic duct toward the duodenum. Juice from acinar and duct cells contains digestive enzymes and bicarbonate. The microscopic opening is beyond this mesh.',[
     ['Exocrine secretion','Acini supply enzymes and duct cells add a bicarbonate-rich fluid.'],
     ['Duct transport','Pancreatic juice flows from smaller branches into the main duct.'],
     ['Duodenal delivery','The duct directs the secretion toward the descending duodenum.']],
-  [trace('pancreatic-duct',[0,1],amber)],{bodyIds:['pancreas']});
+  [flow('pancreatic-duct',[0,1],amber)],{bodyIds:['pancreas']});
 
 add('kidneys','Kidneys',urinary,renal,'kidney_left kidney_right left_renal_artery right_renal_artery','','25.3','Follow renal blood supply',
-  'Red tracers follow the two renal arteries toward the hila. The kidney surfaces retain their shape during inflow. Filtration takes place downstream in microscopic glomeruli.',[
+  'Follow the red tracers to the ends of the two modeled renal arteries. Each artery normally continues into the medial hilum. The reference omits the final stretch on both sides.',[
     ['Arterial inflow','Each renal artery carries blood from the abdominal aorta.'],
-    ['Approach the hilum','The paired vessels enter on the medial sides of the kidneys.'],
-    ['Intrarenal supply','Intrarenal branches eventually feed afferent arterioles and glomeruli.']],
-  [trace('renal-artery-left',[0,.9],blood),trace('renal-artery-right',[0,.9],blood),cue('kidney_left',[.77,1],blood),cue('kidney_right',[.77,1],blood)],{bodyIds:['kidneys','kidney-left','kidney-right']});
+    ['Approach the hila','Trace each artery laterally toward the notch on the medial surface of its kidney.'],
+    ['Modeled endpoints','The markers stop at the available vessel ends. The surface gap is about 20 mm on the anatomical left and 7 mm on the right in this model. In the body, blood continues into branches that supply the glomeruli.']],
+  [flow('renal-artery-left',[0,.66],blood,{holdUntil:1,trail:true}),flow('renal-artery-right',[0,.66],blood,{holdUntil:1,trail:true})],{bodyIds:['kidneys','kidney-left','kidney-right']});
 add('ureters','Ureters',urinary,renal,'ureter_left ureter_right','renal_pelvis_left renal_pelvis_right urinary_bladder','25.2','Propel urine toward the bladder',
   'Urine moves in small boluses. A traveling muscular contraction follows each gold tracer from the renal pelvis toward the bladder. The two timings are illustrative.',[
     ['Pelvic origin','A bolus enters a ureter from its renal pelvis.'],
@@ -200,7 +201,7 @@ add('placenta','Placenta and umbilical cord',reproductive,'assets/ap2-glands/pla
     ['Arterial delivery','Umbilical arteries deliver fetal blood to the placenta.'],
     ['Villous exchange','Fetal capillaries exchange substances with surrounding maternal blood across villous tissue.'],
     ['Venous return','The umbilical vein returns relatively oxygen-rich blood toward the fetus.']],
-  [trace('placental-artery',[0,.45],blue),cue('VH_F_placenta_vessels',[.36,.66],amber),trace('placental-vein',[.58,1],blood)],{direction:[.10,.40,1]});
+  [flow('placental-artery',[0,.45],blue),cue('VH_F_placenta_vessels',[.36,.66],amber),flow('placental-vein',[.58,1],blood)],{direction:[.10,.40,1]});
 add('mammary-alveoli','Mammary alveoli',reproductive,spring('lactating-unit'),'secretory_alveoli milk_in_lumina myoepithelial_cells lactiferous_duct nipple','','28.6','Watch milk ejection',
   'In this enlarged teaching unit, secretory cells supply milk to the alveoli. Oxytocin stimulates the surrounding myoepithelial cells and milk moves into the duct.',[
     ['Milk production','Prolactin supports secretion by the alveolar epithelial cells.'],

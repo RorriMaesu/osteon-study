@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import * as THREE from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {regulationOrgans,mountRegulationMotion,regulationPhaseAt} from '../src/organ-motion-regulation.js';
 
 function readGeometry(path){
@@ -93,24 +94,28 @@ test('superior and inferior caval streams approach the atrium simultaneously thr
   motion.dispose();
 });
 
-test('the sagittal lens visibly closes its actual cut edge and releases the cap on exit',()=>{
+test('the repaired lens retains its single donor section during accommodation',async()=>{
   const entry=regulationOrgans.find(o=>o.id==='eye');
-  const raw=readFileSync(new URL('../'+entry.asset,import.meta.url)),jsonLength=raw.readUInt32LE(12);
-  const doc=JSON.parse(raw.subarray(20,20+jsonLength).toString());
-  const source=doc.nodes.find(n=>n.name==='Lens');
-  const p=doc.meshes[source.mesh].primitives[0],attr=doc.accessors[p.attributes.POSITION],view=doc.bufferViews[attr.bufferView];
-  const start=28+jsonLength+(view.byteOffset||0)+(attr.byteOffset||0);
-  const geo=new THREE.BufferGeometry();
-  geo.setAttribute('position',new THREE.Float32BufferAttribute(Array.from({length:attr.count*3},(_,i)=>raw.readFloatLE(start+i*4)),3));
-  const mesh=new THREE.Mesh(geo,new THREE.MeshStandardMaterial());
-  const scene=new THREE.Scene();scene.add(mesh);
-  const motion=mountRegulationMotion(entry,{scene,invalidate(){}},new Map([['Lens',[mesh]]]));
-  const face=mesh.children[0].geometry;face.computeBoundingBox();
-  assert.ok(face.getAttribute('position').count>15);
-  assert.ok(Math.abs(face.boundingBox.max.z-geo.boundingBox.max.z)<.00012);
-  assert.ok(Math.abs(face.boundingBox.min.y-geo.boundingBox.min.y)<.00012);
-  assert.ok(face.boundingBox.max.x-face.boundingBox.min.x<1e-8);
-  motion.dispose();assert.equal(mesh.children.length,0);
+  const bytes=readFileSync(new URL('../'+entry.asset,import.meta.url));
+  const {scene:model}=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
+  const lens=model.getObjectByName('Lens'),geometry=lens.geometry;
+  geometry.computeBoundingBox();
+  const vertices=geometry.getAttribute('position'),indices=geometry.index.array,cut=geometry.boundingBox.max.x;
+  let cutArea=0;
+  for(let i=0;i<indices.length;i+=3){
+    const [a,b,c]=indices.subarray(i,i+3);
+    if([a,b,c].some(v=>Math.abs(vertices.getX(v)-cut)>1e-7))continue;
+    cutArea+=Math.abs((vertices.getY(b)-vertices.getY(a))*(vertices.getZ(c)-vertices.getZ(a))-
+                      (vertices.getZ(b)-vertices.getZ(a))*(vertices.getY(c)-vertices.getY(a)))/2;
+  }
+  const bounds=geometry.boundingBox.getSize(new THREE.Vector3());
+  assert.ok(cutArea>.55*bounds.y*bounds.z,'The cut face must fill the lens profile');
+  const scene=new THREE.Scene();scene.add(model);
+  const motion=mountRegulationMotion(entry,{scene,model,invalidate(){}},new Map([['Lens',[lens]]]));
+  motion.set(0);const far=lens.scale.z;
+  motion.set(.55);assert.ok(lens.scale.z>far*1.15);
+  assert.equal(lens.geometry,geometry);assert.equal(lens.children.length,0,'A second cut face would overlap the original');
+  motion.dispose();assert.equal(lens.geometry,geometry);
 });
 
 test('vocalis muscles approximate posteriorly around fixed anterior attachments',()=>{

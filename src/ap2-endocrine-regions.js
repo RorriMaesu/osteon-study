@@ -1,3 +1,5 @@
+import {showOrganSelection} from './organ-selection-label.js';
+
 // Selectable regional anatomy used by the endocrine chapter.
 const zCredit = 'Z-Anatomy, based on BodyParts3D. Regional export in Blender 4.5. <a href="https://github.com/Z-Anatomy/Models-of-human-anatomy" target="_blank" rel="noreferrer">Source</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noreferrer">CC BY-SA 4.0</a>.';
 const hraCredit = 'Human Reference Atlas, Kristen Browne and Heidi Schlehlein. <a href="https://humanatlas.io/3d-reference-library" target="_blank" rel="noreferrer">Reference organs</a> · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a>.';
@@ -107,7 +109,8 @@ export function regionSpecimen(host, kind, showModel, direction){
 
   function paint(){
     const selected=picker.value,match=selected===''?null:data.targets[Number(selected)];
-    detail.textContent=match?(match[3]||'Gold highlights '+match[0].toLowerCase()+'.'):'';
+    if(match)showOrganSelection(detail,{id:kind},'',match[0],match[3]);
+    else detail.textContent='';
     focus.disabled=!viewer||!match;
     isolate.disabled=!match;
     if(!match)isolate.checked=false;
@@ -119,7 +122,7 @@ export function regionSpecimen(host, kind, showModel, direction){
       const sheerBone=kind==='ovary'&&/bone|sacrum|coccyx/i.test(obj.name);
       const thinShell=kind==='placenta'&&/amnion|umbilical_cord/.test(obj.name);
       for(const mat of [].concat(obj.material)){
-        mat.color.set(active?'#ffcd6c':color(obj.name));
+        mat.color.set(color(obj.name));
         mat.opacity=context ? .16 : (sheerBone||thinShell)&&!active ? .24:1;
         mat.transparent=mat.opacity<1; mat.depthWrite=!mat.transparent;
       }

@@ -1,4 +1,5 @@
 import {Plane,Vector3,DoubleSide} from 'three';
+import {rememberOrganTeachingColor} from './organ-tissue-material.js';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {mountMechanicalMotion} from './organ-motion-regulation-dynamics.js';
 import {neuralRegions,renderNeuralRegion,startNeuralRegion} from './ap2-neural-regions.js';
@@ -123,9 +124,15 @@ function start(panel,kind){
       if(active&&mesh.visible)highlighted.push(mesh);
       for(const m of [].concat(mesh.material)){
         const tissue=spec.routes?cutawayColor(n):baseColor(n);
+        rememberOrganTeachingColor(m,tissue);
         m.color.set(spot>=0?(spotMatch?'#f5b668':'#839da4'):occluded?(n==='aqueductofmidbrain'?'#c74950':upstream?'#f5b668':tissue):matchingRegion?(n.startsWith('globuspallidus')?'#ed9580':'#f5b668'):region&&+region.value?tissue:selected&&bareAxon&&current===2?'#8cb3c3':selected?'#f5b668':tissue);
-        m.transparent=(context&&!matchingRegion)||(kind==='eye'&&n==='cornea');
-        m.opacity=context&&!matchingRegion?.12:kind==='eye'&&n==='cornea'?.5:1;
+        const clearEyeTissue=kind==='eye'&&(n==='cornea'||n==='lens');
+        m.transparent=(context&&!matchingRegion)||clearEyeTissue;
+        m.opacity=context&&!matchingRegion?.12:clearEyeTissue?(n==='cornea'?.32:.78):1;
+        if(kind==='eye'){
+          m.roughness=clearEyeTissue?.2:n==='sclera'?.68:.84;
+          m.metalness=0;
+        }
         if(identify && identify.value!==''){m.transparent=!selected;m.opacity=selected?1:.16;}
         if(kind==='cardiac-autonomic'&&(n.startsWith('wallof')||n.endsWith('vertebra'))){m.transparent=true;m.opacity=.25;}
         if(spot>=0 && (kind==='eye'||kind==='ventricles'||spec.routes)){m.transparent=!spotMatch;m.opacity=spotMatch?1:.12;}

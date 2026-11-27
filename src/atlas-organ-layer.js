@@ -4,6 +4,7 @@ import {bodyAtlas,motionsForBody,organSystemColor} from './organ-atlas-catalog.j
 import {organAssetUrl} from './organ-asset-url.js';
 import {organStructureName} from './organ-structure-names.js';
 import {bodyMaps,mapRoute} from './organ-atlas-bodies.js';
+import {createOrganAppearance,registerOrganMaterials} from './organ-tissue-material.js';
 
 export function organStudyDestination(row,raw){
   if(raw&&row.targets.includes(raw))return mapRoute(bodyMaps[0],row,raw);
@@ -13,6 +14,14 @@ export function organStudyDestination(row,raw){
 
 export function attachOrganLayer(viewer,toast){
   const button=document.querySelector('#organs-layer-btn'),selection=document.querySelector('#organ-layer-study');
+  const tissue=createOrganAppearance();
+  const finish=document.createElement('button');finish.type='button';finish.hidden=true;
+  finish.id='organ-tissue-layer-btn';finish.textContent='Natural tissue';finish.setAttribute('aria-label','Use natural organ tissue appearance');finish.setAttribute('aria-pressed','true');
+  button.after(finish);
+  finish.onclick=()=>{
+    tissue.setMode(tissue.mode==='natural'?'teaching':'natural');
+    finish.setAttribute('aria-pressed',String(tissue.mode==='natural'));viewer.needsRender=true;
+  };
   const index=new Map(bodyAtlas.organs.flatMap(row=>row.targets.map(name=>[name,row])));
   const parts=[];
   let group,request,enabled=false,chosen=null,chosenRaw=null;
@@ -23,12 +32,19 @@ export function attachOrganLayer(viewer,toast){
       selection.href='#'+organStudyDestination(row,raw);
       selection.textContent='Study '+(raw?organStructureName('body',raw):row.label);
     }
-    for(const part of parts)part.mesh.material.emissive.setHex(part.row===row&&(!raw||part.raw===raw)?0x684311:0);
+    for(const part of parts){
+      const picked=part.row===row&&(!raw||part.raw===raw);
+      for(const {mat,emissive} of part.materials)if(emissive){
+        mat.emissive.copy(emissive);
+        if(picked)mat.emissive.setHex(0x684311);
+      }
+    }
     viewer.needsRender=true;
   }
   function refresh(){
     const active=enabled&&available();
     button.disabled=!available();button.setAttribute('aria-busy',String(!!request&&!group&&enabled));
+    finish.hidden=!active||!group||!tissue.available;
     button.setAttribute('aria-pressed',String(active));button.textContent='Organs: '+(active&&!group?'Loading…':active?'On':'Off');
     if(!group)return;
     group.visible=active;
@@ -45,19 +61,19 @@ export function attachOrganLayer(viewer,toast){
   }
   function load(){
     if(!request)request=new GLTFLoader().loadAsync(organAssetUrl(bodyAtlas.asset)).then(gltf=>{
-      group=gltf.scene;group.updateMatrixWorld(true);
+      group=registerOrganMaterials(gltf);group.updateMatrixWorld(true);
       group.traverse(mesh=>{
         if(!mesh.isMesh)return;
         let raw;for(let obj=mesh;obj&&!raw;obj=obj.parent)raw=[obj.userData?.name,obj.name].find(name=>index.has(name));
         const row=index.get(raw);
         if(!row){mesh.visible=false;return;}
-        const original=mesh.material;
-        const color=[].concat(original)[0]?.color;
-        mesh.material=new THREE.MeshStandardMaterial({color:color&&color.getHex()!==0xffffff?color:organSystemColor(row.system),roughness:.8,side:THREE.DoubleSide});
-        for(const material of [].concat(original))material.dispose();
+        const color=[].concat(mesh.material)[0]?.color;
+        tissue.prepare(mesh,bodyAtlas.asset,color&&color.getHex()!==0xffffff?color:organSystemColor(row.system));
         mesh.userData.organRow=row;mesh.userData.organPart=raw;mesh.userData.zname=organStructureName('body',raw);
-        parts.push({mesh,row,raw,bounds:new THREE.Box3().setFromObject(mesh)});
+        parts.push({mesh,row,raw,bounds:new THREE.Box3().setFromObject(mesh),
+          materials:[].concat(mesh.material).map(mat=>({mat,emissive:mat.emissive?.clone()}))});
       });
+      tissue.dispose(); // All GPU-facing copies now belong to this persistent layer.
       viewer.scene.add(group);viewer.applyVisibility();
     }).catch(error=>{request=null;group=null;enabled=false;refresh();viewer.applyVisibility();toast('Organ surfaces could not load. Toggle Organs to retry.');console.warn(error);});
     return request;

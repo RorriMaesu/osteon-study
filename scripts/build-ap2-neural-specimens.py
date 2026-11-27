@@ -1,4 +1,4 @@
-"""Build compact teaching derivatives in Blender 4.5. Run with -- <source-folder> <repo>.
+"""Build teaching derivatives in Blender 4.5. Run with -- <source-folder> <repo> [eye-only].
 
 Inputs in the source folder are the HRA eye GLB and the IE-Map VTK files
 listed below. The ventricular surfaces come from Osteon's registered nerve layer.
@@ -6,6 +6,7 @@ Export preserves source geometry in metres except for reduction and the eye sect
 """
 from pathlib import Path
 import datetime
+from collections import defaultdict, deque
 import hashlib
 import json
 import shutil
@@ -15,8 +16,12 @@ import tempfile
 import bmesh
 import bpy
 from mathutils import Matrix, Vector
+from mathutils.geometry import delaunay_2d_cdt
 
-source, repo = map(Path, sys.argv[sys.argv.index("--") + 1:])
+arguments = sys.argv[sys.argv.index("--") + 1:]
+source, repo = map(Path, arguments[:2])
+if arguments[2:] not in ([], ["eye-only"]):
+    raise ValueError("Expected <source-folder> <repo> [eye-only]")
 output = repo / "assets" / "ap2-neuro"
 output.mkdir(parents=True, exist_ok=True)
 def digest(path):
@@ -39,6 +44,49 @@ def export(name):
 def clean():
     bpy.ops.wm.read_factory_settings(use_empty=True)
 
+def close_section(bm, plane_x):
+    """Triangulate only the tissue within the section contours, including holes."""
+    boundary = [edge for edge in bm.edges if edge.is_boundary and
+                all(abs(v.co.x - plane_x) < 1e-7 for v in edge.verts)]
+    if not boundary:
+        return
+    vertices = list(dict.fromkeys(v for edge in boundary for v in edge.verts))
+    index = {v: i for i, v in enumerate(vertices)}
+    # Work in millimetres for reliable narrow cross-sections.
+    origin = vertices[0].co.copy()
+    coords = [Vector(((v.co.y - origin.y) * 1000, (v.co.z - origin.z) * 1000)) for v in vertices]
+    segments = [(index[e.verts[0]], index[e.verts[1]]) for e in boundary]
+    result, result_edges, triangles, originals, original_edges, _ = delaunay_2d_cdt(
+        coords, segments, [], 0, 1e-6, True)
+    points = [vertices[ids[0]] if ids else bm.verts.new(
+        (plane_x, origin.y + uv.x / 1000, origin.z + uv.y / 1000)) for uv, ids in zip(result, originals)]
+    # Determine the tissue side topologically. A ray test at a triangle's
+    # centroid is unstable for the extremely thin slivers along the choroid.
+    contours = {tuple(sorted(edge)) for edge, ids in zip(result_edges, original_edges) if ids}
+    neighbors = defaultdict(list)
+    face_edges = []
+    for i, tri in enumerate(triangles):
+        edges = [tuple(sorted((a,b))) for a,b in zip(tri, tri[1:] + tri[:1])]
+        face_edges.append(edges)
+        for edge in edges:
+            neighbors[edge].append(i)
+    inside = {faces[0]: edge in contours for edge, faces in neighbors.items() if len(faces) == 1}
+    queue = deque(inside)
+    while queue:
+        i = queue.popleft()
+        for edge in face_edges[i]:
+            for other in neighbors[edge]:
+                if other not in inside:
+                    inside[other] = inside[i] ^ (edge in contours)
+                    queue.append(other)
+    for i, tri in enumerate(triangles):
+        if inside[i]:
+            face = bm.faces.new([points[i] for i in tri])
+            face.normal_update()
+            if face.normal.x < 0:
+                face.normal_flip()
+            face.smooth = False
+
 def prepare(obj, name, budget, section_plane=None):
     # Bake the imported world transform before detaching the mesh from its source hierarchy.
     world = obj.matrix_world.copy()
@@ -52,16 +100,27 @@ def prepare(obj, name, budget, section_plane=None):
     if section_plane is not None:
         bm = bmesh.new()
         bm.from_mesh(mesh)
+        # glTF splits vertices along shading and UV seams. Cutting or reducing
+        # these triangles independently tore holes far from the section.
+        bmesh.ops.remove_doubles(bm, verts=list(bm.verts), dist=2e-8)
+        for face in bm.faces:
+            face.smooth = True
         bmesh.ops.bisect_plane(bm, geom=list(bm.verts)+list(bm.edges)+list(bm.faces),
                                plane_co=(section_plane,0,0), plane_no=(1,0,0),
                                dist=1e-9, clear_outer=True)
+        if name in {"Sclera","Choroid","Retina","Lens","Cornea","Macula lutea","Fovea"}:
+            close_section(bm, section_plane)
         bm.to_mesh(mesh)
         bm.free()
+        # Donor split normals no longer match the new faces or their flat rims.
+        if mesh.has_custom_normals:
+            mesh.normals_split_custom_set([(0,0,0)] * len(mesh.loops))
     mesh.transform(Matrix.Translation(-pivot))
     obj.location = pivot
     obj.name = mesh.name = name
-    for polygon in mesh.polygons:
-        polygon.use_smooth = True
+    if section_plane is None:
+        for polygon in mesh.polygons:
+            polygon.use_smooth = True
     if len(mesh.polygons) > budget:
         bpy.context.view_layer.objects.active = obj
         reduced = obj.modifiers.new("Mobile surface", "DECIMATE")
@@ -103,6 +162,17 @@ def glb(filename, parts, plane=None):
             bpy.data.objects.remove(obj, do_unlink=True)
     assert {obj.name for obj in bpy.context.scene.objects} == keep
 
+def build_eye():
+    eye = {"sclera":"Sclera","retina":"Retina","iris":"Iris","lens":"Lens","cornea":"Cornea","ciliary_muscle":"Ciliary muscle","suspensory_ligament_of_lens":"Zonules","fovea":"Fovea","macula_lutea":"Macula lutea","optic_disc":"Optic disc","optic_choroid":"Choroid"}
+    # These already compact reference meshes include thin layers and tiny
+    # posterior landmarks. Preserve their sampling and exact cut contours.
+    glb(source / "hra-eye.glb", {"VH_M_"+part+"_L":(name,float("inf")) for part,name in eye.items()}, .03695)
+    export("eye-section")
+
+if arguments[2:] == ["eye-only"]:
+    build_eye()
+    sys.exit(0)
+
 ventricles = ["Lateral ventricle.l","Lateral ventricle.r","Third ventricle","Aqueduct of midbrain","Fourth ventricle","Pons.l","Pons.r","Precentral gyrus.l","Precentral gyrus.r"]
 neighboring_structures = ["Caudate nucleus","Putamen","Globus pallidus","Thalamus","Midbrain","Medulla oblongata"]
 parts = {name:6000 for name in ventricles}
@@ -115,9 +185,7 @@ ossicles = ["Malleus","Incus","Stapes"]
 glb(repo / "assets" / "skeleton.glb", {name+".l.001":(name,9000) for name in ossicles})
 export("ossicles")
 
-eye = {"sclera":"Sclera","retina":"Retina","iris":"Iris","lens":"Lens","cornea":"Cornea","ciliary_muscle":"Ciliary muscle","suspensory_ligament_of_lens":"Zonules","fovea":"Fovea","macula_lutea":"Macula lutea","optic_disc":"Optic disc","optic_choroid":"Choroid"}
-glb(source / "hra-eye.glb", {"VH_M_"+part+"_L":(name,3500) for part,name in eye.items()}, .03695)
-export("eye-section")
+build_eye()
 
 # Legacy binary VTK POLYDATA in published RAS millimetres. Use its own
 # coordinate frame for a stand-alone magnified inner-ear specimen.

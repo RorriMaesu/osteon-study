@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {rememberOrganTeachingColor} from './organ-tissue-material.js';
 import {regulationOrgans} from './organ-motion-regulation-catalog.js';
 import {mountMechanicalMotion} from './organ-motion-regulation-dynamics.js';
 import {pinealOutput} from './organ-mechanism-signals.js';
@@ -114,32 +115,6 @@ function releaseLevel(entry,index,u){
   return .78;
 }
 
-// The HRA sagittal section was bisected without capping its open surfaces.
-// Close the convex cut edge of the lens with its own sampled rim. This makes
-// the actual biconvex profile visible in a side view and follows its motion.
-function makeLensSection(mesh){
-  const geometry=mesh.geometry,position=geometry.getAttribute('position');
-  if(!geometry.boundingBox)geometry.computeBoundingBox();
-  const box=geometry.boundingBox,cut=box.max.x;
-  const tolerance=(cut-box.min.x)*.0005;
-  const rim=new Map();
-  for(let i=0;i<position.count;i++){
-    if(position.getX(i)<cut-tolerance)continue;
-    const y=position.getY(i),z=position.getZ(i);
-    rim.set(y.toFixed(8)+'/'+z.toFixed(8),[y,z]);
-  }
-  if(rim.size<3)return;
-  const points=[...rim.values()];
-  const [cy,cz]=points.reduce(([sy,sz],[y,z])=>[sy+y/points.length,sz+z/points.length],[0,0]);
-  points.sort(([y,z],[by,bz])=>Math.atan2(z-cz,y-cy)-Math.atan2(bz-cz,by-cy));
-  const vertices=[cut,cy,cz],indices=[];
-  points.forEach(([y,z],i)=>{vertices.push(cut,y,z);indices.push(0,i+1,(i+1)%points.length+1);});
-  const face=new THREE.BufferGeometry();
-  face.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));face.setIndex(indices);face.computeVertexNormals();
-  const section=new THREE.Mesh(face,[].concat(mesh.material)[0]);
-  section.name='Lens section through specimen rim';mesh.add(section);
-  return section;
-}
 
 export function mountRegulationMotion(entry,instance,meshesByName){
   const mechanical=entry.kind==='Organ movement'||entry.kind==='Movement and flow';
@@ -148,7 +123,6 @@ export function mountRegulationMotion(entry,instance,meshesByName){
   valves?.set(0);
   const surfaces=new Map(),ink=new Map(),materialDefaults=new Map();
   const specimenMaterials=new Map();
-  const sections=[];
   const modelBounds=new THREE.Box3();
   for(const key of entry.targets){
     const found=meshesByName.get(key)||[];
@@ -170,9 +144,9 @@ export function mountRegulationMotion(entry,instance,meshesByName){
       else if(key==='diaphragm')m.color.set('#a56253');
       else if(entry.id==='eye')m.color.set(key==='Lens'?'#9cd5d3':key==='Zonules'?'#e4d9b8':'#ae6d67');
       else m.color.set(key==='capillary'?'#b65265':key==='colloid_section'?'#e7bb78':'#ae7d87');
+      if(key==='diaphragm'||entry.id==='coronary-circulation')rememberOrganTeachingColor(m,m.color);
       if(key==='colloid_section'){m.transparent=true;m.opacity=.60;m.depthWrite=false;}
     }
-    if(entry.id==='eye'&&key==='Lens')for(const mesh of found){const section=makeLensSection(mesh);if(section)sections.push(section);}
   }
   // A regional surface glow locates microscopic exchange in the myocardium.
   // Its capillaries are drawn separately at teaching scale in the companion.
@@ -185,6 +159,7 @@ export function mountRegulationMotion(entry,instance,meshesByName){
   const count=4; // An explanatory marker at each current site, independent of mesh density.
   const group=new THREE.Group();group.name='Regulation physiology overlay';instance.scene.add(group);
   const geometry=new THREE.SphereGeometry(1,12,8);
+  const arrow=new THREE.ConeGeometry(1,2.8,12),up=new THREE.Vector3(0,1,0),direction=new THREE.Vector3(),previous=new THREE.Vector3();
   const materials=Array.from({length:count},(_,i)=>new THREE.MeshBasicMaterial({
     color:i?FLOW:WARM,transparent:true,opacity:1,depthTest:false,depthWrite:false,toneMapped:false
   }));
@@ -192,7 +167,7 @@ export function mountRegulationMotion(entry,instance,meshesByName){
   const cochlea=entry.mechanism==='cochlear-wave';
   const cavae=entry.mechanism==='caval-return'?cavalStreams(surfaces):null;
   const markers=Array.from({length:mechanical?0:cochlea?cochlearPartition.length:Math.max(1,maxSites)*count},(_,i)=>{
-    const m=new THREE.Mesh(geometry,materials[i%count]);m.renderOrder=7;m.visible=false;group.add(m);return m;
+    const m=new THREE.Mesh(geometry,materials[i%count]);m.renderOrder=7;m.visible=false;m.userData.organProcessMarker=true;group.add(m);return m;
   });
   const emission=new THREE.Color();
   let closed=false;
@@ -216,6 +191,7 @@ export function mountRegulationMotion(entry,instance,meshesByName){
           const mark=markers[stream*count+j],fraction=(t*2+j/count)%1;
           mark.name=stream?'Inferior caval stream':'Superior caval stream';
           path.getPoint(fraction,mark.position);
+          if(j===0){mark.geometry=arrow;mark.quaternion.setFromUnitVectors(up,path.getTangent(fraction,direction));}
           mark.visible=true;
           mark.scale.setScalar(radius*(j===0?.012:.008)*(index===stream||index===2?1:.72));
         }
@@ -250,8 +226,16 @@ export function mountRegulationMotion(entry,instance,meshesByName){
         if(s.path){
           if(entry.mechanism==='airflow'&&index>=2)tick=1-tick;
           flowPosition(m.position,s.path,tick);
+          if(j===0){
+            m.geometry=arrow;
+            flowPosition(direction,s.path,tick+.005);flowPosition(previous,s.path,tick-.005);
+            direction.sub(previous).normalize();
+            if(entry.mechanism==='airflow'&&index>=2)direction.negate();
+            if(direction.lengthSq())m.quaternion.setFromUnitVectors(up,direction);
+          }
           m.scale.setScalar(relative*(j===0?1.20:.76));
         }else{
+          m.geometry=geometry;
           // All positions are registered to one representative surface site.
           // Expansion denotes local activity, not a measured cellular trajectory.
           m.position.copy(s.anchor);
@@ -270,9 +254,8 @@ export function mountRegulationMotion(entry,instance,meshesByName){
     mechanism?.dispose();
     valves?.dispose();
     for(const [mat,base] of materialDefaults){mat.emissive.copy(base.color);mat.emissiveIntensity=base.intensity;}
-    for(const [mat,base] of specimenMaterials){mat.color.copy(base.color);mat.transparent=base.transparent;mat.opacity=base.opacity;mat.depthWrite=base.depthWrite;mat.side=base.side;mat.vertexColors=base.vertexColors;mat.needsUpdate=true;}
-    for(const section of sections){section.removeFromParent();section.geometry.dispose();}
-    group.removeFromParent();geometry.dispose();for(const m of materials)m.dispose();
+    for(const [mat,base] of specimenMaterials){mat.color.copy(base.color);rememberOrganTeachingColor(mat,base.color);mat.transparent=base.transparent;mat.opacity=base.opacity;mat.depthWrite=base.depthWrite;mat.side=base.side;mat.vertexColors=base.vertexColors;mat.needsUpdate=true;}
+    group.removeFromParent();geometry.dispose();arrow.dispose();for(const m of materials)m.dispose();
   }
   return {set,dispose};
 }

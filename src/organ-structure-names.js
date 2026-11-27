@@ -1,4 +1,5 @@
 import {label} from './ap3-specimens-catalog.js';
+import {organLabelRole} from './organ-label-roles.js';
 
 const specific={
   body:{sigmoid_colon:'Sigmoid colon (approximate proximal boundary)'},
@@ -40,7 +41,7 @@ export function organStructureGroups(entry,meshes,describe){
   for(const [raw,parts] of meshes){
     const title=describe?.(raw)||organStructureName(entry.id,raw);
     let group=byTitle.get(title);
-    if(!group){group={title,terms:organSearchAliases(title),meshes:[],names:[],target:false};byTitle.set(title,group);}
+    if(!group){group={title,role:organLabelRole(entry,raw,title),terms:organSearchAliases(title),meshes:[],names:[],target:false};byTitle.set(title,group);}
     group.names.push(raw);
     group.meshes.push(...parts);group.target||=entry.targets.includes(raw);byRaw.set(raw,group);
   }

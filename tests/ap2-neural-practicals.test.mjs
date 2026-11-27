@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {renderLab} from '../src/ap2-neural-labs.js';
 import {neuralCases,renderNeuralCases} from '../src/ap2-neural-cases.js';
 import {signals} from '../src/ap2-neural-signals.js';
@@ -43,6 +44,40 @@ test('eye section and inner-ear mesh labels match real independent surfaces',()=
   }
   const b=coords(eye,eye.nodes.find(n=>n.name==='Lens'));
   assert.ok(b[3]-b[0]<.005,'lens must be opened in sagittal section');
+});
+test('the sectioned eye retains closed tissue walls and open space inside its coats',async()=>{
+  const bytes=readFileSync(new URL('../assets/ap2-neuro/eye-section.glb',import.meta.url));
+  const {scene}=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
+  const tissues=['Sclera','Choroid','Retina','Lens','Cornea','Macula lutea','Fovea','Optic disc'];
+  for(const name of tissues){
+    const mesh=scene.children.find(item=>(item.userData.name||item.name)===name);
+    const pos=mesh.geometry.getAttribute('position'),indices=mesh.geometry.index.array;
+    // Flat cut faces and smooth outer faces have distinct normals at the same position.
+    const verts=new Map(),ids=[];
+    for(let i=0;i<pos.count;i++){
+      const point=[pos.getX(i),pos.getY(i),pos.getZ(i)].map(x=>Math.round(x*1e8)).join(',');
+      if(!verts.has(point))verts.set(point,verts.size);
+      ids.push(verts.get(point));
+    }
+    const edges=new Map();let cutArea=0;
+    for(let i=0;i<indices.length;i+=3){
+      const [a,b,c]=indices.subarray(i,i+3);
+      for(const [v,w] of [[a,b],[b,c],[c,a]]){
+        const key=Math.min(ids[v],ids[w])+','+Math.max(ids[v],ids[w]);
+        edges.set(key,(edges.get(key)||0)+1);
+      }
+      if([a,b,c].every(v=>Math.abs(pos.getX(v)+mesh.position.x-.03695)<1e-7)){
+        cutArea+=Math.abs((pos.getY(b)-pos.getY(a))*(pos.getZ(c)-pos.getZ(a))-
+                          (pos.getZ(b)-pos.getZ(a))*(pos.getY(c)-pos.getY(a)))/2;
+      }
+    }
+    assert.ok([...edges.values()].every(count=>count===2),name+' must have a continuous closed boundary');
+    if(name==='Optic disc')assert.equal(cutArea,0,'the section passes beside the optic disc');
+    else assert.ok(cutArea>0,name+' is missing its cut tissue face');
+    if(['Sclera','Retina','Choroid'].includes(name)){
+      assert.ok(cutArea<.0001,name+' section should follow the thin coat without filling the globe');
+    }
+  }
 });
 test('motor and sensory practicals expose both reasoning steps for each observation',()=>{
   for(const [section,items] of Object.entries(neuralCases)){
