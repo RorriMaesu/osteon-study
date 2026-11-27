@@ -1,4 +1,5 @@
 import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
+import {openStructureIndex} from './ap2-model-index.js';
 import {lessons as fallLessons} from './learning-data.js';
 import {chapters,sections,sectionById,labFor,units} from './ap2-library.js';
 import figures from './ap2-figures.json' with {type:'json'};
@@ -58,7 +59,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
     ];
     const groupCard=([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}<small>${e(goal)}</small></span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>';
     page(hero('A&P II · PRACTICALS','Model & slide lab','Choose a specimen or browse the activities in a textbook chapter.')+
-      '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+
+      '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+link('ap2-structures','Find a structure')+
       '<label>Browse <select data-lab-chapter><option value="">Featured practicals</option>'+
       chapters.map(c=>`<option value="${c.id}">Chapter ${c.id} · ${e(c.title)}</option>`).join('')+
       '</select></label></div><div class="ap2-unit-grid" data-practical-list></div>');
@@ -125,7 +126,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
         body.innerHTML=`<figure class="ap2-art"><div>${art.length>1?`<label>Diagram <select data-figure>${art.map((a,i)=>`<option value="${i}" ${i===index?'selected':''}>${e(a.title)}</option>`).join('')}</select></label>`:''} <a href="${src}" target="_blank" rel="noreferrer">Open full size ↗</a></div>
         <img src="${src}" width="${f.width}" height="${f.height}" alt="${e(f.alt||f.title)}"><figcaption>Fig. ${f.figure} · ${e(f.title)}. OpenStax, Rice University · <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a>. ${e(f.credit||'')} <a href="${e(s.source)}" target="_blank" rel="noreferrer">Access for free at openstax.org ↗</a></figcaption></figure>`;
         const pick=body.querySelector('[data-figure]');if(pick)pick.onchange=()=>show(Number(pick.value));
-      } show(0);
+      } show(Math.max(0,art.findIndex(f=>f.figure===station)));
     } else if(tab==='activity') {
       const lab=labFor(s.id),html=lab.renderLab(s.id);
       body.innerHTML=`${html?'<div class="ap2-simulation">'+html+'</div>':''}<div class="ap2-guided"><h2>${e(s.activity.title)}</h2><p>${e(s.activity.prompt)}</p><div class="ap2-step"></div></div>`;
@@ -134,6 +135,19 @@ export function initAP2({root,escape:e,toast,dialog}) {
       if(picker&&station&&[...picker.options].some(o=>o.value===station)){
         picker.value=station;picker.dispatchEvent(new Event('change',{bubbles:true}));
         body.querySelector('[data-neuro-specimen="'+station+'"] [data-load-specimen]')?.click();
+      }
+      const presets={follicle:['[data-neck-view]','micro'],islet:['[data-scale]','micro'],pancreas:['[data-scale]','gross'],ovary:['[data-gonad]','ovary']};
+      const preset=Object.hasOwn(presets,station)?presets[station]:null;
+      if(preset){
+        const control=body.querySelector(preset[0]);
+        if(control&&control.value!==preset[1]){control.value=preset[1];control.dispatchEvent(new Event('change',{bubbles:true}));}
+      }
+      if(station&&s.id==='20.5'){
+        const view=body.querySelector('[data-cardio-panel="1"] [data-specimen-mode]');
+        if(view&&[...view.options].some(o=>o.value===station)){
+          body.querySelector('[data-cardio-view="1"]')?.click();
+          view.value=station;view.dispatchEvent(new Event('change',{bubbles:true}));
+        }
       }
       const atlas=atlasLinks[s.id];
       if(atlas){
@@ -176,15 +190,22 @@ export function initAP2({root,escape:e,toast,dialog}) {
     delete document.body.dataset.ap2Exam;
     setTutorAssessmentMode(null);
     const chapterId=route.match(/^ap2-chapter-(\d+)$/)?.[1];
-    const lessonId=route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(activity|figures|check))?(?:\/(ventricles|eye|ear|ossicles))?$/);
+    const lessonId=route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(activity|figures|check))?(?:\/([\w.-]+))?$/);
     const ch=chapters.find(c=>String(c.id)===chapterId);
     if(ch){rememberStudy(route);chapter(ch);return;}
     if(lessonId&&sectionById.has(lessonId[1])){rememberStudy(lessonId[3]?route.slice(0,route.lastIndexOf('/')):route);lesson(sectionById.get(lessonId[1]),lessonId[2]||'read',lessonId[3]);return;}
     const writingId=route.match(/^ap2-writing-(1[2-9]|20)$/)?.[1];
     if(writingId){rememberStudy(route);openWritingPractice(Number(writingId),{root,page,hero,link,store,e});return;}
-    if(route==='ap2-body'){
+    if(route==='ap2-structures'){
+      openStructureIndex({root,page,hero,link,e});setLearningContext({course:'ap2',type:'study',label:'Find a structure',text:'Anatomical specimens, microscopic structures and textbook figures.'});return;
+    }
+    const bodyRoute=route.match(/^ap2-body(?:\/([\w-]+))?$/);
+    if(bodyRoute){
       page(hero('A&P II · MODEL LAB','Body systems in 3D','Locate the glands, heart and right leg arteries in a common skeletal reference.')+bodySystemsHTML()+link('ap2-practicals','← Model & slide lab'));
-      mountBodySystems(root);setLearningContext({course:'ap2',type:'study',label:'Body systems in 3D',text:'Position of the glands, heart chambers, and right lower-limb arteries relative to the skeleton.'});return;
+      mountBodySystems(root);
+      const select=root.querySelector('[data-body-select]');
+      if(bodyRoute[1]&&[...select.options].some(o=>o.value===bodyRoute[1])){select.value=bodyRoute[1];select.dispatchEvent(new Event('change'));}
+      setLearningContext({course:'ap2',type:'study',label:'Body systems in 3D',text:'Position of the glands, heart chambers, and right lower-limb arteries relative to the skeleton.'});return;
     }
     if(route==='ap2-practicals'){practicals();return;}
     if(route==='ap2-search'){contextForSearch();search();return;}

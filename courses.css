@@ -59,3 +59,9 @@
 .ap2-writing-panel fieldset{display:grid;gap:.5rem;margin:.7rem 0;padding:.65rem;border:1px solid var(--line)}
 .ap2-writing-panel fieldset input{flex:none}
 #atlas-organ-labs[hidden]{display:none}
+.ap2-index-controls{display:flex;gap:1rem;flex-wrap:wrap}
+.ap2-index-controls label{display:grid;gap:.35rem;flex:1 1 14rem;min-width:0}
+.ap2-index-controls input,.ap2-index-controls select{min-width:0;width:100%}
+.ap2-index-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:.5rem}
+.ap2-index-list .course-link{display:grid;align-content:center;justify-content:start;gap:.2rem}
+.ap2-index-list small{color:var(--muted,#abbebc)}

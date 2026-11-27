@@ -31,6 +31,7 @@ const structures={
   right_posterior_tibial_artery:['arteries','Right posterior tibial artery','This artery descends through the posterior leg and passes behind the medial malleolus.'],
   right_dorsalis_pedis_artery:['arteries','Right dorsalis pedis artery','Find this continuation of the anterior tibial artery on the dorsum of the foot.']
 };
+export {structures as bodyStructures};
 
 export function bodySystemsHTML(){
   const toggles=Object.entries(layers).map(([key,{label}])=>`<label><input type="checkbox" data-body-layer="${key}" checked> ${label}</label>`).join('');
