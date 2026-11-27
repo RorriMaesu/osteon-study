@@ -25,10 +25,10 @@ export const acidBase = {
 const fields = [
   ['Node', 'Lymph node', 'An outer cortex contains lymphoid follicles. Pale sinuses run through the medulla, and an afferent vessel opens beneath the capsule.', 'The node samples lymph. Lymph arriving beneath the capsule passes through sinuses before leaving the hilum.'],
   ['Spleen', 'Spleen', 'Lymphoid nodules with an arteriole lie among extensive blood-filled sinusoids and cellular cords.', 'White pulp is organized around arteries, while red pulp handles blood cells. These landmarks support blood filtration.'],
-  ['Thymus', 'Thymus', 'Septae outline lobules. Each has a dark cortex and a paler medulla containing small concentric epithelial whorls.', 'Lobules with medullary thymic (Hassall) corpuscles support identification of the site of T-cell maturation.'],
+  ['Thymus', 'Thymus', 'Pale septa separate lobules. Within a lobule the periphery stains more densely than the central region.', 'The dark cortex and lighter medulla in a septated lobule support identification of thymus. Developing T cells mature here.'],
 ];
 export const lymphTissue = {
-  title:'Identify lymphoid tissue from field notes', section:'21.1',
+  title:'Identify lymphoid tissue from micrographs', section:'21.1',
   intro:'These are observations from representative section patterns. Use the combination of landmarks and the material an organ samples.',
   controls:[select('field','Field notes',['Field A','Field B','Field C'])],
   run({field}){
@@ -55,10 +55,16 @@ export const foodEnergy = {
   },
 };
 
+// One cycle provides each observation for both the table and the graph.
+const hormoneSeries = new Map([
+  [4,[18,8,5]],[7,[32,9,5]],[10,[60,10,6]],[12,[91,13,7]],
+  [13,[71,100,7]],[14,[38,30,12]],[17,[55,9,53]],
+  [20,[60,8,91]],[23,[55,8,77]],[25,[36,7,40]],[27,[16,7,11]]
+]);
 const cycles = [
-  { label:'Late follicular interval', days:[4,7,10,12], e:[18,32,60,91], lh:[8,9,10,13], pr:[5,5,6,7], tissue:'A growing follicle encloses an oocyte within layers of granulosa cells and an enlarging antrum.', event:'An LH surge and subsequent ovulation', why:'Sustained high estradiol near follicular maturity can switch feedback to positive and trigger the LH surge.' },
-  { label:'Early luteal interval', days:[12,13,14,17], e:[88,71,38,55], lh:[15,100,30,9], pr:[6,7,12,53], tissue:'The ovary now contains a folded, vascular structure developing at the site of the ruptured follicle.', event:'Increasing progesterone supports secretory endometrium', why:'The preceding LH surge and new corpus luteum point to the luteal phase. Progesterone supports uterine gland secretion.' },
-  { label:'Late luteal interval', days:[20,23,25,27], e:[60,55,36,16], lh:[8,8,7,7], pr:[91,77,40,11], tissue:'No implantation occurred. Luteal cells are regressing and steroid support is falling.', event:'Menstruation after loss of steroid support', why:'Falling luteal progesterone and estradiol precede shedding of the functional layer of endometrium.' },
+  { label:'Late follicular interval', days:[4,7,10,12], tissue:'A growing follicle encloses an oocyte within layers of granulosa cells and an enlarging antrum.', event:'An LH surge and subsequent ovulation', why:'Sustained high estradiol near follicular maturity can switch feedback to positive and trigger the LH surge.' },
+  { label:'Early luteal interval', days:[12,13,14,17], tissue:'The ovary now contains a folded, vascular structure developing at the site of the ruptured follicle.', event:'Increasing progesterone supports secretory endometrium', why:'The preceding LH surge and new corpus luteum point to the luteal phase. Progesterone supports uterine gland secretion.' },
+  { label:'Late luteal interval', days:[20,23,25,27], tissue:'No implantation occurred. Luteal cells are regressing and steroid support is falling.', event:'Menstruation after loss of steroid support', why:'Falling luteal progesterone and estradiol precede shedding of the functional layer of endometrium.' },
 ];
 export const ovarian = {
   title:'Align hormone traces and tissue evidence', section:'27.2',
@@ -66,11 +72,11 @@ export const ovarian = {
   controls:[select('interval','Observation interval',['Interval A','Interval B','Interval C'])],
   run({interval}){
     const set=cycles[Number(interval)];
-    const rows=set.days.map((day,i)=>[day,set.e[i],set.lh[i],set.pr[i]]);
+    const rows=set.days.map(day=>[day,...hormoneSeries.get(day)]);
     return {observation:table('Ovarian and pituitary signals',['Cycle day','Estradiol (relative)','LH (relative)','Progesterone (relative)'],rows),
       plot:{x:'Cycle day',y:'Relative hormone level',rows,series:['Estradiol','LH','Progesterone'],ymax:100},note:set.tissue,
       question:'Which event is best supported by the trace and tissue evidence?',choices:[set.event,...cycles.map(c=>c.event).filter(e=>e!==set.event)],
-      why:set.why,frames:set.days.map((day,i)=>['Day '+day,'Estradiol '+set.e[i]+', LH '+set.lh[i]+', progesterone '+set.pr[i]+' (relative units). '+(i===rows.length-1?set.tissue:'Use the matching row of the hormone plot.')]),
+      why:set.why,frames:rows.map(([day,e,lh,pr],i)=>['Day '+day,'Estradiol '+e+', LH '+lh+', progesterone '+pr+' (relative units). '+(i===rows.length-1?set.tissue:'Use the matching row of the hormone plot.')]),
     };
   },
 };

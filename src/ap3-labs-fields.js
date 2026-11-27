@@ -11,6 +11,7 @@ function field(figure, section, size, box, description, micrograph=true) {
 export const lymphMedia = [
   field('21.8','21.1',[1126,420],[58,77,454,274], 'A capsule borders densely cellular tissue with rounded nodules near the outer margin.'),
   field('21.9','21.1',[1126,1064],[330,595,385,420], 'A dark, rounded lymphoid area surrounds an arteriole and lies in tissue of a different staining density.'),
+  field('21.7','21.1',[1084,760],[634,178,265,111], 'Pale partitions separate lobules. The peripheral tissue of a lobule stains more strongly than its center.'),
 ];
 
 const intestinalFields = [
@@ -37,14 +38,16 @@ const alveoli = field('22.11','22.1',[1260,745],[625,368,585,247], 'Numerous irr
 export const gasSurface = {
   title:'Inspect an exchange surface',section:'22.1',
   intro:'Inspect the tissue before interpreting the fictional change. The micrograph shows the baseline architecture. Use the supplied condition to predict gas transfer at the same partial-pressure difference.',
-  controls:[select('condition','Change from baseline',['Increase partition thickness','Reduce available exchange area'])],
+  controls:[select('condition','Change from baseline',['Double partition thickness','Halve available exchange area','Double available exchange area','Double area and thickness together'])],
+  nextTrial:({condition})=>({condition:(Number(condition)+1)%4}),
   run({condition}){
-    const thick=Number(condition)===0;
+    const [area,thickness]=[[1,2],[0.5,1],[2,1],[2,2]][Number(condition)];
+    const rate=area/thickness,answer=rate===1?'It stays fixed':rate===2?'It doubles':'It falls to about half';
     return {media:alveoli, observation:table('Microscope field and experiment',['Measurement','Observation'],[
-      ['Baseline landmark',alveoli.description],['Change',thick?'Diffusion distance doubles. Area stays fixed.':'Effective exchange area halves. Thickness stays fixed.']]),
+      ['Baseline landmark',alveoli.description],['Area relative to baseline',area+'×'],['Thickness relative to baseline',thickness+'×']]),
       question:'With the same gas and the same pressure gradient, how does the predicted diffusion rate change?',
-      choices:['It falls to about half','It doubles','It stays fixed'], why:'Diffusive transfer is proportional to area and inversely proportional to thickness. The delicate alveolar septa normally give gas a short path to blood.',
-      frames:[['Identify the field','The small open air spaces separated by thin septa are alveoli.'],['Hold fixed','The partial-pressure gradient and the gas diffusion coefficient stay fixed.'],['Compare rates',thick?'Doubling the diffusion distance halves predicted transfer.':'Halving effective surface area halves predicted transfer.']]};
+      choices:[answer,...['It falls to about half','It doubles','It stays fixed'].filter(v=>v!==answer)], why:'At fixed partial-pressure difference, relative transfer is area factor ÷ thickness factor = '+area+' ÷ '+thickness+' = '+rate+' times baseline.',
+      frames:[['Identify the field','The small open air spaces separated by thin septa are alveoli.'],['Hold fixed','The partial-pressure gradient and the gas diffusion coefficient stay fixed.'],['Compare rates','The predicted rate is '+rate+' times baseline.']]};
   },
 };
 

@@ -3,6 +3,7 @@ import {fields} from './ap3-slides.js';
 import {specimens} from './ap3-specimens.js';
 import {assessTyped,fold,editDistance} from './typed-answer.js';
 import {checkQuantity} from './ap2-quantities.js';
+import {springScientificTerm} from './ap3-scientific-term.js';
 
 const scopeChapters = scope => scope==='all' ? chapters : chapters.filter(c=>String(c.id)===String(scope));
 function shuffle(rows,rng) {
@@ -92,6 +93,8 @@ export function gradeSpring(q,raw){
   if(q.options)return String(q.answer)===String(raw)?'correct':'incorrect';
   if(q.kind==='surface')return raw===q.expected?'correct':'incorrect';
   if(q.kind==='quantity')return checkQuantity(q,raw).correct?'correct':'incorrect';
+  const scientific=springScientificTerm(q.expected,raw);
+  if(scientific)return scientific;
   const value=fold(raw);
   if(q.opposites?.length){
     const nearKey=Math.min(...[q.expected,...(q.aliases||[])].map(term=>editDistance(value,fold(term))));

@@ -3,6 +3,7 @@
     "21.1": [
       "21.3",
       "21.4",
+      "21.7",
       "21.8",
       "21.9"
     ],
@@ -213,6 +214,13 @@
       "alt": "The map separates the right upper quadrant drained by the right lymphatic duct from the larger territory drained by the thoracic duct. Insets show each duct joining veins near the base of the neck.",
       "page": 937,
       "credit": "",
+      "section": "21.1"
+    },
+    "21.7": {
+      "title": "Location, Structure, and Histology of the Thymus",
+      "alt": "The location diagram places the thymus above the heart. In the newborn thymus micrograph, pale connective tissue divides lobules with darker peripheral cortex and lighter central medulla.",
+      "page": 940,
+      "credit": "Micrograph provided by the Regents of the University of Michigan Medical School © 2012.",
       "section": "21.1"
     },
     "21.8": {
