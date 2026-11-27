@@ -1,5 +1,9 @@
 # Organ atlas models
 
+## Regional teaching preparations
+
+The vestibular preparation preserves the relative positions of the glands, ducts and nearby tissues in the same pelvic donor. The skin cutaway shows a sweat duct, sebaceous outlet and the attachment of the arrector pili muscle at a magnified scale. Each has its own preparation notes and license. [Pelvic reconstruction and authors](accessory-glands/SOURCES.md) · [Hair-bearing skin cutaway](../skin-appendages/SOURCES.md)
+
 ## Whole-body specimen
 
 `registered-organs.glb` contains 157 named surfaces arranged in 50 selectable organ and tissue groups. It uses the same frame as the Osteon skeleton. The patient's left is positive X, superior is positive Y, and anterior is positive Z. The units are meters. The skin is an optional surface assembled from the source atlas's regional skin patches. [Organ groups and source fingerprints](../../src/organ-atlas-assets.json)

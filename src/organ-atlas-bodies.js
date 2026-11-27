@@ -27,6 +27,11 @@ export const bodyMaps=[
   ]},
   {key:'mammary',title:'Mammary glands',label:'Mammary glands',description:'Human Reference Atlas · bilateral preparation',asset:'assets/organ-atlas/mammary-glands.glb',
     organs:[{id:'mammary-glands',label:'Mammary glands and ducts',actionIds:['mammary-glands','mammary-alveoli'],system:'Reproductive',targets:['L','R'].flatMap(side=>['areolar_tubercles','nipple','areola','mammary_lobes','main_lactiferous_ducts','main_lactiferous_sinuses','suspensory_ligaments'].map(n=>'VH_F_'+n+'_'+side))}]},
+  {key:'vestibule',title:'Vestibule and adjacent structures',label:'Vestibule · donor reconstruction',description:'Chinese Visible Human · adult female pelvis',asset:'assets/organ-atlas/accessory-glands/greater-vestibular.glb',direction:[.08,-.97,.48],contextNames:['vestibular_bulbs'],organs:[
+    {id:'greater-vestibular-glands',label:'Greater vestibular glands and ducts',system:'Reproductive',targets:['greater_vestibular_gland_left','greater_vestibular_gland_right']},
+    {id:'vagina',label:'Vaginal wall',system:'Reproductive',targets:['vaginal_wall']},
+    {id:'female-urethra',label:'Urethral submucosa',system:'Urinary',targets:['urethral_submucosa']}
+  ]},
   {key:'pelvic-section',title:'Pelvic outlets and vulva',label:'Pelvic outlets · teaching model',description:'Sagittal teaching reconstruction · anterior to the left',asset:'assets/ap3-models/pelvic-section.glb',boneNames:['pubic_symphysis'],organs:[
     {id:'vagina',label:'Vagina',system:'Reproductive',targets:['vagina']},{id:'vulva',label:'Vulva',system:'Reproductive',targets:['clitoris','labia_majora','labia_minora']},
     {id:'uterus',label:'Uterus',system:'Reproductive',targets:['uterine_body']},{id:'cervix',label:'Cervix',system:'Reproductive',targets:['cervix']},

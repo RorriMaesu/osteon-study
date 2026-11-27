@@ -16,7 +16,7 @@ const companions={
   'renal-buffer':['nephron-transit'],'respiratory-buffer':['alveoli','lungs'],
   'sperm-route':['testes','epididymis','ductus-deferens','seminal-glands','ejaculatory-ducts','prostate','penis'],
   'ovarian-pelvis':['ovaries','uterine-tubes','uterus','cervix'],
-  'pelvic-section':['female-urethra','vagina','vulvar-perfusion','female-bladder','uterus','cervix','rectum'],
+  'pelvic-section':['female-urethra','vagina','vulvar-perfusion','greater-vestibular-glands','female-bladder','uterus','cervix','rectum'],
   'ovarian-follicle':['ovaries'],'seminiferous-tubule':['testes'],
   'placental-exchange':['placenta'],'birth-orientation':['placenta'],'fetal-shunts':['placenta','heart'],
   'lactating-unit':['mammary-alveoli','mammary-glands']

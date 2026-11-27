@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {label as surfaceLabel} from './ap3-specimens-catalog.js';
-import {createOrganMotion} from './organ-atlas-catalog.js';
+import {createOrganMotion,organSystemColor} from './organ-atlas-catalog.js';
 
-const colors={digestive:'#d5956e',urinary:'#bd7992',reproductive:'#be89b5',respiratory:'#c18c99',endocrine:'#e4ae65',nervous:'#d7b686',lymphatic:'#85aa86',cardiovascular:'#bd6974',sensory:'#8fb4bd',integumentary:'#d0a387'};
+
 function lookupSurface(mesh,names){
   for(let obj=mesh;obj;obj=obj.parent){
     for(const key of [obj.userData?.name,obj.name])if(names.has(key))return key;
@@ -24,6 +24,12 @@ function tapSurface(viewer,objects,choose,onTouch=()=>{}){
     choose(ray.intersectObjects(objects().filter(m=>m.visible),false));
   };
 }
+function addViewMenu(host){
+  const bar=host.querySelector('.organ-tools'),button=document.createElement('button');
+  button.type='button';button.className='oa-camera-views';button.textContent='Views';button.setAttribute('aria-expanded','false');
+  button.onclick=()=>{const open=bar.classList.toggle('oa-camera-open');button.setAttribute('aria-expanded',String(open));};
+  bar.insertBefore(button,bar.querySelector('[data-expand]'));
+}
 function expandedControls(host){
   const panel=host.parentElement.querySelector('[data-oa-lesson]');
   return {returnLabel:'Exit full screen',onExpand(active){
@@ -40,9 +46,10 @@ export function mountCloseup(host,entry,onReady){
       const name=lookupSurface(mesh,names),material=[].concat(mesh.material)[0];
       if(material?.color&&material.color.getHex()!==0xffffff)return material.color;
       if(!targets.has(name))return '#a7aaa3';
-      return colors[entry.system.toLowerCase()]||'#ca967f';
+      return organSystemColor(entry.system);
     },
     onLoad(viewer){
+      addViewMenu(host);
       const meshes=new Map();
       viewer.model.traverse(mesh=>{
         if(!mesh.isMesh)return;
@@ -81,7 +88,7 @@ export function mountCloseup(host,entry,onReady){
 
 export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
   const bySurface=new Map(map.organs.flatMap(organ=>organ.targets.map(name=>[name,organ])));
-  const meshes=[],localBones=[],materials=new Map(),boneNames=new Set(map.boneNames||[]);
+  const meshes=[],localBones=[],materials=new Map(),boneNames=new Set(map.boneNames||[]),contextNames=new Set(map.contextNames||[]);
   let selected=null,system='',skeleton=null,bones=true,skeletonLoading=false,closed=false,api;
   function show(){
     for(const {mesh,organ} of meshes){
@@ -129,18 +136,19 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
     direction:map.direction||[0,.02,1],colors:(_,mesh)=>{
       const organ=bySurface.get(lookupSurface(mesh,bySurface));
       const color=[].concat(mesh.material)[0]?.color;
-      return color&&color.getHex()!==0xffffff?color:colors[organ?.system.toLowerCase()]||'#c18b83';
+      return color&&color.getHex()!==0xffffff?color:organSystemColor(organ?.system);
     },onLoad(instance){
-      api=instance;
+      api=instance;addViewMenu(host);
       function indexLayer(layer,extra=false){layer.traverse(mesh=>{
         if(!mesh.isMesh)return;
         const organ=bySurface.get(lookupSurface(mesh,bySurface));
         if(!organ){
           if(lookupSurface(mesh,boneNames)){localBones.push(mesh);for(const mat of [].concat(mesh.material)){mat.color.set('#c9bba5');mat.transparent=true;mat.opacity=.18;mat.depthWrite=false;}}
+          else if(lookupSurface(mesh,contextNames)){for(const mat of [].concat(mesh.material)){mat.transparent=true;mat.opacity=.2;mat.depthWrite=false;}}
           else mesh.visible=false;
           return;
         }
-        if(extra){const original=mesh.material;mesh.material=new THREE.MeshStandardMaterial({color:colors[organ.system.toLowerCase()]||'#bf8d92',roughness:.8});api.addCleanup(()=>{for(const mat of [].concat(original))mat.dispose();});}
+        if(extra){const original=mesh.material;mesh.material=new THREE.MeshStandardMaterial({color:organSystemColor(organ.system),roughness:.8});api.addCleanup(()=>{for(const mat of [].concat(original))mat.dispose();});}
         meshes.push({mesh,organ});mesh.userData.registeredOrgan=organ;
         materials.set(mesh,[].concat(mesh.material).map(mat=>({mat,base:mat.color.clone()})));
       });}

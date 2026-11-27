@@ -67,7 +67,7 @@ function showHistoryRoute(initial=false){
  restoringRoute=true;
  try{
   if(route==='courses'||route==='course-1'||route==='course-2'||route==='course-3'||/^ap[23]-/.test(route))courseHome.open(route);
-  else if(route==='organs'||route.startsWith('organs/')){setView('organs',{route,historyMode:initial?'replace':'none'});organAtlas.open(route);}
+  else if(route==='organs'||route.startsWith('organs/')){const from=currentRoute;setView('organs',{route,historyMode:initial?'replace':'none'});organAtlas.open(route,from);}
   else if(exam4ReportId)document.dispatchEvent(new CustomEvent('exam4results',{detail:{id:exam4ReportId}}));
   else if(mockReportId)document.dispatchEvent(new CustomEvent('exam3results',{detail:{id:mockReportId}}));
   else if(Object.hasOwn(routeEvents,route))document.dispatchEvent(new Event(routeEvents[route]));
@@ -286,7 +286,7 @@ $$('[data-region]').forEach(b=>b.onclick=()=>changeRegion(b.dataset.region));
 syncFilters();
 $('#structure-search').oninput=renderList;$('#exact-only').onchange=renderList;
 $$('[data-browse-mode]').forEach(b=>b.onclick=()=>{browseMode=b.dataset.browseMode;atlasTopic='all';$('#structure-search').placeholder=browseMode==='nerves'?'Search nerves, e.g. CN VII':browseMode==='ligaments'?'Search ligaments':browseMode==='lymph-nodes'?'Search lymph nodes':'Search bones, landmarks & nodes';$('#structure-search').setAttribute('aria-label',$('#structure-search').placeholder);if(browseMode==='ligaments')enableLigaments(true);if(browseMode==='lymph-nodes'&&!lymphNodes.loading)lymphNodes.toggle(true);if(browseMode==='nerves'){nervous.setFilter('all');nervous.toggle(true);}$$('[data-browse-mode]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));if(browseMode==='landmarks')$('#exact-only').checked=false;$('#exact-only').disabled=['landmarks','ligaments','nerves','lymph-nodes'].includes(browseMode);renderList();});
-document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();if($('#organs-view').classList.contains('active')){e.preventDefault();$('#organs-view [data-oa-search]')?.focus();return;}if($('#courses-view').classList.contains('active')&&selectedCourse()!=='1'){if(!document.body.dataset.ap2Exam&&!document.body.dataset.ap3Exam)courseHome.open('ap'+selectedCourse()+'-search');return;}setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&!$('#tutor-panel')?.open&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('#info-dialog').open){e.preventDefault();if($('#organs-view').classList.contains('active')){organAtlas.find();return;}if($('#courses-view').classList.contains('active')&&selectedCourse()!=='1'){if(!document.body.dataset.ap2Exam&&!document.body.dataset.ap3Exam)courseHome.open('ap'+selectedCourse()+'-search');return;}setView('atlas');$(viewer.muscleLayer?.state.enabled?'#muscle-search':'#structure-search').focus();}});
 $$('[data-camera]').forEach(b=>b.onclick=()=>{
  if(!ready)return;
  if(b.dataset.camera==='reset')viewer.recenter();

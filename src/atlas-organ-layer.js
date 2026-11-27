@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {bodyAtlas,motionsForBody} from './organ-atlas-catalog.js';
+import {bodyAtlas,motionsForBody,organSystemColor} from './organ-atlas-catalog.js';
 
 export function attachOrganLayer(viewer,toast){
   const button=document.querySelector('#organs-layer-btn'),selection=document.querySelector('#organ-layer-study');
@@ -44,7 +44,7 @@ export function attachOrganLayer(viewer,toast){
         if(!row){mesh.visible=false;return;}
         const original=mesh.material;
         const color=[].concat(original)[0]?.color;
-        mesh.material=new THREE.MeshStandardMaterial({color:color&&color.getHex()!==0xffffff?color:0xbd8a78,roughness:.8,side:THREE.DoubleSide});
+        mesh.material=new THREE.MeshStandardMaterial({color:color&&color.getHex()!==0xffffff?color:organSystemColor(row.system),roughness:.8,side:THREE.DoubleSide});
         for(const material of [].concat(original))material.dispose();
         mesh.userData.organRow=row;mesh.userData.zname=row.label;
         parts.push({mesh,row,bounds:new THREE.Box3().setFromObject(mesh)});
