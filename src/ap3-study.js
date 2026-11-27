@@ -1,6 +1,6 @@
 import {mountLessonFigure} from './lesson-figure.js';
 import {openSpringSearch,specimenRoute,springTargetKey} from './ap3-search.js';
-import {specimenAnimations,animationForTarget,specimenActivity} from './ap3-specimen-animations.js';
+import {specimenAnimations,animationForTarget,specimenActivity,specimenMotionRoute} from './ap3-specimen-animations.js';
 import {chapters} from './ap3-curriculum.js';
 import {chapterLabs,renderLab,mountLab} from './ap3-labs.js';
 import {springLessonLabs,labRoute,readLabRoute} from './ap3-lab-links.js';
@@ -124,14 +124,15 @@ export function initAP3({root,escape:e,toast}){
     const picker=choices.length>1?'<label class="ap3-select">Organ animation <select data-specimen-motion>'+
       choices.map(v=>'<option value="'+e(v.id)+'"'+(v===first?' selected':'')+'>'+e(v.title+' · '+v.action)+'</option>').join('')+'</select></label>':'';
     const activity=specimenActivity(s,target);
-    const launch=activity?'<a class="course-link course-primary" data-specimen-activity href="#'+e(activity.route)+'">'+e(activity.label)+' →</a>':first?picker+'<a class="course-link course-primary" data-open-specimen-motion href="#organs/'+e(first.id)+'">'+
+    const launch=activity?'<a class="course-link course-primary" data-specimen-activity href="#'+e(activity.route)+'">'+e(activity.label)+' →</a>':first?picker+'<a class="course-link course-primary" data-open-specimen-motion href="#'+e(specimenMotionRoute(first,target))+'">'+
       (picker?'Open animation →':e(first.action)+' →')+'</a>':link('organs','Browse organ animations');
     page(hero('Chapter '+s.chapter+' · '+s.kind,s.title)+'<div class="course-actions ap3-specimen-actions"><div class="ap3-motion-launch" data-specimen-animations>'+launch+'</div>'+
       '<button class="ap3-mobile-enlarge" data-mobile-enlarge>Expand model</button></div><div data-spring-specimen>'+renderSpecimen(s.id)+'</div><div class="course-actions">'+link('ap3-models/'+s.chapter,'← Chapter models')+link('ap3-lab-'+s.chapter,'Physiology lab')+link('atlas','Shared 3D Atlas')+'</div>');
     setLearningContext({course:'ap3',reference:s.stations?.[0]?.section||s.chapter+'.1',type:'lesson',label:s.title,text:s.description});
     const select=root.querySelector('[data-specimen-motion]'),openMotion=root.querySelector('[data-open-specimen-motion]');
     const anonymous=root.querySelector('[data-ap3-anonymous]');
-    if(select)select.onchange=()=>{openMotion.setAttribute('href','#organs/'+select.value);};
+    let selectedTarget=target;
+    if(select)select.onchange=()=>{const entry=choices.find(row=>row.id===select.value);openMotion.setAttribute('href','#'+specimenMotionRoute(entry,selectedTarget));};
     function rememberTarget(id){
       const route=specimenRoute(s.id,id);
       if(location.hash==='#'+route)return;
@@ -142,7 +143,8 @@ export function initAP3({root,escape:e,toast}){
       if(!anonymous?.checked)rememberTarget(id);
       if(activity)root.querySelector('[data-specimen-activity]').setAttribute('href','#'+specimenActivity(s,id).route);
       const match=animationForTarget(s,id,choices)||choices[0];
-      if(select&&match&&!anonymous?.checked){select.value=match.id;openMotion.setAttribute('href','#organs/'+match.id);}
+      selectedTarget=id;
+      if(openMotion&&match&&!anonymous?.checked){if(select)select.value=match.id;openMotion.setAttribute('href','#'+specimenMotionRoute(match,id));}
     }}));
     root.querySelector('[data-mobile-enlarge]').onclick=()=>root.querySelector('[data-spring-specimen] [data-expand]')?.click();
   }

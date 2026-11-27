@@ -17,7 +17,7 @@ function add(id,title,system,asset,targets,context,section,action,description,st
   const flow=effects.some(e=>e.mode==='trace'||e.marker);
   list.push({id,title,system,asset,targets:targets.split(' '),context:context?context.split(' '):[],
     kind:deforms?(flow?'Movement and flow':'Organ movement'):'Process overlay',
-    section,action,description,phases:steps.map(([label,text])=>({label,text})),effects,
+    section,action,description,phases:steps.map(([label,text,at])=>({label,text,at})),effects,
     source:sources.get(section),duration:8,bodyIds:[id],...extra});
 }
 
@@ -70,12 +70,12 @@ add('liver','Liver',digestive,accessory,'liver','hepatic_portal_vein','23.6','Fo
     ['Portal entry','Blood approaches the porta hepatis.'],
     ['Hepatic processing','Inside the liver, portal branches supply sinusoids where hepatocytes exchange substances with blood.']],
   [trace('portal-inflow',[0,.82],blood),cue('liver',[.69,1],amber)]);
-add('gallbladder','Gallbladder',digestive,accessory,'gallbladder','cystic_duct bile_duct duodenum','23.6','Empty stored bile',
+add('gallbladder','Gallbladder',digestive,accessory,'gallbladder cystic_duct bile_duct','duodenum','23.6','Empty stored bile',
   'Follow bile out of the gallbladder through the cystic duct and into the common bile duct. The donor shows one continuous outlet. The change between the two duct labels illustrates where the common hepatic duct would join.',[
-    ['Stored bile','Bile produced by the liver is concentrated in the gallbladder.'],
-    ['Contraction','Cholecystokinin promotes gallbladder contraction during a meal.'],
-    ['Duct delivery','Bile reaches the duodenum as outflow resistance falls.']],
-  [{mode:'empty',mesh:'gallbladder',pivot:[-.03019,1.15737,.03916],amount:.21,span:[0,1]},trace('cystic-duct',[.22,.37],bile),trace('common-bile-duct',[.37,.93],bile)],{direction:[.1,-.32,1]});
+    ['Stored bile','Bile produced by the liver is concentrated in the gallbladder.',0],
+    ['Cystic duct','Cholecystokinin promotes contraction during a meal. Stored bile leaves through the gallbladder neck and cystic duct.',.22],
+    ['Common bile duct','Follow the marker toward the duodenal wall. Bile enters the bowel through the duodenal papilla, beyond the end of this visible duct.',.37]],
+  [{mode:'empty',mesh:'gallbladder',pivot:[-.03019,1.15737,.03916],amount:.21,span:[.22,1]},trace('cystic-duct',[.22,.37],bile),trace('common-bile-duct',[.37,.93],bile)],{direction:[.1,-.32,1]});
 add('pancreas','Pancreas · exocrine secretion',digestive,accessory,'pancreas','pancreatic_duct duodenum','23.6','Deliver pancreatic juice',
   'Follow the gold tracer along the main pancreatic duct toward the duodenum. Juice from acinar and duct cells contains digestive enzymes and bicarbonate. The microscopic opening is beyond this mesh.',[
     ['Exocrine secretion','Acini supply enzymes and duct cells add a bicarbonate-rich fluid.'],
@@ -219,12 +219,19 @@ add('tongue-swallow','Tongue · swallowing',digestive,registered,'tongue','oroph
   [{mode:'tongue',mesh:'tongue'}, {mode:'trace',points:[[0,1.535,.072],[0,1.542,.061],[0,1.544,.049],[0,1.541,.037],[0,1.534,.027],[0,1.524,.019]]}],
   {bodyIds:['tongue'],direction:[.82,.28,.36],kind:'Movement and flow'});
 
-add('pharynx','Pharynx · swallowing',digestive,registered,'oropharynx laryngopharynx','nasopharynx epiglottis','23.3','Follow a swallowed bolus',
-  'Follow a representative bolus behind the tongue through the oropharynx and laryngopharynx. Sequential constrictor activity helps propel it toward the upper esophagus. The nasopharynx is closed off during swallowing.',[
-    ['Pharyngeal entry','The tongue delivers the bolus to the oropharynx.'],
-    ['Protected airway','Laryngeal elevation and closure protect the airway as the bolus moves past it.'],
-    ['Esophageal entry','The upper esophageal sphincter relaxes as the bolus arrives.']],
-  [trace('oropharynx',[0,.56]),trace('laryngopharynx',[.56,1])],{direction:[.70,.06,.50]});
+add('pharynx','Pharynx · swallowing',digestive,registered,'oropharynx laryngopharynx','nasopharynx epiglottis cricoid_cartilage esophagus tongue','23.3','Follow a swallowed bolus',
+  'Follow the bolus behind the tongue and past the airway to the upper esophagus. In the starting side view, the airway lies toward the front. The bright trail records the path already traveled.',[
+    ['Pharyngeal entry','The tongue directs the bolus into the oropharynx.',0],
+    ['Protected airway','The bolus passes behind the laryngeal inlet. The epiglottis marks its anterior margin.',.40],
+    ['Esophageal entry','The bolus enters the upper esophagus behind the cricoid cartilage.',.82]],
+  [trace('oropharynx',[0,.40],amber,{trail:true,size:.060}),
+    trace('laryngopharynx',[.40,.82],amber,{trail:true,size:.060}),
+    {mode:'trace',points:[[.001,1.474,.004],[.001,1.470,.0024],[.0006,1.464,.0015]],span:[.82,1],color:amber,trail:true,size:.060},
+    {...cue('oropharynx',[0,.3999],'#f3ad63'),sustained:true},
+    {...cue('laryngopharynx',[.40,.8199],'#f3ad63'),sustained:true}],
+  {direction:[1,.015,.055],landmarks:[
+    {label:'Airway',mesh:'epiglottis',point:[0,1.509,.021],offset:[0,.005,.021]},
+    {label:'Esophagus',mesh:'esophagus',point:[.0006,1.464,.0015],offset:[0,-.002,.030],size:.12}]});
 add('cecum','Cecum',digestive,registered,'cecum','ascending_colon','23.5','Locate initial colonic mixing',
   'This blind pouch receives material from the terminal ileum. Follow an illustrative displacement of contents within the pouch as local muscular activity mixes them.',[
     ['Receive','Material entering across the ileocecal junction reaches the cecum.'],
@@ -259,11 +266,19 @@ add('female-bladder','Urinary bladder · female reference',urinary,femaleUrinary
   bladderParts.map(mesh=>({mode:'fill',mesh,amount:.38,bounds:[[-.0405,-.0152,-.0593],[.0114,.0262,.0024]],fixPosterior:true})),{direction:[.43,.16,1]});
 add('female-collecting-system','Renal collecting system · female reference',urinary,femaleUrinary,
   'VH_F_minor_calyx_L_a VH_F_minor_calyx_L_b VH_F_minor_calyx_L_c VH_F_minor_calyx_L_d VH_F_minor_calyx_L_e VH_F_minor_calyx_L_f VH_F_minor_calyx_L_g VH_F_minor_calyx_L_h VH_F_minor_calyx_L_i VH_F_minor_calyx_L_j VH_F_major_calyx_L_a VH_F_major_calyx_L_b VH_F_major_calyx_L_c VH_F_major_calyx_L_d VH_F_renal_pelvis_L','VH_F_left_ureter','25.3','Drain urine from a calyx',
-  'The marker follows one branch of the left collecting system. Its minor and major calyces and renal pelvis meet at shared segmentation rims. Follow the flow into the upper ureter.',[
-    ['Minor calyx','Urine arrives from a renal papilla.'],
-    ['Major calyx','The selected minor calyx drains into a larger branch.'],
-    ['Pelvis to ureter','Urine converges in the renal pelvis and enters the ureter.']],
-  [trace('minor-calyx',[0,.35]),trace('major-calyx',[.35,.62]),trace('female-renal-pelvis',[.62,.88]),trace('female-ureter-left',[.88,1],amber,{range:[0,.045]})]);
+  'Trace one branch of the left collecting system. The arrow follows urine out of a minor calyx, into a major calyx, through the renal pelvis and into the upper ureter. Other calyces drain neighboring papillae.',[
+    ['Minor calyx','Urine from a papilla enters the highlighted cup.',0],
+    ['Major calyx','The arrow follows that cup into its shared major calyx.',.35],
+    ['Renal pelvis','Urine from the major calyces converges in the renal pelvis.',.62],
+    ['Upper ureter','Urine leaves the pelvis at the ureteropelvic junction and enters the proximal ureter.',.88]],
+  [trace('minor-calyx',[0,.35],amber,{arrow:true,trail:true,size:.073}),
+    trace('major-calyx',[.35,.62],amber,{arrow:true,trail:true,size:.073}),
+    trace('female-renal-pelvis',[.62,.88],amber,{arrow:true,trail:true,size:.073}),
+    trace('female-ureter-left',[.88,1],amber,{arrow:true,trail:true,size:.073,range:[0,.045]}),
+    {...cue('VH_F_minor_calyx_L_e',[0,.3499],amber),sustained:true},
+    {...cue('VH_F_major_calyx_L_b',[.35,.6199],amber),sustained:true},
+    {...cue('VH_F_renal_pelvis_L',[.62,.8799],amber),sustained:true}],
+  {direction:[.52,.10,-1]});
 
 add('female-urethra','Urethra · female sagittal section',urinary,pelvic,'urethra','bladder pubic_symphysis vagina','25.2','Follow urine through the pelvic outlet',
   'The gold marker moves from the bladder neck to the external urethral opening. In this sagittal teaching model, the urethra lies behind the pubic symphysis and in front of the vagina.',[
@@ -272,8 +287,8 @@ add('female-urethra','Urethra · female sagittal section',urinary,pelvic,'urethr
     ['Vestibule','Urine exits through the urethral opening anterior to the vaginal opening.']],
   [trace('female-urethra')],{direction:[.02,.01,1],modelSource:'Original Osteon teaching reconstruction'});
 add('glomerular-filtration','Glomerular filtration barrier',urinary,spring('filtration-barrier'),
-  'endothelium fenestrae basement_membrane podocyte_foot_processes filtration_slits capsular_space','','25.5','Filter water into capsular space',
-  'Follow one water marker from capillary blood through the three layers of the filtration barrier. This enlarged section shows the direction in which net filtration pressure drives fluid.',[
+  'endothelium fenestrae basement_membrane podocyte_foot_processes filtration_slits capsular_space','','25.5','Compare what can cross the filtration barrier',
+  'Play a water marker or choose a different particle in Compare particles. This enlarged section shows the direction of net filtration into capsular space. Marker sizes and stopping positions illustrate permeability.',[
     ['Endothelial pore','Water passes through a fenestra. Blood cells remain in the circulation.'],
     ['Basement membrane','Water and small solutes pass through the basement membrane. Most plasma protein stays in the blood.'],
     ['Filtration slit','Water crosses the slit diaphragm between podocyte foot processes and enters capsular space.']],

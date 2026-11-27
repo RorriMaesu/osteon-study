@@ -8,6 +8,14 @@ import {mountRegulationMotion,regulationOrgans} from '../src/organ-motion-regula
 import {cardiacValves} from '../src/ap2-valve-surfaces.js';
 import paths from '../src/organ-motion-visceral-paths.json' with {type:'json'};
 
+test('the named bile phases, visible route and reservoir share a clock',()=>{
+  const entry=visceralOrgans.find(row=>row.id==='gallbladder');
+  const routes=entry.effects.filter(effect=>effect.mode==='trace');
+  assert.deepEqual(entry.phases.slice(1).map(phase=>phase.at),routes.map(route=>route.span[0]));
+  assert.equal(entry.effects.find(effect=>effect.mode==='empty').span[0],routes[0].span[0]);
+  assert.ok(['gallbladder','cystic_duct','bile_duct'].every(name=>entry.targets.includes(name)));
+});
+
 async function load(entry){
   const data=readFileSync(new URL('../'+entry.asset,import.meta.url));
   const {scene:model}=await new GLTFLoader().parseAsync(data.buffer.slice(data.byteOffset,data.byteOffset+data.byteLength),'');
@@ -62,7 +70,9 @@ test('each propelled bolus stays downstream of the contracting ring on the loade
 test('all four atlas leaflets change aperture separately and close during both isovolumetric windows',async()=>{
   const heart=regulationOrgans.find(e=>e.id==='heart'),{instance,byName}=await load(heart);
   const mounts=cardiacValves.map(v=>byName.get('VH_M_'+v.key+'_valve')[0]);
+  const vertexColors=mounts.map(m=>m.material.vertexColors);
   const original=mounts.map(mesh=>mesh.geometry),motion=mountRegulationMotion(heart,instance,byName);
+  for(const mesh of mounts)assert.equal(mesh.material.vertexColors,false,'the reconstructed leaflets supply their own color');
   const snapshot=ms=>{motion.set(ms/800);return mounts.map(m=>Array.from(m.geometry.attributes.position.array));};
   const closed=snapshot(215);
   assert.deepEqual(snapshot(540),closed);
@@ -70,5 +80,5 @@ test('all four atlas leaflets change aperture separately and close during both i
     const actual=snapshot(ms);
     cardiacValves.forEach((v,i)=>assert.equal(actual[i].some((x,j)=>Math.abs(x-closed[i][j])>1e-7),open.includes(v.key),v.key+' at '+ms));
   }
-  motion.dispose();mounts.forEach((m,i)=>assert.equal(m.geometry,original[i]));
+  motion.dispose();mounts.forEach((m,i)=>{assert.equal(m.geometry,original[i]);assert.equal(m.material.vertexColors,vertexColors[i]);});
 });

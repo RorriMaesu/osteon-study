@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {regulationOrgans} from './organ-motion-regulation-catalog.js';
 import {mountMechanicalMotion} from './organ-motion-regulation-dynamics.js';
+import {pinealOutput} from './organ-mechanism-signals.js';
 import {mountHeartbeatValves} from './organ-motion-heart-valves.js';
 export {regulationOrgans};
 
@@ -90,7 +91,8 @@ function flowPosition(target,path,u){
 }
 
 function releaseLevel(entry,index,u){
-  if(entry.mechanism==='pineal-release'||entry.mechanism==='feedback-release'){
+  if(entry.mechanism==='pineal-release')return pinealOutput((index+u)/3);
+  if(entry.mechanism==='feedback-release'){
     if(index===0)return .20+.13*u;
     if(index===1)return .4+.6*smooth(u);
     return 1-.8*smooth(u);
@@ -144,9 +146,12 @@ export function mountRegulationMotion(entry,instance,meshesByName){
     ink.set(key,materials);
     for(const m of materials)if(!materialDefaults.has(m))materialDefaults.set(m,{color:m.emissive.clone(),intensity:m.emissiveIntensity});
     if(valves||entry.id==='thyroid'||entry.id==='eye'||entry.id==='coronary-circulation'||key==='diaphragm')for(const m of materials){
-      if(!specimenMaterials.has(m))specimenMaterials.set(m,{color:m.color.clone(),transparent:m.transparent,opacity:m.opacity,depthWrite:m.depthWrite,side:m.side});
+      if(!specimenMaterials.has(m))specimenMaterials.set(m,{color:m.color.clone(),transparent:m.transparent,opacity:m.opacity,depthWrite:m.depthWrite,side:m.side,vertexColors:m.vertexColors});
       if(valves){
-        if(key.endsWith('_valve')){m.color.set('#e5b665');m.side=THREE.DoubleSide;m.needsUpdate=true;}
+        if(key.endsWith('_valve')){
+          // Draw after the translucent chambers so all four leaflets remain legible.
+          m.color.set('#e5b665');m.vertexColors=false;m.side=THREE.DoubleSide;m.transparent=true;m.opacity=1;m.needsUpdate=true;
+        }
         else{m.transparent=true;m.opacity=.19;m.depthWrite=false;}
       }
       else if(entry.id==='coronary-circulation')m.color.set(/vein|sinus/.test(key)?'#557dba':'#bd6161');
@@ -156,6 +161,13 @@ export function mountRegulationMotion(entry,instance,meshesByName){
       if(key==='colloid_section'){m.transparent=true;m.opacity=.60;m.depthWrite=false;}
     }
     if(entry.id==='eye'&&key==='Lens')for(const mesh of found){const section=makeLensSection(mesh);if(section)sections.push(section);}
+  }
+  // A regional surface glow locates microscopic exchange in the myocardium.
+  // Its capillaries are drawn separately at teaching scale in the companion.
+  for(const name of new Set(entry.phases.flatMap(phase=>phase.tissue||[]))){
+    const mats=new Set((meshesByName.get(name)||[]).flatMap(mesh=>[].concat(mesh.material)).filter(mat=>mat.emissive));
+    ink.set(name,mats);
+    for(const mat of mats)if(!materialDefaults.has(mat))materialDefaults.set(mat,{color:mat.emissive.clone(),intensity:mat.emissiveIntensity});
   }
   const radius=Math.max(modelBounds.getSize(new THREE.Vector3()).length(),1e-6);
   const count=4; // An explanatory marker at each current site, independent of mesh density.
@@ -179,7 +191,7 @@ export function mountRegulationMotion(entry,instance,meshesByName){
     for(const [mat,base] of materialDefaults){mat.emissive.copy(base.color);mat.emissiveIntensity=base.intensity;}
     const level=releaseLevel(entry,index,u);
     const glow=(mechanical ? .14 : .10+.39*level)+.09*Math.sin(Math.PI*u);
-    for(const name of phase.sites)for(const mat of ink.get(name)||[]){
+    for(const name of (phase.tissue||phase.sites))for(const mat of ink.get(name)||[]){
       const base=materialDefaults.get(mat);
       mat.emissive.copy(emission.copy(base.color).lerp(WARM,glow));mat.emissiveIntensity=Math.max(base.intensity,.85);
     }
@@ -232,7 +244,7 @@ export function mountRegulationMotion(entry,instance,meshesByName){
     mechanism?.dispose();
     valves?.dispose();
     for(const [mat,base] of materialDefaults){mat.emissive.copy(base.color);mat.emissiveIntensity=base.intensity;}
-    for(const [mat,base] of specimenMaterials){mat.color.copy(base.color);mat.transparent=base.transparent;mat.opacity=base.opacity;mat.depthWrite=base.depthWrite;mat.side=base.side;mat.needsUpdate=true;}
+    for(const [mat,base] of specimenMaterials){mat.color.copy(base.color);mat.transparent=base.transparent;mat.opacity=base.opacity;mat.depthWrite=base.depthWrite;mat.side=base.side;mat.vertexColors=base.vertexColors;mat.needsUpdate=true;}
     for(const section of sections){section.removeFromParent();section.geometry.dispose();}
     group.removeFromParent();geometry.dispose();for(const m of materials)m.dispose();
   }

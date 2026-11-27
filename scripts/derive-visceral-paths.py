@@ -151,6 +151,11 @@ urinary_f='organ-atlas/female-urinary.glb'
 derive('minor-calyx',urinary_f,'VH_F_minor_calyx_L_e','>VH_F_major_calyx_L_b','~VH_F_major_calyx_L_b',False,14)
 derive('major-calyx',urinary_f,'VH_F_major_calyx_L_b','~VH_F_minor_calyx_L_e','~VH_F_renal_pelvis_L',False,18)
 derive('female-renal-pelvis',urinary_f,'VH_F_renal_pelvis_L','~VH_F_major_calyx_L_b','VH_F_left_ureter',False,18)
+# The ureter track begins at the center of its cut rim. The renal-pelvis
+# surface track ends on its edge. Continue to the rim center for a continuous
+# route into the ureter. Use the same handoff for the adjoining calyces.
+paths['major-calyx'][0] = paths['minor-calyx'][-1]
+paths['female-renal-pelvis'].append(paths['female-ureter-left'][0])
 
 # The sublingual gland has many small ducts that are absent from the gross
 # model. Symbols end at the actual superior surface instead of drawing a duct.

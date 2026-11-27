@@ -13,15 +13,19 @@ const companions={
   kidney:['kidneys','glomerular-filtration','nephron-transit','female-collecting-system'],
   'nephron-pair':['nephron-transit','glomerular-filtration'],glomerulus:['glomerular-filtration','nephron-transit'],
   'filtration-barrier':['glomerular-filtration','nephron-transit'],
-  'renal-buffer':['nephron-transit'],'respiratory-buffer':['alveoli','lungs'],
+  'renal-buffer':['renal-acid-base','nephron-transit'],'respiratory-buffer':['respiratory-acid-base','alveoli','lungs'],
   'sperm-route':['testes','epididymis','ductus-deferens','seminal-glands','ejaculatory-ducts','prostate','penis'],
   'ovarian-pelvis':['ovaries','uterine-tubes','uterus','cervix'],
   'pelvic-section':['female-urethra','vagina','vulvar-perfusion','greater-vestibular-glands','female-bladder','uterus','cervix','rectum'],
-  'ovarian-follicle':['ovaries'],'seminiferous-tubule':['testes'],
-  'placental-exchange':['placenta'],
+  'ovarian-follicle':['follicle-ovulation','ovaries'],'seminiferous-tubule':['seminiferous-tubule','testes'],
+  'fluid-spaces':['tissue-water-exchange'],'placental-exchange':['placental-villus-exchange','placenta'],
   'lactating-unit':['mammary-alveoli','mammary-glands']
 };
 const byId=new Map(organMotions.map(entry=>[entry.id,entry]));
+export function specimenMotionRoute(entry,targetId){
+  const phase=entry.phases.findIndex(p=>p.members?.includes(targetId)||p.assemblies?.includes(targetId));
+  return 'organs/'+entry.id+(phase>0?'/step-'+(phase+1):'');
+}
 export function specimenAnimations(specimen){
   const related=companions[specimen.id]||(specimen.id.startsWith('nodes-')?['lymph-node']:[]);
   const matches=organMotions.filter(entry=>entry.asset===specimen.asset).map(entry=>entry.id);

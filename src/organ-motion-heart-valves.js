@@ -8,6 +8,8 @@ export function mountHeartbeatValves(model,byName){
   model.updateWorldMatrix(true,true);
   const valves=cardiacValves.map(spec=>{
     const mesh=byName.get('VH_M_'+spec.key+'_valve')[0],original=mesh.geometry;
+    const savedOrder=mesh.renderOrder;
+    mesh.renderOrder=2;
     const teaching=makeTeachingValve(spec);
     teaching.root.updateMatrixWorld(true);
     const matrix=mesh.matrixWorld.clone().invert().multiply(model.matrixWorld).multiply(teaching.root.matrix);
@@ -33,7 +35,7 @@ export function mountHeartbeatValves(model,byName){
       positions.needsUpdate=true;geometry.computeVertexNormals();geometry.computeBoundingSphere();geometry.computeBoundingBox();
     }
     function dispose(){
-      mesh.geometry=original;geometry.dispose();
+      mesh.geometry=original;mesh.renderOrder=savedOrder;geometry.dispose();
       for(const child of teaching.root.children){child.geometry.dispose();child.material.dispose();}
     }
     return {set,dispose};

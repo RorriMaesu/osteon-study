@@ -22,7 +22,11 @@ function tapSurface(viewer,objects,choose,onTouch=()=>{}){
     if(!click)return;
     const box=canvas.getBoundingClientRect();pointer.set(2*(e.clientX-box.left)/box.width-1,1-2*(e.clientY-box.top)/box.height);
     ray.setFromCamera(pointer,viewer.camera);
-    choose(ray.intersectObjects(objects().filter(m=>m.visible),false));
+    const visible=objects().filter(mesh=>{
+      for(let node=mesh;node;node=node.parent)if(!node.visible)return false;
+      return true;
+    });
+    choose(ray.intersectObjects(visible,false));
   };
 }
 function addViewMenu(host){
@@ -73,7 +77,7 @@ export function mountCloseup(host,entry,onReady){
       const showContext=visible=>{contextVisible=visible;for(const id of context)if(!targets.has(id))for(const mesh of meshes.get(id)||[])mesh.visible=visible;picker?.contextChanged(visible);viewer.invalidate();};
       fitMeshes();viewer.fit();showContext(true);
       const motion=createOrganMotion(entry,viewer,meshes);
-      const frame=t=>{motion.set(t);viewer.invalidate();};
+      const frame=(t,particle)=>{motion.set(t,particle);viewer.invalidate();};
       viewer.addCleanup(()=>motion.dispose?.());
       const selectable=[...meshes.values()].flat();
       picker=mountStructurePicker(host,viewer,entry,meshes,group=>{

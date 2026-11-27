@@ -159,8 +159,9 @@ add('coronary-circulation','Coronary arteries, veins and sinus','Cardiovascular'
   'Follow the named surface vessels of a human heart. Arteries are red and veins are blue. The phases connect arterial supply to venous return. The microscopic capillary beds are below the resolution of the specimen.',text+'19-1-heart-anatomy',[
     phase('Aortic origin','The right and left coronary arteries arise from aortic sinuses just above the aortic valve.','VH_M_left_coronary_artery|VH_M_right_coronary_artery'),
     phase('Arterial branches','The anterior interventricular artery descends toward the apex. The right marginal artery supplies the right ventricular wall. Smaller vessels deliver blood to cardiac muscle.','VH_M_left_anterior_descending_artery|VH_M_right_marginal_artery'),
+    {...phase('Myocardial capillaries','The highlighted ventricular walls contain capillaries that deliver oxygen to cardiac muscle. Open Coronary route to see this microscopic step.',''),tissue:'VH_M_heart_left_ventricle|VH_M_heart_right_ventricle'.split('|')},
     phase('Cardiac veins','Blood leaving the myocardial capillaries returns through cardiac veins, including the great and middle cardiac veins.','VH_M_great_cardiac_vein|VH_M_middle_cardiac_vein'),
-    phase('Coronary sinus','The coronary sinus runs across the posterior heart and empties into the right atrium. Rotate the heart to follow its course.','VH_M_coronary_sinus')
+    phase('Coronary sinus','The coronary sinus runs across the posterior heart and empties into the right atrium. Choose the posterior view in Coronary route to see its course.','VH_M_coronary_sinus')
   ],{bodyIds:['heart','aorta'],aliases:['cardiac perfusion','myocardial perfusion','coronary circulation','LAD','coronary sinus'],direction:[.28,.26,1],duration:11});
 add('heart','Heart','Cardiovascular','ap2-heart','VH_M_pulmonary_trunk|VH_M_ascending_aorta|VH_M_mitral_valve|VH_M_tricuspid_valve|VH_M_aortic_valve|VH_M_pulmonary_valve','Watch a heartbeat',
   'Follow four gold valve openings through a slowed beat. The reconstructed leaflets respond to the pressure gradient across each valve. Translucent chambers show illustrative wall movement. The left and right valves change state at slightly different times.',heart,[
@@ -263,7 +264,7 @@ add('alveoli','Alveoli and pulmonary capillaries','Respiratory',spring+'alveolar
 
 const registered='organ-atlas/registered-organs';
 const vocalis='Vocalis muscle.l|Vocalis muscle.r';
-add('phonation','Larynx · preparing to speak','Respiratory','muscles-head-neck','Lateral crico-arytenoid muscle.l.001|Lateral crico-arytenoid muscle.r.001|Posterior crico-arytenoid muscle.l.001|Posterior crico-arytenoid muscle.r.001','Watch the vocal folds move into position',
+add('phonation','Larynx · preparing to speak','Respiratory','muscles-head-neck','Lateral crico-arytenoid muscle.l.001|Lateral crico-arytenoid muscle.r.001|Posterior crico-arytenoid muscle.l.001|Posterior crico-arytenoid muscle.r.001','Watch the vocalis muscles position the folds',
   'Look down on the paired vocalis muscles inside the true vocal folds. Their anterior attachments stay fixed as the posterior ends move. The thin vibrating mucosal cover is outside this muscle preparation.',text+'22-1-organs-and-structures-of-the-respiratory-system',[
     phase('Breathe in','Posterior cricoarytenoid muscles abduct the vocal folds, widening the airway at the back.',vocalis,0),
     phase('Prepare to speak','Adductor muscles rotate and approximate the arytenoids, bringing the vocal processes and folds toward the midline.',vocalis,.20),

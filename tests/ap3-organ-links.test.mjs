@@ -48,5 +48,5 @@ test('bile route includes both contiguous named duct segments before entering th
   const bile=specimen('accessory-ducts').routes.find(r=>r.name==='Bile delivery');
   assert.deepEqual(bile.steps,['gallbladder','cystic_duct','bile_duct','duodenum']);
   const motion=organMotions.find(e=>e.id==='gallbladder');
-  assert(motion.context.includes('cystic_duct') && motion.context.includes('bile_duct'));
+  assert(motion.targets.includes('cystic_duct') && motion.targets.includes('bile_duct'));
 });

@@ -3,6 +3,8 @@ import {setLearningContext} from './learning-context.js';
 import {bodyMaps,mapForKey,mapRoute,mappedActions,locationForEntry} from './organ-atlas-bodies.js';
 import {organMotions,motionById,phaseStart,currentPhase,sourceCredits} from './organ-atlas-catalog.js';
 import {mountBodyMap,mountCloseup} from './organ-atlas-scene.js';
+import {mountMechanismPanel} from './organ-mechanism-panel.js';
+import {filtrationReading} from './organ-mechanism-signals.js';
 import {makeCourseSearch} from './ap2-term-search.js';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -18,7 +20,10 @@ export function initOrganAtlas(root){
   document.addEventListener('viewchange',ev=>{if(ev.detail!=='organs'&&root.childElementCount)close();});
 
   function open(route,from){
-    if(from&&!from.startsWith('organs'))returnRoute=/^ap[23]-(?:chapter-|specimen-|lesson-|lab-|structures|body|practicals)[\w./-]*$/.test(from)?from:'';
+    if(from&&!from.startsWith('organs')){
+      lastMap='';
+      returnRoute=/^ap[23]-(?:chapter-|specimen-|lesson-|lab-|structures|body|practicals)[\w./-]*$/.test(from)?from:'';
+    }
     close();
     const [,id,bodyId]=route.split('/');
     const entry=motionById.get(id);
@@ -63,11 +68,25 @@ export function initOrganAtlas(root){
       let t=0,phase=-1,frame=0,previous=0,playing=false,controller=null;
       const play=get('play'),slider=get('time'),prev=get('back'),next=get('next'),phaseText=get('phase');
       const runSeconds=entry.duration||7;
+      let lastCaption='';
+      const companion=mountMechanismPanel(lesson,entry,{
+        pause,seek,toggle:()=>play.click(),playing:()=>playing,posterior:()=>{
+          const orientation=host.querySelector('[data-orientation]');
+          orientation.value='reverse';orientation.dispatchEvent(new Event('change'));
+        }
+      });
       function render(position){
-        t=Math.min(1,Math.max(0,position));slider.value=String(Math.round(t*1000));controller?.frame(t);
+        t=Math.min(1,Math.max(0,position));slider.value=String(Math.round(t*1000));controller?.frame(t,companion?.particle);
         const idx=currentPhase(entry,t);
-        if(idx!==phase){
-          phase=idx;const step=entry.phases[idx];
+        const step={...entry.phases[idx]};
+        if(entry.id==='glomerular-filtration'){
+          const reading=filtrationReading(companion.particle,t);
+          step.text=reading.text;
+          if(reading.particle.limit<1&&t>=reading.particle.limit)step.label='Retained in capillary blood';
+        }
+        companion?.update(t,idx,playing&&t<1);
+        if(idx!==phase||step.text!==lastCaption){
+          phase=idx;lastCaption=step.text;
           setLearningContext({type:'study',label:entry.title+' · '+step.label,text:[entry.action,entry.description,step.text].join(' '),source:entry.source});
           phaseText.innerHTML='<b>'+escape(step.label)+'</b><span>'+escape(step.text)+'</span>';
           slider.setAttribute('aria-valuetext','Phase '+(idx+1)+' of '+entry.phases.length+' · '+step.label);
@@ -96,11 +115,13 @@ export function initOrganAtlas(root){
       next.onclick=()=>seek(phaseStart(entry,Math.min(entry.phases.length-1,phase+1)));
       const visibility=()=>{if(document.hidden)pause();};
       document.addEventListener('visibilitychange',visibility);
-      render(0);
+      const requestedStep=/^step-(\d+)$/.exec(bodyId||'');
+      const firstStep=requestedStep?Number(requestedStep[1])-1:0;
+      render(entry.phases[firstStep]?phaseStart(entry,firstStep):0);
       const contextToggle=get('context');
       if(contextToggle)contextToggle.onchange=()=>controller?.showContext(contextToggle.checked);
       const viewer=mountCloseup(host,entry,ready=>{controller=ready;if(contextToggle&&!contextToggle.checked)ready.showContext(false);render(t);play.disabled=false;});
-      dispose=()=>{pause();document.removeEventListener('visibilitychange',visibility);viewer.dispose();};
+      dispose=()=>{pause();document.removeEventListener('visibilitychange',visibility);companion?.dispose();viewer.dispose();};
     }else{
       const rows=map.organs.slice().sort((a,b)=>titleSort(a.label,b.label));
       const groups=[...new Set(rows.map(r=>r.system))].sort(titleSort);

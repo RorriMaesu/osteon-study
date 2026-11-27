@@ -124,6 +124,7 @@ body:has(#organs-view.active)>main,#organs-view.active{height:100%;min-height:0;
  .oa-header h1{font-size:18px}.oa-title h2{font-size:18px}.oa-title small{line-height:1.1}
  #organs-view .oa-body-controls{gap:3px}.oa-body-controls button{font-size:.75rem;padding-inline:5px;min-height:34px}
  #organs-view .oa-model [data-model-status]{font-size:.67rem;line-height:1.1}
+ .oa-phase{height:auto;max-height:none;min-height:2.6em}
 }
 @media(max-height:540px) and (orientation:landscape){
  body:has(#organs-view.active) .topbar{display:flex;flex-wrap:nowrap;gap:6px;padding:2px 9px;min-height:0}
@@ -149,3 +150,17 @@ body:has(#organs-view.active)>main,#organs-view.active{height:100%;min-height:0;
  .oa-body-pick{max-height:2.5em;overflow:auto}
  .oa-page .organ-tools :is(button,select),.oa-transport button,.oa-body-controls button{min-height:28px;padding:2px 5px;font-size:.76rem}
 }
+.oa-mechanism-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.oa-mechanism-row .oa-notes{min-width:0}
+.oa-mechanism-trigger{flex:none;padding:4px 8px;font-size:.8rem}
+.oa-mechanism-dialog{box-sizing:border-box;width:min(28rem,calc(100vw - 1rem));max-height:90dvh;overflow:auto;margin:auto;padding:16px;color:#e4ede6;background:#172a2e;border:1px solid #64827b;border-radius:12px}
+.oa-mechanism-dialog::backdrop{background:#091418bc}
+.oa-mechanism-dialog header,.oa-mech-controls{display:flex;align-items:center;gap:10px}
+.oa-mechanism-dialog header{justify-content:space-between}
+.oa-mechanism-dialog h3,.oa-mechanism-dialog p{margin:0}
+.oa-mechanism-dialog[open]{display:grid;gap:10px}
+.oa-mechanism-dialog p,.oa-mechanism-dialog a,.oa-mechanism-dialog label{font-size:.9rem;line-height:1.35}
+.oa-mechanism-dialog canvas{width:100%;height:auto;background:#102326;border-radius:6px;aspect-ratio:340/132}
+.oa-mech-controls label{flex:1}
+.oa-mech-controls input{width:100%;min-height:30px;accent-color:#dda875}
+.oa-mechanism-dialog button{min-height:34px}

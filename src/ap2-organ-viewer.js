@@ -4,6 +4,7 @@ import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {winterExpandedControls} from './ap2-expanded-station.js';
 import organVersions from './organ-model-versions.json' with {type:'json'};
+import {mountMetricScale} from './organ-metric-scale.js';
 
 const instances = new WeakMap();
 function release(root) {
@@ -41,6 +42,7 @@ export function mountOrganViewer(host, options) {
   let lastWidth=0,lastHeight=0,shownSeconds=0,lastTime=0,userMoved=false,currentRadius=1;
   const disposables = new Set();
   const api = {scene,camera,announce,fit,invalidate,dispose,loadLayer,addCleanup(fn){disposables.add(fn);},get model(){return model;},get controls(){return controls;},get renderer(){return renderer;}};
+  const updateScale=options.asset==='assets/ap3-models/carnegie-stages.glb'?mountMetricScale(viewport,api):null;
   function keepInView() {
     const width=viewport.clientWidth,height=viewport.clientHeight;
     if(!renderer||width<=0||height<=0||width===lastWidth&&height===lastHeight)return;
@@ -101,7 +103,7 @@ export function mountOrganViewer(host, options) {
     shownSeconds+=delta;lastTime=now;
     if(model&&options.onFrame)options.onFrame(shownSeconds,api);
     if(controls)controls.update();
-    if(dirty||options.onFrame){dirty=false;renderer.render(scene,camera);options.onRender?.(api);}
+    if(dirty||options.onFrame){dirty=false;renderer.render(scene,camera);options.onRender?.(api);updateScale?.();}
     if(model&&options.onFrame&&!frame)frame=requestAnimationFrame(draw);
   }
   function turn(angle){

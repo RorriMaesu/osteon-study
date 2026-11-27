@@ -1,3 +1,4 @@
+import {adiposeTissueColors} from './organ-motion-adipose.js';
 import * as THREE from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {specimens as catalogue} from './ap3-specimens-catalog.js';
@@ -71,14 +72,15 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
   if(!panel||!spec)return ()=>{};
   const el=key=>panel.querySelector('[data-ap3-'+key+']'),picker=el('target');
   const meshes=[],targetFor=new Map(),materials=new Map(),byRaw=new Map(),motion=new Map();
-  for(const target of spec.targets)for(const raw of target.meshes)byRaw.set(raw,target);
+  for(const target of spec.targets)if(!target.assembly)for(const raw of target.meshes)byRaw.set(raw,target);
   let selected=spec.targets.find(t=>t.id===prior)||null,optionsList=[],routeIndex=-1,routeStep=0,clip,ready=false,frame=0,time=0,apex=0,viewer;
   let nodeContext;
   const hidden=()=>blind||el('anonymous')?.checked;
   const layerOpacity=raw=>spec.layers?.find(([pattern])=>pattern.test(raw))?.[1];
   function populate(){
-    const restored=Array.isArray(order)?[...new Set(order)].map(key=>spec.targets.find(t=>t.id===key)).filter(Boolean):[];
-    optionsList=hidden()?(restored.length?[...restored,...spec.targets.filter(t=>!restored.includes(t))]:anonymousOrder(spec.targets)):spec.targets;
+    const available=hidden()?spec.targets.filter(target=>!target.assembly):spec.targets;
+    const restored=Array.isArray(order)?[...new Set(order)].map(key=>available.find(t=>t.id===key)).filter(Boolean):[];
+    optionsList=hidden()?(restored.length?[...restored,...available.filter(t=>!restored.includes(t))]:anonymousOrder(available)):available;
     picker.replaceChildren(new Option('All structures',''));
     for(const [i,target] of optionsList.entries())picker.add(new Option(hidden()?'Structure '+letters(i):target.label,String(i)));
     if(el('descriptions'))el('descriptions').innerHTML=optionsList.map((target,i)=>'<dt>Structure '+letters(i)+'</dt><dd>'+escape(descriptions[id][target.id])+'</dd>').join('');
@@ -101,7 +103,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     nodeContext?.update(selected,isolate);
     if(el('atlas')&&selected)el('atlas').href='./?lymph-node='+encodeURIComponent(selected.meshes[0].slice(7))+'#atlas';
     for(const obj of meshes){
-      const raw=obj.userData.ap3Raw,t=targetFor.get(obj),match=Boolean(selected&&selected===t);
+      const raw=obj.userData.ap3Raw,t=targetFor.get(obj),match=Boolean(selected&&(selected===t||selected.assembly&&selected.meshes.includes(raw)));
       if(raw==='flow_arrows'){obj.visible=!hidden()&&el('arrows')?.checked&&!isolate;continue;}
       obj.visible=Boolean(t)&&(!isolate||match);
       const sheet=spec.cut?.test(raw)&&el('section')?.checked&&!match;
@@ -190,7 +192,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     el('prev').onclick=()=>{routeStep--;updateRoute();};el('next').onclick=()=>{routeStep++;updateRoute();};
   }
   el('focus').onclick=()=>{
-    const active=meshes.filter(obj=>targetFor.get(obj)===selected);
+    const active=meshes.filter(obj=>selected?.meshes.includes(obj.userData.ap3Raw));
     if(!active.length)return;
     const bounds=new THREE.Box3();
     for(const obj of active)bounds.union(new THREE.Box3().setFromObject(obj));
@@ -199,7 +201,7 @@ export function mountSpecimen(container,id,{blind=false,onSelect,selected:prior=
     box.position.copy(center);viewer.fit(box,viewer.camera.position.clone().sub(viewer.controls.target));box.geometry.dispose();box.material.dispose();
   };
   viewer=mountOrganViewer(el('view'),{asset:spec.asset,title:blind?'Practical specimen':spec.title,
-    direction:spec.direction||[.04,.04,1],colors:modelColor,onLoad:instance=>{
+    direction:spec.direction||[.04,.04,1],colors:(name,obj)=>(id==='adipose'&&adiposeTissueColors[name])||modelColor(name,obj),onLoad:instance=>{
       viewer=instance;
       instance.model.traverse(obj=>{
         if(!obj.isMesh)return;

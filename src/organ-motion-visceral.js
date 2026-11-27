@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {filtrationReading} from './organ-mechanism-signals.js';
 import tracks from './organ-motion-visceral-paths.json' with {type:'json'};
 
 const clamp=(value,min=0,max=1)=>Math.min(max,Math.max(min,value));
@@ -43,7 +44,8 @@ function tracer(effect,curve,root,radius){
   const lineMat=new THREE.LineBasicMaterial({color:effect.color||'#ffe28a',transparent:true,opacity:.28,depthTest:false,depthWrite:false});
   const line=new THREE.Line(lineGeo,lineMat);line.renderOrder=14;root.add(line);
   // A dark edge keeps the moving token legible on pale tissues and a cut surface.
-  const beadGeo=new THREE.SphereGeometry(Math.max(radius*(effect.size||.024),Math.min(length*.035,radius*.038)),12,9);
+  const beadRadius=Math.max(radius*(effect.size||.024),Math.min(length*.035,radius*.038));
+  const beadGeo=effect.arrow?new THREE.ConeGeometry(beadRadius,2.6*beadRadius,18):new THREE.SphereGeometry(beadRadius,12,9);
   const outline=new THREE.MeshBasicMaterial({color:'#513c2b',side:THREE.BackSide,transparent:true,depthTest:false,depthWrite:false});
   const fill=new THREE.MeshBasicMaterial({color:effect.color||'#ffce51',transparent:true,depthTest:false,depthWrite:false});
   const marker=new THREE.Group();
@@ -51,15 +53,43 @@ function tracer(effect,curve,root,radius){
   edge.scale.setScalar(1.22);edge.renderOrder=15;
   const dot=new THREE.Mesh(beadGeo,fill);dot.renderOrder=16;
   marker.add(edge,dot);root.add(marker);
+  let trail;
+  if(effect.trail){
+    // The filled stroke grows from the entry point as the student scrubs.
+    // Equal-distance samples keep the leading end with the moving symbol.
+    const segments=64,sides=6;
+    const spine=new THREE.Curve();
+    spine.getPoint=(u,out=new THREE.Vector3())=>at(tracerFraction(effect,u),out);
+    const geo=new THREE.TubeGeometry(spine,segments,beadRadius*.27,sides,false);
+    trail=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({color:effect.color||'#ffe28a',depthTest:false,depthWrite:false,transparent:true,opacity:.86}));
+    trail.renderOrder=14;root.add(trail);
+  }
+  const up=new THREE.Vector3(0,1,0),direction=new THREE.Vector3();
   return {
-    set(t){
-      const p=localTime(t,effect.span),f=tracerFraction(effect,p);
-      marker.visible=t>=(effect.span?.[0]??0)&&t<=(effect.span?.[1]??1);
+    set(t,particleKind='water'){
+      const p=localTime(t,effect.span);
+      let f=tracerFraction(effect,p);
+      if(effect.path==='filtration-barrier'){
+        const {particle,fraction}=filtrationReading(particleKind,p);
+        f=fraction;
+        marker.scale.set(...particle.scale);fill.color.set(particle.color);
+        lineGeo.setDrawRange(0,1+Math.floor(64*particle.limit));
+      }
+      marker.visible=t>=(effect.span?.[0]??0)&&t<=(effect.holdUntil??effect.span?.[1]??1);
       line.visible=marker.visible;
       at(f,marker.position);
+      if(effect.arrow){
+        at(tracerFraction(effect,Math.min(1,p+.008)),direction);
+        direction.sub(at(tracerFraction(effect,Math.max(0,p-.008)),temp)).normalize();
+        marker.quaternion.setFromUnitVectors(up,direction);
+      }
+      if(trail){
+        trail.visible=marker.visible;
+        trail.geometry.setDrawRange(0,Math.round(p*64)*6*6);
+      }
       return f;
     },
-    dispose(){lineGeo.dispose();lineMat.dispose();beadGeo.dispose();outline.dispose();fill.dispose();}
+    dispose(){lineGeo.dispose();lineMat.dispose();beadGeo.dispose();outline.dispose();fill.dispose();trail?.geometry.dispose();trail?.material.dispose();}
   };
 }
 
@@ -166,12 +196,40 @@ function cue(object,effect){
   const list=[].concat(original).map(m=>m.clone());
   object.material=Array.isArray(original)?list:list[0];
   const base=list.map(m=>m.color?.clone());
+  const opacities=list.map(m=>m.opacity);
   const color=new THREE.Color(effect.color||'#ffe28a');
   return {set(t){
     const p=localTime(t,effect.span);
-    const level=Math.sin(Math.PI*p)**.7*.82;
-    list.forEach((m,i)=>{if(base[i])m.color.copy(base[i]).lerp(color,level);});
+    const active=t>=effect.span[0]&&t<=effect.span[1];
+    const level=effect.sustained?(active?.80:0):Math.sin(Math.PI*p)**.7*.82;
+    list.forEach((m,i)=>{
+      if(base[i])m.color.copy(base[i]).lerp(color,level);
+      if(effect.opacity!==undefined)m.opacity=active?effect.opacity:opacities[i];
+    });
   },dispose(){object.material=original;list.forEach(m=>m.dispose());}};
+}
+
+function landmarkTag(spec,mesh,root,radius){
+  if(typeof document==='undefined'||!mesh)return;
+  const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+  ctx.font='bold 36px sans-serif';canvas.width=Math.ceil(ctx.measureText(spec.label).width)+26;canvas.height=52;
+  ctx.fillStyle='#153036';ctx.fillRect(0,0,canvas.width,52);
+  ctx.strokeStyle='#b0c9bf';ctx.lineWidth=3;ctx.strokeRect(1.5,1.5,canvas.width-3,49);
+  ctx.font='bold 36px sans-serif';ctx.textBaseline='middle';ctx.textAlign='center';ctx.fillStyle='#fff8de';
+  ctx.fillText(spec.label,canvas.width/2,27);
+  const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;
+  const tag=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,depthTest:false,depthWrite:false}));
+  const point=new THREE.Vector3(...spec.point),caption=point.clone().add(new THREE.Vector3(...spec.offset));
+  // Keep labels attached when the learner rotates the specimen or hides context.
+  const local=p=>mesh.worldToLocal(root.localToWorld(p));
+  const leader=new THREE.Line(new THREE.BufferGeometry().setFromPoints([local(point),local(caption)]),
+    new THREE.LineBasicMaterial({color:0xeaf5dc,depthTest:false,depthWrite:false}));
+  tag.position.copy(caption);
+  const height=radius*(spec.size||.15);
+  tag.scale.set(height*canvas.width/canvas.height,height,1);
+  tag.renderOrder=20;leader.renderOrder=19;mesh.add(leader,tag);
+  return {set(t){tag.visible=leader.visible=!spec.span||(t>=spec.span[0]&&t<=spec.span[1]);},
+    dispose(){tag.removeFromParent();leader.removeFromParent();texture.dispose();tag.material.dispose();leader.geometry.dispose();leader.material.dispose();}};
 }
 
 export function mountVisceralMotion(entry,instance,meshesByName){
@@ -181,6 +239,10 @@ export function mountVisceralMotion(entry,instance,meshesByName){
   for(const target of entry.targets)for(const obj of lookup(meshesByName,target))bounds.union(new THREE.Box3().setFromObject(obj));
   const radius=bounds.isEmpty()?1:bounds.getSize(new THREE.Vector3()).length()*.5;
   const operations=[];
+  for(const spec of entry.landmarks||[]){
+    const tag=landmarkTag(spec,lookup(meshesByName,spec.mesh)[0],root,radius);
+    if(tag)operations.push(tag);
+  }
   for(const effect of entry.effects){
     const meshes=lookup(meshesByName,effect.mesh);
     if(effect.mode==='fill'||effect.mode==='empty'){
@@ -197,10 +259,10 @@ export function mountVisceralMotion(entry,instance,meshesByName){
     }
   }
   let disposed=false;
-  return {set(t){
+  return {set(t,particleKind){
     if(disposed)return;
     const p=clamp(Number(t)||0);
-    for(const op of operations)op.set(p);
+    for(const op of operations)op.set(p,particleKind);
     instance.invalidate();
   },dispose(){
     if(disposed)return;disposed=true;
