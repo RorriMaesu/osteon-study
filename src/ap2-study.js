@@ -1,6 +1,7 @@
 import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
 import {openStructureIndex} from './ap2-model-index.js';
 import {openScoredPractical} from './ap2-scored-practical.js';
+import {addOrgansToLesson} from './ap2-blood-organ-regions.js';
 import {lessons as fallLessons} from './learning-data.js';
 import {chapters,sections,sectionById,labFor,units} from './ap2-library.js';
 import figures from './ap2-figures.json' with {type:'json'};
@@ -89,7 +90,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
   }
   function chapter(ch){
     const data=store.read();
-    page(hero('A&P II · CHAPTER '+ch.id,ch.title,ch.summary)+`<div class="course-actions">${link('ap2-lesson-'+(ch.sections.find(x=>!data.studied[x.id])||ch.sections[0]).id,'Continue chapter',true)}${link('ap2-exams/'+ch.id,'Chapter exam')}${link('ap2-writing-'+ch.id,'Written reasoning')}</div>
+    page(hero('A&P II · CHAPTER '+ch.id,ch.title,ch.summary)+`<div class="course-actions">${link('ap2-lesson-'+(ch.sections.find(x=>!data.studied[x.id])||ch.sections[0]).id,'Continue chapter',true)}${link('ap2-structures/chapter-'+ch.id,'Interactive 3D models')}${link('ap2-exams/'+ch.id,'Chapter exam')}${link('ap2-writing-'+ch.id,'Written reasoning')}</div>
     <section class="course-card"><h2>Lessons</h2><div class="ap2-chapter-list">${ch.sections.map(s=>`<a href="#ap2-lesson-${s.id}"><b>${s.id}</b><span>${e(s.title)}<small>${e(s.objectives[0])}</small></span><span>${data.studied[s.id]?'Studied':'→'}</span></a>`).join('')}</div></section>`);
     setLearningContext({course:'ap2',type:'study',label:ch.title,reference:ch.sections[0].id,text:ch.summary});
   }
@@ -133,10 +134,21 @@ export function initAP2({root,escape:e,toast,dialog}) {
       const lab=labFor(s.id),html=lab.renderLab(s.id);
       body.innerHTML=`${html?'<div class="ap2-simulation">'+html+'</div>':''}<div class="ap2-guided"><h2>${e(s.activity.title)}</h2><p>${e(s.activity.prompt)}</p><div class="ap2-step"></div></div>`;
       if(html)lab.mountLab(body.querySelector('.ap2-simulation'),s.id);
+      addOrgansToLesson(body,s.id,station);
+      if((s.id==='17.3'&&station==='pituitary-pathways')||(s.id==='17.6'&&station==='adrenal-layers')||(s.id==='17.7'&&station==='pineal')||(s.id==='18.1'&&station==='elements')){
+        if(station==='elements')body.querySelector('[data-formed-lab]').open=true;
+        requestAnimationFrame(()=>body.querySelector('[data-micro-stage]')?.scrollIntoView({block:'center',behavior:'instant'}));
+      }
       const picker=body.querySelector('[data-neural-station-picker],[data-circulation-station]');
+      if(s.id==='20.1'&&['walls','capillaries'].includes(station)&&picker){
+        picker.value='tissue';picker.dispatchEvent(new Event('change'));
+        const tissue=body.querySelector('[data-vessel-3d]');
+        if(tissue){tissue.open=true;const scale=tissue.querySelector('[data-vessel-scale]');scale.value=station;scale.dispatchEvent(new Event('change'));requestAnimationFrame(()=>tissue.querySelector('[data-vessel-stage]')?.scrollIntoView({block:'center'}));}
+      }
       if(picker&&station&&[...picker.options].some(o=>o.value===station)){
         picker.value=station;picker.dispatchEvent(new Event('change',{bubbles:true}));
         body.querySelector('[data-neuro-specimen="'+station+'"] [data-load-specimen]')?.click();
+        if(s.id==='20.6'&&station==='fetal-flow')requestAnimationFrame(()=>body.querySelector('[data-fetal-view]')?.scrollIntoView({block:'center'}));
       }
       const presets={follicle:['[data-neck-view]','micro'],neck:['[data-neck-view]','anterior'],parathyroids:['[data-neck-view]','posterior'],islet:['[data-scale]','micro'],pancreas:['[data-scale]','gross'],ovary:['[data-gonad]','ovary'],testis:['[data-gonad]','testis'],placenta:['[data-gonad]','placenta']};
       const preset=Object.hasOwn(presets,station)?presets[station]:null;
@@ -206,12 +218,16 @@ export function initAP2({root,escape:e,toast,dialog}) {
     if(lessonId&&sectionById.has(lessonId[1])){rememberStudy(lessonId[3]?route.slice(0,route.lastIndexOf('/')):route);lesson(sectionById.get(lessonId[1]),lessonId[2]||'read',lessonId[3]);return;}
     const writingId=route.match(/^ap2-writing-(1[2-9]|20)$/)?.[1];
     if(writingId){rememberStudy(route);openWritingPractice(Number(writingId),{root,page,hero,link,store,e});return;}
-    if(route==='ap2-structures'){
+    const indexRoute=route.match(/^ap2-structures(?:\/chapter-(1[2-9]|20))?$/);
+    if(indexRoute){
+      if(indexRoute[1]&&indexState.route!==route)Object.assign(indexState,{chapter:indexRoute[1],kind:'3d',query:''});
+      if(!indexRoute[1]&&indexState.route&&indexState.route!==route)Object.assign(indexState,{chapter:'',kind:'',query:''});
+      indexState.route=route;
       openStructureIndex({root,page,hero,link,e,state:indexState});setLearningContext({course:'ap2',type:'study',label:'Find a structure',text:'Anatomical specimens, microscopic structures and textbook figures.'});return;
     }
     const bodyRoute=route.match(/^ap2-body(?:\/([\w-]+))?$/);
     if(bodyRoute){
-      page(hero('A&P II · MODEL LAB','Body systems in 3D','Locate the glands, heart and right leg arteries in a common skeletal reference.')+bodySystemsHTML()+link('ap2-practicals','← Model & slide lab'));
+      page(hero('A&P II · MODEL LAB','Body systems in 3D','Compare organs in the same body. Choose a structure to zoom in, then isolate it or keep the neighboring anatomy in view.')+bodySystemsHTML()+link('ap2-lesson-13.2/activity/long-cord','Explore the spinal cord and roots')+link('ap2-practicals','← Model & slide lab'));
       mountBodySystems(root);
       const select=root.querySelector('[data-body-select]');
       if(bodyRoute[1]&&[...select.options].some(o=>o.value===bodyRoute[1])){select.value=bodyRoute[1];select.dispatchEvent(new Event('change'));}

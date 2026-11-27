@@ -20,7 +20,7 @@ export function mountOrganViewer(host, options) {
   if (!host) return;
   instances.get(host)?.dispose();
   const title = options.title || '3D anatomy';
-  host.innerHTML = '<div class="organ-viewport"></div><div class="organ-tools" aria-label="3D view controls"><button data-turn="left" aria-label="Rotate left">↶</button><button data-turn="right" aria-label="Rotate right">↷</button><button data-zoom="in" aria-label="Zoom in">+</button><button data-zoom="out" aria-label="Zoom out">−</button><select data-orientation aria-label="Preset view"><option value="home">Starting view</option><option value="reverse">Opposite view</option><option value="side">Side view</option><option value="above">View from above</option></select><button data-recenter>Reset view</button><button data-expand aria-expanded="false">Enlarge</button></div><small role="status" data-model-status></small>';
+  host.innerHTML = '<div class="organ-viewport"></div><div class="organ-tools" aria-label="3D view controls"><button data-turn="left" aria-label="Rotate left">↶</button><button data-turn="right" aria-label="Rotate right">↷</button><button data-zoom="in" aria-label="Zoom in">+</button><button data-zoom="out" aria-label="Zoom out">−</button><select data-orientation aria-label="Preset view"><option value="home">Starting view</option><option value="reverse">Opposite view</option><option value="side">Side view</option><option value="above">View from above</option></select><button data-recenter>Reset view</button><button data-expand aria-expanded="false">Enlarge</button></div><small role="status" data-model-status></small><button type="button" data-retry-model hidden>Retry 3D model</button>';
   host.classList.add('organ-viewer');
   const viewport = host.querySelector('.organ-viewport'), notice = host.querySelector('[data-model-status]');
   const announce = message => {notice.textContent=message;};
@@ -66,9 +66,20 @@ export function mountOrganViewer(host, options) {
     if(bounds.isEmpty())return;
     const sphere=bounds.getBoundingSphere(new THREE.Sphere());
     currentRadius=Math.max(sphere.radius,.00001);
-    const v=THREE.MathUtils.degToRad(camera.fov/2);
-    const distance=1.07*currentRadius/Math.sin(Math.min(v,Math.atan(Math.tan(v)*camera.aspect)));
     const dir=Array.isArray(direction)?new THREE.Vector3(...direction):direction.clone();
+    dir.normalize();
+    const side=new THREE.Vector3().crossVectors(camera.up,dir);
+    if(side.lengthSq()<1e-8)side.crossVectors(Math.abs(dir.x)<.9?new THREE.Vector3(1,0,0):new THREE.Vector3(0,0,1),dir);
+    side.normalize();
+    const up=new THREE.Vector3().crossVectors(dir,side);
+    const tangent=Math.tan(THREE.MathUtils.degToRad(camera.fov/2));
+    let distance=0;
+    for(const x of [bounds.min.x,bounds.max.x])for(const y of [bounds.min.y,bounds.max.y])for(const z of [bounds.min.z,bounds.max.z]){
+      const offset=new THREE.Vector3(x,y,z).sub(sphere.center);
+      const space=Math.max(Math.abs(offset.dot(side))/(tangent*camera.aspect),Math.abs(offset.dot(up))/tangent);
+      distance=Math.max(distance,offset.dot(dir)+1.1*space);
+    }
+    distance=Math.max(distance,currentRadius*.35);
     controls.target.copy(sphere.center);
     camera.near=currentRadius/1000;camera.far=Math.max(distance+currentRadius*40,currentRadius*80);
     camera.updateProjectionMatrix();
@@ -112,10 +123,17 @@ export function mountOrganViewer(host, options) {
   }
   const presets=host.querySelector('[data-orientation]');
   const side=defaultView.clone().applyAxisAngle(camera.up,Math.PI/2);
-  presets.onchange=()=>{userMoved=true;const dir={home:defaultView,reverse:defaultView.clone().negate(),side,above:camera.up.clone().addScaledVector(defaultView,.015)}[presets.value];fit(model,dir);};
+  presets.onchange=()=>{
+    if(!controls)return;
+    userMoved=true;
+    const dir={home:defaultView,reverse:defaultView.clone().negate(),side,above:camera.up.clone().addScaledVector(defaultView,.015)}[presets.value];
+    const distance=camera.position.distanceTo(controls.target);
+    camera.position.copy(controls.target).addScaledVector(dir.clone().normalize(),distance);
+    controls.update();invalidate();
+  };
   function keydown(ev){
     if(ev.key==='Tab'&&host.classList.contains('organ-expanded')){
-      const focusables=[...host.querySelectorAll('canvas,button,select')],first=focusables[0],last=focusables.at(-1);
+      const focusables=[...host.querySelectorAll('canvas,button,select')].filter(el=>!el.disabled&&el.getClientRects().length),first=focusables[0],last=focusables.at(-1);
       if(ev.shiftKey&&document.activeElement===first){ev.preventDefault();last.focus();}else if(!ev.shiftKey&&document.activeElement===last){ev.preventDefault();first.focus();}
     }
     if(ev.key==='Escape'&&host.classList.contains('organ-expanded')){ev.preventDefault();enlarged(false);return;}
@@ -180,10 +198,18 @@ export function mountOrganViewer(host, options) {
       invalidate();
     } catch(err){
       if(disposed)return;
-      announce('3D view unavailable. The lesson and its labeled figures are available.');
+      const message=renderer?'The 3D specimen could not load.':'This browser could not start 3D graphics. Check hardware acceleration or try another browser.';
+      announce(message+' The lesson and its labeled figures are available.');
+      if(!model)host.querySelector('[data-retry-model]').hidden=false;
       console.warn('Organ viewer:',title,err.message);
     }
   }
+  host.querySelector('[data-retry-model]').onclick=event=>{
+    event.currentTarget.hidden=true;
+    controls?.dispose();renderer?.domElement.remove();renderer?.dispose();renderer?.forceContextLoss();
+    controls=null;renderer=null;lastWidth=0;lastHeight=0;started=false;
+    announce('Loading '+title+'…');start();
+  };
   function dispose(){
     if(disposed)return;disposed=true;
     cancelAnimationFrame(frame);resizeObserver?.disconnect();onscreenObserver?.disconnect();removed?.disconnect();

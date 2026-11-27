@@ -1,3 +1,4 @@
+import {tissueMarkup,mountTissueModel} from './ap2-tissue-models.js';
 const book='https://openstax.org/books/anatomy-and-physiology-2e/pages/';
 const style=`<style>
 .bf-practical{padding:clamp(.7rem,2vw,1.3rem);border:1px solid #40585a;border-radius:12px;min-width:0;background:#16272c}
@@ -118,12 +119,15 @@ const practicals={
 };
 export function renderBloodFoundations(id){
   const entry=practicals[id];if(!entry)return '';
-  return style+`<section class="bf-practical" data-blood-foundation="${id}">${entry[0]()}<small><a href="${book+entry[2]}" target="_blank" rel="noreferrer">OpenStax A&amp;P 2e · section ${id}</a></small></section>`;
+  const model=id==='18.1'?'<details data-formed-lab><summary>Explore the formed elements in 3D</summary>'+tissueMarkup('elements')+'</details>':'';
+  return style+`<section class="bf-practical" data-blood-foundation="${id}">${model}${entry[0]()}<small><a href="${book+entry[2]}" target="_blank" rel="noreferrer">OpenStax A&amp;P 2e · section ${id}</a></small></section>`;
 }
 export function mountBloodFoundations(parent,id){
   const entry=practicals[id],selector='[data-blood-foundation="'+id+'"]';
   const root=parent?.matches?.(selector)?parent:parent?.querySelector(selector);
   if(!entry||!root||root.dataset.mounted)return;
   root.dataset.mounted='true';entry[1](root);
+  const details=root.querySelector('[data-formed-lab]');
+  if(details)mountTissueModel(details,'elements');
 }
 

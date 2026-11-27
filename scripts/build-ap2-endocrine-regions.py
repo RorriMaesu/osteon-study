@@ -6,9 +6,11 @@ import sys
 from pathlib import Path
 import bpy
 
-source, target = map(Path, sys.argv[sys.argv.index("--") + 1:])
+paths = sys.argv[sys.argv.index("--") + 1:]
+source, target = map(Path, paths[:2])
+abdomen = paths[2:] == ["--upper-abdomen"]
 files = ["neck.glb", "testicular-region.glb", "ovarian-region.glb", "placenta.glb"]
-if any((target / filename).exists() for filename in files):
+if any((target / filename).exists() for filename in (["upper-abdomen.glb"] if abdomen else files)):
     raise FileExistsError("Back up prior models and choose a new export directory.")
 
 neck = {
@@ -54,7 +56,12 @@ def export_hra(filenames, output):
     bpy.ops.object.select_all(action="SELECT")
     export(output)
 
-export_z(neck, files[0])
-export_z(male, files[1])
-export_hra(["ovary-l", "ovary-r", "fallopian-tube-l", "fallopian-tube-r", "uterus", "pelvis"], files[2])
-export_hra(["placenta-full-term"], files[3])
+if abdomen:
+    export_z({"Liver": "liver", "Spleen": "spleen", "Stomach": "stomach", "Duodenum": "duodenum",
+              "Pancreas": "pancreas", "Gallbladder": "gallbladder", "Splenic vein": "splenic_vein",
+              "Hepatic portal vein": "portal_vein"}, "upper-abdomen.glb")
+else:
+    export_z(neck, files[0])
+    export_z(male, files[1])
+    export_hra(["ovary-l", "ovary-r", "fallopian-tube-l", "fallopian-tube-r", "uterus", "pelvis"], files[2])
+    export_hra(["placenta-full-term"], files[3])

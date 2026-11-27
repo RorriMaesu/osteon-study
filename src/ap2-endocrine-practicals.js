@@ -1,4 +1,5 @@
 import {regionSpecimen} from './ap2-endocrine-regions.js';
+import {tissueMarkup,mountTissueModel} from './ap2-tissue-models.js';
 import {endocrineCaseMarkup,mountEndocrineCase} from './ap2-endocrine-cases.js';
 
 const root = 'assets/ap2-glands/';
@@ -73,13 +74,13 @@ function stationBody(id){
  if(id==='17.10'||id==='17.11')return endocrineCaseMarkup(id);
  if(id==='17.1')return select('region','Choose an anatomical view',regions)+'<p data-location></p><div data-organ></div><small data-attribution></small><h4>Find it from a landmark</h4><p data-locator-prompt></p>'+select('locator-guess','Gland region',{'':'Choose a region',pituitary:'Pituitary',thymus:'Thymus',adrenals:'Adrenals',pancreas:'Pancreas'})+'<button data-identify>Check location</button> <button data-next-location>Next location</button><p data-result role="status"></p>';
  if(id==='17.2')return two(select('signal','Hormone and target',Object.fromEntries(Object.entries(signalRoutes).map(([k,v])=>[k,v.label])))+select('block','Interruption',blocks),select('prediction','Predict the downstream response',{'':'Choose a prediction',continues:'Response can proceed',stops:'Response is reduced'})+'<button data-reveal>Trace the signal</button>')+'<div data-result role="status"></div>';
- if(id==='17.3')return select('lobe','Route to inspect',{anterior:'Hypothalamus → anterior lobe',posterior:'Hypothalamus → posterior lobe'})+select('pit-lesion','Change the connection',{none:'Usual connection',vessel:'Interrupt portal blood delivery',axon:'Interrupt neurosecretory axons'})+'<div data-pit-route></div>';
+ if(id==='17.3')return select('lobe','Route to inspect',{anterior:'Hypothalamus → anterior lobe',posterior:'Hypothalamus → posterior lobe'})+select('pit-lesion','Change the connection',{none:'Usual connection',vessel:'Interrupt portal blood delivery',axon:'Interrupt neurosecretory axons'})+'<button type="button" data-pit-next>Next stop</button> <button type="button" data-pit-run>Play route</button><p data-pit-step aria-live="polite"></p>'+tissueMarkup('pituitary')+'<div data-pit-route></div>';
  if(id==='17.4'||id==='17.5'){
    const ask=id==='17.4' ? select('neck-guess','Which structure crosses the trachea between the two thyroid lobes?',{'':'Choose a structure',isthmus:'Thyroid isthmus',cricoid:'Cricoid cartilage',parathyroid:'Inferior parathyroid gland'}) : select('neck-guess','After ionized calcium falls, what response would you expect?',{'':'Predict the response',loss:'PTH falls and less calcium is retained by the kidney',retain:'PTH rises and the kidney retains more calcium',phosphate:'PTH rises and the kidney retains more phosphate'});
    return select('neck-view','Orientation or scale',{anterior:'Anterior neck · 3D',posterior:'Posterior neck · 3D',micro:'Microscopic · thyroid follicle'})+'<div data-neck-plate></div>'+ask+'<button data-neck-check>Check prediction</button><p data-result role="status"></p>';
  }
- if(id==='17.6')return '<p>Start at the superomedial pole of each kidney. Then use the section to trace the layers from capsule to center.</p><div data-organ></div><small>'+bodyCredit+'</small>'+two(figure('assets/ap2-figures/17.17.webp','A gland section and micrograph distinguish three cortical layers and the medulla.',credits('17.17','17-6-the-adrenal-glands',true)),select('zone','Trace a layer',Object.fromEntries(Object.entries(adrenal).map(([k,v])=>[k,v[0]])))+'<div data-result role="status"></div>');
- if(id==='17.7')return '<p>The pineal body is gold, the pituitary is pink, the hypothalamus is mauve and the third-ventricle space is blue. Rotate to compare the posterior and inferior positions.</p><div data-organ></div><small>'+bodyCredit+'</small>'+select('light','During the biological night',{dark:'Dark surroundings',bright:'Bright light reaches the retina'})+select('melatonin','Predict relative pineal melatonin secretion',{'':'Choose a prediction',rise:'Nighttime rise is supported',fall:'Nighttime rise is suppressed'})+'<button data-pineal-check>Trace the pathway</button><div data-result role="status"></div>';
+ if(id==='17.6')return tissueMarkup('adrenal')+'<div data-result role="status"></div><details><summary>Locate both adrenals above the kidneys</summary><div data-organ></div><small>'+bodyCredit+'</small></details><details><summary>Compare with the textbook section and micrograph</summary>'+figure('assets/ap2-figures/17.17.webp','A gland section and micrograph distinguish three cortical layers and the medulla.',credits('17.17','17-6-the-adrenal-glands',true))+'</details>';
+ if(id==='17.7')return tissueMarkup('pineal')+select('light','During the biological night',{dark:'Dark surroundings',bright:'Bright light reaches the retina'})+select('melatonin','Predict relative pineal melatonin secretion',{'':'Choose a prediction',rise:'Nighttime rise is supported',fall:'Nighttime rise is suppressed'})+'<button data-pineal-check>Trace the pathway</button><div data-result role="status"></div>';
  if(id==='17.8')return select('gonad','Regional specimen',{ovary:'Ovaries, uterus and uterine tubes',testis:'Testes, ducts and pelvic organs',placenta:'Full-term placenta and umbilical cord'})+'<div data-gonad-specimen></div><div data-gonad-controls></div><div data-gonad-guess></div><button data-check-gonad>Check the response</button><p data-gonad-response role="status"></p>';
  return select('scale','Scale',{gross:'Gross anatomy · organ regions',micro:'Microscopic anatomy · islet and acinus'})+'<div data-scale-view></div>';
 }
@@ -233,12 +234,40 @@ export function mountGlandPractical(rootElement,id){
    get('signal').onchange=get('block').onchange=clear;
    get('reveal').onclick=()=>{const response=get('prediction').value;if(!response){get('result').textContent='Choose your predicted response before tracing it.';return;}const answer=signalOutcome(get('signal').value,get('block').value);get('result').innerHTML='<p>'+((response==='stops')===answer.stopped?'Correct. ':'Compare the interruption with the receptor’s pathway. ')+answer.note+'</p>'+routeTrack(answer.chain,answer.stopped?answer.step:Infinity);};
  }else if(id==='17.3'){
+   let step=0,timer;
+   const paths={anterior:['hypothalamus','primary','portal','secondary','anterior'],posterior:['hypothalamus','axons','terminals','blood']};
+   const model=mountTissueModel(get('tissue-station'),'pituitary',{onPick(value){
+     stop();const path=paths[get('lobe').value],match=path.indexOf(value);
+     if(match>=0)step=match;
+     get('pit-step').textContent='Inspecting the specimen. Use Next stop to continue the route.';
+   }});
+   function stop(){clearTimeout(timer);timer=null;get('pit-run').textContent='Play route';}
+   function pathState(){
+     const route=get('lobe').value,lesion=get('pit-lesion').value,path=paths[route];
+     const blocked=route==='anterior'&&lesion==='vessel'?2:route==='posterior'&&lesion==='axon'?1:-1;
+     return {path,blocked,last:blocked>=0?blocked:path.length-1};
+   }
+   function paintStep(){
+     const {path,blocked,last}=pathState();
+     model.select(path[step]);
+     const label=get('tissue-pick').selectedOptions[0].textContent;
+     get('pit-step').textContent='Stop '+(step+1)+' of '+path.length+' · '+label+(step===blocked?' · Route interrupted here.':'');
+     get('pit-next').textContent=step>=last?'Restart route':'Next stop';
+   }
+   get('pit-next').onclick=()=>{stop();const {last}=pathState();step=step>=last?0:step+1;paintStep();};
+   get('pit-run').onclick=()=>{
+     if(timer){stop();return;}
+     const {last}=pathState();if(step>=last)step=0;paintStep();get('pit-run').textContent='Pause route';
+     function advance(){if(!panel.isConnected||!panel.getClientRects().length){stop();return;}step++;paintStep();if(step>=last)stop();else timer=setTimeout(advance,1250);}
+     timer=setTimeout(advance,1250);
+   };
    function trace(){
      const key=get('lobe').value,isAnterior=key==='anterior',lesion=get('pit-lesion').value;
      const impaired=isAnterior?lesion==='vessel':lesion==='axon';
      const plate=figure('assets/ap2-figures/'+(isAnterior?'17.9':'17.8')+'.webp',isAnterior?'A sagittal pituitary diagram shows releasing factors traveling through portal vessels to anterior endocrine cells.':'A sagittal pituitary diagram shows neurosecretory axons extending from the hypothalamus into the posterior lobe.',credits(isAnterior?'17.9':'17.8','17-3-the-pituitary-gland-and-hypothalamus'));
      const note=impaired?(isAnterior?'Portal delivery of hypothalamic factors is impaired. TRH-driven TSH release falls. Prolactin is a special case because dopamine normally inhibits its secretion.':'Axonal interruption reduces delivery and regulated release of hypothalamic ADH and oxytocin.'):'This route retains its direct connection in the selected condition.';
-     get('pit-route').innerHTML=two(plate,routeTrack(pituitary[key].slice(1),impaired?1:Infinity)+'<p role="status">'+note+'</p>');
+     get('pit-route').innerHTML=routeTrack(pituitary[key].slice(1),impaired?1:Infinity)+'<p role="status">'+note+'</p><a class="course-link" href="#ap2-body/pituitary">Locate the pituitary on the body specimen</a><details><summary>Compare with the textbook diagram</summary>'+plate+'</details>';
+     stop();step=0;paintStep();
    }
    get('lobe').onchange=get('pit-lesion').onchange=trace;trace();
  }else if(id==='17.4'||id==='17.5'){
@@ -269,10 +298,10 @@ export function mountGlandPractical(rootElement,id){
    if(id==='17.5')get('neck-view').value='posterior';show();
  }else if(id==='17.6'){
    wholeModel(get('organ'),'adrenals');
-   function layer(){const [,position,product,effect]=adrenal[get('zone').value];get('result').innerHTML='<p><b>'+position+' · '+product+'</b></p><p>'+effect+'</p>';}
-   get('zone').onchange=layer;layer();
+   get('tissue-pick').setAttribute('data-zone','');
+   mountTissueModel(get('tissue-station'),'adrenal',{onPick(value){const zone=adrenal[value];get('result').innerHTML=zone?'<p><b>'+zone[1]+' · '+zone[2]+'</b></p><p>'+zone[3]+'</p>':'';}});
  }else if(id==='17.7'){
-   wholeModel(get('organ'),'brain');
+   mountTissueModel(get('tissue-station'),'pineal',{initial:'pineal'});
    get('light').onchange=()=>{get('melatonin').value='';get('result').textContent='';};
    get('pineal-check').onclick=()=>{const dark=get('light').value==='dark',guess=get('melatonin').value;
      if(!guess){get('result').textContent='Predict the change in melatonin first.';return;}

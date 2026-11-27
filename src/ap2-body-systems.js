@@ -6,10 +6,22 @@ const layers={
   skeleton:{label:'Skeleton',color:'#e9ddc3'},
   glands:{label:'Endocrine organs',color:'#deaf77'},
   central:{label:'Central endocrine structures',asset:'assets/ap2-glands/cranial-glands.glb',color:'#88c6cd'},
+  cns:{label:'Brain landmarks',asset:'assets/ap2-glands/body-brain-landmarks.glb',color:'#c9a5b8',optional:true},
+  gut:{label:'Digestive organs',asset:'assets/ap2-glands/body-gut.glb',color:'#d39173',optional:true},
+  skin:{label:'Skin',asset:'assets/ap2-glands/body-skin.glb',color:'#d2a688',optional:true},
   heart:{label:'Heart walls',asset:'assets/ap2-thorax.glb',color:'#cb7b81'},
   arteries:{label:'Right leg arteries',asset:'assets/ap2-leg-vessels.glb',color:'#e07c65'}
 };
 const structures={
+  ...Object.fromEntries(['left','right'].flatMap(side=>['superior','middle','inferior'].map(level=>[
+    side+'_'+level+'_frontal_gyrus',['cns',side[0].toUpperCase()+side.slice(1)+' '+level+' frontal gyrus','A fold on the '+side+' frontal lobe. Compare the neighboring frontal gyri, then open the regional brain specimen to see the other lobes.']
+  ]))),
+  cerebellum:['cns','Cerebellum','Posterior to the brainstem, the cerebellum compares motor commands with sensory feedback to help coordinate movement.'],
+  brainstem:['cns','Brainstem','Follow the midbrain, pons and medulla between the cerebrum and spinal cord.'],
+  stomach:['gut','Stomach','Stretch and nutrients in the stomach stimulate gastrin release from cells in its lining, promoting gastric acid secretion.'],
+  duodenum:['gut','Duodenum','The first part of the small intestine curves around the head of the pancreas. Acid entering from the stomach stimulates secretin release.'],
+  gallbladder:['gut','Gallbladder','This sac stores bile. Cholecystokinin released by intestinal cells after a meal stimulates the gallbladder to contract.'],
+  skin:['skin','Skin','UVB exposure starts vitamin D synthesis in the epidermis. The liver and then the kidneys modify the precursor. This surface shows the extent of the skin.'],
   pineal:['central','Pineal gland','The pineal gland lies behind the third ventricle and releases melatonin.'],
   hypothalamus:['central','Hypothalamus','The hypothalamus lies below the thalamus and connects with the pituitary through the infundibulum.'],
   pituitary:['glands','Pituitary gland','A small gland in the sella turcica at the base of the skull.'],
@@ -34,16 +46,17 @@ const structures={
 export {structures as bodyStructures};
 
 export function bodySystemsHTML(){
-  const toggles=Object.entries(layers).map(([key,{label}])=>`<label><input type="checkbox" data-body-layer="${key}" checked> ${label}</label>`).join('');
+  const toggles=Object.entries(layers).map(([key,{label,optional}])=>`<label><input type="checkbox" data-body-layer="${key}" ${optional?'':'checked'}> ${label}</label>`).join('');
   const options=Object.entries(layers).filter(([key])=>key!=='skeleton').map(([key,{label}])=>`<optgroup label="${label}">${Object.entries(structures).filter(([,v])=>v[0]===key).map(([id,[,name]])=>`<option value="${id}">${name}</option>`).join('')}</optgroup>`).join('');
   return `<section class="ap2-body-systems" data-body-systems><style>
     .ap2-body-systems{min-width:0}.ap2-body-controls,.ap2-body-pick{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem .85rem;margin:.55rem 0}.ap2-body-controls label{display:inline-flex;align-items:center;gap:.35rem;min-height:38px;cursor:pointer}.ap2-body-controls input{accent-color:#a8d4b8}.ap2-body-pick label{min-width:0;display:grid;gap:.18rem}.ap2-body-pick select{max-width:min(84vw,24rem)}.ap2-body-info{margin:.5rem 0}.ap2-body-systems details{margin-top:.5rem}.ap2-body-systems summary{cursor:pointer}
     </style>
     <div class="ap2-body-controls" role="group" aria-label="Visible body systems">${toggles}</div>
     <div class="ap2-body-pick"><label>Find a structure <select data-body-select><option value="">Whole body</option>${options}</select></label>
-    <button type="button" data-body-center disabled>Center selection</button><button type="button" data-body-full>Full-body view</button></div>
+    <button type="button" data-body-center disabled>Center selection</button><button type="button" data-body-isolate disabled aria-pressed="false">Isolate selection</button><button type="button" data-body-full>Full-body view</button></div>
     <div data-body-model></div><p data-body-info class="ap2-body-info" aria-live="polite">Select a structure by name or tap it on the model.</p><span data-body-state role="status"></span>
-    <details><summary>Specimen and credits</summary><p>The gland, heart and right-leg preparations use the same adult BodyParts3D specimen. The kidney surfaces provide adrenal landmarks. This station includes selected organs and right leg arteries. The detailed heart, flow diagrams and microscopic structures have their own chapter practicals.</p>
+    <div class="course-links"><a class="course-link" href="#ap2-lesson-13.2/activity/brain">Explore the regional brain</a><a class="course-link" href="#ap2-lesson-13.2/activity/long-cord">Explore the spinal cord and roots</a></div>
+    <details><summary>Specimen and credits</summary><p>These layers share the original adult BodyParts3D coordinates. The skeleton places the frontal gyri, cerebellum, brainstem, glands, digestive organs, heart, leg arteries and skin in relation to each other. The regional brain and spinal cord specimens show additional structures.</p>
     <small>BodyParts3D, © The Database Center for Life Science. <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html" target="_blank" rel="noreferrer">CC Attribution 4.0 International</a> · <a href="assets/ap2-glands/SOURCES.md" target="_blank" rel="noreferrer">Gland credits</a> · <a href="assets/AP2-CARDIO-LICENSE.md" target="_blank" rel="noreferrer">Heart and artery credits</a></small></details></section>`;
 }
 
@@ -56,7 +69,7 @@ export function mountBodySystems(parent){
   const select=get('select'),notice=get('state'),info=get('info');
   const surfaces=new Map(), groups=Object.fromEntries(Object.keys(layers).map(key=>[key,[]]));
   const pending=new Set(),loaded=new Set(),errors=new Set();
-  let api,wholeFrame,heartFrame,disposed=false,shouldCenter=false;
+  let api,wholeFrame,heartFrame,disposed=false,shouldCenter=false,isolated=false;
   const checked=key=>checks.get(key).checked;
   function note(){
     const waiting=[...pending].filter(checked).map(k=>layers[k].label.toLowerCase());
@@ -68,16 +81,17 @@ export function mountBodySystems(parent){
   function paint(){
     const selected=select.value;
     for(const [key,objects] of Object.entries(groups))for(const obj of objects){
-      obj.visible=checked(key);
       const chosen=selected===obj.name||(selected==='heart'&&key==='heart');
+      obj.visible=checked(key)&&(!isolated||chosen);
       const mat=obj.material;
       mat.color.set(chosen?'#ffe391':obj.userData.bodyColor);
-      const context=key==='skeleton', muted=selected&&!chosen;
+      const context=key==='skeleton'||key==='skin'&&!chosen, muted=selected&&!chosen;
       mat.transparent=Boolean(context||muted);
-      mat.opacity=context?(selected?.11:.25):muted?.21:1;
+      mat.opacity=context?(key==='skin'?.1:selected?.11:.25):muted?.21:1;
       mat.depthWrite=!mat.transparent;obj.renderOrder=chosen?2:0;
     }
     get('center').disabled=!selected||!loaded.has(structures[selected][0]);
+    const isolate=get('isolate');isolate.disabled=get('center').disabled;isolate.textContent=isolated?'Show neighbors':'Isolate selection';isolate.setAttribute('aria-pressed',String(isolated));
     info.textContent=selected?structures[selected][1]+' · '+structures[selected][2]:'Select a structure by name or tap it on the model.';
     api?.invalidate();note();
   }
@@ -122,7 +136,7 @@ export function mountBodySystems(parent){
     }catch{
       if(disposed)return;
       checks.get(key).checked=false;errors.add(key);
-      if(structures[select.value]?.[0]===key){select.value='';shouldCenter=false;}
+      if(structures[select.value]?.[0]===key){select.value='';shouldCenter=false;isolated=false;}
     }finally{
       pending.delete(key);
       if(!disposed){
@@ -131,7 +145,7 @@ export function mountBodySystems(parent){
     }
   }
   function whole(){
-    select.value='';shouldCenter=false;paint();if(api&&wholeFrame)api.fit(wholeFrame);
+    select.value='';shouldCenter=false;isolated=false;paint();if(api&&wholeFrame)api.fit(wholeFrame);
   }
   for(const [key,input] of checks)input.onchange=()=>{
     if(!input.checked&&structures[select.value]?.[0]===key){whole();return;}
@@ -143,6 +157,7 @@ export function mountBodySystems(parent){
     shouldCenter=true;paint();if(loaded.has(key))center();else startLayer(key);
   };
   get('center').onclick=center;
+  get('isolate').onclick=()=>{isolated=!isolated;paint();if(isolated)center();};
   get('full').onclick=()=>{
     if(![...checks.values()].some(c=>c.checked))checks.get('skeleton').checked=true;
     whole();
@@ -163,7 +178,8 @@ export function mountBodySystems(parent){
         if(!down||Math.hypot(event.clientX-down[0],event.clientY-down[1])>5)return;down=null;
         const rect=canvas.getBoundingClientRect();
         ray.setFromCamera(new THREE.Vector2(2*(event.clientX-rect.left)/rect.width-1,1-2*(event.clientY-rect.top)/rect.height),api.camera);
-        const hit=ray.intersectObjects([...surfaces.values()].filter(o=>o.visible),false)[0];
+        const hits=ray.intersectObjects([...surfaces.values()].filter(o=>o.visible),false);
+        const hit=hits.find(h=>h.object.name!=='skin')||hits[0];
         if(hit){select.value=hit.object.name;shouldCenter=false;paint();}
       });
     }});

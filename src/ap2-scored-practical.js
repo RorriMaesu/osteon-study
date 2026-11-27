@@ -1,22 +1,10 @@
 import {DoubleSide,Raycaster,Vector2,Vector3} from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
+import {addSideGuide} from './ap2-side-guide.js';
 import {practicalStations,byStation,partForMesh,meshKey} from './ap2-practical-bank.js';
 import {newPractical,markStation,practicalScores} from './ap2-practical-session.js';
 
 const skills=['Locate','Trace','Predict'];
-function addSideGuide(viewport,api){
-  const guide=document.createElement('span');
-  guide.className='ap2-practical-side';viewport.append(guide);
-  // Both the HRA pulmonary tree and BodyParts3D kidney pair use negative X for subject right.
-  function update(){
-    api.camera.updateMatrixWorld();
-    const right=new Vector3(-1,0,0).transformDirection(api.camera.matrixWorldInverse);
-    const directions=['→','↗','↑','↖','←','↙','↓','↘'];
-    const text=Math.abs(right.z)>.88?(right.z>0?'toward you':'away from you'):directions[(Math.round(Math.atan2(right.y,right.x)/(Math.PI/4))+8)%8];
-    guide.textContent='Subject’s right '+text;
-  }
-  api.controls.addEventListener('change',update);api.addCleanup(()=>api.controls.removeEventListener('change',update));update();
-}
 
 const letter=n=>String.fromCharCode(65+n);
 export const practicalTotal=run=>practicalScores(run).reduce((a,b)=>a+b,0)+' / '+(3*run.items.length);

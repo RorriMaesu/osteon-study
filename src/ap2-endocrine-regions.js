@@ -22,12 +22,14 @@ const gonads={
     targets:[['Maternal-facing basal plate',/basal/,'#a97078'],['Fetal chorionic plate',/chorionic/,'#ca8991'],['Amnion',/amnion/,'#d9c8be'],['Placental vessels',/placenta_vessels/,'#be7585'],['Umbilical arteries',/umbilical_artery/,'#87afd2'],['Umbilical vein',/umbilical_vein/,'#d58b84'],['Umbilical cord',/umbilical_cord/,'#c8bdac']]}
 };
 export function regionSpecimen(host, kind, showModel, direction){
-  const data=kind==='neck'?neck:gonads[kind];
+  const data=typeof kind==='object'?kind:kind==='neck'?neck:gonads[kind];
   host.innerHTML='<p>'+data.note+'</p><div data-region-canvas></div><label>Highlight a structure<select data-region-target><option value="">All structures</option>'+data.targets.map(([name],i)=>'<option value="'+i+'">'+name+'</option>').join('')+'</select></label><button type="button" data-region-focus disabled>Focus on selection</button><p data-region-detail aria-live="polite"></p><small>'+data.credit+'</small>';
   const picker=host.querySelector('[data-region-target]'),canvas=host.querySelector('[data-region-canvas]'),detail=host.querySelector('[data-region-detail]');
   const group=name=>data.targets.findIndex(([,pattern])=>pattern.test(name));
-  const color=name=>data.targets[group(name)]?.[2]||'#bcb6a8';
+  const color=name=>data.colors?.[name]||data.targets[group(name)]?.[2]||'#bcb6a8';
   const focus=host.querySelector('[data-region-focus]');
+  focus.insertAdjacentHTML('afterend',' <label><input type="checkbox" data-region-isolate disabled> Isolate selection</label>');
+  const isolate=host.querySelector('[data-region-isolate]');
   let viewer,three;
   function frameGroup(match,direction){
     if(!viewer||!three)return;
@@ -51,12 +53,15 @@ export function regionSpecimen(host, kind, showModel, direction){
 
   function paint(){
     const selected=picker.value,match=selected===''?null:data.targets[Number(selected)];
-    detail.textContent=match?'Gold highlights '+match[0].toLowerCase()+'.':'';
+    detail.textContent=match?(match[3]||'Gold highlights '+match[0].toLowerCase()+'.'):'';
     focus.disabled=!viewer||!match;
+    isolate.disabled=!match;
+    if(!match)isolate.checked=false;
     if(!viewer)return;
     viewer.model.traverse(obj=>{
       if(!obj.isMesh)return;
       const active=match?.[1].test(obj.name),context=match&&!active;
+      obj.visible=!isolate.checked||Boolean(active);
       const sheerBone=kind==='ovary'&&/bone|sacrum|coccyx/i.test(obj.name);
       const thinShell=kind==='placenta'&&/amnion|umbilical_cord/.test(obj.name);
       for(const mat of [].concat(obj.material)){
@@ -67,11 +72,25 @@ export function regionSpecimen(host, kind, showModel, direction){
     });
     viewer.invalidate();
   }
-  picker.onchange=paint;
+  picker.onchange=isolate.onchange=paint;
   showModel(canvas,{asset:'assets/ap2-glands/'+data.file,title:data.title,direction:direction||data.dir||[0,0,1],colors:color,
     async onLoad(api){
       viewer=api; three=await import('three');
       if(!host.isConnected)return;
+      const surface=api.renderer.domElement,ray=new three.Raycaster();
+      let down=null;
+      const press=event=>{down=[event.clientX,event.clientY];};
+      const pick=event=>{
+        if(!down||Math.hypot(event.clientX-down[0],event.clientY-down[1])>5){down=null;return;}
+        down=null;
+        const box=surface.getBoundingClientRect(),parts=[];
+        api.model.traverseVisible(o=>{if(o.isMesh&&group(o.name)>=0)parts.push(o);});
+        ray.setFromCamera(new three.Vector2(2*(event.clientX-box.left)/box.width-1,1-2*(event.clientY-box.top)/box.height),api.camera);
+        const hit=ray.intersectObjects(parts,false)[0];
+        if(hit){picker.value=String(group(hit.object.name));paint();}
+      };
+      surface.addEventListener('pointerdown',press);surface.addEventListener('pointerup',pick);
+      api.addCleanup(()=>{surface.removeEventListener('pointerdown',press);surface.removeEventListener('pointerup',pick);});
       paint();
       if(kind==='neck')api.fit(api.model.getObjectByName('thyroid'),direction||[0,0,1]);
       if(kind==='ovary')frameGroup(name=>group(name)===0||group(name)===1||group(name)===2,data.dir);

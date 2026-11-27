@@ -1,5 +1,6 @@
 import {Plane,Vector3,DoubleSide} from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
+import {neuralRegions,renderNeuralRegion,startNeuralRegion} from './ap2-neural-regions.js';
 
 import {cutaways,cutawayMatch,cutawayColor,brainTargets,routeQuestions} from './ap2-neural-cutaways.js';
 
@@ -27,7 +28,7 @@ const specimens={
   ],credit:'IE-Map measured inner-ear template by Ahmadi and colleagues, with registered surfaces from David and colleagues. Highlighting identifies the responding structures.'}
 };
 
-const kindBySection={'12.2':['axon'],'12.3':['cord'],'12.4':['axon'],'13.4':['cord'],'15.1':['cardiac-autonomic'],'13.1':['ventricles'],'13.2':['ventricles','cord'],'13.3':['ventricles'],'14.1':['eye','ossicles','ear'],'16.3':['eye']};
+const kindBySection={'12.2':['axon'],'12.3':['cord'],'12.4':['axon'],'13.4':['cord','long-cord','cranial-nerves'],'15.1':['cardiac-autonomic'],'13.1':['ventricles','brain'],'13.2':['brain','long-cord','ventricles','cord'],'13.3':['ventricles'],'14.1':['eye','outer-ear','ossicles','ear','nose','olfactory-epithelium','tongue','taste-bud'],'14.2':['brain'],'16.2':['brain'],'16.3':['eye','cranial-nerves'],'16.5':['brain']};
 const regions=[
   ['Ventricular cast',[],'Follow each connected space.'],
   ['Telencephalon · caudate',['caudatenucleus'],'The caudate follows the curvature of the lateral ventricle. The telencephalon gives rise to it, the cortex and other components of the cerebral hemispheres.'],
@@ -50,6 +51,7 @@ const option=(label,i)=>'<option value="'+i+'">'+label+'</option>';
 export function renderNeuralSpecimens(id){
   const kinds=kindBySection[id]||[];
   return kinds.map(kind=>{
+    if(neuralRegions[kind])return renderNeuralRegion(kind);
     const spec=specimens[kind];
     const atlasTarget=kind==='eye'?['Optic nerve (II).l','Locate the left optic nerve in the full atlas']:kind==='ear'||kind==='ossicles'?['Vestibulocochlear nerve (VIII).l','Locate the left vestibulocochlear nerve in the full atlas']:['Third ventricle','Locate the third ventricle in the full atlas'];
     const jump=cutaways[kind]?'<a href="'+(kind==='axon'?'#ap2-lesson-12.4/activity/signal':kind==='cord'?'#ap2-lesson-13.4/activity/schematic':'#ap2-lesson-19.3/activity')+'">'+(kind==='axon'?'Compare impulse propagation':kind==='cord'?'Trace spinal nerve fibers':'Compare the cardiac cycle')+' ↗</a>':'<a href="?nerve='+encodeURIComponent(atlasTarget[0])+'#atlas">'+atlasTarget[1]+' ↗</a>';
@@ -198,7 +200,8 @@ export function mountNeuralSpecimens(root){
     const button=panel.querySelector('[data-load-specimen]');
     button.onclick=()=>{
       button.hidden=true;panel.querySelector('[data-specimen-content]').hidden=false;
-      start(panel,panel.dataset.neuroSpecimen);
+      const kind=panel.dataset.neuroSpecimen;
+      if(neuralRegions[kind])startNeuralRegion(panel,kind);else start(panel,kind);
     };
   }
 }

@@ -37,6 +37,14 @@ if "--cranial" in args[2:]:
     roles = {"hypothalamus":"hypothalamus", "pineal body":"pineal",
              "pituitary gland":"pituitary", "third ventricle":"third_ventricle",
              "right superior colliculus":"right_colliculus", "left superior colliculus":"left_colliculus"}
+if "--cns" in args[2:]:
+    roles = {f"{side} {level} frontal gyrus": f"{side}_{level}_frontal_gyrus"
+             for side in ["left", "right"] for level in ["superior", "middle", "inferior"]}
+    roles.update({"cerebellum": "cerebellum", "brainstem": "brainstem"})
+if "--gut" in args[2:]:
+    roles = {"stomach": "stomach", "duodenum": "duodenum", "gallbladder": "gallbladder"}
+if "--skin" in args[2:]:
+    roles = {"skin": "skin"}
 with (directory / "partof_element_parts.txt").open() as file:
     records = list(csv.reader(file, delimiter="\t"))[1:]
 bpy.ops.object.select_all(action="SELECT")
@@ -46,6 +54,9 @@ with zipfile.ZipFile(directory / "partof_BP3D_4.0_obj_99.zip") as archive:
     prefix = archive.namelist()[0].split("/")[0] + "/"
     for name, role in roles.items():
         sources = [r[2] for r in records if r[1] == name]
+        if role == "brainstem":
+            cavities = {r[2] for r in records if r[1] == "ventricular system of brain"}
+            sources = [element for element in sources if element not in cavities]
         if role == "context_skeleton":
             # The archive's aggregate "skeletal system" omits limb bones. Include
             # named appendicular elements explicitly and deduplicate their OBJ IDs.
@@ -72,4 +83,7 @@ with zipfile.ZipFile(directory / "partof_BP3D_4.0_obj_99.zip") as archive:
         if role == "context_skeleton":
             modifier = obj.modifiers.new("Reduce context geometry", "DECIMATE")
             modifier.ratio = .15
+        elif role == "skin" or "--cns" in args[2:]:
+            modifier = obj.modifiers.new("Preserve the gross silhouette for the body locator", "DECIMATE")
+            modifier.ratio = min(1, (18000 if role == "skin" else 14000) / len(data.polygons))
 bpy.ops.export_scene.gltf(filepath=str(output.resolve()), export_format="GLB", export_yup=True, export_apply=True, export_cameras=False, export_lights=False)

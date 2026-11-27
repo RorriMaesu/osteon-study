@@ -17,6 +17,14 @@ Osteon converted millimeters to meters, grouped source elements under their anat
 The original overlays, pressure and volume curves, case values, developmental drawings and flow diagrams support the learning objectives in OpenStax Anatomy and Physiology 2e. The University of Minnesota’s Visible Heart Atlas provides views of valve anatomy and function for comparison. [OpenStax cardiac cycle](https://openstax.org/books/anatomy-and-physiology-2e/pages/19-3-cardiac-cycle) · [OpenStax circulatory pathways](https://openstax.org/books/anatomy-and-physiology-2e/pages/20-5-circulatory-pathways) · [Visible Heart Atlas](https://www.vhlab.umn.edu/atlas/)
 
 
+## Fetal circulation
+
+The fetal blood-flow model is an original spatial teaching diagram. Its marker follows representative streams through the umbilical vessels and three fetal shunts. The foramen ovale is shown as an opening with a flap. The post-transition state summarizes the direction of flow after functional closure. The model enlarges vessels and separates organs for tracing. [OpenStax §20.6](https://openstax.org/books/anatomy-and-physiology-2e/pages/20-6-development-of-blood-vessels-and-fetal-circulation) · [Model generator](../scripts/build-ap2-fetal-flow.mjs).
+
+## Vessel walls and capillary barriers
+
+Osteon created the paired artery and vein, moving venous valve, and enlarged cutaways of continuous, fenestrated and sinusoidal capillaries. The section thicknesses, pore sizes and valve travel are illustrative. [OpenStax §20.1, Structure and Function of Blood Vessels](https://openstax.org/books/anatomy-and-physiology-2e/pages/20-1-structure-and-function-of-blood-vessels) · [Model generator](../scripts/build-ap2-vessel-walls.mjs)
+
 ## Regional limb circulation
 
 **ap2-arm-circulation.glb** contains the usual right arch-to-hand arterial route and the major deep and superficial venous channels returning to the right atrium. **ap2-leg-venous-return.glb** contains the right plantar and dorsal venous arches, paired deep veins, great and small saphenous veins, iliac veins, both portions of the inferior vena cava and the right atrium. Same-specimen bones provide orientation. In the source segmentation the surface labeled anterior tibial veins includes the short proximal confluence up to the popliteal vein.

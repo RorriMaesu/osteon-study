@@ -1,4 +1,5 @@
 import {regionSpecimen} from './ap2-endocrine-regions.js';
+import {vesselModelMarkup,mountVesselModels} from './ap2-vessel-walls.js';
 
 const reference='https://openstax.org/books/anatomy-and-physiology-2e/pages/';
 const credit='<small>OpenStax Anatomy and Physiology 2e, Fig. 20.3(c), LM ×160. Micrograph © 2012 Regents of the University of Michigan Medical School. Original labels covered for identification. <a href="'+reference+'20-1-structure-and-function-of-blood-vessels" target="_blank" rel="noreferrer">Textbook and image credits</a>.</small>';
@@ -32,13 +33,14 @@ const stations={'20.1':tissue,'20.6':fetal};
 export function renderVesselTissue(id){
   if(!stations[id])return '';
   const placenta=id==='20.6';
-  const specimen=placenta?'<details data-vt-placenta><summary>Explore the placenta and cord in 3D</summary><div data-vt-organ></div></details>':'';
+  const specimen=placenta?'<details data-vt-placenta><summary>Explore the placenta and cord in 3D</summary><div data-vt-organ></div></details>':vesselModelMarkup();
   return css+'<section class="vessel-tissue" data-vt="'+id+'"><h3>'+(placenta?'Trace fetal circulation':'Vessel-wall practical')+'</h3><p>'+(placenta?'Start at placental exchange, trace each fetal shunt, and predict the change at birth.':'Use the tissue section to identify vessels, then interpret three capillary diagrams.')+'</p>'+specimen+'<div data-vt-task></div></section>';
 }
 export function mountVesselTissue(root,id){
   const items=stations[id],panel=root?.matches?.('[data-vt]')?root:root?.querySelector('[data-vt="'+id+'"]');
   if(!items||!panel||panel.dataset.vtMounted)return;
   panel.dataset.vtMounted='true';
+  if(id==='20.1')mountVesselModels(panel);
   const slot=panel.querySelector('[data-vt-task]'),saved=[],details=panel.querySelector('[data-vt-placenta]');
   let index=0;
   if(details)details.ontoggle=()=>{
