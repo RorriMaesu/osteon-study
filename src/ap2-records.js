@@ -1,5 +1,6 @@
 import {reviewMatches} from './answer-review-data.js';
 import {validPractical} from './ap2-practical-session.js';
+import {validTermRun} from './term-mock-records.js';
 
 export const AP2_KEY = 'osteon-ap2-v1';
 const counts = [5,4,3,4,5,11,6,5,6];
@@ -116,6 +117,7 @@ export function validAP2Records(records) {
   if (!obj(records) || records.version !== 1 || !obj(records.studied) || !obj(records.checks) ||
       !Array.isArray(records.reports) || !records.reports.every(report => validSession(report,true)) ||
       !(records.draft === null || validSession(records.draft,false))) return false;
+  if(records.mockRuns!==undefined && !(obj(records.mockRuns)&&Object.entries(records.mockRuns).every(([id,r])=>r?.id===id&&validTermRun(r,'ap2'))))return false;
   if (!Object.entries(records.studied).every(([id,date]) => validSection(id) && when(date))) return false;
   if(records.practicalDraft!==undefined&&!validPractical(records.practicalDraft,false))return false;
   if(records.practicalReports!==undefined&&(!Array.isArray(records.practicalReports)||!records.practicalReports.every(s=>validPractical(s,true))||

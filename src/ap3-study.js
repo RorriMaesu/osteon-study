@@ -6,6 +6,8 @@ import figures from './ap3-figures.json' with {type:'json'};
 import {springStore} from './ap3-records.js';
 import {isSpringStudyRoute} from './ap3-backup.js';
 import {createSpringExams} from './ap3-exams.js';
+import {createTermMocks} from './term-mock.js';
+import {springScopes,makeSpringMock} from './term-mock-spring.js';
 import {rememberAP3Route} from './course-home.js';
 import {setTutorAssessmentMode,setLearningContext} from './learning-context.js';
 import {expectedAnswer,displayAnswer} from './ap3-assessment.js';
@@ -33,7 +35,8 @@ export function initAP3({root,escape:e,toast}){
     root.innerHTML='<div class="course-page ap2-page ap3-page"><nav class="ap2-nav" aria-label="A&P III workspace">'+nav.map(([route,label])=>link(route,label)).join('')+'</nav>'+
       (store.volatile?'<p role="status">Work is saved in this tab only. Download a backup before closing it.</p>':'')+content+'</div>';root.scrollTop=0;
   }
-  const exams=createSpringExams({root,link,e,page,hero,store,go,sections,cleanup});
+  const mocks=createTermMocks({course:'ap3',root,page,hero,link,e,store,scopes:springScopes,makeForm:makeSpringMock,toast});
+  const exams=createSpringExams({root,link,e,page,hero,store,go,sections,cleanup,mocks});
   const studied=id=>!!store.read('study:'+id)?.studied;
   const chapterList=ids=>'<div class="ap2-chapter-list">'+ids.map(id=>{
     const c=byChapter.get(String(id));return '<a href="#ap3-chapter-'+id+'"><b>'+id+'</b><span>'+e(c.title)+'<small>'+c.sections.filter(s=>studied(s.id)).length+' of '+c.sections.length+' sections studied</small></span><span aria-hidden="true">→</span></a>';
@@ -129,6 +132,7 @@ export function initAP3({root,escape:e,toast}){
   function progress(){
     const runs=store.attempts(),completed=runs.filter(r=>r.submitted),notes=exams.notes(completed);
     page(hero('A&P III','My progress',[...sections.values()].filter(s=>studied(s.id)).length+' of '+sections.size+' sections marked studied')+
+      mocks.entry()+
       '<section class="course-card"><h2>Saved exams & practicals</h2><div class="course-actions">'+runs.filter(r=>!r.submitted).map(r=>link('ap3-session-'+r.id,'Resume '+(r.scope==='all'?'cumulative':'Chapter '+r.scope)+' '+r.mode)).join('')+'</div>'+exams.results(completed)+'</section>'+
       '<section class="course-card"><h2>Notes from missed questions</h2>'+(notes.length?'<div class="ap2-report-list">'+notes.map(({q,r,i})=>'<details><summary>§'+q.section+' · '+e(q.prompt)+'</summary>'+exams.fieldView(q)+'<p>Your response · '+e(displayAnswer(q,r.answers[i]))+'</p><strong>'+e(expectedAnswer(q))+'</strong><p>'+e(q.why)+'</p>'+exams.reviewedModel(q)+' '+link('ap3-lesson-'+q.section,'Review lesson')+' '+link('ap3-report-'+r.id,'Original result')+'</details>').join('')+'</div>':'<p>After submission, each missed question appears here with the answer, reasoning and source lesson.</p>')+'</section>'+
       '<div class="course-actions"><button data-backup>Download spring study records</button><label class="course-link">Restore spring backup <input type="file" data-restore accept=".json,application/json"></label></div><p role="status" data-import-status></p>');
@@ -147,6 +151,7 @@ export function initAP3({root,escape:e,toast}){
   function open(route){
     release();delete document.body.dataset.ap3Exam;setTutorAssessmentMode(null);
     setLearningContext({course:'ap3',type:'study',label:'A&P III',text:'Chapters 21–28'});
+    if(mocks.open(route))return;
     const [name,arg,detail]=route.split('/');
     const ch=byChapter.get(name.split('-').at(-1)),s=sections.get(name.slice('ap3-lesson-'.length));
     const knownStudyPage=s||ch||specimens.some(v=>'ap3-specimen-'+v.id===name);

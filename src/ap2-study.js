@@ -14,6 +14,8 @@ import {setLearningContext,setTutorAssessmentMode} from './learning-context.js';
 import {rememberAP2Route} from './course-home.js';
 import {createRecordsStore,AP2_KEY} from './ap2-records.js';
 import {createExamScreens} from './ap2-exams.js';
+import {createTermMocks} from './term-mock.js';
+import {winterScopes,makeWinterMock} from './term-mock-winter.js';
 
 const atlasLinks = {
   '12.1':['Median nerve.r','Median nerve'], '13.2':['Anterior horn of spinal cord','Anterior horn of the spinal cord'],
@@ -37,7 +39,8 @@ export function initAP2({root,escape:e,toast,dialog}) {
   const scopeNav=()=>`<nav class="ap2-nav" aria-label="A&P II workspace">${link('course-2','Chapters')}${link('ap2-practicals','Model & slide lab')}${link('ap2-exams','Exams & results')}${link('ap2-progress','My progress')}</nav>`;
   const page=(body)=>{root.innerHTML=`<div class="course-page ap2-page">${scopeNav()}<p data-storage-notice role="status" ${store.volatile?'':'hidden'}>This tab is keeping your work in memory. Download a backup from My progress before closing it.</p>${body}</div>`;root.scrollTop=0;};
   const hero=(kicker,title,description='')=>`<header class="course-hero"><div class="eyebrow">${e(kicker)}</div><h1 tabindex="-1">${e(title)}</h1>${description?'<p>'+e(description)+'</p>':''}</header>`;
-  const exams=createExamScreens({root,page,hero,link,store,e,dialog,toast});
+  const mocks=createTermMocks({course:'ap2',root,page,hero,link,e,store,scopes:winterScopes,makeForm:makeWinterMock,toast});
+  const exams=createExamScreens({root,page,hero,link,store,e,dialog,toast,mocks});
   const chapterComplete=(ch,data)=>ch.sections.filter(s=>data.studied[s.id]).length;
   function resume(data) {
     if (data.draft) return link('ap2-session','Resume · '+data.draft.title,true);
@@ -219,6 +222,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
   function open(route){
     delete document.body.dataset.ap2Exam;
     setTutorAssessmentMode(null);
+    if(mocks.open(route))return;
     const chapterId=route.match(/^ap2-chapter-(\d+)$/)?.[1];
     const lessonId=route.match(/^ap2-lesson-(\d+\.\d+)(?:\/(activity|figures|check)(?:\/([\w.-]+))?)?$/);
     const ch=chapters.find(c=>String(c.id)===chapterId);

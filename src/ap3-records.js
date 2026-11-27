@@ -1,8 +1,19 @@
 import {validatedBackup} from './ap3-backup.js';
-const prefix='osteon-ap3-v1:';
+export const springPrefix='osteon-ap3-v1:';
+const prefix=springPrefix;
 const idPattern=/^[a-z0-9-]{1,70}$/i;
 const pass=status=>status==='correct'||status==='spelling';
 export {pass};
+export function shouldRestoreCourseRecord(key,current,value){
+  if(!current)return true;
+  if(key.startsWith('run:'))return !current.submitted&&Boolean(value.submitted);
+  if(key.startsWith('mock:')){
+    if(!current.submitted&&value.submitted)return true;
+    if(Boolean(current.submitted)!==Boolean(value.submitted)||(value.updated||0)<=(current.updated||0))return false;
+    return !current.submitted||current.submitted===value.submitted&&JSON.stringify(current.answers)===JSON.stringify(value.answers)&&JSON.stringify(current.grades)===JSON.stringify(value.grades);
+  }
+  return (key.startsWith('study:')||key.startsWith('check:'))&&value.at>current.at;
+}
 export function springStore(storage,warn=()=>{}){
   const cache=new Map(),unsaved=new Set();
   let volatile=!storage;
@@ -27,6 +38,7 @@ export function springStore(storage,warn=()=>{}){
     return [...cache.keys()].map(key=>[key,read(key)]).filter(([,v])=>v);
   }
   function attempts(){return entries().filter(([k])=>k.startsWith('run:')).map(([,v])=>v).sort((a,b)=>b.created-a.created);}
+  function mocks(){return entries().filter(([k])=>k.startsWith('mock:')).map(([,v])=>v);}
   function start(mode,scope,items){
     const id=crypto.randomUUID();
     return write('run:'+id,{id,version:1,mode,scope,created:Date.now(),items,answers:items.map(()=>null),index:0});
@@ -41,12 +53,11 @@ export function springStore(storage,warn=()=>{}){
     const entries=validatedBackup(file);let merged=0;
     for(const [key,value] of entries){
       const current=read(key);
-      if(!current||key.startsWith('run:')&&!current.submitted&&value.submitted||
-        (key.startsWith('study:')||key.startsWith('check:'))&&value.at>current.at){
+      if(shouldRestoreCourseRecord(key,current,value)){
         write(key,value);merged++;
       }
     }
     return merged;
   }
-  return {read,write,attempts,start,update,backup,restore,get volatile(){return volatile;},getRun:id=>idPattern.test(id)?read('run:'+id):null};
+  return {read,write,attempts,mocks,start,update,backup,restore,get volatile(){return volatile;},getRun:id=>idPattern.test(id)?read('run:'+id):null};
 }

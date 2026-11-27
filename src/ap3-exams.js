@@ -7,7 +7,7 @@ const title=run=>(run.scope==='all'?'Cumulative':'Chapter '+run.scope)+(run.mode
 const stamp=time=>new Date(time).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});
 const score=run=>run.grades.filter(pass).length;
 
-export function createSpringExams({root,link,e,page,hero,store,go,sections,cleanup}){
+export function createSpringExams({root,link,e,page,hero,store,go,sections,cleanup,mocks}){
   function fieldView(q,blind=false){
     if(q.kind!=='field')return '';
     const label='OpenStax · University of Michigan Medical School',source=sections.get(q.section)?.source;
@@ -25,7 +25,7 @@ export function createSpringExams({root,link,e,page,hero,store,go,sections,clean
   function center(scope='all'){
     if(scope!=='all'&&!chapters.some(c=>String(c.id)===scope))scope='all';
     const runs=store.attempts();
-    page(hero('A&P III','Exams & results')+`<label class="ap3-select">Coverage <select data-scope><option value="all">All eight chapters</option>${chapters.map(ch=>'<option value="'+ch.id+'" '+(scope===String(ch.id)?'selected':'')+'>'+ch.id+' · '+e(ch.title)+'</option>').join('')}</select></label>
+    page(hero('A&P III','Exams & results')+mocks.entry()+`<label class="ap3-select">Coverage <select data-scope><option value="all">All eight chapters</option>${chapters.map(ch=>'<option value="'+ch.id+'" '+(scope===String(ch.id)?'selected':'')+'>'+ch.id+' · '+e(ch.title)+'</option>').join('')}</select></label>
       <div class="course-grid">${['exam','practical'].map(mode=>{
         const draft=runs.find(r=>r.mode===mode&&r.scope===scope&&!r.submitted);
         const count=mode==='practical'?practicalLength(scope):scope==='all'?32:chapters.find(c=>String(c.id)===scope).sections.length+1;

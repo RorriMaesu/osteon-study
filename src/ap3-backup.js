@@ -1,6 +1,7 @@
 import {chapters} from './ap3-curriculum.js';
 import {fields} from './ap3-slides.js';
 import {specimens} from './ap3-specimens.js';
+import {validTermRun} from './term-mock-records.js';
 
 const sectionIds=new Set(chapters.flatMap(c=>c.sections.map(s=>s.id)));
 const time=n=>Number.isSafeInteger(n)&&n>=0;
@@ -35,7 +36,8 @@ export function validatedBackup(file){
   const entries=Object.entries(file.records);
   for(const [key,v] of entries){
     let valid=false;
-    if(key.startsWith('run:'))valid=validRun(key.slice(4),v);
+    if(key.startsWith('mock:'))valid=key==='mock:'+v?.id && validTermRun(v,'ap3');
+    else if(key.startsWith('run:'))valid=validRun(key.slice(4),v);
     else if(record(v)){
       if(key==='last')valid=isSpringStudyRoute(v.route);
       if(key.startsWith('study:'))valid=sectionIds.has(key.slice(6))&&typeof v.studied==='boolean'&&time(v.at);

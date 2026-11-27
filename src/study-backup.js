@@ -1,4 +1,6 @@
 import {AP2_KEY,validAP2Records} from './ap2-records.js';
+import {springPrefix,shouldRestoreCourseRecord} from './ap3-records.js';
+import {validatedBackup as validateSpring} from './ap3-backup.js';
 import {showLegacyStudyImport} from './legacy-study.js';
 import {MOCK_EXAM3_STORAGE_KEY,validMockState} from './mock-exam3-store.js';
 import {MOCK_EXAM4_STORAGE_KEY,validMockExam4State} from './mock-exam4-store.js';
@@ -22,6 +24,12 @@ export function createStudyBackup(storage,{includeChat=false,includeSettings=fal
  const backup={kind:'osteon-full-backup',schema:1,createdAt:now,progress:read(storage,STORAGE_KEY,blankProgress()),exams:read(storage,EXAMS),labTest:read(storage,LAB_TEST_KEY),lessonWork:read(storage,LESSON_WORK_KEY),questionExposure:read(storage,EXPOSURE_KEY),mockExam3:read(storage,MOCK_EXAM3_STORAGE_KEY),mockExam4:read(storage,MOCK_EXAM4_STORAGE_KEY),professorMuscles:read(storage,PROFESSOR_MUSCLE_KEY)};
  if(ap2Records!==undefined)backup.ap2=ap2Records;
  else if(storage.getItem(AP2_KEY)!==null)backup.ap2=read(storage,AP2_KEY);
+ const springRecords={};
+ for(let i=0;i<storage.length;i++){
+   const key=storage.key(i);
+   if(key?.startsWith(springPrefix))springRecords[key.slice(springPrefix.length)]=read(storage,key);
+ }
+ if(Object.keys(springRecords).length)backup.ap3={course:'ap3',version:1,records:springRecords};
  if(includeChat)backup.chat={messages:read(storage,CHAT,[]),draft:storage.getItem('osteon-tutor-draft-v1')||''};
  if(includeSettings)backup.settings=Object.fromEntries(preferences.filter(k=>storage.getItem(k)!==null).map(k=>[k,storage.getItem(k)]));
  validateStudyBackup(backup);return backup;
@@ -30,6 +38,7 @@ export function validateStudyBackup(x){
  if(x?.kind!=='osteon-full-backup'&&validProgress(x))return {legacy:true,attempts:x.attempts.length,examReports:0,hasExamDraft:false,hasLabDraft:false,chat:false,settings:false};
  if(!x||x.kind!=='osteon-full-backup'||x.schema!==1||!Number.isFinite(x.createdAt)||!safeTree(x)||!validProgress(x.progress)||!validExams(x.exams)||!validLab(x.labTest)||(x.lessonWork!==undefined&&!validLessonWork(x.lessonWork))||(x.questionExposure!==undefined&&!validExposure(x.questionExposure)))throw new Error('This is not a valid complete Osteon backup. Nothing was changed.');
  if(x.ap2!==undefined&&!validAP2Records(x.ap2))throw new Error('The A&P II course backup is invalid.');
+ if(x.ap3!==undefined)validateSpring(x.ap3);
  if(x.mockExam3!==undefined&&x.mockExam3!==null&&!validMockState(x.mockExam3))throw new Error('The Exam 3 mock backup is invalid. Nothing was changed.');
  if(x.mockExam4!==undefined&&x.mockExam4!==null&&!validMockExam4State(x.mockExam4))throw new Error('The Exam 4 mock backup is invalid.');
  if(x.professorMuscles!==undefined&&x.professorMuscles!==null&&!validProfessorState(x.professorMuscles))throw new Error('The professor’s muscle review backup is invalid. Nothing was changed.');
@@ -41,7 +50,18 @@ export function validateStudyBackup(x){
 }
 export function restoreStudyBackup(storage,x){
  const preview=validateStudyBackup(x),writes=preview.legacy?[[STORAGE_KEY,JSON.stringify(x)]]:[[STORAGE_KEY,JSON.stringify(x.progress)],[EXAMS,x.exams===null?null:JSON.stringify(x.exams)],[LAB_TEST_KEY,x.labTest===null?null:JSON.stringify(x.labTest)]];
- if(!preview.legacy&&x.ap2!==undefined)writes.push([AP2_KEY,JSON.stringify(x.ap2)]);
+ if(!preview.legacy&&x.ap2!==undefined){
+   const current=read(storage,AP2_KEY),mocks={...(validAP2Records(current)?current.mockRuns:{})};
+   for(const [id,run] of Object.entries(x.ap2.mockRuns||{})){
+     if(shouldRestoreCourseRecord('mock:'+id,mocks[id],run))mocks[id]=run;
+   }
+   const winter=Object.keys(mocks).length?{...x.ap2,mockRuns:mocks}:x.ap2;
+   writes.push([AP2_KEY,JSON.stringify(winter)]);
+ }
+ if(!preview.legacy&&x.ap3)for(const [key,value] of validateSpring(x.ap3)){
+   const storageKey=springPrefix+key;
+   if(shouldRestoreCourseRecord(key,read(storage,storageKey),value))writes.push([storageKey,JSON.stringify(value)]);
+ }
  if(!preview.legacy&&x.mockExam3!==undefined)writes.push([MOCK_EXAM3_STORAGE_KEY,x.mockExam3===null?null:JSON.stringify(x.mockExam3)]);
  if(!preview.legacy&&x.mockExam4!==undefined)writes.push([MOCK_EXAM4_STORAGE_KEY,x.mockExam4===null?null:JSON.stringify(x.mockExam4)]);
  if(!preview.legacy&&x.professorMuscles!==undefined)writes.push([PROFESSOR_MUSCLE_KEY,x.professorMuscles===null?null:JSON.stringify(x.professorMuscles)]);
@@ -61,10 +81,10 @@ export function bindStudyBackups(root,{dialog,toast,escape:e,getAP2Records}){
  const legacy=Object.assign(document.createElement('button'),{type:'button',textContent:'Import earlier study progress'});
  if(!root.querySelector('[data-export-study]'))button.after(legacy);
  legacy.onclick=()=>{try{showLegacyStudyImport({dialog,escape:e});}catch(err){root.querySelector('#import-status,[data-backup-status]').textContent=err.message;}};
- button.before(Object.assign(document.createElement('p'),{className:'tiny',textContent:'Complete backup includes A&P II lesson checks, exam drafts and scores, muscle labeling results, professor review drafts and reports, saved chapter exams, bone-list tests, Exam 3 and 4 mocks and notes, review cards and spellings. Chat and preferences are optional.'}));
+ button.before(Object.assign(document.createElement('p'),{className:'tiny',textContent:'Includes all three courses, mock exam drafts and results, saved rubric reviews, study notes, and lab practice. Chat and preferences are optional.'}));
  button.onclick=()=>{
-  dialog('<h2>Back up your study work</h2><p>Includes both courses’ progress, exam drafts and reports, and the dedicated bone-list test. Keep this file before changing devices or clearing browser data.</p><label class="check-line"><input type="checkbox" id="backup-chat"> Include tutor conversation and draft</label><label class="check-line"><input type="checkbox" id="backup-settings"> Include AI and study preferences</label><button class="primary" id="backup-download">Download complete backup</button><p id="backup-error" role="status"></p>');
+  dialog('<h2>Back up your study work</h2><p>Includes progress, exam drafts, reports and study notes from all three courses. Keep this file before changing devices or clearing browser data.</p><label class="check-line"><input type="checkbox" id="backup-chat"> Include tutor conversation and draft</label><label class="check-line"><input type="checkbox" id="backup-settings"> Include AI and study preferences</label><button class="primary" id="backup-download">Download complete backup</button><p id="backup-error" role="status"></p>');
   document.querySelector('#backup-download').onclick=()=>{try{const data=createStudyBackup(localStorage,{ap2Records:getAP2Records?.(),includeChat:document.querySelector('#backup-chat').checked,includeSettings:document.querySelector('#backup-settings').checked}),url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'})),a=document.createElement('a');a.href=url;a.download='osteon-complete-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);document.querySelector('#info-dialog').close();toast('Complete study backup downloaded.');}catch(err){document.querySelector('#backup-error').textContent=err.message;}};
  };
- input.onchange=async ev=>{const file=ev.target.files[0];if(!file)return;try{if(file.size>15e6)throw new Error('Choose a backup smaller than 15 MB.');const data=JSON.parse(await file.text()),p=validateStudyBackup(data);dialog(`<h2>Review the backup</h2><p>${p.legacy?'Earlier progress-only backup: exam drafts and reports on this device will stay as they are.':'This replaces study progress, chapter-exam records and bone-list test records on this device.'}</p><ul><li>${data.ap2 ? data.ap2.reports.length+' A&P II exam reports, lesson progress, and any saved draft':'Existing A&P II records on this device will be kept'}</li><li>${p.attempts} recorded attempts</li><li>${p.examReports} chapter-exam reports</li><li>${p.mockReports||0} Exam 3 mock reports; saved mock: ${p.hasMockDraft?'included':'none'}</li><li>${p.exam4Reports||0} Exam 4 reports; saved draft: ${p.hasExam4Draft?'included':'none'}</li><li>Professor’s muscle review: ${p.hasProfessorReview?'included':'none'}</li><li>Chapter-exam draft: ${p.hasExamDraft?'included':'none'}</li><li>Bone-list test: ${p.hasLabDraft?'included':'none'}</li><li>Tutor conversation: ${p.chat?'included':'unchanged'}</li><li>Preferences: ${p.settings?'included':'unchanged'}</li></ul><p>Download a backup of this device first if you want to keep both records. Restoring reloads the app.</p><button class="primary" id="backup-restore">Restore and reload</button><p id="backup-error" role="status"></p>`);document.querySelector('#backup-restore').onclick=()=>{try{restoreStudyBackup(localStorage,data);location.reload();}catch(err){document.querySelector('#backup-error').textContent=err.message;}};}catch(err){root.querySelector('#import-status,[data-backup-status]').textContent=err.message;}input.value='';};
+ input.onchange=async ev=>{const file=ev.target.files[0];if(!file)return;try{if(file.size>15e6)throw new Error('Choose a backup smaller than 15 MB.');const data=JSON.parse(await file.text()),p=validateStudyBackup(data);dialog(`<h2>Review the backup</h2><p>${p.legacy?'Earlier progress-only backup: exam drafts and reports on this device will stay as they are.':'This replaces study progress, chapter-exam records and bone-list test records on this device. Winter and spring mock attempts are merged with your saved attempts.'}</p><ul><li>${data.ap2 ? data.ap2.reports.length+' A&P II exam reports, lesson progress, and any saved draft':'Existing A&P II records on this device will be kept'}</li><li>${p.attempts} recorded attempts</li><li>${p.examReports} chapter-exam reports</li><li>${p.mockReports||0} Exam 3 mock reports; saved mock: ${p.hasMockDraft?'included':'none'}</li><li>${p.exam4Reports||0} Exam 4 reports; saved draft: ${p.hasExam4Draft?'included':'none'}</li><li>Professor’s muscle review: ${p.hasProfessorReview?'included':'none'}</li><li>Chapter-exam draft: ${p.hasExamDraft?'included':'none'}</li><li>Bone-list test: ${p.hasLabDraft?'included':'none'}</li><li>Tutor conversation: ${p.chat?'included':'unchanged'}</li><li>Preferences: ${p.settings?'included':'unchanged'}</li></ul><p>Download a backup of this device first if you want to keep both records. Restoring reloads the app.</p><button class="primary" id="backup-restore">Restore and reload</button><p id="backup-error" role="status"></p>`);document.querySelector('#backup-restore').onclick=()=>{try{restoreStudyBackup(localStorage,data);location.reload();}catch(err){document.querySelector('#backup-error').textContent=err.message;}};}catch(err){root.querySelector('#import-status,[data-backup-status]').textContent=err.message;}input.value='';};
 }
