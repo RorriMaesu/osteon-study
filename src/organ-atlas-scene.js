@@ -43,6 +43,10 @@ function expandedControls(host){
   }};
 }
 
+// The portal vein lies on the visceral side of this preparation. Provide the
+// anterior orientation separately so the learner can relate the two surfaces.
+const portalView=[-.3,-.8,-1];
+
 export function mountCloseup(host,entry,onReady){
   const targets=new Set(entry.targets),context=new Set(entry.context||[]);
   const study=new Set((entry.studyOnly||[]).filter(id=>!targets.has(id)&&!context.has(id)));
@@ -50,7 +54,7 @@ export function mountCloseup(host,entry,onReady){
   let picker;
   const options={
     prepare:entry.asset.endsWith('/ovarian-region.glb')?separateRegionalSurfaces:undefined,
-    ...expandedControls(host),asset:entry.asset,title:entry.title,direction:entry.direction||[0,.05,1],up:entry.up||[0,1,0],
+    ...expandedControls(host),asset:entry.asset,title:entry.title,direction:entry.id==='liver'?portalView:entry.direction||[0,.05,1],up:entry.up||[0,1,0],
     onRender:()=>picker?.updatePin(),
     include:(_,mesh)=>Boolean(lookupSurface(mesh,names)),
     colors:(_,mesh)=>{
@@ -89,14 +93,24 @@ export function mountCloseup(host,entry,onReady){
         for(const mesh of supplemental)mesh.visible=selectedParts.has(mesh);
         for(const mesh of surroundings)mesh.visible=contextVisible||selectedParts.has(mesh);
       }
-      function resetView(){
+      function resetView(direction){
         for(const mesh of surroundings)mesh.visible=!!lookupSurface(mesh,fitContext);
         for(const mesh of supplemental)mesh.visible=false;
         const focus=entry.fitTargets?.flatMap(key=>meshes.get(key)||[]);
-        viewer.fit(focus?.length?focus:undefined);visibility();
+        viewer.fit(focus?.length?focus:undefined,direction);visibility();
       }
       const showContext=visible=>{contextVisible=visible;visibility();viewer.invalidate();};
       resetView();
+      if(entry.id==='liver'){
+        const presets=host.querySelector('[data-orientation]'),standard=presets.onchange;
+        presets.options[0].text='Portal inflow · visceral surface';
+        presets.add(new Option('Anterior surface','anterior'),1);
+        presets.onchange=event=>{
+          if(presets.value==='anterior')resetView([0,.05,1]);
+          else if(presets.value==='home')resetView();
+          else standard.call(presets,event);
+        };
+      }
       const motion=createOrganMotion(entry,viewer,meshes);
       const frame=(t,particle)=>{motion.set(t,particle);viewer.invalidate();};
       viewer.addCleanup(()=>motion.dispose?.());

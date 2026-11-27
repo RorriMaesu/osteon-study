@@ -7,6 +7,7 @@ import {organStructureName,organSearchAliases} from './organ-structure-names.js'
 import {mountMechanismPanel} from './organ-mechanism-panel.js';
 import {filtrationReading} from './organ-mechanism-signals.js';
 import {makeCourseSearch} from './ap2-term-search.js';
+import {hasTissueReference,mountTissueReference} from './organ-tissue-references.js';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const link=(id,text)=>'<a class="oa-link" href="#'+escape(id)+'">'+escape(text)+'</a>';
@@ -72,11 +73,14 @@ export function initOrganAtlas(root){
     menu.onchange=()=>{if(menu.value)location.hash='organs/'+menu.value;};
     if(entry){
       const locationRow=locationForEntry(entry);
+      const micrograph=hasTissueReference(entry.id);
       const related=locationRow?.row?mappedActions(locationRow.map,locationRow.row).filter(action=>action!==entry):[];
       lesson.innerHTML='<div class="oa-transport"><button type="button" data-oa-play disabled>▶ Play</button><button type="button" data-oa-back aria-label="Previous phase">←</button><label><span class="oa-sr">Animation position</span><input data-oa-time type="range" min="0" max="1000" step="1" value="0"></label><button type="button" data-oa-next aria-label="Next phase">→</button><label class="oa-check"><input data-oa-loop type="checkbox"> Loop</label></div>'+
-        '<div data-oa-phase class="oa-phase"></div><details class="oa-notes"><summary>'+escape(entry.action)+' · '+escape(entry.kind)+'</summary><p>'+escape(entry.description)+'</p>'+(entry.context?.length?'<label class="oa-check"><input data-oa-context type="checkbox" checked> Show surrounding anatomy</label>':'')+'<div class="oa-links">'+
+        '<div data-oa-phase class="oa-phase"></div><details class="oa-notes"><summary>'+escape(entry.action)+' · '+escape(entry.kind)+(micrograph?' · Micrograph':entry.id==='heart'?' · Exterior view':'')+'</summary><p>'+escape(entry.description)+'</p>'+(entry.context?.length?'<label class="oa-check"><input data-oa-context type="checkbox" checked> Show surrounding anatomy</label>':'')+'<div class="oa-links">'+
+        (micrograph?'<button type="button" data-oa-micrograph>Compare with a tissue micrograph</button> ':'')+(entry.id==='heart'?link('ap2-lesson-19.1/activity/surface','Study the heart exterior in 3D')+' ':'')+
         (['prostate','urethra'].includes(entry.id)?cowperReference+' ':'')+(locationRow?link(mapRoute(locationRow.map,locationRow.row),'Locate on reference'):'')+' <a href="'+escape(entry.source)+'" target="_blank" rel="noreferrer">Physiology reference ↗</a> <a href="'+escape(entry.credits||sourceCredits(entry.asset))+'" target="_blank" rel="noreferrer">Specimen credits ↗</a></div>'+(related.length?'<div class="oa-links oa-related"><strong>Related animations</strong> '+related.map(other=>link('organs/'+other.id,other.action)).join(' ')+'</div>':'')+'</details>';
       let t=0,phase=-1,frame=0,previous=0,playing=false,controller=null;
+      mountTissueReference(lesson,entry,pause);
       const play=get('play'),slider=get('time'),prev=get('back'),next=get('next'),phaseText=get('phase');
       const runSeconds=entry.duration||7;
       let lastCaption='';
