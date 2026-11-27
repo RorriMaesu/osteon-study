@@ -125,7 +125,8 @@
     "region_Hypoglossal_nerve_(XII)"
   ],
   "descending-colon": [
-    "transverse_colon"
+    "transverse_colon",
+    "sigmoid_colon"
   ],
   "diaphragm": [
     "sixth_rib_left",
@@ -345,6 +346,9 @@
     "VH_M_tricuspid_valve",
     "VH_M_interventricular_septum"
   ],
+  "rectum": [
+    "descending_colon"
+  ],
   "red-marrow": [
     "megakaryocyte_nucleus",
     "marrow_adipocytes"
@@ -369,9 +373,6 @@
   "seminal-glands": [
     "illustrative_terminal_ductus_left",
     "illustrative_terminal_ductus_right"
-  ],
-  "sigmoid-colon": [
-    "descending_colon"
   ],
   "skin": [
     "region_Free_nerve_endings",

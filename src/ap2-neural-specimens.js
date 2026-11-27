@@ -80,6 +80,18 @@ function start(panel,kind){
   const route=panel.querySelector('[data-specimen-route]');
   const steps=()=>route?spec.routes[+route.value][1]:spec.steps;
   let current=0,timer=0,animationFrame=0,api,focusAmount=0;
+  const highlighted=[];
+  function focusButton(before, text){
+    const button=document.createElement('button');
+    button.type='button';button.textContent=text;button.dataset.neuralFocus='';button.disabled=true;
+    button.onclick=()=>{
+      if(!api||!highlighted.length)return;
+      stop();
+      api.fit(highlighted,api.camera.position.clone().sub(api.controls.target));
+    };
+    before.before(button);return button;
+  }
+  const focusTargets=[focusButton(play,'Focus selection'),focusButton(panel.querySelector('[data-spot-next]'),'Focus highlighted structure')];
   let ossicles,phaseSlider;
   if(kind==='ossicles'){
     const label=document.createElement('label');label.textContent='Vibration phase ';
@@ -95,6 +107,7 @@ function start(panel,kind){
   const ranges=[null,[-.035,.035],[-.06,.035],[1.57,1.655]];
   function styleModel(){
     if(!api?.model)return;
+    highlighted.length=0;
     api.model.traverse(mesh=>{
       if(!mesh.isMesh)return;
       const n=nameOf(mesh),context=kind==='ventricles'&&!/ventricle|aqueduct/.test(n);
@@ -106,6 +119,8 @@ function start(panel,kind){
       const selected=selection!==undefined&&selection!==''?cutawayMatch(targets[kind][+selection][0],n):spec.routes?cutawayMatch(steps()[current][0],n):focused(kind,current,n);
       const upstream=n.startsWith('lateralventricle')||n==='thirdventricle';
       const occluded=obstruction?.checked;
+      const active=spot>=0?spotMatch:occluded?n==='aqueductofmidbrain':region&&+region.value?matchingRegion:selected;
+      if(active&&mesh.visible)highlighted.push(mesh);
       for(const m of [].concat(mesh.material)){
         const tissue=spec.routes?cutawayColor(n):baseColor(n);
         m.color.set(spot>=0?(spotMatch?'#f5b668':'#839da4'):occluded?(n==='aqueductofmidbrain'?'#c74950':upstream?'#f5b668':tissue):matchingRegion?(n.startsWith('globuspallidus')?'#ed9580':'#f5b668'):region&&+region.value?tissue:selected&&bareAxon&&current===2?'#8cb3c3':selected?'#f5b668':tissue);
@@ -126,6 +141,7 @@ function start(panel,kind){
         if(n==='zonules')mesh.scale.set(1-.055*focusAmount,1-.055*focusAmount,1);
       }
     });
+    for(const button of focusTargets)button.disabled=!highlighted.length;
     api.invalidate();
   }
   function stop(){

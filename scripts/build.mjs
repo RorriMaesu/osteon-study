@@ -21,9 +21,9 @@ if(fs.existsSync(walkMuscleManifest)){
   modelAssets['motion-walk-muscles']=createHash('sha256').update(fs.readFileSync(walkMuscleManifest)).digest('hex').slice(0,12);
 }
 fs.writeFileSync(path.join(root,'src/model-assets.json'),JSON.stringify(modelAssets,null,2)+'\n');
-const organFolder='assets/ap3-models';
-const organRevisions=Object.fromEntries(fs.readdirSync(path.join(root,organFolder)).filter(name=>name.endsWith('.glb')).sort().map(name=>{
- const asset=organFolder+'/'+name;
+const organAssetPaths=['assets/ap3-models','assets/organ-atlas'].flatMap(folder=>
+ fs.readdirSync(path.join(root,folder),{recursive:true}).filter(name=>name.endsWith('.glb')).map(name=>folder+'/'+name.split(path.sep).join('/')));
+const organRevisions=Object.fromEntries(organAssetPaths.sort().map(asset=>{
  return [asset,createHash('sha256').update(fs.readFileSync(path.join(root,asset))).digest('hex').slice(0,12)];
 }));
 fs.writeFileSync(path.join(root,'src/organ-model-versions.json'),JSON.stringify(organRevisions,null,2)+'\n');

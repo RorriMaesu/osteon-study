@@ -1,6 +1,7 @@
 import {label} from './ap3-specimens-catalog.js';
 
 const specific={
+  body:{sigmoid_colon:'Sigmoid colon (approximate proximal boundary)'},
   adrenal:{medulla:'Adrenal medulla',fasciculata:'Zona fasciculata',glomerulosa:'Zona glomerulosa',reticularis:'Zona reticularis',capsule:'Adrenal capsule'},
   artery:{artery_intima:'Tunica intima',artery_media:'Tunica media',artery_externa:'Tunica externa',vein_intima:'Venous tunica intima',vein_media:'Venous tunica media',vein_externa:'Venous tunica externa',vein_leaflet_a:'Venous valve leaflets',vein_leaflet_b:'Venous valve leaflets'},
   'peripheral-nerve':{'First node':'Node of Ranvier (proximal)','Second node':'Node of Ranvier (distal)'},
@@ -39,10 +40,18 @@ export function organStructureGroups(entry,meshes,describe){
   for(const [raw,parts] of meshes){
     const title=describe?.(raw)||organStructureName(entry.id,raw);
     let group=byTitle.get(title);
-    if(!group){group={title,meshes:[],names:[],target:false};byTitle.set(title,group);}
+    if(!group){group={title,terms:organSearchAliases(title),meshes:[],names:[],target:false};byTitle.set(title,group);}
     group.names.push(raw);
     group.meshes.push(...parts);group.target||=entry.targets.includes(raw);byRaw.set(raw,group);
   }
   for(const group of byTitle.values())group.meshes=[...new Set(group.meshes)];
   return {byRaw,groups:[...byTitle.values()].sort((a,b)=>Number(b.target)-Number(a.target)||a.title.localeCompare(b.title))};
+}
+
+export function organSearchAliases(title){
+  if(/glomerular (?:capillary )?tuft/i.test(title))return 'glomerulus glomeruli';
+  if(/glomerular capsule/i.test(title))return "Bowman Bowman’s Bowman's capsule";
+  if(/mitral valve/i.test(title))return 'bicuspid left atrioventricular valve';
+  if(/tricuspid valve/i.test(title))return 'right atrioventricular valve';
+  return '';
 }

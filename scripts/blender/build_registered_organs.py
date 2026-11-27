@@ -58,6 +58,12 @@ def publish(objects):
         export_materials="NONE", export_cameras=False, export_lights=False, export_animations=False)
     if staged.stat().st_size < 10000:
         raise RuntimeError("Incomplete export")
+    if mode == 'registered':
+        import runpy
+        segmented = staged.with_suffix('.segmented.glb')
+        prepare = runpy.run_path(str(Path(__file__).with_name('prepare-colorectal-reference.py')))
+        prepare['split_left_bowel'](staged,segmented,.960)
+        segmented.replace(staged)
     staged.replace(output)
 
 
@@ -265,6 +271,8 @@ for system, group in systems.items():
             record["contextOnly"] = True
         if identity in ("large-intestine","small-intestine","rectum","kidneys"):
             record["registration"] = "Includes fitted BodyParts3D anatomy"
+        if identity == 'large-intestine':
+            record['registration'] += '. The proximal sigmoid boundary is illustrative on the continuous native left-bowel surface.'
         records.append(record)
 bpy.context.window.scene = scene
 bpy.context.view_layer.update()

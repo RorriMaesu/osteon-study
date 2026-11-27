@@ -9,7 +9,7 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
   let byRaw,search;
   function index(){
     const lookup=organStructureGroups(entry,meshes,options.describe);
-    if(options.terms)for(const group of lookup.groups)group.terms=options.terms(group);
+    if(options.terms)for(const group of lookup.groups)group.terms+=' '+options.terms(group);
     byRaw=lookup.byRaw;search=makeCourseSearch(lookup.groups);
   }
   index();

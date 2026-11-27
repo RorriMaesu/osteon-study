@@ -3,7 +3,7 @@ import {setLearningContext} from './learning-context.js';
 import {bodyMaps,mapForKey,mapRoute,mappedActions,locationForEntry} from './organ-atlas-bodies.js';
 import {organMotions,motionById,phaseStart,currentPhase,sourceCredits} from './organ-atlas-catalog.js';
 import {mountBodyMap,mountCloseup} from './organ-atlas-scene.js';
-import {organStructureName} from './organ-structure-names.js';
+import {organStructureName,organSearchAliases} from './organ-structure-names.js';
 import {mountMechanismPanel} from './organ-mechanism-panel.js';
 import {filtrationReading} from './organ-mechanism-signals.js';
 import {makeCourseSearch} from './ap2-term-search.js';
@@ -14,8 +14,9 @@ const options=(rows,selected)=>rows.map(([value,label])=>'<option value="'+escap
 const cowperReference='<a class="oa-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8373982/" target="_blank" rel="noreferrer">Bulbourethral glands · illustrated human anatomy ↗</a>';
 const titleSort=(a,b)=>a.localeCompare(b);
 const searchableMotions=organMotions.map(entry=>{
-  const parts=[...new Set([...entry.targets,...entry.context||[],...entry.studyOnly||[]])].map(raw=>({raw,title:organStructureName(entry.id,raw)}));
-  return {title:entry.title,entry,parts,text:[entry.action,entry.system,...(entry.aliases||[]),...(entry.bodyIds||[]),...parts.map(p=>p.title)].join(' ')};
+  const surfaces=new Set([...entry.targets,...(entry.context||[]),...(entry.studyOnly||[])]);
+  const parts=[...surfaces].map(raw=>({raw,title:organStructureName(entry.id,raw)}));
+  return {title:entry.title,entry,parts,text:[entry.action,entry.system,...(entry.aliases||[]),...(entry.bodyIds||[]),...parts.map(p=>p.title+' '+organSearchAliases(p.title))].join(' ')};
 });
 const searchMotions=makeCourseSearch(searchableMotions);
 
@@ -41,7 +42,7 @@ export function initOrganAtlas(root){
     const region=entry?.system||'',systemFilter=systemNames.includes(system)?system:'';
     if(entry&&systemFilter&&region!==systemFilter)system='';
     root.innerHTML='<div class="oa-page"><header class="oa-header"><div>'+(returnRoute?link(returnRoute,'← '+courseRouteLabel(returnRoute)):link('atlas','← 3D Atlas'))+'<h1>Organ atlas</h1></div><a class="oa-link" href="model-review/">Model guide</a><a class="oa-link" href="assets/organ-atlas/SOURCES.md" target="_blank" rel="noreferrer">Model credits ↗</a></header>'+
-      '<div class="oa-work"><aside class="oa-browser" data-detail data-compact><button type="button" class="oa-find" data-oa-find aria-expanded="false" aria-controls="oa-search-filter oa-system-filter">Find an organ</button><label id="oa-search-filter">Find an organ<input data-oa-search type="search" placeholder="Search by organ or process" autocomplete="off"></label>'+
+      '<div class="oa-work"><aside class="oa-browser" data-detail data-compact><button type="button" class="oa-find" data-oa-find aria-expanded="false" aria-controls="oa-search-filter oa-system-filter">Find an organ</button><label id="oa-search-filter">Find an organ<input data-oa-search type="search" placeholder="Organ, structure or process" autocomplete="off"></label>'+
       '<label id="oa-system-filter">System<select data-oa-system>'+options([['','All systems'],...systemNames.map(s=>[s,s])],system)+'</select></label>'+
       '<label><span class="oa-menu-name">Animated organ</span><select aria-label="Animated organ" data-oa-menu></select></label><div class="oa-count" role="status" data-oa-count></div><div data-oa-list class="oa-list" aria-label="Organ animations"></div></aside>'+
       '<section class="oa-content"><header class="oa-title"><div><small>'+escape(entry?entry.system+' · '+entry.kind:map.description)+'</small><h2 tabindex="-1">'+escape(entry?entry.title:map.title)+'</h2></div>'+

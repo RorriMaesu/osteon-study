@@ -52,17 +52,31 @@ for(const [id,title,key,label] of [['jejunum','Jejunum','jejunal-segment','jejun
 for(const [id,title,mesh,asset,beg,end] of [
   ['ascending-colon','Ascending colon','ascending_colon',gut,'cecal region','right colic flexure'],
   ['transverse-colon','Transverse colon','transverse_colon',gut,'right colic flexure','left colic flexure'],
-  ['descending-colon','Descending colon','descending_colon',gut,'left colic flexure','sigmoid colon'],
-  ['sigmoid-colon','Sigmoid colon','sigmoid_colon',spring('distal-colon'),'descending colon','rectum'],
-  ['rectum','Rectum','rectum',gut,'sigmoid colon','anal canal']
+  ['descending-colon','Descending colon','descending_colon',gut,'left colic flexure','sigmoid colon']
 ]){
-  add(id,title,digestive,asset,mesh,'','23.5',id==='rectum'?'Follow rectal emptying':'Follow a propulsive contraction',
+  add(id,title,digestive,asset,mesh,'','23.5','Follow a propulsive contraction',
     'The gold marker follows a representative path from the '+beg+' toward the '+end+'. The narrowing behind it illustrates wall contraction.',[
       ['Arrival','Contents arrive from the '+beg+'.'],
       ['Contraction','Smooth muscle raises local pressure and propels contents distally.'],
       ['Distal passage','Contents move toward the '+end+'.']],
-    [propel(mesh,id,{amplitude:.24})],{bodyIds:[id,...(id==='rectum'?[]:['large-intestine'])]});
+    [propel(mesh,id,{amplitude:.24})],{bodyIds:[id,'large-intestine']});
 }
+
+const colorectal=spring('distal-colon');
+add('sigmoid-colon','Sigmoid colon',digestive,colorectal,'sigmoid_colon','descending_colon rectum','23.5','Follow a propulsive contraction',
+  'Follow the pelvic loop from the descending colon on the patient’s left to the rectum near the midline. All three segments share their original Human Reference Atlas coordinates. The gold marker travels in the direction of colonic transit.',[
+    ['Descending–sigmoid junction','Contents enter from the left side of the abdomen.'],
+    ['Pelvic loop','The loop bends medially through the pelvis. Its shape and length vary among individuals.'],
+    ['Rectosigmoid junction','The sigmoid colon continues into the upper rectum.']],
+  [propel('sigmoid_colon','sigmoid-colon',{amplitude:.20,range:[.02,.98]})],
+  {direction:[.18,.82,1],modelSource:'Human Reference Atlas · large intestine, male v1.2',bodyIds:['sigmoid-colon','large-intestine']});
+add('rectum','Rectum',digestive,colorectal,'rectum','sigmoid_colon','23.5','Follow rectal emptying',
+  'This oblique side view shows the bend of the rectum below the sigmoid colon. The tracer moves toward the anal canal as rectal contraction helps expel contents. The anal sphincters are outside this preparation.',[
+    ['Rectosigmoid junction','Feces enter the rectum from the sigmoid colon.'],
+    ['Distension','Stretch of the rectal wall initiates the defecation reflex.'],
+    ['Emptying','Rectal contraction and coordinated relaxation of the outlet permit defecation.']],
+  [propel('rectum','rectum',{amplitude:.24,range:[.02,.98]})],
+  {direction:[.95,.10,.32],modelSource:'Human Reference Atlas · large intestine, male v1.2',bodyIds:['rectum']});
 
 add('liver','Liver',digestive,accessory,'liver hepatic_portal_vein','','23.6','Follow hepatic portal inflow',
   'A tracer follows the segmented hepatic portal vein toward the liver. Its arrival marks delivery of absorbed nutrients. The smaller intrahepatic vessels lie beyond this preparation.',[

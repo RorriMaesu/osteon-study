@@ -11,7 +11,7 @@ import sys
 from html.parser import HTMLParser
 from urllib.request import Request, urlopen
 
-HRA = {"node": "ref-organ/lymph-node-male/v1.4", "kidney": "ref-organ/kidney-male-left/v1.3",
+HRA = {"colorectal": "ref-organ/large-intestine-male/v1.2", "node": "ref-organ/lymph-node-male/v1.4", "kidney": "ref-organ/kidney-male-left/v1.3",
        "ureter": "ref-organ/ureter-male-left/v1.2", "glomerulus": "3d-ftu/glomerulus/v1.0"}
 STAGES = {12: "016955", 16: "016953", 20: "016951", 23: "016950"}
 

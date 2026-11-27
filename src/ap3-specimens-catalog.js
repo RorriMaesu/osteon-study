@@ -87,13 +87,14 @@ add(22,'nasal-passage','Nasal cavity and conchae',atlas,'Rotate the nasal prepar
 add(22,'pleura','Pleural surfaces and fluid film',schema,'An opened slice through the thoracic wall shows the parietal layer outside the fluid film and the visceral layer against the lung. The space is enlarged for inspection.',{routes:[route('From chest wall to lung','chest_wall parietal_pleura pleural_fluid visceral_pleura lung_tissue')]});
 add(22,'alveolar-exchange','Alveolar sac and pulmonary capillaries',schema,'The open air spaces share delicate septa. Follow conducting air into the exchange region, then follow blood from an arteriole through the capillary network to a venule.',{routes:[
   route('Air into an alveolus','respiratory_bronchiole alveolar_duct alveolar_air_spaces'),route('Blood past alveolar air','pulmonary_arteriole capillary_network pulmonary_venule')]});
-add(23,'alimentary-tract','Esophagus to rectum',atlas,'Trace the canal to the descending colon, then open the distal-colon specimen for the sigmoid segment. The two specimens use different source surfaces.',{
-  routes:[route('Canal landmarks to descending colon','esophagus stomach duodenum jejunum ileum ileocecal_junction ascending_colon transverse_colon descending_colon')],
+add(23,'alimentary-tract','Esophagus to rectum',atlas,'Trace the bowel from the left abdomen into the pelvis. The boundary between descending and sigmoid colon is approximate in this specimen. Compare the pelvic loop in the separate Human Reference Atlas preparation.',{
+  names:{sigmoid_colon:'Sigmoid colon (approximate proximal boundary)'},
+  routes:[route('Canal landmarks through the rectum','esophagus stomach duodenum jejunum ileum ileocecal_junction ascending_colon transverse_colon descending_colon sigmoid_colon rectum')],
   handoffs:{descending_colon:['ap3-specimen-distal-colon/target/sigmoid_colon','Continue to the sigmoid colon →']}
 });
-add(23,'distal-colon','Descending and sigmoid colon',atlas,'Follow the sigmoid curve into the pelvis anterior to the sacrum. Continue from sigmoid to rectum in the whole-canal specimen.',{
-  routes:[route('Distal colon','descending_colon sigmoid_colon')],
-  handoffs:{sigmoid_colon:['ap3-specimen-alimentary-tract/target/rectum','Continue to the rectum →']}
+add(23,'distal-colon','Descending colon, sigmoid colon and rectum',hra,'Locate the descending colon on the patient’s left. Follow the pelvic loop medially to the rectum. All three segmented surfaces come from the same Human Reference Atlas reference.',{
+  direction:[.15,.30,1],routes:[route('Distal colon into rectum','descending_colon sigmoid_colon rectum')],
+  handoffs:{rectum:['ap3-specimen-alimentary-tract/target/rectum','Compare with the whole-canal specimen →']}
 });
 add(23,'accessory-ducts','Bile, pancreatic juice and portal blood',atlas,'Trace stored bile from the gallbladder through the cystic duct and common bile duct to the duodenum. The donor represents these ducts as one continuous outlet. Their division is approximate because the common hepatic duct branch is absent. Pancreatic juice follows the pancreatic duct.',{routes:[route('Bile delivery','gallbladder cystic_duct bile_duct duodenum'),route('Pancreatic secretion','pancreas pancreatic_duct duodenum')]});
 add(23,'enteric-wall','Layers of the intestinal wall',schema,'Work outward from mucosa through submucosa and muscular layers to serosa. The myenteric plexus lies between the circular and longitudinal layers.',{asset:'assets/ap2-neuro/enteric-wall.glb',names:{mucosa:'Mucosa and villi',medulla:'Medulla oblongata (brainstem inset)',intrinsic_sensory:'Intrinsic sensory neuron',enteric_motor:'Enteric motor neuron',circular_muscle:'Inner circular muscle',longitudinal_muscle:'Outer longitudinal muscle',vagal_afferent:'Vagal sensory fiber',vagal_efferent:'Vagal preganglionic motor fiber'},

@@ -106,9 +106,35 @@ derive('jejunal-segment',gut,'jejunum','-x','+x')
 derive('ileal-segment',gut,'ileum','-x','+x')
 derive('ascending-colon',gut,'ascending_colon','-y','transverse_colon')
 derive('transverse-colon',gut,'transverse_colon','ascending_colon','descending_colon')
-derive('descending-colon',gut,'descending_colon','transverse_colon','rectum')
-derive('sigmoid-colon','ap3-models/distal-colon.glb','sigmoid_colon','descending_colon','-y')
-derive('rectum',gut,'rectum','descending_colon','-y')
+derive('descending-colon',gut,'descending_colon','transverse_colon','~sigmoid_colon')
+distal_colon='ap3-models/distal-colon.glb'
+derive('sigmoid-colon',distal_colon,'sigmoid_colon','~descending_colon','~rectum',ring=True,samples=64)
+derive('rectum',distal_colon,'rectum','~sigmoid_colon','-y',samples=48)
+# At the sharp distal bend, an average of vertices with similar geodesic
+# distance can land outside the wall. Center the distal portion in successive
+# transverse sections of the outer rectal surface.
+rectal_wall=max(scene(distal_colon)['rectum'].split(only_watertight=False),key=lambda part:part.area)
+rectal_path=[p for p in paths['rectum'] if p[1]>=.018]
+for height in np.linspace(rectal_path[-1][1],rectal_wall.bounds[0,1]+.0003,81)[1:]:
+    segments=trimesh.intersections.mesh_plane(rectal_wall,[0,1,0],[0,height,0])[:,:,[0,2]]
+    if not len(segments):continue
+    lo,hi=segments.min(axis=(0,1)),segments.max(axis=(0,1))
+    x,z=np.meshgrid(np.linspace(lo[0],hi[0],61),np.linspace(lo[1],hi[1],61))
+    inside=np.zeros_like(x,dtype=bool);distance=np.full_like(x,np.inf)
+    for a,b in segments:
+        delta=b-a
+        if abs(delta[1])>1e-12:
+            inside^=((a[1]>z)!=(b[1]>z))&(x<(a[0]+(z-a[1])*delta[0]/delta[1]))
+        fraction=np.clip(((x-a[0])*delta[0]+(z-a[1])*delta[1])/max(delta@delta,1e-20),0,1)
+        distance=np.minimum(distance,(x-a[0]-fraction*delta[0])**2+(z-a[1]-fraction*delta[1])**2)
+    if not np.any(inside):raise ValueError('Missing rectal cross-section')
+    # A fold can create two clear spaces on one horizontal section. Follow
+    # the connected space from above so the tracer cannot jump across a fold.
+    prior=rectal_path[-1]
+    score=np.sqrt(distance)-.55*np.hypot(x-prior[0],z-prior[2])
+    idx=np.argmax(np.where(inside,score,-np.inf))
+    rectal_path.append([x.flat[idx],height,z.flat[idx]])
+paths['rectum']=np.round(rectal_path,6).tolist()
 derive('portal-inflow',duct,'hepatic_portal_vein','-y','+y',True,22)
 derive('pancreatic-duct',duct,'pancreatic_duct','+x','duodenum')
 derive('cystic-duct',duct,'cystic_duct','gallbladder','bile_duct',True,18)

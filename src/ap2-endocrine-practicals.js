@@ -69,7 +69,9 @@ const islet={
   beta:['Beta cell','Rising blood glucose','Insulin enters islet capillaries. Muscle and adipose tissue increase glucose uptake, and the liver favors storage.'],
   alpha:['Alpha cell','Falling blood glucose','Glucagon enters islet capillaries and promotes hepatic glucose output.'],
   delta:['Delta cell','Local regulation','Somatostatin reduces the release of insulin and glucagon from neighbors.'],
-  acinus:['Exocrine acinus','Meal-related digestive stimulation','Acinar cells release digestive enzymes into ducts leading to the duodenum.']
+  acinus:['Exocrine acinus','Meal-related digestive stimulation','Acinar cells release digestive enzymes into ducts leading to the duodenum.'],
+  capillary:['Islet capillary','Endocrine transport','Islet hormones reach the circulation through these small blood vessels.'],
+  duct:['Pancreatic ducts','Exocrine transport','Small ducts collect fluid from the acini and join the larger duct.']
 };
 function stationBody(id){
  if(id==='17.10'||id==='17.11')return endocrineCaseMarkup(id);
@@ -167,9 +169,20 @@ function mountMicro(panel,isThyroid,selected){
     button.textContent='Play pathway';
   }
   function update(){
-    currentKey=selected();stop();label.textContent=movementLabels[currentKey];
+    currentKey=selected();stop();delete button.dataset.stage;
+    const pathway=Object.hasOwn(secretionPaths,currentKey);
+    button.hidden=!pathway;button.disabled=!api||!pathway;
+    label.textContent=movementLabels[currentKey]||'Gold marks the selected structure.';
     if(!api)return;
-    api.model.traverse(obj=>{if(obj.isMesh)obj.material.color.set(color(obj.name));});api.invalidate();
+    api.model.traverse(obj=>{
+      if(!obj.isMesh)return;
+      const mat=obj.material;
+      mat.color.set(color(obj.name));
+      const context=!pathway&&microRole(obj.name)!==currentKey;
+      mat.opacity=context ? .16 : 1;
+      mat.transparent=mat.opacity<1;mat.depthWrite=!mat.transparent;
+    });
+    api.invalidate();
   }
   showModel(host,{asset:root+(isThyroid?'follicle-cutaway.glb':'islet-cutaway.glb'),title:isThyroid?'Open thyroid follicle':'Pancreatic islet and surrounding acini',direction:isThyroid?[.45,.25,1]:[.07,.4,1],colors:color,
     onLoad:async viewer=>{
@@ -180,7 +193,7 @@ function mountMicro(panel,isThyroid,selected){
     }
   });
   button.onclick=()=>{
-    if(!api)return;if(frame){stop();return;}
+    if(!api||!Object.hasOwn(secretionPaths,currentKey))return;if(frame){stop();return;}
     const points=secretionPaths[currentKey],begin=performance.now(),reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     marker.visible=true;
     if(reduced){
@@ -279,6 +292,8 @@ export function mountGlandPractical(rootElement,id){
      if(get('neck-view').value==='micro'){
        const micro=figure(root+'thyroid-follicles.webp','Follicle cells enclose a colloid-filled lumen. A leader identifies parafollicular cells near the follicles.',credits('17.12c, tissue panel','17-4-the-thyroid-gland',true));
        const steps={follicle:['Follicle cell','Follicle cells take up iodide from blood and secrete thyroglobulin toward the follicle lumen.'],colloid:['Colloid','Iodination and coupling on thyroglobulin form thyroid hormone precursors in the lumen. Iodinated thyroglobulin provides extracellular storage.'],release:['Return to blood','TSH stimulates uptake of colloid. Proteolysis frees T3 and T4 for release toward the capillaries.'],cCell:['Parafollicular cell','These cells secrete calcitonin and do not make T3 or T4. They lie adjacent to the follicles.']};
+       steps.cell=['Follicular cell nuclei','Each highlighted nucleus lies inside a follicular epithelial cell in the wall surrounding the colloid.'];
+       steps.capillary=['Perifollicular capillary','Capillaries next to the basal surface of the follicular epithelium supply iodide and carry thyroid hormones away.'];
        get('neck-plate').innerHTML=two(microMarkup(),select('follicle-step','Explore a compartment',Object.fromEntries(Object.entries(steps).map(([k,v])=>[k,v[0]])))+'<p data-follicle-note role="status"></p>');
        const updateMicro=mountMicro(panel,true,()=>get('follicle-step').value);get('neck-plate').insertAdjacentHTML('beforeend','<details><summary>Compare with the micrograph</summary>'+micro+'</details>');
        function explain(){updateMicro();get('follicle-note').textContent=steps[get('follicle-step').value][1];}
@@ -354,7 +369,7 @@ export function mountGlandPractical(rootElement,id){
        get('part').onchange=part;
        showModel(get('organ'),{asset:root+'pancreas-v1.3.glb',title:'Human pancreas',direction:[0,.15,1],colors:color,onLoad:v=>{viewer=v;part();}});
      }else{
-       get('scale-view').innerHTML=two(microMarkup(),select('cell','Examine a cell population',Object.fromEntries(Object.entries(islet).map(([k,v])=>[k,v[0]])))+'<p data-cell-result role="status"></p><p>Islet cells release hormones into nearby capillaries. A routine stain can reveal an islet as a cluster. Definitive alpha, beta and delta cell identification typically uses hormone-specific labeling.</p>');
+       get('scale-view').innerHTML=two(microMarkup(),select('cell','Inspect a structure',Object.fromEntries(Object.entries(islet).map(([k,v])=>[k,v[0]])))+'<p data-cell-result role="status"></p><p>This cutaway shows alpha, beta and delta cells. Islets also contain PP cells, which secrete pancreatic polypeptide. A routine stain reveals the islet as a cluster. Identifying individual endocrine cell types generally requires hormone-specific labeling.</p>');
        get('scale-view').insertAdjacentHTML('beforeend','<details><summary>Compare with the micrograph</summary>'+figure(root+'islet.webp','A pancreatic islet and its neighboring acini are identified in the tissue.',credits('17.18','17-9-the-endocrine-pancreas',true))+'</details>');
        const updateMicro=mountMicro(panel,false,()=>get('cell').value);
        function cell(){updateMicro();const [,trigger,result]=islet[get('cell').value];get('cell-result').textContent=trigger+'. '+result;}

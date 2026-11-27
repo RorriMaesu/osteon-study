@@ -4,6 +4,7 @@ Tasks: regions, gut, kidney, node, glomerulus, embryos. Existing outputs are pro
 """
 import csv
 import math
+import runpy
 import sys
 import zipfile
 from collections import defaultdict
@@ -17,6 +18,7 @@ from mathutils import Vector, Matrix
 task, *paths = sys.argv[sys.argv.index("--") + 1:]
 blend, bp3d, reference, target = map(Path, paths)
 target.mkdir(parents=True, exist_ok=True)
+colorectal = runpy.run_path(str(Path(__file__).parent/'blender/prepare-colorectal-reference.py'))
 
 
 def export(name, objects):
@@ -29,6 +31,10 @@ def export(name, objects):
     bpy.ops.export_scene.gltf(filepath=str(path.resolve()), export_format="GLB", use_selection=True,
         use_active_scene=True, export_apply=True, export_yup=True, export_materials="NONE", export_cameras=False,
         export_lights=False, export_animations=False)
+    if name == 'alimentary-tract':
+        segmented = path.with_suffix('.segmented.glb')
+        colorectal['split_left_bowel'](path, segmented, .905)
+        segmented.replace(path)
     print("EXPORTED", name, path.stat().st_size, flush=True)
 
 
@@ -64,7 +70,6 @@ def regional():
             "Seminal gland.r", "Prostate", "Urethra", "Urinary bladder", "Glans penis", "Corpus spongiosum of penis"],
         "accessory-ducts": ["Liver", "Gallbladder", "Pancreas", "Bile duct", "Pancreatic duct",
             "Duodenum", "Hepatic portal vein"],
-        "distal-colon": ["Descending colon", "Sigmoid colon", "Sacrum"],
         "fuel-organs": ["Liver", "Stomach", "Duodenum", "Pancreas", "Rectus abdominis muscle.r", "Hepatic portal vein"],
         "immune-organs": ["Right lobe of thymus", "Left lobe of thymus", "Spleen", "Palatine tonsil.l",
             "Palatine tonsil.r", "Internal jugular vein.r", "Internal jugular vein.l",
@@ -199,6 +204,10 @@ def embryos():
 
 if task in ("regions","sperm-route"):
     regional()
+    if task == 'regions':
+        colorectal['reference'](reference/'colorectal.glb',target/'distal-colon.glb')
+elif task == 'distal-colon':
+    colorectal['reference'](reference/'colorectal.glb',target/'distal-colon.glb')
 elif task == "gut":
     alimentary()
 elif task in ("kidney", "node", "glomerulus"):

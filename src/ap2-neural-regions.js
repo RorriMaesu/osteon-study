@@ -140,7 +140,14 @@ export function startNeuralRegion(panel,kind){
     get('region-reading').textContent=quiz?'Rotate the specimen to identify the gold surface.':i===-1?'Select a structure from the list or tap it on the specimen.':spec.parts[i].name+' · '+spec.parts[i].detail;
     api?.invalidate();
   }
-  function frame(){const mesh=[...surfaces].find(([,i])=>i===Number(target))?.[0];if(api&&mesh)api.fit(mesh,api.camera.position.clone().sub(api.controls.target));}
+  function frame(){
+    if(!api||target==='')return;
+    const selected=[...surfaces].filter(([,i])=>i===Number(target)).map(([mesh])=>mesh);
+    if(selected.length)api.fit(selected,api.camera.position.clone().sub(api.controls.target));
+  }
+  const blindFocus=document.createElement('button');
+  blindFocus.type='button';blindFocus.dataset.neuralFocus='';blindFocus.textContent='Focus highlighted structure';
+  blindFocus.onclick=frame;get('spot-next').before(blindFocus);
   picker.onchange=()=>{motion?.stop();target=picker.value;if(target==='')alone.checked=false;paint();if(api&&(target===''||alone.checked))target===''?api.fit():frame();};
   focus.onclick=frame;
   alone.onchange=()=>{paint();if(alone.checked)frame();else api?.fit();};

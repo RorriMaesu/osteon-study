@@ -34,6 +34,9 @@ export function specimenAnimations(specimen){
 export function animationForTarget(specimen,targetId,choices){
   const target=specimen.targets.find(t=>t.id===targetId);
   if(!target)return;
+  if(['alimentary-tract','distal-colon'].includes(specimen.id)&&['descending_colon','sigmoid_colon','rectum'].includes(targetId)){
+    return choices.find(entry=>entry.id===targetId.replace('_','-'));
+  }
   const matched=field=>choices.find(entry=>entry.asset===specimen.asset&&target.meshes.some(mesh=>entry[field]?.includes(mesh)));
   const direct=matched('targets');
   if(direct)return direct;

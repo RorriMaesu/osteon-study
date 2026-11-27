@@ -151,7 +151,8 @@
     "ascending_colon",
     "transverse_colon",
     "descending_colon",
-    "rectum"
+    "rectum",
+    "sigmoid_colon"
   ],
   "assets/ap3-models/alveolar-exchange.glb": [
     "respiratory_bronchiole",
@@ -210,7 +211,7 @@
   "assets/ap3-models/distal-colon.glb": [
     "descending_colon",
     "sigmoid_colon",
-    "sacrum"
+    "rectum"
   ],
   "assets/ap3-models/filtration-barrier.glb": [
     "endothelium",

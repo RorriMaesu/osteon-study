@@ -2,9 +2,11 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {Vector3} from 'three';
+import {Box3,Vector3} from 'three';
 import {visceralOrgans,mountVisceralMotion} from '../src/organ-motion-visceral.js';
 import paths from '../src/organ-motion-visceral-paths.json' with {type:'json'};
+import {specimens} from '../src/ap3-specimens-catalog.js';
+import {animationForTarget,specimenAnimations} from '../src/ap3-specimen-animations.js';
 
 const loader=new GLTFLoader(), scenes=new Map();
 async function specimen(asset){
@@ -62,6 +64,24 @@ test('visceral lessons render a changing 3D frame on each actual organ and resto
 });
 
 const length=(a,b)=>new Vector3(...a).distanceTo(new Vector3(...b));
+test('the pelvic sigmoid loop remains distinct from the rectum in the body, lab and animation',async()=>{
+  for(const asset of ['assets/organ-atlas/registered-organs.glb','assets/ap3-models/alimentary-tract.glb']){
+    const model=await specimen(asset);
+    const sigmoid=new Box3().setFromObject(model.getObjectByName('sigmoid_colon'));
+    const rectum=new Box3().setFromObject(model.getObjectByName('rectum'));
+    assert(sigmoid.max.x>rectum.max.x+.05,asset+' sigmoid should reach into the left pelvis');
+    assert(sigmoid.min.x<rectum.max.x,asset+' sigmoid should return toward the midline');
+  }
+  const sigmoid=paths['sigmoid-colon'],rectum=paths.rectum;
+  assert(sigmoid[0][0]>sigmoid.at(-1)[0]+.05);
+  assert(length(sigmoid.at(-1),rectum[0])<.001,'donor segments should meet at the rectosigmoid junction');
+  assert(rectum[0][1]>rectum.at(-1)[1]+.10);
+  for(const station of specimens.filter(s=>['distal-colon','alimentary-tract'].includes(s.id))){
+    for(const target of ['descending_colon','sigmoid_colon','rectum']){
+      assert.equal(animationForTarget(station,target,specimenAnimations(station))?.id,target.replace('_','-'));
+    }
+  }
+});
 test('urine, semen, milk and portal examples respect source geometry and flow direction',()=>{
   for(const key of ['ureter-left','ureter-right','female-ureter-left','female-ureter-right','urethra','female-urethra','filtration-barrier','ejaculatory-duct','esophagus']){
     assert(paths[key][0][1]>paths[key].at(-1)[1],key+' should finish inferiorly');

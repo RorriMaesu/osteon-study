@@ -90,7 +90,7 @@ $$('[data-view]').forEach(b=>b.onclick=()=>{const view=b.dataset.view;const term
 let selectionEpoch=0;
 export const viewer=new AnatomyViewer($('#viewer'),m=>{
  selectionEpoch++;
- if(m.userData.organRow){viewer.organLayer.select(m.userData.organRow);return;}
+ if(m.userData.organRow){viewer.organLayer.select(m.userData.organRow,m.userData.organPart);return;}
  viewer.organLayer?.select(null);
  if(document.dispatchEvent(new CustomEvent('bonepick',{detail:m,cancelable:true}))===false)return;
  viewer.selectMesh(m);const term=viewer.termFor(m)||{id:'extra',name:viewer.displayName(m),region:m.userData.region,cue:'Supplementary anatomical structure from the Z-Anatomy skeleton.',type:m.userData.nonbone?'tissue':'bone',exact:true,source:'Full specimen',aliases:[]};selected=term;detail(term,term.exact?viewer.displayName(m):null);renderList();updateButtons();

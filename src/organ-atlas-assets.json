@@ -384,7 +384,7 @@
         "descending_colon",
         "sigmoid_colon"
       ],
-      "registration": "Includes fitted BodyParts3D anatomy"
+      "registration": "Includes fitted BodyParts3D anatomy. The proximal sigmoid boundary is illustrative on the continuous native left-bowel surface."
     },
     {
       "id": "appendix",

@@ -3,7 +3,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
 import {winterExpandedControls} from './ap2-expanded-station.js';
-import organVersions from './organ-model-versions.json' with {type:'json'};
+import {organAssetUrl} from './organ-asset-url.js';
 import {mountMetricScale} from './organ-metric-scale.js';
 
 const instances = new WeakMap();
@@ -160,9 +160,7 @@ export function mountOrganViewer(host, options) {
     const decoder=new DRACOLoader().setDecoderPath(new URL('vendor/draco/',document.baseURI).href).setWorkerLimit(1);
     try{
       const loader=new GLTFLoader().setDRACOLoader(decoder);
-      const url=new URL(asset,document.baseURI);
-      if(organVersions[asset])url.searchParams.set('v',organVersions[asset]);
-      return (await loader.loadAsync(url.href)).scene;
+      return (await loader.loadAsync(organAssetUrl(asset))).scene;
     }finally{decoder.dispose();}
   }
   const layers=new Map();

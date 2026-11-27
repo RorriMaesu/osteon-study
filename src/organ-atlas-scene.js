@@ -196,7 +196,7 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
         terms:group=>{const organ=bySurface.get(group.names[0]);return organ.label+' '+organ.system;},
         eligible:group=>!system||bySurface.get(group.names[0]).system===system,
         reveal(group){activeParts=group?.names||null;if(group){selectedPart=group.names[0];selected=bySurface.get(selectedPart).id;}else selectedPart=null;show();},
-        onSelect(group){interacted=true;onPick(map.organs.find(row=>row.id===selected),group?.names[0]);}
+        onSelect(group){interacted=true;onPick(group?bySurface.get(group.names[0]):null,group?.names[0]);}
       });
       show();whole();
       tapSurface(api,()=>picker.isolateObjects(meshes.map(o=>o.mesh)),hits=>{

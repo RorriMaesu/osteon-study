@@ -36,7 +36,7 @@ const scope = {
   appendix: /^(cecum|ascending_colon|ileum|vermiform_appendix)$/, cecum: /^(cecum|ascending_colon|ileum|vermiform_appendix)$/,
   'ascending-colon': /ileocecal_junction|ascending_colon|transverse_colon/,
   'transverse-colon': /ascending_colon|transverse_colon|descending_colon/,
-  'descending-colon': /transverse_colon|descending_colon/, 'sigmoid-colon': /colon/,
+  'descending-colon': /transverse_colon|descending_colon|sigmoid_colon/, 'sigmoid-colon': /colon/, rectum: /colon|rectum/,
   liver: /liver|hepatic_portal_vein|bile_duct|gallbladder/, gallbladder: /liver|gallbladder|cystic_duct|bile_duct|duodenum/,
   pancreas: /pancreas|pancreatic_duct|duodenum|bile_duct/,
   'submandibular-glands': /submandibular|sublingual|tongue/, 'sublingual-glands': /sublingual|tongue|submandibular_duct/,

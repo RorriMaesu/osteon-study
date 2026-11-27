@@ -1,12 +1,12 @@
 {
   "assets/ap3-models/accessory-ducts.glb": "04266a0a85bb",
-  "assets/ap3-models/alimentary-tract.glb": "95d82135492d",
+  "assets/ap3-models/alimentary-tract.glb": "3cf799b14fd4",
   "assets/ap3-models/alveolar-exchange.glb": "063392c88db7",
   "assets/ap3-models/birth-orientation.glb": "36aeccb8db59",
   "assets/ap3-models/blood-compartment.glb": "3b4d359a221f",
   "assets/ap3-models/carnegie-stages.glb": "b98a2e63d8a8",
   "assets/ap3-models/cleavage-implantation.glb": "a69b1232dba7",
-  "assets/ap3-models/distal-colon.glb": "39d7a1b348c9",
+  "assets/ap3-models/distal-colon.glb": "764290370401",
   "assets/ap3-models/filtration-barrier.glb": "8ea5af33e4ac",
   "assets/ap3-models/fluid-spaces.glb": "97eb0b74adba",
   "assets/ap3-models/fuel-organs.glb": "3fcf04a8d858",
@@ -27,5 +27,9 @@
   "assets/ap3-models/seminiferous-tubule.glb": "5108d3b65f73",
   "assets/ap3-models/sperm-route.glb": "ac406b62a4d2",
   "assets/ap3-models/urinary-tract.glb": "fad1f6a8618c",
-  "assets/ap3-models/villus.glb": "8e154b6f468b"
+  "assets/ap3-models/villus.glb": "8e154b6f468b",
+  "assets/organ-atlas/accessory-glands/greater-vestibular.glb": "71a286fe613b",
+  "assets/organ-atlas/female-urinary.glb": "0b8411995836",
+  "assets/organ-atlas/mammary-glands.glb": "a650e01e81db",
+  "assets/organ-atlas/registered-organs.glb": "ce7d43c9aca7"
 }

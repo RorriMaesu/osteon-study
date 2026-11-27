@@ -173,6 +173,9 @@ export function initAP3({root,escape:e,toast}){
     setLearningContext({course:'ap3',type:'study',label:'A&P III',text:'Chapters 21–28'});
     if(mocks.open(route))return;
     const [name,arg,detail]=route.split('/');
+    if(name==='ap3-specimen-distal-colon'&&arg==='target'&&detail==='sacrum'){
+      location.replace('#ap3-specimen-urinary-tract/target/sacrum');return;
+    }
     const ch=byChapter.get(name.split('-').at(-1)),s=sections.get(name.slice('ap3-lesson-'.length));
     const knownStudyPage=s||ch||specimens.some(v=>'ap3-specimen-'+v.id===name);
     if(knownStudyPage&&isSpringStudyRoute(route)){store.write('last',{route});rememberAP3Route(route);}
