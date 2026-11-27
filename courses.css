@@ -40,9 +40,13 @@ body:has(#courses-view.active .winter-station-bar)>main,#courses-view.active:has
 .ap2-page:has(.winter-station-bar)>.course-hero h1{font-size:clamp(1.3rem,2.4vw,2rem)}
 .ap2-lesson-body:has(>.winter-station-bar){display:flex;flex:1;flex-direction:column;min-height:0;overflow:hidden!important;padding:clamp(6px,1.2vw,14px)}
 .winter-station-bar select:focus-visible,.winter-station-content:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.winter-tools-toggle{display:none}
 @media(max-width:900px),(max-height:760px){
  body:has(#courses-view.active .winter-station-bar)>footer,.ap2-page:has(.winter-station-bar)>.ap2-nav{display:none}
  .ap2-page:has(.winter-station-bar)>.ap2-lesson-footer{display:none}
+ .winter-station-bar{gap:.45rem}.winter-station-bar label{min-width:0;flex:1}
+ .winter-station-bar .winter-tools-toggle{display:inline-block;flex:none;min-height:44px;line-height:1.1}
+ .ap2-page:has(.winter-station-bar)>.ap2-lesson-footer.tools-open{display:flex;flex:none;justify-content:flex-start;gap:.45rem;padding:.4rem 0}
  .ap2-page:has(.winter-station-bar)>.ap2-tabs,.ap2-page:has(.winter-station-bar)>.ap2-breadcrumb{margin:0 0 .25rem}
  .ap2-page:has(.winter-station-bar){padding:.4rem}
 }

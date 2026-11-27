@@ -5,6 +5,7 @@ import {evidenceStations,addEvidenceLesson} from './ap2-evidence-labs.js';
 import {mountGuidedPredictions} from './ap2-guided-predictions.js';
 import {mountTissueModel,tissueMarkup} from './ap2-tissue-models.js';
 import {mountExerciseFlow} from './ap2-exercise-flow.js';
+import {mountVesselModels,vesselModelMarkup} from './ap2-vessel-walls.js';
 
 const inspect='Inspect a specimen',trace='Trace a pathway',test='Test a prediction',interpret='Interpret evidence';
 const panelKinds=[
@@ -27,7 +28,6 @@ const extras={
   '17.9':[['islet','Inspect the pancreatic islet',inspect]],
   '19.1':[['supports','Inspect the mitral valve supports',inspect]],
   '19.4':[['afterload','Compare pressure–volume loops',test]],
-  '20.1':[['walls','Compare arterial and venous walls',inspect],['capillaries','Compare capillary barriers',inspect]],
 };
 const lastStation=new Map();
 export function winterExploreRoute(section){
@@ -48,12 +48,8 @@ function setView(host,id,key){
   const preset=glandPresets[key];if(preset)activateSelect(host,'[data-'+preset[0]+']',preset[1]);
   const circulation=host.querySelector('[data-circulation-station]');
   if(circulation){
-    activateSelect(host,'[data-circulation-station]',['walls','capillaries'].includes(key)?'tissue':key);
+    activateSelect(host,'[data-circulation-station]',key);
     circulation.closest('label').hidden=true;
-    if(['walls','capillaries'].includes(key)){
-      const detail=host.querySelector('[data-vessel-3d]');if(detail)detail.open=true;
-      activateSelect(host,'[data-vessel-scale]',key);
-    }
   }
   if(id==='20.5'&&key!=='core'){
     host.querySelector('[data-cardio-view="1"]')?.click();
@@ -101,6 +97,10 @@ export function openWinterExplore(body,section,requested,{store,escape,atlas}){
   }
   if(id==='20.5')for(const [key,title] of [['arch','Aortic arch'],['pulmonary','Pulmonary vessels'],['caval','Systemic venous return'],['upper','Arm and hand circulation'],['legReturn','Foot to right atrium'],['gut','Arterial supply of the gut'],['kidneys','Renal circulation'],['portal','Hepatic portal system'],['leg','Right leg and foot']])add(key,title,inspect);
   if(id==='18.1')add('elements','Inspect formed blood elements in 3D',inspect,'elements');
+  if(id==='20.1'){
+    add('walls','Compare arterial and venous walls',inspect,'vessel-model');
+    add('capillaries','Compare capillary barriers',inspect,'vessel-model');
+  }
   if(id==='20.4')add('exercise-flow','Distribute blood during exercise',test,'exercise-flow');
   for(const [key,title] of regionalLessons[id]||[])add(key,title,inspect,'regional');
   if(id==='15.2')add('enteric-wall','Trace a reflex in the intestinal wall',trace,'enteric');
@@ -124,6 +124,9 @@ export function openWinterExplore(body,section,requested,{store,escape,atlas}){
   else if(current.kind==='enteric')addEntericLesson(host,key);
   else if(current.kind==='evidence')addEvidenceLesson(host,id,key);
   else if(current.kind==='exercise-flow')mountExerciseFlow(host);
+  else if(current.kind==='vessel-model'){
+    host.innerHTML=vesselModelMarkup(key);mountVesselModels(host);
+  }
   else if(current.kind==='elements'){
     host.innerHTML=tissueMarkup('elements');mountTissueModel(host,'elements');
   }else{

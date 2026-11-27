@@ -3,7 +3,8 @@ import {mountWinterRecall} from './ap2-recall.js';
 import {springSections} from './tutor-ap3.js';
 import {openWinterExplore,winterExploreRoute} from './ap2-explore.js';
 import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
-import {openStructureIndex} from './ap2-model-index.js';
+import {openStructureIndex,structureIndex} from './ap2-model-index.js';
+import {makeCourseSearch} from './ap2-term-search.js';
 import {openScoredPractical} from './ap2-scored-practical.js';
 import {evidenceStations} from './ap2-evidence-labs.js';
 import {lessons as fallLessons} from './learning-data.js';
@@ -63,12 +64,19 @@ export function initAP2({root,escape:e,toast,dialog}) {
   function practicals(){
     const stations=[
       ['Measure and interpret',evidenceStations.map(s=>[s.section,s.title,s.goal,s.id])],
-      ['Neural tissue and pathways', [['12.4','Myelinated axon','Compare signal conduction with intact and damaged myelin.','axon'],['13.2','Spinal cord and roots','Follow sensory input and motor output through a transverse section.','cord'],['13.3','Ventricles and CSF','Rotate the brain specimen, cut sections and test an obstruction.','ventricles'],['14.1','Eye and accommodation','Examine the lens and retina from several views.','eye'],['14.1','Middle-ear ossicles','Follow the bones that transmit vibration.','ossicles'],['14.1','Inner-ear labyrinth','Compare the sensory structures for hearing and balance.','ear'],['14.3','Motor pathways','Trace a motor command to a skeletal muscle.']]],
-      ['Autonomic and neurological assessment',[['15.1','Autonomic routes to the heart','Trace each pathway through its ganglion to the pacemaker.','cardiac-autonomic'],['16.3','Pupillary light reflex','Shine light into either eye and localize the interruption.','pupil'],['16.5','Coordination and gait','Use observations from two tasks to explain a finding.']]],
-      ['Endocrine and blood',[['17.1','Gland locator','Locate glands relative to nearby structures.'],['17.5','Posterior neck','Find the parathyroids behind the thyroid.','parathyroids'],['17.8','Pelvic endocrine anatomy','Locate the ovaries, testes and placenta in their respective specimens.'],['17.9','Pancreas and islets','Move between gross anatomy and a microscopic section.'],['18.4','Blood smear microscope','Identify cells and tally an unfamiliar mixed field.'],['18.5','Hemostasis','Predict the outcome when adhesion or fibrin formation is impaired.']]],
-      ['Heart and circulation',[['19.1','Heart dissection','Inspect the chambers and coronary vessels.'],['19.1','Mitral valve supports','Follow the chordae from the papillary muscles to the leaflets.','supports'],['19.3','Four valves through one beat','Play a beat, then compare valve motion with the pressure traces.','motion'],['20.1','Veins and the calf pump','Track venous return during contraction and release.'],['20.5','Vascular routes','Trace blood through the trunk and limbs.'],['20.6','Fetal circulation','Compare placental and postnatal routes.']]]
+      ['Neural tissue and pathways', [['12.4','Myelinated axon','Compare signal conduction with intact and damaged myelin.','axon'],['13.2','Spinal cord and roots','Follow sensory input and motor output through a transverse section.','cord'],['13.3','Ventricles and CSF','Rotate the brain specimen, cut sections and test an obstruction.','ventricles'],['14.1','Eye and accommodation','Examine the lens and retina from several views.','eye'],['14.1','Middle-ear ossicles','Follow the bones that transmit vibration.','ossicles'],['14.1','Inner-ear labyrinth','Compare the sensory structures for hearing and balance.','ear'],['14.3','Motor pathways','Trace a motor command to a skeletal muscle.','schematic']]],
+      ['Autonomic and neurological assessment',[['15.1','Autonomic routes to the heart','Trace each pathway through its ganglion to the pacemaker.','cardiac-autonomic'],['16.3','Pupillary light reflex','Shine light into either eye and localize the interruption.','pupil'],['16.5','Coordination and gait','Use observations from two tasks to explain a finding.','cerebellar-localization']]],
+      ['Endocrine and blood',[['17.1','Gland locator','Locate glands relative to nearby structures.','gland'],['17.5','Posterior neck','Find the parathyroids behind the thyroid.','parathyroids'],['17.8','Pelvic endocrine anatomy','Locate the ovaries, testes and placenta in their respective specimens.','ovary'],['17.9','Pancreas and islets','Move between gross anatomy and a microscopic section.','pancreas'],['18.4','Blood smear microscope','Identify cells and tally an unfamiliar mixed field.','core'],['18.5','Hemostasis','Predict the outcome when adhesion or fibrin formation is impaired.','core']]],
+      ['Heart and circulation',[['19.1','Heart dissection','Inspect the chambers and coronary vessels.','core'],['19.1','Mitral valve supports','Follow the chordae from the papillary muscles to the leaflets.','supports'],['19.3','Four valves through one beat','Play a beat, then compare valve motion with the pressure traces.','motion'],['20.1','Veins and the calf pump','Track venous return during contraction and release.','core'],['20.5','Vascular routes','Trace blood through the trunk and limbs.','core'],['20.6','Fetal circulation','Compare placental and postnatal routes.','core']]]
     ];
-    const groupCard=([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}<small>${e(goal)}</small></span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>';
+    const indexedActivities=structureIndex().filter(row=>row.route.includes('/activity/'));
+    const featured=new Set(stations.flatMap(([,items])=>items.map(([id,,,key])=>id+'/'+key)));
+    const additions={'12.4/signal':1,'13.1/vesicle-map':1,'14.1/two-point':1,'15.4/drug-actions':2,'16.3/choose-evidence':2,'17.4/regulation':3,'17.5/parathyroid-histology':3,'19.3/heart-sounds':4,'19.4/afterload':4,'20.4/exercise-flow':4};
+    for(const row of indexedActivities){
+      const key=row.route.split('/').at(-1),id=row.section+'/'+key,group=additions[id];
+      if(group&&!featured.has(id))stations[group][1].push([row.section,row.title,'',key]);
+    }
+    const groupCard=([title,items])=>'<article class="course-card"><h2>'+e(title)+'</h2><div class="ap2-chapter-list">'+items.map(([id,name,goal,station])=>`<a href="#ap2-lesson-${id}/activity${station?'/'+station:''}"><b>${id}</b><span>${e(name)}${goal?'<small>'+e(goal)+'</small>':''}</span><span aria-hidden="true">→</span></a>`).join('')+'</div></article>';
     page(hero('A&P II · PRACTICALS','Model & slide lab','Choose a specimen or browse the activities in a textbook chapter.')+
       '<div class="course-actions">'+link('ap2-body','Explore the body systems together',true)+link('ap2-structures','Find a structure')+link('ap2-spotter','Scored 3D practical')+
       '<label>Browse <select data-lab-chapter><option value="">Featured practicals</option>'+
@@ -88,13 +96,17 @@ export function initAP2({root,escape:e,toast,dialog}) {
     page(hero('A&P II · STUDY STUDIO','Search lessons')+`<div class="course-card"><label for="ap2-search-text">Topic or anatomical term</label><input type="search" id="ap2-search-text" autocomplete="off" placeholder="Try myelin, pupil, or blood pressure"><label class="ap2-choice"><input type="checkbox" id="ap2-search-both"> Search all three courses</label><div class="ap2-search-results"></div></div>`);
     const field=root.querySelector('#ap2-search-text'),both=root.querySelector('#ap2-search-both'),out=root.querySelector('.ap2-search-results');
     function filter(){
-      const words=field.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
-      const all=sections.map(s=>({label:s.id+' · '+s.title,route:'ap2-lesson-'+s.id,text:[s.title,...s.objectives,...s.paragraphs].join(' ')}));
-      if(both.checked)all.push(...fallLessons.map(l=>({label:'A&P I · '+l.id+' · '+l.title,route:'lesson-'+l.id,text:[l.title,...l.sections.flat()].join(' ')})));
-      if(both.checked)all.push(...springSections.map(s=>({label:'A&P III · '+s.id+' · '+s.title,route:'ap3-lesson-'+s.id,text:[s.title,s.objective,s.explanation].join(' ')})));
-      const matches=all.filter(s=>words.every(v=>(s.label+' '+s.text).toLowerCase().includes(v)));
-      out.innerHTML=`<p role="status">${matches.length} matching entries</p><div class="course-links">${matches.map(s=>link(s.route,s.label)).join('')}</div>`;
+      const typed=Boolean(field.value.trim());
+      const {items,suggestion}=find(field.value,row=>(both.checked||!row.otherCourse)&&(typed||!row.view));
+      const message=items.length?(suggestion?'Closest spelling “'+suggestion+'” · ':'')+items.length+' matching entries':'No matches. Try another term or search all three courses.';
+      out.innerHTML=`<p role="status">${e(message)}</p><div class="course-links">${items.map(s=>link(s.route,s.label)).join('')}</div>`;
     }
+    const find=makeCourseSearch([
+      ...sections.map(s=>({title:s.title,label:s.id+' · '+s.title,section:s.id,route:'ap2-lesson-'+s.id,text:[...s.objectives,...s.paragraphs].join(' ')})),
+      ...structureIndex().map(s=>({...s,view:true,label:s.title+' · '+s.kind+' · §'+s.section})),
+      ...fallLessons.map(l=>({title:l.title,label:'A&P I · '+l.id+' · '+l.title,section:l.id,route:'lesson-'+l.id,text:l.sections.flat().join(' '),otherCourse:true})),
+      ...springSections.map(s=>({title:s.title,label:'A&P III · '+s.id+' · '+s.title,section:s.id,route:'ap3-lesson-'+s.id,text:[s.objective,s.explanation].join(' '),otherCourse:true}))
+    ]);
     field.oninput=filter;both.onchange=filter;filter();field.focus();
   }
   const featuredOrgan={12:['peripheral-nerve','Watch a nerve impulse'],13:['ventricles','Trace cerebrospinal fluid'],14:['eye','Watch the lens focus'],15:['lacrimal','Follow tears through the lacrimal system'],16:['cranial-nerves','Trace the pupillary light reflex'],17:['thyroid','Watch thyroid hormone release'],18:['formed-elements','Follow oxygen on a red cell'],19:['heart','Watch a heartbeat'],20:['artery','Watch arterial caliber change']};
@@ -139,6 +151,19 @@ export function initAP2({root,escape:e,toast,dialog}) {
         onSelect:i=>{location.hash=base+'/figures/'+entries[i].id;}});
     } else if(tab==='activity') {
       openWinterExplore(body,s,station,{store,escape:e,atlas:atlasLinks[s.id]});
+      const tools=document.createElement('button'),bar=body.querySelector('.winter-station-bar');
+      const footer=root.querySelector('.ap2-lesson-footer');
+      footer.id='winter-lesson-tools';tools.type='button';tools.className='winter-tools-toggle';
+      tools.textContent='Lesson tools';tools.setAttribute('aria-controls',footer.id);
+      const showTools=open=>{
+        tools.setAttribute('aria-expanded',String(open));footer.classList.toggle('tools-open',open);
+      };
+      showTools(false);bar.append(tools);
+      tools.onclick=()=>showTools(tools.getAttribute('aria-expanded')!=='true');
+      const dismiss=event=>{
+        if(event.key==='Escape'&&tools.getAttribute('aria-expanded')==='true'){showTools(false);tools.focus();}
+      };
+      bar.addEventListener('keydown',dismiss);footer.addEventListener('keydown',dismiss);
     } else {
       mountWinterRecall(body,s,store,e);
     }

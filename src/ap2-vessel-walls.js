@@ -23,13 +23,17 @@ const barrierInfo={
   sinusoidal:['Sinusoidal','Wider gaps between endothelial cells align with breaks in the basement membrane in this marrow example. Developing blood cells can enter the circulation through the sinusoidal wall.']
 };
 const option=(value,label)=>'<option value="'+value+'">'+label+'</option>';
-export function vesselModelMarkup(){
+export function vesselModelMarkup(preset){
+  if(preset==='walls'||preset==='capillaries'){
+    const title=preset==='walls'?'Artery and vein wall with valve':'Capillary barriers';
+    return '<section class="course-card" data-vessel-3d="'+preset+'"><h3>'+title+'</h3><div data-vessel-work></div></section>';
+  }
   return '<details data-vessel-3d><summary>Compare vessel walls in 3D</summary><label>Model<select data-vessel-scale>'+option('walls','Muscular artery and vein with valve')+option('capillaries','Three capillary barriers')+'</select></label><div data-vessel-work></div></details>';
 }
 export function mountVesselModels(root){
   const details=root.querySelector('[data-vessel-3d]'),scale=details.querySelector('[data-vessel-scale]'),work=details.querySelector('[data-vessel-work]');
   function scene(){
-    const kind=scale.value,spec=vesselWallTypes[kind],wall=kind==='walls';work.dataset.active=kind;
+    const kind=details.getAttribute('data-vessel-3d')||scale.value,spec=vesselWallTypes[kind],wall=kind==='walls';work.dataset.active=kind;
     const controls=wall?'<label>Venous pressure gradient<select data-wall-flow>'+option('forward','Toward the heart')+option('reverse','Tending to reverse')+'</select></label>':'<label>Capillary<select data-wall-type>'+Object.entries(barrierInfo).map(([k,[label]])=>option(k,label)).join('')+'</select></label>';
     work.innerHTML='<p>'+(wall?'Compare a muscular artery (left in the starting view) with a medium limb vein. A lengthwise cut exposes the tunics and opens a window onto the venous valve.':'View an enlarged patch of capillary wall from the lumen. Rotate around to the tissue side to see the basement membrane.')+'</p><div class="course-actions">'+controls+'<label>Inspect<select data-wall-pick>'+option('','All structures')+Object.entries(spec.parts).map(([k,[label]])=>option(k,label)).join('')+'</select></label><button type="button" data-wall-isolate disabled aria-pressed="false">Isolate selection</button></div><p data-wall-note aria-live="polite"></p><div data-vessel-stage></div><small>Osteon teaching reconstruction. Sizes, thicknesses, openings and travel are illustrative. <a href="assets/AP2-CARDIO-LICENSE.md" target="_blank" rel="noreferrer">Sources</a></small>';
     let viewer,isolated=false,frame=0,amount=0;const picker=work.querySelector('[data-wall-pick]'),solo=work.querySelector('[data-wall-isolate]'),type=work.querySelector('[data-wall-type]'),flow=work.querySelector('[data-wall-flow]'),note=work.querySelector('[data-wall-note]');
@@ -81,6 +85,8 @@ export function mountVesselModels(root){
       api.addCleanup(()=>{cancelAnimationFrame(frame);canvas.removeEventListener('pointerdown',start);canvas.removeEventListener('pointerup',tap);});
     }});
   }
-  scale.onchange=scene;
-  details.addEventListener('toggle',()=>{if(details.open&&!work.firstElementChild)scene();});
+  if(scale){
+    scale.onchange=scene;
+    details.addEventListener('toggle',()=>{if(details.open&&!work.firstElementChild)scene();});
+  }else scene();
 }

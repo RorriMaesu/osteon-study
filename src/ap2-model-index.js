@@ -2,12 +2,25 @@ import {bodyStructures} from './ap2-body-systems.js';
 import {evidenceStations} from './ap2-evidence-labs.js';
 import figures from './ap2-figures.json' with {type:'json'};
 import {sectionById} from './ap2-library.js';
+import {makeCourseSearch} from './ap2-term-search.js';
 
 const station=(title,kind,section,preset,terms)=>({
   title,kind,terms,section,route:'ap2-lesson-'+section+'/activity'+(preset?'/'+preset:'')
 });
 const specimens=[
-  ...evidenceStations.map(s=>station(s.title,'Physiology activity',s.section,s.id,s.goal)),
+  ...evidenceStations.map(s=>station(s.title,'Physiology activity',s.section,s.id,s.goal+' '+({'cuff-reading':'Korotkoff sounds sphygmomanometer auscultation systolic diastolic','tuning-fork':'Rinne Weber air bone conduction'}[s.id]||''))),
+  station('Measure conduction velocity','Physiology activity','12.4','signal','distance latency propagation speed myelin demyelination millimeters milliseconds oligodendrocyte Schwann'),
+  station('Map brain vesicles, walls and cavities','Physiology activity','13.1','vesicle-map','embryology forebrain hindbrain derivatives ventricular lumen'),
+  station('Compare two-point discrimination','Physiology activity','14.1','two-point','fingertip forearm sensory receptive fields resolution'),
+  station('Predict autonomic drug actions','Physiology activity','15.4','drug-actions','nicotine nicotinic receptor agonist autonomic ganglia anticholinergic'),
+  station('Localize the pupil response from observed evidence','Physiology activity','16.3','choose-evidence','pupillary reflex afferent efferent cranial nerve optic oculomotor'),
+  station('Localize a cerebellar finding','Physiology activity','16.5','cerebellar-localization','vermis lateral hemispheres vestibulocerebellum gait coordination gaze ataxia'),
+  station('Predict thyroid feedback and explain the evidence','Physiology activity','17.4','regulation','endocrine hypothalamic pituitary thyroid axis TSH feedback'),
+  station('Compare thyroid and parathyroid histology','Micrograph','17.5','parathyroid-histology','chief cells colloid follicles PTH calcium'),
+  station('Mark the first and second heart sounds','Physiology activity','19.3','heart-sounds','S1 S2 auscultation phonocardiogram atrioventricular semilunar ECG valve closure'),
+  station('Compare pressure–volume loops','Physiology activity','19.4','afterload','afterload EDV ESV stroke volume ventricular ejection'),
+  station('Predict mean arterial pressure after blood loss','Physiology activity','20.4','core','RAP MAP cardiac output hemorrhage systemic vascular resistance'),
+  station('Distribute blood during exercise','Physiology activity','20.4','exercise-flow','perfusion skeletal muscle cerebral blood flow cardiac output percentage'),
   station('Multipolar neuron from dendrites to terminals','Microscopic 3D model','12.2','multipolar-neuron','nervous tissue soma cell body nucleus dendrites axon hillock initial segment myelin nodes of Ranvier synaptic boutons'),
   station('Chemical synapse and neurotransmitter release','Microscopic 3D model','12.5','chemical-synapse','axon terminal synaptic vesicles calcium channels exocytosis synaptic cleft receptors ligand gated postsynaptic membrane'),
   station('Touch, vibration and cutaneous receptors','Microscopic 3D model','14.1','skin-receptors','skin fingertip sensation Meissner Merkel tactile disc Pacinian lamellated corpuscle Ruffini free endings touch pressure pain vibration'),
@@ -55,7 +68,7 @@ const specimens=[
   station('Placenta and umbilical cord','Separate 3D specimen','17.8','placenta','chorionic basal plate umbilical vein arteries fetal'),
   station('Thyroid follicle','Microscopic 3D model','17.4','follicle','thyroid gland colloid follicular epithelium follicular cells capillaries thyroid hormone'),
   station('Pancreatic islet','Microscopic 3D model','17.9','islet','pancreas alpha beta delta endocrine cells exocrine acini islets of Langerhans'),
-  station('Blood smear','Micrograph','18.4','','blood erythrocyte platelet neutrophil eosinophil basophil monocyte lymphocyte'),
+  station('Blood smear and leukocyte differential','Micrograph','18.4','','blood erythrocyte platelet neutrophil eosinophil basophil monocyte lymphocyte absolute count differential'),
   station('Heart and coronary vessels','Separate 3D specimen','19.1','','atrium atria ventricle septum papillary muscles mitral tricuspid aortic pulmonary valve coronary sinus coronary arteries dissection'),
   station('Mitral valve and papillary supports','Separate 3D specimen','19.1','supports','mitral leaflets ventricular papillary muscles chordae tendineae illustrated support apparatus'),
   station('Four valves through one beat','3D teaching model','19.3','motion','mitral tricuspid pulmonary aortic semilunar cusps leaflets pressure opening closing cardiac cycle'),
@@ -81,6 +94,7 @@ export function structureIndex(){
 }
 export function openStructureIndex({root,page,hero,link,e,state}){
   const entries=structureIndex();
+  const find=makeCourseSearch(entries.map(row=>({...row,text:[row.terms,row.kind,row.section,sectionById.get(row.section)?.title].join(' ')})));
   const kinds=[...new Set(entries.map(v=>v.kind))];
   page(hero('A&P II · MODEL & SLIDE LAB','Find a structure','Search a name, then choose the view and scale you want to study.')+
     '<section class="course-card"><div class="ap2-index-controls"><label>Structure or term<input type="search" data-index-search placeholder="Try thyroid, retina or femoral" autocomplete="off"></label><label>Type of view<select data-index-kind><option value="">All views</option>'+
@@ -89,13 +103,10 @@ export function openStructureIndex({root,page,hero,link,e,state}){
   const chapter=root.querySelector('[data-index-chapter]');
   field.value=state.query;kind.value=state.kind;chapter.value=state.chapter||'';
   function filter(){
-    const words=field.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
     state.query=field.value;state.kind=kind.value;state.chapter=chapter.value;
     root.querySelector('[data-index-chapter-link]').innerHTML=chapter.value?link('ap2-chapter-'+chapter.value,'← Chapter '+chapter.value):'';
-    const list=entries.filter(row=>(!chapter.value||row.section.split('.')[0]===chapter.value)&&(!kind.value||(kind.value==='3d'?row.kind==='On the body'||row.kind.includes('3D'):row.kind===kind.value))&&words.every(word=>(row.title+' '+row.terms+' '+row.kind+' '+row.section+' '+(sectionById.get(row.section)?.title||'')).toLowerCase().includes(word)));
-    const titleMatches=row=>words.filter(word=>row.title.toLowerCase().includes(word)).length;
-    if(words.length)list.sort((a,b)=>titleMatches(b)-titleMatches(a));
-    root.querySelector('[data-index-count]').textContent=list.length?list.length+' matching views':'No matching views. Try a broader term or change the view type.';
+    const {items:list,suggestion}=find(field.value,row=>(!chapter.value||row.section.split('.')[0]===chapter.value)&&(!kind.value||(kind.value==='3d'?row.kind==='On the body'||row.kind.includes('3D'):row.kind===kind.value)));
+    root.querySelector('[data-index-count]').textContent=list.length?(suggestion?'Closest spelling “'+suggestion+'” · ':'')+list.length+' matching views':'No matching views. Try a broader term or change the view type.';
     root.querySelector('[data-index-links]').innerHTML=list.map(row=>'<a class="course-link" href="#'+e(row.route)+'"><strong>'+e(row.title)+'</strong><small>'+e(row.kind)+' · §'+e(row.section)+'</small></a>').join('');
   }
   field.oninput=filter;kind.onchange=chapter.onchange=filter;filter();
