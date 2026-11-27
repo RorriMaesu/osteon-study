@@ -6,7 +6,18 @@ import {sectionPractice,springRecoveryCase} from '../src/ap3-recovery-cases.js';
 import {recoveryState,recoveryKey,latestSpringDraft} from '../src/ap3-recall.js';
 import {springStore} from '../src/ap3-records.js';
 import {gradeTermItem} from '../src/term-mock-review.js';
+import {springWordingVerdict} from '../src/ap3-exams.js';
 import {makeSpringMock,springExposureKeys} from '../src/term-mock-spring.js';
+
+test('a spring wording verdict uses the checked decision and never includes model-authored physiology',()=>{
+  const q={id:'23-route',expected:'Lacteal',aliases:['central lacteal'],section:'23.7'},raw='The central lacteal inside the villus';
+  const review={schema:1,status:'reviewed',verdict:'equivalent',confidence:'high',target:q.id,answer:q.expected,response:raw,allowOverride:true,strictCorrect:false,correctedAnswer:q.expected,model:'local',explanation:'Unsupported physiology from a model',reference:q.section,at:1};
+  assert.equal(springWordingVerdict(q,raw,review),'Equivalent wording accepted by local AI');
+  assert.equal(springWordingVerdict(q,'Different input',review),'');
+  for(const [patch,expected] of [[{verdict:'spelling'},'Spelling accepted'],[{verdict:'incorrect'},'wording incorrect'],[{status:'guarded'},'answer-key checks'],[{status:'unavailable'},'unavailable'],[{confidence:'low'},'could not confirm'],[{correctedAnswer:'Other structure'},'could not confirm']]){
+    const label=springWordingVerdict(q,raw,{...review,...patch});assert.match(label,new RegExp(expected));assert.doesNotMatch(label,/Unsupported physiology/);
+  }
+});
 
 test('chapter and mock graders preserve ion charges, CD8 markers and compensation direction',()=>{
   const pairs=[

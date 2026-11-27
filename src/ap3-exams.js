@@ -5,13 +5,26 @@ import {pass} from './ap3-records.js';
 import {mountSpringRecovery,recoveryState} from './ap3-recall.js';
 import {springRecoveryCase} from './ap3-recovery-cases.js';
 import {springScientificTerm} from './ap3-scientific-term.js';
-import {reviewHTML,reviewWithUI} from './answer-review-ui.js';
+import {reviewWithUI} from './answer-review-ui.js';
 import {localAI} from './local-ai.js';
-import {reviewMatches} from './answer-review-data.js';
+import {reviewMatches,reviewedCorrect} from './answer-review-data.js';
 import {setLearningContext,setTutorAssessmentMode} from './learning-context.js';
 const title=run=>(run.scope==='all'?'Cumulative':'Chapter '+run.scope)+(run.mode==='practical'?' practical':' exam');
 const stamp=time=>new Date(time).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'});
 const score=run=>run.grades.filter(pass).length;
+
+function wordingTarget(q){return {id:q.id,answer:q.expected,aliases:q.aliases||[],prompt:q.prompt,explanation:q.why,reference:q.section};}
+// AI assesses the student's wording. The academic explanation in the report
+// always comes from the original question's authored answer key.
+export function springWordingVerdict(q,raw,review){
+  const target=wordingTarget(q);
+  if(!reviewMatches(review,target,raw))return '';
+  if(review.status==='unavailable')return 'Local AI review unavailable. You can try again.';
+  if(review.status==='guarded')return 'Wording did not pass the answer-key checks.';
+  if(reviewedCorrect(false,review,target,raw))return review.verdict==='spelling'?'Spelling accepted by local AI':'Equivalent wording accepted by local AI';
+  if(review.status==='reviewed'&&review.confidence==='high'&&review.verdict==='incorrect')return 'Local AI judged this wording incorrect.';
+  return 'Local AI could not confirm the wording.';
+}
 
 export function createSpringExams({root,link,e,page,hero,store,go,sections,cleanup,mocks}){
   let pendingAI=null;
@@ -107,12 +120,16 @@ export function createSpringExams({root,link,e,page,hero,store,go,sections,clean
       '<section class="course-card" data-recovery></section><nav class="course-actions">'+link('ap3-lesson-'+q.section,'Review the lesson')+link('ap3-report-'+r.id,'Original result')+link('ap3-progress','My study notes')+'</nav>');
     mountSpringRecovery(root.querySelector('[data-recovery]'),r,i,store,e);
   }
-  function target(q){return {id:q.id,answer:q.expected,aliases:q.aliases||[],prompt:q.prompt,explanation:q.why,reference:q.section};}
+  function wordingResult(q,raw,review){
+    const label=springWordingVerdict(q,raw,review);
+    if(!label)return '';
+    return '<div class="answer-review-result"><strong>'+e(label)+'</strong><p class="tiny">'+(review.model?'Local model · '+e(review.model)+' · ':'')+'Original score retained.</p></div>';
+  }
   function wording(r,i){
     const q=r.items[i],raw=r.answers[i];
     if(q.kind!=='name'||!String(raw??'').trim()||pass(r.grades[i]))return '';
     const saved=store.read('wording:'+r.id+':'+i);
-    return '<div data-spring-review="'+i+'">'+(reviewMatches(saved,target(q),raw)?reviewHTML(saved):'')+'</div><button data-wording="'+i+'">Review my wording with local AI</button>';
+    return '<div data-spring-review="'+i+'" aria-live="polite">'+wordingResult(q,raw,saved)+'</div><button data-wording="'+i+'">Review my wording with local AI</button>';
   }
   async function runAI(id,i){
     const r=store.getRun(id),q=r?.items[i],out=root.querySelector('[data-spring-review="'+i+'"]'),button=root.querySelector('[data-wording="'+i+'"]');
@@ -120,9 +137,9 @@ export function createSpringExams({root,link,e,page,hero,store,go,sections,clean
     button.disabled=true;
     const raw=r.answers[i],protectedAnswer=springScientificTerm(q.expected,raw)==='incorrect'||(q.opposites||[]).some(v=>String(raw).toLowerCase().includes(v.toLowerCase()));
     try{
-      const result=await reviewWithUI({target:target(q),response:raw,strictCorrect:false,allowOverride:!protectedAnswer,root:out,enabled:true});
+      const result=await reviewWithUI({target:wordingTarget(q),response:raw,strictCorrect:false,allowOverride:!protectedAnswer,root:out,enabled:true});
       if(result.review&&!result.canceled)store.write('wording:'+id+':'+i,result.review);
-      if(out.isConnected)out.innerHTML=result.canceled?'Review canceled.':reviewHTML(result.review);
+      if(out.isConnected)out.innerHTML=result.canceled?'Review canceled.':wordingResult(q,raw,result.review);
     }finally{button.disabled=false;}
   }
   document.addEventListener('localaistatechange',()=>{if(pendingAI&&localAI.state.ready){const {id,i}=pendingAI;pendingAI=null;if(location.hash==='#ap3-report-'+id)runAI(id,i);}});
@@ -138,7 +155,7 @@ export function createSpringExams({root,link,e,page,hero,store,go,sections,clean
       '<div class="course-actions">'+link('ap3-exams/'+r.scope,'Exams & results')+link('ap3-progress','My study notes')+'</div>'+
       '<div class="ap2-report-list">'+r.items.map((q,i)=>{
         const status=r.grades[i];
-        return '<details class="course-card"><summary>'+ (i+1)+'. '+e(q.prompt)+' · '+(status==='spelling'?'Correct with spelling note':pass(status)?'Correct':status==='unanswered'?'Unanswered':'Review')+'</summary>'+fieldView(q)+'<p>Your response · '+e(displayAnswer(q,r.answers[i]))+'</p><p><strong>'+e(expectedAnswer(q))+'</strong></p><p>'+e(q.why)+'</p><div class="course-actions">'+practiceLink(r,i,completed)+reviewedModel(q)+link('ap3-lesson-'+q.section,'Review §'+q.section)+'<button data-tutor-item="'+i+'">Discuss with tutor</button></div>'+wording(r,i)+'</details>';
+        return '<details class="course-card"><summary>'+ (i+1)+'. '+e(q.prompt)+' · '+(status==='spelling'?'Correct with spelling note':pass(status)?'Correct':status==='unanswered'?'Unanswered':'Review')+'</summary>'+fieldView(q)+'<p>Your response · '+e(displayAnswer(q,r.answers[i]))+'</p><p><strong>'+(q.kind==='name'?'Standard term · ':'')+e(expectedAnswer(q))+'</strong></p><p>'+e(q.why)+'</p><div class="course-actions">'+practiceLink(r,i,completed)+reviewedModel(q)+link('ap3-lesson-'+q.section,'Review §'+q.section)+'<button data-tutor-item="'+i+'">Discuss with tutor</button></div>'+wording(r,i)+'</details>';
       }).join('')+'</div>');
     for(const b of root.querySelectorAll('[data-wording]'))b.onclick=()=>{
       const i=Number(b.dataset.wording);
