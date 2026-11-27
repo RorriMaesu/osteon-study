@@ -12,10 +12,10 @@ import {newRecords,validAP2Records} from '../src/ap2-records.js';
 
 test('all 49 sections have separate exam scenarios and all nine chapters have a fresh writing case',()=>{
   const practice=new Set(sections.flatMap(s=>s.questions.map(q=>q.prompt)));
-  assert.equal(independentItems.length,147);
+  assert.equal(independentItems.length,196);
   assert.equal(new Set(independentItems.map(q=>q.id)).size,independentItems.length);
   assert.equal(new Set(independentItems.map(q=>q.prompt)).size,independentItems.length);
-  for(const section of sections)assert.equal(independentItems.filter(q=>q.section===section.id).length,3,section.id);
+  for(const section of sections)assert.equal(independentItems.filter(q=>q.section===section.id).length,4,section.id);
   for(const q of independentItems){
     assert.ok(!practice.has(q.prompt));assert.equal(new Set(q.choices).size,4);
     assert.ok(['Trace','Identify','Explain','Predict'].includes(q.skill));

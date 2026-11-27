@@ -3,10 +3,13 @@ import assert from 'node:assert/strict';
 import {existsSync} from 'node:fs';
 import {makeWinterMock,winterScopes} from '../src/term-mock-winter.js';
 import {sectionById} from '../src/ap2-library.js';
+import {bank} from '../src/ap2-exam-core.js';
 import {validWrittenQuestion} from '../src/written-answer-judge.js';
 import {checkQuantity} from '../src/ap2-quantities.js';
 import {gradeTermItem,termWrittenFixtures} from '../src/term-mock-review.js';
 import {validTermRun} from '../src/term-mock-records.js';
+
+const lessonStems = new Set(bank.filter(q=>q.pool==='recall').map(q=>q.prompt));
 
 for(const scope of winterScopes){
   test('winter '+scope.id+' has three valid, balanced 60-point forms',()=>{
@@ -33,6 +36,7 @@ for(const scope of winterScopes){
           } else if(p.type==='term')assert.ok(p.expected.trim()&&p.aliases&&!p.opposites.includes(p.expected),q.id);
         }
         if(q.type==='choice'){
+          assert.ok(!lessonStems.has(q.prompt),'Lesson question reused on mock: '+q.prompt);
           assert.ok(!seenChoiceStems.has(q.prompt),'Repeated choice stem: '+q.prompt);
           seenChoiceStems.add(q.prompt);
         }
@@ -61,7 +65,7 @@ for(const scope of winterScopes){
         for(const chapter of scope.chapters)assert.equal(items.filter(q=>q.chapter===chapter&&!q.relatedChapters).length,4);
       }
     }
-    if(scope.id!=='all')for(const s of sectionById.values())if(scope.chapters.includes(Number(s.id.split('.')[0])))assert.ok(covered.has(s.id),'Missed section '+s.id);
+    for(const s of sectionById.values())if(scope.chapters.includes(Number(s.id.split('.')[0])))assert.ok(covered.has(s.id),'Missed section '+s.id);
   });
 }
 test('heart case accepts equivalent output units and separates the stroke volume and output criteria',()=>{

@@ -7,13 +7,13 @@ import {unitWinterWriting} from './term-mock-winter-writing.js';
 import {winterIntegrative} from './term-mock-winter-integration.js';
 import {varyStations} from './term-mock-winter-variants.js';
 
-const version='winter-mock-1';
+const version='winter-mock-2';
 const formNames=['A','B','C'];
 export const winterScopes=[
   ...units.map((u,i)=>({id:'unit-'+(i+1),title:u.title,chapters:[...u.chapters]})),
   {id:'all',title:'Cumulative · Chapters 12–20',chapters:units.flatMap(u=>u.chapters)}
 ];
-const choices=[...bank.filter(q=>q.type==='choice'),...winterTransferChoices];
+const choices=[...bank.filter(q=>q.type==='choice'&&q.pool!=='recall'),...winterTransferChoices];
 const chapterOf=q=>Number(q.section.split('.')[0]);
 function hash(text){
   let value=2166136261;
@@ -30,6 +30,15 @@ function unitChoiceForm(scope,f){
   const base=cumulative?26:30;
   const extraForCumulative={12:3,13:3,14:3,15:3,16:3,17:2,18:3,19:3,20:3};
   const used=new Set();
+  // Use the concept slots to cover sections that the fixed practicals and writing do not sample.
+  const sectionTotal=new Map();
+  if(cumulative){
+    for(const form of [0,1,2]){
+      for(const item of cumulativeStations(form)){
+        sectionTotal.set(item.section,(sectionTotal.get(item.section)||0)+1);
+      }
+    }
+  }
   let selected=[];
   for(let k=0;k<=f;k++){
     selected=[];
@@ -45,11 +54,14 @@ function unitChoiceForm(scope,f){
       const byUse=new Map([...bySection.keys()].map(s=>[s,0]));
       const remaining=stableOrder(available,scope.id+':'+k+':');
       for(let i=0;i<target;i++){
-        remaining.sort((a,b)=>Number(used.has(a.id))-Number(used.has(b.id))||byUse.get(a.section)-byUse.get(b.section));
+        remaining.sort((a,b)=>Number(used.has(a.id))-Number(used.has(b.id))
+          || byUse.get(a.section)-byUse.get(b.section)
+          || (sectionTotal.get(a.section)||0)-(sectionTotal.get(b.section)||0));
         const next=remaining.shift();
         selected.push({...next,points:1,objective:'concept-'+next.section});
         used.add(next.id);
         byUse.set(next.section,byUse.get(next.section)+1);
+        sectionTotal.set(next.section,(sectionTotal.get(next.section)||0)+1);
       }
     }
   }
@@ -73,7 +85,7 @@ function cumulativeStations(f){
     return pool[(f+slot)%pool.length];
   };
   return [
-    ...[12,13,14,15,16,17,18,20].map((ch,i)=>pick(ch,'evidence',i)),
+    ...[12,13,14,15,16,17,18,20].map((ch,i)=>pick(ch,'evidence',ch===17&&f===0?0:i)),
     pick(17,'short',0),pick(19,'short',0),...winterIntegrative(f)
   ];
 }
