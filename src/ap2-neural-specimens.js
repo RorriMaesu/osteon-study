@@ -28,7 +28,7 @@ const specimens={
   ],credit:'IE-Map measured inner-ear template by Ahmadi and colleagues, with registered surfaces from David and colleagues. Highlighting identifies the responding structures.'}
 };
 
-const kindBySection={'12.2':['axon'],'12.3':['cord'],'12.4':['axon'],'13.4':['cord','long-cord','cranial-nerves'],'15.1':['cardiac-autonomic'],'13.1':['ventricles','brain'],'13.2':['brain','long-cord','ventricles','cord'],'13.3':['ventricles'],'14.1':['eye','outer-ear','ossicles','ear','nose','olfactory-epithelium','tongue','taste-bud'],'14.2':['brain'],'16.2':['brain'],'16.3':['eye','cranial-nerves'],'16.5':['brain']};
+const kindBySection={'12.2':['multipolar-neuron','axon'],'12.5':['chemical-synapse'],'12.3':['cord'],'12.4':['axon'],'13.4':['cord','long-cord','cranial-nerves'],'15.1':['cardiac-autonomic'],'13.1':['ventricles','brain'],'13.2':['brain','long-cord','ventricles','cord'],'13.3':['ventricles','cerebral-arteries','dural-sinuses'],'14.1':['eye','skin-receptors','outer-ear','ossicles','ear','nose','olfactory-epithelium','tongue','taste-bud'],'14.2':['brain'],'16.2':['brain'],'16.3':['eye','cranial-nerves'],'16.5':['brain']};
 const regions=[
   ['Ventricular cast',[],'Follow each connected space.'],
   ['Telencephalon · caudate',['caudatenucleus'],'The caudate follows the curvature of the lateral ventricle. The telencephalon gives rise to it, the cortex and other components of the cerebral hemispheres.'],

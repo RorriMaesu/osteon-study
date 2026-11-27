@@ -1,6 +1,7 @@
 import {DoubleSide,Raycaster,Vector2} from 'three';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {addSideGuide} from './ap2-side-guide.js';
+import {cellularNeuralRegions} from './ap2-cellular-neural-regions.js';
 
 const bone='#dfcfa9', nerve='#daa759', muscle='#bb7771', deep='#98adcd';
 const part=(name,color,detail)=>({name,color,detail});
@@ -11,6 +12,35 @@ const lateralLobes=[
   ['occipital','#8d9dc5','The occipital lobe is the posterior cerebral lobe. Primary visual cortex borders the calcarine sulcus on its medial surface.']
 ].flatMap(([name,color,detail])=>['Left','Right'].map(side=>part(side+' '+name+' lobe',color,detail)));
 export const neuralRegions={
+  ...cellularNeuralRegions,
+  'skin-receptors':{title:'Sensory receptors in hairless skin',intro:'Compare the depth and shape of five sensory endings in a cutaway of fingertip skin. Start at the surface and work down to the onion-like layers of the deepest corpuscle.',view:[.28,.16,1],reconstruction:true,link:['14.1/activity/taste-bud','Compare a taste receptor with its afferent fiber'],parts:[
+    part('Epidermis','#bd8c83','The superficial epithelium contains Merkel cells in its basal layer. Some free nerve endings extend between its cells.'),
+    part('Dermis','#ad797b','The superficial dermis forms papillae projecting up into the epidermis. Some papillae contain a tactile corpuscle.'),
+    part('Subcutaneous tissue','#bb9b69','The hypodermis lies beneath the skin proper. Large lamellated corpuscles can occur here and in deep dermis.'),
+    part('Free nerve endings','#f3ca83','These branching, unencapsulated endings reach into the superficial skin. Different sensory neurons respond to potentially damaging stimuli or to temperature.'),
+    part('Merkel cell and tactile disc','#90afcc','At the base of the epidermis, a Merkel cell contacts an afferent ending. Together they signal sustained touch and fine spatial detail.'),
+    part('Meissner corpuscle','#b2d0b1','Stacked lamellar cells surround a rapidly adapting sensory ending in a dermal papilla. It detects gentle moving touch.'),
+    part('Pacinian corpuscle','#6a9caf','Concentric lamellae surround a single sensory ending. The cut face reveals the layers. The receptor is especially sensitive to rapidly changing pressure and vibration.'),
+    part('Ruffini ending','#b0a1cb','This spindle-shaped deep dermal receptor responds to skin stretch.'),
+    part('Sensory nerve fibers','#e6bb69','Separate afferent fibers carry signals from the different endings toward the central nervous system.')]},
+  'cerebral-arteries':{title:'Arterial supply at the base of the brain',intro:'Start on the underside of the brain. Find the two vertebral arteries joining, then follow the communicating arteries toward the internal carotids. The pons and optic chiasm provide orientation.',view:[.06,-.94,.37],link:['13.3/activity/dural-sinuses','Follow venous drainage'],parts:[
+    part('Internal carotid arteries','#ca7869','Each internal carotid supplies the anterior circulation. Find its terminal division into anterior and middle cerebral arteries.'),
+    part('Vertebral arteries','#ba766e','The two vertebral arteries ascend through the foramen magnum and unite to form the basilar artery. The upper ends are shown here.'),
+    part('Basilar artery','#c68d73','Follow this midline artery up the front of the pons to its division into the posterior cerebral arteries.'),
+    part('Anterior cerebral arteries','#dc9c84','Their proximal segments take part in the arterial circle. Farther forward, their branches supply much of the medial frontal and parietal surfaces.'),
+    part('Anterior communicating artery','#e7bb77','This short vessel links the left and right anterior cerebral arteries across the midline. Isolate it to see its full length.'),
+    part('Posterior communicating arteries','#d5ab70','On each side, this artery connects the internal carotid circulation to the posterior cerebral artery.'),
+    part('Posterior cerebral arteries','#cb807b','The basilar artery divides into these paired vessels near the upper pons. Their proximal segments contribute to the arterial circle.'),
+    part('Middle cerebral arteries','#bd737d','The proximal middle cerebral arteries run laterally from the internal carotids and carry blood away from the circle toward the lateral hemispheres.'),
+    part('Optic chiasm',nerve,'Crossing optic fibers form a landmark near the anterior communicating artery.'),
+    part('Pons',deep,'The pons lies behind the basilar artery. Rotate the specimen to see their relationship.')]},
+  'dural-sinuses':{title:'Dural sinuses and jugular drainage',intro:'Start at the high arch of the superior sagittal sinus. Follow blood posteriorly, then laterally and down toward the neck. Select each channel to see its course.',view:[.85,.26,-.68],link:['13.3/activity/ventricles','Compare the pathways for CSF'],parts:[
+    part('Superior sagittal sinus','#8e9cc5','This channel follows the upper margin of the falx cerebri toward the posterior confluence. Arachnoid granulations can return CSF to its venous blood.'),
+    part('Inferior sagittal sinus','#a299bc','This smaller channel lies in the free lower edge of the falx. It joins the great cerebral vein to form the straight sinus.'),
+    part('Straight sinus','#827ca9','Deep venous blood and the inferior sagittal sinus drain into this channel along the junction of falx and tentorium.'),
+    part('Transverse sinuses','#7f9dc1','These sinuses run laterally from the confluence and continue as the sigmoid sinuses. Their sizes can differ between sides.'),
+    part('Sigmoid sinuses','#748fb2','The S-shaped channels turn toward the jugular foramina and continue into the internal jugular veins.'),
+    part('Internal jugular veins','#7ba8b5','The upper ends show where blood exits the cranium. These veins descend through the neck toward the brachiocephalic veins.')]},
   brain:{title:'Major regions of the adult brain',intro:'Rotate the brain to compare the lobes, then select an internal structure to see through the cortex. Left and right refer to the person.',view:[1,.16,.32],
     link:['13.3/activity/ventricles','Explore the ventricles and basal nuclei'],parts:[...lateralLobes,
       part('Insula','#ba9fba','This cortex lies deep within the lateral sulcus, covered by portions of the frontal, parietal and temporal lobes.'),

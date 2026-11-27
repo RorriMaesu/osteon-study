@@ -2,6 +2,7 @@ import {bodySystemsHTML,mountBodySystems} from './ap2-body-systems.js';
 import {openStructureIndex} from './ap2-model-index.js';
 import {openScoredPractical} from './ap2-scored-practical.js';
 import {addOrgansToLesson} from './ap2-blood-organ-regions.js';
+import {addEntericLesson} from './ap2-enteric-wall.js';
 import {lessons as fallLessons} from './learning-data.js';
 import {chapters,sections,sectionById,labFor,units} from './ap2-library.js';
 import figures from './ap2-figures.json' with {type:'json'};
@@ -135,6 +136,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
       body.innerHTML=`${html?'<div class="ap2-simulation">'+html+'</div>':''}<div class="ap2-guided"><h2>${e(s.activity.title)}</h2><p>${e(s.activity.prompt)}</p><div class="ap2-step"></div></div>`;
       if(html)lab.mountLab(body.querySelector('.ap2-simulation'),s.id);
       addOrgansToLesson(body,s.id,station);
+      if(s.id==='15.2')addEntericLesson(body,station);
       if((s.id==='17.3'&&station==='pituitary-pathways')||(s.id==='17.6'&&station==='adrenal-layers')||(s.id==='17.7'&&station==='pineal')||(s.id==='18.1'&&station==='elements')){
         if(station==='elements')body.querySelector('[data-formed-lab]').open=true;
         requestAnimationFrame(()=>body.querySelector('[data-micro-stage]')?.scrollIntoView({block:'center',behavior:'instant'}));
@@ -220,7 +222,7 @@ export function initAP2({root,escape:e,toast,dialog}) {
     if(writingId){rememberStudy(route);openWritingPractice(Number(writingId),{root,page,hero,link,store,e});return;}
     const indexRoute=route.match(/^ap2-structures(?:\/chapter-(1[2-9]|20))?$/);
     if(indexRoute){
-      if(indexRoute[1]&&indexState.route!==route)Object.assign(indexState,{chapter:indexRoute[1],kind:'3d',query:''});
+      if(indexRoute[1]&&(indexState.route!==route||indexState.chapter!==indexRoute[1]))Object.assign(indexState,{chapter:indexRoute[1],kind:'3d',query:''});
       if(!indexRoute[1]&&indexState.route&&indexState.route!==route)Object.assign(indexState,{chapter:'',kind:'',query:''});
       indexState.route=route;
       openStructureIndex({root,page,hero,link,e,state:indexState});setLearningContext({course:'ap2',type:'study',label:'Find a structure',text:'Anatomical specimens, microscopic structures and textbook figures.'});return;

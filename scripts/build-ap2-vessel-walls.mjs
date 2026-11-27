@@ -4,6 +4,7 @@ import {access,copyFile,mkdir,writeFile} from 'node:fs/promises';
 import {Scene,Mesh,MeshStandardMaterial,DoubleSide,BufferGeometry,Float32BufferAttribute,SphereGeometry,Shape,Path,ExtrudeGeometry} from 'three';
 import {mergeGeometries,mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
+import {TessellateModifier} from 'three/addons/modifiers/TessellateModifier.js';
 globalThis.FileReader=class{async readAsArrayBuffer(blob){this.result=await blob.arrayBuffer();this.onloadend?.();}};
 const output=resolve(process.argv[2]||'assets'),pi=Math.PI;
 function mesh(name,geos,color){
@@ -50,6 +51,8 @@ function walls(){
 const capsule=(cx,cy,rx,ry)=>new SphereGeometry(1,16,10).scale(rx,ry,.054).translate(cx,cy,0);
 function capillary(){
   const s=new Scene();
+  // Short edges follow the curved lumen without a flat face covering a nucleus.
+  const tessellate=new TessellateModifier(.17,8);
   // Map a flat patch to a curved portion of wall. The lumen is on its concave face.
   const wrap=(geo,radius)=>{
     const p=geo.attributes.position;
@@ -71,7 +74,7 @@ function capillary(){
         const left=boundaries[i]+gap,right=boundaries[i+1]-gap,width=right-left,bottom=yStart+row*.89+gap,h=.89-2*gap;
         const holes=[];
         if(fen)for(const fx of [.23,.55,.80])for(const fy of [.22,.73])holes.push([left+width*fx,bottom+h*fy,Math.min(width*.10,.055)]);
-        cells.push(wrap(block(left,bottom,width,h,holes),r));
+        cells.push(wrap(tessellate.modify(block(left,bottom,width,h,holes)),r));
         nuclei.push(wrap(capsule(left+.46*width,bottom+h*.48,Math.min(width*.22,.15),.080).translate(0,0,-.012),r));
       }
     }

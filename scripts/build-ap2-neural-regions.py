@@ -1,4 +1,4 @@
-"""Build five registered gross anatomical preparations from Z-Anatomy using Blender 4.5.
+"""Build registered gross anatomical preparations from Z-Anatomy using Blender 4.5.
 Run with -- Startup.blend output_directory. Always use a new destination for regeneration.
 """
 from pathlib import Path
@@ -55,6 +55,21 @@ cranial = {name: pair(name) for name in [
 ]}
 cranial["Brainstem"] = pair("Midbrain") + pair("Pons") + pair("Medulla oblongata")
 specimens = {"brain":brain, "long-cord":spine, "tongue":tongue, "nose":nose, "outer-ear":ear, "cranial-nerves":cranial}
+specimens["cerebral-arteries"] = {
+    "Internal carotid arteries": pair("Internal carotid artery"),
+    "Vertebral arteries": pair("Vertebral artery"), "Basilar artery": ["Basilar artery"],
+    "Anterior cerebral arteries": pair("Anterior cerebral artery"),
+    "Anterior communicating artery": ["Anterior communicating artery"],
+    "Posterior communicating arteries": pair("Posterior communicating artery"),
+    "Posterior cerebral arteries": pair("Posterior cerebral artery"),
+    "Middle cerebral arteries": pair("Middle cerebral artery (M1-segment)"),
+    "Optic chiasm": pair("Optic chiasm"), "Pons": pair("Pons")
+}
+specimens["dural-sinuses"] = {
+    "Superior sagittal sinus": ["Superior sagittal sinus"], "Inferior sagittal sinus": ["Inferior sagittal sinus"],
+    "Straight sinus": ["Straight sinus"], "Transverse sinuses": pair("Transverse sinus"),
+    "Sigmoid sinuses": pair("Sigmoid sinus"), "Internal jugular veins": pair("Internal jugular vein")
+}
 if arguments[2:]:
     specimens = {key: specimens[key] for key in arguments[2:]}
 if any((dest / (key+".glb")).exists() for key in specimens):
@@ -70,9 +85,10 @@ for key, parts in specimens.items():
             mesh.transform(obj.matrix_world)
             merged.from_mesh(mesh)
             bpy.data.meshes.remove(mesh)
-        if key == "cranial-nerves":
+        if key == "cranial-nerves" or (key == "dural-sinuses" and label == "Internal jugular veins") or key == "cerebral-arteries":
+            floor = 1.55 if key == "cerebral-arteries" else 1.49
             bmesh.ops.bisect_plane(merged,geom=list(merged.verts)+list(merged.edges)+list(merged.faces),
-                                   plane_co=(0,0,1.49),plane_no=(0,0,1),clear_inner=True,dist=1e-8)
+                                   plane_co=(0,0,floor),plane_no=(0,0,1),clear_inner=True,dist=1e-8)
         assert len(merged.faces), label
         mesh = bpy.data.meshes.new(key + "_" + label)
         merged.to_mesh(mesh)

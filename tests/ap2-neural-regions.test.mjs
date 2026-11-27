@@ -12,7 +12,7 @@ function inventory(id){
     gltf.accessors[gltf.meshes[n.mesh].primitives[0].attributes.POSITION]]));
 }
 test('each regional specimen has a unique 3D surface for each selectable name and a working chapter mount',()=>{
-  const sections={brain:'13.2','long-cord':'13.2',tongue:'14.1',nose:'14.1','outer-ear':'14.1','taste-bud':'14.1','olfactory-epithelium':'14.1','cranial-nerves':'16.3'};
+  const sections={'multipolar-neuron':'12.2','chemical-synapse':'12.5','skin-receptors':'14.1','cerebral-arteries':'13.3','dural-sinuses':'13.3',brain:'13.2','long-cord':'13.2',tongue:'14.1',nose:'14.1','outer-ear':'14.1','taste-bud':'14.1','olfactory-epithelium':'14.1','cranial-nerves':'16.3'};
   for(const [id,spec] of Object.entries(neuralRegions)){
     const parts=inventory(id);
     assert.deepEqual([...parts.keys()].sort(),spec.parts.map(p=>p.name).sort());
@@ -34,6 +34,10 @@ test('atlas lobe laterality and longitudinal spinal and chemical sense relations
   assert.ok(ear.get('Auricle').max[0]>ear.get('Tympanic membrane').max[0]);
   assert.equal(inventory('cranial-nerves').size,13);
   const taste=inventory('taste-bud'),smell=inventory('olfactory-epithelium');
+  const skin=inventory('skin-receptors'),depth=label=>skin.get(label).min[1];
+  assert.ok(depth('Pacinian corpuscle')<depth('Ruffini ending'));
+  assert.ok(depth('Ruffini ending')<depth('Meissner corpuscle'));
+  assert.ok(skin.get('Free nerve endings').max[1]>skin.get('Dermis').max[1]);
   assert.ok(taste.get('Gustatory afferent').min[1]<taste.get('Gustatory receptor cell').min[1]);
   assert.ok(smell.get('Olfactory cilia').max[1]>smell.get('Dendritic knob').max[1]);
 });

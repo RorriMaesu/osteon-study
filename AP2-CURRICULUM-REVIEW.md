@@ -1,6 +1,26 @@
 # A&P II curriculum and 3D Atlas review
 
-This review covers Osteon release 8e3c546 and the 49 numbered sections of OpenStax Chapters 12–20. I compared the textbook objectives with Osteon’s lessons, activities, diagrams and exam bank. I also reviewed the structure inventory of the shared 3D Atlas and inspected candidate source models. The priorities assume a general A&P II course. Instructor weighting and student performance data would refine them. [Open the course](https://rorrimaesu.github.io/osteon-study/#course-2) · [OpenStax textbook](https://openstax.org/details/books/anatomy-and-physiology-2e)
+## Current 3D coverage by chapter
+
+Each chapter opens its own list through **Interactive 3D models**. The catalogue identifies specimens derived from anatomical datasets, same-donor whole-body views, and enlarged teaching reconstructions. One file can support several target views. [Find a structure](https://rorrimaesu.github.io/osteon-study/#ap2-structures) · [OpenStax Anatomy and Physiology 2e](https://openstax.org/details/books/anatomy-and-physiology-2e)
+
+| Chapter | What to do with the model | Interpretation |
+|---|---|---|
+| 12 · Nervous tissue | Trace a multipolar neuron from dendrites to axon terminals. Inspect the exposed membrane at a node, then locate the vesicles and receptors across a chemical synapse. [Chapter 12 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-12) | Microscopic cutaways enlarge structures that normally operate on very different scales. |
+| 13 · Nervous system anatomy | Locate a lobe, turn the cord to find its lower end and descending roots, trace the cerebral arterial circle, and follow the dural sinuses toward the jugular veins. [Chapter 13 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-13) | The regional brain and cord use registered Z-Anatomy surfaces. The whole-body locator has specific frontal gyri and hindbrain landmarks. |
+| 14 · Somatic nervous system | Focus the lens, identify the ossicles and inner ear, then compare taste, smell and touch receptors with their sensory fibers. [Chapter 14 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-14) | The gross eye, ear, tongue and nose use anatomical datasets. Cellular preparations show representative arrangements. |
+| 15 · Autonomic nervous system | Trace both routes to the cardiac pacemaker. Trace a reflex within the intestinal wall, then follow a longer reflex through the medulla. [Chapter 15 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-15) | The nerve pathways are teaching illustrations. The intestinal cutaway shows the depth of both enteric plexuses. |
+| 16 · Neurological exam | Rotate the cranial nerves, identify a highlighted pair with its label hidden, then link it to a function assessed in the exam. [Chapter 16 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-16) | The cranial preparation ends at the upper neck. Eye and gait observations are available in the lesson activities. |
+| 17 · Endocrine system | Find a gland on the body, compare the axonal and portal routes of the pituitary, isolate adrenal zones, and relate the pancreas, gonads, placenta, skin and abdominal organs to their functions. [Chapter 17 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-17) | Neighboring structures in each gross specimen retain their source coordinates. Gland sections reveal microscopic and internal organization. |
+| 18 · Blood | Select a formed element, rotate its nucleus, locate an erythroblastic island or megakaryocyte in marrow, and identify the spleen and liver in relation to their neighbors. Compare with a real blood smear in §18.4. [Chapter 18 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-18) | The 3D cell models teach morphology. The separate microscopy activity uses actual stained fields. |
+| 19 · Heart | Isolate a chamber or coronary vessel, inspect a mitral valve with its papillary supports, and play or scrub the four valves through a beat. [Chapter 19 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-19) | Adult anatomy derives from reference specimens. Leaflet motion and chordal strands illustrate mechanism. |
+| 20 · Circulation | Switch the venous pressure gradient, look through three capillary barriers, trace arm and leg vessels, and compare fetal shunts before and after the newborn transition. [Chapter 20 models](https://rorrimaesu.github.io/osteon-study/#ap2-structures/chapter-20) | Regional vessels preserve donor geometry. Fetal organs and shunts are separated and enlarged for tracing. The transition summarizes functional closure. |
+
+The source notes describe which surfaces were segmented, which were constructed, and how scale was changed. Peripheral nerve branches and anatomical variants extend beyond the chapter specimens. [Neural sources](assets/ap2-neuro/SOURCES.md) · [Endocrine and tissue sources](assets/ap2-glands/SOURCES.md) · [Blood sources](assets/ap2-blood/SOURCES.md) · [Cardiac and vascular sources](assets/AP2-CARDIO-LICENSE.md)
+
+## Earlier curriculum review
+
+The following findings and priorities record the review of release 8e3c546 across the 49 numbered sections of OpenStax Chapters 12–20. They describe the course at that release. [Open the current course](https://rorrimaesu.github.io/osteon-study/#course-2)
 
 ## 1. Fix what could teach the wrong lesson
 

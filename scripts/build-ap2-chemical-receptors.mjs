@@ -1,7 +1,7 @@
-// Export two separate enlarged teaching cutaways. Run in the repository with a new output directory.
+// Export sensory receptor cutaways to a fresh directory. An optional second argument selects one model.
 import {mkdir,writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
-import {CatmullRomCurve3,LatheGeometry,Mesh,MeshStandardMaterial,Scene,SphereGeometry,TorusGeometry,TubeGeometry,Vector2,Vector3} from 'three';
+import {CatmullRomCurve3,ExtrudeGeometry,LatheGeometry,Mesh,MeshStandardMaterial,Scene,Shape,SphereGeometry,TorusGeometry,TubeGeometry,Vector2,Vector3} from 'three';
 import {mergeGeometries,mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 
@@ -17,6 +17,7 @@ function merged(pieces){
   return mergeVertices(mergeGeometries(buffer));
 }
 async function save(name,parts){
+  if(process.argv[3]&&process.argv[3]!==name)return;
   const scene=new Scene();
   for(const [label,pieces] of Object.entries(parts)){
     const mesh=new Mesh(merged(pieces),new MeshStandardMaterial({roughness:.8}));
@@ -53,4 +54,40 @@ await save('olfactory-epithelium',{
   'Olfactory receptor neuron':[cell([[0,-.59],[.053,-.48],[.135,-.27],[.17,-.06],[.12,.09],[.048,.26],[.037,.78],[.052,.86],[0,.91]],0,0)],
   'Olfactory axon':[tube([[0,-.52,0],[-.015,-.72,.02],[.039,-.91,.04],[.13,-1.08,.09],[.49,-1.17,.13]],.025)],
   'Supporting cells':supports,'Basal cells':[-.49,-.24,.18,.43].map((x,i)=>oval(x,-.69,(i%2-.5)*.21,.13,.105,.11))
+});
+
+// The cut surface is the xy plane. Papillae project toward the epidermis.
+const papilla=x=>.50+.15*Math.cos((x-.48)*Math.PI*2/.74);
+function layer(low,high){
+  const xs=Array.from({length:65},(_,i)=>-1.6+3.2*i/64);
+  const shape=new Shape();shape.moveTo(xs[0],low(xs[0]));
+  for(const x of xs.slice(1))shape.lineTo(x,low(x));
+  for(const x of xs.reverse())shape.lineTo(x,high(x));
+  shape.closePath();
+  return new ExtrudeGeometry(shape,{depth:.47,bevelEnabled:false}).translate(0,0,-.24);
+}
+const front=.245;
+const ending=points=>tube(points.map(([x,y])=>[x,y,front+.015]),.015);
+const merkelX=-.40,merkelY=papilla(merkelX)+.025;
+const lamellae=[.12,.18,.245,.31].map(r=>new SphereGeometry(1,36,20,0,Math.PI*2,0,Math.PI*.54)
+  .rotateX(-Math.PI/2).scale(r*1.16,r*.78,r*.60).translate(.95,-.73,front));
+await save('skin-receptors',{
+  'Epidermis':[layer(papilla,()=>.99)],
+  'Dermis':[layer(()=>-.60,papilla)],
+  'Subcutaneous tissue':[layer(()=>-1.16,()=>-.60)],
+  'Free nerve endings':[
+    ending([[-1.23,.16],[-1.13,.43],[-1.19,.65],[-1.29,.85]]),
+    ending([[-1.14,.46],[-1.04,.64],[-.95,.78]]),ending([[-1.18,.62],[-1.14,.75],[-1.14,.88]])],
+  'Merkel cell and tactile disc':[oval(merkelX,merkelY,front+.02,.092,.058,.052),
+    oval(merkelX,merkelY-.059,front+.02,.071,.017,.044)],
+  'Meissner corpuscle':Array.from({length:6},(_,i)=>oval(.48+(.5-i%2)*.021,.43+i*.027,front,.062,.019,.040)),
+  'Pacinian corpuscle':lamellae,
+  'Ruffini ending':[oval(-.74,-.34,front,.26,.060,.065),
+    ending([[-.99,-.34],[-.79,-.36],[-.61,-.32],[-.50,-.34]])],
+  'Sensory nerve fibers':[
+    ending([[-1.42,-1.15],[-1.39,-.64],[-1.27,-.17],[-1.23,.16]]),
+    ending([[-.26,-1.15],[-.56,-.46],[-.38,.02],[merkelX,merkelY-.067]]),
+    ending([[.13,-1.15],[.16,-.59],[.32,-.08],[.48,.43]]),
+    ending([[1.49,-1.13],[1.41,-.92],[1.25,-.73],[.95,-.73]]),
+    ending([[-1.21,-1.15],[-1.12,-.72],[-1.07,-.41],[-.99,-.34]])]
 });
