@@ -1,0 +1,630 @@
+{
+  "sections": {
+    "21.1": [
+      "21.3",
+      "21.4",
+      "21.8",
+      "21.9"
+    ],
+    "21.2": [
+      "21.13",
+      "21.14"
+    ],
+    "21.3": [
+      "21.17",
+      "21.19"
+    ],
+    "21.4": [
+      "21.22",
+      "21.24"
+    ],
+    "21.5": [
+      "21.27"
+    ],
+    "21.6": [
+      "21.28"
+    ],
+    "21.7": [
+      "21.17"
+    ],
+    "22.1": [
+      "22.2",
+      "22.11"
+    ],
+    "22.2": [
+      "22.13",
+      "22.14"
+    ],
+    "22.3": [
+      "22.17",
+      "22.18"
+    ],
+    "22.4": [
+      "22.22",
+      "22.23"
+    ],
+    "22.5": [
+      "22.26",
+      "22.28"
+    ],
+    "22.6": [
+      "22.26"
+    ],
+    "22.7": [
+      "22.29"
+    ],
+    "23.1": [
+      "23.2",
+      "23.3"
+    ],
+    "23.2": [
+      "23.5",
+      "23.6"
+    ],
+    "23.3": [
+      "23.9",
+      "23.14"
+    ],
+    "23.4": [
+      "23.15",
+      "23.16"
+    ],
+    "23.5": [
+      "23.19",
+      "23.22"
+    ],
+    "23.6": [
+      "23.24",
+      "23.25"
+    ],
+    "23.7": [
+      "23.28",
+      "23.33"
+    ],
+    "24.1": [
+      "24.3"
+    ],
+    "24.2": [
+      "24.4",
+      "24.8"
+    ],
+    "24.3": [
+      "24.13"
+    ],
+    "24.4": [
+      "24.18"
+    ],
+    "24.5": [
+      "24.21",
+      "24.22"
+    ],
+    "24.6": [
+      "24.23"
+    ],
+    "24.7": [
+      "23.28"
+    ],
+    "25.1": [
+      "25.2"
+    ],
+    "25.2": [
+      "25.3",
+      "25.4"
+    ],
+    "25.3": [
+      "25.8",
+      "25.9"
+    ],
+    "25.4": [
+      "25.11",
+      "25.13"
+    ],
+    "25.5": [
+      "25.16"
+    ],
+    "25.6": [
+      "25.17",
+      "25.20"
+    ],
+    "25.7": [
+      "25.13",
+      "25.16"
+    ],
+    "25.8": [
+      "25.21"
+    ],
+    "25.9": [
+      "25.17",
+      "26.11"
+    ],
+    "25.10": [
+      "25.22"
+    ],
+    "26.1": [
+      "26.3",
+      "26.5"
+    ],
+    "26.2": [
+      "26.10",
+      "26.11"
+    ],
+    "26.3": [
+      "26.13"
+    ],
+    "26.4": [
+      "26.16",
+      "26.17"
+    ],
+    "26.5": [
+      "26.16"
+    ],
+    "27.1": [
+      "27.2",
+      "27.4",
+      "27.5"
+    ],
+    "27.2": [
+      "27.9",
+      "27.12",
+      "27.15"
+    ],
+    "27.3": [
+      "27.18",
+      "28.16"
+    ],
+    "28.1": [
+      "28.2"
+    ],
+    "28.2": [
+      "28.4",
+      "28.6",
+      "28.9",
+      "28.14"
+    ],
+    "28.3": [
+      "28.11",
+      "28.17"
+    ],
+    "28.4": [
+      "28.20",
+      "28.21"
+    ],
+    "28.5": [
+      "28.22"
+    ],
+    "28.6": [
+      "28.23"
+    ],
+    "28.7": [
+      "28.25",
+      "28.27"
+    ]
+  },
+  "figures": {
+    "21.3": {
+      "title": "Lymphatic Capillaries",
+      "page": 936,
+      "credit": ""
+    },
+    "21.4": {
+      "title": "Major Trunks and Ducts of the Lymphatic System",
+      "page": 937,
+      "credit": ""
+    },
+    "21.8": {
+      "title": "Structure and Histology of a Lymph Node",
+      "page": 942,
+      "credit": "Micrograph provided by the Regents of the University of Michigan Medical School © 2012"
+    },
+    "21.9": {
+      "title": "Spleen",
+      "page": 943,
+      "credit": "Micrograph provided by the Regents of the University of Michigan Medical School © 2012"
+    },
+    "21.13": {
+      "title": "Complement Cascade and Function",
+      "page": 950,
+      "credit": ""
+    },
+    "21.14": {
+      "title": "The inflammatory response",
+      "page": 951,
+      "credit": ""
+    },
+    "21.17": {
+      "title": "Antigen Processing and Presentation",
+      "page": 955,
+      "credit": ""
+    },
+    "21.19": {
+      "title": "Clonal Selection and Expansion of T Lymphocytes",
+      "page": 958,
+      "credit": ""
+    },
+    "21.22": {
+      "title": "Five Classes of Antibodies",
+      "page": 962,
+      "credit": ""
+    },
+    "21.24": {
+      "title": "Primary and Secondary Antibody Responses",
+      "page": 965,
+      "credit": ""
+    },
+    "21.27": {
+      "title": "IgA Immunity",
+      "page": 968,
+      "credit": ""
+    },
+    "21.28": {
+      "title": "Immune Hypersensitivity",
+      "page": 971,
+      "credit": ""
+    },
+    "22.2": {
+      "title": "Major Respiratory Structures",
+      "page": 990,
+      "credit": ""
+    },
+    "22.11": {
+      "title": "Structures of the Respiratory Zone",
+      "page": 999,
+      "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012"
+    },
+    "22.13": {
+      "title": "Gross Anatomy of the Lungs",
+      "page": 1001,
+      "credit": ""
+    },
+    "22.14": {
+      "title": "Parietal and Visceral Pleurae of the Lungs",
+      "page": 1002,
+      "credit": ""
+    },
+    "22.17": {
+      "title": "Normal Inspiration and Expiration",
+      "page": 1007,
+      "credit": ""
+    },
+    "22.18": {
+      "title": "Respiratory Volumes and Capacities",
+      "page": 1008,
+      "credit": ""
+    },
+    "22.22": {
+      "title": "External Respiration",
+      "page": 1015,
+      "credit": ""
+    },
+    "22.23": {
+      "title": "Internal Respiration",
+      "page": 1016,
+      "credit": ""
+    },
+    "22.26": {
+      "title": "Oxygen-Hemoglobin Dissociation and Effects of pH and Temperature",
+      "page": 1020,
+      "credit": ""
+    },
+    "22.28": {
+      "title": "Carbon Dioxide Transport",
+      "page": 1021,
+      "credit": ""
+    },
+    "22.29": {
+      "title": "Development of the Lower Respiratory System",
+      "page": 1026,
+      "credit": ""
+    },
+    "23.2": {
+      "title": "Components of the Digestive System",
+      "page": 1040,
+      "credit": ""
+    },
+    "23.3": {
+      "title": "Layers of the Alimentary Canal",
+      "page": 1042,
+      "credit": ""
+    },
+    "23.5": {
+      "title": "Peristalsis",
+      "page": 1047,
+      "credit": ""
+    },
+    "23.6": {
+      "title": "Digestive Processes",
+      "page": 1049,
+      "credit": ""
+    },
+    "23.9": {
+      "title": "Salivary glands",
+      "page": 1053,
+      "credit": ""
+    },
+    "23.14": {
+      "title": "Deglutition",
+      "page": 1059,
+      "credit": ""
+    },
+    "23.15": {
+      "title": "Stomach",
+      "page": 1061,
+      "credit": ""
+    },
+    "23.16": {
+      "title": "Histology of the Stomach",
+      "page": 1062,
+      "credit": ""
+    },
+    "23.19": {
+      "title": "Histology of the Small Intestine",
+      "page": 1068,
+      "credit": "credit b-d: Micrograph provided by the Regents of University of Michigan Medical School © 2012"
+    },
+    "23.22": {
+      "title": "Histology of the large Intestine",
+      "page": 1073,
+      "credit": "credit b: Micrograph provided by the Regents of University of Michigan Medical School © 2012"
+    },
+    "23.24": {
+      "title": "Accessory Organs",
+      "page": 1076,
+      "credit": ""
+    },
+    "23.25": {
+      "title": "Microscopic Anatomy of the Liver",
+      "page": 1077,
+      "credit": ""
+    },
+    "23.28": {
+      "title": "Digestion and Absorption",
+      "page": 1082,
+      "credit": ""
+    },
+    "23.33": {
+      "title": "Lipid Absorption",
+      "page": 1090,
+      "credit": ""
+    },
+    "24.3": {
+      "title": "Sources of ATP",
+      "page": 1104,
+      "credit": ""
+    },
+    "24.4": {
+      "title": "Cellular Respiration",
+      "page": 1108,
+      "credit": ""
+    },
+    "24.8": {
+      "title": "Electron Transport Chain",
+      "page": 1115,
+      "credit": ""
+    },
+    "24.13": {
+      "title": "Breakdown of Fatty Acids",
+      "page": 1122,
+      "credit": ""
+    },
+    "24.18": {
+      "title": "Urea Cycle",
+      "page": 1128,
+      "credit": ""
+    },
+    "24.21": {
+      "title": "Absorptive State",
+      "page": 1132,
+      "credit": ""
+    },
+    "24.22": {
+      "title": "Postabsorptive State",
+      "page": 1134,
+      "credit": ""
+    },
+    "24.23": {
+      "title": "Hypothalamus Controls Thermoregulation",
+      "page": 1136,
+      "credit": ""
+    },
+    "25.2": {
+      "title": "Urine Color",
+      "page": 1156,
+      "credit": ""
+    },
+    "25.3": {
+      "title": "Female and Male Urethras",
+      "page": 1158,
+      "credit": ""
+    },
+    "25.4": {
+      "title": "Bladder",
+      "page": 1159,
+      "credit": "Micrograph provided by the Regents of the University of Michigan Medical School © 2012"
+    },
+    "25.8": {
+      "title": "Left Kidney",
+      "page": 1162,
+      "credit": ""
+    },
+    "25.9": {
+      "title": "Blood Flow in the Kidney",
+      "page": 1163,
+      "credit": ""
+    },
+    "25.11": {
+      "title": "Podocytes",
+      "page": 1165,
+      "credit": ""
+    },
+    "25.13": {
+      "title": "Juxtaglomerular Apparatus and Glomerulus",
+      "page": 1167,
+      "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012"
+    },
+    "25.16": {
+      "title": "Net Filtration Pressure",
+      "page": 1171,
+      "credit": ""
+    },
+    "25.17": {
+      "title": "Locations of Secretion and Reabsorption in the Nephron",
+      "page": 1173,
+      "credit": ""
+    },
+    "25.20": {
+      "title": "Countercurrent Multiplier System",
+      "page": 1179,
+      "credit": ""
+    },
+    "25.21": {
+      "title": "Major Hormones That Influence GFR and RFB",
+      "page": 1184,
+      "credit": ""
+    },
+    "26.11": {
+      "title": "Antidiuretic Hormone (ADH)",
+      "page": 1211,
+      "credit": ""
+    },
+    "25.22": {
+      "title": "Nitrogen Wastes",
+      "page": 1187,
+      "credit": ""
+    },
+    "26.3": {
+      "title": "Fluid Compartments in the Human Body",
+      "page": 1204,
+      "credit": ""
+    },
+    "26.5": {
+      "title": "The Concentrations of Different Elements in Key Bodily Fluids",
+      "page": 1205,
+      "credit": ""
+    },
+    "26.10": {
+      "title": "A Flowchart Showing the Thirst Response",
+      "page": 1210,
+      "credit": ""
+    },
+    "26.13": {
+      "title": "The Aldosterone Feedback Loop",
+      "page": 1216,
+      "credit": ""
+    },
+    "26.16": {
+      "title": "Respiratory Regulation of Blood pH",
+      "page": 1220,
+      "credit": ""
+    },
+    "26.17": {
+      "title": "Conservation of Bicarbonate in the Kidney",
+      "page": 1221,
+      "credit": ""
+    },
+    "27.2": {
+      "title": "Testicular Reproductive System",
+      "page": 1233,
+      "credit": ""
+    },
+    "27.4": {
+      "title": "Anatomy of the Testis",
+      "page": 1235,
+      "credit": ""
+    },
+    "27.5": {
+      "title": "Spermatogenesis",
+      "page": 1236,
+      "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012"
+    },
+    "27.9": {
+      "title": "Female Reproductive System",
+      "page": 1243,
+      "credit": ""
+    },
+    "27.12": {
+      "title": "Folliculogenesis",
+      "page": 1248,
+      "credit": "Micrograph provided by the Regents of University of Michigan Medical School © 2012"
+    },
+    "27.15": {
+      "title": "Hormone Levels in Ovarian and Menstrual Cycles",
+      "page": 1254,
+      "credit": ""
+    },
+    "27.18": {
+      "title": "Hormones of Puberty",
+      "page": 1260,
+      "credit": ""
+    },
+    "28.16": {
+      "title": "Sexual Differentiation",
+      "page": 1286,
+      "credit": ""
+    },
+    "28.2": {
+      "title": "Sperm and the Process of Fertilization",
+      "page": 1271,
+      "credit": ""
+    },
+    "28.4": {
+      "title": "Pre-Embryonic Cleavages",
+      "page": 1275,
+      "credit": ""
+    },
+    "28.6": {
+      "title": "Implantation",
+      "page": 1277,
+      "credit": ""
+    },
+    "28.9": {
+      "title": "Germ Layers",
+      "page": 1280,
+      "credit": ""
+    },
+    "28.14": {
+      "title": "Embryonic Folding",
+      "page": 1284,
+      "credit": ""
+    },
+    "28.11": {
+      "title": "Cross-Section of the Placenta",
+      "page": 1281,
+      "credit": ""
+    },
+    "28.17": {
+      "title": "Fetal Circulatory System",
+      "page": 1287,
+      "credit": ""
+    },
+    "28.20": {
+      "title": "Hormones Initiating Labor",
+      "page": 1293,
+      "credit": ""
+    },
+    "28.21": {
+      "title": "Stages of Childbirth",
+      "page": 1294,
+      "credit": ""
+    },
+    "28.22": {
+      "title": "Neonatal Circulatory System",
+      "page": 1297,
+      "credit": ""
+    },
+    "28.23": {
+      "title": "Let-Down Reflex",
+      "page": 1300,
+      "credit": ""
+    },
+    "28.25": {
+      "title": "Random Segregation",
+      "page": 1305,
+      "credit": ""
+    },
+    "28.27": {
+      "title": "Autosomal Recessive Inheritance",
+      "page": 1307,
+      "credit": "credit: U.S. National Library of Medicine"
+    }
+  }
+}
