@@ -25,13 +25,14 @@ function term(section, slug, prompt, stimulus, expected, aliases, why) {
   return { id: `ap2-${section}-${slug}`, section, type: 'term', prompt, stimulus, expected, aliases, why };
 }
 
+const spikeY = mv => 68 - mv;
+const spikeSamples = [[64,-70],[128,-70],[153,-64],[166,-55],[178,-1],[187,30],[192,28],[202,12],[211,-6],[226,-35],[244,-64],[261,-80],[273,-80],[290,-74],[312,-70],[465,-70]];
 const spike = figure(
-  'Membrane voltage starts at −70 mV, rises steeply to +30, then falls toward −80 before returning to baseline. X is on the falling slope shortly after the peak.',
-  line('M62 22 V149 H471', faint, 2) + label(12,26,'mV',ink,14) + label(40,45,'+30',ink,13,'end') +
-  label(40,94,'0',ink,13,'end') + label(43,132,'−70',ink,13,'end') + label(453,173,'Time',ink,14,'end') +
-  line('M62 128 H462',faint,1,'5 6') +
-  line('M64 128 H127 Q155 126 166 101 Q174 49 183 32 Q189 19 199 43 L225 93 Q246 152 267 143 Q285 128 322 128 H465',teal,4) +
-  ellipse(211,67,5,5,coral) + line('M216 65 L244 44 H263',coral,2) + label(271,49,'X',coral,18)
+  'Voltage starts at −70 mV, reaches +30, and falls to −80 before returning to baseline. X marks the descending trace at −6 mV.',
+  line('M62 18 V158 H471', faint, 2) + label(10,19,'mV',ink,14) +
+  [30,0,-70].map(mv => line('M57 '+spikeY(mv)+' H462',faint,1,'3 6') + label(49,spikeY(mv)+4,mv===30?'+30':mv===0?'0':'−70',ink,13,'end')).join('') +
+  line(spikeSamples.map(([x,mv],i)=>(i?'L':'M')+x+' '+spikeY(mv)).join(' '),teal,4) +
+  ellipse(211,spikeY(-6),5,5,coral) + line('M217 '+spikeY(-6)+' L244 44 H263',coral,2) + label(271,49,'X',coral,18) + label(453,179,'Time',ink,14,'end')
 );
 const csf = figure(
   'Two upper curved cavities, one on each side, drain to one midline cavity. X marks the thin channel below that midline cavity and above a wider tent-shaped cavity.',

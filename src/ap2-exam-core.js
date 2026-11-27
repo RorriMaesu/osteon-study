@@ -1,3 +1,4 @@
+import {checkQuantity} from './ap2-quantities.js';
 import {assessTyped} from './typed-answer.js';
 import {chapters,sections,units} from './ap2-library.js';
 import {appliedItems} from './ap2-applied.js';
@@ -37,10 +38,7 @@ export function examItems(scope,random=Math.random) {
 export function grade(q,raw) {
   const response=String(raw??'').trim();
   if (!response) return 'blank';
-  if (q.type==='number') {
-    const numeric=/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(response)?Number(response):NaN;
-    return Number.isFinite(numeric)&&Math.abs(numeric-Number(q.expected))<=(q.tolerance||0)+1e-9?'correct':'incorrect';
-  }
+  if (q.type==='number') return checkQuantity(q,response).correct?'correct':'incorrect';
   if (q.type==='term') {
     if (q.section==='18.6' && /^(AB|A|B|O) (negative|positive)$/i.test(q.expected)) {
       const type=response.toLowerCase().replace(/[−–]/g,'-').replace(/^type\s+/, '').replace(/rh(?:\(d\))?\s*[-‐‑]?(?=negative|positive|neg|pos)/g,'').replace(/rh(?:\(d\))?/g,'').replace(/\s+/g,'');

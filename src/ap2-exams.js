@@ -1,3 +1,4 @@
+import {checkQuantity} from './ap2-quantities.js';
 import {snapshotWriting,examWriting,writingResults} from './ap2-writing-ui.js';
 import {chapters,sectionById} from './ap2-library.js';
 import {bank,examScopes,examItems,submitDraft,score,correctGrade,expectedAnswer} from './ap2-exam-core.js';
@@ -48,7 +49,7 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     page(`<div class="ap2-exam-header"><div><div class="eyebrow">A&P II · INDEPENDENT EXAM</div><h1>${e(s.title)}</h1></div>${link('ap2-exams','Save & exit')}</div>
     <section class="course-card ap2-test"><div class="ap2-question-meta"><label>Question <select aria-label="Jump to exam question" data-jump>${s.items.map((it,i)=>`<option value="${i}" ${s.index===i?'selected':''}>${i+1} / ${s.items.length}${s.responses[it.id]?.trim()?' · answered':''}</option>`).join('')}</select></label><span data-saved role="status">${savedCount()} answered</span></div>
     <h2>${e(q.prompt)}</h2>${stimulus(q)}${q.choices?`<div class="ap2-answers" role="group" aria-label="Answer choices">${q.choices.map((a,i)=>`<button data-answer="${i}" aria-pressed="${value===String(i)}">${e(a)}</button>`).join('')}</div>`:
-    `<label>${q.type==='number'?'Enter a number'+(q.unit?' in '+e(q.unit):''):'Anatomical term'}<input data-typed autocomplete="off" maxlength="500" ${q.type==='number'?'inputmode="decimal"':''} value="${e(value)}"></label>`}<div data-writing-place></div></section>
+    `<label>${q.type==='number'?'Numerical answer'+(q.unit?' · '+e(q.unit)+' or equivalent units':''):'Anatomical term'}<input data-typed autocomplete="off" maxlength="500" ${q.type==='number'?'inputmode="text"':''} value="${e(value)}"></label>`}<div data-writing-place></div></section>
     <div class="ap2-test-nav"><button data-prev ${s.index?'':'disabled'}>← Previous</button><button data-next ${s.index===s.items.length-1?'disabled':''}>Next →</button><button class="primary" data-submit>Review & submit</button></div>`);
     function update(fn){return store.update(r=>{if(r.draft?.id===s.id)fn(r.draft);});}
     examWriting(root,s,update,e);
@@ -81,8 +82,10 @@ export function createExamScreens({root,page,hero,link,store,e,dialog,toast}){
     ${writingResults(r.writing,e)}<div class="ap2-report-list">${included.map(q=>{
       const g=r.grades[q.id],v=r.responses[q.id]||'',given=q.choices&&v!==''?q.choices[Number(v)]:v;
       const reviewed=r.ai?.[q.id];
+      const quantity=q.type==='number'&&v&&g==='incorrect'?checkQuantity(q,v):null;
+      const unitNote=quantity?.correct?'The current grader accepts this equivalent quantity. Your original exam score is preserved.':quantity?.reason;
       return `<details class="course-card" ${onlyReview&&included.length===1?'open':''}><summary><b>${e(label(g))}</b> · §${e(q.section)} · ${e(q.prompt)}</summary>
-      ${stimulus(q)}<p>Your answer · ${e(given||'Unanswered')}</p><p><strong>Answer · ${e(expectedAnswer(q))}</strong></p><p>${e(q.why)}</p>
+      ${stimulus(q)}<p>Your answer · ${e(given||'Unanswered')}</p>${unitNote?'<p>'+e(unitNote)+'</p>':''}<p><strong>Answer · ${e(expectedAnswer(q))}</strong></p><p>${e(q.why)}</p>
       <div class="course-actions">${link('ap2-lesson-'+q.section,'Review §'+q.section)}<button data-ask="${e(q.id)}">Ask the tutor</button>${q.type==='term'&&v?`<button data-ai="${e(q.id)}">Review wording with Ollama</button>`:''}</div>
       <div data-review-for="${e(q.id)}">${reviewed?reviewHTML(reviewed):''}</div></details>`;
     }).join('')||'<p>All answers were correct.</p>'}</div>`);
