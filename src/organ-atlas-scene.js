@@ -43,8 +43,14 @@ function addViewMenu(host){
 }
 function expandedControls(host){
   const panel=host.parentElement.querySelector('[data-oa-lesson]');
+  const header=host.closest('.oa-page')?.querySelector('.oa-header');
+  const switcher=header?.querySelector('.oa-body-models');
   return {returnLabel:'Exit full screen',onExpand(active){
     if(active)host.append(panel);else host.after(panel);
+    if(switcher){
+      if(active)host.querySelector('.organ-tools').append(switcher);
+      else header.querySelector('.oa-model-resources').before(switcher);
+    }
   }};
 }
 

@@ -1,6 +1,6 @@
 import {courseRouteLabel} from './course-home.js';
 import {setLearningContext} from './learning-context.js';
-import {bodyMaps,mapForKey,mapRoute,mappedActions,locationForEntry} from './organ-atlas-bodies.js';
+import {bodyMaps,mapForKey,mapRoute,mappedActions,locationForEntry,correspondingOrgan} from './organ-atlas-bodies.js';
 import {organMotions,motionById,phaseStart,currentPhase,sourceCredits} from './organ-atlas-catalog.js';
 import {mountBodyMap,mountCloseup} from './organ-atlas-scene.js';
 import {createBodyDissection} from './organ-body-dissection.js';
@@ -12,6 +12,8 @@ import {hasTissueReference,mountTissueReference} from './organ-tissue-references
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const link=(id,text)=>'<a class="oa-link" href="#'+escape(id)+'">'+escape(text)+'</a>';
+const wholeBodies=[['male','body','Male'],['female','female','Female']];
+const modelResources='<a class="oa-link" href="model-review/">Model guide</a><a class="oa-link" href="assets/organ-atlas/SOURCES.md" target="_blank" rel="noreferrer">Model credits ↗</a>';
 const options=(rows,selected)=>rows.map(([value,label])=>'<option value="'+escape(value)+'"'+(value===selected?' selected':'')+'>'+escape(label)+'</option>').join('');
 const cowperReference='<a class="oa-link" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8373982/" target="_blank" rel="noreferrer">Bulbourethral glands · illustrated human anatomy ↗</a>';
 const titleSort=(a,b)=>a.localeCompare(b);
@@ -22,8 +24,11 @@ const searchableMotions=organMotions.map(entry=>{
 });
 const searchMotions=makeCourseSearch(searchableMotions);
 
-export function initOrganAtlas(root){
+export function initOrganAtlas(root,replaceMapRoute){
   let dispose=null,query='',system='',returnRoute='',lastMap='';
+  let preferred='body',switchIntent;
+  const preferenceKey='osteon-organ-body-model';
+  try{if(localStorage.getItem(preferenceKey)==='female')preferred='female';}catch{}
   const dissections=new Map();
   function close(){dispose?.();dispose=null;root.replaceChildren();}
   document.addEventListener('viewchange',ev=>{if(ev.detail!=='organs'&&root.childElementCount)close();});
@@ -36,15 +41,25 @@ export function initOrganAtlas(root){
     close();
     const [,id,bodyId,partId]=route.split('/');
     const entry=motionById.get(id);
-    const map=mapForKey(id)||bodyMaps[0];
+    const map=mapForKey(id)||mapForKey(!id?preferred:'body');
     const atlasRow=id=>map.organs.find(b=>b.id===id);
     const initialBody=atlasRow(bodyId);
     const initialPart=partId&&initialBody?.targets.find(raw=>encodeURIComponent(raw)===partId||raw===partId);
-    if(!entry)lastMap=mapRoute(map,initialBody,initialPart);
+    const change=switchIntent?.route===route?switchIntent:null;
+    switchIntent=null;
+    if(!entry){
+      lastMap=mapRoute(map,initialBody,initialPart);
+      if(!id)replaceMapRoute(lastMap);
+      if(wholeBodies.some(([,key])=>key===map.key)&&preferred!==map.key){
+        preferred=map.key;
+        try{localStorage.setItem(preferenceKey,preferred);}catch{}
+      }
+    }
     const systemNames=[...new Set(organMotions.map(e=>e.system))].sort(titleSort);
     const region=entry?.system||'',systemFilter=systemNames.includes(system)?system:'';
     if(entry&&systemFilter&&region!==systemFilter)system='';
-    root.innerHTML='<div class="oa-page"><header class="oa-header"><div>'+(returnRoute?link(returnRoute,'← '+courseRouteLabel(returnRoute)):link('atlas','← 3D Atlas'))+'<h1>Organ atlas</h1></div><a class="oa-link" href="model-review/">Model guide</a><a class="oa-link" href="assets/organ-atlas/SOURCES.md" target="_blank" rel="noreferrer">Model credits ↗</a></header>'+
+    root.innerHTML='<div class="oa-page"><header class="oa-header"><div>'+(returnRoute?link(returnRoute,'← '+courseRouteLabel(returnRoute)):link('atlas','← 3D Atlas'))+'<h1>Organ atlas</h1></div>'+
+      '<nav class="oa-body-models" aria-label="Whole-body model"><span>Body model</span>'+wholeBodies.map(([sex,key,label])=>'<a href="#organs/'+key+'" data-oa-sex="'+sex+'" aria-label="'+label+' whole-body model"'+(!entry&&map.key===key?' aria-current="page"':'')+'>'+label+'</a>').join('')+'</nav><div class="oa-model-resources">'+modelResources+'</div></header>'+
       '<div class="oa-work"><aside class="oa-browser" data-detail data-compact><button type="button" class="oa-find" data-oa-find aria-expanded="false" aria-controls="oa-search-filter oa-system-filter">Find an organ</button><label id="oa-search-filter">Find an organ<input data-oa-search type="search" placeholder="Organ, structure or process" autocomplete="off"></label>'+
       '<label id="oa-system-filter">System<select data-oa-system>'+options([['','All systems'],...systemNames.map(s=>[s,s])],system)+'</select></label>'+
       '<label><span class="oa-menu-name">Animated organ</span><select aria-label="Animated organ" data-oa-menu></select></label><div class="oa-count" role="status" data-oa-count></div><div data-oa-list class="oa-list" aria-label="Organ animations"></div></aside>'+
@@ -52,6 +67,22 @@ export function initOrganAtlas(root){
       (entry?'<div class="oa-title-links">'+(entry.id==='eye'?link('organs/paired-eyes','View intact eyes'):entry.id==='paired-eyes'?link('organs/eye','Eye section'):'')+link(lastMap||'organs',lastMap?'Back to body map':'Whole body')+'</div>':'')+'</header><div class="oa-model" data-oa-model></div><section class="oa-lesson" data-oa-lesson></section></section></div></div>';
     const get=k=>root.querySelector('[data-oa-'+k+']');
     const search=get('search'),systemSelect=get('system'),menu=get('menu'),list=get('list'),count=get('count'),lesson=get('lesson'),host=get('model');
+    let focusedOrgan=false;
+    function updateBodyLinks(row,raw){
+      for(const [sex,key,label] of wholeBodies){
+        const target=mapForKey(key),shared=correspondingOrgan(target,row);
+        const destination=mapRoute(target,shared,raw);
+        const anchor=root.querySelector('[data-oa-sex="'+sex+'"]');
+        anchor.href='#'+destination;
+        anchor.onclick=event=>{
+          if(event.ctrlKey||event.metaKey||event.shiftKey||event.altKey||location.hash==='#'+destination)return;
+          const source=!entry&&dissections.get(map.key);
+          switchIntent={route:destination,focus:focusedOrgan&&!!shared,keyboard:event.detail===0,expanded:host.classList.contains('organ-expanded'),
+            skin:source?.skinVisible,system:source?get('body-system').value:'',
+            message:row&&!shared?'Showing the '+label.toLowerCase()+' model. '+row.label+' is available in the previous view.':''};
+        };
+      }
+    }
     search.value=query;
     const browser=search.closest('.oa-browser'),find=get('find');
     function revealSearch(){browser.removeAttribute('data-compact');find.setAttribute('aria-expanded','true');find.textContent='Hide filters';search.focus();}
@@ -75,13 +106,14 @@ export function initOrganAtlas(root){
     menu.onchange=()=>{if(menu.value)location.hash='organs/'+menu.value;};
     if(entry){
       const locationRow=locationForEntry(entry);
+      updateBodyLinks(locationRow?.row);
       const micrograph=hasTissueReference(entry.id);
       const related=locationRow?.row?mappedActions(locationRow.map,locationRow.row).filter(action=>action!==entry):[];
       lesson.innerHTML='<div class="oa-transport"><button type="button" data-oa-play disabled>▶ Play</button><button type="button" data-oa-back aria-label="Previous phase">←</button><label><span class="oa-sr">Animation position</span><input data-oa-time type="range" min="0" max="1000" step="1" value="0"></label><button type="button" data-oa-next aria-label="Next phase">→</button><label class="oa-check"><input data-oa-loop type="checkbox"> Loop</label></div>'+
         '<div data-oa-phase class="oa-phase"></div><details class="oa-notes"><summary>'+escape(entry.action)+' · '+escape(entry.kind)+(micrograph?' · Micrograph':entry.id==='heart'?' · Exterior view':'')+'</summary><p>'+escape(entry.description)+'</p>'+(entry.context?.length?'<label class="oa-check"><input data-oa-context type="checkbox" checked> Show surrounding anatomy</label>':'')+'<div class="oa-links">'+
         (micrograph?'<button type="button" data-oa-micrograph>Compare with a tissue micrograph</button> ':'')+(entry.id==='heart'?link('ap2-lesson-19.1/activity/surface','Study the heart exterior in 3D')+' ':'')+
         (entry.id==='kidneys'?link('ap3-specimen-kidney/target/VH_M_hilum_of_kidney_L','Inspect the renal hilum in section')+' ':'')+
-        (['prostate','urethra'].includes(entry.id)?cowperReference+' ':'')+(locationRow?link(mapRoute(locationRow.map,locationRow.row),'Locate on reference'):'')+' <a href="'+escape(entry.source)+'" target="_blank" rel="noreferrer">Physiology reference ↗</a> <a href="'+escape(entry.credits||sourceCredits(entry.asset))+'" target="_blank" rel="noreferrer">Specimen credits ↗</a></div>'+(related.length?'<div class="oa-links oa-related"><strong>Related animations</strong> '+related.map(other=>link('organs/'+other.id,other.action)).join(' ')+'</div>':'')+'</details>';
+        (['prostate','urethra'].includes(entry.id)?cowperReference+' ':'')+(locationRow?link(mapRoute(locationRow.map,locationRow.row),'Locate on reference'):'')+' <a href="'+escape(entry.source)+'" target="_blank" rel="noreferrer">Physiology reference ↗</a> <a href="'+escape(entry.credits||sourceCredits(entry.asset))+'" target="_blank" rel="noreferrer">Specimen credits ↗</a></div><div class="oa-compact-resources">'+modelResources+'</div>'+(related.length?'<div class="oa-links oa-related"><strong>Related animations</strong> '+related.map(other=>link('organs/'+other.id,other.action)).join(' ')+'</div>':'')+'</details>';
       let t=0,phase=-1,frame=0,previous=0,playing=false,controller=null;
       mountTissueReference(lesson,entry,pause);
       const play=get('play'),slider=get('time'),prev=get('back'),next=get('next'),phaseText=get('phase');
@@ -150,7 +182,11 @@ export function initOrganAtlas(root){
     }else{
       const rows=map.organs.slice().sort((a,b)=>titleSort(a.label,b.label));
       const groups=[...new Set(rows.map(r=>r.system))].sort(titleSort);
-      if(!dissections.has(map.key))dissections.set(map.key,createBodyDissection(map));
+      if(!dissections.has(map.key)){
+        const dissection=createBodyDissection(map);
+        if(change?.skin)dissection.setSkin(true);
+        dissections.set(map.key,dissection);
+      }
       const dissection=dissections.get(map.key);
       lesson.innerHTML='<div class="oa-dissection-tools"><button type="button" data-oa-settings aria-haspopup="dialog">Layers &amp; settings</button><label><span class="oa-sr">Locate in body</span><select data-oa-locate></select></label><button type="button" data-oa-focus disabled>Focus organ</button><button type="button" data-oa-hide disabled>Hide organ</button><button type="button" data-oa-hide-part hidden>Peel part</button><button type="button" data-oa-undo hidden>Undo hide</button></div>'+
         '<div class="oa-body-pick" data-oa-pick aria-live="polite"></div>'+
@@ -158,7 +194,7 @@ export function initOrganAtlas(root){
         '<label>Preparation<select data-oa-map>'+options(bodyMaps.map(m=>[m.key,m.label]),map.key)+'</select></label><label>Visible system<select data-oa-body-system>'+options([['','All systems'],...groups.map(s=>[s,s])])+'</select></label>'+
         ((map.skeletonAsset||map.boneNames)?'<label>Skeleton<select data-oa-bones>'+options([['off','Hidden'],['solid','Solid bone'],['xray','X-ray outline']],dissection.skeletonMode)+'</select></label>':'')+
         (rows.some(r=>r.id==='skin')?'<label class="oa-check"><input data-oa-skin type="checkbox"> Show skin surface</label>':'')+
-        '<section data-oa-hidden-panel hidden><h4>Hidden organs and parts</h4><ul data-oa-hidden-list></ul><button type="button" data-oa-restore>Restore all hidden anatomy</button></section></dialog>';
+        '<section data-oa-hidden-panel hidden><h4>Hidden organs and parts</h4><ul data-oa-hidden-list></ul><button type="button" data-oa-restore>Restore all hidden anatomy</button></section><div class="oa-compact-resources">'+modelResources+'</div></dialog>';
       const settings=get('settings'),dialog=get('layer-dialog'),hide=get('hide'),peel=get('hide-part'),undo=get('undo');
       const bones=get('bones'),skin=get('skin'),hiddenPanel=get('hidden-panel'),hiddenList=get('hidden-list');
       settings.onclick=()=>dialog.showModal();
@@ -166,10 +202,13 @@ export function initOrganAtlas(root){
       dialog.onclose=()=>{if(settings.isConnected)settings.focus();};
       const picker=get('locate'),group=get('body-system'),picked=get('pick'),focus=get('focus');
       let current=initialBody,currentPart=initialPart,scene,ready=false;
+      let applySystem=groups.includes(change?.system);
+      if(applySystem)group.value=change.system;
+      let switchMessage=change?.message||'',focusOnLoad=change?.focus;
       const hiddenName=row=>row.raw?organStructureName(map.key,row.raw):atlasRow(row.id).label;
       function selectionPrompt(){
         const hidden=dissection.hiddenEntries;
-        return hidden.length?hiddenName(hidden.at(-1))+' hidden.':'Select an organ on the body or choose its name.';
+        return switchMessage||(hidden.length?hiddenName(hidden.at(-1))+' hidden.':'Select an organ on the body or choose its name.');
       }
       function populate(){picker.innerHTML=options([['','Choose an organ'],...rows.filter(r=>(!group.value||r.system===group.value)&&!dissection.isHidden(r.id)).map(r=>[r.id,r.label])],current?.id);}
       function updateLayerControls(){
@@ -190,6 +229,7 @@ export function initOrganAtlas(root){
       }
       function select(organ,part){
         current=organ||null;currentPart=part||null;picker.value=organ?.id||'';scene?.select(organ?.id,currentPart);focus.disabled=!organ||!ready||!scene?.has(organ.id);
+        updateBodyLinks(current,currentPart);
         const title=part?organStructureName(map.key,part):organ?.label;
         focus.textContent=part?'Focus part':'Focus organ';updateLayerControls();
         setLearningContext({type:'study',label:title||map.title,text:map.description+(organ?' · '+organ.system+' · '+organ.label:'')});
@@ -199,19 +239,29 @@ export function initOrganAtlas(root){
         picked.innerHTML='<strong>'+escape(title)+'</strong> '+actions.map(e=>link('organs/'+e.id,'▶ '+e.action)).join(' ');
       }
       function pickOrgan(organ,part){
+        switchMessage='';focusedOrgan=false;focusOnLoad=false;
         select(organ,part);lastMap=mapRoute(map,organ,part);
-        history.replaceState(history.state,'','#'+lastMap);
+        replaceMapRoute(lastMap);
       }
-      if(current&&dissection.isHidden(current.id)){current=null;currentPart=null;}
+      if(current&&dissection.isHidden(current.id)){
+        switchMessage=current.label+' is hidden in this model. Use Layers & settings to show it.';
+        current=null;currentPart=null;
+        lastMap=mapRoute(map);replaceMapRoute(lastMap);
+      }
       if(currentPart&&dissection.isPartHidden(current.id,currentPart))currentPart=null;
       populate();select(current,currentPart);
-      scene=mountBodyMap(host,map,{dissection,onPick:pickOrgan,onReady:()=>{ready=true;select(current,currentPart);},
+      scene=mountBodyMap(host,map,{dissection,onPick:pickOrgan,onReady:()=>{
+        ready=true;
+        if(applySystem){applySystem=false;scene.setSystem(group.value);}
+        select(current,currentPart);
+        if(focusOnLoad&&!focus.disabled){focusOnLoad=false;focusedOrgan=true;scene.focus();}
+      },
         onDissectionChange(){populate();updateLayerControls();if(!current)picked.textContent=selectionPrompt();},
         onLayerError:message=>{picked.textContent=message;}});
       get('map').onchange=e=>{location.hash=mapRoute(mapForKey(e.target.value));};
       picker.onchange=()=>pickOrgan(atlasRow(picker.value));
       group.onchange=()=>{pickOrgan(null);scene.setSystem(group.value);populate();};
-      focus.onclick=()=>scene.focus();
+      focus.onclick=()=>{focusedOrgan=true;scene.focus();};
       hide.onclick=()=>scene.hideSelected();peel.onclick=()=>scene.hidePart(currentPart);
       undo.onclick=()=>{scene.undoHide();if(undo.hidden)settings.focus();};
       get('restore').onclick=()=>{scene.restoreHidden();get('settings-close').focus();};
@@ -227,6 +277,8 @@ export function initOrganAtlas(root){
       if(skin)skin.onchange=()=>scene.setSkin(skin.checked);
       dispose=()=>scene.dispose();
     }
+    if(change?.expanded)host.querySelector('[data-expand]')?.click();
+    if(change?.keyboard)root.querySelector('.oa-body-models [aria-current]')?.focus({preventScroll:true});
   }
   return {open,find(){const search=root.querySelector('[data-oa-search]');if(search?.closest('[data-compact]'))root.querySelector('[data-oa-find]').click();else search?.focus();}};
 }

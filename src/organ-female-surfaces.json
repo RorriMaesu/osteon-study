@@ -1,0 +1,334 @@
+{
+  "organs": [
+    {
+      "id": "skin",
+      "label": "Skin surface",
+      "system": "Integumentary",
+      "targets": [
+        "skin"
+      ],
+      "contextOnly": true
+    },
+    {
+      "id": "brain",
+      "label": "Brain",
+      "system": "Nervous",
+      "targets": [
+        "brain"
+      ]
+    },
+    {
+      "id": "spinal-cord",
+      "label": "Spinal cord",
+      "system": "Nervous",
+      "targets": [
+        "spinal_cord"
+      ]
+    },
+    {
+      "id": "eyes",
+      "label": "Eyes",
+      "system": "Special senses",
+      "targets": [
+        "sclera_left",
+        "sclera_right",
+        "iris_left",
+        "iris_right",
+        "pupil_left",
+        "pupil_right"
+      ]
+    },
+    {
+      "id": "teeth",
+      "label": "Teeth",
+      "system": "Digestive",
+      "targets": [
+        "upper_teeth",
+        "lower_teeth"
+      ]
+    },
+    {
+      "id": "tongue",
+      "label": "Tongue",
+      "system": "Digestive",
+      "targets": [
+        "tongue"
+      ]
+    },
+    {
+      "id": "parotid-glands",
+      "label": "Parotid glands",
+      "system": "Digestive",
+      "targets": [
+        "parotid_gland_left",
+        "parotid_gland_right"
+      ]
+    },
+    {
+      "id": "submandibular-glands",
+      "label": "Submandibular glands",
+      "system": "Digestive",
+      "targets": [
+        "submandibular_gland_left",
+        "submandibular_gland_right"
+      ]
+    },
+    {
+      "id": "sublingual-glands",
+      "label": "Sublingual glands",
+      "system": "Digestive",
+      "targets": [
+        "sublingual_gland_left",
+        "sublingual_gland_right"
+      ]
+    },
+    {
+      "id": "tonsils",
+      "label": "Palatine tonsils",
+      "system": "Lymphatic and immune",
+      "targets": [
+        "palatine_tonsil_left",
+        "palatine_tonsil_right"
+      ]
+    },
+    {
+      "id": "larynx",
+      "label": "Larynx",
+      "system": "Respiratory",
+      "targets": [
+        "laryngeal_cartilages"
+      ]
+    },
+    {
+      "id": "trachea",
+      "label": "Trachea",
+      "system": "Respiratory",
+      "targets": [
+        "trachea"
+      ]
+    },
+    {
+      "id": "bronchi",
+      "label": "Main bronchi",
+      "system": "Respiratory",
+      "targets": [
+        "left_main_bronchus",
+        "right_main_bronchus"
+      ]
+    },
+    {
+      "id": "lungs",
+      "label": "Lungs",
+      "system": "Respiratory",
+      "targets": [
+        "left_lung_upper_lobe",
+        "left_lung_lower_lobe",
+        "right_lung_upper_lobe",
+        "right_lung_middle_lobe",
+        "right_lung_lower_lobe"
+      ]
+    },
+    {
+      "id": "heart",
+      "label": "Heart",
+      "system": "Cardiovascular",
+      "targets": [
+        "left_cardiac_atrium",
+        "left_ventricle",
+        "right_cardiac_atrium",
+        "right_ventricle",
+        "interventricular_septum"
+      ]
+    },
+    {
+      "id": "aorta",
+      "label": "Aorta",
+      "system": "Cardiovascular",
+      "targets": [
+        "aortic_arch",
+        "ascending_aorta",
+        "descending_aorta"
+      ]
+    },
+    {
+      "id": "venae-cavae",
+      "label": "Superior and inferior venae cavae",
+      "system": "Cardiovascular",
+      "targets": [
+        "superior_vena_cava",
+        "inferior_vena_cava"
+      ]
+    },
+    {
+      "id": "thymus",
+      "label": "Thymus",
+      "system": "Lymphatic and immune",
+      "targets": [
+        "thymic_lobe_left",
+        "thymic_lobe_right"
+      ]
+    },
+    {
+      "id": "spleen",
+      "label": "Spleen",
+      "system": "Lymphatic and immune",
+      "targets": [
+        "spleen"
+      ]
+    },
+    {
+      "id": "liver",
+      "label": "Liver",
+      "system": "Digestive",
+      "targets": [
+        "liver"
+      ]
+    },
+    {
+      "id": "gallbladder",
+      "label": "Gallbladder and bile duct",
+      "system": "Digestive",
+      "targets": [
+        "gallbladder",
+        "common_bile_duct"
+      ]
+    },
+    {
+      "id": "pancreas",
+      "label": "Pancreas",
+      "system": "Digestive",
+      "targets": [
+        "pancreas"
+      ]
+    },
+    {
+      "id": "small-intestine",
+      "label": "Small intestine",
+      "system": "Digestive",
+      "targets": [
+        "duodenum",
+        "jejunum",
+        "ileum"
+      ]
+    },
+    {
+      "id": "large-intestine",
+      "label": "Large intestine",
+      "system": "Digestive",
+      "targets": [
+        "caecum",
+        "ascending_colon",
+        "hepatic_flexure_of_colon",
+        "transverse_colon",
+        "splenic_flexure_of_colon",
+        "descending_colon",
+        "sigmoid_colon"
+      ]
+    },
+    {
+      "id": "appendix",
+      "label": "Vermiform appendix",
+      "system": "Digestive",
+      "targets": [
+        "vermiform_appendix"
+      ]
+    },
+    {
+      "id": "rectum",
+      "label": "Rectum",
+      "system": "Digestive",
+      "targets": [
+        "rectum"
+      ]
+    },
+    {
+      "id": "kidneys",
+      "label": "Kidneys",
+      "system": "Urinary",
+      "targets": [
+        "kidney_left",
+        "kidney_right"
+      ]
+    },
+    {
+      "id": "ureters",
+      "label": "Ureters",
+      "system": "Urinary",
+      "targets": [
+        "left_ureter",
+        "right_ureter"
+      ]
+    },
+    {
+      "id": "bladder",
+      "label": "Urinary bladder",
+      "system": "Urinary",
+      "targets": [
+        "urinary_bladder"
+      ]
+    },
+    {
+      "id": "ovaries",
+      "label": "Ovaries",
+      "system": "Reproductive",
+      "targets": [
+        "left_ovary",
+        "right_ovary"
+      ]
+    },
+    {
+      "id": "uterine-tubes",
+      "label": "Uterine tubes",
+      "system": "Reproductive",
+      "targets": [
+        "uterine_tube_left",
+        "uterine_tube_right"
+      ]
+    },
+    {
+      "id": "uterus",
+      "label": "Uterus",
+      "system": "Reproductive",
+      "targets": [
+        "body_of_uterus",
+        "fundus_of_uterus"
+      ]
+    },
+    {
+      "id": "cervix",
+      "label": "Cervix",
+      "system": "Reproductive",
+      "targets": [
+        "cervix"
+      ]
+    },
+    {
+      "id": "vagina",
+      "label": "Vagina",
+      "system": "Reproductive",
+      "targets": [
+        "vaginal_wall"
+      ]
+    },
+    {
+      "id": "mammary-glands",
+      "label": "Mammary glands and ducts",
+      "system": "Reproductive",
+      "targets": [
+        "mammary_lobes_left",
+        "mammary_lobes_right",
+        "lactiferous_ducts_left",
+        "lactiferous_ducts_right",
+        "nipple_left",
+        "nipple_right"
+      ]
+    }
+  ],
+  "boneNames": [
+    "sternum",
+    "pelvic_bones",
+    "vertebral_column",
+    "left_leg_bones",
+    "right_leg_bones"
+  ]
+}

@@ -6,7 +6,7 @@ import {isToothName,TOOTH_COLOR,TOOTH_ROUGHNESS} from './dental-appearance.js';
 // flow markers keep their own colors, even when they contain the same organ words.
 const grossAssets = new Set([
   'assets/organ-atlas/registered-organs.glb', 'assets/ap2-heart.glb', 'assets/ap2-thorax.glb',
-  'assets/organ-atlas/female-urinary.glb', 'assets/organ-atlas/mammary-glands.glb',
+  'assets/organ-atlas/female-body.glb', 'assets/organ-atlas/female-urinary.glb', 'assets/organ-atlas/mammary-glands.glb',
   ...['body-overview','bodyparts-locator','body-gut','body-brain-landmarks','upper-abdomen','cranial-glands',
       'neck','ovarian-region','testicular-region','ovary-v1.3','pancreas-v1.3','placenta']
     .map(id=>'assets/ap2-glands/'+id+'.glb'),
@@ -66,7 +66,7 @@ const names = [
 ];
 
 export function organTissueKind(asset, raw){
-  if((asset==='assets/organ-atlas/registered-organs.glb'||asset==='assets/motion-jaw.glb')&&isToothName(raw))return 'tooth';
+  if((asset==='assets/organ-atlas/registered-organs.glb'||asset==='assets/organ-atlas/female-body.glb'||asset==='assets/motion-jaw.glb')&&isToothName(raw))return 'tooth';
   if(!grossAssets.has(asset))return;
   const name=String(raw).replace(/^VH_[MF]_/, '').toLowerCase();
   if(asset==='assets/ap2-heart.glb'){

@@ -355,7 +355,10 @@ const muscleAtlas=initMuscleAtlas({viewer,escape,toast,dialog,onExit:()=>{region
 initMuscleLabeling({viewer,setView,dialog,toast,escape});
 initMuscleList({setView,dialog,toast,escape});
 courseHome=initCourseHome({setView,escape});
-organAtlas=initOrganAtlas($('#organs-view'));
+organAtlas=initOrganAtlas($('#organs-view'),route=>{
+  currentRoute=route;
+  history.replaceState(history.state,'','#'+route);
+});
 initAP3({root:document.querySelector('#courses-view'),escape,toast});
 initAP2({root:document.querySelector('#courses-view'),escape,toast,dialog});
 showHistoryRoute(true);

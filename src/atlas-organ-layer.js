@@ -36,12 +36,13 @@ export function attachOrganLayer(viewer,toast){
       tooth.material.emissive.setHex(picked?0x684311:0);
     }
   }
+  function updateStudyLink(){
+    selection.hidden=!enabled||!available();
+    selection.href=chosen?'#'+organStudyDestination(chosen,chosenRaw):'#organs/female';
+    selection.textContent=chosen?'Study '+(chosenRaw?organStructureName('body',chosenRaw):chosen.label):'Female body ↗';
+  }
   function showStudy(row,raw){
-    chosen=row;chosenRaw=raw;selection.hidden=!row;
-    if(row){
-      selection.href='#'+organStudyDestination(row,raw);
-      selection.textContent='Study '+(raw?organStructureName('body',raw):row.label);
-    }
+    chosen=row;chosenRaw=raw;updateStudyLink();
     for(const part of parts){
       const picked=part.row===row&&(!raw||part.raw===raw);
       if(part.teeth.length)markTeeth(part,picked);
@@ -56,7 +57,8 @@ export function attachOrganLayer(viewer,toast){
     const active=enabled&&available();
     button.disabled=!available();button.setAttribute('aria-busy',String(!!request&&!group&&enabled));
     finish.hidden=!active||!group||!tissue.available;
-    button.setAttribute('aria-pressed',String(active));button.textContent='Organs: '+(active&&!group?'Loading…':active?'On':'Off');
+    button.setAttribute('aria-pressed',String(active));button.textContent='Organs: '+(active&&!group?'Loading…':active?'On · Male':'Off');
+    updateStudyLink();
     if(!group)return;
     group.visible=active;
     let limits;
@@ -78,7 +80,6 @@ export function attachOrganLayer(viewer,toast){
       }
     }
     if(chosen&&![...pickSurfaces.values()].some(mesh=>mesh.userData.organRow===chosen&&(!chosenRaw||mesh.userData.organPart===chosenRaw)))showStudy(null);
-    selection.hidden=!active||!chosen;
     viewer.needsRender=true;
   }
   function load(){

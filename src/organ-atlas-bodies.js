@@ -1,4 +1,5 @@
 import {bodyAtlas,motionsForBody,motionById} from './organ-atlas-catalog.js';
+import {femaleBody} from './organ-female-body.js';
 import meshes from './ap3-specimens-meshes.json' with {type:'json'};
 
 import nodeInventory from './lymph-node-models.json' with {type:'json'};
@@ -13,6 +14,7 @@ const parts=meshes[pelvis];
 const pelvicRow=(id,label,pattern)=>({id,label,system:'Reproductive',targets:parts.filter(n=>pattern.test(n))});
 export const bodyMaps=[
   {...bodyAtlas,key:'body',title:'Organs in the body',label:'Whole body · adult male',description:'Registered adult male anatomy',skeletonAsset:'assets/skeleton.glb'},
+  femaleBody,
   {key:'lymphatic',title:'Regional lymph nodes',label:'Lymph nodes on the skeleton',description:'Selected node groups · registered adult anatomy',asset:'assets/lymph-nodes-overview.glb',skeletonAsset:'assets/skeleton.glb',organs:regionalGroups(nodeInventory.structures.filter(row=>row.overview),'Node | ','Lymphatic',['lymph-node','lymphatic-drainage'])},
   {key:'peripheral',title:'Peripheral nerves',label:'Peripheral nerves on the skeleton',description:'Selected peripheral nerves · registered adult anatomy',asset:'assets/nerves-overview.glb',skeletonAsset:'assets/skeleton.glb',organs:regionalGroups(nerveInventory.structures.filter(row=>row.overview&&row.category==='peripheral'),'Nerve | ','Nervous',['peripheral-nerve'])},
   {key:'pregnancy',title:'Placenta and umbilical cord',label:'Full-term placenta',description:'Human Reference Atlas · full-term preparation',asset:'assets/ap2-glands/placenta.glb',direction:[.15,.5,1],organs:[{id:'placenta',label:'Placenta and umbilical cord',system:'Reproductive',targets:meshes['assets/ap2-glands/placenta.glb']}]},
@@ -41,6 +43,14 @@ export const bodyMaps=[
 ];
 export function mapForKey(key){return bodyMaps.find(m=>m.key===key);}
 export function mapRoute(map,row,part){return 'organs/'+map.key+(row?'/'+row.id+(row.targets.includes(part)?'/'+encodeURIComponent(part):''):'');}
+// Regional preparations have older, sex-specific IDs for the same organ.
+// Only keep a surface selection when the destination explicitly contains it.
+const sharedIds={'female-bladder':'bladder','female-ureters':'ureters','female-urethra':'urethra'};
+export function correspondingOrgan(map,row){
+  if(!row)return;
+  const id=sharedIds[row.id]||row.id;
+  return map.organs.find(other=>(sharedIds[other.id]||other.id)===id);
+}
 export function mappedActions(map,row){
   if(row.actionIds)return row.actionIds.map(id=>motionById.get(id)).filter(Boolean);
   const specific=motionsForBody(row.id);

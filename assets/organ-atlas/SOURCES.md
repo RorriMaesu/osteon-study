@@ -1,5 +1,11 @@
 # Organ atlas models
 
+## Adult female whole-body specimen
+
+The female body map derives from *3D Reference Organ Set for United, Female*, v1.10, by Kristen Browne and Heidi Schlehlein (2026), published by HuBMAP and the Human Reference Atlas under CC BY 4.0. The reference is based on the National Library of Medicine’s Visible Human Dataset and includes additional registered reference structures, including the Allen brain. Osteon selected the surfaces for the body map, baked their original spatial transforms, simplified the meshes in Blender 4.5.1, grouped parts for study and assigned illustrative tissue colors. [Reference set and citation](https://doi.org/10.48539/HBM637.DWBM.744) · [Release metadata and source credits](https://github.com/hubmapconsortium/hra-kg/blob/main/digital-objects/ref-organ/united-female/v1.10/raw/metadata.yaml) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+`female-body.glb` contains a whole-body skin surface and 35 selectable organ and tissue groups including the skin. The skeletal context comprises selected surfaces of the pelvis, vertebral column, sternum and lower limbs. The placenta has its own separate preparation. The source SHA-256 is `95f0c3d2f918582608692ca1139e8bdb18c147a16470e9ee9af8b276bd77c422`. [Exact mesh selections and conversion](../../scripts/blender/export_female_body.py) · [Study group inventory](../../src/organ-female-surfaces.json)
+
 ## Regional teaching preparations
 
 The vestibular preparation preserves the relative positions of the glands, ducts and nearby tissues in the same pelvic donor. The skin cutaway shows a sweat duct, sebaceous outlet and the attachment of the arrector pili muscle at a magnified scale. Each has its own preparation notes and license. [Pelvic reconstruction and authors](accessory-glands/SOURCES.md) · [Hair-bearing skin cutaway](../skin-appendages/SOURCES.md)

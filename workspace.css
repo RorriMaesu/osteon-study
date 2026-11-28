@@ -434,6 +434,8 @@ body.viewer-room-open{overflow:hidden!important}
 
 .muscle-label-line{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:8;overflow:visible}
 .atlas-intro-actions{display:flex;align-items:center;gap:9px;flex:none}
+.atlas-intro-actions #atlas-organ-labs{min-height:44px;padding-block:4px;line-height:1.2;text-align:center}
+.atlas-intro-actions #atlas-organ-labs small{font-size:11px;font-weight:400}
 .atlas-muscle-toggle{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:42px;padding:10px 14px;white-space:nowrap;background:#203934;border-color:#789f8c;color:#e4f0e7;font-size:12px;font-weight:600}
 .atlas-muscle-toggle[aria-pressed=true]{background:var(--mint);border-color:var(--mint);color:#142f2b}
 .atlas-muscle-toggle>[aria-hidden]{position:relative;display:inline-block;width:26px;height:16px;border-radius:12px;background:#14272b;border:1px solid #8aa997;font-size:0}

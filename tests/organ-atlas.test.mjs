@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {existsSync,readFileSync} from 'node:fs';
-import {bodyMaps,locationForEntry,mappedActions,mapRoute} from '../src/organ-atlas-bodies.js';
+import {bodyMaps,correspondingOrgan,locationForEntry,mappedActions,mapForKey,mapRoute} from '../src/organ-atlas-bodies.js';
 import {organMotions,bodyAtlas,motionById,phaseStart,currentPhase,sourceCredits} from '../src/organ-atlas-catalog.js';
 import {dentition,mountDentition} from '../src/organ-motion-dentition.js';
 
@@ -48,6 +48,25 @@ test('every organ preparation offers a working study route for every selectable 
   assert.equal(primary(male,'urethra'),'urethra');
   assert.equal(primary(section,'female-urethra'),'female-urethra');
   assert.equal(locationForEntry(motionById.get('aorta')).row.id,'aorta');
+});
+test('switching reference bodies preserves shared organs and only carries verified surfaces',()=>{
+  const male=mapForKey('body'),female=mapForKey('female');
+  const find=(map,id)=>map.organs.find(row=>row.id===id);
+  assert.notEqual(female.asset,male.asset);
+  assert.ok(find(female,'skin')?.contextOnly);
+  assert.deepEqual(find(female,'skin').targets,['skin']);
+  assert.ok(!female.skeletonAsset,'The female donor uses her own registered bones');
+  for(const id of ['bladder','teeth']){
+    const a=find(male,id),b=find(female,id);
+    assert.ok(a&&b,id);
+    assert.equal(correspondingOrgan(male,b),a);
+    assert.equal(correspondingOrgan(female,a),b);
+    assert.equal(mapRoute(female,b,'unmapped_surface'),'organs/female/'+id);
+  }
+  assert.equal(correspondingOrgan(female,find(male,'prostate')),undefined);
+  assert.equal(correspondingOrgan(male,find(female,'uterus')),undefined);
+  const pelvicBladder=find(mapForKey('pelvis'),'female-bladder');
+  assert.equal(correspondingOrgan(male,pelvicBladder),find(male,'bladder'));
 });
 test('all organ activities have real targets, ordered phases, references and specimen credits',()=>{
   assert.equal(motionById.size,organMotions.length);
