@@ -5,6 +5,8 @@ import {organAssetUrl} from './organ-asset-url.js';
 import {organStructureName} from './organ-structure-names.js';
 import {bodyMaps,mapRoute} from './organ-atlas-bodies.js';
 import {createOrganAppearance,registerOrganMaterials} from './organ-tissue-material.js';
+import {createEyeAppearance} from './organ-eye-appearance.js';
+import {visibleEyeHit} from './organ-eye-picking.js';
 
 export function organStudyDestination(row,raw){
   if(raw&&row.targets.includes(raw))return mapRoute(bodyMaps[0],row,raw);
@@ -20,6 +22,7 @@ export function attachOrganLayer(viewer,toast){
   button.after(finish);
   finish.onclick=()=>{
     tissue.setMode(tissue.mode==='natural'?'teaching':'natural');
+    for(const part of parts)part.eye?.setMode(tissue.mode);
     finish.setAttribute('aria-pressed',String(tissue.mode==='natural'));viewer.needsRender=true;
   };
   const index=new Map(bodyAtlas.organs.flatMap(row=>row.targets.map(name=>[name,row])));
@@ -69,8 +72,10 @@ export function attachOrganLayer(viewer,toast){
         if(!row){mesh.visible=false;return;}
         const color=[].concat(mesh.material)[0]?.color;
         tissue.prepare(mesh,bodyAtlas.asset,color&&color.getHex()!==0xffffff?color:organSystemColor(row.system));
+        const eye=createEyeAppearance(mesh,bodyAtlas.asset,raw,()=>{viewer.needsRender=true;});
+        eye?.setMode(tissue.mode);
         mesh.userData.organRow=row;mesh.userData.organPart=raw;mesh.userData.zname=organStructureName('body',raw);
-        parts.push({mesh,row,raw,bounds:new THREE.Box3().setFromObject(mesh),
+        parts.push({mesh,row,raw,eye,bounds:new THREE.Box3().setFromObject(mesh),
           materials:[].concat(mesh.material).map(mat=>({mat,emissive:mat.emissive?.clone()}))});
       });
       tissue.dispose(); // All GPU-facing copies now belong to this persistent layer.
@@ -81,8 +86,12 @@ export function attachOrganLayer(viewer,toast){
   button.onclick=()=>{enabled=!enabled;if(enabled)load();else showStudy(null);viewer.applyVisibility();};
   const layer={
     refresh,fadesBones:()=>enabled&&!!group&&available(),
-    pick(ray,boneHit){if(!group?.visible)return null;const hit=ray.intersectObjects(parts.filter(p=>p.mesh.visible).map(p=>p.mesh),false)[0];
-      if(!hit||boneHit&&boneHit.object.material.opacity>=.47&&boneHit.distance<hit.distance)return null;return hit.object;},
+    pick(ray,boneHit){
+      if(!group?.visible)return null;
+      const hits=ray.intersectObjects(parts.filter(p=>p.mesh.visible).map(p=>p.mesh),false);
+      const visible=boneHit&&boneHit.object.material.opacity>=.47?hits.filter(hit=>hit.distance<=boneHit.distance):hits;
+      return visibleEyeHit(visible,tissue.mode,mesh=>mesh.userData.organPart)?.object||null;
+    },
     select:showStudy,open(row,raw){location.hash=organStudyDestination(row,raw);}
   };
   document.addEventListener('viewchange',refresh);document.addEventListener('anatomyready',refresh);

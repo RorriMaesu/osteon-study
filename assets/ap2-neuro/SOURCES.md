@@ -8,6 +8,8 @@ BodyParts3D, The Database Center for Life Science, CC BY-SA 2.1 Japan. Z-Anatomy
 
 ## Left eye
 
+The **Natural tissue** view gives the cornea and lens a translucent finish so their profiles remain visible in section. The brown iris and other tissue colors are illustrative. **Teaching colors** restores the study palette. The gold target is used for structure identification in either view. [OpenStax sensory perception](https://openstax.org/books/anatomy-and-physiology-2e/pages/14-1-sensory-perception) · [National Eye Institute eye anatomy](https://www.nei.nih.gov/eye-health-information/healthy-vision/how-eyes-work)
+
 Kristen Browne and Heidi Schlehlein, Human Reference Atlas, 3D Reference Organ for Eye (Male, Left), version 1.3. Osteon sectioned eleven anatomical surfaces in Blender at their original resolution. The exposed faces on the sclera, choroid, retina, cornea, lens, macula and fovea follow the source tissue contours. The cut leaves the globe cavity open and the optic disc intact. The magnified specimen uses teaching colors and amplified changes in lens shape to illustrate accommodation. [HRA record](https://apps.humanatlas.io/kg-explorer/ref-organ/eye-male-left/v1.3) · [DOI](https://doi.org/10.48539/HBM769.RWTZ.963) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ## Inner ear

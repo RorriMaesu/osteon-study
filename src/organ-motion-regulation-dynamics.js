@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import {pressureState} from './ap2-heart-cycle.js';
+const ease=t=>(1-Math.cos(Math.PI*Math.max(0,Math.min(1,t))))/2;
+export const eyeNearResponse=t=>t<.25?0:t<.50?ease((t-.25)/.25):t<.64?1:1-ease((t-.64)/.36);
 
 // Change transforms in the loaded viewer only. Anatomical mesh data stays in its rest frame.
 export function mountMechanicalMotion(entry,byName){
@@ -29,6 +31,16 @@ export function mountMechanicalMotion(entry,byName){
   const axisX=new THREE.Vector3(1,0,0);
   const axisY=new THREE.Vector3(0,1,0);
   const workPosition=new THREE.Vector3(),localPivot=new THREE.Vector3(),q=new THREE.Quaternion();
+  // The two donor globes share anatomical axes but have separate centers of rotation.
+  // Store the pivots in each mesh parent's frame, including meshes with baked origins.
+  if(entry.mechanism==='eyes'){
+    for(const r of resting){
+      const side=r.name.endsWith('_left')?'left':'right';
+      r.globeCenter=r.mesh.parent.worldToLocal(anchor('sclera_'+side));
+      r.lensCenter=r.name.startsWith('lens_')?r.bounds.getCenter(new THREE.Vector3()):null;
+      r.nearYaw=THREE.MathUtils.degToRad(side==='left'?-6:6);
+    }
+  }
   // Mesh origins may be local or baked into the geometry. Use a common world pivot
   // converted to each object's parent so offsets are preserved in either case.
   function move(r,sx,sy,sz,pivot,dy=0){
@@ -49,8 +61,6 @@ export function mountMechanicalMotion(entry,byName){
       mesh.position.copy(position);mesh.scale.copy(scale);mesh.quaternion.copy(quaternion);
     }
   }
-  const ease=t=>(1-Math.cos(Math.PI*Math.max(0,Math.min(1,t))))/2;
-  const near=t=>t<.25?0:t<.50?ease((t-.25)/.25):t<.64?1:1-ease((t-.64)/.36);
   const respiratory=t=>t<.4?ease(t/.4):1-ease((t-.4)/.6);
   const ossiclePivot=anchor('Malleus').lerp(anchor('Incus'),.55);
   const leftPivot=anchor('malleus_left').lerp(anchor('incus_left'),.55);
@@ -61,7 +71,7 @@ export function mountMechanicalMotion(entry,byName){
       const n=r.name,m=r.mesh;
       switch(entry.mechanism){
         case 'accommodation': {
-          const amount=near(t);
+          const amount=eyeNearResponse(t);
           // The eye section is cut on its sagittal median. The original lens
           // node origin is the optical center; the half-mesh bounding box is offset.
           const pivot=byName.get('Lens')?.[0]?.getWorldPosition(workPosition)||irisCenter;
@@ -70,9 +80,15 @@ export function mountMechanicalMotion(entry,byName){
           break;
         }
         case 'eyes': {
-          // Each globe's lens has its own optical center in the registered specimen.
-          const pivot=r.bounds.getCenter(workPosition);
-          const amount=near(t);if(n.startsWith('lens_'))move(r,1-.07*amount,1-.07*amount,1+.19*amount,pivot);
+          const amount=eyeNearResponse(t);
+          m.position.copy(r.position);m.quaternion.copy(r.quaternion);m.scale.copy(r.scale);
+          if(amount===0)break;
+          // First accommodate around the lens center. Then rotate the whole optical
+          // assembly around its globe center to bring both eyes toward near fixation.
+          if(r.lensCenter)move(r,1-.07*amount,1-.07*amount,1+.19*amount,r.lensCenter);
+          q.setFromAxisAngle(axisY,r.nearYaw*amount);
+          m.position.sub(r.globeCenter).applyQuaternion(q).add(r.globeCenter);
+          m.quaternion.premultiply(q);
           break;
         }
         case 'ossicles':

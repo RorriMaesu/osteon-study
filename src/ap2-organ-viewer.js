@@ -6,6 +6,7 @@ import {winterExpandedControls} from './ap2-expanded-station.js';
 import {organAssetUrl} from './organ-asset-url.js';
 import {mountMetricScale} from './organ-metric-scale.js';
 import {createOrganAppearance,registerOrganMaterials} from './organ-tissue-material.js';
+import {createEyeAppearance} from './organ-eye-appearance.js';
 
 const instances = new WeakMap();
 function release(root) {
@@ -29,7 +30,7 @@ export function mountOrganViewer(host, options) {
   host.classList.add('organ-viewer');
   const viewport = host.querySelector('.organ-viewport'), notice = host.querySelector('[data-model-status]');
   const announce = message => {notice.textContent=message;};
-  const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(38,1,.001,100);
+  const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(options.fieldOfView??38,1,.001,100);
   const defaultView = new THREE.Vector3(...(options.direction || [0,0,1])).normalize();
   camera.up.set(...(options.up || [0,1,0])).normalize();
   const sky=new THREE.HemisphereLight(0xffffff,0x9696a3,1.9);scene.add(sky);
@@ -43,6 +44,7 @@ export function mountOrganViewer(host, options) {
   let lastWidth=0,lastHeight=0,shownSeconds=0,lastTime=0,userMoved=false,currentRadius=1;
   const disposables = new Set();
   const tissue=createOrganAppearance(options.appearance);
+  const eyeSurfaces=new Map();
   const appearance=document.createElement('select');
   appearance.dataset.organAppearance='';appearance.hidden=true;appearance.setAttribute('aria-label','Organ appearance');
   appearance.add(new Option('Natural tissue','natural'));appearance.add(new Option('Teaching colors','teaching'));
@@ -51,7 +53,9 @@ export function mountOrganViewer(host, options) {
   function setAppearance(value){
     if(options.lockAppearance)value=options.appearance||'teaching';
     tissue.setMode(value);appearance.value=tissue.mode;
-    const natural=tissue.available&&tissue.mode==='natural';
+    for(const eye of eyeSurfaces.values())eye.setMode(tissue.mode);
+    options.onAppearanceChange?.(tissue.mode);
+    const natural=(tissue.available||eyeSurfaces.size>0)&&tissue.mode==='natural';
     sky.groundColor.setHex(natural?0xaaa9a7:0x9696a3);sky.intensity=natural?1.15:1.9;
     key.color.setHex(natural?0xfffcf6:0xfff3e7);key.intensity=natural?2.35:2.1;
     fill.color.setHex(natural?0xf4f6ff:0xddf0ff);fill.intensity=natural?.85:1.15;
@@ -59,13 +63,16 @@ export function mountOrganViewer(host, options) {
     invalidate();
   }
   function prepareTissue(mesh,asset,color){
-    const hadTissue=tissue.available;
+    const hadTissue=tissue.available||eyeSurfaces.size>0;
     tissue.prepare(mesh,asset,color);
-    if(!hadTissue&&tissue.available){appearance.hidden=Boolean(options.lockAppearance);setAppearance(tissue.mode);}
+    const eye=createEyeAppearance(mesh,asset,mesh.userData.name||mesh.name,invalidate);
+    if(eye){eyeSurfaces.set(mesh,eye);eye.setMode(tissue.mode);}
+    if(!hadTissue&&(tissue.available||eye)){appearance.hidden=Boolean(options.lockAppearance);setAppearance(tissue.mode);}
   }
   appearance.onchange=()=>setAppearance(appearance.value);
   const api = {scene,camera,announce,fit,invalidate,dispose,loadLayer,prepareTissue,setAppearance,
-    get hasTissueAppearance(){return tissue.available;},get appearance(){return tissue.mode;},
+    eyeSurface:mesh=>eyeSurfaces.get(mesh),
+    get hasTissueAppearance(){return tissue.available||eyeSurfaces.size>0;},get appearance(){return tissue.mode;},
     addCleanup(fn){disposables.add(fn);},get model(){return model;},get controls(){return controls;},get renderer(){return renderer;}};
   const updateScale=options.asset==='assets/ap3-models/carnegie-stages.glb'?mountMetricScale(viewport,api):null;
   function keepInView() {
@@ -242,7 +249,9 @@ export function mountOrganViewer(host, options) {
     if(disposed)return;disposed=true;
     if(host.classList.contains('organ-expanded'))options.onExpand?.(false);
     cancelAnimationFrame(frame);resizeObserver?.disconnect();onscreenObserver?.disconnect();removed?.disconnect();
-    controls?.dispose();for(const fn of disposables)fn();tissue.dispose();release(scene);
+    controls?.dispose();for(const fn of disposables)fn();
+    for(const eye of eyeSurfaces.values())eye.dispose();
+    eyeSurfaces.clear();tissue.dispose();release(scene);
     renderer?.dispose();renderer?.forceContextLoss();
     host.removeEventListener('keydown',keydown);host.classList.remove('organ-expanded');
     instances.delete(host);

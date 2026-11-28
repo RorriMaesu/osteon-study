@@ -66,12 +66,12 @@ add('peripheral-nerve','Myelinated peripheral nerve fiber','Nervous',neuro+'myel
     phase('Second node','When the next node reaches threshold, another action potential is generated.','Second node')
   ],{bodyIds:[]});
 
-add('eye','Eye · lens accommodation','Special senses',neuro+'eye-section','Iris|Cornea','Change focus from far to near',
+add('eye','Eye · lens accommodation','Special senses',neuro+'eye-section','Iris|Cornea|Retina|Fovea|Macula lutea|Optic disc|Choroid|Sclera','Change focus from far to near',
   'A sagittal human eye section shows how ciliary contraction changes lens shape. The movement is enlarged and slowed for inspection.',sensory,[
     phase('Distance focus','Ciliary muscle is relaxed. Zonular tension keeps the lens relatively flat.','Zonules|Lens',0),
     phase('Near focus','The ciliary ring narrows. Reduced zonular tension lets the lens thicken along the optical axis.','Ciliary muscle|Lens',.25),
     phase('Return to distance','Relaxation increases zonular tension, flattening the lens again.','Ciliary muscle|Zonules|Lens',.64)
-  ],{mechanism:'accommodation',kind:'Organ movement',direction:[1,.08,.24],bodyIds:['eyes']});
+  ],{mechanism:'accommodation',kind:'Organ movement',direction:[1,.08,.24],fitContext:['Sclera','Cornea'],bodyIds:['eyes']});
 add('ear','Ear · middle-ear vibration','Special senses',neuro+'ossicles','','Transmit a sound vibration',
   'The malleus and incus rock together while the stapes footplate moves toward and away from the oval window. Excursion is exaggerated and slowed; the oval window is outside this isolated ossicle preparation.',
   'https://www.nidcd.nih.gov/health/how-do-we-hear',[
@@ -272,12 +272,12 @@ add('phonation','Larynx · preparing to speak','Respiratory','muscles-head-neck'
     phase('Voice','Expiratory airflow drives vibration of the approximated fold covers. The underlying muscle bodies shown here remain in the adducted posture.',vocalis,.50),
     phase('Breathe again','As phonation ends, the folds separate for breathing.',vocalis,.74)
   ],{kind:'Organ movement',mechanism:'phonation',aliases:['vocal cords','vocal folds','voice','glottis','phonation','vocalis'],direction:[.04,1,.1],up:[0,0,1],bodyIds:['larynx']});
-add('paired-eyes','Both eyes · accommodation','Special senses',registered,'cornea_left|cornea_right|sclera_left|sclera_right','Compare left and right lenses',
-  'The two lenses thicken together when focusing on a nearer object. Their movement is amplified inside both registered globes; the separate sagittal eye shows the ciliary muscle and zonules.',sensory,[
-    phase('Far focus','Both lenses have a flatter profile for distant vision.','lens_left|lens_right',0),
-    phase('Near focus','Reduced zonular tension lets each elastic lens become thicker and more curved.','lens_left|lens_right',.25),
-    phase('Far focus returns','Increased tension flattens both lenses again.','lens_left|lens_right',.64)
-  ],{kind:'Organ movement',mechanism:'eyes',direction:[.09,.16,1],fitContext:['sclera_left','sclera_right'],bodyIds:['eyes']});
+add('paired-eyes','Eyes · exterior and accommodation','Special senses',registered,'','Watch the near response',
+  'Watch both eyes turn inward as the pupils narrow. Switch to Lens motion to see how the lenses round up, or choose a close-up in Views.',sensory,[
+    phase('Far focus','The eyes face ahead. At the same illumination, the pupils are wider and the lenses flatter during distance viewing.','lens_left|lens_right',0),
+    phase('Near focus','Both eyes turn toward the nose to fix on a near target. The pupils narrow, and ciliary muscle contraction reduces zonular tension so each lens rounds up.','lens_left|lens_right',.25),
+    phase('Far focus returns','The eyes turn back toward distance fixation and the pupils widen. Zonular tension increases and the lenses flatten.','lens_left|lens_right',.64)
+  ],{kind:'Organ movement',mechanism:'eyes',direction:[0,.015,1],restingSurfaces:['sclera_left','sclera_right','cornea_left','cornea_right','iris_left','iris_right','retina_left','retina_right'],bodyIds:['eyes']});
 add('paired-ears','Both ears · sound conduction','Special senses',registered,'','Compare middle-ear vibration',
   'This sequence illustrates simultaneous stimulation of both ears. Slow, enlarged oscillations show the eardrums and their ossicles relative to the midline.',
   'https://www.nidcd.nih.gov/health/how-do-we-hear',[

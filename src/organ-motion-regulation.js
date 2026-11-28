@@ -179,7 +179,8 @@ export function mountRegulationMotion(entry,instance,meshesByName){
     for(const [mat,base] of materialDefaults){mat.emissive.copy(base.color);mat.emissiveIntensity=base.intensity;}
     const level=releaseLevel(entry,index,u);
     const glow=(mechanical ? .14 : .10+.39*level)+.09*Math.sin(Math.PI*u);
-    for(const name of (phase.tissue||phase.sites))for(const mat of ink.get(name)||[]){
+    const naturalEye=(entry.mechanism==='accommodation'||entry.mechanism==='eyes')&&instance.appearance==='natural';
+    for(const name of (naturalEye?[]:phase.tissue||phase.sites))for(const mat of ink.get(name)||[]){
       const base=materialDefaults.get(mat);
       mat.emissive.copy(emission.copy(base.color).lerp(WARM,glow));mat.emissiveIntensity=Math.max(base.intensity,.85);
     }

@@ -47,7 +47,7 @@ export function initOrganAtlas(root){
       '<label id="oa-system-filter">System<select data-oa-system>'+options([['','All systems'],...systemNames.map(s=>[s,s])],system)+'</select></label>'+
       '<label><span class="oa-menu-name">Animated organ</span><select aria-label="Animated organ" data-oa-menu></select></label><div class="oa-count" role="status" data-oa-count></div><div data-oa-list class="oa-list" aria-label="Organ animations"></div></aside>'+
       '<section class="oa-content"><header class="oa-title"><div><small>'+escape(entry?entry.system+' · '+entry.kind:map.description)+'</small><h2 tabindex="-1">'+escape(entry?entry.title:map.title)+'</h2></div>'+
-      (entry?link(lastMap||'organs',lastMap?'Back to body map':'Whole body'):'')+'</header><div class="oa-model" data-oa-model></div><section class="oa-lesson" data-oa-lesson></section></section></div></div>';
+      (entry?'<div class="oa-title-links">'+(entry.id==='eye'?link('organs/paired-eyes','View intact eyes'):entry.id==='paired-eyes'?link('organs/eye','Eye section'):'')+link(lastMap||'organs',lastMap?'Back to body map':'Whole body')+'</div>':'')+'</header><div class="oa-model" data-oa-model></div><section class="oa-lesson" data-oa-lesson></section></section></div></div>';
     const get=k=>root.querySelector('[data-oa-'+k+']');
     const search=get('search'),systemSelect=get('system'),menu=get('menu'),list=get('list'),count=get('count'),lesson=get('lesson'),host=get('model');
     search.value=query;

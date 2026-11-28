@@ -9,6 +9,7 @@ import {appliedItems} from '../src/ap2-applied.js';
 
 import {cutaways,cutawayMatch,brainTargets,normalizeNeuroName,routeQuestions} from '../src/ap2-neural-cutaways.js';
 import {pupilResponse} from '../src/ap2-neural-sensory.js';
+import {eyeSectionTissue} from '../src/organ-eye-section.js';
 
 function glb(path){
   const bytes=readFileSync(new URL('../assets/'+path,import.meta.url));
@@ -33,6 +34,22 @@ test('neural specimens preserve registered brain and left ossicle surfaces',()=>
   assert.equal(brain.nodes.length,21);
   assert.deepEqual(ear.nodes.map(n=>n.name).sort(),['Incus','Malleus','Stapes']);
 });
+test('all donor eye structures have a section finish and both eye lessons open the intact exterior',()=>{
+  const eye=glb('ap2-neuro/eye-section.glb');
+  for(const node of eye.nodes){
+    const material=eyeSectionTissue(node.name);
+    assert.match(material.color,/^#[0-9a-f]{6}$/i,node.name);
+    assert.ok(material.roughness>=0&&material.roughness<=1,node.name);
+    assert.ok(material.opacity>0&&material.opacity<=1,node.name);
+  }
+  assert.ok(eyeSectionTissue('Cornea').opacity<eyeSectionTissue('Lens').opacity);
+  assert.ok(eyeSectionTissue('Lens').opacity<1);
+  assert.equal(eyeSectionTissue('Retina').opacity,1);
+  for(const section of ['14.1','16.3']){
+    assert.match(renderLab(section),/href="#organs\/paired-eyes"/);
+  }
+});
+
 test('eye section and inner-ear mesh labels match real independent surfaces',()=>{
   const eye=glb('ap2-neuro/eye-section.glb'),ear=glb('ap2-neuro/labyrinth.glb');
   for(const [doc,names] of [[eye,['Lens','Ciliary muscle','Zonules','Retina','Iris','Sclera','Cornea','Choroid','Macula lutea','Fovea','Optic disc']],[ear,['Anterior duct','Posterior duct','Lateral duct','Anterior ampulla','Posterior ampulla','Lateral ampulla','Saccule','Utricle','Scala vestibuli','Scala tympani']]]){

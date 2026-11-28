@@ -2,6 +2,7 @@ import {Plane,Vector3,DoubleSide} from 'three';
 import {rememberOrganTeachingColor} from './organ-tissue-material.js';
 import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {mountMechanicalMotion} from './organ-motion-regulation-dynamics.js';
+import {eyeSectionTissue} from './organ-eye-section.js';
 import {neuralRegions,renderNeuralRegion,startNeuralRegion} from './ap2-neural-regions.js';
 
 import {cutaways,cutawayMatch,cutawayColor,brainTargets,routeQuestions} from './ap2-neural-cutaways.js';
@@ -58,7 +59,9 @@ export function renderNeuralSpecimens(id){
     const atlasTarget=kind==='eye'?['Optic nerve (II).l','Locate the left optic nerve in the full atlas']:kind==='ear'||kind==='ossicles'?['Vestibulocochlear nerve (VIII).l','Locate the left vestibulocochlear nerve in the full atlas']:['Third ventricle','Locate the third ventricle in the full atlas'];
     const jump=cutaways[kind]?'<a href="'+(kind==='axon'?'#ap2-lesson-12.4/activity/signal':kind==='cord'?'#ap2-lesson-13.4/activity/schematic':'#ap2-lesson-19.3/activity')+'">'+(kind==='axon'?'Compare impulse propagation':kind==='cord'?'Trace spinal nerve fibers':'Compare the cardiac cycle')+' ↗</a>':'<a href="?nerve='+encodeURIComponent(atlasTarget[0])+'#atlas">'+atlasTarget[1]+' ↗</a>';
     const routeSelect=spec.routes?'<label>Pathway or condition <select data-specimen-route>'+spec.routes.map(([label],i)=>option(label,i)).join('')+'</select></label>':'';
-    return '<section class="neuro-specimen course-card" data-neuro-specimen="'+kind+'"><h3>'+spec.title+'</h3><p>'+spec.credit+' <a href="assets/ap2-neuro/SOURCES.md" target="_blank" rel="noreferrer">Model credits ↗</a></p><button type="button" data-load-specimen>Open the 3D specimen</button><div data-specimen-content hidden><div data-specimen-host></div><div class="course-actions">'+routeSelect+'<label>Structure or condition <select data-stage>'+spec.steps.map(([label],i)=>option(label,i)).join('')+'</select></label>'+
+    const title='<h3>'+spec.title+'</h3>';
+    const heading=kind==='eye'?'<header class="course-actions">'+title+'<a class="course-link" href="#organs/paired-eyes">Explore intact eyes in 3D</a></header>':title;
+    return '<section class="neuro-specimen course-card" data-neuro-specimen="'+kind+'">'+heading+'<p>'+spec.credit+' <a href="assets/ap2-neuro/SOURCES.md" target="_blank" rel="noreferrer">Model credits ↗</a></p><button type="button" data-load-specimen>'+(kind==='eye'?'Open the eye cutaway':'Open the 3D specimen')+'</button><div data-specimen-content hidden><div data-specimen-host></div><div class="course-actions">'+routeSelect+'<label>Structure or condition <select data-stage>'+spec.steps.map(([label],i)=>option(label,i)).join('')+'</select></label>'+
       (kind==='ventricles'?'<label>Section plane <select data-plane><option>Whole cast</option><option>Sagittal</option><option>Coronal</option><option>Axial</option></select></label><label>Move section <input type="range" data-slice min="0" max="100" value="50" disabled></label><label>Adult derivatives <select data-region>'+regions.map(([name],i)=>option(name,i)).join('')+'</select></label><label><input type="checkbox" data-context> Show surrounding landmarks</label><label><input type="checkbox" data-obstruction> Simulate aqueduct obstruction</label>':targets[kind]?'<label>Identify a structure <select data-identify><option value="">Show this condition</option>'+targets[kind].map(([label],i)=>option(label,i)).join('')+'</select></label>':'')+
       '<button type="button" data-play-stages>Play sequence</button></div><p data-specimen-reading role="status"></p>'+(spec.routes?'<div data-route-question><label><span data-predict-prompt></span> <select data-route-response></select></label><button type="button" data-check-route>Check prediction</button><p data-route-feedback role="status"></p></div>':'')+'<button type="button" data-spot-open>Try a hidden-label identification</button><div data-spot hidden><label>Name the highlighted surface <select data-spot-pick></select></label><div class="course-actions"><button type="button" data-spot-check>Check structure</button><button type="button" data-spot-next>Another target</button><button type="button" data-spot-leave>Return to exploration</button></div><p role="status" data-spot-verdict></p></div></div><div class="course-actions">'+jump+(kind==='eye'?(id==='14.1'?'<a href="#ap2-lesson-14.1/activity/rod">Magnify the rod light response ↗</a><a href="#ap2-lesson-16.3/activity/pupil">Test the pupillary light reflex ↗</a>':'<a href="#ap2-lesson-16.3/activity/pupil">Test the pupillary light reflex ↗</a><a href="#ap2-lesson-14.1/activity/eye">Review lens accommodation ↗</a>'):'')+'</div></section>';
   }).join('');
@@ -108,6 +111,8 @@ function start(panel,kind){
   const ranges=[null,[-.035,.035],[-.06,.035],[1.57,1.655]];
   function styleModel(){
     if(!api?.model)return;
+    const naturalEye=kind==='eye'&&api.appearance==='natural';
+    const showNaturalFocus=naturalEye&&spot<0&&identify.value==='';
     highlighted.length=0;
     api.model.traverse(mesh=>{
       if(!mesh.isMesh)return;
@@ -122,15 +127,20 @@ function start(panel,kind){
       const occluded=obstruction?.checked;
       const active=spot>=0?spotMatch:occluded?n==='aqueductofmidbrain':region&&+region.value?matchingRegion:selected;
       if(active&&mesh.visible)highlighted.push(mesh);
+      const sectionTissue=naturalEye?eyeSectionTissue(n):undefined;
       for(const m of [].concat(mesh.material)){
-        const tissue=spec.routes?cutawayColor(n):baseColor(n);
+        const tissue=sectionTissue?.color??(spec.routes?cutawayColor(n):baseColor(n));
         rememberOrganTeachingColor(m,tissue);
-        m.color.set(spot>=0?(spotMatch?'#f5b668':'#839da4'):occluded?(n==='aqueductofmidbrain'?'#c74950':upstream?'#f5b668':tissue):matchingRegion?(n.startsWith('globuspallidus')?'#ed9580':'#f5b668'):region&&+region.value?tissue:selected&&bareAxon&&current===2?'#8cb3c3':selected?'#f5b668':tissue);
+        m.color.set(spot>=0?(spotMatch?'#f5b668':'#839da4'):occluded?(n==='aqueductofmidbrain'?'#c74950':upstream?'#f5b668':tissue):matchingRegion?(n.startsWith('globuspallidus')?'#ed9580':'#f5b668'):region&&+region.value?tissue:selected&&bareAxon&&current===2?'#8cb3c3':selected&&!showNaturalFocus?'#f5b668':tissue);
         const clearEyeTissue=kind==='eye'&&(n==='cornea'||n==='lens');
         m.transparent=(context&&!matchingRegion)||clearEyeTissue;
         m.opacity=context&&!matchingRegion?.12:clearEyeTissue?(n==='cornea'?.32:.78):1;
         if(kind==='eye'){
-          m.roughness=clearEyeTissue?.2:n==='sclera'?.68:.84;
+          if(sectionTissue){m.opacity=sectionTissue.opacity;m.transparent=m.opacity<1;}
+          // Some HRA parts carry a teaching ID color on every vertex, which
+          // would tint both the natural tissues and the anonymous gold target.
+          m.vertexColors=Boolean(mesh.geometry.getAttribute('color'))&&!naturalEye&&spot<0&&identify.value==='';
+          m.roughness=sectionTissue?.roughness??(clearEyeTissue?.2:n==='sclera'?.68:.84);
           m.metalness=0;
         }
         if(identify && identify.value!==''){m.transparent=!selected;m.opacity=selected?1:.16;}
@@ -158,7 +168,7 @@ function start(panel,kind){
   }
   function step(i){
     current=i;stage.value=String(i);
-    const extra=spec.routes?'':kind==='ventricles'?' In the default orientation, superior is up. The pons is anterior to the fourth ventricle.':kind==='eye'?' Gold marks the lens. The globe stays still so you can distinguish accommodation from convergence.':kind==='ossicles'?' Gold marks this ossicle.':' Gold marks the organ associated with this stimulus.';
+    const extra=spec.routes?'':kind==='ventricles'?' In the default orientation, superior is up. The pons is anterior to the fourth ventricle.':kind==='eye'?' Watch the lens in profile. The globe stays still so you can distinguish accommodation from convergence.':kind==='ossicles'?' Gold marks this ossicle.':' Gold marks the organ associated with this stimulus.';
     reading.textContent=obstruction?.checked?'Aqueduct obstruction. The red channel marks the block. The gold lateral and third ventricles lie upstream and can enlarge. The fourth lies downstream. The cast shows their usual shapes.':identify&&identify.value!==''?targets[kind][+identify.value].join(' · '):steps()[i][1]+extra;
     if(region&&+region.value&&!obstruction.checked)reading.textContent=regions[+region.value][2]+' The ventricular cast remains visible for orientation.';
     if(kind==='eye'){
@@ -237,6 +247,11 @@ function start(panel,kind){
   api=mountOrganViewer(host,{asset:'assets/ap2-neuro/'+spec.file+'.glb',title:spec.title,direction:spec.direction,colors:()=> '#aac4ce',
     onLoad(ready){
       api=ready;
+      if(kind==='eye'){
+        const appearance=host.querySelector('[data-organ-appearance]');
+        appearance?.addEventListener('change',styleModel);
+        ready.addCleanup(()=>appearance?.removeEventListener('change',styleModel));
+      }
       if(phaseSlider){
         const targets=spec.steps.map(([name])=>name),bones=new Map();
         ready.model.traverse(mesh=>{if(mesh.isMesh)for(const name of targets)if(nameOf(mesh)===name.toLowerCase())bones.set(name,[mesh]);});

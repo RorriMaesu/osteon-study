@@ -3,6 +3,9 @@ import {mountOrganViewer} from './ap2-organ-viewer.js';
 import {separateRegionalSurfaces} from './ap2-endocrine-regions.js';
 import {mountStructurePicker} from './organ-structure-picker.js';
 import {createOrganMotion,organSystemColor} from './organ-atlas-catalog.js';
+import {eyeNearResponse} from './organ-motion-regulation-dynamics.js';
+import {visibleEyeHit} from './organ-eye-picking.js';
+import {eyeSectionTissue} from './organ-eye-section.js';
 
 
 function lookupSurface(mesh,names){
@@ -51,11 +54,15 @@ export function mountCloseup(host,entry,onReady){
   const targets=new Set(entry.targets),context=new Set(entry.context||[]);
   const study=new Set((entry.studyOnly||[]).filter(id=>!targets.has(id)&&!context.has(id)));
   const names=new Set([...targets,...context,...study]);
-  let picker;
+  const pairedEyes=entry.id==='paired-eyes';
+  let picker,refreshAppearance;
   const options={
     prepare:entry.asset.endsWith('/ovarian-region.glb')?separateRegionalSurfaces:undefined,
+    // A longer focal length gives both globes the same near-frontal view.
+    fieldOfView:pairedEyes?12:undefined,
     ...expandedControls(host),asset:entry.asset,title:entry.title,direction:entry.id==='liver'?portalView:entry.direction||[0,.05,1],up:entry.up||[0,1,0],
     onRender:()=>picker?.updatePin(),
+    onAppearanceChange:()=>refreshAppearance?.(),
     include:(_,mesh)=>Boolean(lookupSurface(mesh,names)),
     colors:(_,mesh)=>{
       const name=lookupSurface(mesh,names),material=[].concat(mesh.material)[0];
@@ -89,9 +96,19 @@ export function mountCloseup(host,entry,onReady){
       // Fit the selected organ before an overlay or distant context can expand its bounds.
       const fitContext=new Set(entry.fitContext||[]);
       let contextVisible=true,selectedParts=new Set();
+      // Keep identity, surface picking and the original donor geometry in both views.
+      // In Lens motion, fade the outer coats and leave the internal lenses visible.
+      const eyeMeshes=pairedEyes?selectable.map(mesh=>({mesh,raw:lookupSurface(mesh,names),eye:viewer.eyeSurface(mesh)})):[];
       function visibility(){
         for(const mesh of supplemental)mesh.visible=selectedParts.has(mesh);
         for(const mesh of surroundings)mesh.visible=contextVisible||selectedParts.has(mesh);
+        for(const {mesh,raw,eye} of eyeMeshes){
+          if(!eye)continue;
+          const inside=viewer.appearance==='teaching',chosen=selectedParts.has(mesh);
+          mesh.visible=chosen||!inside||!(/^(?:iris|retina)_/.test(raw));
+          const opacity=inside&&!chosen&&!raw.startsWith('lens_')?.15:1;
+          eye.applyVisibility(opacity,opacity<1,opacity===1);
+        }
       }
       function resetView(direction){
         for(const mesh of surroundings)mesh.visible=!!lookupSurface(mesh,fitContext);
@@ -100,7 +117,23 @@ export function mountCloseup(host,entry,onReady){
         viewer.fit(focus?.length?focus:undefined,direction);visibility();
       }
       const showContext=visible=>{contextVisible=visible;visibility();viewer.invalidate();};
-      resetView();
+      refreshAppearance=visibility;resetView();
+      if(pairedEyes){
+        const presets=host.querySelector('[data-orientation]'),standard=presets.onchange;
+        const appearance=host.querySelector('[data-organ-appearance]');
+        appearance.setAttribute('aria-label','Eye view');
+        appearance.options[0].text='Eye exterior';appearance.options[1].text='Lens motion';
+        presets.options[0].text='Both eyes · front';
+        presets.add(new Option('Left eye close-up','left-eye'),1);
+        presets.add(new Option('Right eye close-up','right-eye'),2);
+        presets.onchange=event=>{
+          if(presets.value==='home')resetView();
+          else if(presets.value==='left-eye'||presets.value==='right-eye'){
+            const side=presets.value==='left-eye'?'left':'right';
+            viewer.fit(meshes.get('sclera_'+side),entry.direction);
+          }else standard.call(presets,event);
+        };
+      }
       if(entry.id==='liver'){
         const presets=host.querySelector('[data-orientation]'),standard=presets.onchange;
         presets.options[0].text='Portal inflow · visceral surface';
@@ -119,14 +152,57 @@ export function mountCloseup(host,entry,onReady){
         };
       }
       const motion=createOrganMotion(entry,viewer,meshes);
-      const frame=(t,particle)=>{motion.set(t,particle);viewer.invalidate();};
+      let position=0;
+      // This donor is physically sectioned; its cut faces use the same tissue
+      // finishes as the chapter specimen, including the transparent optical media.
+      if(entry.id==='eye'){
+        const coats=[];
+        for(const [raw,parts] of meshes){
+          const natural=eyeSectionTissue(raw);
+          if(!natural)continue;
+          for(const part of parts)for(const mat of [].concat(part.material)){
+            coats.push({mat,natural,teaching:{color:mat.color.clone(),roughness:mat.roughness,opacity:mat.opacity,transparent:mat.transparent,depthWrite:mat.depthWrite,vertexColors:mat.vertexColors}});
+          }
+        }
+        const applySection=()=>{
+          for(const {mat,natural,teaching} of coats){
+            const naturalMode=viewer.appearance==='natural';
+            const style=naturalMode?natural:teaching;
+            mat.color.set(style.color);mat.roughness=style.roughness;mat.opacity=style.opacity;
+            mat.transparent=naturalMode?style.opacity<1:teaching.transparent;
+            mat.depthWrite=naturalMode?style.opacity===1:teaching.depthWrite;
+            const vertexColors=naturalMode?false:teaching.vertexColors;
+            if(mat.vertexColors!==vertexColors){mat.vertexColors=vertexColors;mat.needsUpdate=true;}
+          }
+        };
+        refreshAppearance=()=>{applySection();visibility();motion.set(position);};
+        applySection();
+        const presets=host.querySelector('[data-orientation]'),standard=presets.onchange;
+        presets.options[0].text='Whole eye section';
+        presets.add(new Option('Lens close-up','lens'),1);
+        presets.onchange=event=>{
+          if(presets.value==='lens')viewer.fit([...meshes.get('Lens'),...meshes.get('Zonules')],entry.direction);
+          else if(presets.value==='home')resetView();
+          else standard.call(presets,event);
+        };
+      }
+      const irises=eyeMeshes.filter(o=>o.raw.startsWith('iris_'));
+      const frame=(t,particle)=>{
+        position=t;
+        motion.set(t,particle);
+        if(pairedEyes)for(const {eye} of irises)eye?.setNearFocus(eyeNearResponse(t));
+        viewer.invalidate();
+      };
       viewer.addCleanup(()=>motion.dispose?.());
-      picker=mountStructurePicker(host,viewer,entry,meshes,{reveal(_group,groups){
-        selectedParts=new Set(groups.flatMap(group=>group.meshes));visibility();
+      picker=mountStructurePicker(host,viewer,entry,meshes,{reveal(group,groups){
+        selectedParts=new Set(groups.flatMap(group=>group.meshes));
+        if(pairedEyes&&viewer.appearance==='natural'&&group?.names.some(raw=>/^(?:lens|retina)_/.test(raw)))viewer.setAppearance('teaching');
+        visibility();
       }});
       viewer.announce('Tap a surface or open Structures to identify it.');
       tapSurface(viewer,()=>picker.isolateObjects(selectable),hits=>{
-        const hit=hits[0];if(hit)picker.pick(lookupSurface(hit.object,names),hit);
+        const hit=pairedEyes?visibleEyeHit(hits,viewer.appearance,mesh=>lookupSurface(mesh,names)):hits[0];
+        if(hit)picker.pick(lookupSurface(hit.object,names),hit);
       });
       host.querySelector('[data-recenter]').onclick=()=>{resetView();host.querySelector('[data-orientation]').value='home';};
       onReady({frame,showContext,viewer,selectSurface:raw=>picker.pick(raw)});
@@ -144,9 +220,11 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
     for(const {mesh,organ,raw} of meshes){
       const match=comparedParts.has(raw)||(organ.id===selected&&(!activeParts||activeParts.includes(raw)));
       mesh.visible=(!system||organ.system===system)&&(!organ.contextOnly||organ.id===selected||comparedParts.has(raw)||!!system);
+      const envelope=/^(skin|integument|body-surface)$/i.test(organ.id);
+      const limit=envelope?(match?.26:.035):selected&&!match?.23:1;
+      const eye=api.eyeSurface(mesh);
+      if(eye){eye.applyVisibility(limit,limit<1,limit===1);continue;}
       for(const {mat,opacity,transparent,depthWrite} of materials.get(mesh)){
-        const envelope=/^(skin|integument|body-surface)$/i.test(organ.id);
-        const limit=envelope?(match?.26:.035):selected&&!match?.23:1;
         mat.opacity=Math.min(opacity,limit);
         mat.transparent=transparent||mat.opacity<1;mat.depthWrite=depthWrite&&mat.opacity===opacity;
       }
@@ -162,10 +240,12 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
     show();
   }
   function setSystem(value){system=value||'';select(null);}
-  function frame(objects,direction){
+  let mapFov;
+  function frame(objects,direction,fov=mapFov){
     const bounds=new THREE.Box3();
     for(const mesh of objects)bounds.expandByObject(mesh);
     if(bounds.isEmpty())return;
+    api.camera.fov=fov;
     const size=bounds.getSize(new THREE.Vector3());
     const marker=new THREE.Mesh(new THREE.BoxGeometry(size.x,size.y,size.z));
     bounds.getCenter(marker.position);api.fit(marker,direction);marker.geometry.dispose();marker.material.dispose();
@@ -194,7 +274,7 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
       const color=[].concat(mesh.material)[0]?.color;
       return color&&color.getHex()!==0xffffff?color:organSystemColor(organ?.system);
     },onLoad(instance){
-      api=instance;addViewMenu(host);
+      api=instance;mapFov=api.camera.fov;addViewMenu(host);
       function indexLayer(layer,extraAsset){layer.traverse(mesh=>{
         if(!mesh.isMesh)return;
         const organ=bySurface.get(lookupSurface(mesh,bySurface));
@@ -221,7 +301,8 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
       });
       show();whole();
       tapSurface(api,()=>picker.isolateObjects(meshes.map(o=>o.mesh)),hits=>{
-        const hit=hits.find(h=>!/^skin$/i.test(h.object.userData.registeredOrgan.id))||hits[0];
+        const solids=hits.filter(h=>!/^skin$/i.test(h.object.userData.registeredOrgan.id));
+        const hit=visibleEyeHit(solids.length?solids:hits,api.appearance,mesh=>lookupSurface(mesh,bySurface));
         if(hit)picker.pick(lookupSurface(hit.object,bySurface),hit);
       },()=>{interacted=true;});
       host.querySelector('[data-recenter]').onclick=()=>{host.querySelector('[data-orientation]').value='home';whole();};
@@ -229,6 +310,13 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
       for(const extra of map.extraAssets||[]){api.loadLayer(extra).then(layer=>{if(closed)return;indexLayer(layer,extra);picker.refresh();show();if(!interacted)whole();onReady();}).catch(()=>{if(!closed)onLayerError('The additional urinary surfaces could not load. Reopen this preparation to retry.');});}
     }});
   return {select,setSystem,has(id){return meshes.some(p=>p.organ.id===id);},showSkeleton(on){bones=on;if(on)loadSkeleton();show();},
-    focus(){interacted=true;if(api&&selected)frame(meshes.filter(o=>o.organ.id===selected&&(!activeParts||activeParts.includes(o.raw))).map(o=>o.mesh),api.camera.position.clone().sub(api.controls.target));},
+    focus(){
+      interacted=true;
+      if(!api||!selected)return;
+      const objects=meshes.filter(o=>o.organ.id===selected&&(!activeParts||activeParts.includes(o.raw))).map(o=>o.mesh);
+      // Step back and use a longer lens for the paired globes. A close wide
+      // camera makes forward-facing eyes look as though they diverge.
+      frame(objects,api.camera.position.clone().sub(api.controls.target),selected==='eyes'?12:mapFov);
+    },
     dispose(){closed=true;viewer.dispose();}};
 }
