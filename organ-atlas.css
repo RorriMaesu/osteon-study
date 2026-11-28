@@ -189,3 +189,36 @@ body:has(#organs-view.active)>main,#organs-view.active{height:100%;min-height:0;
 .oa-mech-controls label{flex:1}
 .oa-mech-controls input{width:100%;min-height:30px;accent-color:#dda875}
 .oa-mechanism-dialog button{min-height:34px}
+.oa-dissection-tools{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.oa-dissection-tools label{min-width:0;flex:1 1 150px;max-width:360px}
+.oa-dissection-tools select{width:100%}
+.oa-dissection-tools :is(button,select){min-height:36px}
+.oa-dissection-tools button,.oa-part-actions button{padding:4px 9px}
+.oa-dissection-tools [hidden],.oa-part-actions [hidden],.oa-part-actions[hidden],.oa-layer-dialog [hidden]{display:none!important}
+.oa-layer-dialog{box-sizing:border-box;width:min(24rem,calc(100vw - 20px));max-height:90dvh;overflow:auto;margin:auto;padding:16px;border:1px solid #63837d;border-radius:12px;background:#172a2e;color:#edf4ee}
+.oa-layer-dialog::backdrop{background:#091418bf}
+.oa-layer-dialog[open]{display:grid;gap:12px}
+.oa-layer-dialog header,.oa-layer-dialog li{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.oa-layer-dialog :is(h3,h4,ul){margin:0}
+.oa-layer-dialog label:not(.oa-check){display:grid;gap:3px}
+.oa-layer-dialog ul{list-style:none;padding:0;margin-block:5px}
+.oa-layer-dialog li{padding:3px 0}
+.oa-layer-dialog button{min-height:34px}
+.oa-part-actions{position:absolute;right:6px;top:6px;z-index:2;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px;max-width:calc(100% - 12px)}
+.oa-part-actions .oa-quick-isolate{position:static}
+.oa-part-actions button{background:#132629;color:#eef4ec;border:1px solid #859f95;border-radius:6px;min-height:34px}
+@media(max-width:600px){
+ .oa-dissection-tools{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px}
+ .oa-dissection-tools label{max-width:none}
+ .oa-dissection-tools :is(button,select){font-size:.8rem;padding-inline:6px}
+ .oa-dissection-tools [data-oa-hide]{grid-area:2/1}
+ .oa-dissection-tools [data-oa-hide-part]{grid-area:2/2}
+ .oa-dissection-tools [data-oa-undo]{grid-area:2/3}
+ .oa-lesson:has(.oa-dissection-tools) .oa-body-pick{box-sizing:border-box;height:2.65rem;max-height:2.65rem;overflow:auto;align-content:start}
+}
+@media(max-height:540px) and (orientation:landscape){
+ #organs-view .organ-tools .oa-camera-views{display:block}
+ #organs-view .organ-tools:not(.oa-camera-open) :is([data-turn],[data-orientation],[data-recenter]){display:none}
+ .oa-dissection-tools{display:flex;gap:4px}
+ .oa-dissection-tools :is(button,select){min-height:30px;font-size:.78rem}
+}

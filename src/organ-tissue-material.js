@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {orientOrganSurface} from './organ-surface-orientation.js';
 
 // Exact donor assets and gross surfaces. Microscopy, cutaway teaching models and
 // flow markers keep their own colors, even when they contain the same organ words.
@@ -211,6 +212,7 @@ export function createOrganAppearance(initial='natural'){
     prepare(mesh,asset,teachingColor){
       let kind;
       const name=namedMeshes.get(mesh);
+      orientOrganSurface(mesh,asset,name||mesh.name);
       if(name)kind=organTissueKind(asset,name);
       else if(grossAssets.has(asset)){
         for(let obj=mesh;obj&&!kind;obj=obj.parent){

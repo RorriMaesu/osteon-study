@@ -6,6 +6,8 @@ import {createOrganMotion,organSystemColor} from './organ-atlas-catalog.js';
 import {eyeNearResponse} from './organ-motion-regulation-dynamics.js';
 import {visibleEyeHit} from './organ-eye-picking.js';
 import {eyeSectionTissue} from './organ-eye-section.js';
+import {createBodyDissection} from './organ-body-dissection.js';
+import {createBoneContext} from './organ-bone-context.js';
 
 
 function lookupSurface(mesh,names){
@@ -96,6 +98,7 @@ export function mountCloseup(host,entry,onReady){
       // Fit the selected organ before an overlay or distant context can expand its bounds.
       const fitContext=new Set(entry.fitContext||[]);
       let contextVisible=true,selectedParts=new Set();
+      const peelHistory=[],peeledMeshes=new Set();
       // Keep identity, surface picking and the original donor geometry in both views.
       // In Lens motion, fade the outer coats and leave the internal lenses visible.
       const eyeMeshes=pairedEyes?selectable.map(mesh=>({mesh,raw:lookupSurface(mesh,names),eye:viewer.eyeSurface(mesh)})):[];
@@ -109,6 +112,7 @@ export function mountCloseup(host,entry,onReady){
           const opacity=inside&&!chosen&&!raw.startsWith('lens_')?.15:1;
           eye.applyVisibility(opacity,opacity<1,opacity===1);
         }
+        for(const mesh of peeledMeshes)mesh.visible=false;
       }
       function resetView(direction){
         for(const mesh of surroundings)mesh.visible=!!lookupSurface(mesh,fitContext);
@@ -194,7 +198,27 @@ export function mountCloseup(host,entry,onReady){
         viewer.invalidate();
       };
       viewer.addCleanup(()=>motion.dispose?.());
-      picker=mountStructurePicker(host,viewer,entry,meshes,{reveal(group,groups){
+      function undoPeel(all=false){
+        const restored=peelHistory.splice(all?0:-1);
+        for(const layer of restored)for(const mesh of layer.meshes){
+          peeledMeshes.delete(mesh);mesh.visible=true;
+        }
+        visibility();viewer.invalidate();
+        return restored.at(-1)?.raw;
+      }
+      picker=mountStructurePicker(host,viewer,entry,meshes,{
+        eligible:group=>group.meshes.some(mesh=>!peeledMeshes.has(mesh)),
+        peel:{
+          hide(group){
+            const visible=group.meshes.filter(mesh=>!peeledMeshes.has(mesh));
+            if(!visible.length)return;
+            for(const mesh of visible)peeledMeshes.add(mesh);
+            peelHistory.push({title:group.title,raw:group.names[0],meshes:visible});
+            visibility();viewer.invalidate();
+          },
+          undo:undoPeel,get count(){return peelHistory.length;},get last(){return peelHistory.at(-1)?.title;}
+        },
+        reveal(group,groups){
         selectedParts=new Set(groups.flatMap(group=>group.meshes));
         if(pairedEyes&&viewer.appearance==='natural'&&group?.names.some(raw=>/^(?:lens|retina)_/.test(raw)))viewer.setAppearance('teaching');
         visibility();
@@ -211,32 +235,49 @@ export function mountCloseup(host,entry,onReady){
   return mountOrganViewer(host,options);
 }
 
-export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
+export function mountBodyMap(host,map,{onPick,onReady,onLayerError,onDissectionChange=()=>{},dissection=createBodyDissection(map)}){
   const bySurface=new Map(map.organs.flatMap(organ=>organ.targets.map(name=>[name,organ])));
   const meshes=[],localBones=[],materials=new Map(),boneNames=new Set(map.boneNames||[]),contextNames=new Set(map.contextNames||[]);
-  const parts=new Map();
-  let selected=null,selectedPart=null,activeParts=null,comparedParts=new Set(),system='',skeleton=null,bones=true,skeletonLoading=false,closed=false,api,picker;
+  const parts=new Map(),pickerParts=new Map(),boneContexts=[];
+  let selected=null,selectedPart=null,activeParts=null,comparedParts=new Set(),system='',skeleton=null,skeletonLoading=false,closed=false,isolating=false,api,picker;
+  const skinOrgan=bySurface.get('skin');
+  const eligible=organ=>organ&&!dissection.isHidden(organ.id)&&(!system||organ.system===system);
+  function indexVisibleParts(){
+    pickerParts.clear();
+    for(const [raw,objects] of parts){
+      if(!dissection.isPartHidden(bySurface.get(raw).id,raw))pickerParts.set(raw,objects);
+    }
+  }
   function show(){
+    const coveredPinna=dissection.skinVisible&&eligible(skinOrgan)&&(!isolating||comparedParts.has('skin'));
     for(const {mesh,organ,raw} of meshes){
       const match=comparedParts.has(raw)||(organ.id===selected&&(!activeParts||activeParts.includes(raw)));
-      mesh.visible=(!system||organ.system===system)&&(!organ.contextOnly||organ.id===selected||comparedParts.has(raw)||!!system);
-      const envelope=/^(skin|integument|body-surface)$/i.test(organ.id);
-      const limit=envelope?(match?.26:.035):selected&&!match?.23:1;
-      const eye=api.eyeSurface(mesh);
-      if(eye){eye.applyVisibility(limit,limit<1,limit===1);continue;}
-      for(const {mat,opacity,transparent,depthWrite} of materials.get(mesh)){
-        mat.opacity=Math.min(opacity,limit);
-        mat.transparent=transparent||mat.opacity<1;mat.depthWrite=depthWrite&&mat.opacity===opacity;
+      mesh.visible=Boolean(eligible(organ)&&!dissection.isPartHidden(organ.id,raw)&&(!organ.contextOnly||dissection.skinVisible));
+      // The registered skin already includes the pinnae. Separate auricular
+      // surfaces intersect its outer contour in this donor. Expose them on peel.
+      if(coveredPinna&&/^(helix|concha_of_auricle|lobule_of_auricle)_(left|right)$/.test(raw))mesh.visible=false;
+      for(const {mat,emissive} of materials.get(mesh)){
+        if(emissive){
+          mat.emissive.copy(emissive);
+          if(match)mat.emissive.addScalar(.035);
+        }
       }
     }
-    if(skeleton)skeleton.visible=bones;
-    for(const mesh of localBones)mesh.visible=bones;
+    for(const context of boneContexts)context.setMode(dissection.skeletonMode);
     api?.invalidate();
   }
+  function revealSkin(){
+    if(dissection.setSkin(true))onDissectionChange();
+  }
   function select(id,raw){
+    if(id&&(!eligible(map.organs.find(row=>row.id===id))||dissection.isPartHidden(id,raw)))id=null;
     selected=id||null;
+    if(selected==='skin')revealSkin();
     if(!raw||bySurface.get(raw)?.id!==id){selectedPart=null;activeParts=null;picker?.clear();}
-    else if(raw!==selectedPart||!activeParts){selectedPart=raw;picker?.pick(raw,null,false);}
+    else if(raw!==selectedPart||!activeParts){
+      if(!activeParts?.includes(raw))picker?.pick(raw,null,false);
+      selectedPart=raw;
+    }
     show();
   }
   function setSystem(value){system=value||'';select(null);}
@@ -251,19 +292,21 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
     bounds.getCenter(marker.position);api.fit(marker,direction);marker.geometry.dispose();marker.material.dispose();
   }
   function whole(){const direction=map.direction||[0,.02,1];if(skeleton)frame([skeleton],direction);else if(api)frame([...localBones,...meshes.map(o=>o.mesh)],direction);}
-  async function loadSkeleton(){
+  function addBones(layer,source){
+    const context=createBoneContext(layer,source);
+    if(context){boneContexts.push(context);api.addCleanup(()=>context.dispose());}
+  }
+  async function loadSkeleton(initial=false){
     if(!map.skeletonAsset||skeletonLoading||skeleton||!api||closed)return;
     skeletonLoading=true;
     try{
       const layer=await api.loadLayer(map.skeletonAsset);
       if(closed)return;
       skeleton=layer;
-      const bone=new THREE.MeshStandardMaterial({color:'#d9c4a6',roughness:.9,transparent:true,opacity:.18,depthWrite:false});
-      const originals=new Set();
-      layer.traverse(m=>{if(m.isMesh){for(const mat of [].concat(m.material))originals.add(mat);m.material=bone;}});
-      api.addCleanup(()=>{for(const mat of originals)mat.dispose();});
-      show();if(!interacted)whole();
-    }catch{if(!closed)onLayerError('Skeletal context could not load. Toggle Skeleton to retry.');}
+      const source=[];layer.traverse(mesh=>{if(mesh.isMesh)source.push(mesh);});
+      addBones(layer,source);
+      show();if(initial&&!interacted)whole();
+    }catch{if(!closed)onLayerError('Skeletal context could not load. Choose a skeleton style again to retry.');}
     finally{skeletonLoading=false;}
   }
   let interacted=false;
@@ -279,7 +322,7 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
         if(!mesh.isMesh)return;
         const organ=bySurface.get(lookupSurface(mesh,bySurface));
         if(!organ){
-          if(lookupSurface(mesh,boneNames)){localBones.push(mesh);for(const mat of [].concat(mesh.material)){mat.color.set('#c9bba5');mat.transparent=true;mat.opacity=.18;mat.depthWrite=false;}}
+          if(lookupSurface(mesh,boneNames))localBones.push(mesh);
           else if(lookupSurface(mesh,contextNames)){for(const mat of [].concat(mesh.material)){mat.transparent=true;mat.opacity=.2;mat.depthWrite=false;}}
           else mesh.visible=false;
           return;
@@ -289,31 +332,77 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError}){
         if(!parts.has(raw))parts.set(raw,[]);
         parts.get(raw).push(mesh);
         meshes.push({mesh,organ,raw});mesh.userData.registeredOrgan=organ;
-        materials.set(mesh,[].concat(mesh.material).map(mat=>({mat,opacity:mat.opacity,transparent:mat.transparent,depthWrite:mat.depthWrite})));
+        materials.set(mesh,[].concat(mesh.material).map(mat=>({mat,emissive:mat.emissive?.clone()})));
       });}
       indexLayer(api.model);
+      addBones(api.model,localBones);
       if(!meshes.length)throw Error('No registered organ surfaces');
-      picker=mountStructurePicker(host,api,{id:map.key,title:map.title,targets:[...bySurface.keys()]},parts,{
+      indexVisibleParts();
+      picker=mountStructurePicker(host,api,{id:map.key,title:map.title,targets:[...bySurface.keys()]},pickerParts,{
         terms:group=>{const organ=bySurface.get(group.names[0]);return organ.label+' '+organ.system;},
-        eligible:group=>!system||bySurface.get(group.names[0]).system===system,
-        reveal(group,groups){activeParts=group?.names||null;comparedParts=new Set(groups.flatMap(item=>item.names));if(group){selectedPart=group.names[0];selected=bySurface.get(selectedPart).id;}else selectedPart=null;show();},
-        onSelect(group){interacted=true;onPick(group?bySurface.get(group.names[0]):null,group?.names[0]);}
+        eligible:group=>eligible(bySurface.get(group.names[0]))&&group.names.every(raw=>!dissection.isPartHidden(bySurface.get(raw).id,raw)),
+        occluders:()=>dissection.skeletonMode==='solid'?boneContexts.map(ctx=>ctx.surface):[],
+        onIsolationChange(on){if(on!==isolating){isolating=on;show();}},
+        reveal(group,groups){activeParts=group?.names||null;comparedParts=new Set(groups.flatMap(item=>item.names));if(group){selectedPart=group.names[0];selected=bySurface.get(selectedPart).id;if(selected==='skin')revealSkin();}else selectedPart=null;show();},
+        onSelect(group,hit){interacted=true;const raw=hit?lookupSurface(hit.object,bySurface):group?.names[0];onPick(raw?bySurface.get(raw):null,raw);}
       });
       show();whole();
-      tapSurface(api,()=>picker.isolateObjects(meshes.map(o=>o.mesh)),hits=>{
-        const solids=hits.filter(h=>!/^skin$/i.test(h.object.userData.registeredOrgan.id));
-        const hit=visibleEyeHit(solids.length?solids:hits,api.appearance,mesh=>lookupSurface(mesh,bySurface));
+      tapSurface(api,()=>picker.isolateObjects([...meshes.map(o=>o.mesh),...(dissection.skeletonMode==='solid'?boneContexts.map(c=>c.surface):[])]),hits=>{
+        const bone=hits.find(hit=>!hit.object.userData.registeredOrgan);
+        const visible=bone?hits.filter(hit=>hit.distance<bone.distance):hits;
+        const hit=visibleEyeHit(visible,api.appearance,mesh=>lookupSurface(mesh,bySurface));
         if(hit)picker.pick(lookupSurface(hit.object,bySurface),hit);
       },()=>{interacted=true;});
       host.querySelector('[data-recenter]').onclick=()=>{host.querySelector('[data-orientation]').value='home';whole();};
-      loadSkeleton();onReady();
-      for(const extra of map.extraAssets||[]){api.loadLayer(extra).then(layer=>{if(closed)return;indexLayer(layer,extra);picker.refresh();show();if(!interacted)whole();onReady();}).catch(()=>{if(!closed)onLayerError('The additional urinary surfaces could not load. Reopen this preparation to retry.');});}
+      if(dissection.skeletonMode!=='off')loadSkeleton(true);
+      onReady();
+      for(const extra of map.extraAssets||[]){api.loadLayer(extra).then(layer=>{if(closed)return;indexLayer(layer,extra);indexVisibleParts();picker.refresh();show();if(!interacted)whole();onReady();}).catch(()=>{if(!closed)onLayerError('The additional urinary surfaces could not load. Reopen this preparation to retry.');});}
     }});
-  return {select,setSystem,has(id){return meshes.some(p=>p.organ.id===id);},showSkeleton(on){bones=on;if(on)loadSkeleton();show();},
+  function afterHide(){
+    const group=picker?.prune();
+    indexVisibleParts();picker?.refresh();
+    const raw=group?.names.includes(selectedPart)?selectedPart:group?.names[0];
+    selected=raw?bySurface.get(raw).id:null;selectedPart=raw||null;
+    onPick(raw?bySurface.get(raw):null,raw);
+    show();onDissectionChange();
+  }
+  function afterRestore(){indexVisibleParts();picker?.refresh();show();onDissectionChange();}
+  return {select,setSystem,has(id){return meshes.some(p=>p.organ.id===id&&!dissection.isPartHidden(id,p.raw));},
+    isHidden:id=>dissection.isHidden(id),
+    isPartHidden:(id,raw)=>dissection.isPartHidden(id,raw),
+    get hiddenIds(){return dissection.hiddenIds;},
+    get hiddenEntries(){return dissection.hiddenEntries;},
+    get skinVisible(){return dissection.skinVisible;},
+    get skeletonMode(){return dissection.skeletonMode;},
+    setSkeleton(mode){
+      const changed=dissection.setSkeleton(mode);
+      if(dissection.skeletonMode!=='off')loadSkeleton();
+      if(changed){show();onDissectionChange();}
+    },
+    setSkin(on){
+      if(!dissection.setSkin(on))return;
+      if(!on&&selected==='skin')afterHide();
+      else{picker?.prune();afterRestore();}
+    },
+    hideSelected(){
+      const id=dissection.hide(selected);
+      if(id)afterHide();
+      return id;
+    },
+    hidePart(raw=selectedPart){
+      if(!selected||bySurface.get(raw)?.id!==selected||!pickerParts.has(raw))return null;
+      const hidden=dissection.hidePart(selected,raw);
+      if(hidden)afterHide();
+      return hidden;
+    },
+    undoHide(){const id=dissection.undo();if(id)afterRestore();return id;},
+    showOrgan(id){const restored=dissection.show(id);if(restored)afterRestore();return restored;},
+    showPart(id,raw){const restored=dissection.showPart(id,raw);if(restored)afterRestore();return restored;},
+    restoreHidden(){const count=dissection.restore();if(count)afterRestore();return count;},
     focus(){
       interacted=true;
       if(!api||!selected)return;
-      const objects=meshes.filter(o=>o.organ.id===selected&&(!activeParts||activeParts.includes(o.raw))).map(o=>o.mesh);
+      const objects=meshes.filter(o=>o.mesh.visible&&o.organ.id===selected&&(!activeParts||activeParts.includes(o.raw))).map(o=>o.mesh);
       // Step back and use a longer lens for the paired globes. A close wide
       // camera makes forward-facing eyes look as though they diverge.
       frame(objects,api.camera.position.clone().sub(api.controls.target),selected==='eyes'?12:mapFov);

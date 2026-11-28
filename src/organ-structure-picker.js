@@ -49,14 +49,23 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
   };
   markers.parentElement.hidden=!markerMaterials.size;
   markers.onchange=()=>{for(const material of markerMaterials)material.visible=markers.checked;viewer.invalidate();};
-  const isolate=element('button','oa-quick-isolate',viewport);
+  const tools=options.peel?element('div','oa-part-actions',viewport):null;
+  const isolate=element('button','oa-quick-isolate',tools||viewport);
   isolate.type='button';isolate.hidden=true;
+  let peelButton,undoButton,restoreButton;
+  if(tools){
+    tools.hidden=true;tools.setAttribute('role','group');tools.setAttribute('aria-label','Selected anatomy');
+    peelButton=element('button','',tools);peelButton.type='button';peelButton.dataset.oaPeel='';peelButton.textContent='Peel layer';
+    undoButton=element('button','',tools);undoButton.type='button';undoButton.dataset.oaUndoPeel='';
+    restoreButton=element('button','',dialog.querySelector('footer'));restoreButton.type='button';restoreButton.textContent='Restore peeled layers';
+  }
   const dock=element('div','oa-compare-key',bar);dock.hidden=true;dock.setAttribute('role','group');dock.setAttribute('aria-label','Compared structures');
   const pins=Array.from({length:3},()=>newPin(viewport));
   const narrow=window.matchMedia('(max-width: 700px)');
   const limit=()=>narrow.matches?2:3;
   let byRaw,groups,search,selected=[],lastMessage='',lastCheck=0,recheck;
   const active=()=>selected.at(-1)?.group;
+  const eligible=group=>!options.eligible||options.eligible(group);
   function index(){
     ({byRaw,groups}=organStructureGroups(entry,meshes,options.describe));
     if(options.terms)for(const group of groups)group.terms+=' '+options.terms(group);
@@ -78,12 +87,20 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
     isolate.textContent=solo.checked?'Show context':selected.length>1?'Isolate parts':'Isolate part';
     isolate.setAttribute('aria-pressed',String(solo.checked));
     isolate.setAttribute('aria-label',solo.checked?'Show surrounding anatomy':selected.length>1?'Isolate compared structures':'Isolate '+(active()?.title||'selection'));
+    if(tools){
+      const count=options.peel.count;
+      tools.hidden=!selected.length&&!count;peelButton.hidden=!selected.length;
+      peelButton.title=active()?'Hide '+active().title:'';
+      undoButton.hidden=restoreButton.hidden=!count;undoButton.textContent='Undo peel ('+count+')';
+      undoButton.title=count?'Show '+options.peel.last:'';
+    }
     if(selected.length&&solo.checked){
       const isolated=allSelected();
       viewer.scene.traverse(obj=>{if(obj.isLight)isolated.push(obj);});
       for(const obj of isolated){savedMasks.set(obj,obj.layers.mask);obj.layers.enable(studyLayer);}
       viewer.camera.layers.set(studyLayer);
     }
+    options.onIsolationChange?.(Boolean(selected.length&&solo.checked));
     lastCheck=0;viewer.invalidate();
   }
   function chooseSurface(mesh){
@@ -148,11 +165,13 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
   function updatePin(){
     if(!selected.length||!label.checked){for(const pin of pins)pin.el.hidden=true;return;}
     const width=viewport.clientWidth,height=viewport.clientHeight,now=performance.now(),due=!lastCheck||now-lastCheck>=180;
-    const occupied=isolate.hidden?[]:[{l:isolate.offsetLeft,t:isolate.offsetTop,r:isolate.offsetLeft+isolate.offsetWidth,b:isolate.offsetTop+isolate.offsetHeight}];
+    const controls=tools||isolate;
+    const occupied=controls.hidden?[]:[{l:controls.offsetLeft,t:controls.offsetTop,r:controls.offsetLeft+controls.offsetWidth,b:controls.offsetTop+controls.offsetHeight}];
     let candidates;
     if(due){
       candidates=[];
       for(const parts of meshes.values())for(const mesh of parts)if(mesh.layers.test(viewer.camera.layers)&&visibleInScene(mesh)&&[].concat(mesh.material).some(opaque))candidates.push(mesh);
+      if(options.occluders)for(const mesh of options.occluders())if(mesh.layers.test(viewer.camera.layers)&&visibleInScene(mesh))candidates.push(mesh);
       lastCheck=now;clearTimeout(recheck);recheck=null;
     }else if(!recheck)recheck=setTimeout(()=>{recheck=null;viewer.invalidate();},185-(now-lastCheck));
     for(const [i,pin] of pins.entries()){
@@ -201,12 +220,18 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
     if(!group){solo.checked=false;announce('Tap a surface or open Structures to identify it.');}
     showSelection();
   }
-  function select(group,hit,notify=true){
+  function select(group,hit,notify=true,allowFit=true){
     const was=selected.find(r=>r.group===group);
     const retained=compare.checked&&group?selected.filter(r=>r!==was).slice(1-limit()):[];
     const current=group?(was&&!hit?was:{group,hit}):null;
     applySelection(current?[...retained,current]:[],hit,notify);
-    if(current&&!hit&&!locate(current.anchor))viewer.fit(allSelected(),viewer.camera.position.clone().sub(viewer.controls.target));
+    if(current&&allowFit&&!hit&&!locate(current.anchor))viewer.fit(allSelected(),viewer.camera.position.clone().sub(viewer.controls.target));
+  }
+  function prune(){
+    const retained=selected.filter(record=>eligible(record.group));
+    if(retained.length!==selected.length)applySelection(retained,null,false);
+    else {setLayer();renderList();}
+    return active()||null;
   }
   function renderList(){
     const {items,suggestion}=search(filter.value,options.eligible);
@@ -232,6 +257,20 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
   function resize(){if(selected.length>limit())applySelection(selected.slice(-limit()),null,false);else viewer.invalidate();}
   narrow.addEventListener('change',resize);
   isolate.onclick=()=>{solo.checked=!solo.checked;solo.onchange();};
+  if(tools){
+    peelButton.onclick=()=>{
+      const group=active();if(!group)return;
+      options.peel.hide(group);prune();announce(group.title+' peeled.');undoButton.focus();
+    };
+    undoButton.onclick=()=>{
+      const group=byRaw.get(options.peel.undo());
+      if(group&&eligible(group)){select(group,null,false,false);announce(group.title+' restored.');}
+      else prune();
+      (undoButton.hidden?peelButton:undoButton).focus();
+    };
+    restoreButton.onclick=()=>{options.peel.undo(true);prune();announce('Peeled layers restored.');dialog.close();};
+    setLayer();
+  }
   focus.onclick=()=>{if(active()){viewer.fit(allSelected(),viewer.camera.position.clone().sub(viewer.controls.target));dialog.close();}};
   open.onclick=()=>{filter.value='';renderList();dialog.showModal();filter.focus();};
   dialog.querySelector('[data-close]').onclick=()=>dialog.close();
@@ -240,14 +279,14 @@ export function mountStructurePicker(host,viewer,entry,meshes,options={}){
   viewer.addCleanup(()=>{
     clearTimeout(recheck);narrow.removeEventListener('change',resize);resetLayer();host.classList.remove('oa-neutral-marks','oa-has-comparison');
     viewport.classList.remove('oa-hide-process-captions');
-    for(const pin of pins)pin.el.remove();dock.remove();isolate.remove();dialog.remove();open.remove();
+    for(const pin of pins)pin.el.remove();dock.remove();(tools||isolate).remove();dialog.remove();open.remove();
   });
   return {updatePin,
-    pick(raw,hit,notify=true){if(byRaw.has(raw)){select(byRaw.get(raw),hit,notify);return true;}return false;},
+    prune,pick(raw,hit,notify=true){const group=byRaw.get(raw);if(group&&eligible(group)){select(group,hit,notify);return true;}return false;},
     clear(){if(selected.length)select(null,null,false);},
     refresh(){
       index();
-      if(selected.length)applySelection(selected.flatMap(r=>{const group=byRaw.get(r.group.names[0]);return group?[{...r,group}]:[];}),null,false);
+      if(selected.length)applySelection(selected.flatMap(r=>{const group=byRaw.get(r.group.names[0]);return group&&eligible(group)?[{...r,group}]:[];}),null,false);
       else if(dialog.open)renderList();
     },
     isolateObjects(objects){return selected.length&&solo.checked?allSelected():objects;}};
