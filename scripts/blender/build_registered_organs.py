@@ -21,6 +21,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent))
 from registered_organ_parts import systems
+from refresh_registered_skin import make_exterior_mesh
 
 mode, blend, bp_dir, hra, repo, backup = sys.argv[sys.argv.index("--") + 1:]
 blend, bp_dir, hra, repo, backup = map(Path, (blend, bp_dir, hra, repo, backup))
@@ -231,19 +232,7 @@ def normal_name(key):
 
 def combine(key):
     if key == "skin":
-        root = source_objects["Regions of human body.g"]
-        surfaces = {o for o in root.children_recursive if o.type=="MESH" and o.data.polygons
-            and not re.search(r"\.(j|t|s|i)$",o.name) and o.parent.name != "Hairs.g"}
-        # Keep each full regional patch, including the digit and plantar surfaces.
-        # Its nested small landmarks may duplicate triangles in the patch.
-        names = []
-        for o in surfaces:
-            parent = o.parent
-            while parent and parent not in surfaces:
-                parent = parent.parent
-            if not parent:
-                names.append(o.name)
-        names.sort()
+        return make_exterior_mesh()
     elif key in ("upper_teeth","lower_teeth"):
         pattern = re.compile(r"^"+key.split("_")[0]+r" .*?(?:incisor|canine|premolar|molar tooth)\.[lr]$",re.I)
         names = sorted(n for n in source_objects if pattern.match(n))
@@ -290,7 +279,7 @@ for system, group in systems.items():
             target_names.append(role)
             compact = 2600
             if identity in ("lungs","heart","liver","stomach","skin","small-intestine","brain"):
-                compact = {"skin":22000,"brain":4800,"small-intestine":12000}.get(identity,6000)
+                compact = {"skin":60000,"brain":4800,"small-intestine":12000}.get(identity,6000)
             reduce(obj, compact)
             copies.append(obj)
         record = {"id":identity, "label":label, "system":system, "targets":target_names}

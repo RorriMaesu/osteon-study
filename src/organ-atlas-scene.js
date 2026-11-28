@@ -310,6 +310,9 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError,onDissectionC
     finally{skeletonLoading=false;}
   }
   let interacted=false;
+  const markInteraction=()=>{interacted=true;};
+  host.addEventListener('pointerdown',markInteraction);
+  host.addEventListener('keydown',markInteraction);
   const viewer=mountOrganViewer(host,{...expandedControls(host),asset:map.asset,title:map.title,onRender:()=>picker?.updatePin(),
     prepare:map.asset.endsWith('/ovarian-region.glb')?separateRegionalSurfaces:undefined,
     direction:map.direction||[0,.02,1],colors:(_,mesh)=>{
@@ -407,5 +410,9 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError,onDissectionC
       // camera makes forward-facing eyes look as though they diverge.
       frame(objects,api.camera.position.clone().sub(api.controls.target),selected==='eyes'?12:mapFov);
     },
-    dispose(){closed=true;viewer.dispose();}};
+    dispose(){
+      closed=true;
+      host.removeEventListener('pointerdown',markInteraction);host.removeEventListener('keydown',markInteraction);
+      viewer.dispose();
+    }};
 }

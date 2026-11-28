@@ -25,11 +25,11 @@ function reversedCount(donor,rendered){
   return count;
 }
 
-test('correct only mirrored brain, skin, tooth and unilateral organ pieces on the registered donor',async()=>{
+test('correct only mirrored brain, tooth and unilateral organ pieces on the registered donor',async()=>{
   const model=await load(registered),tissue=createOrganAppearance();
   for(const [name,min,max] of [
     ['frontal_lobes',.49,.51],['temporal_lobes',.49,.51],['occipital_lobes',.49,.51],
-    ['parietal_lobes',.49,.51],['cerebellum',.42,.46],['skin',.43,.51],['upper_teeth',.49,.51],
+    ['parietal_lobes',.49,.51],['cerebellum',.42,.46],['skin',0,0],['upper_teeth',.49,.51],
     ['pons_left',1,1],['submandibular_gland_right',1,1],['malleus_left',1,1],
     ['pons_right',0,0],['liver',0,0],['left_ventricle',0,0],['iris_left',0,0]
   ]){
@@ -42,6 +42,24 @@ test('correct only mirrored brain, skin, tooth and unilateral organ pieces on th
     assert.deepEqual(original.attributes.normal.array,normals);
     assert.deepEqual(corrected.attributes.position.array,original.attributes.position.array);
     if(!min)assert.equal(original,corrected,name);
+  }
+});
+
+test('registered native skin keeps the eye apertures open and covers both cheeks, brows and lips',async()=>{
+  const model=await load(registered),skin=model.getObjectByName('skin');
+  const front=(mesh,x,y)=>new THREE.Raycaster(new THREE.Vector3(x,y,.3),new THREE.Vector3(0,0,-1))
+    .intersectObject(mesh,false)[0]?.point.z??-Infinity;
+  for(const sign of [-1,1]){
+    const iris=model.getObjectByName(sign>0?'iris_left':'iris_right');
+    const surface=front(skin,.031*sign,1.5913);
+    const irisEdgeX=.034*sign;
+    // Use a two-sided optical sample independently of the live eye shader.
+    iris.material=iris.material.clone();iris.material.side=THREE.DoubleSide;
+    assert.ok(surface<0&&front(iris,irisEdgeX,1.5913)>.06);
+    assert.ok(front(skin,.031*sign,1.605)>.075,'brow');
+    assert.ok(front(skin,.039*sign,1.563)>.075,'cheek');
+    assert.ok(front(skin,.004*sign,1.5375)>.09,'upper lip');
+    assert.ok(front(skin,.004*sign,1.522)>.09,'lower lip');
   }
 });
 

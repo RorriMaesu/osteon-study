@@ -8,7 +8,7 @@ import {Box3,Vector3} from 'three';
 const audited=new Map([
   ['assets/organ-atlas/registered-organs.glb',new Set((
     'frontal_lobes parietal_lobes occipital_lobes temporal_lobes insulae limbic_lobes cerebellum '+
-    'pons_left medulla_oblongata_left midbrain_left thalamus_left upper_teeth lower_teeth skin '+
+    'pons_left medulla_oblongata_left midbrain_left thalamus_left upper_teeth lower_teeth '+
     'helix_left lobule_of_auricle_left tympanic_membrane_left malleus_left incus_left stapes_left cochlea_right '+
     'lacrimal_gland_left lacrimal_canaliculus_left lacrimal_sac_left nasolacrimal_duct_left '+
     'superior_parathyroid_gland_left inferior_parathyroid_gland_left palatine_tonsil_left '+
@@ -58,31 +58,20 @@ export function orientOrganSurface(mesh,asset,name){
   const a=new Vector3(),b=new Vector3(),c=new Vector3();
   for(let i=0;i<pos.count;i++){
     const id=owner[i];
-    if(!components.has(id))components.set(id,{bounds:new Box3(),center:new Vector3(),volume:0,count:0});
+    if(!components.has(id))components.set(id,{bounds:new Box3(),center:new Vector3(),volume:0});
     components.get(id).bounds.expandByPoint(a.fromBufferAttribute(pos,i));
   }
-  const pieces=[...components.values()];
-  for(const part of pieces)part.bounds.getCenter(part.center);
+  for(const part of components.values())part.bounds.getCenter(part.center);
   for(let i=0;i<index.count;i+=3){
     const first=index.getX(i),part=components.get(owner[first]);
     a.fromBufferAttribute(pos,first).sub(part.center);
     b.fromBufferAttribute(pos,index.getX(i+1)).sub(part.center);
     c.fromBufferAttribute(pos,index.getX(i+2)).sub(part.center);
     part.volume+=a.dot(b.cross(c));
-    part.count++;
   }
   const inward=new Set();
   for(const [id,part] of components){
     if(part.volume>=0)continue;
-    // The skin includes open regional sheets. A signed volume alone cannot
-    // orient an open sheet. Match it to the opposite donor skin patch first.
-    if(name==='skin'){
-      const reflected=a.copy(part.center);
-      reflected.x=-reflected.x;
-      const counterpart=pieces.some(peer=>peer.volume>0&&Math.abs(peer.count-part.count)<=part.count*.4&&
-        peer.center.distanceTo(reflected)<.002);
-      if(!counterpart)continue;
-    }
     inward.add(id);
   }
   if(!inward.size)return;
