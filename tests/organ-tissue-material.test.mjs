@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
+import {readFileSync} from 'node:fs';
+import {isToothMesh,TOOTH_COLOR,TOOTH_ROUGHNESS} from '../src/dental-appearance.js';
 import {createOrganAppearance,registerOrganMaterials,organTissueKind,cloneOrganMaterial,tintOrganMaterial}
   from '../src/organ-tissue-material.js';
 
@@ -15,6 +17,43 @@ function shaderFor(mat){
   const shader={uniforms:{},vertexShader:THREE.ShaderLib.standard.vertexShader,fragmentShader:THREE.ShaderLib.standard.fragmentShader};
   mat.onBeforeCompile(shader);return shader;
 }
+test('both registered arches and all 28 animated teeth use ivory in natural and teaching views',()=>{
+  for(const [file,expected] of [[asset,2],['assets/motion-jaw.glb',28]]){
+    const bytes=readFileSync(new URL('../'+file,import.meta.url));
+    const document=JSON.parse(bytes.toString('utf8',20,20+bytes.readUInt32LE(12)));
+    const app=createOrganAppearance(),toothMaterials=[];
+    let jaw;
+    for(const node of document.nodes){
+      if(node.mesh===undefined)continue;
+      const mesh=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());
+      mesh.name=node.name;Object.assign(mesh.userData,node.extras);
+      const source=document.materials?.[document.meshes[node.mesh].primitives[0].material];
+      if(source?.pbrMetallicRoughness?.baseColorFactor)mesh.material.color.fromArray(source.pbrMetallicRoughness.baseColorFactor);
+      register(node.name,mesh,[source]);
+      if(isToothMesh(mesh)){
+        const fallback=file===asset?'#d9997b':mesh.material.color;
+        app.prepare(mesh,file,fallback);
+        toothMaterials.push(mesh.material);
+      }else if(mesh.userData.zname==='Mandible'){
+        const old=mesh.material.color.clone();app.prepare(mesh,file,old);jaw=mesh;
+        assert.ok(mesh.material.color.equals(old));
+        assert.notEqual(mesh.material.color.getHex(),TOOTH_COLOR);
+      }
+    }
+    assert.equal(toothMaterials.length,expected);
+    if(file!==asset)assert.ok(jaw);
+    for(const mat of toothMaterials){
+      assert.equal(mat.color.getHex(),TOOTH_COLOR);
+      assert.equal(mat.roughness,TOOTH_ROUGHNESS);assert.equal(mat.metalness,0);
+      const shader=shaderFor(cloneOrganMaterial(mat));
+      assert.equal(shader.uniforms.tissueColor.value.getHex(),TOOTH_COLOR);
+      assert.equal(shader.uniforms.teachingColor.value.getHex(),TOOTH_COLOR);
+      app.setMode('teaching');assert.equal(shader.uniforms.naturalMode.value,0);
+      app.setMode('natural');assert.equal(shader.uniforms.naturalMode.value,1);
+    }
+    app.dispose();
+  }
+});
 test('open teaching sections and donor patches draw their reverse face while neighboring closed anatomy keeps its own winding',()=>{
   const app=createOrganAppearance();
   for(const [file,name,side] of [

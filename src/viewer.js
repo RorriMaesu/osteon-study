@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {isToothMesh,TOOTH_COLOR,TOOTH_ROUGHNESS} from './dental-appearance.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
@@ -81,7 +82,14 @@ export class AnatomyViewer {
   if(!this.renderer)return Promise.reject(Error('The 3D viewer is unavailable.'));
   if(this.baseRequest)return this.baseRequest;
   this.baseRequest=this.loadModel('skeleton').then(scene=>{
-   this.addModel(scene,m=>{const z=m.userData.zname||m.name.replace(/\.001$/,'');m.userData.zname=z;m.userData.region=this.meshRegion(z,m.userData.zgroup||'');m.userData.sinus=/^Sinus /.test(z);m.userData.nonbone=/cartilage|tooth|canine|incisor|premolar/i.test(z);m.material=new THREE.MeshStandardMaterial({color:m.userData.sinus?0xa8b5a0:m.userData.nonbone?0xa6b3ad:0xe5e1cd,roughness:.55,metalness:.04,side:THREE.DoubleSide});m.userData.initialPosition=m.position.clone();});
+   this.addModel(scene,m=>{
+    const z=m.userData.zname||m.name.replace(/\.001$/,'');
+    m.userData.zname=z;m.userData.region=this.meshRegion(z,m.userData.zgroup||'');m.userData.sinus=/^Sinus /.test(z);
+    m.userData.tooth=isToothMesh(m);m.userData.nonbone=m.userData.tooth||/cartilage/i.test(z);
+    const color=m.userData.tooth?TOOTH_COLOR:m.userData.sinus?0xa8b5a0:m.userData.nonbone?0xa6b3ad:0xe5e1cd;
+    m.material=new THREE.MeshStandardMaterial({color,roughness:m.userData.tooth?TOOTH_ROUGHNESS:.55,metalness:m.userData.tooth?0:.04,side:THREE.DoubleSide});
+    m.userData.initialPosition=m.position.clone();
+   });
    this.loaded=true;this.applyVisibility();this.resize();this.reset();this.el.dataset.loaded='true';this.onReady(this.meshes);
   }).catch(error=>{this.baseRequest=null;this.onError(error);throw error;});
   return this.baseRequest;
@@ -329,7 +337,8 @@ export class AnatomyViewer {
    m.material.opacity=display.opacity;m.material.transparent=display.opacity<1;m.material.depthWrite=!m.material.transparent;
    const family=this.skullColors&&!this.quiz&&this.focus.level!=='overview'&&!m.userData.nonbone?boneFamily(m.userData.zname):null;
    const ligament=this.ligaments&&!this.quiz&&ligamentByMesh.has(m.userData.zname);
-   const c=ligament?(selected.has(m)?0xffc26c:0xbd752d):family?parseInt(family.color.slice(1),16):selected.has(m)?(pointKinds.includes(r?.kind)?0xe5e1cd:0xb5e6be):m.userData.sinus?0xa1b59b:m.userData.tissue?/artery/.test(m.userData.zname)?0xd98878:0xc9aa7b:m.userData.nonbone?0x9da9a1:0xe5e1cd;m.material.color.setHex(c);m.material.emissive.setHex(selected.has(m)&&!pointKinds.includes(r?.kind)?0x14291b:0x000000);
+   const resting=m.userData.tooth?TOOTH_COLOR:m.userData.sinus?0xa1b59b:m.userData.tissue?/artery/.test(m.userData.zname)?0xd98878:0xc9aa7b:m.userData.nonbone?0x9da9a1:0xe5e1cd;
+   const c=ligament?(selected.has(m)?0xffc26c:0xbd752d):family?parseInt(family.color.slice(1),16):selected.has(m)?(pointKinds.includes(r?.kind)?0xe5e1cd:0xb5e6be):resting;m.material.color.setHex(c);m.material.emissive.setHex(selected.has(m)&&!pointKinds.includes(r?.kind)?0x14291b:0x000000);
   }this.muscleLayer?.updateVisibility();this.nervousLayer?.refresh();this.lymphNodeLayer?.refresh();this.organLayer?.refresh();this.syncLayerControls();this.refreshLandmarkTools();
  }
 

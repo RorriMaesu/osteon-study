@@ -1,5 +1,6 @@
 
 import * as THREE from 'three';
+import {isToothMesh,TOOTH_COLOR,TOOTH_ROUGHNESS} from './dental-appearance.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {DRACOLoader} from 'three/addons/loaders/DRACOLoader.js';
@@ -158,7 +159,8 @@ export class MotionViewer {
       const targets=Object.entries(mesh.morphTargetDictionary||{});
       if(targets.length)morphables.push({mesh,targets});
       if(mesh.userData.motionContext){
-       mesh.material=new THREE.MeshStandardMaterial({color:'#d1cec1',roughness:.83,opacity:.38,transparent:true,depthWrite:false});
+       const tooth=isToothMesh(mesh);
+       mesh.material=new THREE.MeshStandardMaterial({color:tooth?TOOTH_COLOR:'#d1cec1',roughness:tooth?TOOTH_ROUGHNESS:.83,opacity:.38,transparent:true,depthWrite:false});
        context.push(mesh);
       }
       if(mesh.userData.motionMuscle){
@@ -207,6 +209,13 @@ export class MotionViewer {
   const [file,meta]=await readRig('motion-walk-context');
   if(specimen.upper)return;
   const root=file.scene.getObjectByName(meta.root);
+  // The walking rig shares one source material across the upper body bones and teeth.
+  root.traverse(mesh=>{
+   if(!mesh.isMesh||!isToothMesh(mesh))return;
+   mesh.material=mesh.material.clone();
+   mesh.material.color.setHex(TOOTH_COLOR);
+   mesh.material.roughness=TOOTH_ROUGHNESS;
+  });
   const attach=name=>jointState(root.getObjectByName(name));
   const torso=attach(meta.torso),head=attach(meta.head);
   const arms=Object.fromEntries(Object.entries(meta.joints).map(([side,chain])=>[side,Object.fromEntries(Object.entries(chain).map(([joint,name])=>[joint,attach(name)]))]));

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {orientOrganSurface} from './organ-surface-orientation.js';
+import {isToothName,TOOTH_COLOR,TOOTH_ROUGHNESS} from './dental-appearance.js';
 
 // Exact donor assets and gross surfaces. Microscopy, cutaway teaching models and
 // flow markers keep their own colors, even when they contain the same organ words.
@@ -17,6 +18,7 @@ const grossAssets = new Set([
 // sRGB base, roughness, strength of broad color variation, spatial frequency.
 // These are illustrative surface finishes; no disease markings or invented vessels.
 const profiles = {
+  tooth: [TOOTH_COLOR, TOOTH_ROUGHNESS, .025, 4],
   liver: ['#864632', .32, .25, 3.4],
   vein: ['#86636a', .45, .08, 3],
   artery: ['#ad776a', .49, .09, 3],
@@ -64,6 +66,7 @@ const names = [
 ];
 
 export function organTissueKind(asset, raw){
+  if((asset==='assets/organ-atlas/registered-organs.glb'||asset==='assets/motion-jaw.glb')&&isToothName(raw))return 'tooth';
   if(!grossAssets.has(asset))return;
   const name=String(raw).replace(/^VH_[MF]_/, '').toLowerCase();
   if(asset==='assets/ap2-heart.glb'){
@@ -214,7 +217,7 @@ export function createOrganAppearance(initial='natural'){
       const name=namedMeshes.get(mesh);
       orientOrganSurface(mesh,asset,name||mesh.name);
       if(name)kind=organTissueKind(asset,name);
-      else if(grossAssets.has(asset)){
+      else if(grossAssets.has(asset)||asset==='assets/motion-jaw.glb'){
         for(let obj=mesh;obj&&!kind;obj=obj.parent){
           kind=organTissueKind(asset,obj.userData.name)||organTissueKind(asset,obj.name);
         }
@@ -233,8 +236,15 @@ export function createOrganAppearance(initial='natural'){
           mat.metalness=0;mat.roughness=.8;
         }
         if(kind&&mat.isMeshStandardMaterial){
+          // The registered dental arches have no donor paint. The animated
+          // teeth share the mandible's generic bone material. Give only these
+          // untextured teeth their own base in both display modes.
+          const unpaintedTooth=kind==='tooth'&&!authoredPaint&&(!definition||definition.name==='bone');
+          if(unpaintedTooth){
+            mat.color.setHex(TOOTH_COLOR);mat.roughness=TOOTH_ROUGHNESS;mat.metalness=0;
+          }
           restCoordinates(mesh.geometry);
-          finishSurface(mat,kind,mode,definition);
+          finishSurface(mat,kind,mode,unpaintedTooth?undefined:definition);
           surfaces++;
         }
         return mat;

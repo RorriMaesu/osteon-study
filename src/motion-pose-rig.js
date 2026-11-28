@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {isToothMesh,TOOTH_COLOR,TOOTH_ROUGHNESS} from './dental-appearance.js';
 import {ankleMorphBinding,poseAnkleMorphs} from './motion-ankle.js';
 
 const RAD=Math.PI/180;
@@ -94,7 +95,8 @@ export function preparePoseRig(model,meta){
     walkSegments:data.walkSegments,deformation:data.poseDeformation,contextOnly:false,
     poseDrivers:data.poseDrivers||[],poseOnly:true});
   }else if(data.poseBone){
-   const material=new THREE.MeshStandardMaterial({color:data.poseSupport?'#d8bd92':'#d6ddd0',roughness:.79});
+   const tooth=isToothMesh(mesh);
+   const material=new THREE.MeshStandardMaterial({color:tooth?TOOTH_COLOR:data.poseSupport?'#d8bd92':'#d6ddd0',roughness:tooth?TOOTH_ROUGHNESS:.79});
    mesh.material=material;
    bones.push({mesh,material,name:data.poseBone,region:data.poseRegion,side:data.poseSide||'midline',poseDrivers:data.poseDrivers||[]});
   }

@@ -293,7 +293,7 @@ export function mountBodyMap(host,map,{onPick,onReady,onLayerError,onDissectionC
   }
   function whole(){const direction=map.direction||[0,.02,1];if(skeleton)frame([skeleton],direction);else if(api)frame([...localBones,...meshes.map(o=>o.mesh)],direction);}
   function addBones(layer,source){
-    const context=createBoneContext(layer,source);
+    const context=createBoneContext(layer,source,{omitTeeth:bySurface.has('upper_teeth')&&bySurface.has('lower_teeth')});
     if(context){boneContexts.push(context);api.addCleanup(()=>context.dispose());}
   }
   async function loadSkeleton(initial=false){

@@ -27,8 +27,15 @@ export function attachOrganLayer(viewer,toast){
   };
   const index=new Map(bodyAtlas.organs.flatMap(row=>row.targets.map(name=>[name,row])));
   const parts=[];
+  const pickSurfaces=new Map();
   let group,request,enabled=false,chosen=null,chosenRaw=null;
   const available=()=>viewer.loaded&&!viewer.quiz&&!viewer.activeDetail&&!viewer.muscleLayer?.coursePracticeActive&&viewer.focus.level!=='bone'&&!viewer.isolated&&document.querySelector('#atlas-view').classList.contains('active');
+  function markTeeth(part,picked){
+    for(const tooth of part.teeth){
+      if(viewer.selected.includes(tooth))continue;
+      tooth.material.emissive.setHex(picked?0x684311:0);
+    }
+  }
   function showStudy(row,raw){
     chosen=row;chosenRaw=raw;selection.hidden=!row;
     if(row){
@@ -37,6 +44,7 @@ export function attachOrganLayer(viewer,toast){
     }
     for(const part of parts){
       const picked=part.row===row&&(!raw||part.raw===raw);
+      if(part.teeth.length)markTeeth(part,picked);
       for(const {mat,emissive} of part.materials)if(emissive){
         mat.emissive.copy(emissive);
         if(picked)mat.emissive.setHex(0x684311);
@@ -57,8 +65,19 @@ export function attachOrganLayer(viewer,toast){
       for(const mesh of viewer.meshes)if(mesh.visible&&!mesh.userData.nonbone&&mesh.userData.bounds)limits.union(mesh.userData.bounds);
       limits.expandByScalar(.035);
     }
-    for(const part of parts)part.mesh.visible=active&&!part.row.contextOnly&&(!limits||limits.intersectsBox(part.bounds));
-    if(chosen&&!parts.some(p=>p.mesh.visible&&p.row===chosen&&(!chosenRaw||p.raw===chosenRaw)))showStudy(null);
+    pickSurfaces.clear();
+    for(const part of parts){
+      const inScope=active&&!part.row.contextOnly&&(!limits||limits.intersectsBox(part.bounds));
+      part.mesh.visible=inScope&&!part.teeth.length;
+      if(part.mesh.visible)pickSurfaces.set(part.mesh,part.mesh);
+      if(part.teeth.length&&inScope){
+        // The skeleton supplies individual teeth, including any the learner has peeled.
+        // Keep these as the only drawn surfaces and route a normal tap to the arch's study link.
+        for(const tooth of part.teeth)if(tooth.visible)pickSurfaces.set(tooth,part.mesh);
+        markTeeth(part,chosen===part.row&&(!chosenRaw||chosenRaw===part.raw));
+      }
+    }
+    if(chosen&&![...pickSurfaces.values()].some(mesh=>mesh.userData.organRow===chosen&&(!chosenRaw||mesh.userData.organPart===chosenRaw)))showStudy(null);
     selection.hidden=!active||!chosen;
     viewer.needsRender=true;
   }
@@ -75,7 +94,9 @@ export function attachOrganLayer(viewer,toast){
         const eye=createEyeAppearance(mesh,bodyAtlas.asset,raw,()=>{viewer.needsRender=true;});
         eye?.setMode(tissue.mode);
         mesh.userData.organRow=row;mesh.userData.organPart=raw;mesh.userData.zname=organStructureName('body',raw);
-        parts.push({mesh,row,raw,eye,bounds:new THREE.Box3().setFromObject(mesh),
+        const arch=raw==='upper_teeth'?'Upper ':raw==='lower_teeth'?'Lower ':null;
+        const teeth=arch?viewer.meshes.filter(tooth=>tooth.userData.tooth&&tooth.userData.zname.startsWith(arch)):[];
+        parts.push({mesh,row,raw,eye,teeth,bounds:new THREE.Box3().setFromObject(mesh),
           materials:[].concat(mesh.material).map(mat=>({mat,emissive:mat.emissive?.clone()}))});
       });
       tissue.dispose(); // All GPU-facing copies now belong to this persistent layer.
@@ -88,9 +109,10 @@ export function attachOrganLayer(viewer,toast){
     refresh,fadesBones:()=>enabled&&!!group&&available(),
     pick(ray,boneHit){
       if(!group?.visible)return null;
-      const hits=ray.intersectObjects(parts.filter(p=>p.mesh.visible).map(p=>p.mesh),false);
+      const hits=ray.intersectObjects([...pickSurfaces.keys()],false);
       const visible=boneHit&&boneHit.object.material.opacity>=.47?hits.filter(hit=>hit.distance<=boneHit.distance):hits;
-      return visibleEyeHit(visible,tissue.mode,mesh=>mesh.userData.organPart)?.object||null;
+      const hit=visibleEyeHit(visible,tissue.mode,mesh=>pickSurfaces.get(mesh).userData.organPart);
+      return hit?pickSurfaces.get(hit.object):null;
     },
     select:showStudy,open(row,raw){location.hash=organStudyDestination(row,raw);}
   };

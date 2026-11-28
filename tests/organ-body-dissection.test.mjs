@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import {bodyMaps} from '../src/organ-atlas-bodies.js';
 import {createBodyDissection} from '../src/organ-body-dissection.js';
 import {createBoneContext} from '../src/organ-bone-context.js';
+import {TOOTH_COLOR} from '../src/dental-appearance.js';
 
 const body=bodyMaps.find(map=>map.key==='body');
 test('whole organs are removed in peel order and can be restored individually',()=>{
@@ -68,4 +69,30 @@ test('the skeleton X-ray draws the nearest bone surface once and preserves sourc
   ctx.setMode('off');assert.ok(!surface.visible&&!depth.visible);
   ctx.dispose();assert.deepEqual(root.children,[source,other]);
   source.geometry.dispose();source.material.dispose();
+});
+
+test('the body skeleton omits duplicate teeth and the regional skeleton retains enamel in solid view',()=>{
+  const root=new THREE.Group(),jaw=new THREE.Mesh(new THREE.BoxGeometry(.2,.2,.2));
+  const tooth=jaw.clone();tooth.name='Upper medial incisor.r.001';tooth.userData.zmat='Teeth';tooth.position.x=1;
+  root.add(jaw,tooth);
+  const ray=new THREE.Raycaster(new THREE.Vector3(1,0,2),new THREE.Vector3(0,0,-1));
+  const body=createBoneContext(root,[jaw,tooth],{omitTeeth:true});
+  for(const mode of ['solid','xray']){
+    body.setMode(mode);root.updateMatrixWorld(true);
+    assert.equal(tooth.visible,false);
+    assert.equal(ray.intersectObject(body.surface).length,0,'hidden registered teeth stay clear of bone drawing and picking');
+  }
+  body.dispose();
+  const regional=createBoneContext(root,[jaw,tooth]);regional.setMode('solid');
+  const surface=regional.surface,color=surface.geometry.getAttribute('color');
+  const dentalStart=jaw.geometry.attributes.position.count;
+  assert.equal(surface.material.vertexColors,true);
+  assert.ok(ray.intersectObject(surface).length>0);
+  const almost=(actual,expected)=>assert.ok(Math.abs(actual-expected)<=1/255);
+  const ivory=new THREE.Color(TOOTH_COLOR),bone=new THREE.Color('#d9c4a6');
+  for(const [start,expected] of [[0,bone],[dentalStart,ivory]]){
+    almost(color.getX(start),expected.r);almost(color.getY(start),expected.g);almost(color.getZ(start),expected.b);
+  }
+  regional.setMode('xray');assert.equal(surface.material.vertexColors,false);
+  regional.dispose();jaw.geometry.dispose();jaw.material.dispose();
 });
